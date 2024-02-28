@@ -19,7 +19,10 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public EdgeNGramTokenizer(string name) : base(name)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
 
             TokenChars = new ChangeTrackingList<TokenCharacterKind>();
             ODataType = "#Microsoft.Azure.Search.EdgeNGramTokenizer";

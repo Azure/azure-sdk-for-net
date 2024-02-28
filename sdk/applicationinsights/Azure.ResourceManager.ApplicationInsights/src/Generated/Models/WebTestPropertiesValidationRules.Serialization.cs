@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ContentValidation))
+            if (ContentValidation != null)
             {
                 writer.WritePropertyName("ContentValidation"u8);
                 writer.WriteObjectValue(ContentValidation);
             }
-            if (Optional.IsDefined(CheckSsl))
+            if (CheckSsl.HasValue)
             {
                 writer.WritePropertyName("SSLCheck"u8);
                 writer.WriteBooleanValue(CheckSsl.Value);
             }
-            if (Optional.IsDefined(SSLCertRemainingLifetimeCheck))
+            if (SSLCertRemainingLifetimeCheck.HasValue)
             {
                 writer.WritePropertyName("SSLCertRemainingLifetimeCheck"u8);
                 writer.WriteNumberValue(SSLCertRemainingLifetimeCheck.Value);
             }
-            if (Optional.IsDefined(ExpectedHttpStatusCode))
+            if (ExpectedHttpStatusCode.HasValue)
             {
                 writer.WritePropertyName("ExpectedHttpStatusCode"u8);
                 writer.WriteNumberValue(ExpectedHttpStatusCode.Value);
             }
-            if (Optional.IsDefined(IgnoreHttpStatusCode))
+            if (IgnoreHttpStatusCode.HasValue)
             {
                 writer.WritePropertyName("IgnoreHttpStatusCode"u8);
                 writer.WriteBooleanValue(IgnoreHttpStatusCode.Value);
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     {
                         continue;
                     }
-                    contentValidation = WebTestPropertiesValidationRulesContentValidation.DeserializeWebTestPropertiesValidationRulesContentValidation(property.Value);
+                    contentValidation = WebTestPropertiesValidationRulesContentValidation.DeserializeWebTestPropertiesValidationRulesContentValidation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("SSLCheck"u8))
@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebTestPropertiesValidationRules(contentValidation.Value, Optional.ToNullable(sslCheck), Optional.ToNullable(sslCertRemainingLifetimeCheck), Optional.ToNullable(expectedHttpStatusCode), Optional.ToNullable(ignoreHttpStatusCode), serializedAdditionalRawData);
+            return new WebTestPropertiesValidationRules(
+                contentValidation.Value,
+                Optional.ToNullable(sslCheck),
+                Optional.ToNullable(sslCertRemainingLifetimeCheck),
+                Optional.ToNullable(expectedHttpStatusCode),
+                Optional.ToNullable(ignoreHttpStatusCode),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebTestPropertiesValidationRules>.Write(ModelReaderWriterOptions options)

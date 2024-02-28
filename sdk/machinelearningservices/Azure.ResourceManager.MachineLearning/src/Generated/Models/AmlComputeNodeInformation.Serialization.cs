@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(NodeId))
+            if (options.Format != "W" && NodeId != null)
             {
                 writer.WritePropertyName("nodeId"u8);
                 writer.WriteStringValue(NodeId);
             }
-            if (options.Format != "W" && Optional.IsDefined(PrivateIPAddress))
+            if (options.Format != "W" && PrivateIPAddress != null)
             {
                 if (PrivateIPAddress != null)
                 {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("privateIpAddress");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(PublicIPAddress))
+            if (options.Format != "W" && PublicIPAddress != null)
             {
                 if (PublicIPAddress != null)
                 {
@@ -56,17 +56,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("publicIpAddress");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(Port))
+            if (options.Format != "W" && Port.HasValue)
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(NodeState))
+            if (options.Format != "W" && NodeState.HasValue)
             {
                 writer.WritePropertyName("nodeState"u8);
                 writer.WriteStringValue(NodeState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(RunId))
+            if (options.Format != "W" && RunId != null)
             {
                 if (RunId != null)
                 {
@@ -185,7 +185,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AmlComputeNodeInformation(nodeId.Value, privateIPAddress.Value, publicIPAddress.Value, Optional.ToNullable(port), Optional.ToNullable(nodeState), runId.Value, serializedAdditionalRawData);
+            return new AmlComputeNodeInformation(
+                nodeId.Value,
+                privateIPAddress.Value,
+                publicIPAddress.Value,
+                Optional.ToNullable(port),
+                Optional.ToNullable(nodeState),
+                runId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AmlComputeNodeInformation>.Write(ModelReaderWriterOptions options)

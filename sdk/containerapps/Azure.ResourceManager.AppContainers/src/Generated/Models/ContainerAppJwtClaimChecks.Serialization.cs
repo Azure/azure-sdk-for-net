@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AllowedGroups))
+            if (!(AllowedGroups is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("allowedGroups"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AllowedClientApplications))
+            if (!(AllowedClientApplications is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("allowedClientApplications"u8);
                 writer.WriteStartArray();
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<IList<string>> allowedGroups = default;
-            Optional<IList<string>> allowedClientApplications = default;
+            IList<string> allowedGroups = default;
+            IList<string> allowedClientApplications = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppJwtClaimChecks(Optional.ToList(allowedGroups), Optional.ToList(allowedClientApplications), serializedAdditionalRawData);
+            return new ContainerAppJwtClaimChecks(allowedGroups ?? new ChangeTrackingList<string>(), allowedClientApplications ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppJwtClaimChecks>.Write(ModelReaderWriterOptions options)

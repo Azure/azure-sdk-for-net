@@ -30,27 +30,27 @@ namespace Azure.ResourceManager.IotHub.Models
             writer.WriteStringValue(ExportBlobContainerUri.AbsoluteUri);
             writer.WritePropertyName("excludeKeys"u8);
             writer.WriteBooleanValue(ExcludeKeys);
-            if (Optional.IsDefined(ExportBlobName))
+            if (ExportBlobName != null)
             {
                 writer.WritePropertyName("exportBlobName"u8);
                 writer.WriteStringValue(ExportBlobName);
             }
-            if (Optional.IsDefined(AuthenticationType))
+            if (AuthenticationType.HasValue)
             {
                 writer.WritePropertyName("authenticationType"u8);
                 writer.WriteStringValue(AuthenticationType.Value.ToString());
             }
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
             }
-            if (Optional.IsDefined(IncludeConfigurations))
+            if (IncludeConfigurations.HasValue)
             {
                 writer.WritePropertyName("includeConfigurations"u8);
                 writer.WriteBooleanValue(IncludeConfigurations.Value);
             }
-            if (Optional.IsDefined(ConfigurationsBlobName))
+            if (ConfigurationsBlobName != null)
             {
                 writer.WritePropertyName("configurationsBlobName"u8);
                 writer.WriteStringValue(ConfigurationsBlobName);
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    identity = ManagedIdentity.DeserializeManagedIdentity(property.Value);
+                    identity = ManagedIdentity.DeserializeManagedIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("includeConfigurations"u8))
@@ -157,7 +157,15 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExportDevicesContent(exportBlobContainerUri, excludeKeys, exportBlobName.Value, Optional.ToNullable(authenticationType), identity.Value, Optional.ToNullable(includeConfigurations), configurationsBlobName.Value, serializedAdditionalRawData);
+            return new ExportDevicesContent(
+                exportBlobContainerUri,
+                excludeKeys,
+                exportBlobName.Value,
+                Optional.ToNullable(authenticationType),
+                identity.Value,
+                Optional.ToNullable(includeConfigurations),
+                configurationsBlobName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExportDevicesContent>.Write(ModelReaderWriterOptions options)

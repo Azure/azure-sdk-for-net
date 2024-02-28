@@ -42,14 +42,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(NetworkAdapters))
+            if (options.Format != "W" && !(NetworkAdapters is ChangeTrackingList<DataBoxEdgeNetworkAdapter> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("networkAdapters"u8);
                 writer.WriteStartArray();
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IReadOnlyList<DataBoxEdgeNetworkAdapter>> networkAdapters = default;
+            IReadOnlyList<DataBoxEdgeNetworkAdapter> networkAdapters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                             List<DataBoxEdgeNetworkAdapter> array = new List<DataBoxEdgeNetworkAdapter>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataBoxEdgeNetworkAdapter.DeserializeDataBoxEdgeNetworkAdapter(item));
+                                array.Add(DataBoxEdgeNetworkAdapter.DeserializeDataBoxEdgeNetworkAdapter(item, options));
                             }
                             networkAdapters = array;
                             continue;
@@ -163,7 +163,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeDeviceNetworkSettings(id, name, type, systemData.Value, Optional.ToList(networkAdapters), serializedAdditionalRawData);
+            return new DataBoxEdgeDeviceNetworkSettings(
+                id,
+                name,
+                type,
+                systemData.Value,
+                networkAdapters ?? new ChangeTrackingList<DataBoxEdgeNetworkAdapter>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeDeviceNetworkSettings>.Write(ModelReaderWriterOptions options)

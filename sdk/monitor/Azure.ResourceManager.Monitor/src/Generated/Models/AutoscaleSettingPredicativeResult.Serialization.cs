@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Timespan))
+            if (Timespan != null)
             {
                 writer.WritePropertyName("timespan"u8);
                 writer.WriteStringValue(Timespan);
             }
-            if (Optional.IsDefined(Interval))
+            if (Interval.HasValue)
             {
                 writer.WritePropertyName("interval"u8);
                 writer.WriteStringValue(Interval.Value, "P");
             }
-            if (Optional.IsDefined(MetricName))
+            if (MetricName != null)
             {
                 writer.WritePropertyName("metricName"u8);
                 writer.WriteStringValue(MetricName);
             }
-            if (Optional.IsDefined(TargetResourceId))
+            if (TargetResourceId != null)
             {
                 writer.WritePropertyName("targetResourceId"u8);
                 writer.WriteStringValue(TargetResourceId);
             }
-            if (Optional.IsCollectionDefined(Data))
+            if (!(Data is ChangeTrackingList<PredictiveValue> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("data"u8);
                 writer.WriteStartArray();
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<TimeSpan> interval = default;
             Optional<string> metricName = default;
             Optional<ResourceIdentifier> targetResourceId = default;
-            Optional<IReadOnlyList<PredictiveValue>> data = default;
+            IReadOnlyList<PredictiveValue> data = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<PredictiveValue> array = new List<PredictiveValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PredictiveValue.DeserializePredictiveValue(item));
+                        array.Add(PredictiveValue.DeserializePredictiveValue(item, options));
                     }
                     data = array;
                     continue;
@@ -151,7 +151,13 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutoscaleSettingPredicativeResult(timespan.Value, Optional.ToNullable(interval), metricName.Value, targetResourceId.Value, Optional.ToList(data), serializedAdditionalRawData);
+            return new AutoscaleSettingPredicativeResult(
+                timespan.Value,
+                Optional.ToNullable(interval),
+                metricName.Value,
+                targetResourceId.Value,
+                data ?? new ChangeTrackingList<PredictiveValue>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutoscaleSettingPredicativeResult>.Write(ModelReaderWriterOptions options)

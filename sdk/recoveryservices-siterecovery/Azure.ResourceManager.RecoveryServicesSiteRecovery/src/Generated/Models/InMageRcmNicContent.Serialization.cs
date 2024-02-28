@@ -31,27 +31,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStringValue(NicId);
             writer.WritePropertyName("isPrimaryNic"u8);
             writer.WriteStringValue(IsPrimaryNic);
-            if (Optional.IsDefined(IsSelectedForFailover))
+            if (IsSelectedForFailover != null)
             {
                 writer.WritePropertyName("isSelectedForFailover"u8);
                 writer.WriteStringValue(IsSelectedForFailover);
             }
-            if (Optional.IsDefined(TargetSubnetName))
+            if (TargetSubnetName != null)
             {
                 writer.WritePropertyName("targetSubnetName"u8);
                 writer.WriteStringValue(TargetSubnetName);
             }
-            if (Optional.IsDefined(TargetStaticIPAddress))
+            if (TargetStaticIPAddress != null)
             {
                 writer.WritePropertyName("targetStaticIPAddress"u8);
                 writer.WriteStringValue(TargetStaticIPAddress.ToString());
             }
-            if (Optional.IsDefined(TestSubnetName))
+            if (TestSubnetName != null)
             {
                 writer.WritePropertyName("testSubnetName"u8);
                 writer.WriteStringValue(TestSubnetName);
             }
-            if (Optional.IsDefined(TestStaticIPAddress))
+            if (TestStaticIPAddress != null)
             {
                 writer.WritePropertyName("testStaticIPAddress"u8);
                 writer.WriteStringValue(TestStaticIPAddress.ToString());
@@ -154,7 +154,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageRcmNicContent(nicId, isPrimaryNic, isSelectedForFailover.Value, targetSubnetName.Value, targetStaticIPAddress.Value, testSubnetName.Value, testStaticIPAddress.Value, serializedAdditionalRawData);
+            return new InMageRcmNicContent(
+                nicId,
+                isPrimaryNic,
+                isSelectedForFailover.Value,
+                targetSubnetName.Value,
+                targetStaticIPAddress.Value,
+                testSubnetName.Value,
+                testStaticIPAddress.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InMageRcmNicContent>.Write(ModelReaderWriterOptions options)

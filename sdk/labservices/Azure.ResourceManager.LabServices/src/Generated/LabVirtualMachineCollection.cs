@@ -80,7 +80,14 @@ namespace Azure.ResourceManager.LabServices
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> is null. </exception>
         public virtual async Task<Response<LabVirtualMachineResource>> GetAsync(string virtualMachineName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualMachineName, nameof(virtualMachineName));
+            if (virtualMachineName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualMachineName));
+            }
+            if (virtualMachineName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineName));
+            }
 
             using var scope = _labVirtualMachineVirtualMachinesClientDiagnostics.CreateScope("LabVirtualMachineCollection.Get");
             scope.Start();
@@ -125,7 +132,14 @@ namespace Azure.ResourceManager.LabServices
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> is null. </exception>
         public virtual Response<LabVirtualMachineResource> Get(string virtualMachineName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualMachineName, nameof(virtualMachineName));
+            if (virtualMachineName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualMachineName));
+            }
+            if (virtualMachineName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineName));
+            }
 
             using var scope = _labVirtualMachineVirtualMachinesClientDiagnostics.CreateScope("LabVirtualMachineCollection.Get");
             scope.Start();
@@ -232,7 +246,14 @@ namespace Azure.ResourceManager.LabServices
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string virtualMachineName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualMachineName, nameof(virtualMachineName));
+            if (virtualMachineName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualMachineName));
+            }
+            if (virtualMachineName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineName));
+            }
 
             using var scope = _labVirtualMachineVirtualMachinesClientDiagnostics.CreateScope("LabVirtualMachineCollection.Exists");
             scope.Start();
@@ -275,7 +296,14 @@ namespace Azure.ResourceManager.LabServices
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> is null. </exception>
         public virtual Response<bool> Exists(string virtualMachineName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualMachineName, nameof(virtualMachineName));
+            if (virtualMachineName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualMachineName));
+            }
+            if (virtualMachineName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineName));
+            }
 
             using var scope = _labVirtualMachineVirtualMachinesClientDiagnostics.CreateScope("LabVirtualMachineCollection.Exists");
             scope.Start();
@@ -318,7 +346,14 @@ namespace Azure.ResourceManager.LabServices
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> is null. </exception>
         public virtual async Task<NullableResponse<LabVirtualMachineResource>> GetIfExistsAsync(string virtualMachineName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualMachineName, nameof(virtualMachineName));
+            if (virtualMachineName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualMachineName));
+            }
+            if (virtualMachineName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineName));
+            }
 
             using var scope = _labVirtualMachineVirtualMachinesClientDiagnostics.CreateScope("LabVirtualMachineCollection.GetIfExists");
             scope.Start();
@@ -363,7 +398,14 @@ namespace Azure.ResourceManager.LabServices
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> is null. </exception>
         public virtual NullableResponse<LabVirtualMachineResource> GetIfExists(string virtualMachineName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualMachineName, nameof(virtualMachineName));
+            if (virtualMachineName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualMachineName));
+            }
+            if (virtualMachineName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineName));
+            }
 
             using var scope = _labVirtualMachineVirtualMachinesClientDiagnostics.CreateScope("LabVirtualMachineCollection.GetIfExists");
             scope.Start();

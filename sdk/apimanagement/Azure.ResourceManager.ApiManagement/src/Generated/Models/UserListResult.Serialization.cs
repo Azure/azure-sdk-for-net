@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<UserContractData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Count))
+            if (Count.HasValue)
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<UserContractData>> value = default;
+            IReadOnlyList<UserContractData> value = default;
             Optional<long> count = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<UserContractData> array = new List<UserContractData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UserContractData.DeserializeUserContractData(item));
+                        array.Add(UserContractData.DeserializeUserContractData(item, options));
                     }
                     value = array;
                     continue;
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UserListResult(Optional.ToList(value), Optional.ToNullable(count), nextLink.Value, serializedAdditionalRawData);
+            return new UserListResult(value ?? new ChangeTrackingList<UserContractData>(), Optional.ToNullable(count), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UserListResult>.Write(ModelReaderWriterOptions options)

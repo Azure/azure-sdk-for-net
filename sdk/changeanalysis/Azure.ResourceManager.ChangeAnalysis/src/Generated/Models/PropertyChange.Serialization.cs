@@ -26,47 +26,47 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ChangeType))
+            if (ChangeType.HasValue)
             {
                 writer.WritePropertyName("changeType"u8);
                 writer.WriteStringValue(ChangeType.Value.ToString());
             }
-            if (Optional.IsDefined(ChangeCategory))
+            if (ChangeCategory.HasValue)
             {
                 writer.WritePropertyName("changeCategory"u8);
                 writer.WriteStringValue(ChangeCategory.Value.ToSerialString());
             }
-            if (Optional.IsDefined(JsonPath))
+            if (JsonPath != null)
             {
                 writer.WritePropertyName("jsonPath"u8);
                 writer.WriteStringValue(JsonPath);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Level))
+            if (Level.HasValue)
             {
                 writer.WritePropertyName("level"u8);
                 writer.WriteStringValue(Level.Value.ToString());
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(OldValue))
+            if (OldValue != null)
             {
                 writer.WritePropertyName("oldValue"u8);
                 writer.WriteStringValue(OldValue);
             }
-            if (Optional.IsDefined(NewValue))
+            if (NewValue != null)
             {
                 writer.WritePropertyName("newValue"u8);
                 writer.WriteStringValue(NewValue);
             }
-            if (Optional.IsDefined(IsDataMasked))
+            if (IsDataMasked.HasValue)
             {
                 writer.WritePropertyName("isDataMasked"u8);
                 writer.WriteBooleanValue(IsDataMasked.Value);
@@ -189,7 +189,17 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PropertyChange(Optional.ToNullable(changeType), Optional.ToNullable(changeCategory), jsonPath.Value, displayName.Value, Optional.ToNullable(level), description.Value, oldValue.Value, newValue.Value, Optional.ToNullable(isDataMasked), serializedAdditionalRawData);
+            return new PropertyChange(
+                Optional.ToNullable(changeType),
+                Optional.ToNullable(changeCategory),
+                jsonPath.Value,
+                displayName.Value,
+                Optional.ToNullable(level),
+                description.Value,
+                oldValue.Value,
+                newValue.Value,
+                Optional.ToNullable(isDataMasked),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PropertyChange>.Write(ModelReaderWriterOptions options)

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Peering.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind.HasValue)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
@@ -47,34 +47,34 @@ namespace Azure.ResourceManager.Peering.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Direct))
+            if (Direct != null)
             {
                 writer.WritePropertyName("direct"u8);
                 writer.WriteObjectValue(Direct);
             }
-            if (Optional.IsDefined(Exchange))
+            if (Exchange != null)
             {
                 writer.WritePropertyName("exchange"u8);
                 writer.WriteObjectValue(Exchange);
             }
-            if (Optional.IsDefined(PeeringLocationValue))
+            if (PeeringLocationValue != null)
             {
                 writer.WritePropertyName("peeringLocation"u8);
                 writer.WriteStringValue(PeeringLocationValue);
             }
-            if (Optional.IsDefined(Country))
+            if (Country != null)
             {
                 writer.WritePropertyName("country"u8);
                 writer.WriteStringValue(Country);
             }
-            if (Optional.IsDefined(AzureRegion))
+            if (AzureRegion.HasValue)
             {
                 writer.WritePropertyName("azureRegion"u8);
                 writer.WriteStringValue(AzureRegion.Value);
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Peering.Models
                             {
                                 continue;
                             }
-                            direct = DirectPeeringLocationProperties.DeserializeDirectPeeringLocationProperties(property0.Value);
+                            direct = DirectPeeringLocationProperties.DeserializeDirectPeeringLocationProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("exchange"u8))
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Peering.Models
                             {
                                 continue;
                             }
-                            exchange = PeeringLocationPropertiesExchange.DeserializePeeringLocationPropertiesExchange(property0.Value);
+                            exchange = PeeringLocationPropertiesExchange.DeserializePeeringLocationPropertiesExchange(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("peeringLocation"u8))
@@ -220,7 +220,18 @@ namespace Azure.ResourceManager.Peering.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PeeringLocation(id, name, type, systemData.Value, Optional.ToNullable(kind), direct.Value, exchange.Value, peeringLocation.Value, country.Value, Optional.ToNullable(azureRegion), serializedAdditionalRawData);
+            return new PeeringLocation(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(kind),
+                direct.Value,
+                exchange.Value,
+                peeringLocation.Value,
+                country.Value,
+                Optional.ToNullable(azureRegion),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PeeringLocation>.Write(ModelReaderWriterOptions options)

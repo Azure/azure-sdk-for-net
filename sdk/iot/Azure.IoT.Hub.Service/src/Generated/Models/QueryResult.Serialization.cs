@@ -20,7 +20,7 @@ namespace Azure.IoT.Hub.Service.Models
                 return null;
             }
             Optional<QueryResultType> type = default;
-            Optional<IReadOnlyList<object>> items = default;
+            IReadOnlyList<object> items = default;
             Optional<string> continuationToken = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -60,7 +60,7 @@ namespace Azure.IoT.Hub.Service.Models
                     continue;
                 }
             }
-            return new QueryResult(Optional.ToNullable(type), Optional.ToList(items), continuationToken.Value);
+            return new QueryResult(Optional.ToNullable(type), items ?? new ChangeTrackingList<object>(), continuationToken.Value);
         }
     }
 }

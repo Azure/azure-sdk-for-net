@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Tunnel))
+            if (options.Format != "W" && Tunnel != null)
             {
                 writer.WritePropertyName("tunnel"u8);
                 writer.WriteStringValue(Tunnel);
             }
-            if (options.Format != "W" && Optional.IsDefined(ConnectionStatus))
+            if (options.Format != "W" && ConnectionStatus.HasValue)
             {
                 writer.WritePropertyName("connectionStatus"u8);
                 writer.WriteStringValue(ConnectionStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(IngressBytesTransferred))
+            if (options.Format != "W" && IngressBytesTransferred.HasValue)
             {
                 writer.WritePropertyName("ingressBytesTransferred"u8);
                 writer.WriteNumberValue(IngressBytesTransferred.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(EgressBytesTransferred))
+            if (options.Format != "W" && EgressBytesTransferred.HasValue)
             {
                 writer.WritePropertyName("egressBytesTransferred"u8);
                 writer.WriteNumberValue(EgressBytesTransferred.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastConnectionEstablishedOn))
+            if (options.Format != "W" && LastConnectionEstablishedOn != null)
             {
                 writer.WritePropertyName("lastConnectionEstablishedUtcTime"u8);
                 writer.WriteStringValue(LastConnectionEstablishedOn);
@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TunnelConnectionHealth(tunnel.Value, Optional.ToNullable(connectionStatus), Optional.ToNullable(ingressBytesTransferred), Optional.ToNullable(egressBytesTransferred), lastConnectionEstablishedUtcTime.Value, serializedAdditionalRawData);
+            return new TunnelConnectionHealth(
+                tunnel.Value,
+                Optional.ToNullable(connectionStatus),
+                Optional.ToNullable(ingressBytesTransferred),
+                Optional.ToNullable(egressBytesTransferred),
+                lastConnectionEstablishedUtcTime.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TunnelConnectionHealth>.Write(ModelReaderWriterOptions options)

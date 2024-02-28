@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsEnabled))
+            if (IsEnabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(AllowNetworkPluginKubenet))
+            if (AllowNetworkPluginKubenet.HasValue)
             {
                 writer.WritePropertyName("allowNetworkPluginKubenet"u8);
                 writer.WriteBooleanValue(AllowNetworkPluginKubenet.Value);
             }
-            if (Optional.IsCollectionDefined(UserAssignedIdentities))
+            if (!(UserAssignedIdentities is ChangeTrackingList<ManagedClusterPodIdentity> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("userAssignedIdentities"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(UserAssignedIdentityExceptions))
+            if (!(UserAssignedIdentityExceptions is ChangeTrackingList<ManagedClusterPodIdentityException> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("userAssignedIdentityExceptions"u8);
                 writer.WriteStartArray();
@@ -96,8 +96,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             Optional<bool> enabled = default;
             Optional<bool> allowNetworkPluginKubenet = default;
-            Optional<IList<ManagedClusterPodIdentity>> userAssignedIdentities = default;
-            Optional<IList<ManagedClusterPodIdentityException>> userAssignedIdentityExceptions = default;
+            IList<ManagedClusterPodIdentity> userAssignedIdentities = default;
+            IList<ManagedClusterPodIdentityException> userAssignedIdentityExceptions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<ManagedClusterPodIdentity> array = new List<ManagedClusterPodIdentity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedClusterPodIdentity.DeserializeManagedClusterPodIdentity(item));
+                        array.Add(ManagedClusterPodIdentity.DeserializeManagedClusterPodIdentity(item, options));
                     }
                     userAssignedIdentities = array;
                     continue;
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<ManagedClusterPodIdentityException> array = new List<ManagedClusterPodIdentityException>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedClusterPodIdentityException.DeserializeManagedClusterPodIdentityException(item));
+                        array.Add(ManagedClusterPodIdentityException.DeserializeManagedClusterPodIdentityException(item, options));
                     }
                     userAssignedIdentityExceptions = array;
                     continue;
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterPodIdentityProfile(Optional.ToNullable(enabled), Optional.ToNullable(allowNetworkPluginKubenet), Optional.ToList(userAssignedIdentities), Optional.ToList(userAssignedIdentityExceptions), serializedAdditionalRawData);
+            return new ManagedClusterPodIdentityProfile(Optional.ToNullable(enabled), Optional.ToNullable(allowNetworkPluginKubenet), userAssignedIdentities ?? new ChangeTrackingList<ManagedClusterPodIdentity>(), userAssignedIdentityExceptions ?? new ChangeTrackingList<ManagedClusterPodIdentityException>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterPodIdentityProfile>.Write(ModelReaderWriterOptions options)

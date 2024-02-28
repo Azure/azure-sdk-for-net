@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataShare.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataShare.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownDataSetMapping(document.RootElement, options);
+            return DeserializeShareDataSetMappingData(document.RootElement, options);
         }
 
         internal static UnknownDataSetMapping DeserializeUnknownDataSetMapping(JsonElement element, ModelReaderWriterOptions options = null)
@@ -132,7 +132,13 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownDataSetMapping(id, name, type, systemData.Value, kind, serializedAdditionalRawData);
+            return new UnknownDataSetMapping(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ShareDataSetMappingData>.Write(ModelReaderWriterOptions options)
@@ -157,7 +163,7 @@ namespace Azure.ResourceManager.DataShare.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownDataSetMapping(document.RootElement, options);
+                        return DeserializeShareDataSetMappingData(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(ShareDataSetMappingData)} does not support '{options.Format}' format.");

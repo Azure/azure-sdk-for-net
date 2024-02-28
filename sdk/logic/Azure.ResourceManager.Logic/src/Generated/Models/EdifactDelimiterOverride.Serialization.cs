@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MessageId))
+            if (MessageId != null)
             {
                 writer.WritePropertyName("messageId"u8);
                 writer.WriteStringValue(MessageId);
             }
-            if (Optional.IsDefined(MessageVersion))
+            if (MessageVersion != null)
             {
                 writer.WritePropertyName("messageVersion"u8);
                 writer.WriteStringValue(MessageVersion);
             }
-            if (Optional.IsDefined(MessageRelease))
+            if (MessageRelease != null)
             {
                 writer.WritePropertyName("messageRelease"u8);
                 writer.WriteStringValue(MessageRelease);
@@ -55,12 +55,12 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStringValue(DecimalPointIndicator.ToSerialString());
             writer.WritePropertyName("releaseIndicator"u8);
             writer.WriteNumberValue(ReleaseIndicator);
-            if (Optional.IsDefined(MessageAssociationAssignedCode))
+            if (MessageAssociationAssignedCode != null)
             {
                 writer.WritePropertyName("messageAssociationAssignedCode"u8);
                 writer.WriteStringValue(MessageAssociationAssignedCode);
             }
-            if (Optional.IsDefined(TargetNamespace))
+            if (TargetNamespace != null)
             {
                 writer.WritePropertyName("targetNamespace"u8);
                 writer.WriteStringValue(TargetNamespace);
@@ -185,7 +185,20 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdifactDelimiterOverride(messageId.Value, messageVersion.Value, messageRelease.Value, dataElementSeparator, componentSeparator, segmentTerminator, repetitionSeparator, segmentTerminatorSuffix, decimalPointIndicator, releaseIndicator, messageAssociationAssignedCode.Value, targetNamespace.Value, serializedAdditionalRawData);
+            return new EdifactDelimiterOverride(
+                messageId.Value,
+                messageVersion.Value,
+                messageRelease.Value,
+                dataElementSeparator,
+                componentSeparator,
+                segmentTerminator,
+                repetitionSeparator,
+                segmentTerminatorSuffix,
+                decimalPointIndicator,
+                releaseIndicator,
+                messageAssociationAssignedCode.Value,
+                targetNamespace.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdifactDelimiterOverride>.Write(ModelReaderWriterOptions options)

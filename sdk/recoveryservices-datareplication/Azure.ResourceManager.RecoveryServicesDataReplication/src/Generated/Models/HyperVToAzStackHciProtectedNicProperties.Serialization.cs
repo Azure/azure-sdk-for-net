@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(NicId))
+            if (options.Format != "W" && NicId != null)
             {
                 writer.WritePropertyName("nicId"u8);
                 writer.WriteStringValue(NicId);
             }
-            if (options.Format != "W" && Optional.IsDefined(MacAddress))
+            if (options.Format != "W" && MacAddress != null)
             {
                 writer.WritePropertyName("macAddress"u8);
                 writer.WriteStringValue(MacAddress);
             }
-            if (options.Format != "W" && Optional.IsDefined(NetworkName))
+            if (options.Format != "W" && NetworkName != null)
             {
                 writer.WritePropertyName("networkName"u8);
                 writer.WriteStringValue(NetworkName);
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetNetworkId))
+            if (options.Format != "W" && TargetNetworkId != null)
             {
                 writer.WritePropertyName("targetNetworkId"u8);
                 writer.WriteStringValue(TargetNetworkId);
             }
-            if (options.Format != "W" && Optional.IsDefined(TestNetworkId))
+            if (options.Format != "W" && TestNetworkId != null)
             {
                 writer.WritePropertyName("testNetworkId"u8);
                 writer.WriteStringValue(TestNetworkId);
             }
-            if (options.Format != "W" && Optional.IsDefined(SelectionTypeForFailover))
+            if (options.Format != "W" && SelectionTypeForFailover.HasValue)
             {
                 writer.WritePropertyName("selectionTypeForFailover"u8);
                 writer.WriteStringValue(SelectionTypeForFailover.Value.ToString());
@@ -144,7 +144,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HyperVToAzStackHciProtectedNicProperties(nicId.Value, macAddress.Value, networkName.Value, targetNetworkId.Value, testNetworkId.Value, Optional.ToNullable(selectionTypeForFailover), serializedAdditionalRawData);
+            return new HyperVToAzStackHciProtectedNicProperties(
+                nicId.Value,
+                macAddress.Value,
+                networkName.Value,
+                targetNetworkId.Value,
+                testNetworkId.Value,
+                Optional.ToNullable(selectionTypeForFailover),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HyperVToAzStackHciProtectedNicProperties>.Write(ModelReaderWriterOptions options)

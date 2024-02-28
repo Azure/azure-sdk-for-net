@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SlackAmount))
+            if (SlackAmount.HasValue)
             {
                 writer.WritePropertyName("slackAmount"u8);
                 writer.WriteNumberValue(SlackAmount.Value);
             }
-            if (Optional.IsDefined(SlackFactor))
+            if (SlackFactor.HasValue)
             {
                 writer.WritePropertyName("slackFactor"u8);
                 writer.WriteNumberValue(SlackFactor.Value);
             }
-            if (Optional.IsDefined(DelayEvaluation))
+            if (DelayEvaluation.HasValue)
             {
                 writer.WritePropertyName("delayEvaluation"u8);
                 writer.WriteNumberValue(DelayEvaluation.Value);
             }
-            if (Optional.IsDefined(EvaluationInterval))
+            if (EvaluationInterval.HasValue)
             {
                 writer.WritePropertyName("evaluationInterval"u8);
                 writer.WriteNumberValue(EvaluationInterval.Value);
@@ -142,7 +142,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BanditPolicy(Optional.ToNullable(delayEvaluation), Optional.ToNullable(evaluationInterval), policyType, serializedAdditionalRawData, Optional.ToNullable(slackAmount), Optional.ToNullable(slackFactor));
+            return new BanditPolicy(
+                Optional.ToNullable(delayEvaluation),
+                Optional.ToNullable(evaluationInterval),
+                policyType,
+                serializedAdditionalRawData,
+                Optional.ToNullable(slackAmount),
+                Optional.ToNullable(slackFactor));
         }
 
         BinaryData IPersistableModel<BanditPolicy>.Write(ModelReaderWriterOptions options)

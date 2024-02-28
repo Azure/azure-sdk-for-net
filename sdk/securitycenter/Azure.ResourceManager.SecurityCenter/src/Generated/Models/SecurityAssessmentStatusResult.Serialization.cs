@@ -26,24 +26,24 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(FirstEvaluatedOn))
+            if (options.Format != "W" && FirstEvaluatedOn.HasValue)
             {
                 writer.WritePropertyName("firstEvaluationDate"u8);
                 writer.WriteStringValue(FirstEvaluatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(StatusChangeOn))
+            if (options.Format != "W" && StatusChangeOn.HasValue)
             {
                 writer.WritePropertyName("statusChangeDate"u8);
                 writer.WriteStringValue(StatusChangeOn.Value, "O");
             }
             writer.WritePropertyName("code"u8);
             writer.WriteStringValue(Code.ToString());
-            if (Optional.IsDefined(Cause))
+            if (Cause != null)
             {
                 writer.WritePropertyName("cause"u8);
                 writer.WriteStringValue(Cause);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -134,7 +134,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityAssessmentStatusResult(code, cause.Value, description.Value, serializedAdditionalRawData, Optional.ToNullable(firstEvaluationDate), Optional.ToNullable(statusChangeDate));
+            return new SecurityAssessmentStatusResult(
+                code,
+                cause.Value,
+                description.Value,
+                serializedAdditionalRawData,
+                Optional.ToNullable(firstEvaluationDate),
+                Optional.ToNullable(statusChangeDate));
         }
 
         BinaryData IPersistableModel<SecurityAssessmentStatusResult>.Write(ModelReaderWriterOptions options)

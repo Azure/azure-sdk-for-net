@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             writer.WriteStartObject();
             writer.WritePropertyName("resourceDetails"u8);
             writer.WriteObjectValue(ResourceDetails);
-            if (Optional.IsCollectionDefined(PendingFields))
+            if (!(PendingFields is ChangeTrackingList<PendingField> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("pendingFields"u8);
                 writer.WriteStartArray();
@@ -77,14 +77,14 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 return null;
             }
             CheckRestrictionsResourceDetails resourceDetails = default;
-            Optional<IList<PendingField>> pendingFields = default;
+            IList<PendingField> pendingFields = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceDetails"u8))
                 {
-                    resourceDetails = CheckRestrictionsResourceDetails.DeserializeCheckRestrictionsResourceDetails(property.Value);
+                    resourceDetails = CheckRestrictionsResourceDetails.DeserializeCheckRestrictionsResourceDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("pendingFields"u8))
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     List<PendingField> array = new List<PendingField>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PendingField.DeserializePendingField(item));
+                        array.Add(PendingField.DeserializePendingField(item, options));
                     }
                     pendingFields = array;
                     continue;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CheckPolicyRestrictionsContent(resourceDetails, Optional.ToList(pendingFields), serializedAdditionalRawData);
+            return new CheckPolicyRestrictionsContent(resourceDetails, pendingFields ?? new ChangeTrackingList<PendingField>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CheckPolicyRestrictionsContent>.Write(ModelReaderWriterOptions options)

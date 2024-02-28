@@ -22,7 +22,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             }
             Optional<HealthcareAssertion> assertion = default;
             Optional<string> name = default;
-            Optional<IReadOnlyList<HealthcareEntityLink>> links = default;
+            IReadOnlyList<HealthcareEntityLink> links = default;
             string text = default;
             HealthcareEntityCategory category = default;
             Optional<string> subcategory = default;
@@ -90,7 +90,16 @@ namespace Azure.AI.TextAnalytics.Legacy
                     continue;
                 }
             }
-            return new HealthcareEntity(text, category, subcategory.Value, offset, length, confidenceScore, assertion.Value, name.Value, Optional.ToList(links));
+            return new HealthcareEntity(
+                text,
+                category,
+                subcategory.Value,
+                offset,
+                length,
+                confidenceScore,
+                assertion.Value,
+                name.Value,
+                links ?? new ChangeTrackingList<HealthcareEntityLink>());
         }
     }
 }

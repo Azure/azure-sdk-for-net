@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Disks))
+            if (!(Disks is ChangeTrackingList<VirtualDiskUpdate> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("disks"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             {
                 return null;
             }
-            Optional<IList<VirtualDiskUpdate>> disks = default;
+            IList<VirtualDiskUpdate> disks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     List<VirtualDiskUpdate> array = new List<VirtualDiskUpdate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualDiskUpdate.DeserializeVirtualDiskUpdate(item));
+                        array.Add(VirtualDiskUpdate.DeserializeVirtualDiskUpdate(item, options));
                     }
                     disks = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageProfileUpdate(Optional.ToList(disks), serializedAdditionalRawData);
+            return new StorageProfileUpdate(disks ?? new ChangeTrackingList<VirtualDiskUpdate>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageProfileUpdate>.Write(ModelReaderWriterOptions options)

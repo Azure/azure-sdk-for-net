@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CustomLicenseAcquisitionUriTemplate))
+            if (CustomLicenseAcquisitionUriTemplate != null)
             {
                 writer.WritePropertyName("customLicenseAcquisitionUrlTemplate"u8);
                 writer.WriteStringValue(CustomLicenseAcquisitionUriTemplate);
             }
-            if (Optional.IsDefined(PlayReadyCustomAttributes))
+            if (PlayReadyCustomAttributes != null)
             {
                 writer.WritePropertyName("playReadyCustomAttributes"u8);
                 writer.WriteStringValue(PlayReadyCustomAttributes);

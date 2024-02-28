@@ -282,7 +282,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<CosmosDBSqlRoleAssignmentResource>> UpdateAsync(WaitUntil waitUntil, CosmosDBSqlRoleAssignmentCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _cosmosDBSqlRoleAssignmentSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlRoleAssignmentResource.Update");
             scope.Start();
@@ -328,7 +331,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<CosmosDBSqlRoleAssignmentResource> Update(WaitUntil waitUntil, CosmosDBSqlRoleAssignmentCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _cosmosDBSqlRoleAssignmentSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlRoleAssignmentResource.Update");
             scope.Start();

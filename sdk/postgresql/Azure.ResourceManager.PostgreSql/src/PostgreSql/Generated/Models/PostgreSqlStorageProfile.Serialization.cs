@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.PostgreSql.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(BackupRetentionDays))
+            if (BackupRetentionDays.HasValue)
             {
                 writer.WritePropertyName("backupRetentionDays"u8);
                 writer.WriteNumberValue(BackupRetentionDays.Value);
             }
-            if (Optional.IsDefined(GeoRedundantBackup))
+            if (GeoRedundantBackup.HasValue)
             {
                 writer.WritePropertyName("geoRedundantBackup"u8);
                 writer.WriteStringValue(GeoRedundantBackup.Value.ToString());
             }
-            if (Optional.IsDefined(StorageInMB))
+            if (StorageInMB.HasValue)
             {
                 writer.WritePropertyName("storageMB"u8);
                 writer.WriteNumberValue(StorageInMB.Value);
             }
-            if (Optional.IsDefined(StorageAutogrow))
+            if (StorageAutogrow.HasValue)
             {
                 writer.WritePropertyName("storageAutogrow"u8);
                 writer.WriteStringValue(StorageAutogrow.Value.ToString());

@@ -31,7 +31,7 @@ namespace Azure.AI.OpenAI
             writer.WriteStringValue(Text);
             writer.WritePropertyName("index"u8);
             writer.WriteNumberValue(Index);
-            if (Optional.IsDefined(ContentFilterResults))
+            if (ContentFilterResults != null)
             {
                 writer.WritePropertyName("content_filter_results"u8);
                 writer.WriteObjectValue(ContentFilterResults);
@@ -117,7 +117,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    contentFilterResults = ContentFilterResultsForChoice.DeserializeContentFilterResultsForChoice(property.Value);
+                    contentFilterResults = ContentFilterResultsForChoice.DeserializeContentFilterResultsForChoice(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("logprobs"u8))
@@ -127,7 +127,7 @@ namespace Azure.AI.OpenAI
                         logprobs = null;
                         continue;
                     }
-                    logprobs = CompletionsLogProbabilityModel.DeserializeCompletionsLogProbabilityModel(property.Value);
+                    logprobs = CompletionsLogProbabilityModel.DeserializeCompletionsLogProbabilityModel(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("finish_reason"u8))
@@ -146,7 +146,13 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new Choice(text, index, contentFilterResults.Value, logprobs, finishReason, serializedAdditionalRawData);
+            return new Choice(
+                text,
+                index,
+                contentFilterResults.Value,
+                logprobs,
+                finishReason,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<Choice>.Write(ModelReaderWriterOptions options)

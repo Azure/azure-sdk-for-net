@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Code))
+            if (Code != null)
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (Optional.IsDefined(Message))
+            if (Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Optional.IsDefined(PossibleCauses))
+            if (PossibleCauses != null)
             {
                 writer.WritePropertyName("possibleCauses"u8);
                 writer.WriteStringValue(PossibleCauses);
             }
-            if (Optional.IsDefined(RecommendedAction))
+            if (RecommendedAction != null)
             {
                 writer.WritePropertyName("recommendedAction"u8);
                 writer.WriteStringValue(RecommendedAction);
             }
-            if (Optional.IsDefined(ActivityId))
+            if (ActivityId != null)
             {
                 writer.WritePropertyName("activityId"u8);
                 writer.WriteStringValue(ActivityId);
@@ -129,7 +129,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryServiceError(code.Value, message.Value, possibleCauses.Value, recommendedAction.Value, activityId.Value, serializedAdditionalRawData);
+            return new SiteRecoveryServiceError(
+                code.Value,
+                message.Value,
+                possibleCauses.Value,
+                recommendedAction.Value,
+                activityId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryServiceError>.Write(ModelReaderWriterOptions options)

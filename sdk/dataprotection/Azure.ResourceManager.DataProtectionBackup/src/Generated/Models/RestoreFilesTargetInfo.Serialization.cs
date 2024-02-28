@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteStringValue(ObjectType);
             writer.WritePropertyName("recoveryOption"u8);
             writer.WriteStringValue(RecoverySetting.ToString());
-            if (Optional.IsDefined(RestoreLocation))
+            if (RestoreLocation.HasValue)
             {
                 writer.WritePropertyName("restoreLocation"u8);
                 writer.WriteStringValue(RestoreLocation.Value);
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 if (property.NameEquals("targetDetails"u8))
                 {
-                    targetDetails = RestoreFilesTargetDetails.DeserializeRestoreFilesTargetDetails(property.Value);
+                    targetDetails = RestoreFilesTargetDetails.DeserializeRestoreFilesTargetDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("objectType"u8))

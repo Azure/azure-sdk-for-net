@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(AvailabilityZones))
+            if (options.Format != "W" && !(AvailabilityZones is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("availabilityZones"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AdditionalCapabilities))
+            if (options.Format != "W" && !(AdditionalCapabilities is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("additionalCapabilities"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(Sku))
+            if (options.Format != "W" && Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
@@ -89,8 +89,8 @@ namespace Azure.ResourceManager.StoragePool.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> availabilityZones = default;
-            Optional<IReadOnlyList<string>> additionalCapabilities = default;
+            IReadOnlyList<string> availabilityZones = default;
+            IReadOnlyList<string> additionalCapabilities = default;
             Optional<StoragePoolSku> sku = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                     {
                         continue;
                     }
-                    sku = StoragePoolSku.DeserializeStoragePoolSku(property.Value);
+                    sku = StoragePoolSku.DeserializeStoragePoolSku(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiskPoolZoneInfo(Optional.ToList(availabilityZones), Optional.ToList(additionalCapabilities), sku.Value, serializedAdditionalRawData);
+            return new DiskPoolZoneInfo(availabilityZones ?? new ChangeTrackingList<string>(), additionalCapabilities ?? new ChangeTrackingList<string>(), sku.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiskPoolZoneInfo>.Write(ModelReaderWriterOptions options)

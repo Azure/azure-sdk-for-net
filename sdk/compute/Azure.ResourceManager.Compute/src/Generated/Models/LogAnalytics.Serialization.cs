@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Properties))
+            if (options.Format != "W" && Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    properties = Models.LogAnalyticsOutput.DeserializeLogAnalyticsOutput(property.Value);
+                    properties = Models.LogAnalyticsOutput.DeserializeLogAnalyticsOutput(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

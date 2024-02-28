@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(OutputFiles))
+            if (!(OutputFiles is ChangeTrackingList<MediaOutputFile> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("outputFiles"u8);
                 writer.WriteStartArray();
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<IList<MediaOutputFile>> outputFiles = default;
+            IList<MediaOutputFile> outputFiles = default;
             string odataType = default;
             string filenamePattern = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<MediaOutputFile> array = new List<MediaOutputFile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MediaOutputFile.DeserializeMediaOutputFile(item));
+                        array.Add(MediaOutputFile.DeserializeMediaOutputFile(item, options));
                     }
                     outputFiles = array;
                     continue;
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new Mp4Format(odataType, filenamePattern, serializedAdditionalRawData, Optional.ToList(outputFiles));
+            return new Mp4Format(odataType, filenamePattern, serializedAdditionalRawData, outputFiles ?? new ChangeTrackingList<MediaOutputFile>());
         }
 
         BinaryData IPersistableModel<Mp4Format>.Write(ModelReaderWriterOptions options)

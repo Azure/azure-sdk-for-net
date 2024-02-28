@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(JobId))
+            if (JobId != null)
             {
                 writer.WritePropertyName("jobId"u8);
                 writer.WriteStringValue(JobId);
             }
-            if (Optional.IsDefined(JobFriendlyName))
+            if (JobFriendlyName != null)
             {
                 writer.WritePropertyName("jobFriendlyName"u8);
                 writer.WriteStringValue(JobFriendlyName);
             }
-            if (Optional.IsDefined(TargetObjectId))
+            if (TargetObjectId != null)
             {
                 writer.WritePropertyName("targetObjectId"u8);
                 writer.WriteStringValue(TargetObjectId);
             }
-            if (Optional.IsDefined(TargetObjectName))
+            if (TargetObjectName != null)
             {
                 writer.WritePropertyName("targetObjectName"u8);
                 writer.WriteStringValue(TargetObjectName);
             }
-            if (Optional.IsDefined(TargetInstanceType))
+            if (TargetInstanceType != null)
             {
                 writer.WritePropertyName("targetInstanceType"u8);
                 writer.WriteStringValue(TargetInstanceType);
             }
-            if (Optional.IsDefined(JobScenarioName))
+            if (JobScenarioName != null)
             {
                 writer.WritePropertyName("jobScenarioName"u8);
                 writer.WriteStringValue(JobScenarioName);
@@ -144,7 +144,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryJobEntity(jobId.Value, jobFriendlyName.Value, targetObjectId.Value, targetObjectName.Value, targetInstanceType.Value, jobScenarioName.Value, serializedAdditionalRawData);
+            return new SiteRecoveryJobEntity(
+                jobId.Value,
+                jobFriendlyName.Value,
+                targetObjectId.Value,
+                targetObjectName.Value,
+                targetInstanceType.Value,
+                jobScenarioName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryJobEntity>.Write(ModelReaderWriterOptions options)

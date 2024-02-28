@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TimeoutSeconds))
+            if (TimeoutSeconds.HasValue)
             {
                 writer.WritePropertyName("timeoutSeconds"u8);
                 writer.WriteNumberValue(TimeoutSeconds.Value);
             }
-            if (Optional.IsDefined(RetryAttempts))
+            if (RetryAttempts.HasValue)
             {
                 writer.WritePropertyName("retryAttempts"u8);
                 writer.WriteNumberValue(RetryAttempts.Value);
             }
-            if (Optional.IsDefined(InitialRetryIntervalSeconds))
+            if (InitialRetryIntervalSeconds.HasValue)
             {
                 writer.WritePropertyName("initialRetryIntervalSeconds"u8);
                 writer.WriteNumberValue(InitialRetryIntervalSeconds.Value);
             }
-            if (Optional.IsDefined(MaximumRetryIntervalSeconds))
+            if (MaximumRetryIntervalSeconds.HasValue)
             {
                 writer.WritePropertyName("maximumRetryIntervalSeconds"u8);
                 writer.WriteNumberValue(MaximumRetryIntervalSeconds.Value);
             }
-            if (Optional.IsDefined(RetryIntervalBackoffMultiplier))
+            if (RetryIntervalBackoffMultiplier.HasValue)
             {
                 writer.WritePropertyName("retryIntervalBackoffMultiplier"u8);
                 writer.WriteNumberValue(RetryIntervalBackoffMultiplier.Value);
@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JobStepExecutionOptions(Optional.ToNullable(timeoutSeconds), Optional.ToNullable(retryAttempts), Optional.ToNullable(initialRetryIntervalSeconds), Optional.ToNullable(maximumRetryIntervalSeconds), Optional.ToNullable(retryIntervalBackoffMultiplier), serializedAdditionalRawData);
+            return new JobStepExecutionOptions(
+                Optional.ToNullable(timeoutSeconds),
+                Optional.ToNullable(retryAttempts),
+                Optional.ToNullable(initialRetryIntervalSeconds),
+                Optional.ToNullable(maximumRetryIntervalSeconds),
+                Optional.ToNullable(retryIntervalBackoffMultiplier),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<JobStepExecutionOptions>.Write(ModelReaderWriterOptions options)

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Marketplace.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PlanId))
+            if (PlanId != null)
             {
                 writer.WritePropertyName("planId"u8);
                 writer.WriteStringValue(PlanId);
             }
-            if (Optional.IsDefined(PlanDisplayName))
+            if (PlanDisplayName != null)
             {
                 writer.WritePropertyName("planDisplayName"u8);
                 writer.WriteStringValue(PlanDisplayName);

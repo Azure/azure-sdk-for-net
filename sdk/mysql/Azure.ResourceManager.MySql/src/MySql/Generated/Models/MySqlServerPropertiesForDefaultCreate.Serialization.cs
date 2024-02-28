@@ -30,32 +30,32 @@ namespace Azure.ResourceManager.MySql.Models
             writer.WriteStringValue(AdministratorLogin);
             writer.WritePropertyName("administratorLoginPassword"u8);
             writer.WriteStringValue(AdministratorLoginPassword);
-            if (Optional.IsDefined(Version))
+            if (Version.HasValue)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version.Value.ToString());
             }
-            if (Optional.IsDefined(SslEnforcement))
+            if (SslEnforcement.HasValue)
             {
                 writer.WritePropertyName("sslEnforcement"u8);
                 writer.WriteStringValue(SslEnforcement.Value.ToSerialString());
             }
-            if (Optional.IsDefined(MinimalTlsVersion))
+            if (MinimalTlsVersion.HasValue)
             {
                 writer.WritePropertyName("minimalTlsVersion"u8);
                 writer.WriteStringValue(MinimalTlsVersion.Value.ToString());
             }
-            if (Optional.IsDefined(InfrastructureEncryption))
+            if (InfrastructureEncryption.HasValue)
             {
                 writer.WritePropertyName("infrastructureEncryption"u8);
                 writer.WriteStringValue(InfrastructureEncryption.Value.ToString());
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (PublicNetworkAccess.HasValue)
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Optional.IsDefined(StorageProfile))
+            if (StorageProfile != null)
             {
                 writer.WritePropertyName("storageProfile"u8);
                 writer.WriteObjectValue(StorageProfile);
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.MySql.Models
                     {
                         continue;
                     }
-                    storageProfile = MySqlStorageProfile.DeserializeMySqlStorageProfile(property.Value);
+                    storageProfile = MySqlStorageProfile.DeserializeMySqlStorageProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("createMode"u8))
@@ -188,7 +188,17 @@ namespace Azure.ResourceManager.MySql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlServerPropertiesForDefaultCreate(Optional.ToNullable(version), Optional.ToNullable(sslEnforcement), Optional.ToNullable(minimalTlsVersion), Optional.ToNullable(infrastructureEncryption), Optional.ToNullable(publicNetworkAccess), storageProfile.Value, createMode, serializedAdditionalRawData, administratorLogin, administratorLoginPassword);
+            return new MySqlServerPropertiesForDefaultCreate(
+                Optional.ToNullable(version),
+                Optional.ToNullable(sslEnforcement),
+                Optional.ToNullable(minimalTlsVersion),
+                Optional.ToNullable(infrastructureEncryption),
+                Optional.ToNullable(publicNetworkAccess),
+                storageProfile.Value,
+                createMode,
+                serializedAdditionalRawData,
+                administratorLogin,
+                administratorLoginPassword);
         }
 
         BinaryData IPersistableModel<MySqlServerPropertiesForDefaultCreate>.Write(ModelReaderWriterOptions options)

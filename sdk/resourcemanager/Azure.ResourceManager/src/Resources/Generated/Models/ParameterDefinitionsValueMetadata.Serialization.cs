@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(StrongType))
+            if (StrongType != null)
             {
                 writer.WritePropertyName("strongType"u8);
                 writer.WriteStringValue(StrongType);
             }
-            if (Optional.IsDefined(AssignPermissions))
+            if (AssignPermissions.HasValue)
             {
                 writer.WritePropertyName("assignPermissions"u8);
                 writer.WriteBooleanValue(AssignPermissions.Value);

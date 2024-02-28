@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Origin))
+            if (options.Format != "W" && Origin.HasValue)
             {
                 writer.WritePropertyName("origin"u8);
                 writer.WriteStringValue(Origin.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Severity))
+            if (options.Format != "W" && Severity.HasValue)
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(IssueType))
+            if (options.Format != "W" && IssueType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(IssueType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Context))
+            if (options.Format != "W" && !(Context is ChangeTrackingList<IDictionary<string, string>> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("context"u8);
                 writer.WriteStartArray();
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<IssueOrigin> origin = default;
             Optional<IssueSeverity> severity = default;
             Optional<IssueType> type = default;
-            Optional<IReadOnlyList<IDictionary<string, string>>> context = default;
+            IReadOnlyList<IDictionary<string, string>> context = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectivityIssue(Optional.ToNullable(origin), Optional.ToNullable(severity), Optional.ToNullable(type), Optional.ToList(context), serializedAdditionalRawData);
+            return new ConnectivityIssue(Optional.ToNullable(origin), Optional.ToNullable(severity), Optional.ToNullable(type), context ?? new ChangeTrackingList<IDictionary<string, string>>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectivityIssue>.Write(ModelReaderWriterOptions options)

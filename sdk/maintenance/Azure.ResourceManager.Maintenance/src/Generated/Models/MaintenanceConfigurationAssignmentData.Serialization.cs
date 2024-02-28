@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -47,24 +47,24 @@ namespace Azure.ResourceManager.Maintenance.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(MaintenanceConfigurationId))
+            if (MaintenanceConfigurationId != null)
             {
                 writer.WritePropertyName("maintenanceConfigurationId"u8);
                 writer.WriteStringValue(MaintenanceConfigurationId);
             }
-            if (Optional.IsDefined(ResourceId))
+            if (ResourceId != null)
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Optional.IsDefined(Filter))
+            if (Filter != null)
             {
                 writer.WritePropertyName("filter"u8);
                 writer.WriteObjectValue(Filter);
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                             {
                                 continue;
                             }
-                            filter = MaintenanceConfigurationAssignmentFilter.DeserializeMaintenanceConfigurationAssignmentFilter(property0.Value);
+                            filter = MaintenanceConfigurationAssignmentFilter.DeserializeMaintenanceConfigurationAssignmentFilter(property0.Value, options);
                             continue;
                         }
                     }
@@ -198,7 +198,16 @@ namespace Azure.ResourceManager.Maintenance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MaintenanceConfigurationAssignmentData(id, name, type, systemData.Value, Optional.ToNullable(location), maintenanceConfigurationId.Value, resourceId.Value, filter.Value, serializedAdditionalRawData);
+            return new MaintenanceConfigurationAssignmentData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(location),
+                maintenanceConfigurationId.Value,
+                resourceId.Value,
+                filter.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MaintenanceConfigurationAssignmentData>.Write(ModelReaderWriterOptions options)

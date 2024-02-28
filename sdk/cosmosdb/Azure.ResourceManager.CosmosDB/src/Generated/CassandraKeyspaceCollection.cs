@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="keyspaceName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<CassandraKeyspaceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string keyspaceName, CassandraKeyspaceCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (keyspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(keyspaceName));
+            }
+            if (keyspaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(keyspaceName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _cassandraKeyspaceCassandraResourcesClientDiagnostics.CreateScope("CassandraKeyspaceCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="keyspaceName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<CassandraKeyspaceResource> CreateOrUpdate(WaitUntil waitUntil, string keyspaceName, CassandraKeyspaceCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (keyspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(keyspaceName));
+            }
+            if (keyspaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(keyspaceName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _cassandraKeyspaceCassandraResourcesClientDiagnostics.CreateScope("CassandraKeyspaceCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="keyspaceName"/> is null. </exception>
         public virtual async Task<Response<CassandraKeyspaceResource>> GetAsync(string keyspaceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
+            if (keyspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(keyspaceName));
+            }
+            if (keyspaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(keyspaceName));
+            }
 
             using var scope = _cassandraKeyspaceCassandraResourcesClientDiagnostics.CreateScope("CassandraKeyspaceCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="keyspaceName"/> is null. </exception>
         public virtual Response<CassandraKeyspaceResource> Get(string keyspaceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
+            if (keyspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(keyspaceName));
+            }
+            if (keyspaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(keyspaceName));
+            }
 
             using var scope = _cassandraKeyspaceCassandraResourcesClientDiagnostics.CreateScope("CassandraKeyspaceCollection.Get");
             scope.Start();
@@ -327,7 +361,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="keyspaceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string keyspaceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
+            if (keyspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(keyspaceName));
+            }
+            if (keyspaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(keyspaceName));
+            }
 
             using var scope = _cassandraKeyspaceCassandraResourcesClientDiagnostics.CreateScope("CassandraKeyspaceCollection.Exists");
             scope.Start();
@@ -370,7 +411,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="keyspaceName"/> is null. </exception>
         public virtual Response<bool> Exists(string keyspaceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
+            if (keyspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(keyspaceName));
+            }
+            if (keyspaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(keyspaceName));
+            }
 
             using var scope = _cassandraKeyspaceCassandraResourcesClientDiagnostics.CreateScope("CassandraKeyspaceCollection.Exists");
             scope.Start();
@@ -413,7 +461,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="keyspaceName"/> is null. </exception>
         public virtual async Task<NullableResponse<CassandraKeyspaceResource>> GetIfExistsAsync(string keyspaceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
+            if (keyspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(keyspaceName));
+            }
+            if (keyspaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(keyspaceName));
+            }
 
             using var scope = _cassandraKeyspaceCassandraResourcesClientDiagnostics.CreateScope("CassandraKeyspaceCollection.GetIfExists");
             scope.Start();
@@ -458,7 +513,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="keyspaceName"/> is null. </exception>
         public virtual NullableResponse<CassandraKeyspaceResource> GetIfExists(string keyspaceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
+            if (keyspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(keyspaceName));
+            }
+            if (keyspaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(keyspaceName));
+            }
 
             using var scope = _cassandraKeyspaceCassandraResourcesClientDiagnostics.CreateScope("CassandraKeyspaceCollection.GetIfExists");
             scope.Start();

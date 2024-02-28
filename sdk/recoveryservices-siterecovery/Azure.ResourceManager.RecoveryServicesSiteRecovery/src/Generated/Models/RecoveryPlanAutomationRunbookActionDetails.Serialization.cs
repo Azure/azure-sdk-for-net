@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RunbookId))
+            if (RunbookId != null)
             {
                 writer.WritePropertyName("runbookId"u8);
                 writer.WriteStringValue(RunbookId);
             }
-            if (Optional.IsDefined(Timeout))
+            if (Timeout != null)
             {
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteStringValue(Timeout);

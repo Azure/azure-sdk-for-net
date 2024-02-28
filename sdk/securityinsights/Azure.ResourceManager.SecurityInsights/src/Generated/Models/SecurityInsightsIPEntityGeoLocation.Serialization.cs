@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Asn))
+            if (options.Format != "W" && Asn.HasValue)
             {
                 writer.WritePropertyName("asn"u8);
                 writer.WriteNumberValue(Asn.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(City))
+            if (options.Format != "W" && City != null)
             {
                 writer.WritePropertyName("city"u8);
                 writer.WriteStringValue(City);
             }
-            if (options.Format != "W" && Optional.IsDefined(CountryCode))
+            if (options.Format != "W" && CountryCode != null)
             {
                 writer.WritePropertyName("countryCode"u8);
                 writer.WriteStringValue(CountryCode);
             }
-            if (options.Format != "W" && Optional.IsDefined(CountryName))
+            if (options.Format != "W" && CountryName != null)
             {
                 writer.WritePropertyName("countryName"u8);
                 writer.WriteStringValue(CountryName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Latitude))
+            if (options.Format != "W" && Latitude.HasValue)
             {
                 writer.WritePropertyName("latitude"u8);
                 writer.WriteNumberValue(Latitude.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Longitude))
+            if (options.Format != "W" && Longitude.HasValue)
             {
                 writer.WritePropertyName("longitude"u8);
                 writer.WriteNumberValue(Longitude.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W" && State != null)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
@@ -163,7 +163,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsIPEntityGeoLocation(Optional.ToNullable(asn), city.Value, countryCode.Value, countryName.Value, Optional.ToNullable(latitude), Optional.ToNullable(longitude), state.Value, serializedAdditionalRawData);
+            return new SecurityInsightsIPEntityGeoLocation(
+                Optional.ToNullable(asn),
+                city.Value,
+                countryCode.Value,
+                countryName.Value,
+                Optional.ToNullable(latitude),
+                Optional.ToNullable(longitude),
+                state.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityInsightsIPEntityGeoLocation>.Write(ModelReaderWriterOptions options)

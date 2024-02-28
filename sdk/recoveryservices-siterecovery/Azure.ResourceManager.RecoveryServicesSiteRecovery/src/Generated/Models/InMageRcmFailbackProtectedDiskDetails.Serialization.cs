@@ -26,57 +26,57 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(DiskId))
+            if (options.Format != "W" && DiskId != null)
             {
                 writer.WritePropertyName("diskId"u8);
                 writer.WriteStringValue(DiskId);
             }
-            if (options.Format != "W" && Optional.IsDefined(DiskName))
+            if (options.Format != "W" && DiskName != null)
             {
                 writer.WritePropertyName("diskName"u8);
                 writer.WriteStringValue(DiskName);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsOSDisk))
+            if (options.Format != "W" && IsOSDisk != null)
             {
                 writer.WritePropertyName("isOSDisk"u8);
                 writer.WriteStringValue(IsOSDisk);
             }
-            if (options.Format != "W" && Optional.IsDefined(CapacityInBytes))
+            if (options.Format != "W" && CapacityInBytes.HasValue)
             {
                 writer.WritePropertyName("capacityInBytes"u8);
                 writer.WriteNumberValue(CapacityInBytes.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(DiskUuid))
+            if (options.Format != "W" && DiskUuid != null)
             {
                 writer.WritePropertyName("diskUuid"u8);
                 writer.WriteStringValue(DiskUuid);
             }
-            if (options.Format != "W" && Optional.IsDefined(DataPendingInLogDataStoreInMB))
+            if (options.Format != "W" && DataPendingInLogDataStoreInMB.HasValue)
             {
                 writer.WritePropertyName("dataPendingInLogDataStoreInMB"u8);
                 writer.WriteNumberValue(DataPendingInLogDataStoreInMB.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(DataPendingAtSourceAgentInMB))
+            if (options.Format != "W" && DataPendingAtSourceAgentInMB.HasValue)
             {
                 writer.WritePropertyName("dataPendingAtSourceAgentInMB"u8);
                 writer.WriteNumberValue(DataPendingAtSourceAgentInMB.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsInitialReplicationComplete))
+            if (options.Format != "W" && IsInitialReplicationComplete != null)
             {
                 writer.WritePropertyName("isInitialReplicationComplete"u8);
                 writer.WriteStringValue(IsInitialReplicationComplete);
             }
-            if (Optional.IsDefined(IrDetails))
+            if (IrDetails != null)
             {
                 writer.WritePropertyName("irDetails"u8);
                 writer.WriteObjectValue(IrDetails);
             }
-            if (Optional.IsDefined(ResyncDetails))
+            if (ResyncDetails != null)
             {
                 writer.WritePropertyName("resyncDetails"u8);
                 writer.WriteObjectValue(ResyncDetails);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastSyncedOn))
+            if (options.Format != "W" && LastSyncedOn.HasValue)
             {
                 writer.WritePropertyName("lastSyncTime"u8);
                 writer.WriteStringValue(LastSyncedOn.Value, "O");
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    irDetails = InMageRcmFailbackSyncDetails.DeserializeInMageRcmFailbackSyncDetails(property.Value);
+                    irDetails = InMageRcmFailbackSyncDetails.DeserializeInMageRcmFailbackSyncDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("resyncDetails"u8))
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    resyncDetails = InMageRcmFailbackSyncDetails.DeserializeInMageRcmFailbackSyncDetails(property.Value);
+                    resyncDetails = InMageRcmFailbackSyncDetails.DeserializeInMageRcmFailbackSyncDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("lastSyncTime"u8))
@@ -219,7 +219,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageRcmFailbackProtectedDiskDetails(diskId.Value, diskName.Value, isOSDisk.Value, Optional.ToNullable(capacityInBytes), diskUuid.Value, Optional.ToNullable(dataPendingInLogDataStoreInMB), Optional.ToNullable(dataPendingAtSourceAgentInMB), isInitialReplicationComplete.Value, irDetails.Value, resyncDetails.Value, Optional.ToNullable(lastSyncTime), serializedAdditionalRawData);
+            return new InMageRcmFailbackProtectedDiskDetails(
+                diskId.Value,
+                diskName.Value,
+                isOSDisk.Value,
+                Optional.ToNullable(capacityInBytes),
+                diskUuid.Value,
+                Optional.ToNullable(dataPendingInLogDataStoreInMB),
+                Optional.ToNullable(dataPendingAtSourceAgentInMB),
+                isInitialReplicationComplete.Value,
+                irDetails.Value,
+                resyncDetails.Value,
+                Optional.ToNullable(lastSyncTime),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InMageRcmFailbackProtectedDiskDetails>.Write(ModelReaderWriterOptions options)

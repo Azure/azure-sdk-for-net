@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<SecretPatchProperties> properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     {
                         continue;
                     }
-                    properties = SecretPatchProperties.DeserializeSecretPatchProperties(property.Value);
+                    properties = SecretPatchProperties.DeserializeSecretPatchProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KeyVaultSecretPatch(Optional.ToDictionary(tags), properties.Value, serializedAdditionalRawData);
+            return new KeyVaultSecretPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KeyVaultSecretPatch>.Write(ModelReaderWriterOptions options)

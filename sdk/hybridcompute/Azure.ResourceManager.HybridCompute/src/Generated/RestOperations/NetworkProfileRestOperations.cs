@@ -67,9 +67,30 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="machineName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<HybridComputeNetworkProfile>> GetAsync(string subscriptionId, string resourceGroupName, string machineName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(machineName, nameof(machineName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (machineName == null)
+            {
+                throw new ArgumentNullException(nameof(machineName));
+            }
+            if (machineName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(machineName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, machineName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -96,9 +117,30 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="machineName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<HybridComputeNetworkProfile> Get(string subscriptionId, string resourceGroupName, string machineName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(machineName, nameof(machineName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (machineName == null)
+            {
+                throw new ArgumentNullException(nameof(machineName));
+            }
+            if (machineName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(machineName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, machineName);
             _pipeline.Send(message, cancellationToken);

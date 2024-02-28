@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(CommonNames))
+            if (!(CommonNames is ChangeTrackingList<ClusterServerCertificateCommonName> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("commonNames"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(X509StoreName))
+            if (X509StoreName.HasValue)
             {
                 writer.WritePropertyName("x509StoreName"u8);
                 writer.WriteStringValue(X509StoreName.Value.ToString());
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 return null;
             }
-            Optional<IList<ClusterServerCertificateCommonName>> commonNames = default;
+            IList<ClusterServerCertificateCommonName> commonNames = default;
             Optional<ClusterCertificateStoreName> x509StoreName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     List<ClusterServerCertificateCommonName> array = new List<ClusterServerCertificateCommonName>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClusterServerCertificateCommonName.DeserializeClusterServerCertificateCommonName(item));
+                        array.Add(ClusterServerCertificateCommonName.DeserializeClusterServerCertificateCommonName(item, options));
                     }
                     commonNames = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterServerCertificateCommonNames(Optional.ToList(commonNames), Optional.ToNullable(x509StoreName), serializedAdditionalRawData);
+            return new ClusterServerCertificateCommonNames(commonNames ?? new ChangeTrackingList<ClusterServerCertificateCommonName>(), Optional.ToNullable(x509StoreName), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterServerCertificateCommonNames>.Write(ModelReaderWriterOptions options)

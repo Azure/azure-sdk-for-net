@@ -33,7 +33,13 @@ namespace Azure.ResourceManager.MySql.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new MySqlServerCreateOrUpdateContent(identity, sku, properties, location, tags, serializedAdditionalRawData: null);
+            return new MySqlServerCreateOrUpdateContent(
+                identity,
+                sku,
+                properties,
+                location,
+                tags,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="MySql.MySqlServerData"/>. </summary>
@@ -66,7 +72,31 @@ namespace Azure.ResourceManager.MySql.Models
             tags ??= new Dictionary<string, string>();
             privateEndpointConnections ??= new List<MySqlServerPrivateEndpointConnection>();
 
-            return new MySqlServerData(id, name, resourceType, systemData, tags, location, identity, sku, administratorLogin, version, sslEnforcement, minimalTlsVersion, byokEnforcement, infrastructureEncryption, userVisibleState, fullyQualifiedDomainName, earliestRestoreOn, storageProfile, replicationRole, masterServerId, replicaCapacity, publicNetworkAccess, privateEndpointConnections?.ToList(), serializedAdditionalRawData: null);
+            return new MySqlServerData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                identity,
+                sku,
+                administratorLogin,
+                version,
+                sslEnforcement,
+                minimalTlsVersion,
+                byokEnforcement,
+                infrastructureEncryption,
+                userVisibleState,
+                fullyQualifiedDomainName,
+                earliestRestoreOn,
+                storageProfile,
+                replicationRole,
+                masterServerId,
+                replicaCapacity,
+                publicNetworkAccess,
+                privateEndpointConnections?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MySqlServerPrivateEndpointConnection"/>. </summary>
@@ -108,7 +138,14 @@ namespace Azure.ResourceManager.MySql.Models
         /// <returns> A new <see cref="MySql.MySqlFirewallRuleData"/> instance for mocking. </returns>
         public static MySqlFirewallRuleData MySqlFirewallRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IPAddress startIPAddress = null, IPAddress endIPAddress = null)
         {
-            return new MySqlFirewallRuleData(id, name, resourceType, systemData, startIPAddress, endIPAddress, serializedAdditionalRawData: null);
+            return new MySqlFirewallRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                startIPAddress,
+                endIPAddress,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="MySql.MySqlVirtualNetworkRuleData"/>. </summary>
@@ -122,7 +159,15 @@ namespace Azure.ResourceManager.MySql.Models
         /// <returns> A new <see cref="MySql.MySqlVirtualNetworkRuleData"/> instance for mocking. </returns>
         public static MySqlVirtualNetworkRuleData MySqlVirtualNetworkRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier virtualNetworkSubnetId = null, bool? ignoreMissingVnetServiceEndpoint = null, MySqlVirtualNetworkRuleState? state = null)
         {
-            return new MySqlVirtualNetworkRuleData(id, name, resourceType, systemData, virtualNetworkSubnetId, ignoreMissingVnetServiceEndpoint, state, serializedAdditionalRawData: null);
+            return new MySqlVirtualNetworkRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                virtualNetworkSubnetId,
+                ignoreMissingVnetServiceEndpoint,
+                state,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="MySql.MySqlDatabaseData"/>. </summary>
@@ -135,7 +180,14 @@ namespace Azure.ResourceManager.MySql.Models
         /// <returns> A new <see cref="MySql.MySqlDatabaseData"/> instance for mocking. </returns>
         public static MySqlDatabaseData MySqlDatabaseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string charset = null, string collation = null)
         {
-            return new MySqlDatabaseData(id, name, resourceType, systemData, charset, collation, serializedAdditionalRawData: null);
+            return new MySqlDatabaseData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                charset,
+                collation,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="MySql.MySqlConfigurationData"/>. </summary>
@@ -152,7 +204,18 @@ namespace Azure.ResourceManager.MySql.Models
         /// <returns> A new <see cref="MySql.MySqlConfigurationData"/> instance for mocking. </returns>
         public static MySqlConfigurationData MySqlConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string value = null, string description = null, string defaultValue = null, string dataType = null, string allowedValues = null, string source = null)
         {
-            return new MySqlConfigurationData(id, name, resourceType, systemData, value, description, defaultValue, dataType, allowedValues, source, serializedAdditionalRawData: null);
+            return new MySqlConfigurationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                value,
+                description,
+                defaultValue,
+                dataType,
+                allowedValues,
+                source,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MySqlLogFile"/>. </summary>
@@ -168,7 +231,17 @@ namespace Azure.ResourceManager.MySql.Models
         /// <returns> A new <see cref="Models.MySqlLogFile"/> instance for mocking. </returns>
         public static MySqlLogFile MySqlLogFile(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, long? sizeInKB = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastModifiedOn = null, string logFileType = null, Uri uri = null)
         {
-            return new MySqlLogFile(id, name, resourceType, systemData, sizeInKB, createdOn, lastModifiedOn, logFileType, uri, serializedAdditionalRawData: null);
+            return new MySqlLogFile(
+                id,
+                name,
+                resourceType,
+                systemData,
+                sizeInKB,
+                createdOn,
+                lastModifiedOn,
+                logFileType,
+                uri,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="MySql.MySqlServerAdministratorData"/>. </summary>
@@ -183,7 +256,16 @@ namespace Azure.ResourceManager.MySql.Models
         /// <returns> A new <see cref="MySql.MySqlServerAdministratorData"/> instance for mocking. </returns>
         public static MySqlServerAdministratorData MySqlServerAdministratorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MySqlAdministratorType? administratorType = null, string loginAccountName = null, Guid? secureId = null, Guid? tenantId = null)
         {
-            return new MySqlServerAdministratorData(id, name, resourceType, systemData, administratorType, loginAccountName, secureId, tenantId, serializedAdditionalRawData: null);
+            return new MySqlServerAdministratorData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                administratorType,
+                loginAccountName,
+                secureId,
+                tenantId,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MySqlRecoverableServerResourceData"/>. </summary>
@@ -200,7 +282,18 @@ namespace Azure.ResourceManager.MySql.Models
         /// <returns> A new <see cref="Models.MySqlRecoverableServerResourceData"/> instance for mocking. </returns>
         public static MySqlRecoverableServerResourceData MySqlRecoverableServerResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? lastAvailableBackupOn = null, string serviceLevelObjective = null, string edition = null, int? vCores = null, string hardwareGeneration = null, string version = null)
         {
-            return new MySqlRecoverableServerResourceData(id, name, resourceType, systemData, lastAvailableBackupOn, serviceLevelObjective, edition, vCores, hardwareGeneration, version, serializedAdditionalRawData: null);
+            return new MySqlRecoverableServerResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                lastAvailableBackupOn,
+                serviceLevelObjective,
+                edition,
+                vCores,
+                hardwareGeneration,
+                version,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MySqlPerformanceTier"/>. </summary>
@@ -217,7 +310,16 @@ namespace Azure.ResourceManager.MySql.Models
         {
             serviceLevelObjectives ??= new List<MySqlPerformanceTierServiceLevelObjectives>();
 
-            return new MySqlPerformanceTier(id, maxBackupRetentionDays, minBackupRetentionDays, maxStorageInMB, minLargeStorageInMB, maxLargeStorageInMB, minStorageInMB, serviceLevelObjectives?.ToList(), serializedAdditionalRawData: null);
+            return new MySqlPerformanceTier(
+                id,
+                maxBackupRetentionDays,
+                minBackupRetentionDays,
+                maxStorageInMB,
+                minLargeStorageInMB,
+                maxLargeStorageInMB,
+                minStorageInMB,
+                serviceLevelObjectives?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MySqlPerformanceTierServiceLevelObjectives"/>. </summary>
@@ -232,7 +334,16 @@ namespace Azure.ResourceManager.MySql.Models
         /// <returns> A new <see cref="Models.MySqlPerformanceTierServiceLevelObjectives"/> instance for mocking. </returns>
         public static MySqlPerformanceTierServiceLevelObjectives MySqlPerformanceTierServiceLevelObjectives(string id = null, string edition = null, int? vCores = null, string hardwareGeneration = null, int? maxBackupRetentionDays = null, int? minBackupRetentionDays = null, int? maxStorageInMB = null, int? minStorageInMB = null)
         {
-            return new MySqlPerformanceTierServiceLevelObjectives(id, edition, vCores, hardwareGeneration, maxBackupRetentionDays, minBackupRetentionDays, maxStorageInMB, minStorageInMB, serializedAdditionalRawData: null);
+            return new MySqlPerformanceTierServiceLevelObjectives(
+                id,
+                edition,
+                vCores,
+                hardwareGeneration,
+                maxBackupRetentionDays,
+                minBackupRetentionDays,
+                maxStorageInMB,
+                minStorageInMB,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MySqlNameAvailabilityContent"/>. </summary>
@@ -272,7 +383,19 @@ namespace Azure.ResourceManager.MySql.Models
             disabledAlerts ??= new List<string>();
             emailAddresses ??= new List<string>();
 
-            return new MySqlServerSecurityAlertPolicyData(id, name, resourceType, systemData, state, disabledAlerts?.ToList(), emailAddresses?.ToList(), sendToEmailAccountAdmins, storageEndpoint, storageAccountAccessKey, retentionDays, serializedAdditionalRawData: null);
+            return new MySqlServerSecurityAlertPolicyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                state,
+                disabledAlerts?.ToList(),
+                emailAddresses?.ToList(),
+                sendToEmailAccountAdmins,
+                storageEndpoint,
+                storageAccountAccessKey,
+                retentionDays,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="MySql.MySqlQueryTextData"/>. </summary>
@@ -285,7 +408,14 @@ namespace Azure.ResourceManager.MySql.Models
         /// <returns> A new <see cref="MySql.MySqlQueryTextData"/> instance for mocking. </returns>
         public static MySqlQueryTextData MySqlQueryTextData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string queryId = null, string queryText = null)
         {
-            return new MySqlQueryTextData(id, name, resourceType, systemData, queryId, queryText, serializedAdditionalRawData: null);
+            return new MySqlQueryTextData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                queryId,
+                queryText,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="MySql.MySqlQueryStatisticData"/>. </summary>
@@ -308,7 +438,22 @@ namespace Azure.ResourceManager.MySql.Models
         {
             databaseNames ??= new List<string>();
 
-            return new MySqlQueryStatisticData(id, name, resourceType, systemData, queryId, startOn, endOn, aggregationFunction, databaseNames?.ToList(), queryExecutionCount, metricName, metricDisplayName, metricValue, metricValueUnit, serializedAdditionalRawData: null);
+            return new MySqlQueryStatisticData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                queryId,
+                startOn,
+                endOn,
+                aggregationFunction,
+                databaseNames?.ToList(),
+                queryExecutionCount,
+                metricName,
+                metricDisplayName,
+                metricValue,
+                metricValueUnit,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="MySql.MySqlWaitStatisticData"/>. </summary>
@@ -328,7 +473,21 @@ namespace Azure.ResourceManager.MySql.Models
         /// <returns> A new <see cref="MySql.MySqlWaitStatisticData"/> instance for mocking. </returns>
         public static MySqlWaitStatisticData MySqlWaitStatisticData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, string eventName = null, string eventTypeName = null, long? queryId = null, string databaseName = null, long? userId = null, long? count = null, double? totalTimeInMinutes = null)
         {
-            return new MySqlWaitStatisticData(id, name, resourceType, systemData, startOn, endOn, eventName, eventTypeName, queryId, databaseName, userId, count, totalTimeInMinutes, serializedAdditionalRawData: null);
+            return new MySqlWaitStatisticData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                startOn,
+                endOn,
+                eventName,
+                eventTypeName,
+                queryId,
+                databaseName,
+                userId,
+                count,
+                totalTimeInMinutes,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MySqlQueryPerformanceInsightResetDataResult"/>. </summary>
@@ -349,7 +508,13 @@ namespace Azure.ResourceManager.MySql.Models
         /// <returns> A new <see cref="MySql.MySqlAdvisorData"/> instance for mocking. </returns>
         public static MySqlAdvisorData MySqlAdvisorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, BinaryData properties = null)
         {
-            return new MySqlAdvisorData(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
+            return new MySqlAdvisorData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="MySql.MySqlRecommendationActionData"/>. </summary>
@@ -370,7 +535,20 @@ namespace Azure.ResourceManager.MySql.Models
         {
             details ??= new Dictionary<string, string>();
 
-            return new MySqlRecommendationActionData(id, name, resourceType, systemData, advisorName, sessionId, actionId, createdOn, expireOn, reason, recommendationType, details, serializedAdditionalRawData: null);
+            return new MySqlRecommendationActionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                advisorName,
+                sessionId,
+                actionId,
+                createdOn,
+                expireOn,
+                reason,
+                recommendationType,
+                details,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="MySql.MySqlPrivateEndpointConnectionData"/>. </summary>
@@ -384,7 +562,15 @@ namespace Azure.ResourceManager.MySql.Models
         /// <returns> A new <see cref="MySql.MySqlPrivateEndpointConnectionData"/> instance for mocking. </returns>
         public static MySqlPrivateEndpointConnectionData MySqlPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, MySqlPrivateLinkServiceConnectionStateProperty connectionState = null, string provisioningState = null)
         {
-            return new MySqlPrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null, connectionState, provisioningState, serializedAdditionalRawData: null);
+            return new MySqlPrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null,
+                connectionState,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MySqlPrivateLinkServiceConnectionStateProperty"/>. </summary>
@@ -406,7 +592,13 @@ namespace Azure.ResourceManager.MySql.Models
         /// <returns> A new <see cref="MySql.MySqlPrivateLinkResourceData"/> instance for mocking. </returns>
         public static MySqlPrivateLinkResourceData MySqlPrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MySqlPrivateLinkResourceProperties properties = null)
         {
-            return new MySqlPrivateLinkResourceData(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
+            return new MySqlPrivateLinkResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MySqlPrivateLinkResourceProperties"/>. </summary>
@@ -432,7 +624,16 @@ namespace Azure.ResourceManager.MySql.Models
         /// <returns> A new <see cref="MySql.MySqlServerKeyData"/> instance for mocking. </returns>
         public static MySqlServerKeyData MySqlServerKeyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, MySqlServerKeyType? serverKeyType = null, Uri uri = null, DateTimeOffset? createdOn = null)
         {
-            return new MySqlServerKeyData(id, name, resourceType, systemData, kind, serverKeyType, uri, createdOn, serializedAdditionalRawData: null);
+            return new MySqlServerKeyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                kind,
+                serverKeyType,
+                uri,
+                createdOn,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MySqlServerPropertiesForDefaultCreate"/>. </summary>
@@ -447,7 +648,17 @@ namespace Azure.ResourceManager.MySql.Models
         /// <returns> A new <see cref="Models.MySqlServerPropertiesForDefaultCreate"/> instance for mocking. </returns>
         public static MySqlServerPropertiesForDefaultCreate MySqlServerPropertiesForDefaultCreate(MySqlServerVersion? version = null, MySqlSslEnforcementEnum? sslEnforcement = null, MySqlMinimalTlsVersionEnum? minimalTlsVersion = null, MySqlInfrastructureEncryption? infrastructureEncryption = null, MySqlPublicNetworkAccessEnum? publicNetworkAccess = null, MySqlStorageProfile storageProfile = null, string administratorLogin = null, string administratorLoginPassword = null)
         {
-            return new MySqlServerPropertiesForDefaultCreate(version, sslEnforcement, minimalTlsVersion, infrastructureEncryption, publicNetworkAccess, storageProfile, MySqlCreateMode.Default, serializedAdditionalRawData: null, administratorLogin, administratorLoginPassword);
+            return new MySqlServerPropertiesForDefaultCreate(
+                version,
+                sslEnforcement,
+                minimalTlsVersion,
+                infrastructureEncryption,
+                publicNetworkAccess,
+                storageProfile,
+                MySqlCreateMode.Default,
+                serializedAdditionalRawData: null,
+                administratorLogin,
+                administratorLoginPassword);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MySqlServerPropertiesForRestore"/>. </summary>
@@ -462,7 +673,17 @@ namespace Azure.ResourceManager.MySql.Models
         /// <returns> A new <see cref="Models.MySqlServerPropertiesForRestore"/> instance for mocking. </returns>
         public static MySqlServerPropertiesForRestore MySqlServerPropertiesForRestore(MySqlServerVersion? version = null, MySqlSslEnforcementEnum? sslEnforcement = null, MySqlMinimalTlsVersionEnum? minimalTlsVersion = null, MySqlInfrastructureEncryption? infrastructureEncryption = null, MySqlPublicNetworkAccessEnum? publicNetworkAccess = null, MySqlStorageProfile storageProfile = null, ResourceIdentifier sourceServerId = null, DateTimeOffset restorePointInTime = default)
         {
-            return new MySqlServerPropertiesForRestore(version, sslEnforcement, minimalTlsVersion, infrastructureEncryption, publicNetworkAccess, storageProfile, MySqlCreateMode.PointInTimeRestore, serializedAdditionalRawData: null, sourceServerId, restorePointInTime);
+            return new MySqlServerPropertiesForRestore(
+                version,
+                sslEnforcement,
+                minimalTlsVersion,
+                infrastructureEncryption,
+                publicNetworkAccess,
+                storageProfile,
+                MySqlCreateMode.PointInTimeRestore,
+                serializedAdditionalRawData: null,
+                sourceServerId,
+                restorePointInTime);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MySqlServerPropertiesForGeoRestore"/>. </summary>
@@ -476,7 +697,16 @@ namespace Azure.ResourceManager.MySql.Models
         /// <returns> A new <see cref="Models.MySqlServerPropertiesForGeoRestore"/> instance for mocking. </returns>
         public static MySqlServerPropertiesForGeoRestore MySqlServerPropertiesForGeoRestore(MySqlServerVersion? version = null, MySqlSslEnforcementEnum? sslEnforcement = null, MySqlMinimalTlsVersionEnum? minimalTlsVersion = null, MySqlInfrastructureEncryption? infrastructureEncryption = null, MySqlPublicNetworkAccessEnum? publicNetworkAccess = null, MySqlStorageProfile storageProfile = null, ResourceIdentifier sourceServerId = null)
         {
-            return new MySqlServerPropertiesForGeoRestore(version, sslEnforcement, minimalTlsVersion, infrastructureEncryption, publicNetworkAccess, storageProfile, MySqlCreateMode.GeoRestore, serializedAdditionalRawData: null, sourceServerId);
+            return new MySqlServerPropertiesForGeoRestore(
+                version,
+                sslEnforcement,
+                minimalTlsVersion,
+                infrastructureEncryption,
+                publicNetworkAccess,
+                storageProfile,
+                MySqlCreateMode.GeoRestore,
+                serializedAdditionalRawData: null,
+                sourceServerId);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MySqlServerPropertiesForReplica"/>. </summary>
@@ -490,7 +720,16 @@ namespace Azure.ResourceManager.MySql.Models
         /// <returns> A new <see cref="Models.MySqlServerPropertiesForReplica"/> instance for mocking. </returns>
         public static MySqlServerPropertiesForReplica MySqlServerPropertiesForReplica(MySqlServerVersion? version = null, MySqlSslEnforcementEnum? sslEnforcement = null, MySqlMinimalTlsVersionEnum? minimalTlsVersion = null, MySqlInfrastructureEncryption? infrastructureEncryption = null, MySqlPublicNetworkAccessEnum? publicNetworkAccess = null, MySqlStorageProfile storageProfile = null, ResourceIdentifier sourceServerId = null)
         {
-            return new MySqlServerPropertiesForReplica(version, sslEnforcement, minimalTlsVersion, infrastructureEncryption, publicNetworkAccess, storageProfile, MySqlCreateMode.Replica, serializedAdditionalRawData: null, sourceServerId);
+            return new MySqlServerPropertiesForReplica(
+                version,
+                sslEnforcement,
+                minimalTlsVersion,
+                infrastructureEncryption,
+                publicNetworkAccess,
+                storageProfile,
+                MySqlCreateMode.Replica,
+                serializedAdditionalRawData: null,
+                sourceServerId);
         }
     }
 }

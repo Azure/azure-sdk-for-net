@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             writer.WritePropertyName("componentId"u8);
             writer.WriteStringValue(ComponentId);
-            if (Optional.IsCollectionDefined(InputAssets))
+            if (!(InputAssets is ChangeTrackingDictionary<string, MonitoringInputDataBase> collection && collection.IsUndefined))
             {
                 if (InputAssets != null)
                 {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("inputAssets");
                 }
             }
-            if (Optional.IsCollectionDefined(Inputs))
+            if (!(Inputs is ChangeTrackingDictionary<string, MachineLearningJobInput> collection0 && collection0.IsUndefined))
             {
                 if (Inputs != null)
                 {
@@ -73,12 +73,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteEndArray();
             writer.WritePropertyName("workspaceConnection"u8);
             writer.WriteObjectValue(WorkspaceConnection);
-            if (Optional.IsDefined(Mode))
+            if (Mode.HasValue)
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Properties))
+            if (!(Properties is ChangeTrackingDictionary<string, string> collection1 && collection1.IsUndefined))
             {
                 if (Properties != null)
                 {
@@ -137,12 +137,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             string componentId = default;
-            Optional<IDictionary<string, MonitoringInputDataBase>> inputAssets = default;
-            Optional<IDictionary<string, MachineLearningJobInput>> inputs = default;
+            IDictionary<string, MonitoringInputDataBase> inputAssets = default;
+            IDictionary<string, MachineLearningJobInput> inputs = default;
             IList<CustomMetricThreshold> metricThresholds = default;
             MonitoringWorkspaceConnection workspaceConnection = default;
             Optional<MonitoringNotificationMode> mode = default;
-            Optional<IDictionary<string, string>> properties = default;
+            IDictionary<string, string> properties = default;
             MonitoringSignalType signalType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, MonitoringInputDataBase> dictionary = new Dictionary<string, MonitoringInputDataBase>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, MonitoringInputDataBase.DeserializeMonitoringInputDataBase(property0.Value));
+                        dictionary.Add(property0.Name, MonitoringInputDataBase.DeserializeMonitoringInputDataBase(property0.Value, options));
                     }
                     inputAssets = dictionary;
                     continue;
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, MachineLearningJobInput> dictionary = new Dictionary<string, MachineLearningJobInput>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, MachineLearningJobInput.DeserializeMachineLearningJobInput(property0.Value));
+                        dictionary.Add(property0.Name, MachineLearningJobInput.DeserializeMachineLearningJobInput(property0.Value, options));
                     }
                     inputs = dictionary;
                     continue;
@@ -188,14 +188,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<CustomMetricThreshold> array = new List<CustomMetricThreshold>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CustomMetricThreshold.DeserializeCustomMetricThreshold(item));
+                        array.Add(CustomMetricThreshold.DeserializeCustomMetricThreshold(item, options));
                     }
                     metricThresholds = array;
                     continue;
                 }
                 if (property.NameEquals("workspaceConnection"u8))
                 {
-                    workspaceConnection = MonitoringWorkspaceConnection.DeserializeMonitoringWorkspaceConnection(property.Value);
+                    workspaceConnection = MonitoringWorkspaceConnection.DeserializeMonitoringWorkspaceConnection(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("mode"u8))
@@ -233,7 +233,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomMonitoringSignal(Optional.ToNullable(mode), Optional.ToDictionary(properties), signalType, serializedAdditionalRawData, componentId, Optional.ToDictionary(inputAssets), Optional.ToDictionary(inputs), metricThresholds, workspaceConnection);
+            return new CustomMonitoringSignal(
+                Optional.ToNullable(mode),
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                signalType,
+                serializedAdditionalRawData,
+                componentId,
+                inputAssets ?? new ChangeTrackingDictionary<string, MonitoringInputDataBase>(),
+                inputs ?? new ChangeTrackingDictionary<string, MachineLearningJobInput>(),
+                metricThresholds,
+                workspaceConnection);
         }
 
         BinaryData IPersistableModel<CustomMonitoringSignal>.Write(ModelReaderWriterOptions options)

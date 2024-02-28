@@ -19,7 +19,7 @@ namespace Azure.Communication.ShortCodes.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ShortCode>> shortCodes = default;
+            IReadOnlyList<ShortCode> shortCodes = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -43,7 +43,7 @@ namespace Azure.Communication.ShortCodes.Models
                     continue;
                 }
             }
-            return new ShortCodes(Optional.ToList(shortCodes), nextLink.Value);
+            return new ShortCodes(shortCodes ?? new ChangeTrackingList<ShortCode>(), nextLink.Value);
         }
     }
 }

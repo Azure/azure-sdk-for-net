@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.Datadog
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DatadogSingleSignOnResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string configurationName, DatadogSingleSignOnResourceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (configurationName == null)
+            {
+                throw new ArgumentNullException(nameof(configurationName));
+            }
+            if (configurationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _datadogSingleSignOnResourceSingleSignOnConfigurationsClientDiagnostics.CreateScope("DatadogSingleSignOnResourceCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.Datadog
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DatadogSingleSignOnResource> CreateOrUpdate(WaitUntil waitUntil, string configurationName, DatadogSingleSignOnResourceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (configurationName == null)
+            {
+                throw new ArgumentNullException(nameof(configurationName));
+            }
+            if (configurationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _datadogSingleSignOnResourceSingleSignOnConfigurationsClientDiagnostics.CreateScope("DatadogSingleSignOnResourceCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.Datadog
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
         public virtual async Task<Response<DatadogSingleSignOnResource>> GetAsync(string configurationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
+            if (configurationName == null)
+            {
+                throw new ArgumentNullException(nameof(configurationName));
+            }
+            if (configurationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationName));
+            }
 
             using var scope = _datadogSingleSignOnResourceSingleSignOnConfigurationsClientDiagnostics.CreateScope("DatadogSingleSignOnResourceCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.Datadog
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
         public virtual Response<DatadogSingleSignOnResource> Get(string configurationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
+            if (configurationName == null)
+            {
+                throw new ArgumentNullException(nameof(configurationName));
+            }
+            if (configurationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationName));
+            }
 
             using var scope = _datadogSingleSignOnResourceSingleSignOnConfigurationsClientDiagnostics.CreateScope("DatadogSingleSignOnResourceCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.Datadog
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string configurationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
+            if (configurationName == null)
+            {
+                throw new ArgumentNullException(nameof(configurationName));
+            }
+            if (configurationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationName));
+            }
 
             using var scope = _datadogSingleSignOnResourceSingleSignOnConfigurationsClientDiagnostics.CreateScope("DatadogSingleSignOnResourceCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.Datadog
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
         public virtual Response<bool> Exists(string configurationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
+            if (configurationName == null)
+            {
+                throw new ArgumentNullException(nameof(configurationName));
+            }
+            if (configurationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationName));
+            }
 
             using var scope = _datadogSingleSignOnResourceSingleSignOnConfigurationsClientDiagnostics.CreateScope("DatadogSingleSignOnResourceCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.Datadog
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
         public virtual async Task<NullableResponse<DatadogSingleSignOnResource>> GetIfExistsAsync(string configurationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
+            if (configurationName == null)
+            {
+                throw new ArgumentNullException(nameof(configurationName));
+            }
+            if (configurationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationName));
+            }
 
             using var scope = _datadogSingleSignOnResourceSingleSignOnConfigurationsClientDiagnostics.CreateScope("DatadogSingleSignOnResourceCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.Datadog
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
         public virtual NullableResponse<DatadogSingleSignOnResource> GetIfExists(string configurationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
+            if (configurationName == null)
+            {
+                throw new ArgumentNullException(nameof(configurationName));
+            }
+            if (configurationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationName));
+            }
 
             using var scope = _datadogSingleSignOnResourceSingleSignOnConfigurationsClientDiagnostics.CreateScope("DatadogSingleSignOnResourceCollection.GetIfExists");
             scope.Start();

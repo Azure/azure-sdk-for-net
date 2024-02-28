@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Elastic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Domain))
+            if (Domain != null)
             {
                 writer.WritePropertyName("domain"u8);
                 writer.WriteStringValue(Domain);
             }
-            if (Optional.IsDefined(Business))
+            if (Business != null)
             {
                 writer.WritePropertyName("business"u8);
                 writer.WriteStringValue(Business);
             }
-            if (Optional.IsDefined(EmployeesNumber))
+            if (EmployeesNumber != null)
             {
                 writer.WritePropertyName("employeesNumber"u8);
                 writer.WriteStringValue(EmployeesNumber);
             }
-            if (Optional.IsDefined(State))
+            if (State != null)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
             }
-            if (Optional.IsDefined(Country))
+            if (Country != null)
             {
                 writer.WritePropertyName("country"u8);
                 writer.WriteStringValue(Country);
@@ -129,7 +129,13 @@ namespace Azure.ResourceManager.Elastic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CompanyInfo(domain.Value, business.Value, employeesNumber.Value, state.Value, country.Value, serializedAdditionalRawData);
+            return new CompanyInfo(
+                domain.Value,
+                business.Value,
+                employeesNumber.Value,
+                state.Value,
+                country.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CompanyInfo>.Write(ModelReaderWriterOptions options)

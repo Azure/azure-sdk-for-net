@@ -27,22 +27,22 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (Optional.IsCollectionDefined(Errors))
+            if (!(Errors is ChangeTrackingList<ResponseError> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
@@ -52,22 +52,22 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(CreatedOn))
+            if (CreatedOn.HasValue)
             {
                 writer.WritePropertyName("createdTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(ModifiedOn))
+            if (ModifiedOn.HasValue)
             {
                 writer.WritePropertyName("modifiedTime"u8);
                 writer.WriteStringValue(ModifiedOn.Value, "O");
             }
-            if (Optional.IsDefined(ExpireOn))
+            if (ExpireOn.HasValue)
             {
                 writer.WritePropertyName("expirationTime"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (Optional.IsDefined(GeoMasterOperationId))
+            if (GeoMasterOperationId.HasValue)
             {
                 writer.WritePropertyName("geoMasterOperationId"u8);
                 writer.WriteStringValue(GeoMasterOperationId.Value);
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<AppServiceOperationStatus> status = default;
-            Optional<IReadOnlyList<ResponseError>> errors = default;
+            IReadOnlyList<ResponseError> errors = default;
             Optional<DateTimeOffset> createdTime = default;
             Optional<DateTimeOffset> modifiedTime = default;
             Optional<DateTimeOffset> expirationTime = default;
@@ -197,7 +197,16 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceOperation(id.Value, name.Value, Optional.ToNullable(status), Optional.ToList(errors), Optional.ToNullable(createdTime), Optional.ToNullable(modifiedTime), Optional.ToNullable(expirationTime), Optional.ToNullable(geoMasterOperationId), serializedAdditionalRawData);
+            return new AppServiceOperation(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(status),
+                errors ?? new ChangeTrackingList<ResponseError>(),
+                Optional.ToNullable(createdTime),
+                Optional.ToNullable(modifiedTime),
+                Optional.ToNullable(expirationTime),
+                Optional.ToNullable(geoMasterOperationId),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceOperation>.Write(ModelReaderWriterOptions options)

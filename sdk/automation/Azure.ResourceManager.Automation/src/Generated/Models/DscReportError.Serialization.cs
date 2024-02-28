@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ErrorSource))
+            if (ErrorSource != null)
             {
                 writer.WritePropertyName("errorSource"u8);
                 writer.WriteStringValue(ErrorSource);
             }
-            if (Optional.IsDefined(ResourceId))
+            if (ResourceId != null)
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Optional.IsDefined(ErrorCode))
+            if (ErrorCode != null)
             {
                 writer.WritePropertyName("errorCode"u8);
                 writer.WriteStringValue(ErrorCode);
             }
-            if (Optional.IsDefined(ErrorMessage))
+            if (ErrorMessage != null)
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
             }
-            if (Optional.IsDefined(Locale))
+            if (Locale != null)
             {
                 writer.WritePropertyName("locale"u8);
                 writer.WriteStringValue(Locale);
             }
-            if (Optional.IsDefined(ErrorDetails))
+            if (ErrorDetails != null)
             {
                 writer.WritePropertyName("errorDetails"u8);
                 writer.WriteStringValue(ErrorDetails);
@@ -140,7 +140,14 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DscReportError(errorSource.Value, resourceId.Value, errorCode.Value, errorMessage.Value, locale.Value, errorDetails.Value, serializedAdditionalRawData);
+            return new DscReportError(
+                errorSource.Value,
+                resourceId.Value,
+                errorCode.Value,
+                errorMessage.Value,
+                locale.Value,
+                errorDetails.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DscReportError>.Write(ModelReaderWriterOptions options)

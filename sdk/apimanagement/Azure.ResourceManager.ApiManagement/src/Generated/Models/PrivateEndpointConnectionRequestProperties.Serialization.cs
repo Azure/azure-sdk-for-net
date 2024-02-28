@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrivateLinkServiceConnectionState))
+            if (PrivateLinkServiceConnectionState != null)
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
                 writer.WriteObjectValue(PrivateLinkServiceConnectionState);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    privateLinkServiceConnectionState = ApiManagementPrivateLinkServiceConnectionState.DeserializeApiManagementPrivateLinkServiceConnectionState(property.Value);
+                    privateLinkServiceConnectionState = ApiManagementPrivateLinkServiceConnectionState.DeserializeApiManagementPrivateLinkServiceConnectionState(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

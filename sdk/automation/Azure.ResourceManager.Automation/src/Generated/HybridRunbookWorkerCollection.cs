@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="hybridRunbookWorkerId"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<HybridRunbookWorkerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string hybridRunbookWorkerId, HybridRunbookWorkerCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(hybridRunbookWorkerId, nameof(hybridRunbookWorkerId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (hybridRunbookWorkerId == null)
+            {
+                throw new ArgumentNullException(nameof(hybridRunbookWorkerId));
+            }
+            if (hybridRunbookWorkerId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(hybridRunbookWorkerId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _hybridRunbookWorkerClientDiagnostics.CreateScope("HybridRunbookWorkerCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="hybridRunbookWorkerId"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<HybridRunbookWorkerResource> CreateOrUpdate(WaitUntil waitUntil, string hybridRunbookWorkerId, HybridRunbookWorkerCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(hybridRunbookWorkerId, nameof(hybridRunbookWorkerId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (hybridRunbookWorkerId == null)
+            {
+                throw new ArgumentNullException(nameof(hybridRunbookWorkerId));
+            }
+            if (hybridRunbookWorkerId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(hybridRunbookWorkerId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _hybridRunbookWorkerClientDiagnostics.CreateScope("HybridRunbookWorkerCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="hybridRunbookWorkerId"/> is null. </exception>
         public virtual async Task<Response<HybridRunbookWorkerResource>> GetAsync(string hybridRunbookWorkerId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(hybridRunbookWorkerId, nameof(hybridRunbookWorkerId));
+            if (hybridRunbookWorkerId == null)
+            {
+                throw new ArgumentNullException(nameof(hybridRunbookWorkerId));
+            }
+            if (hybridRunbookWorkerId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(hybridRunbookWorkerId));
+            }
 
             using var scope = _hybridRunbookWorkerClientDiagnostics.CreateScope("HybridRunbookWorkerCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="hybridRunbookWorkerId"/> is null. </exception>
         public virtual Response<HybridRunbookWorkerResource> Get(string hybridRunbookWorkerId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(hybridRunbookWorkerId, nameof(hybridRunbookWorkerId));
+            if (hybridRunbookWorkerId == null)
+            {
+                throw new ArgumentNullException(nameof(hybridRunbookWorkerId));
+            }
+            if (hybridRunbookWorkerId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(hybridRunbookWorkerId));
+            }
 
             using var scope = _hybridRunbookWorkerClientDiagnostics.CreateScope("HybridRunbookWorkerCollection.Get");
             scope.Start();
@@ -331,7 +365,14 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="hybridRunbookWorkerId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string hybridRunbookWorkerId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(hybridRunbookWorkerId, nameof(hybridRunbookWorkerId));
+            if (hybridRunbookWorkerId == null)
+            {
+                throw new ArgumentNullException(nameof(hybridRunbookWorkerId));
+            }
+            if (hybridRunbookWorkerId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(hybridRunbookWorkerId));
+            }
 
             using var scope = _hybridRunbookWorkerClientDiagnostics.CreateScope("HybridRunbookWorkerCollection.Exists");
             scope.Start();
@@ -374,7 +415,14 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="hybridRunbookWorkerId"/> is null. </exception>
         public virtual Response<bool> Exists(string hybridRunbookWorkerId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(hybridRunbookWorkerId, nameof(hybridRunbookWorkerId));
+            if (hybridRunbookWorkerId == null)
+            {
+                throw new ArgumentNullException(nameof(hybridRunbookWorkerId));
+            }
+            if (hybridRunbookWorkerId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(hybridRunbookWorkerId));
+            }
 
             using var scope = _hybridRunbookWorkerClientDiagnostics.CreateScope("HybridRunbookWorkerCollection.Exists");
             scope.Start();
@@ -417,7 +465,14 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="hybridRunbookWorkerId"/> is null. </exception>
         public virtual async Task<NullableResponse<HybridRunbookWorkerResource>> GetIfExistsAsync(string hybridRunbookWorkerId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(hybridRunbookWorkerId, nameof(hybridRunbookWorkerId));
+            if (hybridRunbookWorkerId == null)
+            {
+                throw new ArgumentNullException(nameof(hybridRunbookWorkerId));
+            }
+            if (hybridRunbookWorkerId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(hybridRunbookWorkerId));
+            }
 
             using var scope = _hybridRunbookWorkerClientDiagnostics.CreateScope("HybridRunbookWorkerCollection.GetIfExists");
             scope.Start();
@@ -462,7 +517,14 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="hybridRunbookWorkerId"/> is null. </exception>
         public virtual NullableResponse<HybridRunbookWorkerResource> GetIfExists(string hybridRunbookWorkerId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(hybridRunbookWorkerId, nameof(hybridRunbookWorkerId));
+            if (hybridRunbookWorkerId == null)
+            {
+                throw new ArgumentNullException(nameof(hybridRunbookWorkerId));
+            }
+            if (hybridRunbookWorkerId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(hybridRunbookWorkerId));
+            }
 
             using var scope = _hybridRunbookWorkerClientDiagnostics.CreateScope("HybridRunbookWorkerCollection.GetIfExists");
             scope.Start();

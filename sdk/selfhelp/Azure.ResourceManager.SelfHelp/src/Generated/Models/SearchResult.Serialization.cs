@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SolutionId))
+            if (SolutionId != null)
             {
                 writer.WritePropertyName("solutionId"u8);
                 writer.WriteStringValue(SolutionId);
             }
-            if (Optional.IsDefined(Content))
+            if (Content != null)
             {
                 writer.WritePropertyName("content"u8);
                 writer.WriteStringValue(Content);
             }
-            if (Optional.IsDefined(Title))
+            if (Title != null)
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Optional.IsDefined(Confidence))
+            if (Confidence.HasValue)
             {
                 writer.WritePropertyName("confidence"u8);
                 writer.WriteStringValue(Confidence.Value.ToString());
             }
-            if (Optional.IsDefined(Source))
+            if (Source != null)
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
-            if (Optional.IsDefined(ResultType))
+            if (ResultType.HasValue)
             {
                 writer.WritePropertyName("resultType"u8);
                 writer.WriteStringValue(ResultType.Value.ToString());
             }
-            if (Optional.IsDefined(Rank))
+            if (Rank.HasValue)
             {
                 writer.WritePropertyName("rank"u8);
                 writer.WriteNumberValue(Rank.Value);
             }
-            if (Optional.IsDefined(Link))
+            if (Link != null)
             {
                 writer.WritePropertyName("link"u8);
                 writer.WriteStringValue(Link);
@@ -174,7 +174,16 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SearchResult(solutionId.Value, content.Value, title.Value, Optional.ToNullable(confidence), source.Value, Optional.ToNullable(resultType), Optional.ToNullable(rank), link.Value, serializedAdditionalRawData);
+            return new SearchResult(
+                solutionId.Value,
+                content.Value,
+                title.Value,
+                Optional.ToNullable(confidence),
+                source.Value,
+                Optional.ToNullable(resultType),
+                Optional.ToNullable(rank),
+                link.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SearchResult>.Write(ModelReaderWriterOptions options)

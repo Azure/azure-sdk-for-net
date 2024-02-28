@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PlatformUpdateDomain))
+            if (PlatformUpdateDomain.HasValue)
             {
                 writer.WritePropertyName("platformUpdateDomain"u8);
                 writer.WriteNumberValue(PlatformUpdateDomain.Value);
             }
-            if (Optional.IsDefined(PlatformFaultDomain))
+            if (PlatformFaultDomain.HasValue)
             {
                 writer.WritePropertyName("platformFaultDomain"u8);
                 writer.WriteNumberValue(PlatformFaultDomain.Value);
             }
-            if (Optional.IsDefined(RdpThumbPrint))
+            if (RdpThumbPrint != null)
             {
                 writer.WritePropertyName("rdpThumbPrint"u8);
                 writer.WriteStringValue(RdpThumbPrint);
             }
-            if (Optional.IsDefined(VmAgent))
+            if (VmAgent != null)
             {
                 writer.WritePropertyName("vmAgent"u8);
                 writer.WriteObjectValue(VmAgent);
             }
-            if (Optional.IsDefined(MaintenanceRedeployStatus))
+            if (MaintenanceRedeployStatus != null)
             {
                 writer.WritePropertyName("maintenanceRedeployStatus"u8);
                 writer.WriteObjectValue(MaintenanceRedeployStatus);
             }
-            if (Optional.IsCollectionDefined(Disks))
+            if (!(Disks is ChangeTrackingList<DiskInstanceView> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("disks"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Extensions))
+            if (!(Extensions is ChangeTrackingList<VirtualMachineExtensionInstanceView> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("extensions"u8);
                 writer.WriteStartArray();
@@ -71,17 +71,17 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(VmHealth))
+            if (options.Format != "W" && VmHealth != null)
             {
                 writer.WritePropertyName("vmHealth"u8);
                 writer.WriteObjectValue(VmHealth);
             }
-            if (Optional.IsDefined(BootDiagnostics))
+            if (BootDiagnostics != null)
             {
                 writer.WritePropertyName("bootDiagnostics"u8);
                 writer.WriteObjectValue(BootDiagnostics);
             }
-            if (Optional.IsCollectionDefined(Statuses))
+            if (!(Statuses is ChangeTrackingList<InstanceViewStatus> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("statuses"u8);
                 writer.WriteStartArray();
@@ -91,32 +91,32 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(AssignedHost))
+            if (options.Format != "W" && AssignedHost != null)
             {
                 writer.WritePropertyName("assignedHost"u8);
                 writer.WriteStringValue(AssignedHost);
             }
-            if (Optional.IsDefined(PlacementGroupId))
+            if (PlacementGroupId != null)
             {
                 writer.WritePropertyName("placementGroupId"u8);
                 writer.WriteStringValue(PlacementGroupId);
             }
-            if (Optional.IsDefined(ComputerName))
+            if (ComputerName != null)
             {
                 writer.WritePropertyName("computerName"u8);
                 writer.WriteStringValue(ComputerName);
             }
-            if (Optional.IsDefined(OSName))
+            if (OSName != null)
             {
                 writer.WritePropertyName("osName"u8);
                 writer.WriteStringValue(OSName);
             }
-            if (Optional.IsDefined(OSVersion))
+            if (OSVersion != null)
             {
                 writer.WritePropertyName("osVersion"u8);
                 writer.WriteStringValue(OSVersion);
             }
-            if (Optional.IsDefined(HyperVGeneration))
+            if (HyperVGeneration.HasValue)
             {
                 writer.WritePropertyName("hyperVGeneration"u8);
                 writer.WriteStringValue(HyperVGeneration.Value.ToString());
@@ -164,11 +164,11 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<string> rdpThumbPrint = default;
             Optional<VirtualMachineAgentInstanceView> vmAgent = default;
             Optional<MaintenanceRedeployStatus> maintenanceRedeployStatus = default;
-            Optional<IReadOnlyList<DiskInstanceView>> disks = default;
-            Optional<IReadOnlyList<VirtualMachineExtensionInstanceView>> extensions = default;
+            IReadOnlyList<DiskInstanceView> disks = default;
+            IReadOnlyList<VirtualMachineExtensionInstanceView> extensions = default;
             Optional<VirtualMachineHealthStatus> vmHealth = default;
             Optional<BootDiagnosticsInstanceView> bootDiagnostics = default;
-            Optional<IReadOnlyList<InstanceViewStatus>> statuses = default;
+            IReadOnlyList<InstanceViewStatus> statuses = default;
             Optional<ResourceIdentifier> assignedHost = default;
             Optional<string> placementGroupId = default;
             Optional<string> computerName = default;
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    vmAgent = VirtualMachineAgentInstanceView.DeserializeVirtualMachineAgentInstanceView(property.Value);
+                    vmAgent = VirtualMachineAgentInstanceView.DeserializeVirtualMachineAgentInstanceView(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("maintenanceRedeployStatus"u8))
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    maintenanceRedeployStatus = MaintenanceRedeployStatus.DeserializeMaintenanceRedeployStatus(property.Value);
+                    maintenanceRedeployStatus = MaintenanceRedeployStatus.DeserializeMaintenanceRedeployStatus(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("disks"u8))
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<DiskInstanceView> array = new List<DiskInstanceView>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DiskInstanceView.DeserializeDiskInstanceView(item));
+                        array.Add(DiskInstanceView.DeserializeDiskInstanceView(item, options));
                     }
                     disks = array;
                     continue;
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<VirtualMachineExtensionInstanceView> array = new List<VirtualMachineExtensionInstanceView>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualMachineExtensionInstanceView.DeserializeVirtualMachineExtensionInstanceView(item));
+                        array.Add(VirtualMachineExtensionInstanceView.DeserializeVirtualMachineExtensionInstanceView(item, options));
                     }
                     extensions = array;
                     continue;
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    vmHealth = VirtualMachineHealthStatus.DeserializeVirtualMachineHealthStatus(property.Value);
+                    vmHealth = VirtualMachineHealthStatus.DeserializeVirtualMachineHealthStatus(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("bootDiagnostics"u8))
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    bootDiagnostics = BootDiagnosticsInstanceView.DeserializeBootDiagnosticsInstanceView(property.Value);
+                    bootDiagnostics = BootDiagnosticsInstanceView.DeserializeBootDiagnosticsInstanceView(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("statuses"u8))
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<InstanceViewStatus> array = new List<InstanceViewStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InstanceViewStatus.DeserializeInstanceViewStatus(item));
+                        array.Add(InstanceViewStatus.DeserializeInstanceViewStatus(item, options));
                     }
                     statuses = array;
                     continue;
@@ -324,7 +324,24 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineScaleSetVmInstanceView(Optional.ToNullable(platformUpdateDomain), Optional.ToNullable(platformFaultDomain), rdpThumbPrint.Value, vmAgent.Value, maintenanceRedeployStatus.Value, Optional.ToList(disks), Optional.ToList(extensions), vmHealth.Value, bootDiagnostics.Value, Optional.ToList(statuses), assignedHost.Value, placementGroupId.Value, computerName.Value, osName.Value, osVersion.Value, Optional.ToNullable(hyperVGeneration), serializedAdditionalRawData);
+            return new VirtualMachineScaleSetVmInstanceView(
+                Optional.ToNullable(platformUpdateDomain),
+                Optional.ToNullable(platformFaultDomain),
+                rdpThumbPrint.Value,
+                vmAgent.Value,
+                maintenanceRedeployStatus.Value,
+                disks ?? new ChangeTrackingList<DiskInstanceView>(),
+                extensions ?? new ChangeTrackingList<VirtualMachineExtensionInstanceView>(),
+                vmHealth.Value,
+                bootDiagnostics.Value,
+                statuses ?? new ChangeTrackingList<InstanceViewStatus>(),
+                assignedHost.Value,
+                placementGroupId.Value,
+                computerName.Value,
+                osName.Value,
+                osVersion.Value,
+                Optional.ToNullable(hyperVGeneration),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineScaleSetVmInstanceView>.Write(ModelReaderWriterOptions options)

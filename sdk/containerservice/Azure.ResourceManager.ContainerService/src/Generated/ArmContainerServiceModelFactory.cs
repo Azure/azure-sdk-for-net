@@ -31,7 +31,13 @@ namespace Azure.ResourceManager.ContainerService.Models
         {
             osOptionPropertyList ??= new List<ContainerServiceOSOptionProperty>();
 
-            return new OSOptionProfileData(id, name, resourceType, systemData, osOptionPropertyList?.ToList(), serializedAdditionalRawData: null);
+            return new OSOptionProfileData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                osOptionPropertyList?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerServiceOSOptionProperty"/>. </summary>
@@ -135,7 +141,56 @@ namespace Azure.ResourceManager.ContainerService.Models
             identityProfile ??= new Dictionary<string, ContainerServiceUserAssignedIdentity>();
             privateLinkResources ??= new List<ContainerServicePrivateLinkResourceData>();
 
-            return new ContainerServiceManagedClusterData(id, name, resourceType, systemData, tags, location, sku, extendedLocation, clusterIdentity, provisioningState, powerStateCode != null ? new ContainerServicePowerState(powerStateCode, serializedAdditionalRawData: null) : null, maxAgentPools, kubernetesVersion, currentKubernetesVersion, dnsPrefix, fqdnSubdomain, fqdn, privateFqdn, azurePortalFqdn, agentPoolProfiles?.ToList(), linuxProfile, windowsProfile, servicePrincipalProfile, addonProfiles, podIdentityProfile, oidcIssuerProfile, nodeResourceGroup, enableRbac, supportPlan, enablePodSecurityPolicy, networkProfile, aadProfile, autoUpgradeProfile, upgradeOverrideSettings != null ? new ClusterUpgradeSettings(upgradeOverrideSettings, serializedAdditionalRawData: null) : null, autoScalerProfile, apiServerAccessProfile, diskEncryptionSetId, identityProfile, privateLinkResources?.ToList(), disableLocalAccounts, httpProxyConfig, securityProfile, storageProfile, publicNetworkAccess, workloadAutoScalerProfile, azureMonitorMetrics != null ? new ManagedClusterAzureMonitorProfile(azureMonitorMetrics, serializedAdditionalRawData: null) : null, serviceMeshProfile, resourceId, serializedAdditionalRawData: null);
+            return new ContainerServiceManagedClusterData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                sku,
+                extendedLocation,
+                clusterIdentity,
+                provisioningState,
+                powerStateCode != null ? new ContainerServicePowerState(powerStateCode, serializedAdditionalRawData: null) : null,
+                maxAgentPools,
+                kubernetesVersion,
+                currentKubernetesVersion,
+                dnsPrefix,
+                fqdnSubdomain,
+                fqdn,
+                privateFqdn,
+                azurePortalFqdn,
+                agentPoolProfiles?.ToList(),
+                linuxProfile,
+                windowsProfile,
+                servicePrincipalProfile,
+                addonProfiles,
+                podIdentityProfile,
+                oidcIssuerProfile,
+                nodeResourceGroup,
+                enableRbac,
+                supportPlan,
+                enablePodSecurityPolicy,
+                networkProfile,
+                aadProfile,
+                autoUpgradeProfile,
+                upgradeOverrideSettings != null ? new ClusterUpgradeSettings(upgradeOverrideSettings, serializedAdditionalRawData: null) : null,
+                autoScalerProfile,
+                apiServerAccessProfile,
+                diskEncryptionSetId,
+                identityProfile,
+                privateLinkResources?.ToList(),
+                disableLocalAccounts,
+                httpProxyConfig,
+                securityProfile,
+                storageProfile,
+                publicNetworkAccess,
+                workloadAutoScalerProfile,
+                azureMonitorMetrics != null ? new ManagedClusterAzureMonitorProfile(azureMonitorMetrics, serializedAdditionalRawData: null) : null,
+                serviceMeshProfile,
+                resourceId,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ManagedClusterAgentPoolProfile"/>. </summary>
@@ -191,7 +246,52 @@ namespace Azure.ResourceManager.ContainerService.Models
             nodeLabels ??= new Dictionary<string, string>();
             nodeTaints ??= new List<string>();
 
-            return new ManagedClusterAgentPoolProfile(count, vmSize, osDiskSizeInGB, osDiskType, kubeletDiskType, workloadRuntime, vnetSubnetId, podSubnetId, maxPods, osType, osSku, maxCount, minCount, enableAutoScaling, scaleDownMode, agentPoolType, mode, orchestratorVersion, currentOrchestratorVersion, nodeImageVersion, upgradeSettings, provisioningState, powerStateCode != null ? new ContainerServicePowerState(powerStateCode, serializedAdditionalRawData: null) : null, availabilityZones?.ToList(), enableNodePublicIP, nodePublicIPPrefixId, scaleSetPriority, scaleSetEvictionPolicy, spotMaxPrice, tags, nodeLabels, nodeTaints?.ToList(), proximityPlacementGroupId, kubeletConfig, linuxOSConfig, enableEncryptionAtHost, enableUltraSsd, enableFips, gpuInstanceProfile, creationDataSourceResourceId != null ? new ContainerServiceCreationData(creationDataSourceResourceId, serializedAdditionalRawData: null) : null, capacityReservationGroupId, hostGroupId, networkProfile, serializedAdditionalRawData: null, name);
+            return new ManagedClusterAgentPoolProfile(
+                count,
+                vmSize,
+                osDiskSizeInGB,
+                osDiskType,
+                kubeletDiskType,
+                workloadRuntime,
+                vnetSubnetId,
+                podSubnetId,
+                maxPods,
+                osType,
+                osSku,
+                maxCount,
+                minCount,
+                enableAutoScaling,
+                scaleDownMode,
+                agentPoolType,
+                mode,
+                orchestratorVersion,
+                currentOrchestratorVersion,
+                nodeImageVersion,
+                upgradeSettings,
+                provisioningState,
+                powerStateCode != null ? new ContainerServicePowerState(powerStateCode, serializedAdditionalRawData: null) : null,
+                availabilityZones?.ToList(),
+                enableNodePublicIP,
+                nodePublicIPPrefixId,
+                scaleSetPriority,
+                scaleSetEvictionPolicy,
+                spotMaxPrice,
+                tags,
+                nodeLabels,
+                nodeTaints?.ToList(),
+                proximityPlacementGroupId,
+                kubeletConfig,
+                linuxOSConfig,
+                enableEncryptionAtHost,
+                enableUltraSsd,
+                enableFips,
+                gpuInstanceProfile,
+                creationDataSourceResourceId != null ? new ContainerServiceCreationData(creationDataSourceResourceId, serializedAdditionalRawData: null) : null,
+                capacityReservationGroupId,
+                hostGroupId,
+                networkProfile,
+                serializedAdditionalRawData: null,
+                name);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ManagedClusterAgentPoolProfileProperties"/>. </summary>
@@ -246,7 +346,51 @@ namespace Azure.ResourceManager.ContainerService.Models
             nodeLabels ??= new Dictionary<string, string>();
             nodeTaints ??= new List<string>();
 
-            return new ManagedClusterAgentPoolProfileProperties(count, vmSize, osDiskSizeInGB, osDiskType, kubeletDiskType, workloadRuntime, vnetSubnetId, podSubnetId, maxPods, osType, osSku, maxCount, minCount, enableAutoScaling, scaleDownMode, agentPoolType, mode, orchestratorVersion, currentOrchestratorVersion, nodeImageVersion, upgradeSettings, provisioningState, powerStateCode != null ? new ContainerServicePowerState(powerStateCode, serializedAdditionalRawData: null) : null, availabilityZones?.ToList(), enableNodePublicIP, nodePublicIPPrefixId, scaleSetPriority, scaleSetEvictionPolicy, spotMaxPrice, tags, nodeLabels, nodeTaints?.ToList(), proximityPlacementGroupId, kubeletConfig, linuxOSConfig, enableEncryptionAtHost, enableUltraSsd, enableFips, gpuInstanceProfile, creationDataSourceResourceId != null ? new ContainerServiceCreationData(creationDataSourceResourceId, serializedAdditionalRawData: null) : null, capacityReservationGroupId, hostGroupId, networkProfile, serializedAdditionalRawData: null);
+            return new ManagedClusterAgentPoolProfileProperties(
+                count,
+                vmSize,
+                osDiskSizeInGB,
+                osDiskType,
+                kubeletDiskType,
+                workloadRuntime,
+                vnetSubnetId,
+                podSubnetId,
+                maxPods,
+                osType,
+                osSku,
+                maxCount,
+                minCount,
+                enableAutoScaling,
+                scaleDownMode,
+                agentPoolType,
+                mode,
+                orchestratorVersion,
+                currentOrchestratorVersion,
+                nodeImageVersion,
+                upgradeSettings,
+                provisioningState,
+                powerStateCode != null ? new ContainerServicePowerState(powerStateCode, serializedAdditionalRawData: null) : null,
+                availabilityZones?.ToList(),
+                enableNodePublicIP,
+                nodePublicIPPrefixId,
+                scaleSetPriority,
+                scaleSetEvictionPolicy,
+                spotMaxPrice,
+                tags,
+                nodeLabels,
+                nodeTaints?.ToList(),
+                proximityPlacementGroupId,
+                kubeletConfig,
+                linuxOSConfig,
+                enableEncryptionAtHost,
+                enableUltraSsd,
+                enableFips,
+                gpuInstanceProfile,
+                creationDataSourceResourceId != null ? new ContainerServiceCreationData(creationDataSourceResourceId, serializedAdditionalRawData: null) : null,
+                capacityReservationGroupId,
+                hostGroupId,
+                networkProfile,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ManagedClusterAddonProfile"/>. </summary>
@@ -271,7 +415,14 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <returns> A new <see cref="Models.ManagedClusterPodIdentity"/> instance for mocking. </returns>
         public static ManagedClusterPodIdentity ManagedClusterPodIdentity(string name = null, string @namespace = null, string bindingSelector = null, ContainerServiceUserAssignedIdentity identity = null, ManagedClusterPodIdentityProvisioningState? provisioningState = null, ResponseError errorDetail = null)
         {
-            return new ManagedClusterPodIdentity(name, @namespace, bindingSelector, identity, provisioningState, errorDetail != null ? new ManagedClusterPodIdentityProvisioningInfo(new ManagedClusterPodIdentityProvisioningError(errorDetail, serializedAdditionalRawData: null), serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
+            return new ManagedClusterPodIdentity(
+                name,
+                @namespace,
+                bindingSelector,
+                identity,
+                provisioningState,
+                errorDetail != null ? new ManagedClusterPodIdentityProvisioningInfo(new ManagedClusterPodIdentityProvisioningError(errorDetail, serializedAdditionalRawData: null), serializedAdditionalRawData: null) : null,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ManagedClusterOidcIssuerProfile"/>. </summary>
@@ -295,7 +446,14 @@ namespace Azure.ResourceManager.ContainerService.Models
         {
             requiredMembers ??= new List<string>();
 
-            return new ContainerServicePrivateLinkResourceData(id, name, resourceType, groupId, requiredMembers?.ToList(), privateLinkServiceId, serializedAdditionalRawData: null);
+            return new ContainerServicePrivateLinkResourceData(
+                id,
+                name,
+                resourceType,
+                groupId,
+                requiredMembers?.ToList(),
+                privateLinkServiceId,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerService.ManagedClusterUpgradeProfileData"/>. </summary>
@@ -310,7 +468,14 @@ namespace Azure.ResourceManager.ContainerService.Models
         {
             agentPoolProfiles ??= new List<ManagedClusterPoolUpgradeProfile>();
 
-            return new ManagedClusterUpgradeProfileData(id, name, resourceType, systemData, controlPlaneProfile, agentPoolProfiles?.ToList(), serializedAdditionalRawData: null);
+            return new ManagedClusterUpgradeProfileData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                controlPlaneProfile,
+                agentPoolProfiles?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ManagedClusterPoolUpgradeProfile"/>. </summary>
@@ -348,7 +513,15 @@ namespace Azure.ResourceManager.ContainerService.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ManagedClusterAccessProfile(id, name, resourceType, systemData, tags, location, kubeConfig, serializedAdditionalRawData: null);
+            return new ManagedClusterAccessProfile(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                kubeConfig,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ManagedClusterCredentials"/>. </summary>
@@ -384,7 +557,15 @@ namespace Azure.ResourceManager.ContainerService.Models
             timesInWeek ??= new List<ContainerServiceTimeInWeek>();
             notAllowedTimes ??= new List<ContainerServiceTimeSpan>();
 
-            return new ContainerServiceMaintenanceConfigurationData(id, name, resourceType, systemData, timesInWeek?.ToList(), notAllowedTimes?.ToList(), maintenanceWindow, serializedAdditionalRawData: null);
+            return new ContainerServiceMaintenanceConfigurationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                timesInWeek?.ToList(),
+                notAllowedTimes?.ToList(),
+                maintenanceWindow,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerService.ContainerServiceAgentPoolData"/>. </summary>
@@ -443,7 +624,55 @@ namespace Azure.ResourceManager.ContainerService.Models
             nodeLabels ??= new Dictionary<string, string>();
             nodeTaints ??= new List<string>();
 
-            return new ContainerServiceAgentPoolData(id, name, resourceType, systemData, count, vmSize, osDiskSizeInGB, osDiskType, kubeletDiskType, workloadRuntime, vnetSubnetId, podSubnetId, maxPods, osType, osSku, maxCount, minCount, enableAutoScaling, scaleDownMode, typePropertiesType, mode, orchestratorVersion, currentOrchestratorVersion, nodeImageVersion, upgradeSettings, provisioningState, powerStateCode != null ? new ContainerServicePowerState(powerStateCode, serializedAdditionalRawData: null) : null, availabilityZones?.ToList(), enableNodePublicIP, nodePublicIPPrefixId, scaleSetPriority, scaleSetEvictionPolicy, spotMaxPrice, tags, nodeLabels, nodeTaints?.ToList(), proximityPlacementGroupId, kubeletConfig, linuxOSConfig, enableEncryptionAtHost, enableUltraSsd, enableFips, gpuInstanceProfile, creationDataSourceResourceId != null ? new ContainerServiceCreationData(creationDataSourceResourceId, serializedAdditionalRawData: null) : null, capacityReservationGroupId, hostGroupId, networkProfile, serializedAdditionalRawData: null);
+            return new ContainerServiceAgentPoolData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                count,
+                vmSize,
+                osDiskSizeInGB,
+                osDiskType,
+                kubeletDiskType,
+                workloadRuntime,
+                vnetSubnetId,
+                podSubnetId,
+                maxPods,
+                osType,
+                osSku,
+                maxCount,
+                minCount,
+                enableAutoScaling,
+                scaleDownMode,
+                typePropertiesType,
+                mode,
+                orchestratorVersion,
+                currentOrchestratorVersion,
+                nodeImageVersion,
+                upgradeSettings,
+                provisioningState,
+                powerStateCode != null ? new ContainerServicePowerState(powerStateCode, serializedAdditionalRawData: null) : null,
+                availabilityZones?.ToList(),
+                enableNodePublicIP,
+                nodePublicIPPrefixId,
+                scaleSetPriority,
+                scaleSetEvictionPolicy,
+                spotMaxPrice,
+                tags,
+                nodeLabels,
+                nodeTaints?.ToList(),
+                proximityPlacementGroupId,
+                kubeletConfig,
+                linuxOSConfig,
+                enableEncryptionAtHost,
+                enableUltraSsd,
+                enableFips,
+                gpuInstanceProfile,
+                creationDataSourceResourceId != null ? new ContainerServiceCreationData(creationDataSourceResourceId, serializedAdditionalRawData: null) : null,
+                capacityReservationGroupId,
+                hostGroupId,
+                networkProfile,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerService.AgentPoolUpgradeProfileData"/>. </summary>
@@ -460,7 +689,16 @@ namespace Azure.ResourceManager.ContainerService.Models
         {
             upgrades ??= new List<AgentPoolUpgradeProfilePropertiesUpgradesItem>();
 
-            return new AgentPoolUpgradeProfileData(id, name, resourceType, systemData, kubernetesVersion, osType, upgrades?.ToList(), latestNodeImageVersion, serializedAdditionalRawData: null);
+            return new AgentPoolUpgradeProfileData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                kubernetesVersion,
+                osType,
+                upgrades?.ToList(),
+                latestNodeImageVersion,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AgentPoolUpgradeProfilePropertiesUpgradesItem"/>. </summary>
@@ -483,7 +721,13 @@ namespace Azure.ResourceManager.ContainerService.Models
         {
             agentPoolVersions ??= new List<AgentPoolAvailableVersion>();
 
-            return new AgentPoolAvailableVersions(id, name, resourceType, systemData, agentPoolVersions?.ToList(), serializedAdditionalRawData: null);
+            return new AgentPoolAvailableVersions(
+                id,
+                name,
+                resourceType,
+                systemData,
+                agentPoolVersions?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AgentPoolAvailableVersion"/>. </summary>
@@ -507,7 +751,15 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <returns> A new <see cref="ContainerService.ContainerServicePrivateEndpointConnectionData"/> instance for mocking. </returns>
         public static ContainerServicePrivateEndpointConnectionData ContainerServicePrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ContainerServicePrivateEndpointConnectionProvisioningState? provisioningState = null, ResourceIdentifier privateEndpointId = null, ContainerServicePrivateLinkServiceConnectionState connectionState = null)
         {
-            return new ContainerServicePrivateEndpointConnectionData(id, name, resourceType, systemData, provisioningState, privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null, connectionState, serializedAdditionalRawData: null);
+            return new ContainerServicePrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null,
+                connectionState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ManagedClusterRunCommandContent"/>. </summary>
@@ -531,7 +783,15 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <returns> A new <see cref="Models.ManagedClusterRunCommandResult"/> instance for mocking. </returns>
         public static ManagedClusterRunCommandResult ManagedClusterRunCommandResult(string id = null, string provisioningState = null, int? exitCode = null, DateTimeOffset? startedOn = null, DateTimeOffset? finishedOn = null, string logs = null, string reason = null)
         {
-            return new ManagedClusterRunCommandResult(id, provisioningState, exitCode, startedOn, finishedOn, logs, reason, serializedAdditionalRawData: null);
+            return new ManagedClusterRunCommandResult(
+                id,
+                provisioningState,
+                exitCode,
+                startedOn,
+                finishedOn,
+                logs,
+                reason,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerServiceOutboundEnvironmentEndpoint"/>. </summary>
@@ -587,7 +847,22 @@ namespace Azure.ResourceManager.ContainerService.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new AgentPoolSnapshotData(id, name, resourceType, systemData, tags, location, creationDataSourceResourceId != null ? new ContainerServiceCreationData(creationDataSourceResourceId, serializedAdditionalRawData: null) : null, snapshotType, kubernetesVersion, nodeImageVersion, osType, osSku, vmSize, enableFips, serializedAdditionalRawData: null);
+            return new AgentPoolSnapshotData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                creationDataSourceResourceId != null ? new ContainerServiceCreationData(creationDataSourceResourceId, serializedAdditionalRawData: null) : null,
+                snapshotType,
+                kubernetesVersion,
+                nodeImageVersion,
+                osType,
+                osSku,
+                vmSize,
+                enableFips,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerService.MeshRevisionProfileData"/>. </summary>
@@ -601,7 +876,13 @@ namespace Azure.ResourceManager.ContainerService.Models
         {
             meshRevisions ??= new List<MeshRevision>();
 
-            return new MeshRevisionProfileData(id, name, resourceType, systemData, meshRevisions != null ? new MeshRevisionProfileProperties(meshRevisions?.ToList(), serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
+            return new MeshRevisionProfileData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                meshRevisions != null ? new MeshRevisionProfileProperties(meshRevisions?.ToList(), serializedAdditionalRawData: null) : null,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerService.MeshUpgradeProfileData"/>. </summary>
@@ -613,7 +894,13 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <returns> A new <see cref="ContainerService.MeshUpgradeProfileData"/> instance for mocking. </returns>
         public static MeshUpgradeProfileData MeshUpgradeProfileData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MeshUpgradeProfileProperties properties = null)
         {
-            return new MeshUpgradeProfileData(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
+            return new MeshUpgradeProfileData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerService.ContainerServiceTrustedAccessRoleBindingData"/>. </summary>
@@ -629,7 +916,15 @@ namespace Azure.ResourceManager.ContainerService.Models
         {
             roles ??= new List<string>();
 
-            return new ContainerServiceTrustedAccessRoleBindingData(id, name, resourceType, systemData, provisioningState, sourceResourceId, roles?.ToList(), serializedAdditionalRawData: null);
+            return new ContainerServiceTrustedAccessRoleBindingData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                sourceResourceId,
+                roles?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerServiceTrustedAccessRole"/>. </summary>
@@ -659,7 +954,13 @@ namespace Azure.ResourceManager.ContainerService.Models
             resourceNames ??= new List<string>();
             nonResourceUrls ??= new List<string>();
 
-            return new ContainerServiceTrustedAccessRoleRule(verbs?.ToList(), apiGroups?.ToList(), resources?.ToList(), resourceNames?.ToList(), nonResourceUrls?.ToList(), serializedAdditionalRawData: null);
+            return new ContainerServiceTrustedAccessRoleRule(
+                verbs?.ToList(),
+                apiGroups?.ToList(),
+                resources?.ToList(),
+                resourceNames?.ToList(),
+                nonResourceUrls?.ToList(),
+                serializedAdditionalRawData: null);
         }
     }
 }

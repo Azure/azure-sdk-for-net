@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(AlertsCount))
+            if (options.Format != "W" && AlertsCount.HasValue)
             {
                 writer.WritePropertyName("alertsCount"u8);
                 writer.WriteNumberValue(AlertsCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(BookmarksCount))
+            if (options.Format != "W" && BookmarksCount.HasValue)
             {
                 writer.WritePropertyName("bookmarksCount"u8);
                 writer.WriteNumberValue(BookmarksCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CommentsCount))
+            if (options.Format != "W" && CommentsCount.HasValue)
             {
                 writer.WritePropertyName("commentsCount"u8);
                 writer.WriteNumberValue(CommentsCount.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AlertProductNames))
+            if (options.Format != "W" && !(AlertProductNames is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("alertProductNames"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Tactics))
+            if (options.Format != "W" && !(Tactics is ChangeTrackingList<SecurityInsightsAttackTactic> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("tactics"u8);
                 writer.WriteStartArray();
@@ -102,8 +102,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<int> alertsCount = default;
             Optional<int> bookmarksCount = default;
             Optional<int> commentsCount = default;
-            Optional<IReadOnlyList<string>> alertProductNames = default;
-            Optional<IReadOnlyList<SecurityInsightsAttackTactic>> tactics = default;
+            IReadOnlyList<string> alertProductNames = default;
+            IReadOnlyList<SecurityInsightsAttackTactic> tactics = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -169,7 +169,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsIncidentAdditionalInfo(Optional.ToNullable(alertsCount), Optional.ToNullable(bookmarksCount), Optional.ToNullable(commentsCount), Optional.ToList(alertProductNames), Optional.ToList(tactics), serializedAdditionalRawData);
+            return new SecurityInsightsIncidentAdditionalInfo(
+                Optional.ToNullable(alertsCount),
+                Optional.ToNullable(bookmarksCount),
+                Optional.ToNullable(commentsCount),
+                alertProductNames ?? new ChangeTrackingList<string>(),
+                tactics ?? new ChangeTrackingList<SecurityInsightsAttackTactic>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityInsightsIncidentAdditionalInfo>.Write(ModelReaderWriterOptions options)

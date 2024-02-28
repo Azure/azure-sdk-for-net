@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
-            if (Optional.IsDefined(Error))
+            if (Error != null)
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    properties = ExchangeResultProperties.DeserializeExchangeResultProperties(property.Value);
+                    properties = ExchangeResultProperties.DeserializeExchangeResultProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("error"u8))
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    error = OperationResultError.DeserializeOperationResultError(property.Value);
+                    error = OperationResultError.DeserializeOperationResultError(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -145,7 +145,13 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExchangeResult(id.Value, name.Value, Optional.ToNullable(status), properties.Value, error.Value, serializedAdditionalRawData);
+            return new ExchangeResult(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(status),
+                properties.Value,
+                error.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExchangeResult>.Write(ModelReaderWriterOptions options)

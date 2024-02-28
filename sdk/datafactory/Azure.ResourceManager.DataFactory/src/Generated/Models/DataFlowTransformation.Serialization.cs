@@ -29,22 +29,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Dataset))
+            if (Dataset != null)
             {
                 writer.WritePropertyName("dataset"u8);
                 writer.WriteObjectValue(Dataset);
             }
-            if (Optional.IsDefined(LinkedService))
+            if (LinkedService != null)
             {
                 writer.WritePropertyName("linkedService"u8);
                 JsonSerializer.Serialize(writer, LinkedService);
             }
-            if (Optional.IsDefined(Flowlet))
+            if (Flowlet != null)
             {
                 writer.WritePropertyName("flowlet"u8);
                 writer.WriteObjectValue(Flowlet);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    dataset = DatasetReference.DeserializeDatasetReference(property.Value);
+                    dataset = DatasetReference.DeserializeDatasetReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("linkedService"u8))
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    flowlet = DataFlowReference.DeserializeDataFlowReference(property.Value);
+                    flowlet = DataFlowReference.DeserializeDataFlowReference(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +139,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataFlowTransformation(name, description.Value, dataset.Value, linkedService, flowlet.Value, serializedAdditionalRawData);
+            return new DataFlowTransformation(
+                name,
+                description.Value,
+                dataset.Value,
+                linkedService,
+                flowlet.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataFlowTransformation>.Write(ModelReaderWriterOptions options)

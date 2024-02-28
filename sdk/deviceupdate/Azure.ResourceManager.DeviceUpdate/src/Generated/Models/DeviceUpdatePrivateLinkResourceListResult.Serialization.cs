@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<DeviceUpdatePrivateLinkData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DeviceUpdatePrivateLinkData>> value = default;
+            IReadOnlyList<DeviceUpdatePrivateLinkData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                     List<DeviceUpdatePrivateLinkData> array = new List<DeviceUpdatePrivateLinkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeviceUpdatePrivateLinkData.DeserializeDeviceUpdatePrivateLinkData(item));
+                        array.Add(DeviceUpdatePrivateLinkData.DeserializeDeviceUpdatePrivateLinkData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeviceUpdatePrivateLinkResourceListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new DeviceUpdatePrivateLinkResourceListResult(value ?? new ChangeTrackingList<DeviceUpdatePrivateLinkData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeviceUpdatePrivateLinkResourceListResult>.Write(ModelReaderWriterOptions options)

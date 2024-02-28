@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Query))
+            if (Query != null)
             {
                 if (Query != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("query");
                 }
             }
-            if (Optional.IsDefined(StoredProcedure))
+            if (StoredProcedure != null)
             {
                 if (StoredProcedure != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("storedProcedure");
                 }
             }
-            if (Optional.IsCollectionDefined(StoredProcedureParams))
+            if (!(StoredProcedureParams is ChangeTrackingList<IDictionary<string, string>> collection && collection.IsUndefined))
             {
                 if (StoredProcedureParams != null)
                 {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("storedProcedureParams");
                 }
             }
-            if (Optional.IsDefined(TableName))
+            if (TableName != null)
             {
                 if (TableName != null)
                 {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("tableName");
                 }
             }
-            if (Optional.IsDefined(Connection))
+            if (Connection != null)
             {
                 if (Connection != null)
                 {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             Optional<string> query = default;
             Optional<string> storedProcedure = default;
-            Optional<IList<IDictionary<string, string>>> storedProcedureParams = default;
+            IList<IDictionary<string, string>> storedProcedureParams = default;
             Optional<string> tableName = default;
             Optional<string> connection = default;
             DataImportSourceType sourceType = default;
@@ -230,7 +230,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatabaseSource(connection.Value, sourceType, serializedAdditionalRawData, query.Value, storedProcedure.Value, Optional.ToList(storedProcedureParams), tableName.Value);
+            return new DatabaseSource(
+                connection.Value,
+                sourceType,
+                serializedAdditionalRawData,
+                query.Value,
+                storedProcedure.Value,
+                storedProcedureParams ?? new ChangeTrackingList<IDictionary<string, string>>(),
+                tableName.Value);
         }
 
         BinaryData IPersistableModel<DatabaseSource>.Write(ModelReaderWriterOptions options)

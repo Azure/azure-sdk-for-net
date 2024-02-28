@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<ServiceBusPrivateEndpointConnectionData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ServiceBusPrivateEndpointConnectionData>> value = default;
+            IReadOnlyList<ServiceBusPrivateEndpointConnectionData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     List<ServiceBusPrivateEndpointConnectionData> array = new List<ServiceBusPrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceBusPrivateEndpointConnectionData.DeserializeServiceBusPrivateEndpointConnectionData(item));
+                        array.Add(ServiceBusPrivateEndpointConnectionData.DeserializeServiceBusPrivateEndpointConnectionData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceBusPrivateEndpointConnectionListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ServiceBusPrivateEndpointConnectionListResult(value ?? new ChangeTrackingList<ServiceBusPrivateEndpointConnectionData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceBusPrivateEndpointConnectionListResult>.Write(ModelReaderWriterOptions options)

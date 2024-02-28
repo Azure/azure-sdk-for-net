@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(StorageType))
+            if (StorageType.HasValue)
             {
                 writer.WritePropertyName("storageType"u8);
                 writer.WriteStringValue(StorageType.Value.ToString());
             }
-            if (Optional.IsDefined(StorageName))
+            if (StorageName != null)
             {
                 writer.WritePropertyName("storageName"u8);
                 writer.WriteStringValue(StorageName);
             }
-            if (Optional.IsCollectionDefined(Secrets))
+            if (!(Secrets is ChangeTrackingList<SecretVolumeItem> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("secrets"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(MountOptions))
+            if (MountOptions != null)
             {
                 writer.WritePropertyName("mountOptions"u8);
                 writer.WriteStringValue(MountOptions);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<string> name = default;
             Optional<ContainerAppStorageType> storageType = default;
             Optional<string> storageName = default;
-            Optional<IList<SecretVolumeItem>> secrets = default;
+            IList<SecretVolumeItem> secrets = default;
             Optional<string> mountOptions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<SecretVolumeItem> array = new List<SecretVolumeItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecretVolumeItem.DeserializeSecretVolumeItem(item));
+                        array.Add(SecretVolumeItem.DeserializeSecretVolumeItem(item, options));
                     }
                     secrets = array;
                     continue;
@@ -147,7 +147,13 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppVolume(name.Value, Optional.ToNullable(storageType), storageName.Value, Optional.ToList(secrets), mountOptions.Value, serializedAdditionalRawData);
+            return new ContainerAppVolume(
+                name.Value,
+                Optional.ToNullable(storageType),
+                storageName.Value,
+                secrets ?? new ChangeTrackingList<SecretVolumeItem>(),
+                mountOptions.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppVolume>.Write(ModelReaderWriterOptions options)

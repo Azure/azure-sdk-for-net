@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ImageNames))
+            if (!(ImageNames is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("imageNames"u8);
                 writer.WriteStartArray();
@@ -36,22 +36,22 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsPushEnabled))
+            if (IsPushEnabled.HasValue)
             {
                 writer.WritePropertyName("isPushEnabled"u8);
                 writer.WriteBooleanValue(IsPushEnabled.Value);
             }
-            if (Optional.IsDefined(NoCache))
+            if (NoCache.HasValue)
             {
                 writer.WritePropertyName("noCache"u8);
                 writer.WriteBooleanValue(NoCache.Value);
             }
-            if (Optional.IsDefined(DockerFilePath))
+            if (DockerFilePath != null)
             {
                 writer.WritePropertyName("dockerFilePath"u8);
                 writer.WriteStringValue(DockerFilePath);
             }
-            if (Optional.IsCollectionDefined(Arguments))
+            if (!(Arguments is ChangeTrackingList<ContainerRegistryRunArgument> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("arguments"u8);
                 writer.WriteStartArray();
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Target))
+            if (Target != null)
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(StepType.ToString());
-            if (Optional.IsDefined(ContextPath))
+            if (ContextPath != null)
             {
                 writer.WritePropertyName("contextPath"u8);
                 writer.WriteStringValue(ContextPath);
             }
-            if (Optional.IsDefined(ContextAccessToken))
+            if (ContextAccessToken != null)
             {
                 writer.WritePropertyName("contextAccessToken"u8);
                 writer.WriteStringValue(ContextAccessToken);
@@ -116,11 +116,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<IList<string>> imageNames = default;
+            IList<string> imageNames = default;
             Optional<bool> isPushEnabled = default;
             Optional<bool> noCache = default;
             Optional<string> dockerFilePath = default;
-            Optional<IList<ContainerRegistryRunArgument>> arguments = default;
+            IList<ContainerRegistryRunArgument> arguments = default;
             Optional<string> target = default;
             ContainerRegistryTaskStepType type = default;
             Optional<string> contextPath = default;
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     List<ContainerRegistryRunArgument> array = new List<ContainerRegistryRunArgument>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerRegistryRunArgument.DeserializeContainerRegistryRunArgument(item));
+                        array.Add(ContainerRegistryRunArgument.DeserializeContainerRegistryRunArgument(item, options));
                     }
                     arguments = array;
                     continue;
@@ -206,7 +206,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryDockerBuildStepUpdateContent(type, contextPath.Value, contextAccessToken.Value, serializedAdditionalRawData, Optional.ToList(imageNames), Optional.ToNullable(isPushEnabled), Optional.ToNullable(noCache), dockerFilePath.Value, Optional.ToList(arguments), target.Value);
+            return new ContainerRegistryDockerBuildStepUpdateContent(
+                type,
+                contextPath.Value,
+                contextAccessToken.Value,
+                serializedAdditionalRawData,
+                imageNames ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(isPushEnabled),
+                Optional.ToNullable(noCache),
+                dockerFilePath.Value,
+                arguments ?? new ChangeTrackingList<ContainerRegistryRunArgument>(),
+                target.Value);
         }
 
         BinaryData IPersistableModel<ContainerRegistryDockerBuildStepUpdateContent>.Write(ModelReaderWriterOptions options)

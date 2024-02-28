@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 if (ProvisioningState != null)
                 {
@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     writer.WriteNull("provisioningState");
                 }
             }
-            if (Optional.IsDefined(PrivateEndpoint))
+            if (PrivateEndpoint != null)
             {
                 writer.WritePropertyName("privateEndpoint"u8);
                 JsonSerializer.Serialize(writer, PrivateEndpoint);
             }
-            if (Optional.IsCollectionDefined(GroupIds))
+            if (!(GroupIds is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("groupIds"u8);
                 writer.WriteStartArray();
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PrivateLinkServiceConnectionState))
+            if (PrivateLinkServiceConnectionState != null)
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
                 writer.WriteObjectValue(PrivateLinkServiceConnectionState);
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             }
             Optional<DigitalTwinsPrivateLinkResourceProvisioningState?> provisioningState = default;
             Optional<SubResource> privateEndpoint = default;
-            Optional<IList<string>> groupIds = default;
+            IList<string> groupIds = default;
             Optional<DigitalTwinsPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     {
                         continue;
                     }
-                    privateLinkServiceConnectionState = DigitalTwinsPrivateLinkServiceConnectionState.DeserializeDigitalTwinsPrivateLinkServiceConnectionState(property.Value);
+                    privateLinkServiceConnectionState = DigitalTwinsPrivateLinkServiceConnectionState.DeserializeDigitalTwinsPrivateLinkServiceConnectionState(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DigitalTwinsPrivateEndpointConnectionProperties(Optional.ToNullable(provisioningState), privateEndpoint, Optional.ToList(groupIds), privateLinkServiceConnectionState.Value, serializedAdditionalRawData);
+            return new DigitalTwinsPrivateEndpointConnectionProperties(Optional.ToNullable(provisioningState), privateEndpoint, groupIds ?? new ChangeTrackingList<string>(), privateLinkServiceConnectionState.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DigitalTwinsPrivateEndpointConnectionProperties>.Write(ModelReaderWriterOptions options)

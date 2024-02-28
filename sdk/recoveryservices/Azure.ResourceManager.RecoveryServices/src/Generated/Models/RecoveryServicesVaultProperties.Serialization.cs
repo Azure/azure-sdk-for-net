@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (Optional.IsDefined(UpgradeDetails))
+            if (UpgradeDetails != null)
             {
                 writer.WritePropertyName("upgradeDetails"u8);
                 writer.WriteObjectValue(UpgradeDetails);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
+            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<RecoveryServicesPrivateEndpointConnectionVaultProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -46,62 +46,62 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(PrivateEndpointStateForBackup))
+            if (options.Format != "W" && PrivateEndpointStateForBackup.HasValue)
             {
                 writer.WritePropertyName("privateEndpointStateForBackup"u8);
                 writer.WriteStringValue(PrivateEndpointStateForBackup.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(PrivateEndpointStateForSiteRecovery))
+            if (options.Format != "W" && PrivateEndpointStateForSiteRecovery.HasValue)
             {
                 writer.WritePropertyName("privateEndpointStateForSiteRecovery"u8);
                 writer.WriteStringValue(PrivateEndpointStateForSiteRecovery.Value.ToString());
             }
-            if (Optional.IsDefined(Encryption))
+            if (Encryption != null)
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
-            if (Optional.IsDefined(MoveDetails))
+            if (MoveDetails != null)
             {
                 writer.WritePropertyName("moveDetails"u8);
                 writer.WriteObjectValue(MoveDetails);
             }
-            if (options.Format != "W" && Optional.IsDefined(MoveState))
+            if (options.Format != "W" && MoveState.HasValue)
             {
                 writer.WritePropertyName("moveState"u8);
                 writer.WriteStringValue(MoveState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(BackupStorageVersion))
+            if (options.Format != "W" && BackupStorageVersion.HasValue)
             {
                 writer.WritePropertyName("backupStorageVersion"u8);
                 writer.WriteStringValue(BackupStorageVersion.Value.ToString());
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (PublicNetworkAccess.HasValue)
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Optional.IsDefined(MonitoringSettings))
+            if (MonitoringSettings != null)
             {
                 writer.WritePropertyName("monitoringSettings"u8);
                 writer.WriteObjectValue(MonitoringSettings);
             }
-            if (Optional.IsDefined(RestoreSettings))
+            if (RestoreSettings != null)
             {
                 writer.WritePropertyName("restoreSettings"u8);
                 writer.WriteObjectValue(RestoreSettings);
             }
-            if (Optional.IsDefined(RedundancySettings))
+            if (RedundancySettings != null)
             {
                 writer.WritePropertyName("redundancySettings"u8);
                 writer.WriteObjectValue(RedundancySettings);
             }
-            if (Optional.IsDefined(SecuritySettings))
+            if (SecuritySettings != null)
             {
                 writer.WritePropertyName("securitySettings"u8);
                 writer.WriteObjectValue(SecuritySettings);
             }
-            if (options.Format != "W" && Optional.IsDefined(SecureScore))
+            if (options.Format != "W" && SecureScore.HasValue)
             {
                 writer.WritePropertyName("secureScore"u8);
                 writer.WriteStringValue(SecureScore.Value.ToString());
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
             Optional<string> provisioningState = default;
             Optional<VaultUpgradeDetails> upgradeDetails = default;
-            Optional<IReadOnlyList<RecoveryServicesPrivateEndpointConnectionVaultProperties>> privateEndpointConnections = default;
+            IReadOnlyList<RecoveryServicesPrivateEndpointConnectionVaultProperties> privateEndpointConnections = default;
             Optional<VaultPrivateEndpointState> privateEndpointStateForBackup = default;
             Optional<VaultPrivateEndpointState> privateEndpointStateForSiteRecovery = default;
             Optional<VaultPropertiesEncryption> encryption = default;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    upgradeDetails = VaultUpgradeDetails.DeserializeVaultUpgradeDetails(property.Value);
+                    upgradeDetails = VaultUpgradeDetails.DeserializeVaultUpgradeDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("privateEndpointConnections"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     List<RecoveryServicesPrivateEndpointConnectionVaultProperties> array = new List<RecoveryServicesPrivateEndpointConnectionVaultProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RecoveryServicesPrivateEndpointConnectionVaultProperties.DeserializeRecoveryServicesPrivateEndpointConnectionVaultProperties(item));
+                        array.Add(RecoveryServicesPrivateEndpointConnectionVaultProperties.DeserializeRecoveryServicesPrivateEndpointConnectionVaultProperties(item, options));
                     }
                     privateEndpointConnections = array;
                     continue;
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    encryption = VaultPropertiesEncryption.DeserializeVaultPropertiesEncryption(property.Value);
+                    encryption = VaultPropertiesEncryption.DeserializeVaultPropertiesEncryption(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("moveDetails"u8))
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    moveDetails = VaultPropertiesMoveDetails.DeserializeVaultPropertiesMoveDetails(property.Value);
+                    moveDetails = VaultPropertiesMoveDetails.DeserializeVaultPropertiesMoveDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("moveState"u8))
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    monitoringSettings = VaultMonitoringSettings.DeserializeVaultMonitoringSettings(property.Value);
+                    monitoringSettings = VaultMonitoringSettings.DeserializeVaultMonitoringSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("restoreSettings"u8))
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    restoreSettings = RestoreSettings.DeserializeRestoreSettings(property.Value);
+                    restoreSettings = RestoreSettings.DeserializeRestoreSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("redundancySettings"u8))
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    redundancySettings = VaultPropertiesRedundancySettings.DeserializeVaultPropertiesRedundancySettings(property.Value);
+                    redundancySettings = VaultPropertiesRedundancySettings.DeserializeVaultPropertiesRedundancySettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("securitySettings"u8))
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    securitySettings = RecoveryServicesSecuritySettings.DeserializeRecoveryServicesSecuritySettings(property.Value);
+                    securitySettings = RecoveryServicesSecuritySettings.DeserializeRecoveryServicesSecuritySettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("secureScore"u8))
@@ -305,7 +305,23 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecoveryServicesVaultProperties(provisioningState.Value, upgradeDetails.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(privateEndpointStateForBackup), Optional.ToNullable(privateEndpointStateForSiteRecovery), encryption.Value, moveDetails.Value, Optional.ToNullable(moveState), Optional.ToNullable(backupStorageVersion), Optional.ToNullable(publicNetworkAccess), monitoringSettings.Value, restoreSettings.Value, redundancySettings.Value, securitySettings.Value, Optional.ToNullable(secureScore), serializedAdditionalRawData);
+            return new RecoveryServicesVaultProperties(
+                provisioningState.Value,
+                upgradeDetails.Value,
+                privateEndpointConnections ?? new ChangeTrackingList<RecoveryServicesPrivateEndpointConnectionVaultProperties>(),
+                Optional.ToNullable(privateEndpointStateForBackup),
+                Optional.ToNullable(privateEndpointStateForSiteRecovery),
+                encryption.Value,
+                moveDetails.Value,
+                Optional.ToNullable(moveState),
+                Optional.ToNullable(backupStorageVersion),
+                Optional.ToNullable(publicNetworkAccess),
+                monitoringSettings.Value,
+                restoreSettings.Value,
+                redundancySettings.Value,
+                securitySettings.Value,
+                Optional.ToNullable(secureScore),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecoveryServicesVaultProperties>.Write(ModelReaderWriterOptions options)

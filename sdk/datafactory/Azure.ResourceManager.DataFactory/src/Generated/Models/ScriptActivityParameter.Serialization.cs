@@ -27,27 +27,27 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 JsonSerializer.Serialize(writer, Name);
             }
-            if (Optional.IsDefined(ParameterType))
+            if (ParameterType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ParameterType.Value.ToString());
             }
-            if (Optional.IsDefined(Value))
+            if (Value != null)
             {
                 writer.WritePropertyName("value"u8);
                 JsonSerializer.Serialize(writer, Value);
             }
-            if (Optional.IsDefined(Direction))
+            if (Direction.HasValue)
             {
                 writer.WritePropertyName("direction"u8);
                 writer.WriteStringValue(Direction.Value.ToString());
             }
-            if (Optional.IsDefined(Size))
+            if (Size.HasValue)
             {
                 writer.WritePropertyName("size"u8);
                 writer.WriteNumberValue(Size.Value);
@@ -150,7 +150,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScriptActivityParameter(name.Value, Optional.ToNullable(type), value.Value, Optional.ToNullable(direction), Optional.ToNullable(size), serializedAdditionalRawData);
+            return new ScriptActivityParameter(
+                name.Value,
+                Optional.ToNullable(type),
+                value.Value,
+                Optional.ToNullable(direction),
+                Optional.ToNullable(size),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScriptActivityParameter>.Write(ModelReaderWriterOptions options)

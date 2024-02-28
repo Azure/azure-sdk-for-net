@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(MinValue))
+            if (options.Format != "W" && MinValue.HasValue)
             {
                 writer.WritePropertyName("minValue"u8);
                 writer.WriteNumberValue(MinValue.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MaxValue))
+            if (options.Format != "W" && MaxValue.HasValue)
             {
                 writer.WritePropertyName("maxValue"u8);
                 writer.WriteNumberValue(MaxValue.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(StepSize))
+            if (options.Format != "W" && StepSize.HasValue)
             {
                 writer.WritePropertyName("stepSize"u8);
                 writer.WriteNumberValue(StepSize.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Default))
+            if (options.Format != "W" && Default.HasValue)
             {
                 writer.WritePropertyName("default"u8);
                 writer.WriteNumberValue(Default.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Unit))
+            if (options.Format != "W" && Unit.HasValue)
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DoNotPauseValue))
+            if (options.Format != "W" && DoNotPauseValue.HasValue)
             {
                 writer.WritePropertyName("doNotPauseValue"u8);
                 writer.WriteNumberValue(DoNotPauseValue.Value);
@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutoPauseDelayTimeRange(Optional.ToNullable(minValue), Optional.ToNullable(maxValue), Optional.ToNullable(stepSize), Optional.ToNullable(@default), Optional.ToNullable(unit), Optional.ToNullable(doNotPauseValue), serializedAdditionalRawData);
+            return new AutoPauseDelayTimeRange(
+                Optional.ToNullable(minValue),
+                Optional.ToNullable(maxValue),
+                Optional.ToNullable(stepSize),
+                Optional.ToNullable(@default),
+                Optional.ToNullable(unit),
+                Optional.ToNullable(doNotPauseValue),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutoPauseDelayTimeRange>.Write(ModelReaderWriterOptions options)

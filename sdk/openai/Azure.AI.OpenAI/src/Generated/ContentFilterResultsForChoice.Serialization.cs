@@ -27,32 +27,32 @@ namespace Azure.AI.OpenAI
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sexual))
+            if (Sexual != null)
             {
                 writer.WritePropertyName("sexual"u8);
                 writer.WriteObjectValue(Sexual);
             }
-            if (Optional.IsDefined(Violence))
+            if (Violence != null)
             {
                 writer.WritePropertyName("violence"u8);
                 writer.WriteObjectValue(Violence);
             }
-            if (Optional.IsDefined(Hate))
+            if (Hate != null)
             {
                 writer.WritePropertyName("hate"u8);
                 writer.WriteObjectValue(Hate);
             }
-            if (Optional.IsDefined(SelfHarm))
+            if (SelfHarm != null)
             {
                 writer.WritePropertyName("self_harm"u8);
                 writer.WriteObjectValue(SelfHarm);
             }
-            if (Optional.IsDefined(Profanity))
+            if (Profanity != null)
             {
                 writer.WritePropertyName("profanity"u8);
                 writer.WriteObjectValue(Profanity);
             }
-            if (Optional.IsCollectionDefined(CustomBlocklists))
+            if (!(CustomBlocklists is ChangeTrackingList<ContentFilterBlocklistIdResult> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("custom_blocklists"u8);
                 writer.WriteStartArray();
@@ -62,17 +62,17 @@ namespace Azure.AI.OpenAI
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Error))
+            if (Error != null)
             {
                 writer.WritePropertyName("error"u8);
                 JsonSerializer.Serialize(writer, Error);
             }
-            if (Optional.IsDefined(ProtectedMaterialText))
+            if (ProtectedMaterialText != null)
             {
                 writer.WritePropertyName("protected_material_text"u8);
                 writer.WriteObjectValue(ProtectedMaterialText);
             }
-            if (Optional.IsDefined(ProtectedMaterialCode))
+            if (ProtectedMaterialCode != null)
             {
                 writer.WritePropertyName("protected_material_code"u8);
                 writer.WriteObjectValue(ProtectedMaterialCode);
@@ -120,7 +120,7 @@ namespace Azure.AI.OpenAI
             Optional<ContentFilterResult> hate = default;
             Optional<ContentFilterResult> selfHarm = default;
             Optional<ContentFilterDetectionResult> profanity = default;
-            Optional<IReadOnlyList<ContentFilterBlocklistIdResult>> customBlocklists = default;
+            IReadOnlyList<ContentFilterBlocklistIdResult> customBlocklists = default;
             Optional<ResponseError> error = default;
             Optional<ContentFilterDetectionResult> protectedMaterialText = default;
             Optional<ContentFilterCitedDetectionResult> protectedMaterialCode = default;
@@ -134,7 +134,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    sexual = ContentFilterResult.DeserializeContentFilterResult(property.Value);
+                    sexual = ContentFilterResult.DeserializeContentFilterResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("violence"u8))
@@ -143,7 +143,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    violence = ContentFilterResult.DeserializeContentFilterResult(property.Value);
+                    violence = ContentFilterResult.DeserializeContentFilterResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("hate"u8))
@@ -152,7 +152,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    hate = ContentFilterResult.DeserializeContentFilterResult(property.Value);
+                    hate = ContentFilterResult.DeserializeContentFilterResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("self_harm"u8))
@@ -161,7 +161,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    selfHarm = ContentFilterResult.DeserializeContentFilterResult(property.Value);
+                    selfHarm = ContentFilterResult.DeserializeContentFilterResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("profanity"u8))
@@ -170,7 +170,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    profanity = ContentFilterDetectionResult.DeserializeContentFilterDetectionResult(property.Value);
+                    profanity = ContentFilterDetectionResult.DeserializeContentFilterDetectionResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("custom_blocklists"u8))
@@ -182,7 +182,7 @@ namespace Azure.AI.OpenAI
                     List<ContentFilterBlocklistIdResult> array = new List<ContentFilterBlocklistIdResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContentFilterBlocklistIdResult.DeserializeContentFilterBlocklistIdResult(item));
+                        array.Add(ContentFilterBlocklistIdResult.DeserializeContentFilterBlocklistIdResult(item, options));
                     }
                     customBlocklists = array;
                     continue;
@@ -202,7 +202,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    protectedMaterialText = ContentFilterDetectionResult.DeserializeContentFilterDetectionResult(property.Value);
+                    protectedMaterialText = ContentFilterDetectionResult.DeserializeContentFilterDetectionResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("protected_material_code"u8))
@@ -211,7 +211,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    protectedMaterialCode = ContentFilterCitedDetectionResult.DeserializeContentFilterCitedDetectionResult(property.Value);
+                    protectedMaterialCode = ContentFilterCitedDetectionResult.DeserializeContentFilterCitedDetectionResult(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -220,7 +220,17 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContentFilterResultsForChoice(sexual.Value, violence.Value, hate.Value, selfHarm.Value, profanity.Value, Optional.ToList(customBlocklists), error.Value, protectedMaterialText.Value, protectedMaterialCode.Value, serializedAdditionalRawData);
+            return new ContentFilterResultsForChoice(
+                sexual.Value,
+                violence.Value,
+                hate.Value,
+                selfHarm.Value,
+                profanity.Value,
+                customBlocklists ?? new ChangeTrackingList<ContentFilterBlocklistIdResult>(),
+                error.Value,
+                protectedMaterialText.Value,
+                protectedMaterialCode.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContentFilterResultsForChoice>.Write(ModelReaderWriterOptions options)

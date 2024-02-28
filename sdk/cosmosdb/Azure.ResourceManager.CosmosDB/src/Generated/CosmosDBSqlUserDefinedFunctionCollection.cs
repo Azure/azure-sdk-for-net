@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="userDefinedFunctionName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<CosmosDBSqlUserDefinedFunctionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string userDefinedFunctionName, CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(userDefinedFunctionName, nameof(userDefinedFunctionName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (userDefinedFunctionName == null)
+            {
+                throw new ArgumentNullException(nameof(userDefinedFunctionName));
+            }
+            if (userDefinedFunctionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(userDefinedFunctionName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _cosmosDBSqlUserDefinedFunctionSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlUserDefinedFunctionCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="userDefinedFunctionName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<CosmosDBSqlUserDefinedFunctionResource> CreateOrUpdate(WaitUntil waitUntil, string userDefinedFunctionName, CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(userDefinedFunctionName, nameof(userDefinedFunctionName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (userDefinedFunctionName == null)
+            {
+                throw new ArgumentNullException(nameof(userDefinedFunctionName));
+            }
+            if (userDefinedFunctionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(userDefinedFunctionName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _cosmosDBSqlUserDefinedFunctionSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlUserDefinedFunctionCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="userDefinedFunctionName"/> is null. </exception>
         public virtual async Task<Response<CosmosDBSqlUserDefinedFunctionResource>> GetAsync(string userDefinedFunctionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(userDefinedFunctionName, nameof(userDefinedFunctionName));
+            if (userDefinedFunctionName == null)
+            {
+                throw new ArgumentNullException(nameof(userDefinedFunctionName));
+            }
+            if (userDefinedFunctionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(userDefinedFunctionName));
+            }
 
             using var scope = _cosmosDBSqlUserDefinedFunctionSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlUserDefinedFunctionCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="userDefinedFunctionName"/> is null. </exception>
         public virtual Response<CosmosDBSqlUserDefinedFunctionResource> Get(string userDefinedFunctionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(userDefinedFunctionName, nameof(userDefinedFunctionName));
+            if (userDefinedFunctionName == null)
+            {
+                throw new ArgumentNullException(nameof(userDefinedFunctionName));
+            }
+            if (userDefinedFunctionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(userDefinedFunctionName));
+            }
 
             using var scope = _cosmosDBSqlUserDefinedFunctionSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlUserDefinedFunctionCollection.Get");
             scope.Start();
@@ -327,7 +361,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="userDefinedFunctionName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string userDefinedFunctionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(userDefinedFunctionName, nameof(userDefinedFunctionName));
+            if (userDefinedFunctionName == null)
+            {
+                throw new ArgumentNullException(nameof(userDefinedFunctionName));
+            }
+            if (userDefinedFunctionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(userDefinedFunctionName));
+            }
 
             using var scope = _cosmosDBSqlUserDefinedFunctionSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlUserDefinedFunctionCollection.Exists");
             scope.Start();
@@ -370,7 +411,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="userDefinedFunctionName"/> is null. </exception>
         public virtual Response<bool> Exists(string userDefinedFunctionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(userDefinedFunctionName, nameof(userDefinedFunctionName));
+            if (userDefinedFunctionName == null)
+            {
+                throw new ArgumentNullException(nameof(userDefinedFunctionName));
+            }
+            if (userDefinedFunctionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(userDefinedFunctionName));
+            }
 
             using var scope = _cosmosDBSqlUserDefinedFunctionSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlUserDefinedFunctionCollection.Exists");
             scope.Start();
@@ -413,7 +461,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="userDefinedFunctionName"/> is null. </exception>
         public virtual async Task<NullableResponse<CosmosDBSqlUserDefinedFunctionResource>> GetIfExistsAsync(string userDefinedFunctionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(userDefinedFunctionName, nameof(userDefinedFunctionName));
+            if (userDefinedFunctionName == null)
+            {
+                throw new ArgumentNullException(nameof(userDefinedFunctionName));
+            }
+            if (userDefinedFunctionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(userDefinedFunctionName));
+            }
 
             using var scope = _cosmosDBSqlUserDefinedFunctionSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlUserDefinedFunctionCollection.GetIfExists");
             scope.Start();
@@ -458,7 +513,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="userDefinedFunctionName"/> is null. </exception>
         public virtual NullableResponse<CosmosDBSqlUserDefinedFunctionResource> GetIfExists(string userDefinedFunctionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(userDefinedFunctionName, nameof(userDefinedFunctionName));
+            if (userDefinedFunctionName == null)
+            {
+                throw new ArgumentNullException(nameof(userDefinedFunctionName));
+            }
+            if (userDefinedFunctionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(userDefinedFunctionName));
+            }
 
             using var scope = _cosmosDBSqlUserDefinedFunctionSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlUserDefinedFunctionCollection.GetIfExists");
             scope.Start();

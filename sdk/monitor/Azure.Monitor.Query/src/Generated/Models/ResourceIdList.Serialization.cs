@@ -15,7 +15,7 @@ namespace Azure.Monitor.Query.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Resourceids))
+            if (!(Resourceids is ChangeTrackingList<ResourceIdentifier> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("resourceids"u8);
                 writer.WriteStartArray();

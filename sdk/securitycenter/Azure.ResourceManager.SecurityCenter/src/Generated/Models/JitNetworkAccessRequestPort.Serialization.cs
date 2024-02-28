@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartObject();
             writer.WritePropertyName("number"u8);
             writer.WriteNumberValue(Number);
-            if (Optional.IsDefined(AllowedSourceAddressPrefix))
+            if (AllowedSourceAddressPrefix != null)
             {
                 writer.WritePropertyName("allowedSourceAddressPrefix"u8);
                 writer.WriteStringValue(AllowedSourceAddressPrefix);
             }
-            if (Optional.IsCollectionDefined(AllowedSourceAddressPrefixes))
+            if (!(AllowedSourceAddressPrefixes is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("allowedSourceAddressPrefixes"u8);
                 writer.WriteStartArray();
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStringValue(Status.ToString());
             writer.WritePropertyName("statusReason"u8);
             writer.WriteStringValue(StatusReason.ToString());
-            if (Optional.IsDefined(MappedPort))
+            if (MappedPort.HasValue)
             {
                 writer.WritePropertyName("mappedPort"u8);
                 writer.WriteNumberValue(MappedPort.Value);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             int number = default;
             Optional<string> allowedSourceAddressPrefix = default;
-            Optional<IList<string>> allowedSourceAddressPrefixes = default;
+            IList<string> allowedSourceAddressPrefixes = default;
             DateTimeOffset endTimeUtc = default;
             JitNetworkAccessPortStatus status = default;
             JitNetworkAccessPortStatusReason statusReason = default;
@@ -157,7 +157,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JitNetworkAccessRequestPort(number, allowedSourceAddressPrefix.Value, Optional.ToList(allowedSourceAddressPrefixes), endTimeUtc, status, statusReason, Optional.ToNullable(mappedPort), serializedAdditionalRawData);
+            return new JitNetworkAccessRequestPort(
+                number,
+                allowedSourceAddressPrefix.Value,
+                allowedSourceAddressPrefixes ?? new ChangeTrackingList<string>(),
+                endTimeUtc,
+                status,
+                statusReason,
+                Optional.ToNullable(mappedPort),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<JitNetworkAccessRequestPort>.Write(ModelReaderWriterOptions options)

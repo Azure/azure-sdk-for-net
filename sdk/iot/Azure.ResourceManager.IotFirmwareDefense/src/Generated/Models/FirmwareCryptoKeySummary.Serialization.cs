@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TotalKeys))
+            if (TotalKeys.HasValue)
             {
                 writer.WritePropertyName("totalKeys"u8);
                 writer.WriteNumberValue(TotalKeys.Value);
             }
-            if (Optional.IsDefined(PublicKeys))
+            if (PublicKeys.HasValue)
             {
                 writer.WritePropertyName("publicKeys"u8);
                 writer.WriteNumberValue(PublicKeys.Value);
             }
-            if (Optional.IsDefined(PrivateKeys))
+            if (PrivateKeys.HasValue)
             {
                 writer.WritePropertyName("privateKeys"u8);
                 writer.WriteNumberValue(PrivateKeys.Value);
             }
-            if (Optional.IsDefined(PairedKeys))
+            if (PairedKeys.HasValue)
             {
                 writer.WritePropertyName("pairedKeys"u8);
                 writer.WriteNumberValue(PairedKeys.Value);
             }
-            if (Optional.IsDefined(ShortKeySize))
+            if (ShortKeySize.HasValue)
             {
                 writer.WritePropertyName("shortKeySize"u8);
                 writer.WriteNumberValue(ShortKeySize.Value);
@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirmwareCryptoKeySummary(Optional.ToNullable(totalKeys), Optional.ToNullable(publicKeys), Optional.ToNullable(privateKeys), Optional.ToNullable(pairedKeys), Optional.ToNullable(shortKeySize), serializedAdditionalRawData);
+            return new FirmwareCryptoKeySummary(
+                Optional.ToNullable(totalKeys),
+                Optional.ToNullable(publicKeys),
+                Optional.ToNullable(privateKeys),
+                Optional.ToNullable(pairedKeys),
+                Optional.ToNullable(shortKeySize),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirmwareCryptoKeySummary>.Write(ModelReaderWriterOptions options)

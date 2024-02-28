@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(AgentId))
+            if (options.Format != "W" && AgentId != null)
             {
                 writer.WritePropertyName("agentId"u8);
                 writer.WriteStringValue(AgentId);
             }
-            if (options.Format != "W" && Optional.IsDefined(MachineId))
+            if (options.Format != "W" && MachineId != null)
             {
                 writer.WritePropertyName("machineId"u8);
                 writer.WriteStringValue(MachineId);
             }
-            if (options.Format != "W" && Optional.IsDefined(BiosId))
+            if (options.Format != "W" && BiosId != null)
             {
                 writer.WritePropertyName("biosId"u8);
                 writer.WriteStringValue(BiosId);
             }
-            if (options.Format != "W" && Optional.IsDefined(Fqdn))
+            if (options.Format != "W" && Fqdn != null)
             {
                 writer.WritePropertyName("fqdn"u8);
                 writer.WriteStringValue(Fqdn);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Disks))
+            if (options.Format != "W" && !(Disks is ChangeTrackingList<SiteRecoveryAgentDiskDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("disks"u8);
                 writer.WriteStartArray();
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> machineId = default;
             Optional<string> biosId = default;
             Optional<string> fqdn = default;
-            Optional<IReadOnlyList<SiteRecoveryAgentDiskDetails>> disks = default;
+            IReadOnlyList<SiteRecoveryAgentDiskDetails> disks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryAgentDiskDetails> array = new List<SiteRecoveryAgentDiskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryAgentDiskDetails.DeserializeSiteRecoveryAgentDiskDetails(item));
+                        array.Add(SiteRecoveryAgentDiskDetails.DeserializeSiteRecoveryAgentDiskDetails(item, options));
                     }
                     disks = array;
                     continue;
@@ -143,7 +143,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryAgentDetails(agentId.Value, machineId.Value, biosId.Value, fqdn.Value, Optional.ToList(disks), serializedAdditionalRawData);
+            return new SiteRecoveryAgentDetails(
+                agentId.Value,
+                machineId.Value,
+                biosId.Value,
+                fqdn.Value,
+                disks ?? new ChangeTrackingList<SiteRecoveryAgentDiskDetails>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryAgentDetails>.Write(ModelReaderWriterOptions options)

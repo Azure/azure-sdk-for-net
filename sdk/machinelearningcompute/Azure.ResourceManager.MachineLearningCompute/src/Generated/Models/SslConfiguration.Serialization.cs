@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(Cert))
+            if (Cert != null)
             {
                 writer.WritePropertyName("cert"u8);
                 writer.WriteStringValue(Cert);
             }
-            if (Optional.IsDefined(Key))
+            if (Key != null)
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
             }
-            if (Optional.IsDefined(Cname))
+            if (Cname != null)
             {
                 writer.WritePropertyName("cname"u8);
                 writer.WriteStringValue(Cname);

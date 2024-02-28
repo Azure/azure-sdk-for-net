@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(PerformanceCounters))
+            if (!(PerformanceCounters is ChangeTrackingList<PerfCounterDataSource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("performanceCounters"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(WindowsEventLogs))
+            if (!(WindowsEventLogs is ChangeTrackingList<WindowsEventLogDataSource> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("windowsEventLogs"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Syslog))
+            if (!(Syslog is ChangeTrackingList<SyslogDataSource> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("syslog"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Extensions))
+            if (!(Extensions is ChangeTrackingList<ExtensionDataSource> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("extensions"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(LogFiles))
+            if (!(LogFiles is ChangeTrackingList<LogFilesDataSource> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("logFiles"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IisLogs))
+            if (!(IisLogs is ChangeTrackingList<IisLogsDataSource> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("iisLogs"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(WindowsFirewallLogs))
+            if (!(WindowsFirewallLogs is ChangeTrackingList<WindowsFirewallLogsDataSource> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("windowsFirewallLogs"u8);
                 writer.WriteStartArray();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(PrometheusForwarder))
+            if (!(PrometheusForwarder is ChangeTrackingList<PrometheusForwarderDataSource> collection6 && collection6.IsUndefined))
             {
                 writer.WritePropertyName("prometheusForwarder"u8);
                 writer.WriteStartArray();
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(PlatformTelemetry))
+            if (!(PlatformTelemetry is ChangeTrackingList<PlatformTelemetryDataSource> collection7 && collection7.IsUndefined))
             {
                 writer.WritePropertyName("platformTelemetry"u8);
                 writer.WriteStartArray();
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DataImports))
+            if (DataImports != null)
             {
                 writer.WritePropertyName("dataImports"u8);
                 writer.WriteObjectValue(DataImports);
@@ -159,15 +159,15 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IList<PerfCounterDataSource>> performanceCounters = default;
-            Optional<IList<WindowsEventLogDataSource>> windowsEventLogs = default;
-            Optional<IList<SyslogDataSource>> syslog = default;
-            Optional<IList<ExtensionDataSource>> extensions = default;
-            Optional<IList<LogFilesDataSource>> logFiles = default;
-            Optional<IList<IisLogsDataSource>> iisLogs = default;
-            Optional<IList<WindowsFirewallLogsDataSource>> windowsFirewallLogs = default;
-            Optional<IList<PrometheusForwarderDataSource>> prometheusForwarder = default;
-            Optional<IList<PlatformTelemetryDataSource>> platformTelemetry = default;
+            IList<PerfCounterDataSource> performanceCounters = default;
+            IList<WindowsEventLogDataSource> windowsEventLogs = default;
+            IList<SyslogDataSource> syslog = default;
+            IList<ExtensionDataSource> extensions = default;
+            IList<LogFilesDataSource> logFiles = default;
+            IList<IisLogsDataSource> iisLogs = default;
+            IList<WindowsFirewallLogsDataSource> windowsFirewallLogs = default;
+            IList<PrometheusForwarderDataSource> prometheusForwarder = default;
+            IList<PlatformTelemetryDataSource> platformTelemetry = default;
             Optional<DataSourcesSpecDataImports> dataImports = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<PerfCounterDataSource> array = new List<PerfCounterDataSource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PerfCounterDataSource.DeserializePerfCounterDataSource(item));
+                        array.Add(PerfCounterDataSource.DeserializePerfCounterDataSource(item, options));
                     }
                     performanceCounters = array;
                     continue;
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<WindowsEventLogDataSource> array = new List<WindowsEventLogDataSource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WindowsEventLogDataSource.DeserializeWindowsEventLogDataSource(item));
+                        array.Add(WindowsEventLogDataSource.DeserializeWindowsEventLogDataSource(item, options));
                     }
                     windowsEventLogs = array;
                     continue;
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<SyslogDataSource> array = new List<SyslogDataSource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SyslogDataSource.DeserializeSyslogDataSource(item));
+                        array.Add(SyslogDataSource.DeserializeSyslogDataSource(item, options));
                     }
                     syslog = array;
                     continue;
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<ExtensionDataSource> array = new List<ExtensionDataSource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExtensionDataSource.DeserializeExtensionDataSource(item));
+                        array.Add(ExtensionDataSource.DeserializeExtensionDataSource(item, options));
                     }
                     extensions = array;
                     continue;
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<LogFilesDataSource> array = new List<LogFilesDataSource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LogFilesDataSource.DeserializeLogFilesDataSource(item));
+                        array.Add(LogFilesDataSource.DeserializeLogFilesDataSource(item, options));
                     }
                     logFiles = array;
                     continue;
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<IisLogsDataSource> array = new List<IisLogsDataSource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IisLogsDataSource.DeserializeIisLogsDataSource(item));
+                        array.Add(IisLogsDataSource.DeserializeIisLogsDataSource(item, options));
                     }
                     iisLogs = array;
                     continue;
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<WindowsFirewallLogsDataSource> array = new List<WindowsFirewallLogsDataSource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WindowsFirewallLogsDataSource.DeserializeWindowsFirewallLogsDataSource(item));
+                        array.Add(WindowsFirewallLogsDataSource.DeserializeWindowsFirewallLogsDataSource(item, options));
                     }
                     windowsFirewallLogs = array;
                     continue;
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<PrometheusForwarderDataSource> array = new List<PrometheusForwarderDataSource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrometheusForwarderDataSource.DeserializePrometheusForwarderDataSource(item));
+                        array.Add(PrometheusForwarderDataSource.DeserializePrometheusForwarderDataSource(item, options));
                     }
                     prometheusForwarder = array;
                     continue;
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<PlatformTelemetryDataSource> array = new List<PlatformTelemetryDataSource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PlatformTelemetryDataSource.DeserializePlatformTelemetryDataSource(item));
+                        array.Add(PlatformTelemetryDataSource.DeserializePlatformTelemetryDataSource(item, options));
                     }
                     platformTelemetry = array;
                     continue;
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    dataImports = DataSourcesSpecDataImports.DeserializeDataSourcesSpecDataImports(property.Value);
+                    dataImports = DataSourcesSpecDataImports.DeserializeDataSourcesSpecDataImports(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -314,7 +314,18 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataSourcesSpec(Optional.ToList(performanceCounters), Optional.ToList(windowsEventLogs), Optional.ToList(syslog), Optional.ToList(extensions), Optional.ToList(logFiles), Optional.ToList(iisLogs), Optional.ToList(windowsFirewallLogs), Optional.ToList(prometheusForwarder), Optional.ToList(platformTelemetry), dataImports.Value, serializedAdditionalRawData);
+            return new DataSourcesSpec(
+                performanceCounters ?? new ChangeTrackingList<PerfCounterDataSource>(),
+                windowsEventLogs ?? new ChangeTrackingList<WindowsEventLogDataSource>(),
+                syslog ?? new ChangeTrackingList<SyslogDataSource>(),
+                extensions ?? new ChangeTrackingList<ExtensionDataSource>(),
+                logFiles ?? new ChangeTrackingList<LogFilesDataSource>(),
+                iisLogs ?? new ChangeTrackingList<IisLogsDataSource>(),
+                windowsFirewallLogs ?? new ChangeTrackingList<WindowsFirewallLogsDataSource>(),
+                prometheusForwarder ?? new ChangeTrackingList<PrometheusForwarderDataSource>(),
+                platformTelemetry ?? new ChangeTrackingList<PlatformTelemetryDataSource>(),
+                dataImports.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataSourcesSpec>.Write(ModelReaderWriterOptions options)

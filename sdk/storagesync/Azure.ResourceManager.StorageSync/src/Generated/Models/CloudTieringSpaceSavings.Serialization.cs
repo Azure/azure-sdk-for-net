@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
+            if (options.Format != "W" && LastUpdatedOn.HasValue)
             {
                 writer.WritePropertyName("lastUpdatedTimestamp"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(VolumeSizeInBytes))
+            if (options.Format != "W" && VolumeSizeInBytes.HasValue)
             {
                 writer.WritePropertyName("volumeSizeBytes"u8);
                 writer.WriteNumberValue(VolumeSizeInBytes.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CloudTotalSizeInBytes))
+            if (options.Format != "W" && CloudTotalSizeInBytes.HasValue)
             {
                 writer.WritePropertyName("totalSizeCloudBytes"u8);
                 writer.WriteNumberValue(CloudTotalSizeInBytes.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CachedSizeInBytes))
+            if (options.Format != "W" && CachedSizeInBytes.HasValue)
             {
                 writer.WritePropertyName("cachedSizeBytes"u8);
                 writer.WriteNumberValue(CachedSizeInBytes.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(SpaceSavingsPercent))
+            if (options.Format != "W" && SpaceSavingsPercent.HasValue)
             {
                 writer.WritePropertyName("spaceSavingsPercent"u8);
                 writer.WriteNumberValue(SpaceSavingsPercent.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(SpaceSavingsInBytes))
+            if (options.Format != "W" && SpaceSavingsInBytes.HasValue)
             {
                 writer.WritePropertyName("spaceSavingsBytes"u8);
                 writer.WriteNumberValue(SpaceSavingsInBytes.Value);
@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudTieringSpaceSavings(Optional.ToNullable(lastUpdatedTimestamp), Optional.ToNullable(volumeSizeBytes), Optional.ToNullable(totalSizeCloudBytes), Optional.ToNullable(cachedSizeBytes), Optional.ToNullable(spaceSavingsPercent), Optional.ToNullable(spaceSavingsBytes), serializedAdditionalRawData);
+            return new CloudTieringSpaceSavings(
+                Optional.ToNullable(lastUpdatedTimestamp),
+                Optional.ToNullable(volumeSizeBytes),
+                Optional.ToNullable(totalSizeCloudBytes),
+                Optional.ToNullable(cachedSizeBytes),
+                Optional.ToNullable(spaceSavingsPercent),
+                Optional.ToNullable(spaceSavingsBytes),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudTieringSpaceSavings>.Write(ModelReaderWriterOptions options)

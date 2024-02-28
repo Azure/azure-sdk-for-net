@@ -22,7 +22,7 @@ namespace Azure.Communication.CallAutomation
             }
             Optional<string> callConnectionId = default;
             Optional<string> serverCallId = default;
-            Optional<IReadOnlyList<CommunicationIdentifierModel>> targets = default;
+            IReadOnlyList<CommunicationIdentifierModel> targets = default;
             Optional<CallConnectionState> callConnectionState = default;
             Optional<string> callbackUri = default;
             Optional<string> mediaSubscriptionId = default;
@@ -32,7 +32,7 @@ namespace Azure.Communication.CallAutomation
             Optional<CommunicationIdentifierModel> source = default;
             Optional<string> correlationId = default;
             Optional<CommunicationUserIdentifierModel> answeredBy = default;
-            Optional<PhoneNumberIdentifierModel> originalPSTNTarget = default;
+            Optional<PhoneNumberIdentifierModel> originalPstnTarget = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("callConnectionId"u8))
@@ -120,17 +120,30 @@ namespace Azure.Communication.CallAutomation
                     answeredBy = CommunicationUserIdentifierModel.DeserializeCommunicationUserIdentifierModel(property.Value);
                     continue;
                 }
-                if (property.NameEquals("originalPSTNTarget"u8))
+                if (property.NameEquals("originalPstnTarget"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    originalPSTNTarget = PhoneNumberIdentifierModel.DeserializePhoneNumberIdentifierModel(property.Value);
+                    originalPstnTarget = PhoneNumberIdentifierModel.DeserializePhoneNumberIdentifierModel(property.Value);
                     continue;
                 }
             }
-            return new CallConnectionPropertiesInternal(callConnectionId.Value, serverCallId.Value, Optional.ToList(targets), Optional.ToNullable(callConnectionState), callbackUri.Value, mediaSubscriptionId.Value, dataSubscriptionId.Value, sourceCallerIdNumber.Value, sourceDisplayName.Value, source.Value, correlationId.Value, answeredBy.Value, originalPSTNTarget.Value);
+            return new CallConnectionPropertiesInternal(
+                callConnectionId.Value,
+                serverCallId.Value,
+                targets ?? new ChangeTrackingList<CommunicationIdentifierModel>(),
+                Optional.ToNullable(callConnectionState),
+                callbackUri.Value,
+                mediaSubscriptionId.Value,
+                dataSubscriptionId.Value,
+                sourceCallerIdNumber.Value,
+                sourceDisplayName.Value,
+                source.Value,
+                correlationId.Value,
+                answeredBy.Value,
+                originalPstnTarget.Value);
         }
     }
 }

@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ChildType))
+            if (options.Format != "W" && ChildType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ChildType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(DisplayName))
+            if (options.Format != "W" && DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Children))
+            if (options.Format != "W" && !(Children is ChangeTrackingList<ManagementGroupChildOptions> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("children"u8);
                 writer.WriteStartArray();
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> displayName = default;
-            Optional<IReadOnlyList<ManagementGroupChildOptions>> children = default;
+            IReadOnlyList<ManagementGroupChildOptions> children = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     List<ManagementGroupChildOptions> array = new List<ManagementGroupChildOptions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeManagementGroupChildOptions(item));
+                        array.Add(DeserializeManagementGroupChildOptions(item, options));
                     }
                     children = array;
                     continue;
@@ -147,7 +147,13 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagementGroupChildOptions(Optional.ToNullable(type), id.Value, name.Value, displayName.Value, Optional.ToList(children), serializedAdditionalRawData);
+            return new ManagementGroupChildOptions(
+                Optional.ToNullable(type),
+                id.Value,
+                name.Value,
+                displayName.Value,
+                children ?? new ChangeTrackingList<ManagementGroupChildOptions>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagementGroupChildOptions>.Write(ModelReaderWriterOptions options)

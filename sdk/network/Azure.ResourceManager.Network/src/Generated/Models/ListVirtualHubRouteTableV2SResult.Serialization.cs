@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<VirtualHubRouteTableV2Data> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<VirtualHubRouteTableV2Data>> value = default;
+            IReadOnlyList<VirtualHubRouteTableV2Data> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<VirtualHubRouteTableV2Data> array = new List<VirtualHubRouteTableV2Data>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualHubRouteTableV2Data.DeserializeVirtualHubRouteTableV2Data(item));
+                        array.Add(VirtualHubRouteTableV2Data.DeserializeVirtualHubRouteTableV2Data(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ListVirtualHubRouteTableV2SResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ListVirtualHubRouteTableV2SResult(value ?? new ChangeTrackingList<VirtualHubRouteTableV2Data>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ListVirtualHubRouteTableV2SResult>.Write(ModelReaderWriterOptions options)

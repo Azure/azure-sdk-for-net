@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<SynapseWorkspaceData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 return null;
             }
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<SynapseWorkspaceData>> value = default;
+            IReadOnlyList<SynapseWorkspaceData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseWorkspaceData> array = new List<SynapseWorkspaceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseWorkspaceData.DeserializeSynapseWorkspaceData(item));
+                        array.Add(SynapseWorkspaceData.DeserializeSynapseWorkspaceData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseWorkspaceListResult(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new SynapseWorkspaceListResult(nextLink.Value, value ?? new ChangeTrackingList<SynapseWorkspaceData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseWorkspaceListResult>.Write(ModelReaderWriterOptions options)

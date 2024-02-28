@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CatalogInfo))
+            if (CatalogInfo != null)
             {
                 writer.WritePropertyName("catalogInfo"u8);
                 writer.WriteObjectValue(CatalogInfo);
             }
-            if (Optional.IsDefined(LicenseType))
+            if (LicenseType.HasValue)
             {
                 writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType.Value.ToString());
             }
-            if (Optional.IsDefined(CustomSetupScriptProperties))
+            if (CustomSetupScriptProperties != null)
             {
                 writer.WritePropertyName("customSetupScriptProperties"u8);
                 writer.WriteObjectValue(CustomSetupScriptProperties);
             }
-            if (Optional.IsDefined(DataProxyProperties))
+            if (DataProxyProperties != null)
             {
                 writer.WritePropertyName("dataProxyProperties"u8);
                 writer.WriteObjectValue(DataProxyProperties);
             }
-            if (Optional.IsDefined(Edition))
+            if (Edition.HasValue)
             {
                 writer.WritePropertyName("edition"u8);
                 writer.WriteStringValue(Edition.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(ExpressCustomSetupProperties))
+            if (!(ExpressCustomSetupProperties is ChangeTrackingList<CustomSetupBase> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("expressCustomSetupProperties"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(PackageStores))
+            if (!(PackageStores is ChangeTrackingList<DataFactoryPackageStore> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("packageStores"u8);
                 writer.WriteStartArray();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Credential))
+            if (Credential != null)
             {
                 writer.WritePropertyName("credential"u8);
                 writer.WriteObjectValue(Credential);
@@ -116,8 +116,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IntegrationRuntimeCustomSetupScriptProperties> customSetupScriptProperties = default;
             Optional<IntegrationRuntimeDataProxyProperties> dataProxyProperties = default;
             Optional<IntegrationRuntimeEdition> edition = default;
-            Optional<IList<CustomSetupBase>> expressCustomSetupProperties = default;
-            Optional<IList<DataFactoryPackageStore>> packageStores = default;
+            IList<CustomSetupBase> expressCustomSetupProperties = default;
+            IList<DataFactoryPackageStore> packageStores = default;
             Optional<DataFactoryCredentialReference> credential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    catalogInfo = IntegrationRuntimeSsisCatalogInfo.DeserializeIntegrationRuntimeSsisCatalogInfo(property.Value);
+                    catalogInfo = IntegrationRuntimeSsisCatalogInfo.DeserializeIntegrationRuntimeSsisCatalogInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("licenseType"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    customSetupScriptProperties = IntegrationRuntimeCustomSetupScriptProperties.DeserializeIntegrationRuntimeCustomSetupScriptProperties(property.Value);
+                    customSetupScriptProperties = IntegrationRuntimeCustomSetupScriptProperties.DeserializeIntegrationRuntimeCustomSetupScriptProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dataProxyProperties"u8))
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    dataProxyProperties = IntegrationRuntimeDataProxyProperties.DeserializeIntegrationRuntimeDataProxyProperties(property.Value);
+                    dataProxyProperties = IntegrationRuntimeDataProxyProperties.DeserializeIntegrationRuntimeDataProxyProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("edition"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<CustomSetupBase> array = new List<CustomSetupBase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CustomSetupBase.DeserializeCustomSetupBase(item));
+                        array.Add(CustomSetupBase.DeserializeCustomSetupBase(item, options));
                     }
                     expressCustomSetupProperties = array;
                     continue;
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<DataFactoryPackageStore> array = new List<DataFactoryPackageStore>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataFactoryPackageStore.DeserializeDataFactoryPackageStore(item));
+                        array.Add(DataFactoryPackageStore.DeserializeDataFactoryPackageStore(item, options));
                     }
                     packageStores = array;
                     continue;
@@ -202,13 +202,22 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    credential = DataFactoryCredentialReference.DeserializeDataFactoryCredentialReference(property.Value);
+                    credential = DataFactoryCredentialReference.DeserializeDataFactoryCredentialReference(property.Value, options);
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new IntegrationRuntimeSsisProperties(catalogInfo.Value, Optional.ToNullable(licenseType), customSetupScriptProperties.Value, dataProxyProperties.Value, Optional.ToNullable(edition), Optional.ToList(expressCustomSetupProperties), Optional.ToList(packageStores), credential.Value, additionalProperties);
+            return new IntegrationRuntimeSsisProperties(
+                catalogInfo.Value,
+                Optional.ToNullable(licenseType),
+                customSetupScriptProperties.Value,
+                dataProxyProperties.Value,
+                Optional.ToNullable(edition),
+                expressCustomSetupProperties ?? new ChangeTrackingList<CustomSetupBase>(),
+                packageStores ?? new ChangeTrackingList<DataFactoryPackageStore>(),
+                credential.Value,
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<IntegrationRuntimeSsisProperties>.Write(ModelReaderWriterOptions options)

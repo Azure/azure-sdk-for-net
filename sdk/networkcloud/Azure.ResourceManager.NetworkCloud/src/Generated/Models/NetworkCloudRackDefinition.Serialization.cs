@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AvailabilityZone))
+            if (AvailabilityZone != null)
             {
                 writer.WritePropertyName("availabilityZone"u8);
                 writer.WriteStringValue(AvailabilityZone);
             }
-            if (Optional.IsCollectionDefined(BareMetalMachineConfigurationData))
+            if (!(BareMetalMachineConfigurationData is ChangeTrackingList<BareMetalMachineConfiguration> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("bareMetalMachineConfigurationData"u8);
                 writer.WriteStartArray();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             writer.WritePropertyName("networkRackId"u8);
             writer.WriteStringValue(NetworkRackId);
-            if (Optional.IsDefined(RackLocation))
+            if (RackLocation != null)
             {
                 writer.WritePropertyName("rackLocation"u8);
                 writer.WriteStringValue(RackLocation);
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             writer.WriteStringValue(RackSerialNumber);
             writer.WritePropertyName("rackSkuId"u8);
             writer.WriteStringValue(RackSkuId);
-            if (Optional.IsCollectionDefined(StorageApplianceConfigurationData))
+            if (!(StorageApplianceConfigurationData is ChangeTrackingList<StorageApplianceConfiguration> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("storageApplianceConfigurationData"u8);
                 writer.WriteStartArray();
@@ -101,12 +101,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             Optional<string> availabilityZone = default;
-            Optional<IList<BareMetalMachineConfiguration>> bareMetalMachineConfigurationData = default;
+            IList<BareMetalMachineConfiguration> bareMetalMachineConfigurationData = default;
             ResourceIdentifier networkRackId = default;
             Optional<string> rackLocation = default;
             string rackSerialNumber = default;
             ResourceIdentifier rackSkuId = default;
-            Optional<IList<StorageApplianceConfiguration>> storageApplianceConfigurationData = default;
+            IList<StorageApplianceConfiguration> storageApplianceConfigurationData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     List<BareMetalMachineConfiguration> array = new List<BareMetalMachineConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BareMetalMachineConfiguration.DeserializeBareMetalMachineConfiguration(item));
+                        array.Add(BareMetalMachineConfiguration.DeserializeBareMetalMachineConfiguration(item, options));
                     }
                     bareMetalMachineConfigurationData = array;
                     continue;
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     List<StorageApplianceConfiguration> array = new List<StorageApplianceConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageApplianceConfiguration.DeserializeStorageApplianceConfiguration(item));
+                        array.Add(StorageApplianceConfiguration.DeserializeStorageApplianceConfiguration(item, options));
                     }
                     storageApplianceConfigurationData = array;
                     continue;
@@ -170,7 +170,15 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudRackDefinition(availabilityZone.Value, Optional.ToList(bareMetalMachineConfigurationData), networkRackId, rackLocation.Value, rackSerialNumber, rackSkuId, Optional.ToList(storageApplianceConfigurationData), serializedAdditionalRawData);
+            return new NetworkCloudRackDefinition(
+                availabilityZone.Value,
+                bareMetalMachineConfigurationData ?? new ChangeTrackingList<BareMetalMachineConfiguration>(),
+                networkRackId,
+                rackLocation.Value,
+                rackSerialNumber,
+                rackSkuId,
+                storageApplianceConfigurationData ?? new ChangeTrackingList<StorageApplianceConfiguration>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudRackDefinition>.Write(ModelReaderWriterOptions options)

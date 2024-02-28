@@ -85,7 +85,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="alertName"/> is null. </exception>
         public virtual async Task<Response<SubscriptionSecurityAlertResource>> GetAsync(string alertName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(alertName, nameof(alertName));
+            if (alertName == null)
+            {
+                throw new ArgumentNullException(nameof(alertName));
+            }
+            if (alertName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(alertName));
+            }
 
             using var scope = _subscriptionSecurityAlertAlertsClientDiagnostics.CreateScope("SubscriptionSecurityAlertCollection.Get");
             scope.Start();
@@ -130,7 +137,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="alertName"/> is null. </exception>
         public virtual Response<SubscriptionSecurityAlertResource> Get(string alertName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(alertName, nameof(alertName));
+            if (alertName == null)
+            {
+                throw new ArgumentNullException(nameof(alertName));
+            }
+            if (alertName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(alertName));
+            }
 
             using var scope = _subscriptionSecurityAlertAlertsClientDiagnostics.CreateScope("SubscriptionSecurityAlertCollection.Get");
             scope.Start();
@@ -231,7 +245,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation> SimulateAsync(WaitUntil waitUntil, SecurityAlertSimulatorContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _alertsClientDiagnostics.CreateScope("SubscriptionSecurityAlertCollection.Simulate");
             scope.Start();
@@ -273,7 +290,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation Simulate(WaitUntil waitUntil, SecurityAlertSimulatorContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _alertsClientDiagnostics.CreateScope("SubscriptionSecurityAlertCollection.Simulate");
             scope.Start();
@@ -319,7 +339,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="alertName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string alertName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(alertName, nameof(alertName));
+            if (alertName == null)
+            {
+                throw new ArgumentNullException(nameof(alertName));
+            }
+            if (alertName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(alertName));
+            }
 
             using var scope = _subscriptionSecurityAlertAlertsClientDiagnostics.CreateScope("SubscriptionSecurityAlertCollection.Exists");
             scope.Start();
@@ -362,7 +389,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="alertName"/> is null. </exception>
         public virtual Response<bool> Exists(string alertName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(alertName, nameof(alertName));
+            if (alertName == null)
+            {
+                throw new ArgumentNullException(nameof(alertName));
+            }
+            if (alertName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(alertName));
+            }
 
             using var scope = _subscriptionSecurityAlertAlertsClientDiagnostics.CreateScope("SubscriptionSecurityAlertCollection.Exists");
             scope.Start();
@@ -405,7 +439,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="alertName"/> is null. </exception>
         public virtual async Task<NullableResponse<SubscriptionSecurityAlertResource>> GetIfExistsAsync(string alertName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(alertName, nameof(alertName));
+            if (alertName == null)
+            {
+                throw new ArgumentNullException(nameof(alertName));
+            }
+            if (alertName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(alertName));
+            }
 
             using var scope = _subscriptionSecurityAlertAlertsClientDiagnostics.CreateScope("SubscriptionSecurityAlertCollection.GetIfExists");
             scope.Start();
@@ -450,7 +491,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="alertName"/> is null. </exception>
         public virtual NullableResponse<SubscriptionSecurityAlertResource> GetIfExists(string alertName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(alertName, nameof(alertName));
+            if (alertName == null)
+            {
+                throw new ArgumentNullException(nameof(alertName));
+            }
+            if (alertName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(alertName));
+            }
 
             using var scope = _subscriptionSecurityAlertAlertsClientDiagnostics.CreateScope("SubscriptionSecurityAlertCollection.GetIfExists");
             scope.Start();

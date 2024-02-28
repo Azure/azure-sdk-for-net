@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             writer.WritePropertyName("inputType"u8);
             writer.WriteStringValue(InputType.ToString());
-            if (Optional.IsDefined(Mode))
+            if (Mode.HasValue)
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (Optional.IsDefined(MountPath))
+            if (MountPath != null)
             {
                 if (MountPath != null)
                 {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("path"u8))
                 {
-                    path = PackageInputPathBase.DeserializePackageInputPathBase(property.Value);
+                    path = PackageInputPathBase.DeserializePackageInputPathBase(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

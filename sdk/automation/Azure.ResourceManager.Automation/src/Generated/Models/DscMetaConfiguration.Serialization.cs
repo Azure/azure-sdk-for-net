@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ConfigurationModeFrequencyMins))
+            if (ConfigurationModeFrequencyMins.HasValue)
             {
                 writer.WritePropertyName("configurationModeFrequencyMins"u8);
                 writer.WriteNumberValue(ConfigurationModeFrequencyMins.Value);
             }
-            if (Optional.IsDefined(RebootNodeIfNeeded))
+            if (RebootNodeIfNeeded.HasValue)
             {
                 writer.WritePropertyName("rebootNodeIfNeeded"u8);
                 writer.WriteBooleanValue(RebootNodeIfNeeded.Value);
             }
-            if (Optional.IsDefined(ConfigurationMode))
+            if (ConfigurationMode != null)
             {
                 writer.WritePropertyName("configurationMode"u8);
                 writer.WriteStringValue(ConfigurationMode);
             }
-            if (Optional.IsDefined(ActionAfterReboot))
+            if (ActionAfterReboot != null)
             {
                 writer.WritePropertyName("actionAfterReboot"u8);
                 writer.WriteStringValue(ActionAfterReboot);
             }
-            if (Optional.IsDefined(CertificateId))
+            if (CertificateId != null)
             {
                 writer.WritePropertyName("certificateId"u8);
                 writer.WriteStringValue(CertificateId);
             }
-            if (Optional.IsDefined(RefreshFrequencyMins))
+            if (RefreshFrequencyMins.HasValue)
             {
                 writer.WritePropertyName("refreshFrequencyMins"u8);
                 writer.WriteNumberValue(RefreshFrequencyMins.Value);
             }
-            if (Optional.IsDefined(AllowModuleOverwrite))
+            if (AllowModuleOverwrite.HasValue)
             {
                 writer.WritePropertyName("allowModuleOverwrite"u8);
                 writer.WriteBooleanValue(AllowModuleOverwrite.Value);
@@ -167,7 +167,15 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DscMetaConfiguration(Optional.ToNullable(configurationModeFrequencyMins), Optional.ToNullable(rebootNodeIfNeeded), configurationMode.Value, actionAfterReboot.Value, certificateId.Value, Optional.ToNullable(refreshFrequencyMins), Optional.ToNullable(allowModuleOverwrite), serializedAdditionalRawData);
+            return new DscMetaConfiguration(
+                Optional.ToNullable(configurationModeFrequencyMins),
+                Optional.ToNullable(rebootNodeIfNeeded),
+                configurationMode.Value,
+                actionAfterReboot.Value,
+                certificateId.Value,
+                Optional.ToNullable(refreshFrequencyMins),
+                Optional.ToNullable(allowModuleOverwrite),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DscMetaConfiguration>.Write(ModelReaderWriterOptions options)

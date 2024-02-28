@@ -28,22 +28,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(StoreWriteSettingsType);
-            if (Optional.IsDefined(MaxConcurrentConnections))
+            if (MaxConcurrentConnections != null)
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 JsonSerializer.Serialize(writer, MaxConcurrentConnections);
             }
-            if (Optional.IsDefined(DisableMetricsCollection))
+            if (DisableMetricsCollection != null)
             {
                 writer.WritePropertyName("disableMetricsCollection"u8);
                 JsonSerializer.Serialize(writer, DisableMetricsCollection);
             }
-            if (Optional.IsDefined(CopyBehavior))
+            if (CopyBehavior != null)
             {
                 writer.WritePropertyName("copyBehavior"u8);
                 JsonSerializer.Serialize(writer, CopyBehavior);
             }
-            if (Optional.IsCollectionDefined(Metadata))
+            if (!(Metadata is ChangeTrackingList<DataFactoryMetadataItemInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartArray();
@@ -92,16 +92,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureBlobFSWriteSettings": return AzureBlobFSWriteSettings.DeserializeAzureBlobFSWriteSettings(element);
-                    case "AzureBlobStorageWriteSettings": return AzureBlobStorageWriteSettings.DeserializeAzureBlobStorageWriteSettings(element);
-                    case "AzureDataLakeStoreWriteSettings": return AzureDataLakeStoreWriteSettings.DeserializeAzureDataLakeStoreWriteSettings(element);
-                    case "AzureFileStorageWriteSettings": return AzureFileStorageWriteSettings.DeserializeAzureFileStorageWriteSettings(element);
-                    case "FileServerWriteSettings": return FileServerWriteSettings.DeserializeFileServerWriteSettings(element);
-                    case "LakeHouseWriteSettings": return LakeHouseWriteSettings.DeserializeLakeHouseWriteSettings(element);
-                    case "SftpWriteSettings": return SftpWriteSettings.DeserializeSftpWriteSettings(element);
+                    case "AzureBlobFSWriteSettings": return AzureBlobFSWriteSettings.DeserializeAzureBlobFSWriteSettings(element, options);
+                    case "AzureBlobStorageWriteSettings": return AzureBlobStorageWriteSettings.DeserializeAzureBlobStorageWriteSettings(element, options);
+                    case "AzureDataLakeStoreWriteSettings": return AzureDataLakeStoreWriteSettings.DeserializeAzureDataLakeStoreWriteSettings(element, options);
+                    case "AzureFileStorageWriteSettings": return AzureFileStorageWriteSettings.DeserializeAzureFileStorageWriteSettings(element, options);
+                    case "FileServerWriteSettings": return FileServerWriteSettings.DeserializeFileServerWriteSettings(element, options);
+                    case "LakeHouseWriteSettings": return LakeHouseWriteSettings.DeserializeLakeHouseWriteSettings(element, options);
+                    case "SftpWriteSettings": return SftpWriteSettings.DeserializeSftpWriteSettings(element, options);
                 }
             }
-            return UnknownStoreWriteSettings.DeserializeUnknownStoreWriteSettings(element);
+            return UnknownStoreWriteSettings.DeserializeUnknownStoreWriteSettings(element, options);
         }
 
         BinaryData IPersistableModel<StoreWriteSettings>.Write(ModelReaderWriterOptions options)

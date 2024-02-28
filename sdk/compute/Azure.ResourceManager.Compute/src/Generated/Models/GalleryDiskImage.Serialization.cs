@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(SizeInGB))
+            if (options.Format != "W" && SizeInGB.HasValue)
             {
                 writer.WritePropertyName("sizeInGB"u8);
                 writer.WriteNumberValue(SizeInGB.Value);
             }
-            if (Optional.IsDefined(HostCaching))
+            if (HostCaching.HasValue)
             {
                 writer.WritePropertyName("hostCaching"u8);
                 writer.WriteStringValue(HostCaching.Value.ToSerialString());
             }
-            if (Optional.IsDefined(GallerySource))
+            if (GallerySource != null)
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteObjectValue(GallerySource);
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    source = GalleryDiskImageSource.DeserializeGalleryDiskImageSource(property.Value);
+                    source = GalleryDiskImageSource.DeserializeGalleryDiskImageSource(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

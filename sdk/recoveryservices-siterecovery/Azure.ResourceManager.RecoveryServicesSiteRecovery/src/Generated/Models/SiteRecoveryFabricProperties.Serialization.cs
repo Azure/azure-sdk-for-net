@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FriendlyName))
+            if (FriendlyName != null)
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Optional.IsDefined(EncryptionDetails))
+            if (EncryptionDetails != null)
             {
                 writer.WritePropertyName("encryptionDetails"u8);
                 writer.WriteObjectValue(EncryptionDetails);
             }
-            if (Optional.IsDefined(RolloverEncryptionDetails))
+            if (RolloverEncryptionDetails != null)
             {
                 writer.WritePropertyName("rolloverEncryptionDetails"u8);
                 writer.WriteObjectValue(RolloverEncryptionDetails);
             }
-            if (Optional.IsDefined(InternalIdentifier))
+            if (InternalIdentifier != null)
             {
                 writer.WritePropertyName("internalIdentifier"u8);
                 writer.WriteStringValue(InternalIdentifier);
             }
-            if (Optional.IsDefined(BcdrState))
+            if (BcdrState != null)
             {
                 writer.WritePropertyName("bcdrState"u8);
                 writer.WriteStringValue(BcdrState);
             }
-            if (Optional.IsDefined(CustomDetails))
+            if (CustomDetails != null)
             {
                 writer.WritePropertyName("customDetails"u8);
                 writer.WriteObjectValue(CustomDetails);
             }
-            if (Optional.IsCollectionDefined(HealthErrorDetails))
+            if (!(HealthErrorDetails is ChangeTrackingList<SiteRecoveryHealthError> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("healthErrorDetails"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Health))
+            if (Health != null)
             {
                 writer.WritePropertyName("health"u8);
                 writer.WriteStringValue(Health);
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> internalIdentifier = default;
             Optional<string> bcdrState = default;
             Optional<FabricSpecificDetails> customDetails = default;
-            Optional<IReadOnlyList<SiteRecoveryHealthError>> healthErrorDetails = default;
+            IReadOnlyList<SiteRecoveryHealthError> healthErrorDetails = default;
             Optional<string> health = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    encryptionDetails = SiteRecoveryEncryptionDetails.DeserializeSiteRecoveryEncryptionDetails(property.Value);
+                    encryptionDetails = SiteRecoveryEncryptionDetails.DeserializeSiteRecoveryEncryptionDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("rolloverEncryptionDetails"u8))
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    rolloverEncryptionDetails = SiteRecoveryEncryptionDetails.DeserializeSiteRecoveryEncryptionDetails(property.Value);
+                    rolloverEncryptionDetails = SiteRecoveryEncryptionDetails.DeserializeSiteRecoveryEncryptionDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("internalIdentifier"u8))
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    customDetails = FabricSpecificDetails.DeserializeFabricSpecificDetails(property.Value);
+                    customDetails = FabricSpecificDetails.DeserializeFabricSpecificDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("healthErrorDetails"u8))
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryHealthError> array = new List<SiteRecoveryHealthError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item));
+                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item, options));
                     }
                     healthErrorDetails = array;
                     continue;
@@ -188,7 +188,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryFabricProperties(friendlyName.Value, encryptionDetails.Value, rolloverEncryptionDetails.Value, internalIdentifier.Value, bcdrState.Value, customDetails.Value, Optional.ToList(healthErrorDetails), health.Value, serializedAdditionalRawData);
+            return new SiteRecoveryFabricProperties(
+                friendlyName.Value,
+                encryptionDetails.Value,
+                rolloverEncryptionDetails.Value,
+                internalIdentifier.Value,
+                bcdrState.Value,
+                customDetails.Value,
+                healthErrorDetails ?? new ChangeTrackingList<SiteRecoveryHealthError>(),
+                health.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryFabricProperties>.Write(ModelReaderWriterOptions options)

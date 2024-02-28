@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Authorization.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NotificationDeliveryType))
+            if (NotificationDeliveryType.HasValue)
             {
                 writer.WritePropertyName("notificationType"u8);
                 writer.WriteStringValue(NotificationDeliveryType.Value.ToString());
             }
-            if (Optional.IsDefined(NotificationLevel))
+            if (NotificationLevel.HasValue)
             {
                 writer.WritePropertyName("notificationLevel"u8);
                 writer.WriteStringValue(NotificationLevel.Value.ToString());
             }
-            if (Optional.IsDefined(RecipientType))
+            if (RecipientType.HasValue)
             {
                 writer.WritePropertyName("recipientType"u8);
                 writer.WriteStringValue(RecipientType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(NotificationRecipients))
+            if (!(NotificationRecipients is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("notificationRecipients"u8);
                 writer.WriteStartArray();
@@ -51,19 +51,19 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AreDefaultRecipientsEnabled))
+            if (AreDefaultRecipientsEnabled.HasValue)
             {
                 writer.WritePropertyName("isDefaultRecipientsEnabled"u8);
                 writer.WriteBooleanValue(AreDefaultRecipientsEnabled.Value);
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("ruleType"u8);
             writer.WriteStringValue(RuleType.ToString());
-            if (Optional.IsDefined(Target))
+            if (Target != null)
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteObjectValue(Target);
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Authorization.Models
             Optional<NotificationDeliveryType> notificationType = default;
             Optional<RoleManagementPolicyNotificationLevel> notificationLevel = default;
             Optional<RoleManagementPolicyRecipientType> recipientType = default;
-            Optional<IList<string>> notificationRecipients = default;
+            IList<string> notificationRecipients = default;
             Optional<bool> isDefaultRecipientsEnabled = default;
             Optional<string> id = default;
             RoleManagementPolicyRuleType ruleType = default;
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     {
                         continue;
                     }
-                    target = RoleManagementPolicyRuleTarget.DeserializeRoleManagementPolicyRuleTarget(property.Value);
+                    target = RoleManagementPolicyRuleTarget.DeserializeRoleManagementPolicyRuleTarget(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -193,7 +193,16 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoleManagementPolicyNotificationRule(id.Value, ruleType, target.Value, serializedAdditionalRawData, Optional.ToNullable(notificationType), Optional.ToNullable(notificationLevel), Optional.ToNullable(recipientType), Optional.ToList(notificationRecipients), Optional.ToNullable(isDefaultRecipientsEnabled));
+            return new RoleManagementPolicyNotificationRule(
+                id.Value,
+                ruleType,
+                target.Value,
+                serializedAdditionalRawData,
+                Optional.ToNullable(notificationType),
+                Optional.ToNullable(notificationLevel),
+                Optional.ToNullable(recipientType),
+                notificationRecipients ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(isDefaultRecipientsEnabled));
         }
 
         BinaryData IPersistableModel<RoleManagementPolicyNotificationRule>.Write(ModelReaderWriterOptions options)

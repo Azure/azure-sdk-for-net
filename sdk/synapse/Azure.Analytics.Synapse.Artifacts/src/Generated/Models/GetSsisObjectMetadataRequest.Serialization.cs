@@ -18,7 +18,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(MetadataPath))
+            if (MetadataPath != null)
             {
                 writer.WritePropertyName("metadataPath"u8);
                 writer.WriteStringValue(MetadataPath);

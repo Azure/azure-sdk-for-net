@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsCollectionDefined(SiteNames))
+            if (!(SiteNames is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("siteNames"u8);
                 writer.WriteStartArray();
@@ -41,22 +41,22 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AzureResourceName))
+            if (AzureResourceName != null)
             {
                 writer.WritePropertyName("azureResourceName"u8);
                 writer.WriteStringValue(AzureResourceName);
             }
-            if (Optional.IsDefined(AzureResourceType))
+            if (AzureResourceType.HasValue)
             {
                 writer.WritePropertyName("azureResourceType"u8);
                 writer.WriteStringValue(AzureResourceType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(CustomHostNameDnsRecordType))
+            if (CustomHostNameDnsRecordType.HasValue)
             {
                 writer.WritePropertyName("customHostNameDnsRecordType"u8);
                 writer.WriteStringValue(CustomHostNameDnsRecordType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(HostNameType))
+            if (HostNameType.HasValue)
             {
                 writer.WritePropertyName("hostNameType"u8);
                 writer.WriteStringValue(HostNameType.Value.ToSerialString());
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             Optional<string> name = default;
-            Optional<IReadOnlyList<string>> siteNames = default;
+            IReadOnlyList<string> siteNames = default;
             Optional<string> azureResourceName = default;
             Optional<AppServiceResourceType> azureResourceType = default;
             Optional<CustomHostNameDnsRecordType> customHostNameDnsRecordType = default;
@@ -166,7 +166,14 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceHostName(name.Value, Optional.ToList(siteNames), azureResourceName.Value, Optional.ToNullable(azureResourceType), Optional.ToNullable(customHostNameDnsRecordType), Optional.ToNullable(hostNameType), serializedAdditionalRawData);
+            return new AppServiceHostName(
+                name.Value,
+                siteNames ?? new ChangeTrackingList<string>(),
+                azureResourceName.Value,
+                Optional.ToNullable(azureResourceType),
+                Optional.ToNullable(customHostNameDnsRecordType),
+                Optional.ToNullable(hostNameType),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceHostName>.Write(ModelReaderWriterOptions options)

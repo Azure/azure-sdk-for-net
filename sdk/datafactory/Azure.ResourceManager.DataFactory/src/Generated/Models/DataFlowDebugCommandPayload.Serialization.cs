@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("streamName"u8);
             writer.WriteStringValue(StreamName);
-            if (Optional.IsDefined(RowLimits))
+            if (RowLimits.HasValue)
             {
                 writer.WritePropertyName("rowLimits"u8);
                 writer.WriteNumberValue(RowLimits.Value);
             }
-            if (Optional.IsCollectionDefined(Columns))
+            if (!(Columns is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("columns"u8);
                 writer.WriteStartArray();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Expression))
+            if (Expression != null)
             {
                 writer.WritePropertyName("expression"u8);
                 writer.WriteStringValue(Expression);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             string streamName = default;
             Optional<int> rowLimits = default;
-            Optional<IList<string>> columns = default;
+            IList<string> columns = default;
             Optional<string> expression = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataFlowDebugCommandPayload(streamName, Optional.ToNullable(rowLimits), Optional.ToList(columns), expression.Value, serializedAdditionalRawData);
+            return new DataFlowDebugCommandPayload(streamName, Optional.ToNullable(rowLimits), columns ?? new ChangeTrackingList<string>(), expression.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataFlowDebugCommandPayload>.Write(ModelReaderWriterOptions options)

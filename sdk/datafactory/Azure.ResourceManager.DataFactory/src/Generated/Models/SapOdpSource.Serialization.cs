@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ExtractionMode))
+            if (ExtractionMode != null)
             {
                 writer.WritePropertyName("extractionMode"u8);
                 JsonSerializer.Serialize(writer, ExtractionMode);
             }
-            if (Optional.IsDefined(SubscriberProcess))
+            if (SubscriberProcess != null)
             {
                 writer.WritePropertyName("subscriberProcess"u8);
                 JsonSerializer.Serialize(writer, SubscriberProcess);
             }
-            if (Optional.IsDefined(Selection))
+            if (Selection != null)
             {
                 writer.WritePropertyName("selection"u8);
 #if NET6_0_OR_GREATER
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            if (Optional.IsDefined(Projection))
+            if (Projection != null)
             {
                 writer.WritePropertyName("projection"u8);
 #if NET6_0_OR_GREATER
@@ -61,12 +61,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            if (Optional.IsDefined(QueryTimeout))
+            if (QueryTimeout != null)
             {
                 writer.WritePropertyName("queryTimeout"u8);
                 JsonSerializer.Serialize(writer, QueryTimeout);
             }
-            if (Optional.IsDefined(AdditionalColumns))
+            if (AdditionalColumns != null)
             {
                 writer.WritePropertyName("additionalColumns"u8);
 #if NET6_0_OR_GREATER
@@ -80,22 +80,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CopySourceType);
-            if (Optional.IsDefined(SourceRetryCount))
+            if (SourceRetryCount != null)
             {
                 writer.WritePropertyName("sourceRetryCount"u8);
                 JsonSerializer.Serialize(writer, SourceRetryCount);
             }
-            if (Optional.IsDefined(SourceRetryWait))
+            if (SourceRetryWait != null)
             {
                 writer.WritePropertyName("sourceRetryWait"u8);
                 JsonSerializer.Serialize(writer, SourceRetryWait);
             }
-            if (Optional.IsDefined(MaxConcurrentConnections))
+            if (MaxConcurrentConnections != null)
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 JsonSerializer.Serialize(writer, MaxConcurrentConnections);
             }
-            if (Optional.IsDefined(DisableMetricsCollection))
+            if (DisableMetricsCollection != null)
             {
                 writer.WritePropertyName("disableMetricsCollection"u8);
                 JsonSerializer.Serialize(writer, DisableMetricsCollection);
@@ -248,7 +248,19 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SapOdpSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, queryTimeout.Value, additionalColumns.Value, extractionMode.Value, subscriberProcess.Value, selection.Value, projection.Value);
+            return new SapOdpSource(
+                type,
+                sourceRetryCount.Value,
+                sourceRetryWait.Value,
+                maxConcurrentConnections.Value,
+                disableMetricsCollection.Value,
+                additionalProperties,
+                queryTimeout.Value,
+                additionalColumns.Value,
+                extractionMode.Value,
+                subscriberProcess.Value,
+                selection.Value,
+                projection.Value);
         }
 
         BinaryData IPersistableModel<SapOdpSource>.Write(ModelReaderWriterOptions options)

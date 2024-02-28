@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Grafana.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(MonitorWorkspaceIntegrations))
+            if (!(MonitorWorkspaceIntegrations is ChangeTrackingList<MonitorWorkspaceIntegration> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("azureMonitorWorkspaceIntegrations"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Grafana.Models
             {
                 return null;
             }
-            Optional<IList<MonitorWorkspaceIntegration>> azureMonitorWorkspaceIntegrations = default;
+            IList<MonitorWorkspaceIntegration> azureMonitorWorkspaceIntegrations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Grafana.Models
                     List<MonitorWorkspaceIntegration> array = new List<MonitorWorkspaceIntegration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorWorkspaceIntegration.DeserializeMonitorWorkspaceIntegration(item));
+                        array.Add(MonitorWorkspaceIntegration.DeserializeMonitorWorkspaceIntegration(item, options));
                     }
                     azureMonitorWorkspaceIntegrations = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GrafanaIntegrations(Optional.ToList(azureMonitorWorkspaceIntegrations), serializedAdditionalRawData);
+            return new GrafanaIntegrations(azureMonitorWorkspaceIntegrations ?? new ChangeTrackingList<MonitorWorkspaceIntegration>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GrafanaIntegrations>.Write(ModelReaderWriterOptions options)

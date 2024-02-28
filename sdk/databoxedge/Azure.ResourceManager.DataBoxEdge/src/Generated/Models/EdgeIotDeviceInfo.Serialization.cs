@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteStringValue(DeviceId);
             writer.WritePropertyName("ioTHostHub"u8);
             writer.WriteStringValue(IotHostHub);
-            if (Optional.IsDefined(IotHostHubId))
+            if (IotHostHubId != null)
             {
                 writer.WritePropertyName("ioTHostHubId"u8);
                 writer.WriteStringValue(IotHostHubId);
             }
-            if (Optional.IsDefined(Authentication))
+            if (Authentication != null)
             {
                 writer.WritePropertyName("authentication"u8);
                 writer.WriteObjectValue(Authentication);
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    authentication = Authentication.DeserializeAuthentication(property.Value);
+                    authentication = Authentication.DeserializeAuthentication(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

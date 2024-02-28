@@ -29,22 +29,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Zones))
+            if (!(Zones is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -80,64 +80,64 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(NotificationSenderEmail))
+            if (NotificationSenderEmail != null)
             {
                 writer.WritePropertyName("notificationSenderEmail"u8);
                 writer.WriteStringValue(NotificationSenderEmail);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetProvisioningState))
+            if (options.Format != "W" && TargetProvisioningState != null)
             {
                 writer.WritePropertyName("targetProvisioningState"u8);
                 writer.WriteStringValue(TargetProvisioningState);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedAtUtc))
+            if (options.Format != "W" && CreatedAtUtc.HasValue)
             {
                 writer.WritePropertyName("createdAtUtc"u8);
                 writer.WriteStringValue(CreatedAtUtc.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(GatewayUri))
+            if (options.Format != "W" && GatewayUri != null)
             {
                 writer.WritePropertyName("gatewayUrl"u8);
                 writer.WriteStringValue(GatewayUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(GatewayRegionalUri))
+            if (options.Format != "W" && GatewayRegionalUri != null)
             {
                 writer.WritePropertyName("gatewayRegionalUrl"u8);
                 writer.WriteStringValue(GatewayRegionalUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(PortalUri))
+            if (options.Format != "W" && PortalUri != null)
             {
                 writer.WritePropertyName("portalUrl"u8);
                 writer.WriteStringValue(PortalUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(ManagementApiUri))
+            if (options.Format != "W" && ManagementApiUri != null)
             {
                 writer.WritePropertyName("managementApiUrl"u8);
                 writer.WriteStringValue(ManagementApiUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(ScmUri))
+            if (options.Format != "W" && ScmUri != null)
             {
                 writer.WritePropertyName("scmUrl"u8);
                 writer.WriteStringValue(ScmUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(DeveloperPortalUri))
+            if (options.Format != "W" && DeveloperPortalUri != null)
             {
                 writer.WritePropertyName("developerPortalUrl"u8);
                 writer.WriteStringValue(DeveloperPortalUri.AbsoluteUri);
             }
-            if (Optional.IsCollectionDefined(HostnameConfigurations))
+            if (!(HostnameConfigurations is ChangeTrackingList<HostnameConfiguration> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("hostnameConfigurations"u8);
                 writer.WriteStartArray();
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PublicIPAddresses))
+            if (options.Format != "W" && !(PublicIPAddresses is ChangeTrackingList<IPAddress> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("publicIPAddresses"u8);
                 writer.WriteStartArray();
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateIPAddresses))
+            if (options.Format != "W" && !(PrivateIPAddresses is ChangeTrackingList<IPAddress> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("privateIPAddresses"u8);
                 writer.WriteStartArray();
@@ -177,22 +177,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PublicIPAddressId))
+            if (PublicIPAddressId != null)
             {
                 writer.WritePropertyName("publicIpAddressId"u8);
                 writer.WriteStringValue(PublicIPAddressId);
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (PublicNetworkAccess.HasValue)
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Optional.IsDefined(VirtualNetworkConfiguration))
+            if (VirtualNetworkConfiguration != null)
             {
                 writer.WritePropertyName("virtualNetworkConfiguration"u8);
                 writer.WriteObjectValue(VirtualNetworkConfiguration);
             }
-            if (Optional.IsCollectionDefined(AdditionalLocations))
+            if (!(AdditionalLocations is ChangeTrackingList<AdditionalLocation> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("additionalLocations"u8);
                 writer.WriteStartArray();
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(CustomProperties))
+            if (!(CustomProperties is ChangeTrackingDictionary<string, string> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("customProperties"u8);
                 writer.WriteStartObject();
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Certificates))
+            if (!(Certificates is ChangeTrackingList<CertificateConfiguration> collection6 && collection6.IsUndefined))
             {
                 writer.WritePropertyName("certificates"u8);
                 writer.WriteStartArray();
@@ -223,32 +223,32 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(EnableClientCertificate))
+            if (EnableClientCertificate.HasValue)
             {
                 writer.WritePropertyName("enableClientCertificate"u8);
                 writer.WriteBooleanValue(EnableClientCertificate.Value);
             }
-            if (Optional.IsDefined(DisableGateway))
+            if (DisableGateway.HasValue)
             {
                 writer.WritePropertyName("disableGateway"u8);
                 writer.WriteBooleanValue(DisableGateway.Value);
             }
-            if (Optional.IsDefined(VirtualNetworkType))
+            if (VirtualNetworkType.HasValue)
             {
                 writer.WritePropertyName("virtualNetworkType"u8);
                 writer.WriteStringValue(VirtualNetworkType.Value.ToString());
             }
-            if (Optional.IsDefined(ApiVersionConstraint))
+            if (ApiVersionConstraint != null)
             {
                 writer.WritePropertyName("apiVersionConstraint"u8);
                 writer.WriteObjectValue(ApiVersionConstraint);
             }
-            if (Optional.IsDefined(Restore))
+            if (Restore.HasValue)
             {
                 writer.WritePropertyName("restore"u8);
                 writer.WriteBooleanValue(Restore.Value);
             }
-            if (Optional.IsCollectionDefined(PrivateEndpointConnections))
+            if (!(PrivateEndpointConnections is ChangeTrackingList<RemotePrivateEndpointConnectionWrapper> collection7 && collection7.IsUndefined))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -258,17 +258,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(PlatformVersion))
+            if (options.Format != "W" && PlatformVersion.HasValue)
             {
                 writer.WritePropertyName("platformVersion"u8);
                 writer.WriteStringValue(PlatformVersion.Value.ToString());
             }
-            if (Optional.IsDefined(PublisherEmail))
+            if (PublisherEmail != null)
             {
                 writer.WritePropertyName("publisherEmail"u8);
                 writer.WriteStringValue(PublisherEmail);
             }
-            if (Optional.IsDefined(PublisherName))
+            if (PublisherName != null)
             {
                 writer.WritePropertyName("publisherName"u8);
                 writer.WriteStringValue(PublisherName);
@@ -315,8 +315,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<ApiManagementServiceSkuProperties> sku = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<ETag> etag = default;
-            Optional<IList<string>> zones = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IList<string> zones = default;
+            IDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -331,21 +331,21 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<Uri> managementApiUri = default;
             Optional<Uri> scmUri = default;
             Optional<Uri> developerPortalUri = default;
-            Optional<IList<HostnameConfiguration>> hostnameConfigurations = default;
-            Optional<IReadOnlyList<IPAddress>> publicIPAddresses = default;
-            Optional<IReadOnlyList<IPAddress>> privateIPAddresses = default;
+            IList<HostnameConfiguration> hostnameConfigurations = default;
+            IReadOnlyList<IPAddress> publicIPAddresses = default;
+            IReadOnlyList<IPAddress> privateIPAddresses = default;
             Optional<ResourceIdentifier> publicIPAddressId = default;
             Optional<PublicNetworkAccess> publicNetworkAccess = default;
             Optional<VirtualNetworkConfiguration> virtualNetworkConfiguration = default;
-            Optional<IList<AdditionalLocation>> additionalLocations = default;
-            Optional<IDictionary<string, string>> customProperties = default;
-            Optional<IList<CertificateConfiguration>> certificates = default;
+            IList<AdditionalLocation> additionalLocations = default;
+            IDictionary<string, string> customProperties = default;
+            IList<CertificateConfiguration> certificates = default;
             Optional<bool> enableClientCertificate = default;
             Optional<bool> disableGateway = default;
             Optional<VirtualNetworkType> virtualNetworkType = default;
             Optional<ApiVersionConstraint> apiVersionConstraint = default;
             Optional<bool> restore = default;
-            Optional<IList<RemotePrivateEndpointConnectionWrapper>> privateEndpointConnections = default;
+            IList<RemotePrivateEndpointConnectionWrapper> privateEndpointConnections = default;
             Optional<PlatformVersion> platformVersion = default;
             Optional<string> publisherEmail = default;
             Optional<string> publisherName = default;
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    sku = ApiManagementServiceSkuProperties.DeserializeApiManagementServiceSkuProperties(property.Value);
+                    sku = ApiManagementServiceSkuProperties.DeserializeApiManagementServiceSkuProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             List<HostnameConfiguration> array = new List<HostnameConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(HostnameConfiguration.DeserializeHostnameConfiguration(item));
+                                array.Add(HostnameConfiguration.DeserializeHostnameConfiguration(item, options));
                             }
                             hostnameConfigurations = array;
                             continue;
@@ -599,7 +599,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             {
                                 continue;
                             }
-                            virtualNetworkConfiguration = VirtualNetworkConfiguration.DeserializeVirtualNetworkConfiguration(property0.Value);
+                            virtualNetworkConfiguration = VirtualNetworkConfiguration.DeserializeVirtualNetworkConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("additionalLocations"u8))
@@ -611,7 +611,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             List<AdditionalLocation> array = new List<AdditionalLocation>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AdditionalLocation.DeserializeAdditionalLocation(item));
+                                array.Add(AdditionalLocation.DeserializeAdditionalLocation(item, options));
                             }
                             additionalLocations = array;
                             continue;
@@ -639,7 +639,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             List<CertificateConfiguration> array = new List<CertificateConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(CertificateConfiguration.DeserializeCertificateConfiguration(item));
+                                array.Add(CertificateConfiguration.DeserializeCertificateConfiguration(item, options));
                             }
                             certificates = array;
                             continue;
@@ -677,7 +677,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             {
                                 continue;
                             }
-                            apiVersionConstraint = ApiVersionConstraint.DeserializeApiVersionConstraint(property0.Value);
+                            apiVersionConstraint = ApiVersionConstraint.DeserializeApiVersionConstraint(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("restore"u8))
@@ -698,7 +698,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             List<RemotePrivateEndpointConnectionWrapper> array = new List<RemotePrivateEndpointConnectionWrapper>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RemotePrivateEndpointConnectionWrapper.DeserializeRemotePrivateEndpointConnectionWrapper(item));
+                                array.Add(RemotePrivateEndpointConnectionWrapper.DeserializeRemotePrivateEndpointConnectionWrapper(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -731,7 +731,45 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementServicePatch(id, name, type, systemData.Value, sku.Value, identity, Optional.ToNullable(etag), Optional.ToList(zones), notificationSenderEmail.Value, provisioningState.Value, targetProvisioningState.Value, Optional.ToNullable(createdAtUtc), gatewayUri.Value, gatewayRegionalUri.Value, portalUri.Value, managementApiUri.Value, scmUri.Value, developerPortalUri.Value, Optional.ToList(hostnameConfigurations), Optional.ToList(publicIPAddresses), Optional.ToList(privateIPAddresses), publicIPAddressId.Value, Optional.ToNullable(publicNetworkAccess), virtualNetworkConfiguration.Value, Optional.ToList(additionalLocations), Optional.ToDictionary(customProperties), Optional.ToList(certificates), Optional.ToNullable(enableClientCertificate), Optional.ToNullable(disableGateway), Optional.ToNullable(virtualNetworkType), apiVersionConstraint.Value, Optional.ToNullable(restore), Optional.ToList(privateEndpointConnections), Optional.ToNullable(platformVersion), publisherEmail.Value, publisherName.Value, Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new ApiManagementServicePatch(
+                id,
+                name,
+                type,
+                systemData.Value,
+                sku.Value,
+                identity,
+                Optional.ToNullable(etag),
+                zones ?? new ChangeTrackingList<string>(),
+                notificationSenderEmail.Value,
+                provisioningState.Value,
+                targetProvisioningState.Value,
+                Optional.ToNullable(createdAtUtc),
+                gatewayUri.Value,
+                gatewayRegionalUri.Value,
+                portalUri.Value,
+                managementApiUri.Value,
+                scmUri.Value,
+                developerPortalUri.Value,
+                hostnameConfigurations ?? new ChangeTrackingList<HostnameConfiguration>(),
+                publicIPAddresses ?? new ChangeTrackingList<IPAddress>(),
+                privateIPAddresses ?? new ChangeTrackingList<IPAddress>(),
+                publicIPAddressId.Value,
+                Optional.ToNullable(publicNetworkAccess),
+                virtualNetworkConfiguration.Value,
+                additionalLocations ?? new ChangeTrackingList<AdditionalLocation>(),
+                customProperties ?? new ChangeTrackingDictionary<string, string>(),
+                certificates ?? new ChangeTrackingList<CertificateConfiguration>(),
+                Optional.ToNullable(enableClientCertificate),
+                Optional.ToNullable(disableGateway),
+                Optional.ToNullable(virtualNetworkType),
+                apiVersionConstraint.Value,
+                Optional.ToNullable(restore),
+                privateEndpointConnections ?? new ChangeTrackingList<RemotePrivateEndpointConnectionWrapper>(),
+                Optional.ToNullable(platformVersion),
+                publisherEmail.Value,
+                publisherName.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementServicePatch>.Write(ModelReaderWriterOptions options)

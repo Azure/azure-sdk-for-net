@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EnabledProtocols))
+            if (EnabledProtocols != null)
             {
                 writer.WritePropertyName("enabledProtocols"u8);
                 writer.WriteObjectValue(EnabledProtocols);
             }
-            if (Optional.IsCollectionDefined(ClearTracks))
+            if (!(ClearTracks is ChangeTrackingList<MediaTrackSelection> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("clearTracks"u8);
                 writer.WriteStartArray();
@@ -41,17 +41,17 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ContentKeys))
+            if (ContentKeys != null)
             {
                 writer.WritePropertyName("contentKeys"u8);
                 writer.WriteObjectValue(ContentKeys);
             }
-            if (Optional.IsDefined(Drm))
+            if (Drm != null)
             {
                 writer.WritePropertyName("drm"u8);
                 writer.WriteObjectValue(Drm);
             }
-            if (Optional.IsDefined(ClearKeyEncryptionConfiguration))
+            if (ClearKeyEncryptionConfiguration != null)
             {
                 writer.WritePropertyName("clearKeyEncryptionConfiguration"u8);
                 writer.WriteObjectValue(ClearKeyEncryptionConfiguration);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Media.Models
                 return null;
             }
             Optional<MediaEnabledProtocols> enabledProtocols = default;
-            Optional<IList<MediaTrackSelection>> clearTracks = default;
+            IList<MediaTrackSelection> clearTracks = default;
             Optional<StreamingPolicyContentKeys> contentKeys = default;
             Optional<CbcsDrmConfiguration> drm = default;
             Optional<ClearKeyEncryptionConfiguration> clearKeyEncryptionConfiguration = default;
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    enabledProtocols = MediaEnabledProtocols.DeserializeMediaEnabledProtocols(property.Value);
+                    enabledProtocols = MediaEnabledProtocols.DeserializeMediaEnabledProtocols(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("clearTracks"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<MediaTrackSelection> array = new List<MediaTrackSelection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MediaTrackSelection.DeserializeMediaTrackSelection(item));
+                        array.Add(MediaTrackSelection.DeserializeMediaTrackSelection(item, options));
                     }
                     clearTracks = array;
                     continue;
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    contentKeys = StreamingPolicyContentKeys.DeserializeStreamingPolicyContentKeys(property.Value);
+                    contentKeys = StreamingPolicyContentKeys.DeserializeStreamingPolicyContentKeys(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("drm"u8))
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    drm = CbcsDrmConfiguration.DeserializeCbcsDrmConfiguration(property.Value);
+                    drm = CbcsDrmConfiguration.DeserializeCbcsDrmConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("clearKeyEncryptionConfiguration"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    clearKeyEncryptionConfiguration = ClearKeyEncryptionConfiguration.DeserializeClearKeyEncryptionConfiguration(property.Value);
+                    clearKeyEncryptionConfiguration = ClearKeyEncryptionConfiguration.DeserializeClearKeyEncryptionConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -159,7 +159,13 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CommonEncryptionCbcs(enabledProtocols.Value, Optional.ToList(clearTracks), contentKeys.Value, drm.Value, clearKeyEncryptionConfiguration.Value, serializedAdditionalRawData);
+            return new CommonEncryptionCbcs(
+                enabledProtocols.Value,
+                clearTracks ?? new ChangeTrackingList<MediaTrackSelection>(),
+                contentKeys.Value,
+                drm.Value,
+                clearKeyEncryptionConfiguration.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CommonEncryptionCbcs>.Write(ModelReaderWriterOptions options)

@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    properties = ContainerAppBillingMeterProperties.DeserializeContainerAppBillingMeterProperties(property.Value);
+                    properties = ContainerAppBillingMeterProperties.DeserializeContainerAppBillingMeterProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -153,7 +153,14 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppBillingMeter(id, name, type, systemData.Value, Optional.ToNullable(location), properties.Value, serializedAdditionalRawData);
+            return new ContainerAppBillingMeter(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(location),
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppBillingMeter>.Write(ModelReaderWriterOptions options)

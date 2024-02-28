@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisablePasswordAuthentication))
+            if (DisablePasswordAuthentication.HasValue)
             {
                 writer.WritePropertyName("disablePasswordAuthentication"u8);
                 writer.WriteBooleanValue(DisablePasswordAuthentication.Value);
             }
-            if (Optional.IsDefined(Ssh))
+            if (Ssh != null)
             {
                 writer.WritePropertyName("ssh"u8);
                 writer.WriteObjectValue(Ssh);
             }
-            if (Optional.IsDefined(SshKeyPair))
+            if (SshKeyPair != null)
             {
                 writer.WritePropertyName("sshKeyPair"u8);
                 writer.WriteObjectValue(SshKeyPair);
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    ssh = SapSshConfiguration.DeserializeSapSshConfiguration(property.Value);
+                    ssh = SapSshConfiguration.DeserializeSapSshConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sshKeyPair"u8))
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    sshKeyPair = SapSshKeyPair.DeserializeSapSshKeyPair(property.Value);
+                    sshKeyPair = SapSshKeyPair.DeserializeSapSshKeyPair(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("osType"u8))

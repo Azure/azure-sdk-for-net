@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Query))
+            if (Query != null)
             {
                 writer.WritePropertyName("query"u8);
                 writer.WriteStringValue(Query);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Limit))
+            if (Limit.HasValue)
             {
                 writer.WritePropertyName("limit"u8);
                 writer.WriteNumberValue(Limit.Value);
             }
-            if (Optional.IsDefined(StartSearchOn))
+            if (StartSearchOn.HasValue)
             {
                 writer.WritePropertyName("startSearchTime"u8);
                 writer.WriteStringValue(StartSearchOn.Value, "O");
             }
-            if (Optional.IsDefined(EndSearchOn))
+            if (EndSearchOn.HasValue)
             {
                 writer.WritePropertyName("endSearchTime"u8);
                 writer.WriteStringValue(EndSearchOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(SourceTable))
+            if (options.Format != "W" && SourceTable != null)
             {
                 writer.WritePropertyName("sourceTable"u8);
                 writer.WriteStringValue(SourceTable);
             }
-            if (options.Format != "W" && Optional.IsDefined(AzureAsyncOperationId))
+            if (options.Format != "W" && AzureAsyncOperationId.HasValue)
             {
                 writer.WritePropertyName("azureAsyncOperationId"u8);
                 writer.WriteStringValue(AzureAsyncOperationId.Value);
@@ -167,7 +167,15 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationalInsightsTableSearchResults(query.Value, description.Value, Optional.ToNullable(limit), Optional.ToNullable(startSearchTime), Optional.ToNullable(endSearchTime), sourceTable.Value, Optional.ToNullable(azureAsyncOperationId), serializedAdditionalRawData);
+            return new OperationalInsightsTableSearchResults(
+                query.Value,
+                description.Value,
+                Optional.ToNullable(limit),
+                Optional.ToNullable(startSearchTime),
+                Optional.ToNullable(endSearchTime),
+                sourceTable.Value,
+                Optional.ToNullable(azureAsyncOperationId),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationalInsightsTableSearchResults>.Write(ModelReaderWriterOptions options)

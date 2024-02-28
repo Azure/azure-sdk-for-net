@@ -51,7 +51,10 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="alertType"/> is null. </exception>
         public NotificationContent(string alertType)
         {
-            Argument.AssertNotNull(alertType, nameof(alertType));
+            if (alertType == null)
+            {
+                throw new ArgumentNullException(nameof(alertType));
+            }
 
             AlertType = alertType;
             EmailReceivers = new ChangeTrackingList<MonitorEmailReceiver>();

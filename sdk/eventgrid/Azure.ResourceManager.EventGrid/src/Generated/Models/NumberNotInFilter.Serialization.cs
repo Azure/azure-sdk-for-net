@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Values))
+            if (!(Values is ChangeTrackingList<double> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
             writer.WritePropertyName("operatorType"u8);
             writer.WriteStringValue(OperatorType.ToString());
-            if (Optional.IsDefined(Key))
+            if (Key != null)
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<IList<double>> values = default;
+            IList<double> values = default;
             FilterOperatorType operatorType = default;
             Optional<string> key = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NumberNotInFilter(operatorType, key.Value, serializedAdditionalRawData, Optional.ToList(values));
+            return new NumberNotInFilter(operatorType, key.Value, serializedAdditionalRawData, values ?? new ChangeTrackingList<double>());
         }
 
         BinaryData IPersistableModel<NumberNotInFilter>.Write(ModelReaderWriterOptions options)

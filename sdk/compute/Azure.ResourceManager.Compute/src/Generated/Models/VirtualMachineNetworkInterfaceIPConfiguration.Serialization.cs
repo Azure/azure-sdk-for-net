@@ -31,27 +31,27 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Subnet))
+            if (Subnet != null)
             {
                 writer.WritePropertyName("subnet"u8);
                 JsonSerializer.Serialize(writer, Subnet);
             }
-            if (Optional.IsDefined(Primary))
+            if (Primary.HasValue)
             {
                 writer.WritePropertyName("primary"u8);
                 writer.WriteBooleanValue(Primary.Value);
             }
-            if (Optional.IsDefined(PublicIPAddressConfiguration))
+            if (PublicIPAddressConfiguration != null)
             {
                 writer.WritePropertyName("publicIPAddressConfiguration"u8);
                 writer.WriteObjectValue(PublicIPAddressConfiguration);
             }
-            if (Optional.IsDefined(PrivateIPAddressVersion))
+            if (PrivateIPAddressVersion.HasValue)
             {
                 writer.WritePropertyName("privateIPAddressVersion"u8);
                 writer.WriteStringValue(PrivateIPAddressVersion.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(ApplicationSecurityGroups))
+            if (!(ApplicationSecurityGroups is ChangeTrackingList<WritableSubResource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("applicationSecurityGroups"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ApplicationGatewayBackendAddressPools))
+            if (!(ApplicationGatewayBackendAddressPools is ChangeTrackingList<WritableSubResource> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("applicationGatewayBackendAddressPools"u8);
                 writer.WriteStartArray();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(LoadBalancerBackendAddressPools))
+            if (!(LoadBalancerBackendAddressPools is ChangeTrackingList<WritableSubResource> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("loadBalancerBackendAddressPools"u8);
                 writer.WriteStartArray();
@@ -125,9 +125,9 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<bool> primary = default;
             Optional<VirtualMachinePublicIPAddressConfiguration> publicIPAddressConfiguration = default;
             Optional<IPVersion> privateIPAddressVersion = default;
-            Optional<IList<WritableSubResource>> applicationSecurityGroups = default;
-            Optional<IList<WritableSubResource>> applicationGatewayBackendAddressPools = default;
-            Optional<IList<WritableSubResource>> loadBalancerBackendAddressPools = default;
+            IList<WritableSubResource> applicationSecurityGroups = default;
+            IList<WritableSubResource> applicationGatewayBackendAddressPools = default;
+            IList<WritableSubResource> loadBalancerBackendAddressPools = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            publicIPAddressConfiguration = VirtualMachinePublicIPAddressConfiguration.DeserializeVirtualMachinePublicIPAddressConfiguration(property0.Value);
+                            publicIPAddressConfiguration = VirtualMachinePublicIPAddressConfiguration.DeserializeVirtualMachinePublicIPAddressConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("privateIPAddressVersion"u8))
@@ -233,7 +233,16 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineNetworkInterfaceIPConfiguration(name, subnet, Optional.ToNullable(primary), publicIPAddressConfiguration.Value, Optional.ToNullable(privateIPAddressVersion), Optional.ToList(applicationSecurityGroups), Optional.ToList(applicationGatewayBackendAddressPools), Optional.ToList(loadBalancerBackendAddressPools), serializedAdditionalRawData);
+            return new VirtualMachineNetworkInterfaceIPConfiguration(
+                name,
+                subnet,
+                Optional.ToNullable(primary),
+                publicIPAddressConfiguration.Value,
+                Optional.ToNullable(privateIPAddressVersion),
+                applicationSecurityGroups ?? new ChangeTrackingList<WritableSubResource>(),
+                applicationGatewayBackendAddressPools ?? new ChangeTrackingList<WritableSubResource>(),
+                loadBalancerBackendAddressPools ?? new ChangeTrackingList<WritableSubResource>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineNetworkInterfaceIPConfiguration>.Write(ModelReaderWriterOptions options)

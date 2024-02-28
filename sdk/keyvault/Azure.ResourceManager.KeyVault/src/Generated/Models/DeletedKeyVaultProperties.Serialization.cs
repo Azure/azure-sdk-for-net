@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(VaultId))
+            if (options.Format != "W" && VaultId != null)
             {
                 writer.WritePropertyName("vaultId"u8);
                 writer.WriteStringValue(VaultId);
             }
-            if (options.Format != "W" && Optional.IsDefined(Location))
+            if (options.Format != "W" && Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(DeletedOn))
+            if (options.Format != "W" && DeletedOn.HasValue)
             {
                 writer.WritePropertyName("deletionDate"u8);
                 writer.WriteStringValue(DeletedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ScheduledPurgeOn))
+            if (options.Format != "W" && ScheduledPurgeOn.HasValue)
             {
                 writer.WritePropertyName("scheduledPurgeDate"u8);
                 writer.WriteStringValue(ScheduledPurgeOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Tags))
+            if (options.Format != "W" && !(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsDefined(PurgeProtectionEnabled))
+            if (options.Format != "W" && PurgeProtectionEnabled.HasValue)
             {
                 writer.WritePropertyName("purgeProtectionEnabled"u8);
                 writer.WriteBooleanValue(PurgeProtectionEnabled.Value);
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             Optional<AzureLocation> location = default;
             Optional<DateTimeOffset> deletionDate = default;
             Optional<DateTimeOffset> scheduledPurgeDate = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            IReadOnlyDictionary<string, string> tags = default;
             Optional<bool> purgeProtectionEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -175,7 +175,14 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeletedKeyVaultProperties(vaultId.Value, Optional.ToNullable(location), Optional.ToNullable(deletionDate), Optional.ToNullable(scheduledPurgeDate), Optional.ToDictionary(tags), Optional.ToNullable(purgeProtectionEnabled), serializedAdditionalRawData);
+            return new DeletedKeyVaultProperties(
+                vaultId.Value,
+                Optional.ToNullable(location),
+                Optional.ToNullable(deletionDate),
+                Optional.ToNullable(scheduledPurgeDate),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(purgeProtectionEnabled),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeletedKeyVaultProperties>.Write(ModelReaderWriterOptions options)

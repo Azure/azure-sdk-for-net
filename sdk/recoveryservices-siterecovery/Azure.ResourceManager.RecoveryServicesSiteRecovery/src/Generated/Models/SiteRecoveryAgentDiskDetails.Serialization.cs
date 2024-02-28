@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(DiskId))
+            if (options.Format != "W" && DiskId != null)
             {
                 writer.WritePropertyName("diskId"u8);
                 writer.WriteStringValue(DiskId);
             }
-            if (options.Format != "W" && Optional.IsDefined(DiskName))
+            if (options.Format != "W" && DiskName != null)
             {
                 writer.WritePropertyName("diskName"u8);
                 writer.WriteStringValue(DiskName);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsOSDisk))
+            if (options.Format != "W" && IsOSDisk != null)
             {
                 writer.WritePropertyName("isOSDisk"u8);
                 writer.WriteStringValue(IsOSDisk);
             }
-            if (options.Format != "W" && Optional.IsDefined(CapacityInBytes))
+            if (options.Format != "W" && CapacityInBytes.HasValue)
             {
                 writer.WritePropertyName("capacityInBytes"u8);
                 writer.WriteNumberValue(CapacityInBytes.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(LunId))
+            if (options.Format != "W" && LunId.HasValue)
             {
                 writer.WritePropertyName("lunId"u8);
                 writer.WriteNumberValue(LunId.Value);
@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryAgentDiskDetails(diskId.Value, diskName.Value, isOSDisk.Value, Optional.ToNullable(capacityInBytes), Optional.ToNullable(lunId), serializedAdditionalRawData);
+            return new SiteRecoveryAgentDiskDetails(
+                diskId.Value,
+                diskName.Value,
+                isOSDisk.Value,
+                Optional.ToNullable(capacityInBytes),
+                Optional.ToNullable(lunId),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryAgentDiskDetails>.Write(ModelReaderWriterOptions options)

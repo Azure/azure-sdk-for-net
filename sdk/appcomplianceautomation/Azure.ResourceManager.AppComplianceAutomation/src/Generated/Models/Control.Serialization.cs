@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ControlId))
+            if (options.Format != "W" && ControlId != null)
             {
                 writer.WritePropertyName("controlId"u8);
                 writer.WriteStringValue(ControlId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ControlShortName))
+            if (options.Format != "W" && ControlShortName != null)
             {
                 writer.WritePropertyName("controlShortName"u8);
                 writer.WriteStringValue(ControlShortName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ControlFullName))
+            if (options.Format != "W" && ControlFullName != null)
             {
                 writer.WritePropertyName("controlFullName"u8);
                 writer.WriteStringValue(ControlFullName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ControlType))
+            if (options.Format != "W" && ControlType.HasValue)
             {
                 writer.WritePropertyName("controlType"u8);
                 writer.WriteStringValue(ControlType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ControlDescription))
+            if (options.Format != "W" && ControlDescription != null)
             {
                 writer.WritePropertyName("controlDescription"u8);
                 writer.WriteStringValue(ControlDescription);
             }
-            if (options.Format != "W" && Optional.IsDefined(ControlDescriptionHyperLink))
+            if (options.Format != "W" && ControlDescriptionHyperLink != null)
             {
                 writer.WritePropertyName("controlDescriptionHyperLink"u8);
                 writer.WriteStringValue(ControlDescriptionHyperLink);
             }
-            if (options.Format != "W" && Optional.IsDefined(ControlStatus))
+            if (options.Format != "W" && ControlStatus.HasValue)
             {
                 writer.WritePropertyName("controlStatus"u8);
                 writer.WriteStringValue(ControlStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Assessments))
+            if (options.Format != "W" && !(Assessments is ChangeTrackingList<Assessment> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("assessments"u8);
                 writer.WriteStartArray();
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             Optional<string> controlDescription = default;
             Optional<string> controlDescriptionHyperLink = default;
             Optional<ControlStatus> controlStatus = default;
-            Optional<IReadOnlyList<Assessment>> assessments = default;
+            IReadOnlyList<Assessment> assessments = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     List<Assessment> array = new List<Assessment>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Assessment.DeserializeAssessment(item));
+                        array.Add(Assessment.DeserializeAssessment(item, options));
                     }
                     assessments = array;
                     continue;
@@ -184,7 +184,16 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new Control(controlId.Value, controlShortName.Value, controlFullName.Value, Optional.ToNullable(controlType), controlDescription.Value, controlDescriptionHyperLink.Value, Optional.ToNullable(controlStatus), Optional.ToList(assessments), serializedAdditionalRawData);
+            return new Control(
+                controlId.Value,
+                controlShortName.Value,
+                controlFullName.Value,
+                Optional.ToNullable(controlType),
+                controlDescription.Value,
+                controlDescriptionHyperLink.Value,
+                Optional.ToNullable(controlStatus),
+                assessments ?? new ChangeTrackingList<Assessment>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<Control>.Write(ModelReaderWriterOptions options)

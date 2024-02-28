@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="azureFirewallName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AzureFirewallResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string azureFirewallName, AzureFirewallData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(azureFirewallName, nameof(azureFirewallName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (azureFirewallName == null)
+            {
+                throw new ArgumentNullException(nameof(azureFirewallName));
+            }
+            if (azureFirewallName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(azureFirewallName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _azureFirewallClientDiagnostics.CreateScope("AzureFirewallCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="azureFirewallName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AzureFirewallResource> CreateOrUpdate(WaitUntil waitUntil, string azureFirewallName, AzureFirewallData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(azureFirewallName, nameof(azureFirewallName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (azureFirewallName == null)
+            {
+                throw new ArgumentNullException(nameof(azureFirewallName));
+            }
+            if (azureFirewallName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(azureFirewallName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _azureFirewallClientDiagnostics.CreateScope("AzureFirewallCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="azureFirewallName"/> is null. </exception>
         public virtual async Task<Response<AzureFirewallResource>> GetAsync(string azureFirewallName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(azureFirewallName, nameof(azureFirewallName));
+            if (azureFirewallName == null)
+            {
+                throw new ArgumentNullException(nameof(azureFirewallName));
+            }
+            if (azureFirewallName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(azureFirewallName));
+            }
 
             using var scope = _azureFirewallClientDiagnostics.CreateScope("AzureFirewallCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="azureFirewallName"/> is null. </exception>
         public virtual Response<AzureFirewallResource> Get(string azureFirewallName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(azureFirewallName, nameof(azureFirewallName));
+            if (azureFirewallName == null)
+            {
+                throw new ArgumentNullException(nameof(azureFirewallName));
+            }
+            if (azureFirewallName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(azureFirewallName));
+            }
 
             using var scope = _azureFirewallClientDiagnostics.CreateScope("AzureFirewallCollection.Get");
             scope.Start();
@@ -329,7 +363,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="azureFirewallName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string azureFirewallName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(azureFirewallName, nameof(azureFirewallName));
+            if (azureFirewallName == null)
+            {
+                throw new ArgumentNullException(nameof(azureFirewallName));
+            }
+            if (azureFirewallName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(azureFirewallName));
+            }
 
             using var scope = _azureFirewallClientDiagnostics.CreateScope("AzureFirewallCollection.Exists");
             scope.Start();
@@ -372,7 +413,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="azureFirewallName"/> is null. </exception>
         public virtual Response<bool> Exists(string azureFirewallName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(azureFirewallName, nameof(azureFirewallName));
+            if (azureFirewallName == null)
+            {
+                throw new ArgumentNullException(nameof(azureFirewallName));
+            }
+            if (azureFirewallName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(azureFirewallName));
+            }
 
             using var scope = _azureFirewallClientDiagnostics.CreateScope("AzureFirewallCollection.Exists");
             scope.Start();
@@ -415,7 +463,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="azureFirewallName"/> is null. </exception>
         public virtual async Task<NullableResponse<AzureFirewallResource>> GetIfExistsAsync(string azureFirewallName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(azureFirewallName, nameof(azureFirewallName));
+            if (azureFirewallName == null)
+            {
+                throw new ArgumentNullException(nameof(azureFirewallName));
+            }
+            if (azureFirewallName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(azureFirewallName));
+            }
 
             using var scope = _azureFirewallClientDiagnostics.CreateScope("AzureFirewallCollection.GetIfExists");
             scope.Start();
@@ -460,7 +515,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="azureFirewallName"/> is null. </exception>
         public virtual NullableResponse<AzureFirewallResource> GetIfExists(string azureFirewallName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(azureFirewallName, nameof(azureFirewallName));
+            if (azureFirewallName == null)
+            {
+                throw new ArgumentNullException(nameof(azureFirewallName));
+            }
+            if (azureFirewallName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(azureFirewallName));
+            }
 
             using var scope = _azureFirewallClientDiagnostics.CreateScope("AzureFirewallCollection.GetIfExists");
             scope.Start();

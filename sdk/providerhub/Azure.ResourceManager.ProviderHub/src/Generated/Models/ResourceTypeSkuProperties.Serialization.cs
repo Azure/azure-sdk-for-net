@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(ProvisioningState))
+            if (ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<ResourceTypeSkuSetting> array = new List<ResourceTypeSkuSetting>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceTypeSkuSetting.DeserializeResourceTypeSkuSetting(item));
+                        array.Add(ResourceTypeSkuSetting.DeserializeResourceTypeSkuSetting(item, options));
                     }
                     skuSettings = array;
                     continue;

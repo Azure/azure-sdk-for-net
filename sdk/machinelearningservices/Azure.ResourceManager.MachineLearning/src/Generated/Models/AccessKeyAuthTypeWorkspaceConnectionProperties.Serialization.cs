@@ -26,24 +26,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Credentials))
+            if (Credentials != null)
             {
                 writer.WritePropertyName("credentials"u8);
                 writer.WriteObjectValue(Credentials);
             }
             writer.WritePropertyName("authType"u8);
             writer.WriteStringValue(AuthType.ToString());
-            if (Optional.IsDefined(Category))
+            if (Category.HasValue)
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category.Value.ToString());
             }
-            if (Optional.IsDefined(ExpiryOn))
+            if (ExpiryOn.HasValue)
             {
                 writer.WritePropertyName("expiryTime"u8);
                 writer.WriteStringValue(ExpiryOn.Value, "O");
             }
-            if (Optional.IsDefined(Metadata))
+            if (Metadata != null)
             {
                 writer.WritePropertyName("metadata"u8);
 #if NET6_0_OR_GREATER
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
 #endif
             }
-            if (Optional.IsDefined(Target))
+            if (Target != null)
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target);
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    credentials = WorkspaceConnectionAccessKey.DeserializeWorkspaceConnectionAccessKey(property.Value);
+                    credentials = WorkspaceConnectionAccessKey.DeserializeWorkspaceConnectionAccessKey(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("authType"u8))
@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AccessKeyAuthTypeWorkspaceConnectionProperties(authType, Optional.ToNullable(category), Optional.ToNullable(expiryTime), metadata.Value, target.Value, serializedAdditionalRawData, credentials.Value);
+            return new AccessKeyAuthTypeWorkspaceConnectionProperties(
+                authType,
+                Optional.ToNullable(category),
+                Optional.ToNullable(expiryTime),
+                metadata.Value,
+                target.Value,
+                serializedAdditionalRawData,
+                credentials.Value);
         }
 
         BinaryData IPersistableModel<AccessKeyAuthTypeWorkspaceConnectionProperties>.Write(ModelReaderWriterOptions options)

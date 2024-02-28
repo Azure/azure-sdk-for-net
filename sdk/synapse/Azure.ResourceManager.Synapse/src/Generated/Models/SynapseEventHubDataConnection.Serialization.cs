@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -49,39 +49,39 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(EventHubResourceId))
+            if (EventHubResourceId != null)
             {
                 writer.WritePropertyName("eventHubResourceId"u8);
                 writer.WriteStringValue(EventHubResourceId);
             }
-            if (Optional.IsDefined(ConsumerGroup))
+            if (ConsumerGroup != null)
             {
                 writer.WritePropertyName("consumerGroup"u8);
                 writer.WriteStringValue(ConsumerGroup);
             }
-            if (Optional.IsDefined(TableName))
+            if (TableName != null)
             {
                 writer.WritePropertyName("tableName"u8);
                 writer.WriteStringValue(TableName);
             }
-            if (Optional.IsDefined(MappingRuleName))
+            if (MappingRuleName != null)
             {
                 writer.WritePropertyName("mappingRuleName"u8);
                 writer.WriteStringValue(MappingRuleName);
             }
-            if (Optional.IsDefined(DataFormat))
+            if (DataFormat.HasValue)
             {
                 writer.WritePropertyName("dataFormat"u8);
                 writer.WriteStringValue(DataFormat.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(EventSystemProperties))
+            if (!(EventSystemProperties is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("eventSystemProperties"u8);
                 writer.WriteStartArray();
@@ -91,17 +91,17 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Compression))
+            if (Compression.HasValue)
             {
                 writer.WritePropertyName("compression"u8);
                 writer.WriteStringValue(Compression.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(ManagedIdentityResourceId))
+            if (ManagedIdentityResourceId != null)
             {
                 writer.WritePropertyName("managedIdentityResourceId"u8);
                 writer.WriteStringValue(ManagedIdentityResourceId);
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Synapse.Models
             Optional<string> tableName = default;
             Optional<string> mappingRuleName = default;
             Optional<SynapseEventHubDataFormat> dataFormat = default;
-            Optional<IList<string>> eventSystemProperties = default;
+            IList<string> eventSystemProperties = default;
             Optional<KustoPoolCompressionType> compression = default;
             Optional<ResourceProvisioningState> provisioningState = default;
             Optional<ResourceIdentifier> managedIdentityResourceId = default;
@@ -294,7 +294,23 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseEventHubDataConnection(id, name, type, systemData.Value, Optional.ToNullable(location), kind, serializedAdditionalRawData, eventHubResourceId.Value, consumerGroup.Value, tableName.Value, mappingRuleName.Value, Optional.ToNullable(dataFormat), Optional.ToList(eventSystemProperties), Optional.ToNullable(compression), Optional.ToNullable(provisioningState), managedIdentityResourceId.Value);
+            return new SynapseEventHubDataConnection(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(location),
+                kind,
+                serializedAdditionalRawData,
+                eventHubResourceId.Value,
+                consumerGroup.Value,
+                tableName.Value,
+                mappingRuleName.Value,
+                Optional.ToNullable(dataFormat),
+                eventSystemProperties ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(compression),
+                Optional.ToNullable(provisioningState),
+                managedIdentityResourceId.Value);
         }
 
         BinaryData IPersistableModel<SynapseEventHubDataConnection>.Write(ModelReaderWriterOptions options)

@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(LinkedServiceType);
-            if (Optional.IsDefined(ConnectVia))
+            if (ConnectVia != null)
             {
                 writer.WritePropertyName("connectVia"u8);
                 writer.WriteObjectValue(ConnectVia);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingDictionary<string, EntityParameterSpecification> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Annotations))
+            if (!(Annotations is ChangeTrackingList<BinaryData> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -76,44 +76,44 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("server"u8);
             JsonSerializer.Serialize(writer, Server);
-            if (Optional.IsDefined(AuthenticationType))
+            if (AuthenticationType.HasValue)
             {
                 writer.WritePropertyName("authenticationType"u8);
                 writer.WriteStringValue(AuthenticationType.Value.ToString());
             }
             writer.WritePropertyName("databaseName"u8);
             JsonSerializer.Serialize(writer, DatabaseName);
-            if (Optional.IsDefined(Username))
+            if (Username != null)
             {
                 writer.WritePropertyName("username"u8);
                 JsonSerializer.Serialize(writer, Username);
             }
-            if (Optional.IsDefined(Password))
+            if (Password != null)
             {
                 writer.WritePropertyName("password"u8);
                 JsonSerializer.Serialize(writer, Password);
             }
-            if (Optional.IsDefined(AuthSource))
+            if (AuthSource != null)
             {
                 writer.WritePropertyName("authSource"u8);
                 JsonSerializer.Serialize(writer, AuthSource);
             }
-            if (Optional.IsDefined(Port))
+            if (Port != null)
             {
                 writer.WritePropertyName("port"u8);
                 JsonSerializer.Serialize(writer, Port);
             }
-            if (Optional.IsDefined(EnableSsl))
+            if (EnableSsl != null)
             {
                 writer.WritePropertyName("enableSsl"u8);
                 JsonSerializer.Serialize(writer, EnableSsl);
             }
-            if (Optional.IsDefined(AllowSelfSignedServerCert))
+            if (AllowSelfSignedServerCert != null)
             {
                 writer.WritePropertyName("allowSelfSignedServerCert"u8);
                 JsonSerializer.Serialize(writer, AllowSelfSignedServerCert);
             }
-            if (Optional.IsDefined(EncryptedCredential))
+            if (EncryptedCredential != null)
             {
                 writer.WritePropertyName("encryptedCredential"u8);
                 writer.WriteStringValue(EncryptedCredential);
@@ -157,8 +157,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             string type = default;
             Optional<IntegrationRuntimeReference> connectVia = default;
             Optional<string> description = default;
-            Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
-            Optional<IList<BinaryData>> annotations = default;
+            IDictionary<string, EntityParameterSpecification> parameters = default;
+            IList<BinaryData> annotations = default;
             DataFactoryElement<string> server = default;
             Optional<MongoDBAuthenticationType> authenticationType = default;
             DataFactoryElement<string> databaseName = default;
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property.Value);
+                    connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("description"u8))
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     Dictionary<string, EntityParameterSpecification> dictionary = new Dictionary<string, EntityParameterSpecification>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, EntityParameterSpecification.DeserializeEntityParameterSpecification(property0.Value));
+                        dictionary.Add(property0.Name, EntityParameterSpecification.DeserializeEntityParameterSpecification(property0.Value, options));
                     }
                     parameters = dictionary;
                     continue;
@@ -320,7 +320,23 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new MongoDBLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, server, Optional.ToNullable(authenticationType), databaseName, username.Value, password, authSource.Value, port.Value, enableSsl.Value, allowSelfSignedServerCert.Value, encryptedCredential.Value);
+            return new MongoDBLinkedService(
+                type,
+                connectVia.Value,
+                description.Value,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                server,
+                Optional.ToNullable(authenticationType),
+                databaseName,
+                username.Value,
+                password,
+                authSource.Value,
+                port.Value,
+                enableSsl.Value,
+                allowSelfSignedServerCert.Value,
+                encryptedCredential.Value);
         }
 
         BinaryData IPersistableModel<MongoDBLinkedService>.Write(ModelReaderWriterOptions options)

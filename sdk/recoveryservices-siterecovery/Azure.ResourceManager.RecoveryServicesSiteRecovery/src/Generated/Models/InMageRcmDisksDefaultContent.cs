@@ -52,7 +52,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="logStorageAccountId"/> is null. </exception>
         public InMageRcmDisksDefaultContent(ResourceIdentifier logStorageAccountId, SiteRecoveryDiskAccountType diskType)
         {
-            Argument.AssertNotNull(logStorageAccountId, nameof(logStorageAccountId));
+            if (logStorageAccountId == null)
+            {
+                throw new ArgumentNullException(nameof(logStorageAccountId));
+            }
 
             LogStorageAccountId = logStorageAccountId;
             DiskType = diskType;

@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Properties))
+            if (options.Format != "W" && Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
-            if (options.Format != "W" && Optional.IsDefined(Location))
+            if (options.Format != "W" && Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    properties = RecoveryServicesPrivateEndpointConnection.DeserializeRecoveryServicesPrivateEndpointConnection(property.Value);
+                    properties = RecoveryServicesPrivateEndpointConnection.DeserializeRecoveryServicesPrivateEndpointConnection(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("location"u8))
@@ -153,7 +153,14 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecoveryServicesPrivateEndpointConnectionVaultProperties(id, name, type, systemData.Value, properties.Value, Optional.ToNullable(location), serializedAdditionalRawData);
+            return new RecoveryServicesPrivateEndpointConnectionVaultProperties(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                Optional.ToNullable(location),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecoveryServicesPrivateEndpointConnectionVaultProperties>.Write(ModelReaderWriterOptions options)

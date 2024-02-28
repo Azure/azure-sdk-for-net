@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(KeyVaultSecretId))
+            if (KeyVaultSecretId != null)
             {
                 writer.WritePropertyName("keyVaultSecretId"u8);
                 writer.WriteStringValue(KeyVaultSecretId);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);

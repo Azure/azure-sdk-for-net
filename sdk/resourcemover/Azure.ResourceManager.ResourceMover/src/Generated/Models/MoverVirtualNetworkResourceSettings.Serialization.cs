@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 if (Tags != null)
                 {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     writer.WriteNull("tags");
                 }
             }
-            if (Optional.IsDefined(EnableDdosProtection))
+            if (EnableDdosProtection.HasValue)
             {
                 if (EnableDdosProtection != null)
                 {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     writer.WriteNull("enableDdosProtection");
                 }
             }
-            if (Optional.IsCollectionDefined(AddressSpace))
+            if (!(AddressSpace is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 if (AddressSpace != null)
                 {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     writer.WriteNull("addressSpace");
                 }
             }
-            if (Optional.IsCollectionDefined(DnsServers))
+            if (!(DnsServers is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 if (DnsServers != null)
                 {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     writer.WriteNull("dnsServers");
                 }
             }
-            if (Optional.IsCollectionDefined(Subnets))
+            if (!(Subnets is ChangeTrackingList<SubnetResourceSettings> collection2 && collection2.IsUndefined))
             {
                 if (Subnets != null)
                 {
@@ -109,12 +109,12 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
             writer.WritePropertyName("resourceType"u8);
             writer.WriteStringValue(ResourceType);
-            if (Optional.IsDefined(TargetResourceName))
+            if (TargetResourceName != null)
             {
                 writer.WritePropertyName("targetResourceName"u8);
                 writer.WriteStringValue(TargetResourceName);
             }
-            if (Optional.IsDefined(TargetResourceGroupName))
+            if (TargetResourceGroupName != null)
             {
                 writer.WritePropertyName("targetResourceGroupName"u8);
                 writer.WriteStringValue(TargetResourceGroupName);
@@ -157,11 +157,11 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<bool?> enableDdosProtection = default;
-            Optional<IList<string>> addressSpace = default;
-            Optional<IList<string>> dnsServers = default;
-            Optional<IList<SubnetResourceSettings>> subnets = default;
+            IList<string> addressSpace = default;
+            IList<string> dnsServers = default;
+            IList<SubnetResourceSettings> subnets = default;
             string resourceType = default;
             Optional<string> targetResourceName = default;
             Optional<string> targetResourceGroupName = default;
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     List<SubnetResourceSettings> array = new List<SubnetResourceSettings>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SubnetResourceSettings.DeserializeSubnetResourceSettings(item));
+                        array.Add(SubnetResourceSettings.DeserializeSubnetResourceSettings(item, options));
                     }
                     subnets = array;
                     continue;
@@ -260,7 +260,16 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MoverVirtualNetworkResourceSettings(resourceType, targetResourceName.Value, targetResourceGroupName.Value, serializedAdditionalRawData, Optional.ToDictionary(tags), Optional.ToNullable(enableDdosProtection), Optional.ToList(addressSpace), Optional.ToList(dnsServers), Optional.ToList(subnets));
+            return new MoverVirtualNetworkResourceSettings(
+                resourceType,
+                targetResourceName.Value,
+                targetResourceGroupName.Value,
+                serializedAdditionalRawData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(enableDdosProtection),
+                addressSpace ?? new ChangeTrackingList<string>(),
+                dnsServers ?? new ChangeTrackingList<string>(),
+                subnets ?? new ChangeTrackingList<SubnetResourceSettings>());
         }
 
         BinaryData IPersistableModel<MoverVirtualNetworkResourceSettings>.Write(ModelReaderWriterOptions options)

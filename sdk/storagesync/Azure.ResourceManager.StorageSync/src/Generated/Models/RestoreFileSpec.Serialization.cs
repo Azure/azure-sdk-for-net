@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Path))
+            if (Path != null)
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (Optional.IsDefined(IsDirectory))
+            if (IsDirectory.HasValue)
             {
                 writer.WritePropertyName("isdir"u8);
                 writer.WriteBooleanValue(IsDirectory.Value);

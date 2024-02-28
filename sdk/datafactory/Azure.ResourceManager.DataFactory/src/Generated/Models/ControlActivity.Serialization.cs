@@ -30,22 +30,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ActivityType);
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(State))
+            if (State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(OnInactiveMarkAs))
+            if (OnInactiveMarkAs.HasValue)
             {
                 writer.WritePropertyName("onInactiveMarkAs"u8);
                 writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(DependsOn))
+            if (!(DependsOn is ChangeTrackingList<PipelineActivityDependency> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(UserProperties))
+            if (!(UserProperties is ChangeTrackingList<PipelineActivityUserProperty> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("userProperties"u8);
                 writer.WriteStartArray();
@@ -104,18 +104,18 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AppendVariable": return AppendVariableActivity.DeserializeAppendVariableActivity(element);
-                    case "ExecutePipeline": return ExecutePipelineActivity.DeserializeExecutePipelineActivity(element);
-                    case "Fail": return FailActivity.DeserializeFailActivity(element);
-                    case "Filter": return FilterActivity.DeserializeFilterActivity(element);
-                    case "ForEach": return ForEachActivity.DeserializeForEachActivity(element);
-                    case "IfCondition": return IfConditionActivity.DeserializeIfConditionActivity(element);
-                    case "SetVariable": return SetVariableActivity.DeserializeSetVariableActivity(element);
-                    case "Switch": return SwitchActivity.DeserializeSwitchActivity(element);
-                    case "Until": return UntilActivity.DeserializeUntilActivity(element);
-                    case "Validation": return ValidationActivity.DeserializeValidationActivity(element);
-                    case "Wait": return WaitActivity.DeserializeWaitActivity(element);
-                    case "WebHook": return WebHookActivity.DeserializeWebHookActivity(element);
+                    case "AppendVariable": return AppendVariableActivity.DeserializeAppendVariableActivity(element, options);
+                    case "ExecutePipeline": return ExecutePipelineActivity.DeserializeExecutePipelineActivity(element, options);
+                    case "Fail": return FailActivity.DeserializeFailActivity(element, options);
+                    case "Filter": return FilterActivity.DeserializeFilterActivity(element, options);
+                    case "ForEach": return ForEachActivity.DeserializeForEachActivity(element, options);
+                    case "IfCondition": return IfConditionActivity.DeserializeIfConditionActivity(element, options);
+                    case "SetVariable": return SetVariableActivity.DeserializeSetVariableActivity(element, options);
+                    case "Switch": return SwitchActivity.DeserializeSwitchActivity(element, options);
+                    case "Until": return UntilActivity.DeserializeUntilActivity(element, options);
+                    case "Validation": return ValidationActivity.DeserializeValidationActivity(element, options);
+                    case "Wait": return WaitActivity.DeserializeWaitActivity(element, options);
+                    case "WebHook": return WebHookActivity.DeserializeWebHookActivity(element, options);
                 }
             }
             string name = default;
@@ -123,8 +123,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> description = default;
             Optional<PipelineActivityState> state = default;
             Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
-            Optional<IList<PipelineActivityDependency>> dependsOn = default;
-            Optional<IList<PipelineActivityUserProperty>> userProperties = default;
+            IList<PipelineActivityDependency> dependsOn = default;
+            IList<PipelineActivityUserProperty> userProperties = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<PipelineActivityDependency> array = new List<PipelineActivityDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PipelineActivityDependency.DeserializePipelineActivityDependency(item));
+                        array.Add(PipelineActivityDependency.DeserializePipelineActivityDependency(item, options));
                     }
                     dependsOn = array;
                     continue;
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<PipelineActivityUserProperty> array = new List<PipelineActivityUserProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PipelineActivityUserProperty.DeserializePipelineActivityUserProperty(item));
+                        array.Add(PipelineActivityUserProperty.DeserializePipelineActivityUserProperty(item, options));
                     }
                     userProperties = array;
                     continue;
@@ -193,7 +193,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ControlActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties);
+            return new ControlActivity(
+                name,
+                type,
+                description.Value,
+                Optional.ToNullable(state),
+                Optional.ToNullable(onInactiveMarkAs),
+                dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(),
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<ControlActivity>.Write(ModelReaderWriterOptions options)

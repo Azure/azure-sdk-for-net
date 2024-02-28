@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(PrincipalId))
+            if (options.Format != "W" && PrincipalId.HasValue)
             {
                 writer.WritePropertyName("principalId"u8);
                 writer.WriteStringValue(PrincipalId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(TenantId))
+            if (options.Format != "W" && TenantId.HasValue)
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (Optional.IsDefined(IdentityType))
+            if (IdentityType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(IdentityType.Value.ToSerialString());
             }
-            if (Optional.IsCollectionDefined(UserAssignedIdentities))
+            if (!(UserAssignedIdentities is ChangeTrackingDictionary<string, ArmApplicationUserAssignedIdentity> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("userAssignedIdentities"u8);
                 writer.WriteStartObject();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<Guid> principalId = default;
             Optional<Guid> tenantId = default;
             Optional<ArmApplicationManagedIdentityType> type = default;
-            Optional<IDictionary<string, ArmApplicationUserAssignedIdentity>> userAssignedIdentities = default;
+            IDictionary<string, ArmApplicationUserAssignedIdentity> userAssignedIdentities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Resources.Models
                     Dictionary<string, ArmApplicationUserAssignedIdentity> dictionary = new Dictionary<string, ArmApplicationUserAssignedIdentity>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, ArmApplicationUserAssignedIdentity.DeserializeArmApplicationUserAssignedIdentity(property0.Value));
+                        dictionary.Add(property0.Name, ArmApplicationUserAssignedIdentity.DeserializeArmApplicationUserAssignedIdentity(property0.Value, options));
                     }
                     userAssignedIdentities = dictionary;
                     continue;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmApplicationManagedIdentity(Optional.ToNullable(principalId), Optional.ToNullable(tenantId), Optional.ToNullable(type), Optional.ToDictionary(userAssignedIdentities), serializedAdditionalRawData);
+            return new ArmApplicationManagedIdentity(Optional.ToNullable(principalId), Optional.ToNullable(tenantId), Optional.ToNullable(type), userAssignedIdentities ?? new ChangeTrackingDictionary<string, ArmApplicationUserAssignedIdentity>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArmApplicationManagedIdentity>.Write(ModelReaderWriterOptions options)

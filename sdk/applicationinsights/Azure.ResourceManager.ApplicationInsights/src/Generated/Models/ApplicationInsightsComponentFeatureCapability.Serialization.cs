@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("Name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(Description))
+            if (options.Format != "W" && Description != null)
             {
                 writer.WritePropertyName("Description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsDefined(Value))
+            if (options.Format != "W" && Value != null)
             {
                 writer.WritePropertyName("Value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Unit))
+            if (options.Format != "W" && Unit != null)
             {
                 writer.WritePropertyName("Unit"u8);
                 writer.WriteStringValue(Unit);
             }
-            if (options.Format != "W" && Optional.IsDefined(MeterId))
+            if (options.Format != "W" && MeterId != null)
             {
                 writer.WritePropertyName("MeterId"u8);
                 writer.WriteStringValue(MeterId);
             }
-            if (options.Format != "W" && Optional.IsDefined(MeterRateFrequency))
+            if (options.Format != "W" && MeterRateFrequency != null)
             {
                 writer.WritePropertyName("MeterRateFrequency"u8);
                 writer.WriteStringValue(MeterRateFrequency);
@@ -140,7 +140,14 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationInsightsComponentFeatureCapability(name.Value, description.Value, value.Value, unit.Value, meterId.Value, meterRateFrequency.Value, serializedAdditionalRawData);
+            return new ApplicationInsightsComponentFeatureCapability(
+                name.Value,
+                description.Value,
+                value.Value,
+                unit.Value,
+                meterId.Value,
+                meterRateFrequency.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationInsightsComponentFeatureCapability>.Write(ModelReaderWriterOptions options)

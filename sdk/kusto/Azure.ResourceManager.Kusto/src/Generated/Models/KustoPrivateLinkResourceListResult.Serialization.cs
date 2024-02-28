@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Kusto.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<KustoPrivateLinkResourceData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<KustoPrivateLinkResourceData>> value = default;
+            IReadOnlyList<KustoPrivateLinkResourceData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     List<KustoPrivateLinkResourceData> array = new List<KustoPrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KustoPrivateLinkResourceData.DeserializeKustoPrivateLinkResourceData(item));
+                        array.Add(KustoPrivateLinkResourceData.DeserializeKustoPrivateLinkResourceData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KustoPrivateLinkResourceListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new KustoPrivateLinkResourceListResult(value ?? new ChangeTrackingList<KustoPrivateLinkResourceData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KustoPrivateLinkResourceListResult>.Write(ModelReaderWriterOptions options)

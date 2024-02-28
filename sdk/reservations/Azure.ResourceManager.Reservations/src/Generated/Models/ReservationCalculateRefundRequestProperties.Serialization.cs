@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Scope))
+            if (Scope != null)
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
-            if (Optional.IsDefined(ReservationToReturn))
+            if (ReservationToReturn != null)
             {
                 writer.WritePropertyName("reservationToReturn"u8);
                 writer.WriteObjectValue(ReservationToReturn);
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    reservationToReturn = ReservationToReturn.DeserializeReservationToReturn(property.Value);
+                    reservationToReturn = ReservationToReturn.DeserializeReservationToReturn(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

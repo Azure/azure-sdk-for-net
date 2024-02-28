@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Error))
+            if (options.Format != "W" && Error != null)
             {
                 writer.WritePropertyName("error"u8);
 #if NET6_0_OR_GREATER
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.Logic.Models
                 }
 #endif
             }
-            if (Optional.IsDefined(ParameterType))
+            if (ParameterType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ParameterType.Value.ToString());
             }
-            if (Optional.IsDefined(Value))
+            if (Value != null)
             {
                 writer.WritePropertyName("value"u8);
 #if NET6_0_OR_GREATER
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
 #endif
             }
-            if (Optional.IsDefined(Metadata))
+            if (Metadata != null)
             {
                 writer.WritePropertyName("metadata"u8);
 #if NET6_0_OR_GREATER
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
 #endif
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -166,7 +166,13 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicWorkflowOutputParameterInfo(Optional.ToNullable(type), value.Value, metadata.Value, description.Value, serializedAdditionalRawData, error.Value);
+            return new LogicWorkflowOutputParameterInfo(
+                Optional.ToNullable(type),
+                value.Value,
+                metadata.Value,
+                description.Value,
+                serializedAdditionalRawData,
+                error.Value);
         }
 
         BinaryData IPersistableModel<LogicWorkflowOutputParameterInfo>.Write(ModelReaderWriterOptions options)

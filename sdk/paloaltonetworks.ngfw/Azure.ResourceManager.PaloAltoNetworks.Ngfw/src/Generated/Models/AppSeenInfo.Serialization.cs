@@ -130,7 +130,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppSeenInfo(title, category, subCategory, risk, tag, technology, standardPorts, serializedAdditionalRawData);
+            return new AppSeenInfo(
+                title,
+                category,
+                subCategory,
+                risk,
+                tag,
+                technology,
+                standardPorts,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppSeenInfo>.Write(ModelReaderWriterOptions options)

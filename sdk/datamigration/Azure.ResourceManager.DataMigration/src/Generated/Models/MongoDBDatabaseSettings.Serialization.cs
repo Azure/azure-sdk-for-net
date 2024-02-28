@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteObjectValue(item.Value);
             }
             writer.WriteEndObject();
-            if (Optional.IsDefined(TargetRUs))
+            if (TargetRUs.HasValue)
             {
                 writer.WritePropertyName("targetRUs"u8);
                 writer.WriteNumberValue(TargetRUs.Value);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     Dictionary<string, MongoDBCollectionSettings> dictionary = new Dictionary<string, MongoDBCollectionSettings>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, MongoDBCollectionSettings.DeserializeMongoDBCollectionSettings(property0.Value));
+                        dictionary.Add(property0.Name, MongoDBCollectionSettings.DeserializeMongoDBCollectionSettings(property0.Value, options));
                     }
                     collections = dictionary;
                     continue;

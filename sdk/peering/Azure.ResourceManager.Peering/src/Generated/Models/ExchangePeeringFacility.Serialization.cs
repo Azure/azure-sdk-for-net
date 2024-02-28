@@ -27,42 +27,42 @@ namespace Azure.ResourceManager.Peering.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ExchangeName))
+            if (ExchangeName != null)
             {
                 writer.WritePropertyName("exchangeName"u8);
                 writer.WriteStringValue(ExchangeName);
             }
-            if (Optional.IsDefined(BandwidthInMbps))
+            if (BandwidthInMbps.HasValue)
             {
                 writer.WritePropertyName("bandwidthInMbps"u8);
                 writer.WriteNumberValue(BandwidthInMbps.Value);
             }
-            if (Optional.IsDefined(MicrosoftIPv4Address))
+            if (MicrosoftIPv4Address != null)
             {
                 writer.WritePropertyName("microsoftIPv4Address"u8);
                 writer.WriteStringValue(MicrosoftIPv4Address.ToString());
             }
-            if (Optional.IsDefined(MicrosoftIPv6Address))
+            if (MicrosoftIPv6Address != null)
             {
                 writer.WritePropertyName("microsoftIPv6Address"u8);
                 writer.WriteStringValue(MicrosoftIPv6Address.ToString());
             }
-            if (Optional.IsDefined(FacilityIPv4Prefix))
+            if (FacilityIPv4Prefix != null)
             {
                 writer.WritePropertyName("facilityIPv4Prefix"u8);
                 writer.WriteStringValue(FacilityIPv4Prefix);
             }
-            if (Optional.IsDefined(FacilityIPv6Prefix))
+            if (FacilityIPv6Prefix != null)
             {
                 writer.WritePropertyName("facilityIPv6Prefix"u8);
                 writer.WriteStringValue(FacilityIPv6Prefix);
             }
-            if (Optional.IsDefined(PeeringDBFacilityId))
+            if (PeeringDBFacilityId.HasValue)
             {
                 writer.WritePropertyName("peeringDBFacilityId"u8);
                 writer.WriteNumberValue(PeeringDBFacilityId.Value);
             }
-            if (Optional.IsDefined(PeeringDBFacilityLink))
+            if (PeeringDBFacilityLink != null)
             {
                 writer.WritePropertyName("peeringDBFacilityLink"u8);
                 writer.WriteStringValue(PeeringDBFacilityLink);
@@ -179,7 +179,16 @@ namespace Azure.ResourceManager.Peering.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExchangePeeringFacility(exchangeName.Value, Optional.ToNullable(bandwidthInMbps), microsoftIPv4Address.Value, microsoftIPv6Address.Value, facilityIPv4Prefix.Value, facilityIPv6Prefix.Value, Optional.ToNullable(peeringDBFacilityId), peeringDBFacilityLink.Value, serializedAdditionalRawData);
+            return new ExchangePeeringFacility(
+                exchangeName.Value,
+                Optional.ToNullable(bandwidthInMbps),
+                microsoftIPv4Address.Value,
+                microsoftIPv6Address.Value,
+                facilityIPv4Prefix.Value,
+                facilityIPv6Prefix.Value,
+                Optional.ToNullable(peeringDBFacilityId),
+                peeringDBFacilityLink.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExchangePeeringFacility>.Write(ModelReaderWriterOptions options)

@@ -199,7 +199,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<CosmosDBSqlClientEncryptionKeyResource>> UpdateAsync(WaitUntil waitUntil, CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _cosmosDBSqlClientEncryptionKeySqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlClientEncryptionKeyResource.Update");
             scope.Start();
@@ -245,7 +248,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<CosmosDBSqlClientEncryptionKeyResource> Update(WaitUntil waitUntil, CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _cosmosDBSqlClientEncryptionKeySqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlClientEncryptionKeyResource.Update");
             scope.Start();

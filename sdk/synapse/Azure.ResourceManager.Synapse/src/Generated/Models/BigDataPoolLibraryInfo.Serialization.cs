@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Path))
+            if (Path != null)
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (Optional.IsDefined(ContainerName))
+            if (ContainerName != null)
             {
                 writer.WritePropertyName("containerName"u8);
                 writer.WriteStringValue(ContainerName);
             }
-            if (Optional.IsDefined(UploadedOn))
+            if (UploadedOn.HasValue)
             {
                 writer.WritePropertyName("uploadedTimestamp"u8);
                 writer.WriteStringValue(UploadedOn.Value, "O");
             }
-            if (Optional.IsDefined(LibraryInfoType))
+            if (LibraryInfoType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(LibraryInfoType);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningStatus))
+            if (options.Format != "W" && ProvisioningStatus != null)
             {
                 writer.WritePropertyName("provisioningStatus"u8);
                 writer.WriteStringValue(ProvisioningStatus);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatorId))
+            if (options.Format != "W" && CreatorId != null)
             {
                 writer.WritePropertyName("creatorId"u8);
                 writer.WriteStringValue(CreatorId);
@@ -155,7 +155,15 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BigDataPoolLibraryInfo(name.Value, path.Value, containerName.Value, Optional.ToNullable(uploadedTimestamp), type.Value, provisioningStatus.Value, creatorId.Value, serializedAdditionalRawData);
+            return new BigDataPoolLibraryInfo(
+                name.Value,
+                path.Value,
+                containerName.Value,
+                Optional.ToNullable(uploadedTimestamp),
+                type.Value,
+                provisioningStatus.Value,
+                creatorId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BigDataPoolLibraryInfo>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Authorization.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Actions))
+            if (!(Actions is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(NotActions))
+            if (!(NotActions is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("notActions"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DataActions))
+            if (!(DataActions is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("dataActions"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(NotDataActions))
+            if (!(NotDataActions is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("notDataActions"u8);
                 writer.WriteStartArray();
@@ -66,12 +66,12 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Condition))
+            if (Condition != null)
             {
                 writer.WritePropertyName("condition"u8);
                 writer.WriteStringValue(Condition);
             }
-            if (Optional.IsDefined(ConditionVersion))
+            if (ConditionVersion != null)
             {
                 writer.WritePropertyName("conditionVersion"u8);
                 writer.WriteStringValue(ConditionVersion);
@@ -114,10 +114,10 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> actions = default;
-            Optional<IReadOnlyList<string>> notActions = default;
-            Optional<IReadOnlyList<string>> dataActions = default;
-            Optional<IReadOnlyList<string>> notDataActions = default;
+            IReadOnlyList<string> actions = default;
+            IReadOnlyList<string> notActions = default;
+            IReadOnlyList<string> dataActions = default;
+            IReadOnlyList<string> notDataActions = default;
             Optional<string> condition = default;
             Optional<string> conditionVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -196,7 +196,14 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DenyAssignmentPermission(Optional.ToList(actions), Optional.ToList(notActions), Optional.ToList(dataActions), Optional.ToList(notDataActions), condition.Value, conditionVersion.Value, serializedAdditionalRawData);
+            return new DenyAssignmentPermission(
+                actions ?? new ChangeTrackingList<string>(),
+                notActions ?? new ChangeTrackingList<string>(),
+                dataActions ?? new ChangeTrackingList<string>(),
+                notDataActions ?? new ChangeTrackingList<string>(),
+                condition.Value,
+                conditionVersion.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DenyAssignmentPermission>.Write(ModelReaderWriterOptions options)

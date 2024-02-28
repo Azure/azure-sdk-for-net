@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             writer.WriteStringValue(MinimumTlsVersion.ToString());
             writer.WritePropertyName("frontDoorCertificateSourceParameters"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(CertificateType))
+            if (CertificateType.HasValue)
             {
                 writer.WritePropertyName("certificateType"u8);
                 writer.WriteStringValue(CertificateType.Value.ToString());
@@ -43,17 +43,17 @@ namespace Azure.ResourceManager.FrontDoor.Models
             writer.WriteEndObject();
             writer.WritePropertyName("keyVaultCertificateSourceParameters"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Vault))
+            if (Vault != null)
             {
                 writer.WritePropertyName("vault"u8);
                 JsonSerializer.Serialize(writer, Vault);
             }
-            if (Optional.IsDefined(SecretName))
+            if (SecretName != null)
             {
                 writer.WritePropertyName("secretName"u8);
                 writer.WriteStringValue(SecretName);
             }
-            if (Optional.IsDefined(SecretVersion))
+            if (SecretVersion != null)
             {
                 writer.WritePropertyName("secretVersion"u8);
                 writer.WriteStringValue(SecretVersion);
@@ -181,7 +181,15 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomHttpsConfiguration(certificateSource, protocolType, minimumTlsVersion, Optional.ToNullable(certificateType), vault, secretName.Value, secretVersion.Value, serializedAdditionalRawData);
+            return new CustomHttpsConfiguration(
+                certificateSource,
+                protocolType,
+                minimumTlsVersion,
+                Optional.ToNullable(certificateType),
+                vault,
+                secretName.Value,
+                secretVersion.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CustomHttpsConfiguration>.Write(ModelReaderWriterOptions options)

@@ -29,7 +29,15 @@ namespace Azure.ResourceManager.GraphServices.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new GraphServicesAccountResourceData(id, name, resourceType, systemData, tags, location, properties, serializedAdditionalRawData: null);
+            return new GraphServicesAccountResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GraphServicesAccountResourceProperties"/>. </summary>

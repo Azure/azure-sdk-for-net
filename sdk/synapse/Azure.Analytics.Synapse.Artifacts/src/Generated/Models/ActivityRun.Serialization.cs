@@ -131,7 +131,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ActivityRun(pipelineName.Value, pipelineRunId.Value, activityName.Value, activityType.Value, activityRunId.Value, linkedServiceName.Value, status.Value, Optional.ToNullable(activityRunStart), Optional.ToNullable(activityRunEnd), Optional.ToNullable(durationInMs), input.Value, output.Value, error.Value, additionalProperties);
+            return new ActivityRun(
+                pipelineName.Value,
+                pipelineRunId.Value,
+                activityName.Value,
+                activityType.Value,
+                activityRunId.Value,
+                linkedServiceName.Value,
+                status.Value,
+                Optional.ToNullable(activityRunStart),
+                Optional.ToNullable(activityRunEnd),
+                Optional.ToNullable(durationInMs),
+                input.Value,
+                output.Value,
+                error.Value,
+                additionalProperties);
         }
 
         internal partial class ActivityRunConverter : JsonConverter<ActivityRun>

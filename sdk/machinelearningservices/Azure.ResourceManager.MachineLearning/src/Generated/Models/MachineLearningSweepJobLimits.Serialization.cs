@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MaxConcurrentTrials))
+            if (MaxConcurrentTrials.HasValue)
             {
                 if (MaxConcurrentTrials != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("maxConcurrentTrials");
                 }
             }
-            if (Optional.IsDefined(MaxTotalTrials))
+            if (MaxTotalTrials.HasValue)
             {
                 if (MaxTotalTrials != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("maxTotalTrials");
                 }
             }
-            if (Optional.IsDefined(TrialTimeout))
+            if (TrialTimeout.HasValue)
             {
                 if (TrialTimeout != null)
                 {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("jobLimitsType"u8);
             writer.WriteStringValue(JobLimitsType.ToString());
-            if (Optional.IsDefined(Timeout))
+            if (Timeout.HasValue)
             {
                 if (Timeout != null)
                 {
@@ -174,7 +174,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningSweepJobLimits(jobLimitsType, Optional.ToNullable(timeout), serializedAdditionalRawData, Optional.ToNullable(maxConcurrentTrials), Optional.ToNullable(maxTotalTrials), Optional.ToNullable(trialTimeout));
+            return new MachineLearningSweepJobLimits(
+                jobLimitsType,
+                Optional.ToNullable(timeout),
+                serializedAdditionalRawData,
+                Optional.ToNullable(maxConcurrentTrials),
+                Optional.ToNullable(maxTotalTrials),
+                Optional.ToNullable(trialTimeout));
         }
 
         BinaryData IPersistableModel<MachineLearningSweepJobLimits>.Write(ModelReaderWriterOptions options)

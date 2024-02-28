@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = IntegrationRuntimeStatus.DeserializeIntegrationRuntimeStatus(property.Value);
+                    properties = IntegrationRuntimeStatus.DeserializeIntegrationRuntimeStatus(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

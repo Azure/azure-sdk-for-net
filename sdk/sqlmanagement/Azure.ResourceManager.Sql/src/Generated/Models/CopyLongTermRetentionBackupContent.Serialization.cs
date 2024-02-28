@@ -28,32 +28,32 @@ namespace Azure.ResourceManager.Sql.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(TargetSubscriptionId))
+            if (TargetSubscriptionId != null)
             {
                 writer.WritePropertyName("targetSubscriptionId"u8);
                 writer.WriteStringValue(TargetSubscriptionId);
             }
-            if (Optional.IsDefined(TargetResourceGroup))
+            if (TargetResourceGroup != null)
             {
                 writer.WritePropertyName("targetResourceGroup"u8);
                 writer.WriteStringValue(TargetResourceGroup);
             }
-            if (Optional.IsDefined(TargetServerResourceId))
+            if (TargetServerResourceId != null)
             {
                 writer.WritePropertyName("targetServerResourceId"u8);
                 writer.WriteStringValue(TargetServerResourceId);
             }
-            if (Optional.IsDefined(TargetServerFullyQualifiedDomainName))
+            if (TargetServerFullyQualifiedDomainName != null)
             {
                 writer.WritePropertyName("targetServerFullyQualifiedDomainName"u8);
                 writer.WriteStringValue(TargetServerFullyQualifiedDomainName);
             }
-            if (Optional.IsDefined(TargetDatabaseName))
+            if (TargetDatabaseName != null)
             {
                 writer.WritePropertyName("targetDatabaseName"u8);
                 writer.WriteStringValue(TargetDatabaseName);
             }
-            if (Optional.IsDefined(TargetBackupStorageRedundancy))
+            if (TargetBackupStorageRedundancy.HasValue)
             {
                 writer.WritePropertyName("targetBackupStorageRedundancy"u8);
                 writer.WriteStringValue(TargetBackupStorageRedundancy.Value.ToString());
@@ -163,7 +163,14 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CopyLongTermRetentionBackupContent(targetSubscriptionId.Value, targetResourceGroup.Value, targetServerResourceId.Value, targetServerFullyQualifiedDomainName.Value, targetDatabaseName.Value, Optional.ToNullable(targetBackupStorageRedundancy), serializedAdditionalRawData);
+            return new CopyLongTermRetentionBackupContent(
+                targetSubscriptionId.Value,
+                targetResourceGroup.Value,
+                targetServerResourceId.Value,
+                targetServerFullyQualifiedDomainName.Value,
+                targetDatabaseName.Value,
+                Optional.ToNullable(targetBackupStorageRedundancy),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CopyLongTermRetentionBackupContent>.Write(ModelReaderWriterOptions options)

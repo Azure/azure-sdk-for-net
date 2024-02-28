@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(WorkflowIds))
+            if (!(WorkflowIds is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("workflowIds"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
-            if (Optional.IsCollectionDefined(ChildTasks))
+            if (!(ChildTasks is ChangeTrackingList<AsrTask> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("childTasks"u8);
                 writer.WriteStartArray();
@@ -86,9 +86,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> workflowIds = default;
+            IReadOnlyList<string> workflowIds = default;
             string instanceType = default;
-            Optional<IReadOnlyList<AsrTask>> childTasks = default;
+            IReadOnlyList<AsrTask> childTasks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<AsrTask> array = new List<AsrTask>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AsrTask.DeserializeAsrTask(item));
+                        array.Add(AsrTask.DeserializeAsrTask(item, options));
                     }
                     childTasks = array;
                     continue;
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InlineWorkflowTaskDetails(instanceType, Optional.ToList(childTasks), serializedAdditionalRawData, Optional.ToList(workflowIds));
+            return new InlineWorkflowTaskDetails(instanceType, childTasks ?? new ChangeTrackingList<AsrTask>(), serializedAdditionalRawData, workflowIds ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<InlineWorkflowTaskDetails>.Write(ModelReaderWriterOptions options)

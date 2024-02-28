@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Endpoint))
+            if (options.Format != "W" && Endpoint != null)
             {
                 writer.WritePropertyName("endpoint"u8);
                 writer.WriteStringValue(Endpoint);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Capabilities))
+            if (options.Format != "W" && !(Capabilities is ChangeTrackingList<CognitiveServicesSkuCapability> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartArray();
@@ -47,37 +47,37 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(IsMigrated))
+            if (options.Format != "W" && IsMigrated.HasValue)
             {
                 writer.WritePropertyName("isMigrated"u8);
                 writer.WriteBooleanValue(IsMigrated.Value);
             }
-            if (Optional.IsDefined(MigrationToken))
+            if (MigrationToken != null)
             {
                 writer.WritePropertyName("migrationToken"u8);
                 writer.WriteStringValue(MigrationToken);
             }
-            if (options.Format != "W" && Optional.IsDefined(SkuChangeInfo))
+            if (options.Format != "W" && SkuChangeInfo != null)
             {
                 writer.WritePropertyName("skuChangeInfo"u8);
                 writer.WriteObjectValue(SkuChangeInfo);
             }
-            if (Optional.IsDefined(CustomSubDomainName))
+            if (CustomSubDomainName != null)
             {
                 writer.WritePropertyName("customSubDomainName"u8);
                 writer.WriteStringValue(CustomSubDomainName);
             }
-            if (Optional.IsDefined(NetworkAcls))
+            if (NetworkAcls != null)
             {
                 writer.WritePropertyName("networkAcls"u8);
                 writer.WriteObjectValue(NetworkAcls);
             }
-            if (Optional.IsDefined(Encryption))
+            if (Encryption != null)
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
-            if (Optional.IsCollectionDefined(UserOwnedStorage))
+            if (!(UserOwnedStorage is ChangeTrackingList<ServiceAccountUserOwnedStorage> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("userOwnedStorage"u8);
                 writer.WriteStartArray();
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
+            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<CognitiveServicesPrivateEndpointConnectionData> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -97,42 +97,42 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (PublicNetworkAccess.HasValue)
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Optional.IsDefined(ApiProperties))
+            if (ApiProperties != null)
             {
                 writer.WritePropertyName("apiProperties"u8);
                 writer.WriteObjectValue(ApiProperties);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("dateCreated"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(CallRateLimit))
+            if (options.Format != "W" && CallRateLimit != null)
             {
                 writer.WritePropertyName("callRateLimit"u8);
                 writer.WriteObjectValue(CallRateLimit);
             }
-            if (Optional.IsDefined(EnableDynamicThrottling))
+            if (EnableDynamicThrottling.HasValue)
             {
                 writer.WritePropertyName("dynamicThrottlingEnabled"u8);
                 writer.WriteBooleanValue(EnableDynamicThrottling.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(QuotaLimit))
+            if (options.Format != "W" && QuotaLimit != null)
             {
                 writer.WritePropertyName("quotaLimit"u8);
                 writer.WriteObjectValue(QuotaLimit);
             }
-            if (Optional.IsDefined(RestrictOutboundNetworkAccess))
+            if (RestrictOutboundNetworkAccess.HasValue)
             {
                 writer.WritePropertyName("restrictOutboundNetworkAccess"u8);
                 writer.WriteBooleanValue(RestrictOutboundNetworkAccess.Value);
             }
-            if (Optional.IsCollectionDefined(AllowedFqdnList))
+            if (!(AllowedFqdnList is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("allowedFqdnList"u8);
                 writer.WriteStartArray();
@@ -142,12 +142,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DisableLocalAuth))
+            if (DisableLocalAuth.HasValue)
             {
                 writer.WritePropertyName("disableLocalAuth"u8);
                 writer.WriteBooleanValue(DisableLocalAuth.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Endpoints))
+            if (options.Format != "W" && !(Endpoints is ChangeTrackingDictionary<string, string> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartObject();
@@ -158,27 +158,27 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Restore))
+            if (Restore.HasValue)
             {
                 writer.WritePropertyName("restore"u8);
                 writer.WriteBooleanValue(Restore.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(DeletedOn))
+            if (options.Format != "W" && DeletedOn.HasValue)
             {
                 writer.WritePropertyName("deletionDate"u8);
                 writer.WriteStringValue(DeletedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ScheduledPurgeDate))
+            if (options.Format != "W" && ScheduledPurgeDate != null)
             {
                 writer.WritePropertyName("scheduledPurgeDate"u8);
                 writer.WriteStringValue(ScheduledPurgeDate);
             }
-            if (Optional.IsDefined(Locations))
+            if (Locations != null)
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteObjectValue(Locations);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(CommitmentPlanAssociations))
+            if (options.Format != "W" && !(CommitmentPlanAssociations is ChangeTrackingList<CommitmentPlanAssociation> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("commitmentPlanAssociations"u8);
                 writer.WriteStartArray();
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(AbusePenalty))
+            if (options.Format != "W" && AbusePenalty != null)
             {
                 writer.WritePropertyName("abusePenalty"u8);
                 writer.WriteObjectValue(AbusePenalty);
@@ -233,15 +233,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
             Optional<ServiceAccountProvisioningState> provisioningState = default;
             Optional<string> endpoint = default;
-            Optional<IReadOnlyList<CognitiveServicesSkuCapability>> capabilities = default;
+            IReadOnlyList<CognitiveServicesSkuCapability> capabilities = default;
             Optional<bool> isMigrated = default;
             Optional<string> migrationToken = default;
             Optional<CognitiveServicesSkuChangeInfo> skuChangeInfo = default;
             Optional<string> customSubDomainName = default;
             Optional<CognitiveServicesNetworkRuleSet> networkAcls = default;
             Optional<ServiceAccountEncryptionProperties> encryption = default;
-            Optional<IList<ServiceAccountUserOwnedStorage>> userOwnedStorage = default;
-            Optional<IReadOnlyList<CognitiveServicesPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            IList<ServiceAccountUserOwnedStorage> userOwnedStorage = default;
+            IReadOnlyList<CognitiveServicesPrivateEndpointConnectionData> privateEndpointConnections = default;
             Optional<ServiceAccountPublicNetworkAccess> publicNetworkAccess = default;
             Optional<ServiceAccountApiProperties> apiProperties = default;
             Optional<DateTimeOffset> dateCreated = default;
@@ -249,14 +249,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             Optional<bool> dynamicThrottlingEnabled = default;
             Optional<ServiceAccountQuotaLimit> quotaLimit = default;
             Optional<bool> restrictOutboundNetworkAccess = default;
-            Optional<IList<string>> allowedFqdnList = default;
+            IList<string> allowedFqdnList = default;
             Optional<bool> disableLocalAuth = default;
-            Optional<IReadOnlyDictionary<string, string>> endpoints = default;
+            IReadOnlyDictionary<string, string> endpoints = default;
             Optional<bool> restore = default;
             Optional<DateTimeOffset> deletionDate = default;
             Optional<string> scheduledPurgeDate = default;
             Optional<CognitiveServicesMultiRegionSettings> locations = default;
-            Optional<IReadOnlyList<CommitmentPlanAssociation>> commitmentPlanAssociations = default;
+            IReadOnlyList<CommitmentPlanAssociation> commitmentPlanAssociations = default;
             Optional<AbusePenalty> abusePenalty = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     List<CognitiveServicesSkuCapability> array = new List<CognitiveServicesSkuCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CognitiveServicesSkuCapability.DeserializeCognitiveServicesSkuCapability(item));
+                        array.Add(CognitiveServicesSkuCapability.DeserializeCognitiveServicesSkuCapability(item, options));
                     }
                     capabilities = array;
                     continue;
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    skuChangeInfo = CognitiveServicesSkuChangeInfo.DeserializeCognitiveServicesSkuChangeInfo(property.Value);
+                    skuChangeInfo = CognitiveServicesSkuChangeInfo.DeserializeCognitiveServicesSkuChangeInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("customSubDomainName"u8))
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    networkAcls = CognitiveServicesNetworkRuleSet.DeserializeCognitiveServicesNetworkRuleSet(property.Value);
+                    networkAcls = CognitiveServicesNetworkRuleSet.DeserializeCognitiveServicesNetworkRuleSet(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("encryption"u8))
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    encryption = ServiceAccountEncryptionProperties.DeserializeServiceAccountEncryptionProperties(property.Value);
+                    encryption = ServiceAccountEncryptionProperties.DeserializeServiceAccountEncryptionProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("userOwnedStorage"u8))
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     List<ServiceAccountUserOwnedStorage> array = new List<ServiceAccountUserOwnedStorage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceAccountUserOwnedStorage.DeserializeServiceAccountUserOwnedStorage(item));
+                        array.Add(ServiceAccountUserOwnedStorage.DeserializeServiceAccountUserOwnedStorage(item, options));
                     }
                     userOwnedStorage = array;
                     continue;
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     List<CognitiveServicesPrivateEndpointConnectionData> array = new List<CognitiveServicesPrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CognitiveServicesPrivateEndpointConnectionData.DeserializeCognitiveServicesPrivateEndpointConnectionData(item));
+                        array.Add(CognitiveServicesPrivateEndpointConnectionData.DeserializeCognitiveServicesPrivateEndpointConnectionData(item, options));
                     }
                     privateEndpointConnections = array;
                     continue;
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    apiProperties = ServiceAccountApiProperties.DeserializeServiceAccountApiProperties(property.Value);
+                    apiProperties = ServiceAccountApiProperties.DeserializeServiceAccountApiProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dateCreated"u8))
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    callRateLimit = ServiceAccountCallRateLimit.DeserializeServiceAccountCallRateLimit(property.Value);
+                    callRateLimit = ServiceAccountCallRateLimit.DeserializeServiceAccountCallRateLimit(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dynamicThrottlingEnabled"u8))
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    quotaLimit = ServiceAccountQuotaLimit.DeserializeServiceAccountQuotaLimit(property.Value);
+                    quotaLimit = ServiceAccountQuotaLimit.DeserializeServiceAccountQuotaLimit(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("restrictOutboundNetworkAccess"u8))
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    locations = CognitiveServicesMultiRegionSettings.DeserializeCognitiveServicesMultiRegionSettings(property.Value);
+                    locations = CognitiveServicesMultiRegionSettings.DeserializeCognitiveServicesMultiRegionSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("commitmentPlanAssociations"u8))
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     List<CommitmentPlanAssociation> array = new List<CommitmentPlanAssociation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CommitmentPlanAssociation.DeserializeCommitmentPlanAssociation(item));
+                        array.Add(CommitmentPlanAssociation.DeserializeCommitmentPlanAssociation(item, options));
                     }
                     commitmentPlanAssociations = array;
                     continue;
@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    abusePenalty = AbusePenalty.DeserializeAbusePenalty(property.Value);
+                    abusePenalty = AbusePenalty.DeserializeAbusePenalty(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -525,7 +525,35 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CognitiveServicesAccountProperties(Optional.ToNullable(provisioningState), endpoint.Value, Optional.ToList(capabilities), Optional.ToNullable(isMigrated), migrationToken.Value, skuChangeInfo.Value, customSubDomainName.Value, networkAcls.Value, encryption.Value, Optional.ToList(userOwnedStorage), Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess), apiProperties.Value, Optional.ToNullable(dateCreated), callRateLimit.Value, Optional.ToNullable(dynamicThrottlingEnabled), quotaLimit.Value, Optional.ToNullable(restrictOutboundNetworkAccess), Optional.ToList(allowedFqdnList), Optional.ToNullable(disableLocalAuth), Optional.ToDictionary(endpoints), Optional.ToNullable(restore), Optional.ToNullable(deletionDate), scheduledPurgeDate.Value, locations.Value, Optional.ToList(commitmentPlanAssociations), abusePenalty.Value, serializedAdditionalRawData);
+            return new CognitiveServicesAccountProperties(
+                Optional.ToNullable(provisioningState),
+                endpoint.Value,
+                capabilities ?? new ChangeTrackingList<CognitiveServicesSkuCapability>(),
+                Optional.ToNullable(isMigrated),
+                migrationToken.Value,
+                skuChangeInfo.Value,
+                customSubDomainName.Value,
+                networkAcls.Value,
+                encryption.Value,
+                userOwnedStorage ?? new ChangeTrackingList<ServiceAccountUserOwnedStorage>(),
+                privateEndpointConnections ?? new ChangeTrackingList<CognitiveServicesPrivateEndpointConnectionData>(),
+                Optional.ToNullable(publicNetworkAccess),
+                apiProperties.Value,
+                Optional.ToNullable(dateCreated),
+                callRateLimit.Value,
+                Optional.ToNullable(dynamicThrottlingEnabled),
+                quotaLimit.Value,
+                Optional.ToNullable(restrictOutboundNetworkAccess),
+                allowedFqdnList ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(disableLocalAuth),
+                endpoints ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(restore),
+                Optional.ToNullable(deletionDate),
+                scheduledPurgeDate.Value,
+                locations.Value,
+                commitmentPlanAssociations ?? new ChangeTrackingList<CommitmentPlanAssociation>(),
+                abusePenalty.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CognitiveServicesAccountProperties>.Write(ModelReaderWriterOptions options)

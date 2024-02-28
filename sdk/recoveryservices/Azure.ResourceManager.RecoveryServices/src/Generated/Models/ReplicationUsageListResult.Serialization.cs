@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<ReplicationUsage> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ReplicationUsage>> value = default;
+            IReadOnlyList<ReplicationUsage> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     List<ReplicationUsage> array = new List<ReplicationUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReplicationUsage.DeserializeReplicationUsage(item));
+                        array.Add(ReplicationUsage.DeserializeReplicationUsage(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReplicationUsageListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new ReplicationUsageListResult(value ?? new ChangeTrackingList<ReplicationUsage>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReplicationUsageListResult>.Write(ModelReaderWriterOptions options)

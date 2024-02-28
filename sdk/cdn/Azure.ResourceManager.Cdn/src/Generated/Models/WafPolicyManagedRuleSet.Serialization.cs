@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStringValue(RuleSetType);
             writer.WritePropertyName("ruleSetVersion"u8);
             writer.WriteStringValue(RuleSetVersion);
-            if (Optional.IsDefined(AnomalyScore))
+            if (AnomalyScore.HasValue)
             {
                 writer.WritePropertyName("anomalyScore"u8);
                 writer.WriteNumberValue(AnomalyScore.Value);
             }
-            if (Optional.IsCollectionDefined(RuleGroupOverrides))
+            if (!(RuleGroupOverrides is ChangeTrackingList<ManagedRuleGroupOverrideSetting> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ruleGroupOverrides"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Cdn.Models
             string ruleSetType = default;
             string ruleSetVersion = default;
             Optional<int> anomalyScore = default;
-            Optional<IList<ManagedRuleGroupOverrideSetting>> ruleGroupOverrides = default;
+            IList<ManagedRuleGroupOverrideSetting> ruleGroupOverrides = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<ManagedRuleGroupOverrideSetting> array = new List<ManagedRuleGroupOverrideSetting>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedRuleGroupOverrideSetting.DeserializeManagedRuleGroupOverrideSetting(item));
+                        array.Add(ManagedRuleGroupOverrideSetting.DeserializeManagedRuleGroupOverrideSetting(item, options));
                     }
                     ruleGroupOverrides = array;
                     continue;
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WafPolicyManagedRuleSet(ruleSetType, ruleSetVersion, Optional.ToNullable(anomalyScore), Optional.ToList(ruleGroupOverrides), serializedAdditionalRawData);
+            return new WafPolicyManagedRuleSet(ruleSetType, ruleSetVersion, Optional.ToNullable(anomalyScore), ruleGroupOverrides ?? new ChangeTrackingList<ManagedRuleGroupOverrideSetting>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WafPolicyManagedRuleSet>.Write(ModelReaderWriterOptions options)

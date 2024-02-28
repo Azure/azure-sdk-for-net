@@ -26,52 +26,52 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(QnaRuntimeEndpoint))
+            if (QnaRuntimeEndpoint != null)
             {
                 writer.WritePropertyName("qnaRuntimeEndpoint"u8);
                 writer.WriteStringValue(QnaRuntimeEndpoint);
             }
-            if (Optional.IsDefined(QnaAzureSearchEndpointKey))
+            if (QnaAzureSearchEndpointKey != null)
             {
                 writer.WritePropertyName("qnaAzureSearchEndpointKey"u8);
                 writer.WriteStringValue(QnaAzureSearchEndpointKey);
             }
-            if (Optional.IsDefined(QnaAzureSearchEndpointId))
+            if (QnaAzureSearchEndpointId != null)
             {
                 writer.WritePropertyName("qnaAzureSearchEndpointId"u8);
                 writer.WriteStringValue(QnaAzureSearchEndpointId);
             }
-            if (Optional.IsDefined(EnableStatistics))
+            if (EnableStatistics.HasValue)
             {
                 writer.WritePropertyName("statisticsEnabled"u8);
                 writer.WriteBooleanValue(EnableStatistics.Value);
             }
-            if (Optional.IsDefined(EventHubConnectionString))
+            if (EventHubConnectionString != null)
             {
                 writer.WritePropertyName("eventHubConnectionString"u8);
                 writer.WriteStringValue(EventHubConnectionString);
             }
-            if (Optional.IsDefined(StorageAccountConnectionString))
+            if (StorageAccountConnectionString != null)
             {
                 writer.WritePropertyName("storageAccountConnectionString"u8);
                 writer.WriteStringValue(StorageAccountConnectionString);
             }
-            if (Optional.IsDefined(AadClientId))
+            if (AadClientId.HasValue)
             {
                 writer.WritePropertyName("aadClientId"u8);
                 writer.WriteStringValue(AadClientId.Value);
             }
-            if (Optional.IsDefined(AadTenantId))
+            if (AadTenantId.HasValue)
             {
                 writer.WritePropertyName("aadTenantId"u8);
                 writer.WriteStringValue(AadTenantId.Value);
             }
-            if (Optional.IsDefined(SuperUser))
+            if (SuperUser != null)
             {
                 writer.WritePropertyName("superUser"u8);
                 writer.WriteStringValue(SuperUser);
             }
-            if (Optional.IsDefined(WebsiteName))
+            if (WebsiteName != null)
             {
                 writer.WritePropertyName("websiteName"u8);
                 writer.WriteStringValue(WebsiteName);
@@ -194,7 +194,18 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ServiceAccountApiProperties(qnaRuntimeEndpoint.Value, qnaAzureSearchEndpointKey.Value, qnaAzureSearchEndpointId.Value, Optional.ToNullable(statisticsEnabled), eventHubConnectionString.Value, storageAccountConnectionString.Value, Optional.ToNullable(aadClientId), Optional.ToNullable(aadTenantId), superUser.Value, websiteName.Value, additionalProperties);
+            return new ServiceAccountApiProperties(
+                qnaRuntimeEndpoint.Value,
+                qnaAzureSearchEndpointKey.Value,
+                qnaAzureSearchEndpointId.Value,
+                Optional.ToNullable(statisticsEnabled),
+                eventHubConnectionString.Value,
+                storageAccountConnectionString.Value,
+                Optional.ToNullable(aadClientId),
+                Optional.ToNullable(aadTenantId),
+                superUser.Value,
+                websiteName.Value,
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<ServiceAccountApiProperties>.Write(ModelReaderWriterOptions options)

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SchemaDifferences))
+            if (SchemaDifferences != null)
             {
                 writer.WritePropertyName("schemaDifferences"u8);
                 writer.WriteObjectValue(SchemaDifferences);
             }
-            if (Optional.IsDefined(ValidationErrors))
+            if (ValidationErrors != null)
             {
                 writer.WritePropertyName("validationErrors"u8);
                 writer.WriteObjectValue(ValidationErrors);
             }
-            if (Optional.IsCollectionDefined(SourceDatabaseObjectCount))
+            if (!(SourceDatabaseObjectCount is ChangeTrackingDictionary<string, long> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("sourceDatabaseObjectCount"u8);
                 writer.WriteStartObject();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(TargetDatabaseObjectCount))
+            if (!(TargetDatabaseObjectCount is ChangeTrackingDictionary<string, long> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("targetDatabaseObjectCount"u8);
                 writer.WriteStartObject();
@@ -98,8 +98,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             Optional<SchemaComparisonValidationResultType> schemaDifferences = default;
             Optional<ValidationError> validationErrors = default;
-            Optional<IReadOnlyDictionary<string, long>> sourceDatabaseObjectCount = default;
-            Optional<IReadOnlyDictionary<string, long>> targetDatabaseObjectCount = default;
+            IReadOnlyDictionary<string, long> sourceDatabaseObjectCount = default;
+            IReadOnlyDictionary<string, long> targetDatabaseObjectCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    schemaDifferences = SchemaComparisonValidationResultType.DeserializeSchemaComparisonValidationResultType(property.Value);
+                    schemaDifferences = SchemaComparisonValidationResultType.DeserializeSchemaComparisonValidationResultType(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("validationErrors"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    validationErrors = ValidationError.DeserializeValidationError(property.Value);
+                    validationErrors = ValidationError.DeserializeValidationError(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sourceDatabaseObjectCount"u8))
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SchemaComparisonValidationResult(schemaDifferences.Value, validationErrors.Value, Optional.ToDictionary(sourceDatabaseObjectCount), Optional.ToDictionary(targetDatabaseObjectCount), serializedAdditionalRawData);
+            return new SchemaComparisonValidationResult(schemaDifferences.Value, validationErrors.Value, sourceDatabaseObjectCount ?? new ChangeTrackingDictionary<string, long>(), targetDatabaseObjectCount ?? new ChangeTrackingDictionary<string, long>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SchemaComparisonValidationResult>.Write(ModelReaderWriterOptions options)

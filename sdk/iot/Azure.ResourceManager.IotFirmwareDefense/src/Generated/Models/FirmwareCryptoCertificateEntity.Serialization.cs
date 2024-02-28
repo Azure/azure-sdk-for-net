@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CommonName))
+            if (CommonName != null)
             {
                 if (CommonName != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("commonName");
                 }
             }
-            if (Optional.IsDefined(Organization))
+            if (Organization != null)
             {
                 if (Organization != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("organization");
                 }
             }
-            if (Optional.IsDefined(OrganizationalUnit))
+            if (OrganizationalUnit != null)
             {
                 if (OrganizationalUnit != null)
                 {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("organizationalUnit");
                 }
             }
-            if (Optional.IsDefined(State))
+            if (State != null)
             {
                 if (State != null)
                 {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("state");
                 }
             }
-            if (Optional.IsDefined(Country))
+            if (Country != null)
             {
                 if (Country != null)
                 {
@@ -189,7 +189,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirmwareCryptoCertificateEntity(commonName.Value, organization.Value, organizationalUnit.Value, state.Value, country.Value, serializedAdditionalRawData);
+            return new FirmwareCryptoCertificateEntity(
+                commonName.Value,
+                organization.Value,
+                organizationalUnit.Value,
+                state.Value,
+                country.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirmwareCryptoCertificateEntity>.Write(ModelReaderWriterOptions options)

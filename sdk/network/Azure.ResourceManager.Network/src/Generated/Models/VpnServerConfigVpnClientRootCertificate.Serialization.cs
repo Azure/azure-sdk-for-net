@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(PublicCertData))
+            if (PublicCertData != null)
             {
                 writer.WritePropertyName("publicCertData"u8);
 #if NET6_0_OR_GREATER

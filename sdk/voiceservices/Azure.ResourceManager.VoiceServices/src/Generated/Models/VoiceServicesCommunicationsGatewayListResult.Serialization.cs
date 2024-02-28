@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink.AbsoluteUri);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
                     List<VoiceServicesCommunicationsGatewayData> array = new List<VoiceServicesCommunicationsGatewayData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VoiceServicesCommunicationsGatewayData.DeserializeVoiceServicesCommunicationsGatewayData(item));
+                        array.Add(VoiceServicesCommunicationsGatewayData.DeserializeVoiceServicesCommunicationsGatewayData(item, options));
                     }
                     value = array;
                     continue;

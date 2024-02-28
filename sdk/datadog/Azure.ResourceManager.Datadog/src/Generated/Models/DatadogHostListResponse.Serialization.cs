@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Datadog.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<DatadogHost> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DatadogHost>> value = default;
+            IReadOnlyList<DatadogHost> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     List<DatadogHost> array = new List<DatadogHost>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DatadogHost.DeserializeDatadogHost(item));
+                        array.Add(DatadogHost.DeserializeDatadogHost(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatadogHostListResponse(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new DatadogHostListResponse(value ?? new ChangeTrackingList<DatadogHost>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatadogHostListResponse>.Write(ModelReaderWriterOptions options)

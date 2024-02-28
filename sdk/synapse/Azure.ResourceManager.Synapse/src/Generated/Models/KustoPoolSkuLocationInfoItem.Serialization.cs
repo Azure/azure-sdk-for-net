@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Synapse.Models
             writer.WriteStartObject();
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            if (Optional.IsCollectionDefined(Zones))
+            if (!(Zones is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 return null;
             }
             AzureLocation location = default;
-            Optional<IReadOnlyList<string>> zones = default;
+            IReadOnlyList<string> zones = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KustoPoolSkuLocationInfoItem(location, Optional.ToList(zones), serializedAdditionalRawData);
+            return new KustoPoolSkuLocationInfoItem(location, zones ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KustoPoolSkuLocationInfoItem>.Write(ModelReaderWriterOptions options)

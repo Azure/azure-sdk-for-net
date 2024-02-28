@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ClassificationsToInclude))
+            if (!(ClassificationsToInclude is ChangeTrackingList<VmGuestPatchClassificationWindow> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("classificationsToInclude"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(KbNumbersToInclude))
+            if (!(KbNumbersToInclude is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("kbNumbersToInclude"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(KbNumbersToExclude))
+            if (!(KbNumbersToExclude is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("kbNumbersToExclude"u8);
                 writer.WriteStartArray();
@@ -56,12 +56,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ExcludeKbsRequiringReboot))
+            if (ExcludeKbsRequiringReboot.HasValue)
             {
                 writer.WritePropertyName("excludeKbsRequiringReboot"u8);
                 writer.WriteBooleanValue(ExcludeKbsRequiringReboot.Value);
             }
-            if (Optional.IsDefined(MaxPatchPublishOn))
+            if (MaxPatchPublishOn.HasValue)
             {
                 writer.WritePropertyName("maxPatchPublishDate"u8);
                 writer.WriteStringValue(MaxPatchPublishOn.Value, "O");
@@ -104,9 +104,9 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<IList<VmGuestPatchClassificationWindow>> classificationsToInclude = default;
-            Optional<IList<string>> kbNumbersToInclude = default;
-            Optional<IList<string>> kbNumbersToExclude = default;
+            IList<VmGuestPatchClassificationWindow> classificationsToInclude = default;
+            IList<string> kbNumbersToInclude = default;
+            IList<string> kbNumbersToExclude = default;
             Optional<bool> excludeKbsRequiringReboot = default;
             Optional<DateTimeOffset> maxPatchPublishDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -179,7 +179,13 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridComputeWindowsParameters(Optional.ToList(classificationsToInclude), Optional.ToList(kbNumbersToInclude), Optional.ToList(kbNumbersToExclude), Optional.ToNullable(excludeKbsRequiringReboot), Optional.ToNullable(maxPatchPublishDate), serializedAdditionalRawData);
+            return new HybridComputeWindowsParameters(
+                classificationsToInclude ?? new ChangeTrackingList<VmGuestPatchClassificationWindow>(),
+                kbNumbersToInclude ?? new ChangeTrackingList<string>(),
+                kbNumbersToExclude ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(excludeKbsRequiringReboot),
+                Optional.ToNullable(maxPatchPublishDate),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridComputeWindowsParameters>.Write(ModelReaderWriterOptions options)

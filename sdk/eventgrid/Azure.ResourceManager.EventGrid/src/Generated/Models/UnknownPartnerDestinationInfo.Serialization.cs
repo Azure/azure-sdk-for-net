@@ -26,29 +26,29 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AzureSubscriptionId))
+            if (AzureSubscriptionId != null)
             {
                 writer.WritePropertyName("azureSubscriptionId"u8);
                 writer.WriteStringValue(AzureSubscriptionId);
             }
-            if (Optional.IsDefined(ResourceGroupName))
+            if (ResourceGroupName != null)
             {
                 writer.WritePropertyName("resourceGroupName"u8);
                 writer.WriteStringValue(ResourceGroupName);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("endpointType"u8);
             writer.WriteStringValue(EndpointType.ToString());
-            if (Optional.IsDefined(EndpointServiceContext))
+            if (EndpointServiceContext != null)
             {
                 writer.WritePropertyName("endpointServiceContext"u8);
                 writer.WriteStringValue(EndpointServiceContext);
             }
-            if (Optional.IsCollectionDefined(ResourceMoveChangeHistory))
+            if (!(ResourceMoveChangeHistory is ChangeTrackingList<ResourceMoveChangeHistory> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("resourceMoveChangeHistory"u8);
                 writer.WriteStartArray();
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownPartnerDestinationInfo(document.RootElement, options);
+            return DeserializePartnerDestinationInfo(document.RootElement, options);
         }
 
         internal static UnknownPartnerDestinationInfo DeserializeUnknownPartnerDestinationInfo(JsonElement element, ModelReaderWriterOptions options = null)
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             Optional<string> name = default;
             PartnerEndpointType endpointType = "Unknown";
             Optional<string> endpointServiceContext = default;
-            Optional<IList<ResourceMoveChangeHistory>> resourceMoveChangeHistory = default;
+            IList<ResourceMoveChangeHistory> resourceMoveChangeHistory = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     List<ResourceMoveChangeHistory> array = new List<ResourceMoveChangeHistory>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.ResourceMoveChangeHistory.DeserializeResourceMoveChangeHistory(item));
+                        array.Add(Models.ResourceMoveChangeHistory.DeserializeResourceMoveChangeHistory(item, options));
                     }
                     resourceMoveChangeHistory = array;
                     continue;
@@ -151,7 +151,14 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownPartnerDestinationInfo(azureSubscriptionId.Value, resourceGroupName.Value, name.Value, endpointType, endpointServiceContext.Value, Optional.ToList(resourceMoveChangeHistory), serializedAdditionalRawData);
+            return new UnknownPartnerDestinationInfo(
+                azureSubscriptionId.Value,
+                resourceGroupName.Value,
+                name.Value,
+                endpointType,
+                endpointServiceContext.Value,
+                resourceMoveChangeHistory ?? new ChangeTrackingList<ResourceMoveChangeHistory>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PartnerDestinationInfo>.Write(ModelReaderWriterOptions options)
@@ -176,7 +183,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownPartnerDestinationInfo(document.RootElement, options);
+                        return DeserializePartnerDestinationInfo(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(PartnerDestinationInfo)} does not support '{options.Format}' format.");

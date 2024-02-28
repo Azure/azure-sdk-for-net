@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Kubeconfigs))
+            if (options.Format != "W" && !(Kubeconfigs is ChangeTrackingList<ManagedClusterCredential> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("kubeconfigs"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ManagedClusterCredential>> kubeconfigs = default;
+            IReadOnlyList<ManagedClusterCredential> kubeconfigs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<ManagedClusterCredential> array = new List<ManagedClusterCredential>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedClusterCredential.DeserializeManagedClusterCredential(item));
+                        array.Add(ManagedClusterCredential.DeserializeManagedClusterCredential(item, options));
                     }
                     kubeconfigs = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterCredentials(Optional.ToList(kubeconfigs), serializedAdditionalRawData);
+            return new ManagedClusterCredentials(kubeconfigs ?? new ChangeTrackingList<ManagedClusterCredential>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterCredentials>.Write(ModelReaderWriterOptions options)

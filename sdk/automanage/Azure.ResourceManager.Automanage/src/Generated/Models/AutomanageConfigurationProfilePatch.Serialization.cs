@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Automanage.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Automanage.Models
                 return null;
             }
             Optional<ConfigurationProfileProperties> properties = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Automanage.Models
                     {
                         continue;
                     }
-                    properties = ConfigurationProfileProperties.DeserializeConfigurationProfileProperties(property.Value);
+                    properties = ConfigurationProfileProperties.DeserializeConfigurationProfileProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Automanage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomanageConfigurationProfilePatch(Optional.ToDictionary(tags), serializedAdditionalRawData, properties.Value);
+            return new AutomanageConfigurationProfilePatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, properties.Value);
         }
 
         BinaryData IPersistableModel<AutomanageConfigurationProfilePatch>.Write(ModelReaderWriterOptions options)

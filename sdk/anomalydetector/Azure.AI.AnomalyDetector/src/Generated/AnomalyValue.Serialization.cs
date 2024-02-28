@@ -33,7 +33,7 @@ namespace Azure.AI.AnomalyDetector
             writer.WriteNumberValue(Severity);
             writer.WritePropertyName("score"u8);
             writer.WriteNumberValue(Score);
-            if (Optional.IsCollectionDefined(Interpretation))
+            if (!(Interpretation is ChangeTrackingList<AnomalyInterpretation> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("interpretation"u8);
                 writer.WriteStartArray();
@@ -84,7 +84,7 @@ namespace Azure.AI.AnomalyDetector
             bool isAnomaly = default;
             float severity = default;
             float score = default;
-            Optional<IReadOnlyList<AnomalyInterpretation>> interpretation = default;
+            IReadOnlyList<AnomalyInterpretation> interpretation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +113,7 @@ namespace Azure.AI.AnomalyDetector
                     List<AnomalyInterpretation> array = new List<AnomalyInterpretation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AnomalyInterpretation.DeserializeAnomalyInterpretation(item));
+                        array.Add(AnomalyInterpretation.DeserializeAnomalyInterpretation(item, options));
                     }
                     interpretation = array;
                     continue;
@@ -124,7 +124,7 @@ namespace Azure.AI.AnomalyDetector
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AnomalyValue(isAnomaly, severity, score, Optional.ToList(interpretation), serializedAdditionalRawData);
+            return new AnomalyValue(isAnomaly, severity, score, interpretation ?? new ChangeTrackingList<AnomalyInterpretation>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AnomalyValue>.Write(ModelReaderWriterOptions options)

@@ -42,44 +42,44 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(State))
+            if (State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(StateReason))
+            if (options.Format != "W" && StateReason != null)
             {
                 writer.WritePropertyName("stateReason"u8);
                 writer.WriteStringValue(StateReason);
             }
-            if (Optional.IsDefined(StorageOutputRetention))
+            if (StorageOutputRetention.HasValue)
             {
                 writer.WritePropertyName("storageOutputRetention"u8);
                 writer.WriteNumberValue(StorageOutputRetention.Value);
             }
-            if (Optional.IsDefined(DatabaseCacheRetention))
+            if (DatabaseCacheRetention.HasValue)
             {
                 writer.WritePropertyName("databaseCacheRetention"u8);
                 writer.WriteNumberValue(DatabaseCacheRetention.Value);
             }
-            if (Optional.IsDefined(DatabaseRetention))
+            if (DatabaseRetention.HasValue)
             {
                 writer.WritePropertyName("databaseRetention"u8);
                 writer.WriteNumberValue(DatabaseRetention.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(VisualizationUri))
+            if (options.Format != "W" && VisualizationUri != null)
             {
                 writer.WritePropertyName("visualizationUrl"u8);
                 writer.WriteStringValue(VisualizationUri.AbsoluteUri);
@@ -239,7 +239,19 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataProductDataType(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(state), stateReason.Value, Optional.ToNullable(storageOutputRetention), Optional.ToNullable(databaseCacheRetention), Optional.ToNullable(databaseRetention), visualizationUrl.Value, serializedAdditionalRawData);
+            return new DataProductDataType(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(state),
+                stateReason.Value,
+                Optional.ToNullable(storageOutputRetention),
+                Optional.ToNullable(databaseCacheRetention),
+                Optional.ToNullable(databaseRetention),
+                visualizationUrl.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataProductDataType>.Write(ModelReaderWriterOptions options)

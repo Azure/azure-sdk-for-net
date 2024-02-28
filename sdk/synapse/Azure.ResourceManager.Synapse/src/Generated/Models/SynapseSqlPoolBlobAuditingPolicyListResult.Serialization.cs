@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<SynapseSqlPoolBlobAuditingPolicyData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SynapseSqlPoolBlobAuditingPolicyData>> value = default;
+            IReadOnlyList<SynapseSqlPoolBlobAuditingPolicyData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseSqlPoolBlobAuditingPolicyData> array = new List<SynapseSqlPoolBlobAuditingPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseSqlPoolBlobAuditingPolicyData.DeserializeSynapseSqlPoolBlobAuditingPolicyData(item));
+                        array.Add(SynapseSqlPoolBlobAuditingPolicyData.DeserializeSynapseSqlPoolBlobAuditingPolicyData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseSqlPoolBlobAuditingPolicyListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SynapseSqlPoolBlobAuditingPolicyListResult(value ?? new ChangeTrackingList<SynapseSqlPoolBlobAuditingPolicyData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseSqlPoolBlobAuditingPolicyListResult>.Write(ModelReaderWriterOptions options)

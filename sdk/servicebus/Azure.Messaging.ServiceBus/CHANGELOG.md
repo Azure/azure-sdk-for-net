@@ -10,6 +10,17 @@
 
 ### Other Changes
 
+- Updated the `Microsoft.Azure.Amqp` dependency to 2.6.5, which includes several bug fixes.  One notable fix addresses an obscure race condition when a cancellation token is signaled while service operations are being invoked concurrently which caused those operations to hang.  Another notable fix is for an obscure race condition that occurred when attempting to complete a message which caused the operation to hang.
+
+## 7.17.3 (2024-02-14)
+
+### Bugs Fixed
+
+- Fixed draining of credits when prefetch is enabled.
+- No longer drain credits when using the `ServiceBusSessionProcessor` as it is not necessary unless the `ServiceBusSessionProcessorOptions.SessionIds` property is set.
+
+### Other Changes
+
 - Loosened validation for the fully qualified namespace name passed to the `ServiceBusClient` constructor.  A URI is now also accepted as a valid format.  This is intended to improve the experience when using the management library, CLI, Bicep, or ARM template to create the namespace, as they return only an endpoint for the namespace.  Previously, callers were responsible for parsing the endpoint and extracting the host name for use with the client.
 
 ## 7.17.2 (2024-01-16)

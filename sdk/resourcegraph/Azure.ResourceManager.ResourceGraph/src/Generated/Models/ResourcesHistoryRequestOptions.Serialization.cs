@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Interval))
+            if (Interval != null)
             {
                 writer.WritePropertyName("interval"u8);
                 writer.WriteObjectValue(Interval);
             }
-            if (Optional.IsDefined(Top))
+            if (Top.HasValue)
             {
                 writer.WritePropertyName("$top"u8);
                 writer.WriteNumberValue(Top.Value);
             }
-            if (Optional.IsDefined(Skip))
+            if (Skip.HasValue)
             {
                 writer.WritePropertyName("$skip"u8);
                 writer.WriteNumberValue(Skip.Value);
             }
-            if (Optional.IsDefined(SkipToken))
+            if (SkipToken != null)
             {
                 writer.WritePropertyName("$skipToken"u8);
                 writer.WriteStringValue(SkipToken);
             }
-            if (Optional.IsDefined(ResultFormat))
+            if (ResultFormat.HasValue)
             {
                 writer.WritePropertyName("resultFormat"u8);
                 writer.WriteStringValue(ResultFormat.Value.ToSerialString());
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                     {
                         continue;
                     }
-                    interval = DateTimeInterval.DeserializeDateTimeInterval(property.Value);
+                    interval = DateTimeInterval.DeserializeDateTimeInterval(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("$top"u8))
@@ -145,7 +145,13 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourcesHistoryRequestOptions(interval.Value, Optional.ToNullable(top), Optional.ToNullable(skip), skipToken.Value, Optional.ToNullable(resultFormat), serializedAdditionalRawData);
+            return new ResourcesHistoryRequestOptions(
+                interval.Value,
+                Optional.ToNullable(top),
+                Optional.ToNullable(skip),
+                skipToken.Value,
+                Optional.ToNullable(resultFormat),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourcesHistoryRequestOptions>.Write(ModelReaderWriterOptions options)

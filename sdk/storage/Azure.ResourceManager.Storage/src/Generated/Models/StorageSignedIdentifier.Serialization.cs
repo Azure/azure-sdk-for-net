@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(AccessPolicy))
+            if (AccessPolicy != null)
             {
                 writer.WritePropertyName("accessPolicy"u8);
                 writer.WriteObjectValue(AccessPolicy);
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    accessPolicy = StorageServiceAccessPolicy.DeserializeStorageServiceAccessPolicy(property.Value);
+                    accessPolicy = StorageServiceAccessPolicy.DeserializeStorageServiceAccessPolicy(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

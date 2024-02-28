@@ -29,7 +29,7 @@ namespace Azure.AI.DocumentIntelligence
             writer.WriteStartObject();
             writer.WritePropertyName("modelId"u8);
             writer.WriteStringValue(ModelId);
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -41,7 +41,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -93,7 +93,7 @@ namespace Azure.AI.DocumentIntelligence
             string modelId = default;
             Optional<string> description = default;
             IList<ComponentDocumentModelDetails> componentModels = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +113,7 @@ namespace Azure.AI.DocumentIntelligence
                     List<ComponentDocumentModelDetails> array = new List<ComponentDocumentModelDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ComponentDocumentModelDetails.DeserializeComponentDocumentModelDetails(item));
+                        array.Add(ComponentDocumentModelDetails.DeserializeComponentDocumentModelDetails(item, options));
                     }
                     componentModels = array;
                     continue;
@@ -138,7 +138,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComposeDocumentModelContent(modelId, description.Value, componentModels, Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new ComposeDocumentModelContent(modelId, description.Value, componentModels, tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComposeDocumentModelContent>.Write(ModelReaderWriterOptions options)

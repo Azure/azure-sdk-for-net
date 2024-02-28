@@ -86,8 +86,18 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="serverTrustGroupName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SqlServerTrustGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string serverTrustGroupName, SqlServerTrustGroupData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(serverTrustGroupName, nameof(serverTrustGroupName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (serverTrustGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(serverTrustGroupName));
+            }
+            if (serverTrustGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverTrustGroupName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _sqlServerTrustGroupServerTrustGroupsClientDiagnostics.CreateScope("SqlServerTrustGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -135,8 +145,18 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="serverTrustGroupName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SqlServerTrustGroupResource> CreateOrUpdate(WaitUntil waitUntil, string serverTrustGroupName, SqlServerTrustGroupData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(serverTrustGroupName, nameof(serverTrustGroupName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (serverTrustGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(serverTrustGroupName));
+            }
+            if (serverTrustGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverTrustGroupName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _sqlServerTrustGroupServerTrustGroupsClientDiagnostics.CreateScope("SqlServerTrustGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -182,7 +202,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="serverTrustGroupName"/> is null. </exception>
         public virtual async Task<Response<SqlServerTrustGroupResource>> GetAsync(string serverTrustGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(serverTrustGroupName, nameof(serverTrustGroupName));
+            if (serverTrustGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(serverTrustGroupName));
+            }
+            if (serverTrustGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverTrustGroupName));
+            }
 
             using var scope = _sqlServerTrustGroupServerTrustGroupsClientDiagnostics.CreateScope("SqlServerTrustGroupCollection.Get");
             scope.Start();
@@ -227,7 +254,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="serverTrustGroupName"/> is null. </exception>
         public virtual Response<SqlServerTrustGroupResource> Get(string serverTrustGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(serverTrustGroupName, nameof(serverTrustGroupName));
+            if (serverTrustGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(serverTrustGroupName));
+            }
+            if (serverTrustGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverTrustGroupName));
+            }
 
             using var scope = _sqlServerTrustGroupServerTrustGroupsClientDiagnostics.CreateScope("SqlServerTrustGroupCollection.Get");
             scope.Start();
@@ -332,7 +366,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="serverTrustGroupName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string serverTrustGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(serverTrustGroupName, nameof(serverTrustGroupName));
+            if (serverTrustGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(serverTrustGroupName));
+            }
+            if (serverTrustGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverTrustGroupName));
+            }
 
             using var scope = _sqlServerTrustGroupServerTrustGroupsClientDiagnostics.CreateScope("SqlServerTrustGroupCollection.Exists");
             scope.Start();
@@ -375,7 +416,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="serverTrustGroupName"/> is null. </exception>
         public virtual Response<bool> Exists(string serverTrustGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(serverTrustGroupName, nameof(serverTrustGroupName));
+            if (serverTrustGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(serverTrustGroupName));
+            }
+            if (serverTrustGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverTrustGroupName));
+            }
 
             using var scope = _sqlServerTrustGroupServerTrustGroupsClientDiagnostics.CreateScope("SqlServerTrustGroupCollection.Exists");
             scope.Start();
@@ -418,7 +466,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="serverTrustGroupName"/> is null. </exception>
         public virtual async Task<NullableResponse<SqlServerTrustGroupResource>> GetIfExistsAsync(string serverTrustGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(serverTrustGroupName, nameof(serverTrustGroupName));
+            if (serverTrustGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(serverTrustGroupName));
+            }
+            if (serverTrustGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverTrustGroupName));
+            }
 
             using var scope = _sqlServerTrustGroupServerTrustGroupsClientDiagnostics.CreateScope("SqlServerTrustGroupCollection.GetIfExists");
             scope.Start();
@@ -463,7 +518,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="serverTrustGroupName"/> is null. </exception>
         public virtual NullableResponse<SqlServerTrustGroupResource> GetIfExists(string serverTrustGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(serverTrustGroupName, nameof(serverTrustGroupName));
+            if (serverTrustGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(serverTrustGroupName));
+            }
+            if (serverTrustGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverTrustGroupName));
+            }
 
             using var scope = _sqlServerTrustGroupServerTrustGroupsClientDiagnostics.CreateScope("SqlServerTrustGroupCollection.GetIfExists");
             scope.Start();

@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Capacity))
+            if (Capacity.HasValue)
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteNumberValue(Capacity.Value);
             }
-            if (Optional.IsDefined(Family))
+            if (Family != null)
             {
                 writer.WritePropertyName("family"u8);
                 writer.WriteStringValue(Family);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Size))
+            if (Size != null)
             {
                 writer.WritePropertyName("size"u8);
                 writer.WriteStringValue(Size);
             }
-            if (Optional.IsDefined(Tier))
+            if (Tier.HasValue)
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier.Value.ToSerialString());
@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningSkuPatch(Optional.ToNullable(capacity), family.Value, name.Value, size.Value, Optional.ToNullable(tier), serializedAdditionalRawData);
+            return new MachineLearningSkuPatch(
+                Optional.ToNullable(capacity),
+                family.Value,
+                name.Value,
+                size.Value,
+                Optional.ToNullable(tier),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningSkuPatch>.Write(ModelReaderWriterOptions options)

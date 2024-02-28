@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.Datadog.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(MonitoringStatus))
+            if (MonitoringStatus.HasValue)
             {
                 writer.WritePropertyName("monitoringStatus"u8);
                 writer.WriteStringValue(MonitoringStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(MarketplaceSubscriptionStatus))
+            if (options.Format != "W" && MarketplaceSubscriptionStatus.HasValue)
             {
                 writer.WritePropertyName("marketplaceSubscriptionStatus"u8);
                 writer.WriteStringValue(MarketplaceSubscriptionStatus.Value.ToString());
             }
-            if (Optional.IsDefined(DatadogOrganizationProperties))
+            if (DatadogOrganizationProperties != null)
             {
                 writer.WritePropertyName("datadogOrganizationProperties"u8);
                 writer.WriteObjectValue(DatadogOrganizationProperties);
             }
-            if (Optional.IsDefined(UserInfo))
+            if (UserInfo != null)
             {
                 writer.WritePropertyName("userInfo"u8);
                 writer.WriteObjectValue(UserInfo);
             }
-            if (options.Format != "W" && Optional.IsDefined(LiftrResourceCategory))
+            if (options.Format != "W" && LiftrResourceCategory.HasValue)
             {
                 writer.WritePropertyName("liftrResourceCategory"u8);
                 writer.WriteStringValue(LiftrResourceCategory.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(LiftrResourcePreference))
+            if (options.Format != "W" && LiftrResourcePreference.HasValue)
             {
                 writer.WritePropertyName("liftrResourcePreference"u8);
                 writer.WriteNumberValue(LiftrResourcePreference.Value);
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     {
                         continue;
                     }
-                    datadogOrganizationProperties = DatadogOrganizationProperties.DeserializeDatadogOrganizationProperties(property.Value);
+                    datadogOrganizationProperties = DatadogOrganizationProperties.DeserializeDatadogOrganizationProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("userInfo"u8))
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     {
                         continue;
                     }
-                    userInfo = UserInfo.DeserializeUserInfo(property.Value);
+                    userInfo = UserInfo.DeserializeUserInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("liftrResourceCategory"u8))
@@ -179,7 +179,15 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(monitoringStatus), Optional.ToNullable(marketplaceSubscriptionStatus), datadogOrganizationProperties.Value, userInfo.Value, Optional.ToNullable(liftrResourceCategory), Optional.ToNullable(liftrResourcePreference), serializedAdditionalRawData);
+            return new MonitorProperties(
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(monitoringStatus),
+                Optional.ToNullable(marketplaceSubscriptionStatus),
+                datadogOrganizationProperties.Value,
+                userInfo.Value,
+                Optional.ToNullable(liftrResourceCategory),
+                Optional.ToNullable(liftrResourcePreference),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorProperties>.Write(ModelReaderWriterOptions options)

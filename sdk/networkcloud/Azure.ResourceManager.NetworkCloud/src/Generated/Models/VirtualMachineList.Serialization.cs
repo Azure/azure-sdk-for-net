@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<NetworkCloudVirtualMachineData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<NetworkCloudVirtualMachineData>> value = default;
+            IReadOnlyList<NetworkCloudVirtualMachineData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     List<NetworkCloudVirtualMachineData> array = new List<NetworkCloudVirtualMachineData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkCloudVirtualMachineData.DeserializeNetworkCloudVirtualMachineData(item));
+                        array.Add(NetworkCloudVirtualMachineData.DeserializeNetworkCloudVirtualMachineData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineList(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new VirtualMachineList(nextLink.Value, value ?? new ChangeTrackingList<NetworkCloudVirtualMachineData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineList>.Write(ModelReaderWriterOptions options)

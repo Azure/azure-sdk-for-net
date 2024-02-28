@@ -26,49 +26,49 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Path))
+            if (Path != null)
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (Optional.IsDefined(Protocol))
+            if (Protocol.HasValue)
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (Optional.IsDefined(IntervalInSeconds))
+            if (IntervalInSeconds.HasValue)
             {
                 writer.WritePropertyName("intervalInSeconds"u8);
                 writer.WriteNumberValue(IntervalInSeconds.Value);
             }
-            if (Optional.IsDefined(HealthProbeMethod))
+            if (HealthProbeMethod.HasValue)
             {
                 writer.WritePropertyName("healthProbeMethod"u8);
                 writer.WriteStringValue(HealthProbeMethod.Value.ToString());
             }
-            if (Optional.IsDefined(EnabledState))
+            if (EnabledState.HasValue)
             {
                 writer.WritePropertyName("enabledState"u8);
                 writer.WriteStringValue(EnabledState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceState))
+            if (options.Format != "W" && ResourceState.HasValue)
             {
                 writer.WritePropertyName("resourceState"u8);
                 writer.WriteStringValue(ResourceState.Value.ToString());
@@ -216,7 +216,17 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorHealthProbeSettingsData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, path.Value, Optional.ToNullable(protocol), Optional.ToNullable(intervalInSeconds), Optional.ToNullable(healthProbeMethod), Optional.ToNullable(enabledState), Optional.ToNullable(resourceState));
+            return new FrontDoorHealthProbeSettingsData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                path.Value,
+                Optional.ToNullable(protocol),
+                Optional.ToNullable(intervalInSeconds),
+                Optional.ToNullable(healthProbeMethod),
+                Optional.ToNullable(enabledState),
+                Optional.ToNullable(resourceState));
         }
 
         BinaryData IPersistableModel<FrontDoorHealthProbeSettingsData>.Write(ModelReaderWriterOptions options)

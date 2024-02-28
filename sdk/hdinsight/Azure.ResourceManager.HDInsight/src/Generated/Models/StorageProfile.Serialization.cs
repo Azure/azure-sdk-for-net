@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(StorageAccounts))
+            if (!(StorageAccounts is ChangeTrackingList<HDInsightStorageAccountInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("storageaccounts"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<IList<HDInsightStorageAccountInfo>> storageaccounts = default;
+            IList<HDInsightStorageAccountInfo> storageaccounts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<HDInsightStorageAccountInfo> array = new List<HDInsightStorageAccountInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HDInsightStorageAccountInfo.DeserializeHDInsightStorageAccountInfo(item));
+                        array.Add(HDInsightStorageAccountInfo.DeserializeHDInsightStorageAccountInfo(item, options));
                     }
                     storageaccounts = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageProfile(Optional.ToList(storageaccounts), serializedAdditionalRawData);
+            return new StorageProfile(storageaccounts ?? new ChangeTrackingList<HDInsightStorageAccountInfo>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageProfile>.Write(ModelReaderWriterOptions options)

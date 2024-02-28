@@ -20,15 +20,19 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GalleryArtifactVersionFullSource"/>. </summary>
-        /// <param name="id"> The id of the gallery artifact version source. Can specify a disk uri, snapshot uri, user image or storage account resource. </param>
+        /// <param name="id"> The id of the gallery artifact version source. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="communityGalleryImageId"> The resource Id of the source Community Gallery Image.  Only required when using Community Gallery Image as a source. </param>
-        internal GalleryArtifactVersionFullSource(ResourceIdentifier id, IDictionary<string, BinaryData> serializedAdditionalRawData, string communityGalleryImageId) : base(id, serializedAdditionalRawData)
+        /// <param name="virtualMachineId"> The resource Id of the source virtual machine.  Only required when capturing a virtual machine to source this Gallery Image Version. </param>
+        internal GalleryArtifactVersionFullSource(ResourceIdentifier id, IDictionary<string, BinaryData> serializedAdditionalRawData, string communityGalleryImageId, ResourceIdentifier virtualMachineId) : base(id, serializedAdditionalRawData)
         {
             CommunityGalleryImageId = communityGalleryImageId;
+            VirtualMachineId = virtualMachineId;
         }
 
         /// <summary> The resource Id of the source Community Gallery Image.  Only required when using Community Gallery Image as a source. </summary>
         public string CommunityGalleryImageId { get; set; }
+        /// <summary> The resource Id of the source virtual machine.  Only required when capturing a virtual machine to source this Gallery Image Version. </summary>
+        public ResourceIdentifier VirtualMachineId { get; set; }
     }
 }

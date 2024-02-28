@@ -26,24 +26,24 @@ namespace Azure.ResourceManager.Authorization.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsEnabled))
+            if (IsEnabled.HasValue)
             {
                 writer.WritePropertyName("isEnabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(ClaimValue))
+            if (ClaimValue != null)
             {
                 writer.WritePropertyName("claimValue"u8);
                 writer.WriteStringValue(ClaimValue);
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("ruleType"u8);
             writer.WriteStringValue(RuleType.ToString());
-            if (Optional.IsDefined(Target))
+            if (Target != null)
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteObjectValue(Target);
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     {
                         continue;
                     }
-                    target = RoleManagementPolicyRuleTarget.DeserializeRoleManagementPolicyRuleTarget(property.Value);
+                    target = RoleManagementPolicyRuleTarget.DeserializeRoleManagementPolicyRuleTarget(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -134,7 +134,13 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoleManagementPolicyAuthenticationContextRule(id.Value, ruleType, target.Value, serializedAdditionalRawData, Optional.ToNullable(isEnabled), claimValue.Value);
+            return new RoleManagementPolicyAuthenticationContextRule(
+                id.Value,
+                ruleType,
+                target.Value,
+                serializedAdditionalRawData,
+                Optional.ToNullable(isEnabled),
+                claimValue.Value);
         }
 
         BinaryData IPersistableModel<RoleManagementPolicyAuthenticationContextRule>.Write(ModelReaderWriterOptions options)

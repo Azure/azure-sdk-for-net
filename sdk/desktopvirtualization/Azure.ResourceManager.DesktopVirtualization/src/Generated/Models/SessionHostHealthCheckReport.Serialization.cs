@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(HealthCheckName))
+            if (options.Format != "W" && HealthCheckName.HasValue)
             {
                 writer.WritePropertyName("healthCheckName"u8);
                 writer.WriteStringValue(HealthCheckName.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(HealthCheckResult))
+            if (options.Format != "W" && HealthCheckResult.HasValue)
             {
                 writer.WritePropertyName("healthCheckResult"u8);
                 writer.WriteStringValue(HealthCheckResult.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(AdditionalFailureDetails))
+            if (options.Format != "W" && AdditionalFailureDetails != null)
             {
                 writer.WritePropertyName("additionalFailureDetails"u8);
                 writer.WriteObjectValue(AdditionalFailureDetails);
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    additionalFailureDetails = SessionHostHealthCheckFailureDetails.DeserializeSessionHostHealthCheckFailureDetails(property.Value);
+                    additionalFailureDetails = SessionHostHealthCheckFailureDetails.DeserializeSessionHostHealthCheckFailureDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

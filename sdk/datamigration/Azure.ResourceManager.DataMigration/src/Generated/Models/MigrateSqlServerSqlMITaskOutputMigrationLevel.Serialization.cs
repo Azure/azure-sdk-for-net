@@ -26,47 +26,47 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(StartedOn))
+            if (options.Format != "W" && StartedOn.HasValue)
             {
                 writer.WritePropertyName("startedOn"u8);
                 writer.WriteStringValue(StartedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EndedOn))
+            if (options.Format != "W" && EndedOn.HasValue)
             {
                 writer.WritePropertyName("endedOn"u8);
                 writer.WriteStringValue(EndedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W" && State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(AgentJobs))
+            if (options.Format != "W" && AgentJobs != null)
             {
                 writer.WritePropertyName("agentJobs"u8);
                 writer.WriteStringValue(AgentJobs);
             }
-            if (options.Format != "W" && Optional.IsDefined(Logins))
+            if (options.Format != "W" && Logins != null)
             {
                 writer.WritePropertyName("logins"u8);
                 writer.WriteStringValue(Logins);
             }
-            if (options.Format != "W" && Optional.IsDefined(Message))
+            if (options.Format != "W" && Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (options.Format != "W" && Optional.IsDefined(ServerRoleResults))
+            if (options.Format != "W" && ServerRoleResults != null)
             {
                 writer.WritePropertyName("serverRoleResults"u8);
                 writer.WriteStringValue(ServerRoleResults);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(OrphanedUsersInfo))
+            if (options.Format != "W" && !(OrphanedUsersInfo is ChangeTrackingList<OrphanedUserInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("orphanedUsersInfo"u8);
                 writer.WriteStartArray();
@@ -76,32 +76,32 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(Databases))
+            if (options.Format != "W" && Databases != null)
             {
                 writer.WritePropertyName("databases"u8);
                 writer.WriteStringValue(Databases);
             }
-            if (options.Format != "W" && Optional.IsDefined(SourceServerVersion))
+            if (options.Format != "W" && SourceServerVersion != null)
             {
                 writer.WritePropertyName("sourceServerVersion"u8);
                 writer.WriteStringValue(SourceServerVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(SourceServerBrandVersion))
+            if (options.Format != "W" && SourceServerBrandVersion != null)
             {
                 writer.WritePropertyName("sourceServerBrandVersion"u8);
                 writer.WriteStringValue(SourceServerBrandVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetServerVersion))
+            if (options.Format != "W" && TargetServerVersion != null)
             {
                 writer.WritePropertyName("targetServerVersion"u8);
                 writer.WriteStringValue(TargetServerVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetServerBrandVersion))
+            if (options.Format != "W" && TargetServerBrandVersion != null)
             {
                 writer.WritePropertyName("targetServerBrandVersion"u8);
                 writer.WriteStringValue(TargetServerBrandVersion);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ExceptionsAndWarnings))
+            if (options.Format != "W" && !(ExceptionsAndWarnings is ChangeTrackingList<ReportableException> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("exceptionsAndWarnings"u8);
                 writer.WriteStartArray();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -164,13 +164,13 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<string> logins = default;
             Optional<string> message = default;
             Optional<string> serverRoleResults = default;
-            Optional<IReadOnlyList<OrphanedUserInfo>> orphanedUsersInfo = default;
+            IReadOnlyList<OrphanedUserInfo> orphanedUsersInfo = default;
             Optional<string> databases = default;
             Optional<string> sourceServerVersion = default;
             Optional<string> sourceServerBrandVersion = default;
             Optional<string> targetServerVersion = default;
             Optional<string> targetServerBrandVersion = default;
-            Optional<IReadOnlyList<ReportableException>> exceptionsAndWarnings = default;
+            IReadOnlyList<ReportableException> exceptionsAndWarnings = default;
             Optional<string> id = default;
             string resultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<OrphanedUserInfo> array = new List<OrphanedUserInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OrphanedUserInfo.DeserializeOrphanedUserInfo(item));
+                        array.Add(OrphanedUserInfo.DeserializeOrphanedUserInfo(item, options));
                     }
                     orphanedUsersInfo = array;
                     continue;
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ReportableException> array = new List<ReportableException>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReportableException.DeserializeReportableException(item));
+                        array.Add(ReportableException.DeserializeReportableException(item, options));
                     }
                     exceptionsAndWarnings = array;
                     continue;
@@ -302,7 +302,25 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateSqlServerSqlMITaskOutputMigrationLevel(id.Value, resultType, serializedAdditionalRawData, Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), Optional.ToNullable(status), Optional.ToNullable(state), agentJobs.Value, logins.Value, message.Value, serverRoleResults.Value, Optional.ToList(orphanedUsersInfo), databases.Value, sourceServerVersion.Value, sourceServerBrandVersion.Value, targetServerVersion.Value, targetServerBrandVersion.Value, Optional.ToList(exceptionsAndWarnings));
+            return new MigrateSqlServerSqlMITaskOutputMigrationLevel(
+                id.Value,
+                resultType,
+                serializedAdditionalRawData,
+                Optional.ToNullable(startedOn),
+                Optional.ToNullable(endedOn),
+                Optional.ToNullable(status),
+                Optional.ToNullable(state),
+                agentJobs.Value,
+                logins.Value,
+                message.Value,
+                serverRoleResults.Value,
+                orphanedUsersInfo ?? new ChangeTrackingList<OrphanedUserInfo>(),
+                databases.Value,
+                sourceServerVersion.Value,
+                sourceServerBrandVersion.Value,
+                targetServerVersion.Value,
+                targetServerBrandVersion.Value,
+                exceptionsAndWarnings ?? new ChangeTrackingList<ReportableException>());
         }
 
         BinaryData IPersistableModel<MigrateSqlServerSqlMITaskOutputMigrationLevel>.Write(ModelReaderWriterOptions options)

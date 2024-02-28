@@ -80,7 +80,14 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="advisorName"/> is null. </exception>
         public virtual async Task<Response<MySqlAdvisorResource>> GetAsync(string advisorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(advisorName, nameof(advisorName));
+            if (advisorName == null)
+            {
+                throw new ArgumentNullException(nameof(advisorName));
+            }
+            if (advisorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(advisorName));
+            }
 
             using var scope = _mySqlAdvisorAdvisorsClientDiagnostics.CreateScope("MySqlAdvisorCollection.Get");
             scope.Start();
@@ -125,7 +132,14 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="advisorName"/> is null. </exception>
         public virtual Response<MySqlAdvisorResource> Get(string advisorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(advisorName, nameof(advisorName));
+            if (advisorName == null)
+            {
+                throw new ArgumentNullException(nameof(advisorName));
+            }
+            if (advisorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(advisorName));
+            }
 
             using var scope = _mySqlAdvisorAdvisorsClientDiagnostics.CreateScope("MySqlAdvisorCollection.Get");
             scope.Start();
@@ -230,7 +244,14 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="advisorName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string advisorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(advisorName, nameof(advisorName));
+            if (advisorName == null)
+            {
+                throw new ArgumentNullException(nameof(advisorName));
+            }
+            if (advisorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(advisorName));
+            }
 
             using var scope = _mySqlAdvisorAdvisorsClientDiagnostics.CreateScope("MySqlAdvisorCollection.Exists");
             scope.Start();
@@ -273,7 +294,14 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="advisorName"/> is null. </exception>
         public virtual Response<bool> Exists(string advisorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(advisorName, nameof(advisorName));
+            if (advisorName == null)
+            {
+                throw new ArgumentNullException(nameof(advisorName));
+            }
+            if (advisorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(advisorName));
+            }
 
             using var scope = _mySqlAdvisorAdvisorsClientDiagnostics.CreateScope("MySqlAdvisorCollection.Exists");
             scope.Start();
@@ -316,7 +344,14 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="advisorName"/> is null. </exception>
         public virtual async Task<NullableResponse<MySqlAdvisorResource>> GetIfExistsAsync(string advisorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(advisorName, nameof(advisorName));
+            if (advisorName == null)
+            {
+                throw new ArgumentNullException(nameof(advisorName));
+            }
+            if (advisorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(advisorName));
+            }
 
             using var scope = _mySqlAdvisorAdvisorsClientDiagnostics.CreateScope("MySqlAdvisorCollection.GetIfExists");
             scope.Start();
@@ -361,7 +396,14 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="advisorName"/> is null. </exception>
         public virtual NullableResponse<MySqlAdvisorResource> GetIfExists(string advisorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(advisorName, nameof(advisorName));
+            if (advisorName == null)
+            {
+                throw new ArgumentNullException(nameof(advisorName));
+            }
+            if (advisorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(advisorName));
+            }
 
             using var scope = _mySqlAdvisorAdvisorsClientDiagnostics.CreateScope("MySqlAdvisorCollection.GetIfExists");
             scope.Start();

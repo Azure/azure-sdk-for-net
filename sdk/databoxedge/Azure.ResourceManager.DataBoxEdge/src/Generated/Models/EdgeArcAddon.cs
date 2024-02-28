@@ -24,9 +24,18 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         public EdgeArcAddon(string subscriptionId, string resourceGroupName, string resourceName, AzureLocation resourceLocation)
         {
-            Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNull(resourceName, nameof(resourceName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
 
             SubscriptionId = subscriptionId;
             ResourceGroupName = resourceGroupName;

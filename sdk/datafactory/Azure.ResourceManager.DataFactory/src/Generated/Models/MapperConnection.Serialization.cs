@@ -27,24 +27,24 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(LinkedService))
+            if (LinkedService != null)
             {
                 writer.WritePropertyName("linkedService"u8);
                 JsonSerializer.Serialize(writer, LinkedService);
             }
-            if (Optional.IsDefined(LinkedServiceType))
+            if (LinkedServiceType != null)
             {
                 writer.WritePropertyName("linkedServiceType"u8);
                 writer.WriteStringValue(LinkedServiceType);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ConnectionType.ToString());
-            if (Optional.IsDefined(IsInlineDataset))
+            if (IsInlineDataset.HasValue)
             {
                 writer.WritePropertyName("isInlineDataset"u8);
                 writer.WriteBooleanValue(IsInlineDataset.Value);
             }
-            if (Optional.IsCollectionDefined(CommonDslConnectorProperties))
+            if (!(CommonDslConnectorProperties is ChangeTrackingList<MapperDslConnectorProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("commonDslConnectorProperties"u8);
                 writer.WriteStartArray();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> linkedServiceType = default;
             MapperConnectionType type = default;
             Optional<bool> isInlineDataset = default;
-            Optional<IList<MapperDslConnectorProperties>> commonDslConnectorProperties = default;
+            IList<MapperDslConnectorProperties> commonDslConnectorProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<MapperDslConnectorProperties> array = new List<MapperDslConnectorProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MapperDslConnectorProperties.DeserializeMapperDslConnectorProperties(item));
+                        array.Add(MapperDslConnectorProperties.DeserializeMapperDslConnectorProperties(item, options));
                     }
                     commonDslConnectorProperties = array;
                     continue;
@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MapperConnection(linkedService, linkedServiceType.Value, type, Optional.ToNullable(isInlineDataset), Optional.ToList(commonDslConnectorProperties), serializedAdditionalRawData);
+            return new MapperConnection(
+                linkedService,
+                linkedServiceType.Value,
+                type,
+                Optional.ToNullable(isInlineDataset),
+                commonDslConnectorProperties ?? new ChangeTrackingList<MapperDslConnectorProperties>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MapperConnection>.Write(ModelReaderWriterOptions options)

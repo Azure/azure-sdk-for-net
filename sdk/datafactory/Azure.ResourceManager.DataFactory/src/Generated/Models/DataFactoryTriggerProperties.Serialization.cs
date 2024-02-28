@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(TriggerType);
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsDefined(RuntimeState))
+            if (options.Format != "W" && RuntimeState.HasValue)
             {
                 writer.WritePropertyName("runtimeState"u8);
                 writer.WriteStringValue(RuntimeState.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Annotations))
+            if (!(Annotations is ChangeTrackingList<BinaryData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -99,17 +99,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "BlobEventsTrigger": return DataFactoryBlobEventsTrigger.DeserializeDataFactoryBlobEventsTrigger(element);
-                    case "BlobTrigger": return DataFactoryBlobTrigger.DeserializeDataFactoryBlobTrigger(element);
-                    case "ChainingTrigger": return ChainingTrigger.DeserializeChainingTrigger(element);
-                    case "CustomEventsTrigger": return CustomEventsTrigger.DeserializeCustomEventsTrigger(element);
-                    case "MultiplePipelineTrigger": return MultiplePipelineTrigger.DeserializeMultiplePipelineTrigger(element);
-                    case "RerunTumblingWindowTrigger": return RerunTumblingWindowTrigger.DeserializeRerunTumblingWindowTrigger(element);
-                    case "ScheduleTrigger": return DataFactoryScheduleTrigger.DeserializeDataFactoryScheduleTrigger(element);
-                    case "TumblingWindowTrigger": return TumblingWindowTrigger.DeserializeTumblingWindowTrigger(element);
+                    case "BlobEventsTrigger": return DataFactoryBlobEventsTrigger.DeserializeDataFactoryBlobEventsTrigger(element, options);
+                    case "BlobTrigger": return DataFactoryBlobTrigger.DeserializeDataFactoryBlobTrigger(element, options);
+                    case "ChainingTrigger": return ChainingTrigger.DeserializeChainingTrigger(element, options);
+                    case "CustomEventsTrigger": return CustomEventsTrigger.DeserializeCustomEventsTrigger(element, options);
+                    case "MultiplePipelineTrigger": return MultiplePipelineTrigger.DeserializeMultiplePipelineTrigger(element, options);
+                    case "RerunTumblingWindowTrigger": return RerunTumblingWindowTrigger.DeserializeRerunTumblingWindowTrigger(element, options);
+                    case "ScheduleTrigger": return DataFactoryScheduleTrigger.DeserializeDataFactoryScheduleTrigger(element, options);
+                    case "TumblingWindowTrigger": return TumblingWindowTrigger.DeserializeTumblingWindowTrigger(element, options);
                 }
             }
-            return UnknownTrigger.DeserializeUnknownTrigger(element);
+            return UnknownTrigger.DeserializeUnknownTrigger(element, options);
         }
 
         BinaryData IPersistableModel<DataFactoryTriggerProperties>.Write(ModelReaderWriterOptions options)

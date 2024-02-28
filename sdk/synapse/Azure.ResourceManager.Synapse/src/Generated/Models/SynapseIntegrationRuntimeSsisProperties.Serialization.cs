@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CatalogInfo))
+            if (CatalogInfo != null)
             {
                 writer.WritePropertyName("catalogInfo"u8);
                 writer.WriteObjectValue(CatalogInfo);
             }
-            if (Optional.IsDefined(LicenseType))
+            if (LicenseType.HasValue)
             {
                 writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType.Value.ToString());
             }
-            if (Optional.IsDefined(CustomSetupScriptProperties))
+            if (CustomSetupScriptProperties != null)
             {
                 writer.WritePropertyName("customSetupScriptProperties"u8);
                 writer.WriteObjectValue(CustomSetupScriptProperties);
             }
-            if (Optional.IsDefined(DataProxyProperties))
+            if (DataProxyProperties != null)
             {
                 writer.WritePropertyName("dataProxyProperties"u8);
                 writer.WriteObjectValue(DataProxyProperties);
             }
-            if (Optional.IsDefined(Edition))
+            if (Edition.HasValue)
             {
                 writer.WritePropertyName("edition"u8);
                 writer.WriteStringValue(Edition.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(ExpressCustomSetupProperties))
+            if (!(ExpressCustomSetupProperties is ChangeTrackingList<SynapseCustomSetupBase> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("expressCustomSetupProperties"u8);
                 writer.WriteStartArray();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Synapse.Models
             Optional<SynapseIntegrationRuntimeCustomSetupScriptProperties> customSetupScriptProperties = default;
             Optional<SynapseIntegrationRuntimeDataProxyProperties> dataProxyProperties = default;
             Optional<SynapseIntegrationRuntimeEdition> edition = default;
-            Optional<IList<SynapseCustomSetupBase>> expressCustomSetupProperties = default;
+            IList<SynapseCustomSetupBase> expressCustomSetupProperties = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     {
                         continue;
                     }
-                    catalogInfo = SynapseIntegrationRuntimeSsisCatalogInfo.DeserializeSynapseIntegrationRuntimeSsisCatalogInfo(property.Value);
+                    catalogInfo = SynapseIntegrationRuntimeSsisCatalogInfo.DeserializeSynapseIntegrationRuntimeSsisCatalogInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("licenseType"u8))
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     {
                         continue;
                     }
-                    customSetupScriptProperties = SynapseIntegrationRuntimeCustomSetupScriptProperties.DeserializeSynapseIntegrationRuntimeCustomSetupScriptProperties(property.Value);
+                    customSetupScriptProperties = SynapseIntegrationRuntimeCustomSetupScriptProperties.DeserializeSynapseIntegrationRuntimeCustomSetupScriptProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dataProxyProperties"u8))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     {
                         continue;
                     }
-                    dataProxyProperties = SynapseIntegrationRuntimeDataProxyProperties.DeserializeSynapseIntegrationRuntimeDataProxyProperties(property.Value);
+                    dataProxyProperties = SynapseIntegrationRuntimeDataProxyProperties.DeserializeSynapseIntegrationRuntimeDataProxyProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("edition"u8))
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseCustomSetupBase> array = new List<SynapseCustomSetupBase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseCustomSetupBase.DeserializeSynapseCustomSetupBase(item));
+                        array.Add(SynapseCustomSetupBase.DeserializeSynapseCustomSetupBase(item, options));
                     }
                     expressCustomSetupProperties = array;
                     continue;
@@ -168,7 +168,14 @@ namespace Azure.ResourceManager.Synapse.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SynapseIntegrationRuntimeSsisProperties(catalogInfo.Value, Optional.ToNullable(licenseType), customSetupScriptProperties.Value, dataProxyProperties.Value, Optional.ToNullable(edition), Optional.ToList(expressCustomSetupProperties), additionalProperties);
+            return new SynapseIntegrationRuntimeSsisProperties(
+                catalogInfo.Value,
+                Optional.ToNullable(licenseType),
+                customSetupScriptProperties.Value,
+                dataProxyProperties.Value,
+                Optional.ToNullable(edition),
+                expressCustomSetupProperties ?? new ChangeTrackingList<SynapseCustomSetupBase>(),
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<SynapseIntegrationRuntimeSsisProperties>.Write(ModelReaderWriterOptions options)

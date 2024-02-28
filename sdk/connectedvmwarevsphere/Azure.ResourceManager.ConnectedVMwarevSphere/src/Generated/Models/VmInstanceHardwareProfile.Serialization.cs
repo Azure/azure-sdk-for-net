@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MemorySizeMB))
+            if (MemorySizeMB.HasValue)
             {
                 writer.WritePropertyName("memorySizeMB"u8);
                 writer.WriteNumberValue(MemorySizeMB.Value);
             }
-            if (Optional.IsDefined(NumCpus))
+            if (NumCpus.HasValue)
             {
                 writer.WritePropertyName("numCPUs"u8);
                 writer.WriteNumberValue(NumCpus.Value);
             }
-            if (Optional.IsDefined(NumCoresPerSocket))
+            if (NumCoresPerSocket.HasValue)
             {
                 writer.WritePropertyName("numCoresPerSocket"u8);
                 writer.WriteNumberValue(NumCoresPerSocket.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CpuHotAddEnabled))
+            if (options.Format != "W" && CpuHotAddEnabled.HasValue)
             {
                 writer.WritePropertyName("cpuHotAddEnabled"u8);
                 writer.WriteBooleanValue(CpuHotAddEnabled.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CpuHotRemoveEnabled))
+            if (options.Format != "W" && CpuHotRemoveEnabled.HasValue)
             {
                 writer.WritePropertyName("cpuHotRemoveEnabled"u8);
                 writer.WriteBooleanValue(CpuHotRemoveEnabled.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MemoryHotAddEnabled))
+            if (options.Format != "W" && MemoryHotAddEnabled.HasValue)
             {
                 writer.WritePropertyName("memoryHotAddEnabled"u8);
                 writer.WriteBooleanValue(MemoryHotAddEnabled.Value);
@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VmInstanceHardwareProfile(Optional.ToNullable(memorySizeMB), Optional.ToNullable(numCpus), Optional.ToNullable(numCoresPerSocket), Optional.ToNullable(cpuHotAddEnabled), Optional.ToNullable(cpuHotRemoveEnabled), Optional.ToNullable(memoryHotAddEnabled), serializedAdditionalRawData);
+            return new VmInstanceHardwareProfile(
+                Optional.ToNullable(memorySizeMB),
+                Optional.ToNullable(numCpus),
+                Optional.ToNullable(numCoresPerSocket),
+                Optional.ToNullable(cpuHotAddEnabled),
+                Optional.ToNullable(cpuHotRemoveEnabled),
+                Optional.ToNullable(memoryHotAddEnabled),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VmInstanceHardwareProfile>.Write(ModelReaderWriterOptions options)

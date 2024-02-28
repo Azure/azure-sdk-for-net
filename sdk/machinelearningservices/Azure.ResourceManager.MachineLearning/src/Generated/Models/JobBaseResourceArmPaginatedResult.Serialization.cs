@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<MachineLearningJobData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<MachineLearningJobData>> value = default;
+            IReadOnlyList<MachineLearningJobData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningJobData> array = new List<MachineLearningJobData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningJobData.DeserializeMachineLearningJobData(item));
+                        array.Add(MachineLearningJobData.DeserializeMachineLearningJobData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JobBaseResourceArmPaginatedResult(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new JobBaseResourceArmPaginatedResult(nextLink.Value, value ?? new ChangeTrackingList<MachineLearningJobData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<JobBaseResourceArmPaginatedResult>.Write(ModelReaderWriterOptions options)

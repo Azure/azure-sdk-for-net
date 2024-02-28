@@ -34,37 +34,37 @@ namespace Azure.AI.AnomalyDetector
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(Granularity))
+            if (Granularity.HasValue)
             {
                 writer.WritePropertyName("granularity"u8);
                 writer.WriteStringValue(Granularity.Value.ToString());
             }
-            if (Optional.IsDefined(CustomInterval))
+            if (CustomInterval.HasValue)
             {
                 writer.WritePropertyName("customInterval"u8);
                 writer.WriteNumberValue(CustomInterval.Value);
             }
-            if (Optional.IsDefined(Period))
+            if (Period.HasValue)
             {
                 writer.WritePropertyName("period"u8);
                 writer.WriteNumberValue(Period.Value);
             }
-            if (Optional.IsDefined(MaxAnomalyRatio))
+            if (MaxAnomalyRatio.HasValue)
             {
                 writer.WritePropertyName("maxAnomalyRatio"u8);
                 writer.WriteNumberValue(MaxAnomalyRatio.Value);
             }
-            if (Optional.IsDefined(Sensitivity))
+            if (Sensitivity.HasValue)
             {
                 writer.WritePropertyName("sensitivity"u8);
                 writer.WriteNumberValue(Sensitivity.Value);
             }
-            if (Optional.IsDefined(ImputeMode))
+            if (ImputeMode.HasValue)
             {
                 writer.WritePropertyName("imputeMode"u8);
                 writer.WriteStringValue(ImputeMode.Value.ToString());
             }
-            if (Optional.IsDefined(ImputeFixedValue))
+            if (ImputeFixedValue.HasValue)
             {
                 writer.WritePropertyName("imputeFixedValue"u8);
                 writer.WriteNumberValue(ImputeFixedValue.Value);
@@ -124,7 +124,7 @@ namespace Azure.AI.AnomalyDetector
                     List<TimeSeriesPoint> array = new List<TimeSeriesPoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TimeSeriesPoint.DeserializeTimeSeriesPoint(item));
+                        array.Add(TimeSeriesPoint.DeserializeTimeSeriesPoint(item, options));
                     }
                     series = array;
                     continue;
@@ -198,7 +198,16 @@ namespace Azure.AI.AnomalyDetector
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnivariateDetectionOptions(series, Optional.ToNullable(granularity), Optional.ToNullable(customInterval), Optional.ToNullable(period), Optional.ToNullable(maxAnomalyRatio), Optional.ToNullable(sensitivity), Optional.ToNullable(imputeMode), Optional.ToNullable(imputeFixedValue), serializedAdditionalRawData);
+            return new UnivariateDetectionOptions(
+                series,
+                Optional.ToNullable(granularity),
+                Optional.ToNullable(customInterval),
+                Optional.ToNullable(period),
+                Optional.ToNullable(maxAnomalyRatio),
+                Optional.ToNullable(sensitivity),
+                Optional.ToNullable(imputeMode),
+                Optional.ToNullable(imputeFixedValue),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UnivariateDetectionOptions>.Write(ModelReaderWriterOptions options)

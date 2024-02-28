@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W" && State != null)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProgressPercentage))
+            if (options.Format != "W" && ProgressPercentage.HasValue)
             {
                 writer.WritePropertyName("progressPercentage"u8);
                 writer.WriteNumberValue(ProgressPercentage.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(TimeElapsed))
+            if (options.Format != "W" && TimeElapsed.HasValue)
             {
                 writer.WritePropertyName("timeElapsed"u8);
                 writer.WriteNumberValue(TimeElapsed.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(TimeRemaining))
+            if (options.Format != "W" && TimeRemaining.HasValue)
             {
                 writer.WritePropertyName("timeRemaining"u8);
                 writer.WriteNumberValue(TimeRemaining.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(UploadSpeed))
+            if (options.Format != "W" && UploadSpeed.HasValue)
             {
                 writer.WritePropertyName("uploadSpeed"u8);
                 writer.WriteNumberValue(UploadSpeed.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(HostName))
+            if (options.Format != "W" && HostName != null)
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DataStores))
+            if (options.Format != "W" && !(DataStores is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dataStores"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(VMwareReadThroughput))
+            if (options.Format != "W" && VMwareReadThroughput.HasValue)
             {
                 writer.WritePropertyName("vmwareReadThroughput"u8);
                 writer.WriteNumberValue(VMwareReadThroughput.Value);
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<long> timeRemaining = default;
             Optional<long> uploadSpeed = default;
             Optional<string> hostName = default;
-            Optional<IReadOnlyList<string>> dataStores = default;
+            IReadOnlyList<string> dataStores = default;
             Optional<long> vmwareReadThroughput = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -196,7 +196,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GatewayOperationDetails(state.Value, Optional.ToNullable(progressPercentage), Optional.ToNullable(timeElapsed), Optional.ToNullable(timeRemaining), Optional.ToNullable(uploadSpeed), hostName.Value, Optional.ToList(dataStores), Optional.ToNullable(vmwareReadThroughput), serializedAdditionalRawData);
+            return new GatewayOperationDetails(
+                state.Value,
+                Optional.ToNullable(progressPercentage),
+                Optional.ToNullable(timeElapsed),
+                Optional.ToNullable(timeRemaining),
+                Optional.ToNullable(uploadSpeed),
+                hostName.Value,
+                dataStores ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(vmwareReadThroughput),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GatewayOperationDetails>.Write(ModelReaderWriterOptions options)

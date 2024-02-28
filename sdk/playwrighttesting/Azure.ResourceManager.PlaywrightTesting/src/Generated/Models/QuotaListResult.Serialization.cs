@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink.AbsoluteUri);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
                     List<PlaywrightTestingQuotaData> array = new List<PlaywrightTestingQuotaData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PlaywrightTestingQuotaData.DeserializePlaywrightTestingQuotaData(item));
+                        array.Add(PlaywrightTestingQuotaData.DeserializePlaywrightTestingQuotaData(item, options));
                     }
                     value = array;
                     continue;

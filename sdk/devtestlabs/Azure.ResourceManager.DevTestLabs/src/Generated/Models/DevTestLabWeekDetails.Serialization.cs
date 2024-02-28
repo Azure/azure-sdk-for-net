@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Weekdays))
+            if (!(Weekdays is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("weekdays"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Time))
+            if (Time != null)
             {
                 writer.WritePropertyName("time"u8);
                 writer.WriteStringValue(Time);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<IList<string>> weekdays = default;
+            IList<string> weekdays = default;
             Optional<string> time = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabWeekDetails(Optional.ToList(weekdays), time.Value, serializedAdditionalRawData);
+            return new DevTestLabWeekDetails(weekdays ?? new ChangeTrackingList<string>(), time.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabWeekDetails>.Write(ModelReaderWriterOptions options)

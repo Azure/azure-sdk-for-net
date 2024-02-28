@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(IntervalStartTime))
+            if (options.Format != "W" && IntervalStartTime != null)
             {
                 writer.WritePropertyName("intervalStartTime"u8);
                 writer.WriteStringValue(IntervalStartTime);
             }
-            if (options.Format != "W" && Optional.IsDefined(IntervalType))
+            if (options.Format != "W" && IntervalType.HasValue)
             {
                 writer.WritePropertyName("intervalType"u8);
                 writer.WriteStringValue(IntervalType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ExecutionCount))
+            if (options.Format != "W" && ExecutionCount.HasValue)
             {
                 writer.WritePropertyName("executionCount"u8);
                 writer.WriteNumberValue(ExecutionCount.Value);
             }
-            if (Optional.IsCollectionDefined(Metrics))
+            if (!(Metrics is ChangeTrackingList<QueryMetricProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("metrics"u8);
                 writer.WriteStartArray();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<string> intervalStartTime = default;
             Optional<QueryTimeGrainType> intervalType = default;
             Optional<long> executionCount = default;
-            Optional<IList<QueryMetricProperties>> metrics = default;
+            IList<QueryMetricProperties> metrics = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<QueryMetricProperties> array = new List<QueryMetricProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QueryMetricProperties.DeserializeQueryMetricProperties(item));
+                        array.Add(QueryMetricProperties.DeserializeQueryMetricProperties(item, options));
                     }
                     metrics = array;
                     continue;
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QueryMetricInterval(intervalStartTime.Value, Optional.ToNullable(intervalType), Optional.ToNullable(executionCount), Optional.ToList(metrics), serializedAdditionalRawData);
+            return new QueryMetricInterval(intervalStartTime.Value, Optional.ToNullable(intervalType), Optional.ToNullable(executionCount), metrics ?? new ChangeTrackingList<QueryMetricProperties>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QueryMetricInterval>.Write(ModelReaderWriterOptions options)

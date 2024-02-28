@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteStringValue(Source);
             writer.WritePropertyName("relativeMountPath"u8);
             writer.WriteStringValue(RelativeMountPath);
-            if (Optional.IsDefined(MountOptions))
+            if (MountOptions != null)
             {
                 writer.WritePropertyName("mountOptions"u8);
                 writer.WriteStringValue(MountOptions);
@@ -117,7 +117,13 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchCifsMountConfiguration(userName, source, relativeMountPath, mountOptions.Value, password, serializedAdditionalRawData);
+            return new BatchCifsMountConfiguration(
+                userName,
+                source,
+                relativeMountPath,
+                mountOptions.Value,
+                password,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchCifsMountConfiguration>.Write(ModelReaderWriterOptions options)

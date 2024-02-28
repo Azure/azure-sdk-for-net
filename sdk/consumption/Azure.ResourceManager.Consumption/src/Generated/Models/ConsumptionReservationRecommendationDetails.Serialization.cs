@@ -28,22 +28,22 @@ namespace Azure.ResourceManager.Consumption.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteStringValue(Sku);
             }
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Tags))
+            if (options.Format != "W" && !(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -69,39 +69,39 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Currency))
+            if (options.Format != "W" && Currency != null)
             {
                 writer.WritePropertyName("currency"u8);
                 writer.WriteStringValue(Currency);
             }
-            if (options.Format != "W" && Optional.IsDefined(Properties))
+            if (options.Format != "W" && Properties != null)
             {
                 writer.WritePropertyName("resource"u8);
                 writer.WriteObjectValue(Properties);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceGroup))
+            if (options.Format != "W" && ResourceGroup != null)
             {
                 writer.WritePropertyName("resourceGroup"u8);
                 writer.WriteStringValue(ResourceGroup);
             }
-            if (options.Format != "W" && Optional.IsDefined(Savings))
+            if (options.Format != "W" && Savings != null)
             {
                 writer.WritePropertyName("savings"u8);
                 writer.WriteObjectValue(Savings);
             }
-            if (options.Format != "W" && Optional.IsDefined(Scope))
+            if (options.Format != "W" && Scope != null)
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
-            if (options.Format != "W" && Optional.IsDefined(Usage))
+            if (options.Format != "W" && Usage != null)
             {
                 writer.WritePropertyName("usage"u8);
                 writer.WriteObjectValue(Usage);
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Consumption.Models
             Optional<AzureLocation> location = default;
             Optional<string> sku = default;
             Optional<ETag> etag = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            IReadOnlyDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            resource = ConsumptionResourceProperties.DeserializeConsumptionResourceProperties(property0.Value);
+                            resource = ConsumptionResourceProperties.DeserializeConsumptionResourceProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("resourceGroup"u8))
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            savings = ConsumptionSavingsProperties.DeserializeConsumptionSavingsProperties(property0.Value);
+                            savings = ConsumptionSavingsProperties.DeserializeConsumptionSavingsProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("scope"u8))
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            usage = ConsumptionUsageProperties.DeserializeConsumptionUsageProperties(property0.Value);
+                            usage = ConsumptionUsageProperties.DeserializeConsumptionUsageProperties(property0.Value, options);
                             continue;
                         }
                     }
@@ -284,7 +284,22 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionReservationRecommendationDetails(id, name, type, systemData.Value, Optional.ToNullable(location), sku.Value, currency.Value, resource.Value, resourceGroup.Value, savings.Value, scope.Value, usage.Value, Optional.ToNullable(etag), Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new ConsumptionReservationRecommendationDetails(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(location),
+                sku.Value,
+                currency.Value,
+                resource.Value,
+                resourceGroup.Value,
+                savings.Value,
+                scope.Value,
+                usage.Value,
+                Optional.ToNullable(etag),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumptionReservationRecommendationDetails>.Write(ModelReaderWriterOptions options)

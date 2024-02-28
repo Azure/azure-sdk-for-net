@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(ExtendedLocation))
+            if (ExtendedLocation != null)
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 writer.WriteObjectValue(ExtendedLocation);
             }
-            if (Optional.IsDefined(ExtendedLocationReplicaCount))
+            if (ExtendedLocationReplicaCount.HasValue)
             {
                 writer.WritePropertyName("extendedLocationReplicaCount"u8);
                 writer.WriteNumberValue(ExtendedLocationReplicaCount.Value);
             }
-            if (Optional.IsDefined(GalleryStorageAccountType))
+            if (GalleryStorageAccountType.HasValue)
             {
                 writer.WritePropertyName("storageAccountType"u8);
                 writer.WriteStringValue(GalleryStorageAccountType.Value.ToString());
             }
-            if (Optional.IsDefined(Encryption))
+            if (Encryption != null)
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    extendedLocation = GalleryExtendedLocation.DeserializeGalleryExtendedLocation(property.Value);
+                    extendedLocation = GalleryExtendedLocation.DeserializeGalleryExtendedLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("extendedLocationReplicaCount"u8))
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    encryption = EncryptionImages.DeserializeEncryptionImages(property.Value);
+                    encryption = EncryptionImages.DeserializeEncryptionImages(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -145,7 +145,13 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GalleryTargetExtendedLocation(name.Value, extendedLocation.Value, Optional.ToNullable(extendedLocationReplicaCount), Optional.ToNullable(storageAccountType), encryption.Value, serializedAdditionalRawData);
+            return new GalleryTargetExtendedLocation(
+                name.Value,
+                extendedLocation.Value,
+                Optional.ToNullable(extendedLocationReplicaCount),
+                Optional.ToNullable(storageAccountType),
+                encryption.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GalleryTargetExtendedLocation>.Write(ModelReaderWriterOptions options)

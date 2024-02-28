@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<RecoveryServicesVaultData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<RecoveryServicesVaultData>> value = default;
+            IReadOnlyList<RecoveryServicesVaultData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     List<RecoveryServicesVaultData> array = new List<RecoveryServicesVaultData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RecoveryServicesVaultData.DeserializeRecoveryServicesVaultData(item));
+                        array.Add(RecoveryServicesVaultData.DeserializeRecoveryServicesVaultData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecoveryServicesVaultListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new RecoveryServicesVaultListResult(value ?? new ChangeTrackingList<RecoveryServicesVaultData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecoveryServicesVaultListResult>.Write(ModelReaderWriterOptions options)

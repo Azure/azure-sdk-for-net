@@ -28,42 +28,42 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             writer.WritePropertyName("bitrate"u8);
             writer.WriteNumberValue(Bitrate);
-            if (Optional.IsDefined(MaxBitrate))
+            if (MaxBitrate.HasValue)
             {
                 writer.WritePropertyName("maxBitrate"u8);
                 writer.WriteNumberValue(MaxBitrate.Value);
             }
-            if (Optional.IsDefined(BFrames))
+            if (BFrames.HasValue)
             {
                 writer.WritePropertyName("bFrames"u8);
                 writer.WriteNumberValue(BFrames.Value);
             }
-            if (Optional.IsDefined(FrameRate))
+            if (FrameRate != null)
             {
                 writer.WritePropertyName("frameRate"u8);
                 writer.WriteStringValue(FrameRate);
             }
-            if (Optional.IsDefined(Slices))
+            if (Slices.HasValue)
             {
                 writer.WritePropertyName("slices"u8);
                 writer.WriteNumberValue(Slices.Value);
             }
-            if (Optional.IsDefined(UseAdaptiveBFrame))
+            if (UseAdaptiveBFrame.HasValue)
             {
                 writer.WritePropertyName("adaptiveBFrame"u8);
                 writer.WriteBooleanValue(UseAdaptiveBFrame.Value);
             }
-            if (Optional.IsDefined(Width))
+            if (Width != null)
             {
                 writer.WritePropertyName("width"u8);
                 writer.WriteStringValue(Width);
             }
-            if (Optional.IsDefined(Height))
+            if (Height != null)
             {
                 writer.WritePropertyName("height"u8);
                 writer.WriteStringValue(Height);
             }
-            if (Optional.IsDefined(Label))
+            if (Label != null)
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
@@ -186,7 +186,17 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new H265VideoLayer(width.Value, height.Value, label.Value, serializedAdditionalRawData, bitrate, Optional.ToNullable(maxBitrate), Optional.ToNullable(bFrames), frameRate.Value, Optional.ToNullable(slices), Optional.ToNullable(adaptiveBFrame));
+            return new H265VideoLayer(
+                width.Value,
+                height.Value,
+                label.Value,
+                serializedAdditionalRawData,
+                bitrate,
+                Optional.ToNullable(maxBitrate),
+                Optional.ToNullable(bFrames),
+                frameRate.Value,
+                Optional.ToNullable(slices),
+                Optional.ToNullable(adaptiveBFrame));
         }
 
         BinaryData IPersistableModel<H265VideoLayer>.Write(ModelReaderWriterOptions options)

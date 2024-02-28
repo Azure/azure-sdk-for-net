@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteBooleanValue(NeedLoopForValidMessages);
             writer.WritePropertyName("sendSynchronousAcknowledgement"u8);
             writer.WriteBooleanValue(SendSynchronousAcknowledgement);
-            if (Optional.IsDefined(AcknowledgementControlNumberPrefix))
+            if (AcknowledgementControlNumberPrefix != null)
             {
                 writer.WritePropertyName("acknowledgementControlNumberPrefix"u8);
                 writer.WriteStringValue(AcknowledgementControlNumberPrefix);
             }
-            if (Optional.IsDefined(AcknowledgementControlNumberSuffix))
+            if (AcknowledgementControlNumberSuffix != null)
             {
                 writer.WritePropertyName("acknowledgementControlNumberSuffix"u8);
                 writer.WriteStringValue(AcknowledgementControlNumberSuffix);
@@ -168,7 +168,19 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdifactAcknowledgementSettings(needTechnicalAcknowledgement, batchTechnicalAcknowledgements, needFunctionalAcknowledgement, batchFunctionalAcknowledgements, needLoopForValidMessages, sendSynchronousAcknowledgement, acknowledgementControlNumberPrefix.Value, acknowledgementControlNumberSuffix.Value, acknowledgementControlNumberLowerBound, acknowledgementControlNumberUpperBound, rolloverAcknowledgementControlNumber, serializedAdditionalRawData);
+            return new EdifactAcknowledgementSettings(
+                needTechnicalAcknowledgement,
+                batchTechnicalAcknowledgements,
+                needFunctionalAcknowledgement,
+                batchFunctionalAcknowledgements,
+                needLoopForValidMessages,
+                sendSynchronousAcknowledgement,
+                acknowledgementControlNumberPrefix.Value,
+                acknowledgementControlNumberSuffix.Value,
+                acknowledgementControlNumberLowerBound,
+                acknowledgementControlNumberUpperBound,
+                rolloverAcknowledgementControlNumber,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdifactAcknowledgementSettings>.Write(ModelReaderWriterOptions options)

@@ -26,24 +26,24 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RuntimeVersion))
+            if (RuntimeVersion != null)
             {
                 writer.WritePropertyName("runtimeVersion"u8);
                 writer.WriteStringValue(RuntimeVersion);
             }
-            if (Optional.IsDefined(JvmOptions))
+            if (JvmOptions != null)
             {
                 writer.WritePropertyName("jvmOptions"u8);
                 writer.WriteStringValue(JvmOptions);
             }
-            if (Optional.IsDefined(RelativePath))
+            if (RelativePath != null)
             {
                 writer.WritePropertyName("relativePath"u8);
                 writer.WriteStringValue(RelativePath);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(UserSourceInfoType);
-            if (Optional.IsDefined(Version))
+            if (Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
@@ -126,7 +126,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JarUploadedUserSourceInfo(type, version.Value, serializedAdditionalRawData, relativePath.Value, runtimeVersion.Value, jvmOptions.Value);
+            return new JarUploadedUserSourceInfo(
+                type,
+                version.Value,
+                serializedAdditionalRawData,
+                relativePath.Value,
+                runtimeVersion.Value,
+                jvmOptions.Value);
         }
 
         BinaryData IPersistableModel<JarUploadedUserSourceInfo>.Write(ModelReaderWriterOptions options)

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ComplianceStatus))
+            if (options.Format != "W" && ComplianceStatus.HasValue)
             {
                 writer.WritePropertyName("complianceStatus"u8);
                 writer.WriteStringValue(ComplianceStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(AssignmentResourceSettingName))
+            if (options.Format != "W" && AssignmentResourceSettingName != null)
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(AssignmentResourceSettingName);
             }
-            if (Optional.IsCollectionDefined(Reasons))
+            if (!(Reasons is ChangeTrackingList<AssignmentReportResourceComplianceReason> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("reasons"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(Properties))
+            if (options.Format != "W" && Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
 #if NET6_0_OR_GREATER
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             }
             Optional<AssignedGuestConfigurationMachineComplianceStatus> complianceStatus = default;
             Optional<string> resourceId = default;
-            Optional<IList<AssignmentReportResourceComplianceReason>> reasons = default;
+            IList<AssignmentReportResourceComplianceReason> reasons = default;
             Optional<BinaryData> properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     List<AssignmentReportResourceComplianceReason> array = new List<AssignmentReportResourceComplianceReason>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AssignmentReportResourceComplianceReason.DeserializeAssignmentReportResourceComplianceReason(item));
+                        array.Add(AssignmentReportResourceComplianceReason.DeserializeAssignmentReportResourceComplianceReason(item, options));
                     }
                     reasons = array;
                     continue;
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AssignmentReportResourceInfo(Optional.ToNullable(complianceStatus), resourceId.Value, Optional.ToList(reasons), properties.Value, serializedAdditionalRawData);
+            return new AssignmentReportResourceInfo(Optional.ToNullable(complianceStatus), resourceId.Value, reasons ?? new ChangeTrackingList<AssignmentReportResourceComplianceReason>(), properties.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AssignmentReportResourceInfo>.Write(ModelReaderWriterOptions options)

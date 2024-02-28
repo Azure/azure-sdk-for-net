@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<ManagedCcfData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ManagedCcfData>> value = default;
+            IReadOnlyList<ManagedCcfData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                     List<ManagedCcfData> array = new List<ManagedCcfData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedCcfData.DeserializeManagedCcfData(item));
+                        array.Add(ManagedCcfData.DeserializeManagedCcfData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedCcfList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ManagedCcfList(value ?? new ChangeTrackingList<ManagedCcfData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedCcfList>.Write(ModelReaderWriterOptions options)

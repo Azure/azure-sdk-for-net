@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Consumption.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Tags))
+            if (options.Format != "W" && !(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -59,64 +59,64 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ReservationOrderId))
+            if (options.Format != "W" && ReservationOrderId != null)
             {
                 writer.WritePropertyName("reservationOrderId"u8);
                 writer.WriteStringValue(ReservationOrderId);
             }
-            if (options.Format != "W" && Optional.IsDefined(InstanceFlexibilityRatio))
+            if (options.Format != "W" && InstanceFlexibilityRatio != null)
             {
                 writer.WritePropertyName("instanceFlexibilityRatio"u8);
                 writer.WriteStringValue(InstanceFlexibilityRatio);
             }
-            if (options.Format != "W" && Optional.IsDefined(InstanceFlexibilityGroup))
+            if (options.Format != "W" && InstanceFlexibilityGroup != null)
             {
                 writer.WritePropertyName("instanceFlexibilityGroup"u8);
                 writer.WriteStringValue(InstanceFlexibilityGroup);
             }
-            if (options.Format != "W" && Optional.IsDefined(ReservationId))
+            if (options.Format != "W" && ReservationId != null)
             {
                 writer.WritePropertyName("reservationId"u8);
                 writer.WriteStringValue(ReservationId);
             }
-            if (options.Format != "W" && Optional.IsDefined(SkuName))
+            if (options.Format != "W" && SkuName != null)
             {
                 writer.WritePropertyName("skuName"u8);
                 writer.WriteStringValue(SkuName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ReservedHours))
+            if (options.Format != "W" && ReservedHours.HasValue)
             {
                 writer.WritePropertyName("reservedHours"u8);
                 writer.WriteNumberValue(ReservedHours.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ConsumptionOccurredOn))
+            if (options.Format != "W" && ConsumptionOccurredOn.HasValue)
             {
                 writer.WritePropertyName("usageDate"u8);
                 writer.WriteStringValue(ConsumptionOccurredOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(UsedHours))
+            if (options.Format != "W" && UsedHours.HasValue)
             {
                 writer.WritePropertyName("usedHours"u8);
                 writer.WriteNumberValue(UsedHours.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(InstanceId))
+            if (options.Format != "W" && InstanceId != null)
             {
                 writer.WritePropertyName("instanceId"u8);
                 writer.WriteStringValue(InstanceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(TotalReservedQuantity))
+            if (options.Format != "W" && TotalReservedQuantity.HasValue)
             {
                 writer.WritePropertyName("totalReservedQuantity"u8);
                 writer.WriteNumberValue(TotalReservedQuantity.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Kind))
+            if (options.Format != "W" && Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 return null;
             }
             Optional<ETag> etag = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            IReadOnlyDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -321,7 +321,25 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionReservationDetail(id, name, type, systemData.Value, reservationOrderId.Value, instanceFlexibilityRatio.Value, instanceFlexibilityGroup.Value, reservationId.Value, skuName.Value, Optional.ToNullable(reservedHours), Optional.ToNullable(usageDate), Optional.ToNullable(usedHours), instanceId.Value, Optional.ToNullable(totalReservedQuantity), kind.Value, Optional.ToNullable(etag), Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new ConsumptionReservationDetail(
+                id,
+                name,
+                type,
+                systemData.Value,
+                reservationOrderId.Value,
+                instanceFlexibilityRatio.Value,
+                instanceFlexibilityGroup.Value,
+                reservationId.Value,
+                skuName.Value,
+                Optional.ToNullable(reservedHours),
+                Optional.ToNullable(usageDate),
+                Optional.ToNullable(usedHours),
+                instanceId.Value,
+                Optional.ToNullable(totalReservedQuantity),
+                kind.Value,
+                Optional.ToNullable(etag),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumptionReservationDetail>.Write(ModelReaderWriterOptions options)

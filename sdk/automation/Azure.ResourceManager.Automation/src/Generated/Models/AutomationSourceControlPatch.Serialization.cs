@@ -28,32 +28,32 @@ namespace Azure.ResourceManager.Automation.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Branch))
+            if (Branch != null)
             {
                 writer.WritePropertyName("branch"u8);
                 writer.WriteStringValue(Branch);
             }
-            if (Optional.IsDefined(FolderPath))
+            if (FolderPath != null)
             {
                 writer.WritePropertyName("folderPath"u8);
                 writer.WriteStringValue(FolderPath);
             }
-            if (Optional.IsDefined(IsAutoSyncEnabled))
+            if (IsAutoSyncEnabled.HasValue)
             {
                 writer.WritePropertyName("autoSync"u8);
                 writer.WriteBooleanValue(IsAutoSyncEnabled.Value);
             }
-            if (Optional.IsDefined(IsAutoPublishRunbookEnabled))
+            if (IsAutoPublishRunbookEnabled.HasValue)
             {
                 writer.WritePropertyName("publishRunbook"u8);
                 writer.WriteBooleanValue(IsAutoPublishRunbookEnabled.Value);
             }
-            if (Optional.IsDefined(SecurityToken))
+            if (SecurityToken != null)
             {
                 writer.WritePropertyName("securityToken"u8);
                 writer.WriteObjectValue(SecurityToken);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Automation.Models
                             {
                                 continue;
                             }
-                            securityToken = SourceControlSecurityTokenProperties.DeserializeSourceControlSecurityTokenProperties(property0.Value);
+                            securityToken = SourceControlSecurityTokenProperties.DeserializeSourceControlSecurityTokenProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("description"u8))
@@ -167,7 +167,14 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationSourceControlPatch(branch.Value, folderPath.Value, Optional.ToNullable(autoSync), Optional.ToNullable(publishRunbook), securityToken.Value, description.Value, serializedAdditionalRawData);
+            return new AutomationSourceControlPatch(
+                branch.Value,
+                folderPath.Value,
+                Optional.ToNullable(autoSync),
+                Optional.ToNullable(publishRunbook),
+                securityToken.Value,
+                description.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationSourceControlPatch>.Write(ModelReaderWriterOptions options)

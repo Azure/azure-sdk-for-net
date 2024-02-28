@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<NetworkFabricIPPrefixData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<NetworkFabricIPPrefixData>> value = default;
+            IReadOnlyList<NetworkFabricIPPrefixData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<NetworkFabricIPPrefixData> array = new List<NetworkFabricIPPrefixData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkFabricIPPrefixData.DeserializeNetworkFabricIPPrefixData(item));
+                        array.Add(NetworkFabricIPPrefixData.DeserializeNetworkFabricIPPrefixData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IPPrefixesListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new IPPrefixesListResult(value ?? new ChangeTrackingList<NetworkFabricIPPrefixData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IPPrefixesListResult>.Write(ModelReaderWriterOptions options)

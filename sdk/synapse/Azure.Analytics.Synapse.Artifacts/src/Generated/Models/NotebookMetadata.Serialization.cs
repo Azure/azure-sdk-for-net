@@ -19,12 +19,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kernelspec))
+            if (Kernelspec != null)
             {
                 writer.WritePropertyName("kernelspec"u8);
                 writer.WriteObjectValue(Kernelspec);
             }
-            if (Optional.IsDefined(LanguageInfo))
+            if (LanguageInfo != null)
             {
                 if (LanguageInfo != null)
                 {

@@ -30,17 +30,17 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStringValue(BatchGroupName);
             writer.WritePropertyName("releaseCriteria"u8);
             writer.WriteObjectValue(ReleaseCriteria);
-            if (Optional.IsDefined(CreatedOn))
+            if (CreatedOn.HasValue)
             {
                 writer.WritePropertyName("createdTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(ChangedOn))
+            if (ChangedOn.HasValue)
             {
                 writer.WritePropertyName("changedTime"u8);
                 writer.WriteStringValue(ChangedOn.Value, "O");
             }
-            if (Optional.IsDefined(Metadata))
+            if (Metadata != null)
             {
                 writer.WritePropertyName("metadata"u8);
 #if NET6_0_OR_GREATER
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 if (property.NameEquals("releaseCriteria"u8))
                 {
-                    releaseCriteria = IntegrationAccountBatchReleaseCriteria.DeserializeIntegrationAccountBatchReleaseCriteria(property.Value);
+                    releaseCriteria = IntegrationAccountBatchReleaseCriteria.DeserializeIntegrationAccountBatchReleaseCriteria(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("createdTime"u8))
@@ -142,7 +142,13 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationAccountBatchConfigurationProperties(Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), metadata.Value, serializedAdditionalRawData, batchGroupName, releaseCriteria);
+            return new IntegrationAccountBatchConfigurationProperties(
+                Optional.ToNullable(createdTime),
+                Optional.ToNullable(changedTime),
+                metadata.Value,
+                serializedAdditionalRawData,
+                batchGroupName,
+                releaseCriteria);
         }
 
         BinaryData IPersistableModel<IntegrationAccountBatchConfigurationProperties>.Write(ModelReaderWriterOptions options)

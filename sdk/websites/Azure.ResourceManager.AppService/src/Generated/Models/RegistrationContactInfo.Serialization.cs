@@ -26,19 +26,19 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AddressMailing))
+            if (AddressMailing != null)
             {
                 writer.WritePropertyName("addressMailing"u8);
                 writer.WriteObjectValue(AddressMailing);
             }
             writer.WritePropertyName("email"u8);
             writer.WriteStringValue(Email);
-            if (Optional.IsDefined(Fax))
+            if (Fax != null)
             {
                 writer.WritePropertyName("fax"u8);
                 writer.WriteStringValue(Fax);
             }
-            if (Optional.IsDefined(JobTitle))
+            if (JobTitle != null)
             {
                 writer.WritePropertyName("jobTitle"u8);
                 writer.WriteStringValue(JobTitle);
@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStringValue(NameFirst);
             writer.WritePropertyName("nameLast"u8);
             writer.WriteStringValue(NameLast);
-            if (Optional.IsDefined(NameMiddle))
+            if (NameMiddle != null)
             {
                 writer.WritePropertyName("nameMiddle"u8);
                 writer.WriteStringValue(NameMiddle);
             }
-            if (Optional.IsDefined(Organization))
+            if (Organization != null)
             {
                 writer.WritePropertyName("organization"u8);
                 writer.WriteStringValue(Organization);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    addressMailing = RegistrationAddressInfo.DeserializeRegistrationAddressInfo(property.Value);
+                    addressMailing = RegistrationAddressInfo.DeserializeRegistrationAddressInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("email"u8))
@@ -165,7 +165,17 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RegistrationContactInfo(addressMailing.Value, email, fax.Value, jobTitle.Value, nameFirst, nameLast, nameMiddle.Value, organization.Value, phone, serializedAdditionalRawData);
+            return new RegistrationContactInfo(
+                addressMailing.Value,
+                email,
+                fax.Value,
+                jobTitle.Value,
+                nameFirst,
+                nameLast,
+                nameMiddle.Value,
+                organization.Value,
+                phone,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RegistrationContactInfo>.Write(ModelReaderWriterOptions options)

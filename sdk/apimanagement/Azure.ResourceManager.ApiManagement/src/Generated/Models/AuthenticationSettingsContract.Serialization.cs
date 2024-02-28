@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(OAuth2))
+            if (OAuth2 != null)
             {
                 writer.WritePropertyName("oAuth2"u8);
                 writer.WriteObjectValue(OAuth2);
             }
-            if (Optional.IsDefined(OpenId))
+            if (OpenId != null)
             {
                 writer.WritePropertyName("openid"u8);
                 writer.WriteObjectValue(OpenId);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    oAuth2 = OAuth2AuthenticationSettingsContract.DeserializeOAuth2AuthenticationSettingsContract(property.Value);
+                    oAuth2 = OAuth2AuthenticationSettingsContract.DeserializeOAuth2AuthenticationSettingsContract(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("openid"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    openid = OpenIdAuthenticationSettingsContract.DeserializeOpenIdAuthenticationSettingsContract(property.Value);
+                    openid = OpenIdAuthenticationSettingsContract.DeserializeOpenIdAuthenticationSettingsContract(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

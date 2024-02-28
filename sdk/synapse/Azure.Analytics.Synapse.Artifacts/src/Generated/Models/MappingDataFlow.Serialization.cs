@@ -21,12 +21,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(Annotations))
+            if (!(Annotations is ChangeTrackingList<object> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -41,14 +41,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Folder))
+            if (Folder != null)
             {
                 writer.WritePropertyName("folder"u8);
                 writer.WriteObjectValue(Folder);
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Sources))
+            if (!(Sources is ChangeTrackingList<DataFlowSource> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("sources"u8);
                 writer.WriteStartArray();
@@ -58,7 +58,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Sinks))
+            if (!(Sinks is ChangeTrackingList<DataFlowSink> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("sinks"u8);
                 writer.WriteStartArray();
@@ -68,7 +68,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Transformations))
+            if (!(Transformations is ChangeTrackingList<Transformation> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("transformations"u8);
                 writer.WriteStartArray();
@@ -78,12 +78,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Script))
+            if (Script != null)
             {
                 writer.WritePropertyName("script"u8);
                 writer.WriteStringValue(Script);
             }
-            if (Optional.IsCollectionDefined(ScriptLines))
+            if (!(ScriptLines is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("scriptLines"u8);
                 writer.WriteStartArray();
@@ -105,13 +105,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             string type = default;
             Optional<string> description = default;
-            Optional<IList<object>> annotations = default;
+            IList<object> annotations = default;
             Optional<DataFlowFolder> folder = default;
-            Optional<IList<DataFlowSource>> sources = default;
-            Optional<IList<DataFlowSink>> sinks = default;
-            Optional<IList<Transformation>> transformations = default;
+            IList<DataFlowSource> sources = default;
+            IList<DataFlowSink> sinks = default;
+            IList<Transformation> transformations = default;
             Optional<string> script = default;
-            Optional<IList<string>> scriptLines = default;
+            IList<string> scriptLines = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -228,7 +228,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new MappingDataFlow(type, description.Value, Optional.ToList(annotations), folder.Value, Optional.ToList(sources), Optional.ToList(sinks), Optional.ToList(transformations), script.Value, Optional.ToList(scriptLines));
+            return new MappingDataFlow(
+                type,
+                description.Value,
+                annotations ?? new ChangeTrackingList<object>(),
+                folder.Value,
+                sources ?? new ChangeTrackingList<DataFlowSource>(),
+                sinks ?? new ChangeTrackingList<DataFlowSink>(),
+                transformations ?? new ChangeTrackingList<Transformation>(),
+                script.Value,
+                scriptLines ?? new ChangeTrackingList<string>());
         }
 
         internal partial class MappingDataFlowConverter : JsonConverter<MappingDataFlow>

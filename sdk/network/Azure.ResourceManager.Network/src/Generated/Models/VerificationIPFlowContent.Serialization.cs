@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStringValue(LocalIPAddress);
             writer.WritePropertyName("remoteIPAddress"u8);
             writer.WriteStringValue(RemoteIPAddress);
-            if (Optional.IsDefined(TargetNicResourceId))
+            if (TargetNicResourceId != null)
             {
                 writer.WritePropertyName("targetNicResourceId"u8);
                 writer.WriteStringValue(TargetNicResourceId);
@@ -145,7 +145,16 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VerificationIPFlowContent(targetResourceId, direction, protocol, localPort, remotePort, localIPAddress, remoteIPAddress, targetNicResourceId.Value, serializedAdditionalRawData);
+            return new VerificationIPFlowContent(
+                targetResourceId,
+                direction,
+                protocol,
+                localPort,
+                remotePort,
+                localIPAddress,
+                remoteIPAddress,
+                targetNicResourceId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VerificationIPFlowContent>.Write(ModelReaderWriterOptions options)

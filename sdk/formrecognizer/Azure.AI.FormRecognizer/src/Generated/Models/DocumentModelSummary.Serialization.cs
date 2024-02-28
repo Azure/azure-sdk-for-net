@@ -25,7 +25,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             DateTimeOffset createdDateTime = default;
             Optional<DateTimeOffset> expirationDateTime = default;
             Optional<string> apiVersion = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            IReadOnlyDictionary<string, string> tags = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("modelId"u8))
@@ -72,7 +72,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new DocumentModelSummary(modelId, description.Value, createdDateTime, Optional.ToNullable(expirationDateTime), apiVersion.Value, Optional.ToDictionary(tags));
+            return new DocumentModelSummary(
+                modelId,
+                description.Value,
+                createdDateTime,
+                Optional.ToNullable(expirationDateTime),
+                apiVersion.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>());
         }
     }
 }

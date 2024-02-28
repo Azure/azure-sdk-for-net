@@ -30,32 +30,32 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStringValue(OutputDataSourceType);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ServiceBusNamespace))
+            if (ServiceBusNamespace != null)
             {
                 writer.WritePropertyName("serviceBusNamespace"u8);
                 writer.WriteStringValue(ServiceBusNamespace);
             }
-            if (Optional.IsDefined(SharedAccessPolicyName))
+            if (SharedAccessPolicyName != null)
             {
                 writer.WritePropertyName("sharedAccessPolicyName"u8);
                 writer.WriteStringValue(SharedAccessPolicyName);
             }
-            if (Optional.IsDefined(SharedAccessPolicyKey))
+            if (SharedAccessPolicyKey != null)
             {
                 writer.WritePropertyName("sharedAccessPolicyKey"u8);
                 writer.WriteStringValue(SharedAccessPolicyKey);
             }
-            if (Optional.IsDefined(AuthenticationMode))
+            if (AuthenticationMode.HasValue)
             {
                 writer.WritePropertyName("authenticationMode"u8);
                 writer.WriteStringValue(AuthenticationMode.Value.ToString());
             }
-            if (Optional.IsDefined(QueueName))
+            if (QueueName != null)
             {
                 writer.WritePropertyName("queueName"u8);
                 writer.WriteStringValue(QueueName);
             }
-            if (Optional.IsCollectionDefined(PropertyColumns))
+            if (!(PropertyColumns is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("propertyColumns"u8);
                 writer.WriteStartArray();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SystemPropertyColumns))
+            if (!(SystemPropertyColumns is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("systemPropertyColumns"u8);
                 writer.WriteStartObject();
@@ -121,8 +121,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Optional<string> sharedAccessPolicyKey = default;
             Optional<StreamAnalyticsAuthenticationMode> authenticationMode = default;
             Optional<string> queueName = default;
-            Optional<IList<string>> propertyColumns = default;
-            Optional<IDictionary<string, string>> systemPropertyColumns = default;
+            IList<string> propertyColumns = default;
+            IDictionary<string, string> systemPropertyColumns = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -207,7 +207,16 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceBusQueueOutputDataSource(type, serializedAdditionalRawData, serviceBusNamespace.Value, sharedAccessPolicyName.Value, sharedAccessPolicyKey.Value, Optional.ToNullable(authenticationMode), queueName.Value, Optional.ToList(propertyColumns), Optional.ToDictionary(systemPropertyColumns));
+            return new ServiceBusQueueOutputDataSource(
+                type,
+                serializedAdditionalRawData,
+                serviceBusNamespace.Value,
+                sharedAccessPolicyName.Value,
+                sharedAccessPolicyKey.Value,
+                Optional.ToNullable(authenticationMode),
+                queueName.Value,
+                propertyColumns ?? new ChangeTrackingList<string>(),
+                systemPropertyColumns ?? new ChangeTrackingDictionary<string, string>());
         }
 
         BinaryData IPersistableModel<ServiceBusQueueOutputDataSource>.Write(ModelReaderWriterOptions options)

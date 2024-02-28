@@ -56,7 +56,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <exception cref="ArgumentNullException"> <paramref name="matchConditions"/> is null. </exception>
         public WebApplicationFirewallCustomRule(int priority, WebApplicationFirewallRuleType ruleType, IEnumerable<MatchCondition> matchConditions, WebApplicationFirewallAction action)
         {
-            Argument.AssertNotNull(matchConditions, nameof(matchConditions));
+            if (matchConditions == null)
+            {
+                throw new ArgumentNullException(nameof(matchConditions));
+            }
 
             Priority = priority;
             RuleType = ruleType;

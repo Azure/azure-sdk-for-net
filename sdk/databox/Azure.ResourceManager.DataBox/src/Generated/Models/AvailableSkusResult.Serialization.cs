@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<DataBoxSkuInformation> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DataBoxSkuInformation>> value = default;
+            IReadOnlyList<DataBoxSkuInformation> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     List<DataBoxSkuInformation> array = new List<DataBoxSkuInformation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataBoxSkuInformation.DeserializeDataBoxSkuInformation(item));
+                        array.Add(DataBoxSkuInformation.DeserializeDataBoxSkuInformation(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailableSkusResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new AvailableSkusResult(value ?? new ChangeTrackingList<DataBoxSkuInformation>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailableSkusResult>.Write(ModelReaderWriterOptions options)

@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W" && State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(LastCompletionOn))
+            if (options.Format != "W" && LastCompletionOn.HasValue)
             {
                 writer.WritePropertyName("lastCompletionTime"u8);
                 writer.WriteStringValue(LastCompletionOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastStartedOn))
+            if (options.Format != "W" && LastStartedOn.HasValue)
             {
                 writer.WritePropertyName("lastStartedTime"u8);
                 writer.WriteStringValue(LastStartedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(PercentComplete))
+            if (options.Format != "W" && PercentComplete.HasValue)
             {
                 writer.WritePropertyName("percentComplete"u8);
                 writer.WriteNumberValue(PercentComplete.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ErrorCode))
+            if (options.Format != "W" && ErrorCode != null)
             {
                 writer.WritePropertyName("errorCode"u8);
                 writer.WriteStringValue(ErrorCode);
             }
-            if (options.Format != "W" && Optional.IsDefined(ErrorMessage))
+            if (options.Format != "W" && ErrorMessage != null)
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
@@ -156,7 +156,14 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AmlFileSystemArchiveStatus(Optional.ToNullable(state), Optional.ToNullable(lastCompletionTime), Optional.ToNullable(lastStartedTime), Optional.ToNullable(percentComplete), errorCode.Value, errorMessage.Value, serializedAdditionalRawData);
+            return new AmlFileSystemArchiveStatus(
+                Optional.ToNullable(state),
+                Optional.ToNullable(lastCompletionTime),
+                Optional.ToNullable(lastStartedTime),
+                Optional.ToNullable(percentComplete),
+                errorCode.Value,
+                errorMessage.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AmlFileSystemArchiveStatus>.Write(ModelReaderWriterOptions options)

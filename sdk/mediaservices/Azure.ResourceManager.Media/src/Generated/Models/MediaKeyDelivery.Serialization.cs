@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AccessControl))
+            if (AccessControl != null)
             {
                 writer.WritePropertyName("accessControl"u8);
                 writer.WriteObjectValue(AccessControl);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    accessControl = MediaAccessControl.DeserializeMediaAccessControl(property.Value);
+                    accessControl = MediaAccessControl.DeserializeMediaAccessControl(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

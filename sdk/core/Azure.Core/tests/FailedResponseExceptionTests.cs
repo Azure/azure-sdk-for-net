@@ -633,7 +633,7 @@ namespace Azure.Core.Tests
         {
             public override bool TryParse(Response response, out ResponseError error, out IDictionary<string, string> data)
             {
-                RequestFailedException.TryExtractErrorContent(response, out error, out data);
+                DefaultRequestFailedDetailsParser.TryParseDetails(response, out error, out data);
                 data = response.Content.ToObjectFromJson<IDictionary<string, string>>();
                 return true;
             }

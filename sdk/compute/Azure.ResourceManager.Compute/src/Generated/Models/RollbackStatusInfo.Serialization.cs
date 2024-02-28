@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(SuccessfullyRolledbackInstanceCount))
+            if (options.Format != "W" && SuccessfullyRolledbackInstanceCount.HasValue)
             {
                 writer.WritePropertyName("successfullyRolledbackInstanceCount"u8);
                 writer.WriteNumberValue(SuccessfullyRolledbackInstanceCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(FailedRolledbackInstanceCount))
+            if (options.Format != "W" && FailedRolledbackInstanceCount.HasValue)
             {
                 writer.WritePropertyName("failedRolledbackInstanceCount"u8);
                 writer.WriteNumberValue(FailedRolledbackInstanceCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(RollbackError))
+            if (options.Format != "W" && RollbackError != null)
             {
                 writer.WritePropertyName("rollbackError"u8);
                 writer.WriteObjectValue(RollbackError);
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    rollbackError = ComputeApiError.DeserializeComputeApiError(property.Value);
+                    rollbackError = ComputeApiError.DeserializeComputeApiError(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

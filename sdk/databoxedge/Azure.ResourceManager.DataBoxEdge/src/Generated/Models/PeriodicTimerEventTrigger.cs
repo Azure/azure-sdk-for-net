@@ -22,8 +22,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sourceInfo"/> or <paramref name="sinkInfo"/> is null. </exception>
         public PeriodicTimerEventTrigger(PeriodicTimerSourceInfo sourceInfo, DataBoxEdgeRoleSinkInfo sinkInfo)
         {
-            Argument.AssertNotNull(sourceInfo, nameof(sourceInfo));
-            Argument.AssertNotNull(sinkInfo, nameof(sinkInfo));
+            if (sourceInfo == null)
+            {
+                throw new ArgumentNullException(nameof(sourceInfo));
+            }
+            if (sinkInfo == null)
+            {
+                throw new ArgumentNullException(nameof(sinkInfo));
+            }
 
             SourceInfo = sourceInfo;
             SinkInfo = sinkInfo;

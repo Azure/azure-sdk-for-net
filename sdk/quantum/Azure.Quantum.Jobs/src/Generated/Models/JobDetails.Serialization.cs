@@ -17,26 +17,26 @@ namespace Azure.Quantum.Jobs.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("containerUri"u8);
             writer.WriteStringValue(ContainerUri);
-            if (Optional.IsDefined(InputDataUri))
+            if (InputDataUri != null)
             {
                 writer.WritePropertyName("inputDataUri"u8);
                 writer.WriteStringValue(InputDataUri);
             }
             writer.WritePropertyName("inputDataFormat"u8);
             writer.WriteStringValue(InputDataFormat);
-            if (Optional.IsDefined(InputParams))
+            if (InputParams != null)
             {
                 writer.WritePropertyName("inputParams"u8);
                 writer.WriteObjectValue(InputParams);
@@ -45,7 +45,7 @@ namespace Azure.Quantum.Jobs.Models
             writer.WriteStringValue(ProviderId);
             writer.WritePropertyName("target"u8);
             writer.WriteStringValue(Target);
-            if (Optional.IsCollectionDefined(Metadata))
+            if (!(Metadata is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 if (Metadata != null)
                 {
@@ -63,17 +63,17 @@ namespace Azure.Quantum.Jobs.Models
                     writer.WriteNull("metadata");
                 }
             }
-            if (Optional.IsDefined(OutputDataUri))
+            if (OutputDataUri != null)
             {
                 writer.WritePropertyName("outputDataUri"u8);
                 writer.WriteStringValue(OutputDataUri);
             }
-            if (Optional.IsDefined(OutputDataFormat))
+            if (OutputDataFormat != null)
             {
                 writer.WritePropertyName("outputDataFormat"u8);
                 writer.WriteStringValue(OutputDataFormat);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 if (Tags != null)
                 {
@@ -107,7 +107,7 @@ namespace Azure.Quantum.Jobs.Models
             Optional<object> inputParams = default;
             string providerId = default;
             string target = default;
-            Optional<IDictionary<string, string>> metadata = default;
+            IDictionary<string, string> metadata = default;
             Optional<string> outputDataUri = default;
             Optional<string> outputDataFormat = default;
             Optional<JobStatus> status = default;
@@ -117,7 +117,7 @@ namespace Azure.Quantum.Jobs.Models
             Optional<DateTimeOffset?> cancellationTime = default;
             Optional<CostEstimate> costEstimate = default;
             Optional<ErrorData> errorData = default;
-            Optional<IList<string>> tags = default;
+            IList<string> tags = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -271,7 +271,26 @@ namespace Azure.Quantum.Jobs.Models
                     continue;
                 }
             }
-            return new JobDetails(id.Value, name.Value, containerUri, inputDataUri.Value, inputDataFormat, inputParams.Value, providerId, target, Optional.ToDictionary(metadata), outputDataUri.Value, outputDataFormat.Value, Optional.ToNullable(status), Optional.ToNullable(creationTime), Optional.ToNullable(beginExecutionTime), Optional.ToNullable(endExecutionTime), Optional.ToNullable(cancellationTime), costEstimate.Value, errorData.Value, Optional.ToList(tags));
+            return new JobDetails(
+                id.Value,
+                name.Value,
+                containerUri,
+                inputDataUri.Value,
+                inputDataFormat,
+                inputParams.Value,
+                providerId,
+                target,
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                outputDataUri.Value,
+                outputDataFormat.Value,
+                Optional.ToNullable(status),
+                Optional.ToNullable(creationTime),
+                Optional.ToNullable(beginExecutionTime),
+                Optional.ToNullable(endExecutionTime),
+                Optional.ToNullable(cancellationTime),
+                costEstimate.Value,
+                errorData.Value,
+                tags ?? new ChangeTrackingList<string>());
         }
     }
 }

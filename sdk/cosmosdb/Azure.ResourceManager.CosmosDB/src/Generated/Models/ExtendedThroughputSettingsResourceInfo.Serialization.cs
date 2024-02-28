@@ -27,47 +27,47 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Rid))
+            if (options.Format != "W" && Rid != null)
             {
                 writer.WritePropertyName("_rid"u8);
                 writer.WriteStringValue(Rid);
             }
-            if (options.Format != "W" && Optional.IsDefined(Timestamp))
+            if (options.Format != "W" && Timestamp.HasValue)
             {
                 writer.WritePropertyName("_ts"u8);
                 writer.WriteNumberValue(Timestamp.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("_etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(Throughput))
+            if (Throughput.HasValue)
             {
                 writer.WritePropertyName("throughput"u8);
                 writer.WriteNumberValue(Throughput.Value);
             }
-            if (Optional.IsDefined(AutoscaleSettings))
+            if (AutoscaleSettings != null)
             {
                 writer.WritePropertyName("autoscaleSettings"u8);
                 writer.WriteObjectValue(AutoscaleSettings);
             }
-            if (options.Format != "W" && Optional.IsDefined(MinimumThroughput))
+            if (options.Format != "W" && MinimumThroughput != null)
             {
                 writer.WritePropertyName("minimumThroughput"u8);
                 writer.WriteStringValue(MinimumThroughput);
             }
-            if (options.Format != "W" && Optional.IsDefined(OfferReplacePending))
+            if (options.Format != "W" && OfferReplacePending != null)
             {
                 writer.WritePropertyName("offerReplacePending"u8);
                 writer.WriteStringValue(OfferReplacePending);
             }
-            if (options.Format != "W" && Optional.IsDefined(InstantMaximumThroughput))
+            if (options.Format != "W" && InstantMaximumThroughput != null)
             {
                 writer.WritePropertyName("instantMaximumThroughput"u8);
                 writer.WriteStringValue(InstantMaximumThroughput);
             }
-            if (options.Format != "W" && Optional.IsDefined(SoftAllowedMaximumThroughput))
+            if (options.Format != "W" && SoftAllowedMaximumThroughput != null)
             {
                 writer.WritePropertyName("softAllowedMaximumThroughput"u8);
                 writer.WriteStringValue(SoftAllowedMaximumThroughput);
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    autoscaleSettings = AutoscaleSettingsResourceInfo.DeserializeAutoscaleSettingsResourceInfo(property.Value);
+                    autoscaleSettings = AutoscaleSettingsResourceInfo.DeserializeAutoscaleSettingsResourceInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("minimumThroughput"u8))
@@ -190,7 +190,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExtendedThroughputSettingsResourceInfo(Optional.ToNullable(throughput), autoscaleSettings.Value, minimumThroughput.Value, offerReplacePending.Value, instantMaximumThroughput.Value, softAllowedMaximumThroughput.Value, serializedAdditionalRawData, rid.Value, Optional.ToNullable(ts), Optional.ToNullable(etag));
+            return new ExtendedThroughputSettingsResourceInfo(
+                Optional.ToNullable(throughput),
+                autoscaleSettings.Value,
+                minimumThroughput.Value,
+                offerReplacePending.Value,
+                instantMaximumThroughput.Value,
+                softAllowedMaximumThroughput.Value,
+                serializedAdditionalRawData,
+                rid.Value,
+                Optional.ToNullable(ts),
+                Optional.ToNullable(etag));
         }
 
         BinaryData IPersistableModel<ExtendedThroughputSettingsResourceInfo>.Write(ModelReaderWriterOptions options)

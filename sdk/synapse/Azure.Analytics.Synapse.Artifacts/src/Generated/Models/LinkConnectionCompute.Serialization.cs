@@ -18,17 +18,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CoreCount))
+            if (CoreCount.HasValue)
             {
                 writer.WritePropertyName("coreCount"u8);
                 writer.WriteNumberValue(CoreCount.Value);
             }
-            if (Optional.IsDefined(ComputeType))
+            if (ComputeType != null)
             {
                 writer.WritePropertyName("computeType"u8);
                 writer.WriteStringValue(ComputeType);
             }
-            if (Optional.IsDefined(DataProcessIntervalMinutes))
+            if (DataProcessIntervalMinutes.HasValue)
             {
                 writer.WritePropertyName("dataProcessIntervalMinutes"u8);
                 writer.WriteNumberValue(DataProcessIntervalMinutes.Value);

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(FullyQualifiedResourceType))
+            if (FullyQualifiedResourceType.HasValue)
             {
                 writer.WritePropertyName("fullyQualifiedResourceType"u8);
                 writer.WriteStringValue(FullyQualifiedResourceType.Value);
             }
-            if (Optional.IsCollectionDefined(DefaultProperties))
+            if (!(DefaultProperties is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("defaultProperties"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AllowCustomProperties))
+            if (AllowCustomProperties.HasValue)
             {
                 writer.WritePropertyName("allowCustomProperties"u8);
                 writer.WriteBooleanValue(AllowCustomProperties.Value);
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
             Optional<string> name = default;
             Optional<ResourceType> fullyQualifiedResourceType = default;
-            Optional<IReadOnlyList<string>> defaultProperties = default;
+            IReadOnlyList<string> defaultProperties = default;
             Optional<bool> allowCustomProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataManifestCustomResourceFunctionDefinition(name.Value, Optional.ToNullable(fullyQualifiedResourceType), Optional.ToList(defaultProperties), Optional.ToNullable(allowCustomProperties), serializedAdditionalRawData);
+            return new DataManifestCustomResourceFunctionDefinition(name.Value, Optional.ToNullable(fullyQualifiedResourceType), defaultProperties ?? new ChangeTrackingList<string>(), Optional.ToNullable(allowCustomProperties), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataManifestCustomResourceFunctionDefinition>.Write(ModelReaderWriterOptions options)

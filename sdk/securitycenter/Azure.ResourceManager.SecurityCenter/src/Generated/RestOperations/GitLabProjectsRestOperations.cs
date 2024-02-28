@@ -70,10 +70,38 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="securityConnectorName"/> or <paramref name="groupFQName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<GitLabProjectListResponse>> ListAsync(string subscriptionId, string resourceGroupName, string securityConnectorName, string groupFQName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(securityConnectorName, nameof(securityConnectorName));
-            Argument.AssertNotNullOrEmpty(groupFQName, nameof(groupFQName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (securityConnectorName == null)
+            {
+                throw new ArgumentNullException(nameof(securityConnectorName));
+            }
+            if (securityConnectorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(securityConnectorName));
+            }
+            if (groupFQName == null)
+            {
+                throw new ArgumentNullException(nameof(groupFQName));
+            }
+            if (groupFQName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(groupFQName));
+            }
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, securityConnectorName, groupFQName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -101,10 +129,38 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="securityConnectorName"/> or <paramref name="groupFQName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<GitLabProjectListResponse> List(string subscriptionId, string resourceGroupName, string securityConnectorName, string groupFQName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(securityConnectorName, nameof(securityConnectorName));
-            Argument.AssertNotNullOrEmpty(groupFQName, nameof(groupFQName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (securityConnectorName == null)
+            {
+                throw new ArgumentNullException(nameof(securityConnectorName));
+            }
+            if (securityConnectorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(securityConnectorName));
+            }
+            if (groupFQName == null)
+            {
+                throw new ArgumentNullException(nameof(groupFQName));
+            }
+            if (groupFQName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(groupFQName));
+            }
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, securityConnectorName, groupFQName);
             _pipeline.Send(message, cancellationToken);
@@ -157,11 +213,46 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="securityConnectorName"/>, <paramref name="groupFQName"/> or <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SecurityConnectorGitLabProjectData>> GetAsync(string subscriptionId, string resourceGroupName, string securityConnectorName, string groupFQName, string projectName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(securityConnectorName, nameof(securityConnectorName));
-            Argument.AssertNotNullOrEmpty(groupFQName, nameof(groupFQName));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (securityConnectorName == null)
+            {
+                throw new ArgumentNullException(nameof(securityConnectorName));
+            }
+            if (securityConnectorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(securityConnectorName));
+            }
+            if (groupFQName == null)
+            {
+                throw new ArgumentNullException(nameof(groupFQName));
+            }
+            if (groupFQName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(groupFQName));
+            }
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, securityConnectorName, groupFQName, projectName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -192,11 +283,46 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="securityConnectorName"/>, <paramref name="groupFQName"/> or <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SecurityConnectorGitLabProjectData> Get(string subscriptionId, string resourceGroupName, string securityConnectorName, string groupFQName, string projectName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(securityConnectorName, nameof(securityConnectorName));
-            Argument.AssertNotNullOrEmpty(groupFQName, nameof(groupFQName));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (securityConnectorName == null)
+            {
+                throw new ArgumentNullException(nameof(securityConnectorName));
+            }
+            if (securityConnectorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(securityConnectorName));
+            }
+            if (groupFQName == null)
+            {
+                throw new ArgumentNullException(nameof(groupFQName));
+            }
+            if (groupFQName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(groupFQName));
+            }
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, securityConnectorName, groupFQName, projectName);
             _pipeline.Send(message, cancellationToken);
@@ -241,11 +367,42 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="securityConnectorName"/> or <paramref name="groupFQName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<GitLabProjectListResponse>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string securityConnectorName, string groupFQName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(securityConnectorName, nameof(securityConnectorName));
-            Argument.AssertNotNullOrEmpty(groupFQName, nameof(groupFQName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (securityConnectorName == null)
+            {
+                throw new ArgumentNullException(nameof(securityConnectorName));
+            }
+            if (securityConnectorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(securityConnectorName));
+            }
+            if (groupFQName == null)
+            {
+                throw new ArgumentNullException(nameof(groupFQName));
+            }
+            if (groupFQName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(groupFQName));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, securityConnectorName, groupFQName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -274,11 +431,42 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="securityConnectorName"/> or <paramref name="groupFQName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<GitLabProjectListResponse> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string securityConnectorName, string groupFQName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(securityConnectorName, nameof(securityConnectorName));
-            Argument.AssertNotNullOrEmpty(groupFQName, nameof(groupFQName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (securityConnectorName == null)
+            {
+                throw new ArgumentNullException(nameof(securityConnectorName));
+            }
+            if (securityConnectorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(securityConnectorName));
+            }
+            if (groupFQName == null)
+            {
+                throw new ArgumentNullException(nameof(groupFQName));
+            }
+            if (groupFQName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(groupFQName));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, securityConnectorName, groupFQName);
             _pipeline.Send(message, cancellationToken);

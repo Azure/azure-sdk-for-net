@@ -26,34 +26,34 @@ namespace Azure.ResourceManager.Maintenance.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MaintenanceScope))
+            if (MaintenanceScope.HasValue)
             {
                 writer.WritePropertyName("maintenanceScope"u8);
                 writer.WriteStringValue(MaintenanceScope.Value.ToString());
             }
-            if (Optional.IsDefined(ImpactType))
+            if (ImpactType.HasValue)
             {
                 writer.WritePropertyName("impactType"u8);
                 writer.WriteStringValue(ImpactType.Value.ToString());
             }
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(ImpactDurationInSec))
+            if (ImpactDurationInSec.HasValue)
             {
                 writer.WritePropertyName("impactDurationInSec"u8);
                 writer.WriteNumberValue(ImpactDurationInSec.Value);
             }
-            if (Optional.IsDefined(NotBefore))
+            if (NotBefore.HasValue)
             {
                 writer.WritePropertyName("notBefore"u8);
                 writer.WriteStringValue(NotBefore.Value, "O");
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceId))
+            if (ResourceId != null)
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
@@ -179,7 +179,14 @@ namespace Azure.ResourceManager.Maintenance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MaintenanceUpdate(Optional.ToNullable(maintenanceScope), Optional.ToNullable(impactType), Optional.ToNullable(status), Optional.ToNullable(impactDurationInSec), Optional.ToNullable(notBefore), resourceId.Value, serializedAdditionalRawData);
+            return new MaintenanceUpdate(
+                Optional.ToNullable(maintenanceScope),
+                Optional.ToNullable(impactType),
+                Optional.ToNullable(status),
+                Optional.ToNullable(impactDurationInSec),
+                Optional.ToNullable(notBefore),
+                resourceId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MaintenanceUpdate>.Write(ModelReaderWriterOptions options)

@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TemplateRepositoryUri))
+            if (TemplateRepositoryUri != null)
             {
                 writer.WritePropertyName("templateRepositoryUrl"u8);
                 writer.WriteStringValue(TemplateRepositoryUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(Owner))
+            if (Owner != null)
             {
                 writer.WritePropertyName("owner"u8);
                 writer.WriteStringValue(Owner);
             }
-            if (Optional.IsDefined(RepositoryName))
+            if (RepositoryName != null)
             {
                 writer.WritePropertyName("repositoryName"u8);
                 writer.WriteStringValue(RepositoryName);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(IsPrivate))
+            if (IsPrivate.HasValue)
             {
                 writer.WritePropertyName("isPrivate"u8);
                 writer.WriteBooleanValue(IsPrivate.Value);
@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StaticSiteTemplate(templateRepositoryUrl.Value, owner.Value, repositoryName.Value, description.Value, Optional.ToNullable(isPrivate), serializedAdditionalRawData);
+            return new StaticSiteTemplate(
+                templateRepositoryUrl.Value,
+                owner.Value,
+                repositoryName.Value,
+                description.Value,
+                Optional.ToNullable(isPrivate),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StaticSiteTemplate>.Write(ModelReaderWriterOptions options)

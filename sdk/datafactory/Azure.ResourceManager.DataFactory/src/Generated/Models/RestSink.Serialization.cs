@@ -27,22 +27,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RequestMethod))
+            if (RequestMethod != null)
             {
                 writer.WritePropertyName("requestMethod"u8);
                 JsonSerializer.Serialize(writer, RequestMethod);
             }
-            if (Optional.IsDefined(AdditionalHeaders))
+            if (AdditionalHeaders != null)
             {
                 writer.WritePropertyName("additionalHeaders"u8);
                 JsonSerializer.Serialize(writer, AdditionalHeaders);
             }
-            if (Optional.IsDefined(HttpRequestTimeout))
+            if (HttpRequestTimeout != null)
             {
                 writer.WritePropertyName("httpRequestTimeout"u8);
                 JsonSerializer.Serialize(writer, HttpRequestTimeout);
             }
-            if (Optional.IsDefined(RequestInterval))
+            if (RequestInterval != null)
             {
                 writer.WritePropertyName("requestInterval"u8);
 #if NET6_0_OR_GREATER
@@ -54,39 +54,39 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            if (Optional.IsDefined(HttpCompressionType))
+            if (HttpCompressionType != null)
             {
                 writer.WritePropertyName("httpCompressionType"u8);
                 JsonSerializer.Serialize(writer, HttpCompressionType);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CopySinkType);
-            if (Optional.IsDefined(WriteBatchSize))
+            if (WriteBatchSize != null)
             {
                 writer.WritePropertyName("writeBatchSize"u8);
                 JsonSerializer.Serialize(writer, WriteBatchSize);
             }
-            if (Optional.IsDefined(WriteBatchTimeout))
+            if (WriteBatchTimeout != null)
             {
                 writer.WritePropertyName("writeBatchTimeout"u8);
                 JsonSerializer.Serialize(writer, WriteBatchTimeout);
             }
-            if (Optional.IsDefined(SinkRetryCount))
+            if (SinkRetryCount != null)
             {
                 writer.WritePropertyName("sinkRetryCount"u8);
                 JsonSerializer.Serialize(writer, SinkRetryCount);
             }
-            if (Optional.IsDefined(SinkRetryWait))
+            if (SinkRetryWait != null)
             {
                 writer.WritePropertyName("sinkRetryWait"u8);
                 JsonSerializer.Serialize(writer, SinkRetryWait);
             }
-            if (Optional.IsDefined(MaxConcurrentConnections))
+            if (MaxConcurrentConnections != null)
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 JsonSerializer.Serialize(writer, MaxConcurrentConnections);
             }
-            if (Optional.IsDefined(DisableMetricsCollection))
+            if (DisableMetricsCollection != null)
             {
                 writer.WritePropertyName("disableMetricsCollection"u8);
                 JsonSerializer.Serialize(writer, DisableMetricsCollection);
@@ -249,7 +249,20 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new RestSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, requestMethod.Value, additionalHeaders.Value, httpRequestTimeout.Value, requestInterval.Value, httpCompressionType.Value);
+            return new RestSink(
+                type,
+                writeBatchSize.Value,
+                writeBatchTimeout.Value,
+                sinkRetryCount.Value,
+                sinkRetryWait.Value,
+                maxConcurrentConnections.Value,
+                disableMetricsCollection.Value,
+                additionalProperties,
+                requestMethod.Value,
+                additionalHeaders.Value,
+                httpRequestTimeout.Value,
+                requestInterval.Value,
+                httpCompressionType.Value);
         }
 
         BinaryData IPersistableModel<RestSink>.Write(ModelReaderWriterOptions options)

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -53,8 +52,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <exception cref="ArgumentNullException"> <paramref name="category"/> or <paramref name="endpoints"/> is null. </exception>
         public EgressEndpoint(string category, IEnumerable<EndpointDependency> endpoints)
         {
-            Argument.AssertNotNull(category, nameof(category));
-            Argument.AssertNotNull(endpoints, nameof(endpoints));
+            if (category == null)
+            {
+                throw new ArgumentNullException(nameof(category));
+            }
+            if (endpoints == null)
+            {
+                throw new ArgumentNullException(nameof(endpoints));
+            }
 
             Category = category;
             Endpoints = endpoints.ToList();

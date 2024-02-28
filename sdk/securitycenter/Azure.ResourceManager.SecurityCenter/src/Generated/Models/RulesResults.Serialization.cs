@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<SqlVulnerabilityAssessmentBaselineRuleData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SqlVulnerabilityAssessmentBaselineRuleData>> value = default;
+            IReadOnlyList<SqlVulnerabilityAssessmentBaselineRuleData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<SqlVulnerabilityAssessmentBaselineRuleData> array = new List<SqlVulnerabilityAssessmentBaselineRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlVulnerabilityAssessmentBaselineRuleData.DeserializeSqlVulnerabilityAssessmentBaselineRuleData(item));
+                        array.Add(SqlVulnerabilityAssessmentBaselineRuleData.DeserializeSqlVulnerabilityAssessmentBaselineRuleData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RulesResults(Optional.ToList(value), serializedAdditionalRawData);
+            return new RulesResults(value ?? new ChangeTrackingList<SqlVulnerabilityAssessmentBaselineRuleData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RulesResults>.Write(ModelReaderWriterOptions options)

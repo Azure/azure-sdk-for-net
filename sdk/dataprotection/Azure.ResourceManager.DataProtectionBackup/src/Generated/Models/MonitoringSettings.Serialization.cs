@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AzureMonitorAlertSettings))
+            if (AzureMonitorAlertSettings != null)
             {
                 writer.WritePropertyName("azureMonitorAlertSettings"u8);
                 writer.WriteObjectValue(AzureMonitorAlertSettings);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    azureMonitorAlertSettings = AzureMonitorAlertSettings.DeserializeAzureMonitorAlertSettings(property.Value);
+                    azureMonitorAlertSettings = AzureMonitorAlertSettings.DeserializeAzureMonitorAlertSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

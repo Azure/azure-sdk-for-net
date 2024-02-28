@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Elastic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FirstName))
+            if (FirstName != null)
             {
                 writer.WritePropertyName("firstName"u8);
                 writer.WriteStringValue(FirstName);
             }
-            if (Optional.IsDefined(LastName))
+            if (LastName != null)
             {
                 writer.WritePropertyName("lastName"u8);
                 writer.WriteStringValue(LastName);
             }
-            if (Optional.IsDefined(CompanyName))
+            if (CompanyName != null)
             {
                 writer.WritePropertyName("companyName"u8);
                 writer.WriteStringValue(CompanyName);
             }
-            if (Optional.IsDefined(EmailAddress))
+            if (EmailAddress != null)
             {
                 writer.WritePropertyName("emailAddress"u8);
                 writer.WriteStringValue(EmailAddress);
             }
-            if (Optional.IsDefined(CompanyInfo))
+            if (CompanyInfo != null)
             {
                 writer.WritePropertyName("companyInfo"u8);
                 writer.WriteObjectValue(CompanyInfo);
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Elastic.Models
                     {
                         continue;
                     }
-                    companyInfo = CompanyInfo.DeserializeCompanyInfo(property.Value);
+                    companyInfo = CompanyInfo.DeserializeCompanyInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.Elastic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UserInfo(firstName.Value, lastName.Value, companyName.Value, emailAddress.Value, companyInfo.Value, serializedAdditionalRawData);
+            return new UserInfo(
+                firstName.Value,
+                lastName.Value,
+                companyName.Value,
+                emailAddress.Value,
+                companyInfo.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UserInfo>.Write(ModelReaderWriterOptions options)

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Authorization.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<RoleAssignmentScheduleInstanceData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<RoleAssignmentScheduleInstanceData>> value = default;
+            IReadOnlyList<RoleAssignmentScheduleInstanceData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     List<RoleAssignmentScheduleInstanceData> array = new List<RoleAssignmentScheduleInstanceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RoleAssignmentScheduleInstanceData.DeserializeRoleAssignmentScheduleInstanceData(item));
+                        array.Add(RoleAssignmentScheduleInstanceData.DeserializeRoleAssignmentScheduleInstanceData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoleAssignmentScheduleInstanceListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new RoleAssignmentScheduleInstanceListResult(value ?? new ChangeTrackingList<RoleAssignmentScheduleInstanceData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoleAssignmentScheduleInstanceListResult>.Write(ModelReaderWriterOptions options)

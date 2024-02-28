@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             {
                 writer.WriteNull("accessKey1");
             }
-            if (Optional.IsDefined(AccessKey2))
+            if (AccessKey2 != null)
             {
                 if (AccessKey2 != null)
                 {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             }
             writer.WritePropertyName("endpointType"u8);
             writer.WriteStringValue(EndpointType.ToString());
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 if (ProvisioningState != null)
                 {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     writer.WriteNull("provisioningState");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 if (CreatedOn != null)
                 {
@@ -75,12 +75,12 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     writer.WriteNull("createdTime");
                 }
             }
-            if (Optional.IsDefined(AuthenticationType))
+            if (AuthenticationType.HasValue)
             {
                 writer.WritePropertyName("authenticationType"u8);
                 writer.WriteStringValue(AuthenticationType.Value.ToString());
             }
-            if (Optional.IsDefined(DeadLetterSecret))
+            if (DeadLetterSecret != null)
             {
                 if (DeadLetterSecret != null)
                 {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     writer.WriteNull("deadLetterSecret");
                 }
             }
-            if (Optional.IsDefined(DeadLetterUri))
+            if (DeadLetterUri != null)
             {
                 if (DeadLetterUri != null)
                 {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     writer.WriteNull("deadLetterUri");
                 }
             }
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 if (Identity != null)
                 {
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                         identity = null;
                         continue;
                     }
-                    identity = DigitalTwinsManagedIdentityReference.DeserializeDigitalTwinsManagedIdentityReference(property.Value);
+                    identity = DigitalTwinsManagedIdentityReference.DeserializeDigitalTwinsManagedIdentityReference(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -263,7 +263,18 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DigitalTwinsEventGridProperties(endpointType, Optional.ToNullable(provisioningState), Optional.ToNullable(createdTime), Optional.ToNullable(authenticationType), deadLetterSecret.Value, deadLetterUri.Value, identity.Value, serializedAdditionalRawData, topicEndpoint, accessKey1, accessKey2.Value);
+            return new DigitalTwinsEventGridProperties(
+                endpointType,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(createdTime),
+                Optional.ToNullable(authenticationType),
+                deadLetterSecret.Value,
+                deadLetterUri.Value,
+                identity.Value,
+                serializedAdditionalRawData,
+                topicEndpoint,
+                accessKey1,
+                accessKey2.Value);
         }
 
         BinaryData IPersistableModel<DigitalTwinsEventGridProperties>.Write(ModelReaderWriterOptions options)

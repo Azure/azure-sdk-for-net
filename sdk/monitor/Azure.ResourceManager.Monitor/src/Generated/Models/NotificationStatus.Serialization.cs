@@ -26,24 +26,24 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Context))
+            if (Context != null)
             {
                 writer.WritePropertyName("context"u8);
                 writer.WriteObjectValue(Context);
             }
             writer.WritePropertyName("state"u8);
             writer.WriteStringValue(State);
-            if (Optional.IsDefined(CompletedOn))
+            if (CompletedOn.HasValue)
             {
                 writer.WritePropertyName("completedTime"u8);
                 writer.WriteStringValue(CompletedOn.Value, "O");
             }
-            if (Optional.IsDefined(CreatedOn))
+            if (CreatedOn.HasValue)
             {
                 writer.WritePropertyName("createdTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(ActionDetails))
+            if (!(ActionDetails is ChangeTrackingList<NotificationActionDetail> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("actionDetails"u8);
                 writer.WriteStartArray();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Monitor.Models
             string state = default;
             Optional<DateTimeOffset> completedTime = default;
             Optional<DateTimeOffset> createdTime = default;
-            Optional<IReadOnlyList<NotificationActionDetail>> actionDetails = default;
+            IReadOnlyList<NotificationActionDetail> actionDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    context = NotificationContext.DeserializeNotificationContext(property.Value);
+                    context = NotificationContext.DeserializeNotificationContext(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("state"u8))
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<NotificationActionDetail> array = new List<NotificationActionDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NotificationActionDetail.DeserializeNotificationActionDetail(item));
+                        array.Add(NotificationActionDetail.DeserializeNotificationActionDetail(item, options));
                     }
                     actionDetails = array;
                     continue;
@@ -152,7 +152,13 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NotificationStatus(context.Value, state, Optional.ToNullable(completedTime), Optional.ToNullable(createdTime), Optional.ToList(actionDetails), serializedAdditionalRawData);
+            return new NotificationStatus(
+                context.Value,
+                state,
+                Optional.ToNullable(completedTime),
+                Optional.ToNullable(createdTime),
+                actionDetails ?? new ChangeTrackingList<NotificationActionDetail>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NotificationStatus>.Write(ModelReaderWriterOptions options)

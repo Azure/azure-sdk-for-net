@@ -26,52 +26,52 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TemplateId))
+            if (TemplateId != null)
             {
                 writer.WritePropertyName("templateId"u8);
                 writer.WriteStringValue(TemplateId);
             }
-            if (Optional.IsDefined(VCenterId))
+            if (VCenterId != null)
             {
                 writer.WritePropertyName("vCenterId"u8);
                 writer.WriteStringValue(VCenterId);
             }
-            if (options.Format != "W" && Optional.IsDefined(MoRefId))
+            if (options.Format != "W" && MoRefId != null)
             {
                 writer.WritePropertyName("moRefId"u8);
                 writer.WriteStringValue(MoRefId);
             }
-            if (Optional.IsDefined(InventoryItemId))
+            if (InventoryItemId != null)
             {
                 writer.WritePropertyName("inventoryItemId"u8);
                 writer.WriteStringValue(InventoryItemId);
             }
-            if (options.Format != "W" && Optional.IsDefined(MoName))
+            if (options.Format != "W" && MoName != null)
             {
                 writer.WritePropertyName("moName"u8);
                 writer.WriteStringValue(MoName);
             }
-            if (options.Format != "W" && Optional.IsDefined(FolderPath))
+            if (options.Format != "W" && FolderPath != null)
             {
                 writer.WritePropertyName("folderPath"u8);
                 writer.WriteStringValue(FolderPath);
             }
-            if (options.Format != "W" && Optional.IsDefined(InstanceUuid))
+            if (options.Format != "W" && InstanceUuid != null)
             {
                 writer.WritePropertyName("instanceUuid"u8);
                 writer.WriteStringValue(InstanceUuid);
             }
-            if (Optional.IsDefined(SmbiosUuid))
+            if (SmbiosUuid != null)
             {
                 writer.WritePropertyName("smbiosUuid"u8);
                 writer.WriteStringValue(SmbiosUuid);
             }
-            if (Optional.IsDefined(FirmwareType))
+            if (FirmwareType.HasValue)
             {
                 writer.WritePropertyName("firmwareType"u8);
                 writer.WriteStringValue(FirmwareType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CustomResourceName))
+            if (options.Format != "W" && CustomResourceName != null)
             {
                 writer.WritePropertyName("customResourceName"u8);
                 writer.WriteStringValue(CustomResourceName);
@@ -188,7 +188,18 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VCenterInfrastructureProfile(templateId.Value, vCenterId.Value, moRefId.Value, inventoryItemId.Value, moName.Value, folderPath.Value, instanceUuid.Value, smbiosUuid.Value, Optional.ToNullable(firmwareType), customResourceName.Value, serializedAdditionalRawData);
+            return new VCenterInfrastructureProfile(
+                templateId.Value,
+                vCenterId.Value,
+                moRefId.Value,
+                inventoryItemId.Value,
+                moName.Value,
+                folderPath.Value,
+                instanceUuid.Value,
+                smbiosUuid.Value,
+                Optional.ToNullable(firmwareType),
+                customResourceName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VCenterInfrastructureProfile>.Write(ModelReaderWriterOptions options)

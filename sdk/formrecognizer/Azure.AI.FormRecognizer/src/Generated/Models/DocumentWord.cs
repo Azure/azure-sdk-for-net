@@ -21,7 +21,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         internal DocumentWord(string content, DocumentSpan span, float confidence)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             Content = content;
             Polygon = new ChangeTrackingList<float>();

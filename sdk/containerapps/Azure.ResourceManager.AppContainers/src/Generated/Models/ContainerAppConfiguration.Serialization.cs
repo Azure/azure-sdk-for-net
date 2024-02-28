@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Secrets))
+            if (!(Secrets is ChangeTrackingList<ContainerAppWritableSecret> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("secrets"u8);
                 writer.WriteStartArray();
@@ -36,17 +36,17 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ActiveRevisionsMode))
+            if (ActiveRevisionsMode.HasValue)
             {
                 writer.WritePropertyName("activeRevisionsMode"u8);
                 writer.WriteStringValue(ActiveRevisionsMode.Value.ToString());
             }
-            if (Optional.IsDefined(Ingress))
+            if (Ingress != null)
             {
                 writer.WritePropertyName("ingress"u8);
                 writer.WriteObjectValue(Ingress);
             }
-            if (Optional.IsCollectionDefined(Registries))
+            if (!(Registries is ChangeTrackingList<ContainerAppRegistryCredentials> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("registries"u8);
                 writer.WriteStartArray();
@@ -56,17 +56,17 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Dapr))
+            if (Dapr != null)
             {
                 writer.WritePropertyName("dapr"u8);
                 writer.WriteObjectValue(Dapr);
             }
-            if (Optional.IsDefined(MaxInactiveRevisions))
+            if (MaxInactiveRevisions.HasValue)
             {
                 writer.WritePropertyName("maxInactiveRevisions"u8);
                 writer.WriteNumberValue(MaxInactiveRevisions.Value);
             }
-            if (Optional.IsDefined(Service))
+            if (Service != null)
             {
                 writer.WritePropertyName("service"u8);
                 writer.WriteObjectValue(Service);
@@ -109,10 +109,10 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<IList<ContainerAppWritableSecret>> secrets = default;
+            IList<ContainerAppWritableSecret> secrets = default;
             Optional<ContainerAppActiveRevisionsMode> activeRevisionsMode = default;
             Optional<ContainerAppIngressConfiguration> ingress = default;
-            Optional<IList<ContainerAppRegistryCredentials>> registries = default;
+            IList<ContainerAppRegistryCredentials> registries = default;
             Optional<ContainerAppDaprConfiguration> dapr = default;
             Optional<int> maxInactiveRevisions = default;
             Optional<Service> service = default;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppWritableSecret> array = new List<ContainerAppWritableSecret>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppWritableSecret.DeserializeContainerAppWritableSecret(item));
+                        array.Add(ContainerAppWritableSecret.DeserializeContainerAppWritableSecret(item, options));
                     }
                     secrets = array;
                     continue;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    ingress = ContainerAppIngressConfiguration.DeserializeContainerAppIngressConfiguration(property.Value);
+                    ingress = ContainerAppIngressConfiguration.DeserializeContainerAppIngressConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("registries"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppRegistryCredentials> array = new List<ContainerAppRegistryCredentials>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppRegistryCredentials.DeserializeContainerAppRegistryCredentials(item));
+                        array.Add(ContainerAppRegistryCredentials.DeserializeContainerAppRegistryCredentials(item, options));
                     }
                     registries = array;
                     continue;
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    dapr = ContainerAppDaprConfiguration.DeserializeContainerAppDaprConfiguration(property.Value);
+                    dapr = ContainerAppDaprConfiguration.DeserializeContainerAppDaprConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("maxInactiveRevisions"u8))
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    service = Service.DeserializeService(property.Value);
+                    service = Service.DeserializeService(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -199,7 +199,15 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppConfiguration(Optional.ToList(secrets), Optional.ToNullable(activeRevisionsMode), ingress.Value, Optional.ToList(registries), dapr.Value, Optional.ToNullable(maxInactiveRevisions), service.Value, serializedAdditionalRawData);
+            return new ContainerAppConfiguration(
+                secrets ?? new ChangeTrackingList<ContainerAppWritableSecret>(),
+                Optional.ToNullable(activeRevisionsMode),
+                ingress.Value,
+                registries ?? new ChangeTrackingList<ContainerAppRegistryCredentials>(),
+                dapr.Value,
+                Optional.ToNullable(maxInactiveRevisions),
+                service.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppConfiguration>.Write(ModelReaderWriterOptions options)

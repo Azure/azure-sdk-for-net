@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsDefined(SizeInGB))
+            if (SizeInGB.HasValue)
             {
                 writer.WritePropertyName("sizeGB"u8);
                 writer.WriteNumberValue(SizeInGB.Value);
             }
-            if (Optional.IsDefined(MinimumSupportedDiskCount))
+            if (MinimumSupportedDiskCount.HasValue)
             {
                 writer.WritePropertyName("minimumSupportedDiskCount"u8);
                 writer.WriteNumberValue(MinimumSupportedDiskCount.Value);
             }
-            if (Optional.IsDefined(MaximumSupportedDiskCount))
+            if (MaximumSupportedDiskCount.HasValue)
             {
                 writer.WritePropertyName("maximumSupportedDiskCount"u8);
                 writer.WriteNumberValue(MaximumSupportedDiskCount.Value);
             }
-            if (Optional.IsDefined(IopsReadWrite))
+            if (IopsReadWrite.HasValue)
             {
                 writer.WritePropertyName("iopsReadWrite"u8);
                 writer.WriteNumberValue(IopsReadWrite.Value);
             }
-            if (Optional.IsDefined(MbpsReadWrite))
+            if (MbpsReadWrite.HasValue)
             {
                 writer.WritePropertyName("mbpsReadWrite"u8);
                 writer.WriteNumberValue(MbpsReadWrite.Value);
             }
-            if (Optional.IsDefined(DiskTier))
+            if (DiskTier != null)
             {
                 writer.WritePropertyName("diskTier"u8);
                 writer.WriteStringValue(DiskTier);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    sku = SapDiskSku.DeserializeSapDiskSku(property.Value);
+                    sku = SapDiskSku.DeserializeSapDiskSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sizeGB"u8))
@@ -175,7 +175,15 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SupportedConfigurationsDiskDetails(sku.Value, Optional.ToNullable(sizeGB), Optional.ToNullable(minimumSupportedDiskCount), Optional.ToNullable(maximumSupportedDiskCount), Optional.ToNullable(iopsReadWrite), Optional.ToNullable(mbpsReadWrite), diskTier.Value, serializedAdditionalRawData);
+            return new SupportedConfigurationsDiskDetails(
+                sku.Value,
+                Optional.ToNullable(sizeGB),
+                Optional.ToNullable(minimumSupportedDiskCount),
+                Optional.ToNullable(maximumSupportedDiskCount),
+                Optional.ToNullable(iopsReadWrite),
+                Optional.ToNullable(mbpsReadWrite),
+                diskTier.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SupportedConfigurationsDiskDetails>.Write(ModelReaderWriterOptions options)

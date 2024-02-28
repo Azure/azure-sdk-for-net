@@ -26,57 +26,57 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsEnabled))
+            if (IsEnabled.HasValue)
             {
                 writer.WritePropertyName("enable"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(IsEncryptionEnabled))
+            if (IsEncryptionEnabled.HasValue)
             {
                 writer.WritePropertyName("enableEncryption"u8);
                 writer.WriteBooleanValue(IsEncryptionEnabled.Value);
             }
-            if (Optional.IsDefined(RetentionPeriodInDays))
+            if (RetentionPeriodInDays.HasValue)
             {
                 writer.WritePropertyName("retentionPeriod"u8);
                 writer.WriteNumberValue(RetentionPeriodInDays.Value);
             }
-            if (Optional.IsDefined(StorageAccountUri))
+            if (StorageAccountUri != null)
             {
                 writer.WritePropertyName("storageAccountUrl"u8);
                 writer.WriteStringValue(StorageAccountUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(StorageContainerName))
+            if (StorageContainerName != null)
             {
                 writer.WritePropertyName("storageContainerName"u8);
                 writer.WriteStringValue(StorageContainerName);
             }
-            if (Optional.IsDefined(StorageAccessKey))
+            if (StorageAccessKey != null)
             {
                 writer.WritePropertyName("storageAccessKey"u8);
                 writer.WriteStringValue(StorageAccessKey);
             }
-            if (Optional.IsDefined(Password))
+            if (Password != null)
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (Optional.IsDefined(AreSystemDbsIncludedInBackup))
+            if (AreSystemDbsIncludedInBackup.HasValue)
             {
                 writer.WritePropertyName("backupSystemDbs"u8);
                 writer.WriteBooleanValue(AreSystemDbsIncludedInBackup.Value);
             }
-            if (Optional.IsDefined(BackupScheduleType))
+            if (BackupScheduleType.HasValue)
             {
                 writer.WritePropertyName("backupScheduleType"u8);
                 writer.WriteStringValue(BackupScheduleType.Value.ToString());
             }
-            if (Optional.IsDefined(FullBackupFrequency))
+            if (FullBackupFrequency.HasValue)
             {
                 writer.WritePropertyName("fullBackupFrequency"u8);
                 writer.WriteStringValue(FullBackupFrequency.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(DaysOfWeek))
+            if (!(DaysOfWeek is ChangeTrackingList<SqlVmAutoBackupDayOfWeek> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("daysOfWeek"u8);
                 writer.WriteStartArray();
@@ -86,17 +86,17 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(FullBackupStartHour))
+            if (FullBackupStartHour.HasValue)
             {
                 writer.WritePropertyName("fullBackupStartTime"u8);
                 writer.WriteNumberValue(FullBackupStartHour.Value);
             }
-            if (Optional.IsDefined(FullBackupWindowHours))
+            if (FullBackupWindowHours.HasValue)
             {
                 writer.WritePropertyName("fullBackupWindowHours"u8);
                 writer.WriteNumberValue(FullBackupWindowHours.Value);
             }
-            if (Optional.IsDefined(LogBackupFrequency))
+            if (LogBackupFrequency.HasValue)
             {
                 writer.WritePropertyName("logBackupFrequency"u8);
                 writer.WriteNumberValue(LogBackupFrequency.Value);
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             Optional<bool> backupSystemDbs = default;
             Optional<SqVmBackupScheduleType> backupScheduleType = default;
             Optional<SqlVmFullBackupFrequency> fullBackupFrequency = default;
-            Optional<IList<SqlVmAutoBackupDayOfWeek>> daysOfWeek = default;
+            IList<SqlVmAutoBackupDayOfWeek> daysOfWeek = default;
             Optional<int> fullBackupStartTime = default;
             Optional<int> fullBackupWindowHours = default;
             Optional<int> logBackupFrequency = default;
@@ -282,7 +282,22 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlVmAutoBackupSettings(Optional.ToNullable(enable), Optional.ToNullable(enableEncryption), Optional.ToNullable(retentionPeriod), storageAccountUrl.Value, storageContainerName.Value, storageAccessKey.Value, password.Value, Optional.ToNullable(backupSystemDbs), Optional.ToNullable(backupScheduleType), Optional.ToNullable(fullBackupFrequency), Optional.ToList(daysOfWeek), Optional.ToNullable(fullBackupStartTime), Optional.ToNullable(fullBackupWindowHours), Optional.ToNullable(logBackupFrequency), serializedAdditionalRawData);
+            return new SqlVmAutoBackupSettings(
+                Optional.ToNullable(enable),
+                Optional.ToNullable(enableEncryption),
+                Optional.ToNullable(retentionPeriod),
+                storageAccountUrl.Value,
+                storageContainerName.Value,
+                storageAccessKey.Value,
+                password.Value,
+                Optional.ToNullable(backupSystemDbs),
+                Optional.ToNullable(backupScheduleType),
+                Optional.ToNullable(fullBackupFrequency),
+                daysOfWeek ?? new ChangeTrackingList<SqlVmAutoBackupDayOfWeek>(),
+                Optional.ToNullable(fullBackupStartTime),
+                Optional.ToNullable(fullBackupWindowHours),
+                Optional.ToNullable(logBackupFrequency),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlVmAutoBackupSettings>.Write(ModelReaderWriterOptions options)

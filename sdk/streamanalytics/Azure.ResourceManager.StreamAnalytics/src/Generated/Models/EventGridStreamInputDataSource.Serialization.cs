@@ -30,17 +30,17 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStringValue(StreamInputDataSourceType);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Subscriber))
+            if (Subscriber != null)
             {
                 writer.WritePropertyName("subscriber"u8);
                 writer.WriteObjectValue(Subscriber);
             }
-            if (Optional.IsDefined(Schema))
+            if (Schema.HasValue)
             {
                 writer.WritePropertyName("schema"u8);
                 writer.WriteStringValue(Schema.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(StorageAccounts))
+            if (!(StorageAccounts is ChangeTrackingList<StreamAnalyticsStorageAccount> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("storageAccounts"u8);
                 writer.WriteStartArray();
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(EventTypes))
+            if (!(EventTypes is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("eventTypes"u8);
                 writer.WriteStartArray();
@@ -102,8 +102,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             string type = default;
             Optional<EventHubV2StreamInputDataSource> subscriber = default;
             Optional<EventGridEventSchemaType> schema = default;
-            Optional<IList<StreamAnalyticsStorageAccount>> storageAccounts = default;
-            Optional<IList<string>> eventTypes = default;
+            IList<StreamAnalyticsStorageAccount> storageAccounts = default;
+            IList<string> eventTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                             {
                                 continue;
                             }
-                            subscriber = EventHubV2StreamInputDataSource.DeserializeEventHubV2StreamInputDataSource(property0.Value);
+                            subscriber = EventHubV2StreamInputDataSource.DeserializeEventHubV2StreamInputDataSource(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("schema"u8))
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                             List<StreamAnalyticsStorageAccount> array = new List<StreamAnalyticsStorageAccount>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(StreamAnalyticsStorageAccount.DeserializeStreamAnalyticsStorageAccount(item));
+                                array.Add(StreamAnalyticsStorageAccount.DeserializeStreamAnalyticsStorageAccount(item, options));
                             }
                             storageAccounts = array;
                             continue;
@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventGridStreamInputDataSource(type, serializedAdditionalRawData, subscriber.Value, Optional.ToNullable(schema), Optional.ToList(storageAccounts), Optional.ToList(eventTypes));
+            return new EventGridStreamInputDataSource(
+                type,
+                serializedAdditionalRawData,
+                subscriber.Value,
+                Optional.ToNullable(schema),
+                storageAccounts ?? new ChangeTrackingList<StreamAnalyticsStorageAccount>(),
+                eventTypes ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<EventGridStreamInputDataSource>.Write(ModelReaderWriterOptions options)

@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Category))
+            if (Category != null)
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (Optional.IsDefined(WorkbookTemplateGalleryType))
+            if (WorkbookTemplateGalleryType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(WorkbookTemplateGalleryType);
             }
-            if (Optional.IsDefined(Order))
+            if (Order.HasValue)
             {
                 writer.WritePropertyName("order"u8);
                 writer.WriteNumberValue(Order.Value);
             }
-            if (Optional.IsDefined(ResourceType))
+            if (ResourceType != null)
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType);
@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkbookTemplateGallery(name.Value, category.Value, type.Value, Optional.ToNullable(order), resourceType.Value, serializedAdditionalRawData);
+            return new WorkbookTemplateGallery(
+                name.Value,
+                category.Value,
+                type.Value,
+                Optional.ToNullable(order),
+                resourceType.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkbookTemplateGallery>.Write(ModelReaderWriterOptions options)

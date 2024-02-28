@@ -42,74 +42,74 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Operation))
+            if (options.Format != "W" && Operation != null)
             {
                 writer.WritePropertyName("operation"u8);
                 writer.WriteStringValue(Operation);
             }
-            if (options.Format != "W" && Optional.IsDefined(OperationFriendlyName))
+            if (options.Format != "W" && OperationFriendlyName != null)
             {
                 writer.WritePropertyName("operationFriendlyName"u8);
                 writer.WriteStringValue(OperationFriendlyName);
             }
-            if (options.Format != "W" && Optional.IsDefined(PercentComplete))
+            if (options.Format != "W" && PercentComplete.HasValue)
             {
                 writer.WritePropertyName("percentComplete"u8);
                 writer.WriteNumberValue(PercentComplete.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ServerName))
+            if (options.Format != "W" && ServerName != null)
             {
                 writer.WritePropertyName("serverName"u8);
                 writer.WriteStringValue(ServerName);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W" && State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ErrorCode))
+            if (options.Format != "W" && ErrorCode.HasValue)
             {
                 writer.WritePropertyName("errorCode"u8);
                 writer.WriteNumberValue(ErrorCode.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ErrorDescription))
+            if (options.Format != "W" && ErrorDescription != null)
             {
                 writer.WritePropertyName("errorDescription"u8);
                 writer.WriteStringValue(ErrorDescription);
             }
-            if (options.Format != "W" && Optional.IsDefined(ErrorSeverity))
+            if (options.Format != "W" && ErrorSeverity.HasValue)
             {
                 writer.WritePropertyName("errorSeverity"u8);
                 writer.WriteNumberValue(ErrorSeverity.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsUserError))
+            if (options.Format != "W" && IsUserError.HasValue)
             {
                 writer.WritePropertyName("isUserError"u8);
                 writer.WriteBooleanValue(IsUserError.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(EstimatedCompleteOn))
+            if (options.Format != "W" && EstimatedCompleteOn.HasValue)
             {
                 writer.WritePropertyName("estimatedCompletionTime"u8);
                 writer.WriteStringValue(EstimatedCompleteOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(Description))
+            if (options.Format != "W" && Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsCancellable))
+            if (options.Format != "W" && IsCancellable.HasValue)
             {
                 writer.WritePropertyName("isCancellable"u8);
                 writer.WriteBooleanValue(IsCancellable.Value);
@@ -313,7 +313,25 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServerOperationData(id, name, type, systemData.Value, operation.Value, operationFriendlyName.Value, Optional.ToNullable(percentComplete), serverName.Value, Optional.ToNullable(startTime), Optional.ToNullable(state), Optional.ToNullable(errorCode), errorDescription.Value, Optional.ToNullable(errorSeverity), Optional.ToNullable(isUserError), Optional.ToNullable(estimatedCompletionTime), description.Value, Optional.ToNullable(isCancellable), serializedAdditionalRawData);
+            return new ServerOperationData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                operation.Value,
+                operationFriendlyName.Value,
+                Optional.ToNullable(percentComplete),
+                serverName.Value,
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(state),
+                Optional.ToNullable(errorCode),
+                errorDescription.Value,
+                Optional.ToNullable(errorSeverity),
+                Optional.ToNullable(isUserError),
+                Optional.ToNullable(estimatedCompletionTime),
+                description.Value,
+                Optional.ToNullable(isCancellable),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServerOperationData>.Write(ModelReaderWriterOptions options)

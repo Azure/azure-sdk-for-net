@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Length))
+            if (options.Format != "W" && Length.HasValue)
             {
                 writer.WritePropertyName("length"u8);
                 writer.WriteNumberValue(Length.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Height))
+            if (options.Format != "W" && Height.HasValue)
             {
                 writer.WritePropertyName("height"u8);
                 writer.WriteNumberValue(Height.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Width))
+            if (options.Format != "W" && Width.HasValue)
             {
                 writer.WritePropertyName("width"u8);
                 writer.WriteNumberValue(Width.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(LengthHeightUnit))
+            if (options.Format != "W" && LengthHeightUnit.HasValue)
             {
                 writer.WritePropertyName("lengthHeightUnit"u8);
                 writer.WriteStringValue(LengthHeightUnit.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Weight))
+            if (options.Format != "W" && Weight.HasValue)
             {
                 writer.WritePropertyName("weight"u8);
                 writer.WriteNumberValue(Weight.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Depth))
+            if (options.Format != "W" && Depth.HasValue)
             {
                 writer.WritePropertyName("depth"u8);
                 writer.WriteNumberValue(Depth.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(WeightUnit))
+            if (options.Format != "W" && WeightUnit.HasValue)
             {
                 writer.WritePropertyName("weightUnit"u8);
                 writer.WriteStringValue(WeightUnit.Value.ToString());
@@ -179,7 +179,15 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProductDimensions(Optional.ToNullable(length), Optional.ToNullable(height), Optional.ToNullable(width), Optional.ToNullable(lengthHeightUnit), Optional.ToNullable(weight), Optional.ToNullable(depth), Optional.ToNullable(weightUnit), serializedAdditionalRawData);
+            return new ProductDimensions(
+                Optional.ToNullable(length),
+                Optional.ToNullable(height),
+                Optional.ToNullable(width),
+                Optional.ToNullable(lengthHeightUnit),
+                Optional.ToNullable(weight),
+                Optional.ToNullable(depth),
+                Optional.ToNullable(weightUnit),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProductDimensions>.Write(ModelReaderWriterOptions options)

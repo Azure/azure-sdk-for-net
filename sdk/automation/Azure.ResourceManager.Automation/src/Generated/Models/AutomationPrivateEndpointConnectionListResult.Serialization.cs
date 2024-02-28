@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<AutomationPrivateEndpointConnectionData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AutomationPrivateEndpointConnectionData>> value = default;
+            IReadOnlyList<AutomationPrivateEndpointConnectionData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<AutomationPrivateEndpointConnectionData> array = new List<AutomationPrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutomationPrivateEndpointConnectionData.DeserializeAutomationPrivateEndpointConnectionData(item));
+                        array.Add(AutomationPrivateEndpointConnectionData.DeserializeAutomationPrivateEndpointConnectionData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationPrivateEndpointConnectionListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new AutomationPrivateEndpointConnectionListResult(value ?? new ChangeTrackingList<AutomationPrivateEndpointConnectionData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationPrivateEndpointConnectionListResult>.Write(ModelReaderWriterOptions options)

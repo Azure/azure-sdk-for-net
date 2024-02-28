@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MinPort))
+            if (MinPort.HasValue)
             {
                 writer.WritePropertyName("minPort"u8);
                 writer.WriteNumberValue(MinPort.Value);
             }
-            if (Optional.IsDefined(MaxPort))
+            if (MaxPort.HasValue)
             {
                 writer.WritePropertyName("maxPort"u8);
                 writer.WriteNumberValue(MaxPort.Value);

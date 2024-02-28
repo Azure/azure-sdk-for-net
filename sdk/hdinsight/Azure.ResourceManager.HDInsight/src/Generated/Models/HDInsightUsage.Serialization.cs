@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Unit))
+            if (Unit != null)
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit);
             }
-            if (Optional.IsDefined(CurrentValue))
+            if (CurrentValue.HasValue)
             {
                 writer.WritePropertyName("currentValue"u8);
                 writer.WriteNumberValue(CurrentValue.Value);
             }
-            if (Optional.IsDefined(Limit))
+            if (Limit.HasValue)
             {
                 writer.WritePropertyName("limit"u8);
                 writer.WriteNumberValue(Limit.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteObjectValue(Name);
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    name = HDInsightLocalizedName.DeserializeHDInsightLocalizedName(property.Value);
+                    name = HDInsightLocalizedName.DeserializeHDInsightLocalizedName(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

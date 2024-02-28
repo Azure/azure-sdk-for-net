@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStartObject();
             writer.WritePropertyName("canary"u8);
             writer.WriteObjectValue(Canary);
-            if (Optional.IsDefined(ProviderRegistration))
+            if (ProviderRegistration != null)
             {
                 writer.WritePropertyName("providerRegistration"u8);
                 writer.WriteObjectValue(ProviderRegistration);
             }
-            if (Optional.IsCollectionDefined(ResourceTypeRegistrations))
+            if (!(ResourceTypeRegistrations is ChangeTrackingList<ResourceTypeRegistrationData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("resourceTypeRegistrations"u8);
                 writer.WriteStartArray();
@@ -84,14 +84,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             TrafficRegions canary = default;
             Optional<ProviderRegistrationData> providerRegistration = default;
-            Optional<IList<ResourceTypeRegistrationData>> resourceTypeRegistrations = default;
+            IList<ResourceTypeRegistrationData> resourceTypeRegistrations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("canary"u8))
                 {
-                    canary = TrafficRegions.DeserializeTrafficRegions(property.Value);
+                    canary = TrafficRegions.DeserializeTrafficRegions(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("providerRegistration"u8))
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    providerRegistration = ProviderRegistrationData.DeserializeProviderRegistrationData(property.Value);
+                    providerRegistration = ProviderRegistrationData.DeserializeProviderRegistrationData(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("resourceTypeRegistrations"u8))
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<ResourceTypeRegistrationData> array = new List<ResourceTypeRegistrationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceTypeRegistrationData.DeserializeResourceTypeRegistrationData(item));
+                        array.Add(ResourceTypeRegistrationData.DeserializeResourceTypeRegistrationData(item, options));
                     }
                     resourceTypeRegistrations = array;
                     continue;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomRolloutSpecification(canary, providerRegistration.Value, Optional.ToList(resourceTypeRegistrations), serializedAdditionalRawData);
+            return new CustomRolloutSpecification(canary, providerRegistration.Value, resourceTypeRegistrations ?? new ChangeTrackingList<ResourceTypeRegistrationData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CustomRolloutSpecification>.Write(ModelReaderWriterOptions options)

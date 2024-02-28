@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     List<GlobalRulestackFqdnData> array = new List<GlobalRulestackFqdnData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GlobalRulestackFqdnData.DeserializeGlobalRulestackFqdnData(item));
+                        array.Add(GlobalRulestackFqdnData.DeserializeGlobalRulestackFqdnData(item, options));
                     }
                     value = array;
                     continue;

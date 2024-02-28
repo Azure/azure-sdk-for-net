@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(IsServiceRole))
+            if (IsServiceRole.HasValue)
             {
                 writer.WritePropertyName("isServiceRole"u8);
                 writer.WriteBooleanValue(IsServiceRole.Value);
             }
-            if (Optional.IsCollectionDefined(Permissions))
+            if (!(Permissions is ChangeTrackingList<Permission> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("permissions"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Scopes))
+            if (!(Scopes is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("scopes"u8);
                 writer.WriteStartArray();
@@ -102,8 +102,8 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<bool> isServiceRole = default;
-            Optional<IReadOnlyList<Permission>> permissions = default;
-            Optional<IReadOnlyList<string>> scopes = default;
+            IReadOnlyList<Permission> permissions = default;
+            IReadOnlyList<string> scopes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<Permission> array = new List<Permission>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Permission.DeserializePermission(item));
+                        array.Add(Permission.DeserializePermission(item, options));
                     }
                     permissions = array;
                     continue;
@@ -161,7 +161,13 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureRoleDefinition(id.Value, name.Value, Optional.ToNullable(isServiceRole), Optional.ToList(permissions), Optional.ToList(scopes), serializedAdditionalRawData);
+            return new AzureRoleDefinition(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(isServiceRole),
+                permissions ?? new ChangeTrackingList<Permission>(),
+                scopes ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureRoleDefinition>.Write(ModelReaderWriterOptions options)

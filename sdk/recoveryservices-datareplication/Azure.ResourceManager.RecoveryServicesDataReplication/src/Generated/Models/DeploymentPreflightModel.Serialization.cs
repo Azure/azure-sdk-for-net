@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Resources))
+            if (!(Resources is ChangeTrackingList<DeploymentPreflightResourceInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("resources"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 return null;
             }
-            Optional<IList<DeploymentPreflightResourceInfo>> resources = default;
+            IList<DeploymentPreflightResourceInfo> resources = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     List<DeploymentPreflightResourceInfo> array = new List<DeploymentPreflightResourceInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeploymentPreflightResourceInfo.DeserializeDeploymentPreflightResourceInfo(item));
+                        array.Add(DeploymentPreflightResourceInfo.DeserializeDeploymentPreflightResourceInfo(item, options));
                     }
                     resources = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeploymentPreflightModel(Optional.ToList(resources), serializedAdditionalRawData);
+            return new DeploymentPreflightModel(resources ?? new ChangeTrackingList<DeploymentPreflightResourceInfo>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeploymentPreflightModel>.Write(ModelReaderWriterOptions options)

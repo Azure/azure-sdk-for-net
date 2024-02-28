@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DueOn))
+            if (DueOn.HasValue)
             {
                 writer.WritePropertyName("dueDate"u8);
                 writer.WriteStringValue(DueOn.Value, "D");
             }
-            if (Optional.IsDefined(PayOn))
+            if (PayOn.HasValue)
             {
                 writer.WritePropertyName("paymentDate"u8);
                 writer.WriteStringValue(PayOn.Value, "D");
             }
-            if (Optional.IsDefined(PricingCurrencyTotal))
+            if (PricingCurrencyTotal != null)
             {
                 writer.WritePropertyName("pricingCurrencyTotal"u8);
                 writer.WriteObjectValue(PricingCurrencyTotal);
             }
-            if (Optional.IsDefined(BillingCurrencyTotal))
+            if (BillingCurrencyTotal != null)
             {
                 writer.WritePropertyName("billingCurrencyTotal"u8);
                 writer.WriteObjectValue(BillingCurrencyTotal);
             }
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ExtendedStatusInfo))
+            if (options.Format != "W" && ExtendedStatusInfo != null)
             {
                 writer.WritePropertyName("extendedStatusInfo"u8);
                 writer.WriteObjectValue(ExtendedStatusInfo);
             }
-            if (Optional.IsDefined(BillingAccount))
+            if (BillingAccount != null)
             {
                 writer.WritePropertyName("billingAccount"u8);
                 writer.WriteStringValue(BillingAccount);
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     {
                         continue;
                     }
-                    pricingCurrencyTotal = BillingBenefitsPrice.DeserializeBillingBenefitsPrice(property.Value);
+                    pricingCurrencyTotal = BillingBenefitsPrice.DeserializeBillingBenefitsPrice(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("billingCurrencyTotal"u8))
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     {
                         continue;
                     }
-                    billingCurrencyTotal = BillingBenefitsPrice.DeserializeBillingBenefitsPrice(property.Value);
+                    billingCurrencyTotal = BillingBenefitsPrice.DeserializeBillingBenefitsPrice(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     {
                         continue;
                     }
-                    extendedStatusInfo = BillingBenefitsExtendedStatusInfo.DeserializeBillingBenefitsExtendedStatusInfo(property.Value);
+                    extendedStatusInfo = BillingBenefitsExtendedStatusInfo.DeserializeBillingBenefitsExtendedStatusInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("billingAccount"u8))
@@ -175,7 +175,15 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SavingsPlanOrderPaymentDetail(Optional.ToNullable(dueDate), Optional.ToNullable(paymentDate), pricingCurrencyTotal.Value, billingCurrencyTotal.Value, Optional.ToNullable(status), extendedStatusInfo.Value, billingAccount.Value, serializedAdditionalRawData);
+            return new SavingsPlanOrderPaymentDetail(
+                Optional.ToNullable(dueDate),
+                Optional.ToNullable(paymentDate),
+                pricingCurrencyTotal.Value,
+                billingCurrencyTotal.Value,
+                Optional.ToNullable(status),
+                extendedStatusInfo.Value,
+                billingAccount.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SavingsPlanOrderPaymentDetail>.Write(ModelReaderWriterOptions options)

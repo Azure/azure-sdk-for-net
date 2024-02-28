@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(KeyEncryptionKey))
+            if (KeyEncryptionKey != null)
             {
                 writer.WritePropertyName("keyEncryptionKey"u8);
                 writer.WriteObjectValue(KeyEncryptionKey);
             }
-            if (Optional.IsDefined(EnableRotationToLatestKeyVersion))
+            if (EnableRotationToLatestKeyVersion.HasValue)
             {
                 writer.WritePropertyName("rotationToLatestKeyVersionEnabled"u8);
                 writer.WriteBooleanValue(EnableRotationToLatestKeyVersion.Value);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     {
                         continue;
                     }
-                    keyEncryptionKey = StorageCacheEncryptionKeyVaultKeyReference.DeserializeStorageCacheEncryptionKeyVaultKeyReference(property.Value);
+                    keyEncryptionKey = StorageCacheEncryptionKeyVaultKeyReference.DeserializeStorageCacheEncryptionKeyVaultKeyReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("rotationToLatestKeyVersionEnabled"u8))

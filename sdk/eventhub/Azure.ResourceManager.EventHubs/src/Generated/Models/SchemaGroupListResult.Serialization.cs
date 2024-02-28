@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<EventHubsSchemaGroupData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<EventHubsSchemaGroupData>> value = default;
+            IReadOnlyList<EventHubsSchemaGroupData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     List<EventHubsSchemaGroupData> array = new List<EventHubsSchemaGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EventHubsSchemaGroupData.DeserializeEventHubsSchemaGroupData(item));
+                        array.Add(EventHubsSchemaGroupData.DeserializeEventHubsSchemaGroupData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SchemaGroupListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SchemaGroupListResult(value ?? new ChangeTrackingList<EventHubsSchemaGroupData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SchemaGroupListResult>.Write(ModelReaderWriterOptions options)

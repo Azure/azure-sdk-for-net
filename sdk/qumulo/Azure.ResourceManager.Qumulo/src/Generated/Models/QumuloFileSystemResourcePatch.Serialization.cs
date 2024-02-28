@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Qumulo.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Qumulo.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Qumulo.Models
                 return null;
             }
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<FileSystemResourceUpdateProperties> properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Qumulo.Models
                     {
                         continue;
                     }
-                    properties = FileSystemResourceUpdateProperties.DeserializeFileSystemResourceUpdateProperties(property.Value);
+                    properties = FileSystemResourceUpdateProperties.DeserializeFileSystemResourceUpdateProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Qumulo.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QumuloFileSystemResourcePatch(identity, Optional.ToDictionary(tags), properties.Value, serializedAdditionalRawData);
+            return new QumuloFileSystemResourcePatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), properties.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QumuloFileSystemResourcePatch>.Write(ModelReaderWriterOptions options)

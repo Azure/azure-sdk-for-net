@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<ContainerCapabilities> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ContainerCapabilities>> value = default;
+            IReadOnlyList<ContainerCapabilities> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     List<ContainerCapabilities> array = new List<ContainerCapabilities>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerCapabilities.DeserializeContainerCapabilities(item));
+                        array.Add(ContainerCapabilities.DeserializeContainerCapabilities(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerCapabilitiesListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ContainerCapabilitiesListResult(value ?? new ChangeTrackingList<ContainerCapabilities>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerCapabilitiesListResult>.Write(ModelReaderWriterOptions options)

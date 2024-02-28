@@ -26,29 +26,29 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AzureSubscriptionId))
+            if (AzureSubscriptionId != null)
             {
                 writer.WritePropertyName("azureSubscriptionId"u8);
                 writer.WriteStringValue(AzureSubscriptionId);
             }
-            if (Optional.IsDefined(ResourceGroupName))
+            if (ResourceGroupName != null)
             {
                 writer.WritePropertyName("resourceGroupName"u8);
                 writer.WriteStringValue(ResourceGroupName);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("endpointType"u8);
             writer.WriteStringValue(EndpointType.ToString());
-            if (Optional.IsDefined(EndpointServiceContext))
+            if (EndpointServiceContext != null)
             {
                 writer.WritePropertyName("endpointServiceContext"u8);
                 writer.WriteStringValue(EndpointServiceContext);
             }
-            if (Optional.IsCollectionDefined(ResourceMoveChangeHistory))
+            if (!(ResourceMoveChangeHistory is ChangeTrackingList<ResourceMoveChangeHistory> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("resourceMoveChangeHistory"u8);
                 writer.WriteStartArray();
@@ -60,17 +60,17 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(EndpointUri))
+            if (EndpointUri != null)
             {
                 writer.WritePropertyName("endpointUrl"u8);
                 writer.WriteStringValue(EndpointUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(EndpointBaseUri))
+            if (EndpointBaseUri != null)
             {
                 writer.WritePropertyName("endpointBaseUrl"u8);
                 writer.WriteStringValue(EndpointBaseUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ClientAuthentication))
+            if (ClientAuthentication != null)
             {
                 writer.WritePropertyName("clientAuthentication"u8);
                 writer.WriteObjectValue(ClientAuthentication);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             Optional<string> name = default;
             PartnerEndpointType endpointType = default;
             Optional<string> endpointServiceContext = default;
-            Optional<IList<ResourceMoveChangeHistory>> resourceMoveChangeHistory = default;
+            IList<ResourceMoveChangeHistory> resourceMoveChangeHistory = default;
             Optional<Uri> endpointUri = default;
             Optional<Uri> endpointBaseUri = default;
             Optional<PartnerClientAuthentication> clientAuthentication = default;
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     List<ResourceMoveChangeHistory> array = new List<ResourceMoveChangeHistory>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.ResourceMoveChangeHistory.DeserializeResourceMoveChangeHistory(item));
+                        array.Add(Models.ResourceMoveChangeHistory.DeserializeResourceMoveChangeHistory(item, options));
                     }
                     resourceMoveChangeHistory = array;
                     continue;
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                             {
                                 continue;
                             }
-                            clientAuthentication = PartnerClientAuthentication.DeserializePartnerClientAuthentication(property0.Value);
+                            clientAuthentication = PartnerClientAuthentication.DeserializePartnerClientAuthentication(property0.Value, options);
                             continue;
                         }
                     }
@@ -211,7 +211,17 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebhookPartnerDestinationInfo(azureSubscriptionId.Value, resourceGroupName.Value, name.Value, endpointType, endpointServiceContext.Value, Optional.ToList(resourceMoveChangeHistory), serializedAdditionalRawData, endpointUri.Value, endpointBaseUri.Value, clientAuthentication.Value);
+            return new WebhookPartnerDestinationInfo(
+                azureSubscriptionId.Value,
+                resourceGroupName.Value,
+                name.Value,
+                endpointType,
+                endpointServiceContext.Value,
+                resourceMoveChangeHistory ?? new ChangeTrackingList<ResourceMoveChangeHistory>(),
+                serializedAdditionalRawData,
+                endpointUri.Value,
+                endpointBaseUri.Value,
+                clientAuthentication.Value);
         }
 
         BinaryData IPersistableModel<WebhookPartnerDestinationInfo>.Write(ModelReaderWriterOptions options)

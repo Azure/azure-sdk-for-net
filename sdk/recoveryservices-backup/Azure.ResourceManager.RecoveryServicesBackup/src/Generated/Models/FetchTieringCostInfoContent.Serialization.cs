@@ -74,13 +74,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "FetchTieringCostInfoForRehydrationRequest": return FetchTieringCostInfoForRehydrationContent.DeserializeFetchTieringCostInfoForRehydrationContent(element);
-                    case "FetchTieringCostSavingsInfoForPolicyRequest": return FetchTieringCostSavingsInfoForPolicyContent.DeserializeFetchTieringCostSavingsInfoForPolicyContent(element);
-                    case "FetchTieringCostSavingsInfoForProtectedItemRequest": return FetchTieringCostSavingsInfoForProtectedItemContent.DeserializeFetchTieringCostSavingsInfoForProtectedItemContent(element);
-                    case "FetchTieringCostSavingsInfoForVaultRequest": return FetchTieringCostSavingsInfoForVaultContent.DeserializeFetchTieringCostSavingsInfoForVaultContent(element);
+                    case "FetchTieringCostInfoForRehydrationRequest": return FetchTieringCostInfoForRehydrationContent.DeserializeFetchTieringCostInfoForRehydrationContent(element, options);
+                    case "FetchTieringCostSavingsInfoForPolicyRequest": return FetchTieringCostSavingsInfoForPolicyContent.DeserializeFetchTieringCostSavingsInfoForPolicyContent(element, options);
+                    case "FetchTieringCostSavingsInfoForProtectedItemRequest": return FetchTieringCostSavingsInfoForProtectedItemContent.DeserializeFetchTieringCostSavingsInfoForProtectedItemContent(element, options);
+                    case "FetchTieringCostSavingsInfoForVaultRequest": return FetchTieringCostSavingsInfoForVaultContent.DeserializeFetchTieringCostSavingsInfoForVaultContent(element, options);
                 }
             }
-            return UnknownFetchTieringCostInfoRequest.DeserializeUnknownFetchTieringCostInfoRequest(element);
+            return UnknownFetchTieringCostInfoRequest.DeserializeUnknownFetchTieringCostInfoRequest(element, options);
         }
 
         BinaryData IPersistableModel<FetchTieringCostInfoContent>.Write(ModelReaderWriterOptions options)

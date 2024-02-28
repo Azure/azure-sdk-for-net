@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(VmIds))
+            if (!(VmIds is ChangeTrackingList<ResourceIdentifier> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("vmIds"u8);
                 writer.WriteStartArray();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 return null;
             }
-            Optional<IList<ResourceIdentifier>> vmIds = default;
+            IList<ResourceIdentifier> vmIds = default;
             string userEmail = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NewRelicHostsGetContent(Optional.ToList(vmIds), userEmail, serializedAdditionalRawData);
+            return new NewRelicHostsGetContent(vmIds ?? new ChangeTrackingList<ResourceIdentifier>(), userEmail, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NewRelicHostsGetContent>.Write(ModelReaderWriterOptions options)

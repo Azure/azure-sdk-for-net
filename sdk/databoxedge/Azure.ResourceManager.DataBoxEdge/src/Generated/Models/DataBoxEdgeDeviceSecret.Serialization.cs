@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EncryptedSecret))
+            if (EncryptedSecret != null)
             {
                 writer.WritePropertyName("encryptedSecret"u8);
                 writer.WriteObjectValue(EncryptedSecret);
             }
-            if (Optional.IsDefined(KeyVaultId))
+            if (KeyVaultId != null)
             {
                 writer.WritePropertyName("keyVaultId"u8);
                 writer.WriteStringValue(KeyVaultId);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    encryptedSecret = AsymmetricEncryptedSecret.DeserializeAsymmetricEncryptedSecret(property.Value);
+                    encryptedSecret = AsymmetricEncryptedSecret.DeserializeAsymmetricEncryptedSecret(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("keyVaultId"u8))

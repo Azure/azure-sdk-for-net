@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(GraphApiComputeEndpoint))
+            if (GraphApiComputeEndpoint != null)
             {
                 writer.WritePropertyName("graphApiComputeEndpoint"u8);
                 writer.WriteStringValue(GraphApiComputeEndpoint);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Locations))
+            if (options.Format != "W" && !(Locations is ChangeTrackingList<GraphApiComputeRegionalService> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
@@ -41,24 +41,24 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(InstanceSize))
+            if (InstanceSize.HasValue)
             {
                 writer.WritePropertyName("instanceSize"u8);
                 writer.WriteStringValue(InstanceSize.Value.ToString());
             }
-            if (Optional.IsDefined(InstanceCount))
+            if (InstanceCount.HasValue)
             {
                 writer.WritePropertyName("instanceCount"u8);
                 writer.WriteNumberValue(InstanceCount.Value);
             }
             writer.WritePropertyName("serviceType"u8);
             writer.WriteStringValue(ServiceType.ToString());
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             Optional<string> graphApiComputeEndpoint = default;
-            Optional<IReadOnlyList<GraphApiComputeRegionalService>> locations = default;
+            IReadOnlyList<GraphApiComputeRegionalService> locations = default;
             Optional<DateTimeOffset> creationTime = default;
             Optional<CosmosDBServiceSize> instanceSize = default;
             Optional<int> instanceCount = default;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<GraphApiComputeRegionalService> array = new List<GraphApiComputeRegionalService>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GraphApiComputeRegionalService.DeserializeGraphApiComputeRegionalService(item));
+                        array.Add(GraphApiComputeRegionalService.DeserializeGraphApiComputeRegionalService(item, options));
                     }
                     locations = array;
                     continue;
@@ -172,7 +172,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new GraphApiComputeServiceProperties(Optional.ToNullable(creationTime), Optional.ToNullable(instanceSize), Optional.ToNullable(instanceCount), serviceType, Optional.ToNullable(status), additionalProperties, graphApiComputeEndpoint.Value, Optional.ToList(locations));
+            return new GraphApiComputeServiceProperties(
+                Optional.ToNullable(creationTime),
+                Optional.ToNullable(instanceSize),
+                Optional.ToNullable(instanceCount),
+                serviceType,
+                Optional.ToNullable(status),
+                additionalProperties,
+                graphApiComputeEndpoint.Value,
+                locations ?? new ChangeTrackingList<GraphApiComputeRegionalService>());
         }
 
         BinaryData IPersistableModel<GraphApiComputeServiceProperties>.Write(ModelReaderWriterOptions options)

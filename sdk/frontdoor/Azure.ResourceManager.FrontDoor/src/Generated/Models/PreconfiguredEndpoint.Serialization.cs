@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -55,29 +55,29 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Endpoint))
+            if (Endpoint != null)
             {
                 writer.WritePropertyName("endpoint"u8);
                 writer.WriteStringValue(Endpoint);
             }
-            if (Optional.IsDefined(EndpointType))
+            if (EndpointType.HasValue)
             {
                 writer.WritePropertyName("endpointType"u8);
                 writer.WriteStringValue(EndpointType.Value.ToString());
             }
-            if (Optional.IsDefined(Backend))
+            if (Backend != null)
             {
                 writer.WritePropertyName("backend"u8);
                 writer.WriteStringValue(Backend);
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -220,7 +220,18 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PreconfiguredEndpoint(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, description.Value, endpoint.Value, Optional.ToNullable(endpointType), backend.Value, serializedAdditionalRawData);
+            return new PreconfiguredEndpoint(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                description.Value,
+                endpoint.Value,
+                Optional.ToNullable(endpointType),
+                backend.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PreconfiguredEndpoint>.Write(ModelReaderWriterOptions options)

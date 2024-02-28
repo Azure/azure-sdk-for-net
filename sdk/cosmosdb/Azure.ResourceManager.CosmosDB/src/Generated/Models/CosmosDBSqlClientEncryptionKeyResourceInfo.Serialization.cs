@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(EncryptionAlgorithm))
+            if (EncryptionAlgorithm != null)
             {
                 writer.WritePropertyName("encryptionAlgorithm"u8);
                 writer.WriteStringValue(EncryptionAlgorithm);
             }
-            if (Optional.IsDefined(WrappedDataEncryptionKey))
+            if (WrappedDataEncryptionKey != null)
             {
                 writer.WritePropertyName("wrappedDataEncryptionKey"u8);
                 writer.WriteBase64StringValue(WrappedDataEncryptionKey, "D");
             }
-            if (Optional.IsDefined(KeyWrapMetadata))
+            if (KeyWrapMetadata != null)
             {
                 writer.WritePropertyName("keyWrapMetadata"u8);
                 writer.WriteObjectValue(KeyWrapMetadata);
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    keyWrapMetadata = CosmosDBKeyWrapMetadata.DeserializeCosmosDBKeyWrapMetadata(property.Value);
+                    keyWrapMetadata = CosmosDBKeyWrapMetadata.DeserializeCosmosDBKeyWrapMetadata(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ClientTrackingId))
+            if (ClientTrackingId != null)
             {
                 writer.WritePropertyName("clientTrackingId"u8);
                 writer.WriteStringValue(ClientTrackingId);
             }
-            if (Optional.IsCollectionDefined(ClientKeywords))
+            if (!(ClientKeywords is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("clientKeywords"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Logic.Models
                 return null;
             }
             Optional<string> clientTrackingId = default;
-            Optional<IList<string>> clientKeywords = default;
+            IList<string> clientKeywords = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicWorkflowRunCorrelation(clientTrackingId.Value, Optional.ToList(clientKeywords), serializedAdditionalRawData);
+            return new LogicWorkflowRunCorrelation(clientTrackingId.Value, clientKeywords ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicWorkflowRunCorrelation>.Write(ModelReaderWriterOptions options)

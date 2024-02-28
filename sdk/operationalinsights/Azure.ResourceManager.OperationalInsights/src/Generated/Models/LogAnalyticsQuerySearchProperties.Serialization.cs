@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Related))
+            if (Related != null)
             {
                 writer.WritePropertyName("related"u8);
                 writer.WriteObjectValue(Related);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, IList<string>> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 return null;
             }
             Optional<LogAnalyticsQuerySearchRelatedMetadata> related = default;
-            Optional<IDictionary<string, IList<string>>> tags = default;
+            IDictionary<string, IList<string>> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     {
                         continue;
                     }
-                    related = LogAnalyticsQuerySearchRelatedMetadata.DeserializeLogAnalyticsQuerySearchRelatedMetadata(property.Value);
+                    related = LogAnalyticsQuerySearchRelatedMetadata.DeserializeLogAnalyticsQuerySearchRelatedMetadata(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogAnalyticsQuerySearchProperties(related.Value, Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new LogAnalyticsQuerySearchProperties(related.Value, tags ?? new ChangeTrackingDictionary<string, IList<string>>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogAnalyticsQuerySearchProperties>.Write(ModelReaderWriterOptions options)

@@ -26,34 +26,34 @@ namespace Azure.ResourceManager.DataShare.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(DurationInMilliSeconds))
+            if (options.Format != "W" && DurationInMilliSeconds.HasValue)
             {
                 writer.WritePropertyName("durationMs"u8);
                 writer.WriteNumberValue(DurationInMilliSeconds.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(EndOn))
+            if (options.Format != "W" && EndOn.HasValue)
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(Message))
+            if (options.Format != "W" && Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
             writer.WritePropertyName("synchronizationId"u8);
             writer.WriteStringValue(SynchronizationId);
-            if (options.Format != "W" && Optional.IsDefined(SynchronizationMode))
+            if (options.Format != "W" && SynchronizationMode.HasValue)
             {
                 writer.WritePropertyName("synchronizationMode"u8);
                 writer.WriteStringValue(SynchronizationMode.Value.ToString());
@@ -164,7 +164,15 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ShareSubscriptionSynchronization(Optional.ToNullable(durationMs), Optional.ToNullable(endTime), message.Value, Optional.ToNullable(startTime), status.Value, synchronizationId, Optional.ToNullable(synchronizationMode), serializedAdditionalRawData);
+            return new ShareSubscriptionSynchronization(
+                Optional.ToNullable(durationMs),
+                Optional.ToNullable(endTime),
+                message.Value,
+                Optional.ToNullable(startTime),
+                status.Value,
+                synchronizationId,
+                Optional.ToNullable(synchronizationMode),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ShareSubscriptionSynchronization>.Write(ModelReaderWriterOptions options)

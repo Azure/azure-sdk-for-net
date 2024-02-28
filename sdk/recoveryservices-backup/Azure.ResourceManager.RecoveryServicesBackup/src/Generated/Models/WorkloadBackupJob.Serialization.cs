@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(WorkloadType))
+            if (WorkloadType != null)
             {
                 writer.WritePropertyName("workloadType"u8);
                 writer.WriteStringValue(WorkloadType);
             }
-            if (Optional.IsDefined(Duration))
+            if (Duration.HasValue)
             {
                 writer.WritePropertyName("duration"u8);
                 writer.WriteStringValue(Duration.Value, "P");
             }
-            if (Optional.IsCollectionDefined(ActionsInfo))
+            if (!(ActionsInfo is ChangeTrackingList<JobSupportedAction> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("actionsInfo"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ErrorDetails))
+            if (!(ErrorDetails is ChangeTrackingList<WorkloadErrorInfo> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("errorDetails"u8);
                 writer.WriteStartArray();
@@ -56,42 +56,42 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ExtendedInfo))
+            if (ExtendedInfo != null)
             {
                 writer.WritePropertyName("extendedInfo"u8);
                 writer.WriteObjectValue(ExtendedInfo);
             }
-            if (Optional.IsDefined(EntityFriendlyName))
+            if (EntityFriendlyName != null)
             {
                 writer.WritePropertyName("entityFriendlyName"u8);
                 writer.WriteStringValue(EntityFriendlyName);
             }
-            if (Optional.IsDefined(BackupManagementType))
+            if (BackupManagementType.HasValue)
             {
                 writer.WritePropertyName("backupManagementType"u8);
                 writer.WriteStringValue(BackupManagementType.Value.ToString());
             }
-            if (Optional.IsDefined(Operation))
+            if (Operation != null)
             {
                 writer.WritePropertyName("operation"u8);
                 writer.WriteStringValue(Operation);
             }
-            if (Optional.IsDefined(Status))
+            if (Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Optional.IsDefined(StartOn))
+            if (StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (EndOn.HasValue)
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Optional.IsDefined(ActivityId))
+            if (ActivityId != null)
             {
                 writer.WritePropertyName("activityId"u8);
                 writer.WriteStringValue(ActivityId);
@@ -138,8 +138,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             Optional<string> workloadType = default;
             Optional<TimeSpan> duration = default;
-            Optional<IList<JobSupportedAction>> actionsInfo = default;
-            Optional<IList<WorkloadErrorInfo>> errorDetails = default;
+            IList<JobSupportedAction> actionsInfo = default;
+            IList<WorkloadErrorInfo> errorDetails = default;
             Optional<WorkloadBackupJobExtendedInfo> extendedInfo = default;
             Optional<string> entityFriendlyName = default;
             Optional<BackupManagementType> backupManagementType = default;
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<WorkloadErrorInfo> array = new List<WorkloadErrorInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WorkloadErrorInfo.DeserializeWorkloadErrorInfo(item));
+                        array.Add(WorkloadErrorInfo.DeserializeWorkloadErrorInfo(item, options));
                     }
                     errorDetails = array;
                     continue;
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    extendedInfo = WorkloadBackupJobExtendedInfo.DeserializeWorkloadBackupJobExtendedInfo(property.Value);
+                    extendedInfo = WorkloadBackupJobExtendedInfo.DeserializeWorkloadBackupJobExtendedInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("entityFriendlyName"u8))
@@ -262,7 +262,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadBackupJob(entityFriendlyName.Value, Optional.ToNullable(backupManagementType), operation.Value, status.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), activityId.Value, jobType, serializedAdditionalRawData, workloadType.Value, Optional.ToNullable(duration), Optional.ToList(actionsInfo), Optional.ToList(errorDetails), extendedInfo.Value);
+            return new WorkloadBackupJob(
+                entityFriendlyName.Value,
+                Optional.ToNullable(backupManagementType),
+                operation.Value,
+                status.Value,
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                activityId.Value,
+                jobType,
+                serializedAdditionalRawData,
+                workloadType.Value,
+                Optional.ToNullable(duration),
+                actionsInfo ?? new ChangeTrackingList<JobSupportedAction>(),
+                errorDetails ?? new ChangeTrackingList<WorkloadErrorInfo>(),
+                extendedInfo.Value);
         }
 
         BinaryData IPersistableModel<WorkloadBackupJob>.Write(ModelReaderWriterOptions options)

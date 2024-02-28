@@ -26,52 +26,52 @@ namespace Azure.ResourceManager.DataShare.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ConsumerEmail))
+            if (ConsumerEmail != null)
             {
                 writer.WritePropertyName("consumerEmail"u8);
                 writer.WriteStringValue(ConsumerEmail);
             }
-            if (Optional.IsDefined(ConsumerName))
+            if (ConsumerName != null)
             {
                 writer.WritePropertyName("consumerName"u8);
                 writer.WriteStringValue(ConsumerName);
             }
-            if (Optional.IsDefined(ConsumerTenantName))
+            if (ConsumerTenantName != null)
             {
                 writer.WritePropertyName("consumerTenantName"u8);
                 writer.WriteStringValue(ConsumerTenantName);
             }
-            if (Optional.IsDefined(DurationInMilliSeconds))
+            if (DurationInMilliSeconds.HasValue)
             {
                 writer.WritePropertyName("durationMs"u8);
                 writer.WriteNumberValue(DurationInMilliSeconds.Value);
             }
-            if (Optional.IsDefined(EndOn))
+            if (EndOn.HasValue)
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Optional.IsDefined(Message))
+            if (Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Optional.IsDefined(StartOn))
+            if (StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(Status))
+            if (Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Optional.IsDefined(SynchronizationId))
+            if (SynchronizationId.HasValue)
             {
                 writer.WritePropertyName("synchronizationId"u8);
                 writer.WriteStringValue(SynchronizationId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(SynchronizationMode))
+            if (options.Format != "W" && SynchronizationMode.HasValue)
             {
                 writer.WritePropertyName("synchronizationMode"u8);
                 writer.WriteStringValue(SynchronizationMode.Value.ToString());
@@ -204,7 +204,18 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ShareSynchronization(consumerEmail.Value, consumerName.Value, consumerTenantName.Value, Optional.ToNullable(durationMs), Optional.ToNullable(endTime), message.Value, Optional.ToNullable(startTime), status.Value, Optional.ToNullable(synchronizationId), Optional.ToNullable(synchronizationMode), serializedAdditionalRawData);
+            return new ShareSynchronization(
+                consumerEmail.Value,
+                consumerName.Value,
+                consumerTenantName.Value,
+                Optional.ToNullable(durationMs),
+                Optional.ToNullable(endTime),
+                message.Value,
+                Optional.ToNullable(startTime),
+                status.Value,
+                Optional.ToNullable(synchronizationId),
+                Optional.ToNullable(synchronizationMode),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ShareSynchronization>.Write(ModelReaderWriterOptions options)

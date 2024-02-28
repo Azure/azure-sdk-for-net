@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Format))
+            if (Format != null)
             {
                 writer.WritePropertyName("format"u8);
                 writer.WriteStringValue(Format);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Version))
+            if (Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Optional.IsDefined(Source))
+            if (Source != null)
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
-            if (options.Format != "W" && Optional.IsDefined(CallRateLimit))
+            if (options.Format != "W" && CallRateLimit != null)
             {
                 writer.WritePropertyName("callRateLimit"u8);
                 writer.WriteObjectValue(CallRateLimit);
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    callRateLimit = ServiceAccountCallRateLimit.DeserializeServiceAccountCallRateLimit(property.Value);
+                    callRateLimit = ServiceAccountCallRateLimit.DeserializeServiceAccountCallRateLimit(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CognitiveServicesAccountDeploymentModel(format.Value, name.Value, version.Value, source.Value, callRateLimit.Value, serializedAdditionalRawData);
+            return new CognitiveServicesAccountDeploymentModel(
+                format.Value,
+                name.Value,
+                version.Value,
+                source.Value,
+                callRateLimit.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CognitiveServicesAccountDeploymentModel>.Write(ModelReaderWriterOptions options)

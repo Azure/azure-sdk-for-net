@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Result))
+            if (Result != null)
             {
                 writer.WritePropertyName("result"u8);
                 writer.WriteStringValue(Result);
             }
-            if (Optional.IsDefined(Expression))
+            if (Expression != null)
             {
                 writer.WritePropertyName("expression"u8);
                 writer.WriteStringValue(Expression);
             }
-            if (options.Format != "W" && Optional.IsDefined(ExpressionKind))
+            if (options.Format != "W" && ExpressionKind != null)
             {
                 writer.WritePropertyName("expressionKind"u8);
                 writer.WriteStringValue(ExpressionKind);
             }
-            if (Optional.IsDefined(Path))
+            if (Path != null)
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (Optional.IsDefined(ExpressionValue))
+            if (ExpressionValue != null)
             {
                 writer.WritePropertyName("expressionValue"u8);
 #if NET6_0_OR_GREATER
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
 #endif
             }
-            if (Optional.IsDefined(TargetValue))
+            if (TargetValue != null)
             {
                 writer.WritePropertyName("targetValue"u8);
 #if NET6_0_OR_GREATER
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
 #endif
             }
-            if (Optional.IsDefined(Operator))
+            if (Operator != null)
             {
                 writer.WritePropertyName("operator"u8);
                 writer.WriteStringValue(Operator);
@@ -173,7 +173,15 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExpressionEvaluationDetails(result.Value, expression.Value, expressionKind.Value, path.Value, expressionValue.Value, targetValue.Value, @operator.Value, serializedAdditionalRawData);
+            return new ExpressionEvaluationDetails(
+                result.Value,
+                expression.Value,
+                expressionKind.Value,
+                path.Value,
+                expressionValue.Value,
+                targetValue.Value,
+                @operator.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExpressionEvaluationDetails>.Write(ModelReaderWriterOptions options)

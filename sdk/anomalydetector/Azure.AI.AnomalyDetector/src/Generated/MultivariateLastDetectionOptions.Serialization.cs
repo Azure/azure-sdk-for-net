@@ -34,7 +34,7 @@ namespace Azure.AI.AnomalyDetector
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(TopContributorCount))
+            if (TopContributorCount.HasValue)
             {
                 writer.WritePropertyName("topContributorCount"u8);
                 writer.WriteNumberValue(TopContributorCount.Value);
@@ -88,7 +88,7 @@ namespace Azure.AI.AnomalyDetector
                     List<VariableValues> array = new List<VariableValues>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VariableValues.DeserializeVariableValues(item));
+                        array.Add(VariableValues.DeserializeVariableValues(item, options));
                     }
                     variables = array;
                     continue;

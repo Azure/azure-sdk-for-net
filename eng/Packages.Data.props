@@ -36,7 +36,7 @@
     <PackageReference Update="System.Diagnostics.DiagnosticSource" Version="4.5.1" />
     <PackageReference Update="System.Diagnostics.Tools" Version="4.3.0" />
     <PackageReference Update="System.Globalization" Version="4.3.0" />
-    <PackageReference Update="System.IdentityModel.Tokens.Jwt" Version="5.4.0" />
+    <PackageReference Update="System.IdentityModel.Tokens.Jwt" Version="5.7.0" />
     <PackageReference Update="System.Linq" Version="4.3.0" />
     <PackageReference Update="System.Memory.Data" Version="1.0.2" />
     <PackageReference Update="System.Net.Http" Version="4.3.4" />
@@ -106,18 +106,20 @@
 
     <!-- Azure SDK packages -->
     <PackageReference Update="Azure.Communication.Identity" Version="1.3.0" />
-    <PackageReference Update="Azure.Communication.Common" Version="1.2.1" />
-    <PackageReference Update="Azure.Core" Version="1.37.0" />
+    <PackageReference Update="Azure.Communication.Common" Version="1.3.0" />
+    <PackageReference Update="Azure.Core" Version="1.38.0" />
     <PackageReference Update="Azure.Core.Amqp" Version="1.3.0" />
     <PackageReference Update="Azure.Core.Experimental" Version="0.1.0-preview.32" />
     <PackageReference Update="Azure.Core.Expressions.DataFactory" Version="1.0.0-beta.6" />
     <PackageReference Update="Azure.Data.SchemaRegistry" Version="1.2.0" />
     <PackageReference Update="Azure.Data.Tables" Version="12.8.0" />
-    <PackageReference Update="Azure.Messaging.EventHubs" Version="5.10.0" />
+    <PackageReference Update="Azure.Messaging.EventHubs" Version="5.11.0" />
     <PackageReference Update="Azure.Messaging.EventGrid" Version="4.21.0" />
     <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.17.1" />
     <PackageReference Update="Azure.Messaging.WebPubSub" Version="1.2.0" />
-    <PackageReference Update="Azure.Monitor.OpenTelemetry.Exporter" Version="1.2.0" />
+    <PackageReference Update="Azure.MixedReality.Authentication" version= "1.2.0" />
+    <PackageReference Update="Azure.Monitor.OpenTelemetry.Exporter" Version="1.3.0-beta.1" />
+    <PackageReference Update="Azure.Monitor.OpenTelemetry.LiveMetrics" Version="1.0.0-beta.2" />
     <PackageReference Update="Azure.Monitor.Query" Version="1.1.0" />
     <PackageReference Update="Azure.Identity" Version="1.10.4" />
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.2.0" />
@@ -130,7 +132,7 @@
     <PackageReference Update="Azure.ResourceManager" Version="1.10.1" />
 
     <!-- Other approved packages -->
-    <PackageReference Update="Microsoft.Azure.Amqp" Version="2.6.4" />
+    <PackageReference Update="Microsoft.Azure.Amqp" Version="2.6.5" />
     <PackageReference Update="Microsoft.Azure.WebPubSub.Common" Version="1.2.0" />
     <PackageReference Update="Microsoft.Identity.Client" Version="4.56.0" />
     <PackageReference Update="Microsoft.Identity.Client.Extensions.Msal" Version="4.56.0" />
@@ -141,7 +143,7 @@
     <PackageReference Update="Microsoft.Identity.Client.Broker" Version="4.56.0" />
 
     <!-- TODO: Make sure this package is arch-board approved -->
-    <PackageReference Update="System.IdentityModel.Tokens.Jwt" Version="6.5.0" />
+    <PackageReference Update="System.IdentityModel.Tokens.Jwt" Version="6.35.0" />
   </ItemGroup>
 
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.Monitor.OpenTelemetry'))">
@@ -201,8 +203,8 @@
     All should have PrivateAssets="All" set so they don't become package dependencies
   -->
   <ItemGroup>
-    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20240207.2" PrivateAssets="All" />
-    <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20240123.2" PrivateAssets="All" />
+    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20240226.5" PrivateAssets="All" />
+    <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20240214.2" PrivateAssets="All" />
     <PackageReference Update="coverlet.collector" Version="3.2.0" PrivateAssets="All" />
     <PackageReference Update="Microsoft.CodeAnalysis.NetAnalyzers" Version="7.0.4" PrivateAssets="All" />
     <PackageReference Update="Microsoft.CodeAnalysis.BannedApiAnalyzers" Version="3.3.2" PrivateAssets="All" />
@@ -223,7 +225,7 @@
     <PackageReference Update="ApprovalUtilities" Version="3.0.22" />
     <PackageReference Update="Azure.Identity" Version="1.10.4" />
     <PackageReference Update="Azure.Messaging.EventGrid" Version="4.17.0" />
-		<PackageReference Update="Azure.Messaging.EventHubs.Processor" Version="5.10.0" />
+		<PackageReference Update="Azure.Messaging.EventHubs.Processor" Version="5.11.0" />
     <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.16.0" />
     <PackageReference Update="Azure.ResourceManager.Compute" Version="1.2.0" />
     <PackageReference Update="Azure.ResourceManager.CognitiveServices" Version="1.3.0" />

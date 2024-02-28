@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataShare.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -55,19 +55,19 @@ namespace Azure.ResourceManager.DataShare.Models
             writer.WriteStringValue(ContainerName);
             writer.WritePropertyName("dataSetId"u8);
             writer.WriteStringValue(DataSetId);
-            if (options.Format != "W" && Optional.IsDefined(DataSetMappingStatus))
+            if (options.Format != "W" && DataSetMappingStatus.HasValue)
             {
                 writer.WritePropertyName("dataSetMappingStatus"u8);
                 writer.WriteStringValue(DataSetMappingStatus.Value.ToString());
             }
             writer.WritePropertyName("filePath"u8);
             writer.WriteStringValue(FilePath);
-            if (Optional.IsDefined(OutputType))
+            if (OutputType.HasValue)
             {
                 writer.WritePropertyName("outputType"u8);
                 writer.WriteStringValue(OutputType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -239,7 +239,22 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BlobDataSetMapping(id, name, type, systemData.Value, kind, serializedAdditionalRawData, containerName, dataSetId, Optional.ToNullable(dataSetMappingStatus), filePath, Optional.ToNullable(outputType), Optional.ToNullable(provisioningState), resourceGroup, storageAccountName, subscriptionId);
+            return new BlobDataSetMapping(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData,
+                containerName,
+                dataSetId,
+                Optional.ToNullable(dataSetMappingStatus),
+                filePath,
+                Optional.ToNullable(outputType),
+                Optional.ToNullable(provisioningState),
+                resourceGroup,
+                storageAccountName,
+                subscriptionId);
         }
 
         BinaryData IPersistableModel<BlobDataSetMapping>.Write(ModelReaderWriterOptions options)

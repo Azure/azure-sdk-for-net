@@ -27,47 +27,47 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AgentGeneratedId))
+            if (AgentGeneratedId != null)
             {
                 writer.WritePropertyName("agentGeneratedId"u8);
                 writer.WriteStringValue(AgentGeneratedId);
             }
-            if (Optional.IsDefined(AgentInstalled))
+            if (AgentInstalled != null)
             {
                 writer.WritePropertyName("agentInstalled"u8);
                 writer.WriteStringValue(AgentInstalled);
             }
-            if (Optional.IsDefined(OSType))
+            if (OSType != null)
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType);
             }
-            if (Optional.IsDefined(AgentVersion))
+            if (AgentVersion != null)
             {
                 writer.WritePropertyName("agentVersion"u8);
                 writer.WriteStringValue(AgentVersion);
             }
-            if (Optional.IsDefined(IPAddress))
+            if (IPAddress != null)
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress.ToString());
             }
-            if (Optional.IsDefined(PoweredOn))
+            if (PoweredOn != null)
             {
                 writer.WritePropertyName("poweredOn"u8);
                 writer.WriteStringValue(PoweredOn);
             }
-            if (Optional.IsDefined(VCenterInfrastructureId))
+            if (VCenterInfrastructureId != null)
             {
                 writer.WritePropertyName("vCenterInfrastructureId"u8);
                 writer.WriteStringValue(VCenterInfrastructureId);
             }
-            if (Optional.IsDefined(DiscoveryType))
+            if (DiscoveryType != null)
             {
                 writer.WritePropertyName("discoveryType"u8);
                 writer.WriteStringValue(DiscoveryType);
             }
-            if (Optional.IsCollectionDefined(DiskDetails))
+            if (!(DiskDetails is ChangeTrackingList<InMageDiskDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("diskDetails"u8);
                 writer.WriteStartArray();
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ValidationErrors))
+            if (!(ValidationErrors is ChangeTrackingList<SiteRecoveryHealthError> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("validationErrors"u8);
                 writer.WriteStartArray();
@@ -135,8 +135,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> poweredOn = default;
             Optional<string> vCenterInfrastructureId = default;
             Optional<string> discoveryType = default;
-            Optional<IReadOnlyList<InMageDiskDetails>> diskDetails = default;
-            Optional<IReadOnlyList<SiteRecoveryHealthError>> validationErrors = default;
+            IReadOnlyList<InMageDiskDetails> diskDetails = default;
+            IReadOnlyList<SiteRecoveryHealthError> validationErrors = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<InMageDiskDetails> array = new List<InMageDiskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InMageDiskDetails.DeserializeInMageDiskDetails(item));
+                        array.Add(InMageDiskDetails.DeserializeInMageDiskDetails(item, options));
                     }
                     diskDetails = array;
                     continue;
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryHealthError> array = new List<SiteRecoveryHealthError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item));
+                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item, options));
                     }
                     validationErrors = array;
                     continue;
@@ -225,7 +225,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareVmDetails(instanceType, serializedAdditionalRawData, agentGeneratedId.Value, agentInstalled.Value, osType.Value, agentVersion.Value, ipAddress.Value, poweredOn.Value, vCenterInfrastructureId.Value, discoveryType.Value, Optional.ToList(diskDetails), Optional.ToList(validationErrors));
+            return new VMwareVmDetails(
+                instanceType,
+                serializedAdditionalRawData,
+                agentGeneratedId.Value,
+                agentInstalled.Value,
+                osType.Value,
+                agentVersion.Value,
+                ipAddress.Value,
+                poweredOn.Value,
+                vCenterInfrastructureId.Value,
+                discoveryType.Value,
+                diskDetails ?? new ChangeTrackingList<InMageDiskDetails>(),
+                validationErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>());
         }
 
         BinaryData IPersistableModel<VMwareVmDetails>.Write(ModelReaderWriterOptions options)

@@ -130,7 +130,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FetchTieringCostInfoForRehydrationContent(sourceTierType, targetTierType, objectType, serializedAdditionalRawData, containerName, protectedItemName, recoveryPointId, rehydrationPriority);
+            return new FetchTieringCostInfoForRehydrationContent(
+                sourceTierType,
+                targetTierType,
+                objectType,
+                serializedAdditionalRawData,
+                containerName,
+                protectedItemName,
+                recoveryPointId,
+                rehydrationPriority);
         }
 
         BinaryData IPersistableModel<FetchTieringCostInfoForRehydrationContent>.Write(ModelReaderWriterOptions options)

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ImageName))
+            if (ImageName != null)
             {
                 writer.WritePropertyName("imageName"u8);
                 writer.WriteStringValue(ImageName);
             }
-            if (Optional.IsDefined(IsSysPrepEnabled))
+            if (IsSysPrepEnabled.HasValue)
             {
                 writer.WritePropertyName("sysPrep"u8);
                 writer.WriteBooleanValue(IsSysPrepEnabled.Value);

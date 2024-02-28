@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(IsDataAction))
+            if (IsDataAction.HasValue)
             {
                 writer.WritePropertyName("isDataAction"u8);
                 writer.WriteBooleanValue(IsDataAction.Value);
             }
-            if (Optional.IsDefined(Display))
+            if (Display != null)
             {
                 writer.WritePropertyName("display"u8);
                 writer.WriteObjectValue(Display);
             }
-            if (Optional.IsDefined(Origin))
+            if (Origin != null)
             {
                 writer.WritePropertyName("origin"u8);
                 writer.WriteStringValue(Origin);
             }
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    display = CsmOperationDisplay.DeserializeCsmOperationDisplay(property.Value);
+                    display = CsmOperationDisplay.DeserializeCsmOperationDisplay(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("origin"u8))
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    properties = CsmOperationDescriptionProperties.DeserializeCsmOperationDescriptionProperties(property.Value);
+                    properties = CsmOperationDescriptionProperties.DeserializeCsmOperationDescriptionProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CsmOperationDescription(name.Value, Optional.ToNullable(isDataAction), display.Value, origin.Value, properties.Value, serializedAdditionalRawData);
+            return new CsmOperationDescription(
+                name.Value,
+                Optional.ToNullable(isDataAction),
+                display.Value,
+                origin.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CsmOperationDescription>.Write(ModelReaderWriterOptions options)

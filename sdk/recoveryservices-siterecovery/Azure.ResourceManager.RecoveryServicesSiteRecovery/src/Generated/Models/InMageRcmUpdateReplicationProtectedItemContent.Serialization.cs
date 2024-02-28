@@ -26,52 +26,52 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TargetVmName))
+            if (TargetVmName != null)
             {
                 writer.WritePropertyName("targetVmName"u8);
                 writer.WriteStringValue(TargetVmName);
             }
-            if (Optional.IsDefined(TargetVmSize))
+            if (TargetVmSize != null)
             {
                 writer.WritePropertyName("targetVmSize"u8);
                 writer.WriteStringValue(TargetVmSize);
             }
-            if (Optional.IsDefined(TargetResourceGroupId))
+            if (TargetResourceGroupId != null)
             {
                 writer.WritePropertyName("targetResourceGroupId"u8);
                 writer.WriteStringValue(TargetResourceGroupId);
             }
-            if (Optional.IsDefined(TargetAvailabilitySetId))
+            if (TargetAvailabilitySetId != null)
             {
                 writer.WritePropertyName("targetAvailabilitySetId"u8);
                 writer.WriteStringValue(TargetAvailabilitySetId);
             }
-            if (Optional.IsDefined(TargetAvailabilityZone))
+            if (TargetAvailabilityZone != null)
             {
                 writer.WritePropertyName("targetAvailabilityZone"u8);
                 writer.WriteStringValue(TargetAvailabilityZone);
             }
-            if (Optional.IsDefined(TargetProximityPlacementGroupId))
+            if (TargetProximityPlacementGroupId != null)
             {
                 writer.WritePropertyName("targetProximityPlacementGroupId"u8);
                 writer.WriteStringValue(TargetProximityPlacementGroupId);
             }
-            if (Optional.IsDefined(TargetBootDiagnosticsStorageAccountId))
+            if (TargetBootDiagnosticsStorageAccountId != null)
             {
                 writer.WritePropertyName("targetBootDiagnosticsStorageAccountId"u8);
                 writer.WriteStringValue(TargetBootDiagnosticsStorageAccountId);
             }
-            if (Optional.IsDefined(TargetNetworkId))
+            if (TargetNetworkId != null)
             {
                 writer.WritePropertyName("targetNetworkId"u8);
                 writer.WriteStringValue(TargetNetworkId);
             }
-            if (Optional.IsDefined(TestNetworkId))
+            if (TestNetworkId != null)
             {
                 writer.WritePropertyName("testNetworkId"u8);
                 writer.WriteStringValue(TestNetworkId);
             }
-            if (Optional.IsCollectionDefined(VmNics))
+            if (!(VmNics is ChangeTrackingList<InMageRcmNicContent> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("vmNics"u8);
                 writer.WriteStartArray();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(LicenseType))
+            if (LicenseType.HasValue)
             {
                 writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType.Value.ToString());
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<ResourceIdentifier> targetBootDiagnosticsStorageAccountId = default;
             Optional<ResourceIdentifier> targetNetworkId = default;
             Optional<ResourceIdentifier> testNetworkId = default;
-            Optional<IList<InMageRcmNicContent>> vmNics = default;
+            IList<InMageRcmNicContent> vmNics = default;
             Optional<SiteRecoveryLicenseType> licenseType = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<InMageRcmNicContent> array = new List<InMageRcmNicContent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InMageRcmNicContent.DeserializeInMageRcmNicContent(item));
+                        array.Add(InMageRcmNicContent.DeserializeInMageRcmNicContent(item, options));
                     }
                     vmNics = array;
                     continue;
@@ -245,7 +245,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageRcmUpdateReplicationProtectedItemContent(instanceType, serializedAdditionalRawData, targetVmName.Value, targetVmSize.Value, targetResourceGroupId.Value, targetAvailabilitySetId.Value, targetAvailabilityZone.Value, targetProximityPlacementGroupId.Value, targetBootDiagnosticsStorageAccountId.Value, targetNetworkId.Value, testNetworkId.Value, Optional.ToList(vmNics), Optional.ToNullable(licenseType));
+            return new InMageRcmUpdateReplicationProtectedItemContent(
+                instanceType,
+                serializedAdditionalRawData,
+                targetVmName.Value,
+                targetVmSize.Value,
+                targetResourceGroupId.Value,
+                targetAvailabilitySetId.Value,
+                targetAvailabilityZone.Value,
+                targetProximityPlacementGroupId.Value,
+                targetBootDiagnosticsStorageAccountId.Value,
+                targetNetworkId.Value,
+                testNetworkId.Value,
+                vmNics ?? new ChangeTrackingList<InMageRcmNicContent>(),
+                Optional.ToNullable(licenseType));
         }
 
         BinaryData IPersistableModel<InMageRcmUpdateReplicationProtectedItemContent>.Write(ModelReaderWriterOptions options)

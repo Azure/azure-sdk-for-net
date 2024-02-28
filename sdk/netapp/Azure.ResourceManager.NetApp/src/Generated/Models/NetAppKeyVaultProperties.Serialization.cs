@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(KeyVaultId))
+            if (options.Format != "W" && KeyVaultId != null)
             {
                 writer.WritePropertyName("keyVaultId"u8);
                 writer.WriteStringValue(KeyVaultId);
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.NetApp.Models
             writer.WriteStringValue(KeyName);
             writer.WritePropertyName("keyVaultResourceId"u8);
             writer.WriteStringValue(KeyVaultResourceId);
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -124,7 +124,13 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppKeyVaultProperties(keyVaultId.Value, keyVaultUri, keyName, keyVaultResourceId, Optional.ToNullable(status), serializedAdditionalRawData);
+            return new NetAppKeyVaultProperties(
+                keyVaultId.Value,
+                keyVaultUri,
+                keyName,
+                keyVaultResourceId,
+                Optional.ToNullable(status),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppKeyVaultProperties>.Write(ModelReaderWriterOptions options)

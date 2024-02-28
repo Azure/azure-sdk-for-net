@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             writer.WriteStringValue(NicId);
             writer.WritePropertyName("label"u8);
             writer.WriteStringValue(Label);
-            if (options.Format != "W" && Optional.IsDefined(NetworkName))
+            if (options.Format != "W" && NetworkName != null)
             {
                 writer.WritePropertyName("networkName"u8);
                 writer.WriteStringValue(NetworkName);
@@ -125,7 +125,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareToAzStackHciNicInput(nicId, label, networkName.Value, targetNetworkId, testNetworkId, selectionTypeForFailover, serializedAdditionalRawData);
+            return new VMwareToAzStackHciNicInput(
+                nicId,
+                label,
+                networkName.Value,
+                targetNetworkId,
+                testNetworkId,
+                selectionTypeForFailover,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VMwareToAzStackHciNicInput>.Write(ModelReaderWriterOptions options)

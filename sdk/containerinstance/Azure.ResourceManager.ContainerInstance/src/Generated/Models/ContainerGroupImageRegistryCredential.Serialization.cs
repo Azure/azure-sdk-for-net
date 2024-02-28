@@ -28,22 +28,22 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             writer.WriteStartObject();
             writer.WritePropertyName("server"u8);
             writer.WriteStringValue(Server);
-            if (Optional.IsDefined(Username))
+            if (Username != null)
             {
                 writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(Username);
             }
-            if (Optional.IsDefined(Password))
+            if (Password != null)
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteStringValue(Identity);
             }
-            if (Optional.IsDefined(IdentityUri))
+            if (IdentityUri != null)
             {
                 writer.WritePropertyName("identityUrl"u8);
                 writer.WriteStringValue(IdentityUri.AbsoluteUri);
@@ -130,7 +130,13 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerGroupImageRegistryCredential(server, username.Value, password.Value, identity.Value, identityUrl.Value, serializedAdditionalRawData);
+            return new ContainerGroupImageRegistryCredential(
+                server,
+                username.Value,
+                password.Value,
+                identity.Value,
+                identityUrl.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerGroupImageRegistryCredential>.Write(ModelReaderWriterOptions options)

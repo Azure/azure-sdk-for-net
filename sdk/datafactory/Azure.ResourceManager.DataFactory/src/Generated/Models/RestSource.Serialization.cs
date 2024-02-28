@@ -27,32 +27,32 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RequestMethod))
+            if (RequestMethod != null)
             {
                 writer.WritePropertyName("requestMethod"u8);
                 JsonSerializer.Serialize(writer, RequestMethod);
             }
-            if (Optional.IsDefined(RequestBody))
+            if (RequestBody != null)
             {
                 writer.WritePropertyName("requestBody"u8);
                 JsonSerializer.Serialize(writer, RequestBody);
             }
-            if (Optional.IsDefined(AdditionalHeaders))
+            if (AdditionalHeaders != null)
             {
                 writer.WritePropertyName("additionalHeaders"u8);
                 JsonSerializer.Serialize(writer, AdditionalHeaders);
             }
-            if (Optional.IsDefined(PaginationRules))
+            if (PaginationRules != null)
             {
                 writer.WritePropertyName("paginationRules"u8);
                 JsonSerializer.Serialize(writer, PaginationRules);
             }
-            if (Optional.IsDefined(HttpRequestTimeout))
+            if (HttpRequestTimeout != null)
             {
                 writer.WritePropertyName("httpRequestTimeout"u8);
                 JsonSerializer.Serialize(writer, HttpRequestTimeout);
             }
-            if (Optional.IsDefined(RequestInterval))
+            if (RequestInterval != null)
             {
                 writer.WritePropertyName("requestInterval"u8);
 #if NET6_0_OR_GREATER
@@ -64,29 +64,29 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            if (Optional.IsDefined(AdditionalColumns))
+            if (AdditionalColumns != null)
             {
                 writer.WritePropertyName("additionalColumns"u8);
                 JsonSerializer.Serialize(writer, AdditionalColumns);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CopySourceType);
-            if (Optional.IsDefined(SourceRetryCount))
+            if (SourceRetryCount != null)
             {
                 writer.WritePropertyName("sourceRetryCount"u8);
                 JsonSerializer.Serialize(writer, SourceRetryCount);
             }
-            if (Optional.IsDefined(SourceRetryWait))
+            if (SourceRetryWait != null)
             {
                 writer.WritePropertyName("sourceRetryWait"u8);
                 JsonSerializer.Serialize(writer, SourceRetryWait);
             }
-            if (Optional.IsDefined(MaxConcurrentConnections))
+            if (MaxConcurrentConnections != null)
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 JsonSerializer.Serialize(writer, MaxConcurrentConnections);
             }
-            if (Optional.IsDefined(DisableMetricsCollection))
+            if (DisableMetricsCollection != null)
             {
                 writer.WritePropertyName("disableMetricsCollection"u8);
                 JsonSerializer.Serialize(writer, DisableMetricsCollection);
@@ -249,7 +249,20 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new RestSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, requestMethod.Value, requestBody.Value, additionalHeaders.Value, paginationRules.Value, httpRequestTimeout.Value, requestInterval.Value, additionalColumns.Value);
+            return new RestSource(
+                type,
+                sourceRetryCount.Value,
+                sourceRetryWait.Value,
+                maxConcurrentConnections.Value,
+                disableMetricsCollection.Value,
+                additionalProperties,
+                requestMethod.Value,
+                requestBody.Value,
+                additionalHeaders.Value,
+                paginationRules.Value,
+                httpRequestTimeout.Value,
+                requestInterval.Value,
+                additionalColumns.Value);
         }
 
         BinaryData IPersistableModel<RestSource>.Write(ModelReaderWriterOptions options)

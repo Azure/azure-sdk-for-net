@@ -42,44 +42,44 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(NodeStatus))
+            if (options.Format != "W" && NodeStatus.HasValue)
             {
                 writer.WritePropertyName("nodeStatus"u8);
                 writer.WriteStringValue(NodeStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(NodeChassisSerialNumber))
+            if (options.Format != "W" && NodeChassisSerialNumber != null)
             {
                 writer.WritePropertyName("nodeChassisSerialNumber"u8);
                 writer.WriteStringValue(NodeChassisSerialNumber);
             }
-            if (options.Format != "W" && Optional.IsDefined(NodeSerialNumber))
+            if (options.Format != "W" && NodeSerialNumber != null)
             {
                 writer.WritePropertyName("nodeSerialNumber"u8);
                 writer.WriteStringValue(NodeSerialNumber);
             }
-            if (options.Format != "W" && Optional.IsDefined(NodeDisplayName))
+            if (options.Format != "W" && NodeDisplayName != null)
             {
                 writer.WritePropertyName("nodeDisplayName"u8);
                 writer.WriteStringValue(NodeDisplayName);
             }
-            if (options.Format != "W" && Optional.IsDefined(NodeFriendlySoftwareVersion))
+            if (options.Format != "W" && NodeFriendlySoftwareVersion != null)
             {
                 writer.WritePropertyName("nodeFriendlySoftwareVersion"u8);
                 writer.WriteStringValue(NodeFriendlySoftwareVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(NodeHcsVersion))
+            if (options.Format != "W" && NodeHcsVersion != null)
             {
                 writer.WritePropertyName("nodeHcsVersion"u8);
                 writer.WriteStringValue(NodeHcsVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(NodeInstanceId))
+            if (options.Format != "W" && NodeInstanceId.HasValue)
             {
                 writer.WritePropertyName("nodeInstanceId"u8);
                 writer.WriteStringValue(NodeInstanceId.Value);
@@ -223,7 +223,19 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeNode(id, name, type, systemData.Value, Optional.ToNullable(nodeStatus), nodeChassisSerialNumber.Value, nodeSerialNumber.Value, nodeDisplayName.Value, nodeFriendlySoftwareVersion.Value, nodeHcsVersion.Value, Optional.ToNullable(nodeInstanceId), serializedAdditionalRawData);
+            return new DataBoxEdgeNode(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(nodeStatus),
+                nodeChassisSerialNumber.Value,
+                nodeSerialNumber.Value,
+                nodeDisplayName.Value,
+                nodeFriendlySoftwareVersion.Value,
+                nodeHcsVersion.Value,
+                Optional.ToNullable(nodeInstanceId),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeNode>.Write(ModelReaderWriterOptions options)

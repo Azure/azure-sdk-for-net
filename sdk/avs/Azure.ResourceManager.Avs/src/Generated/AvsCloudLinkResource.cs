@@ -281,7 +281,10 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AvsCloudLinkResource>> UpdateAsync(WaitUntil waitUntil, AvsCloudLinkData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _avsCloudLinkCloudLinksClientDiagnostics.CreateScope("AvsCloudLinkResource.Update");
             scope.Start();
@@ -327,7 +330,10 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AvsCloudLinkResource> Update(WaitUntil waitUntil, AvsCloudLinkData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _avsCloudLinkCloudLinksClientDiagnostics.CreateScope("AvsCloudLinkResource.Update");
             scope.Start();

@@ -1,17 +1,32 @@
 # Release History
 
-## 5.11.0-beta.1 (Unreleased)
+## 5.12.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+- Updated the `Microsoft.Azure.Amqp` dependency to 2.6.5, which includes several bug fixes.  A notable fix addresses an obscure race condition when a cancellation token is signaled while service operations are being invoked concurrently which caused those operations to hang.
+
+## 5.11.0 (2024-02-13)
+
+### Acknowledgments
 
 Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
 
 - Dave Trainer _([GitHub](https://github.com/davetrainer))_
 
 ### Features Added
+
 - Added a `CheckpointPosition` struct to use when updating a checkpoint. The specified position indicates that an event processor should begin reading from the next event. Added new `UpdateCheckpointAsync` overloads to `EventProcessorClient` and `BlobCheckpointStore` that accept the `CheckpointPosition` struct instead of individual values for offset and sequence number.
 
 ### Breaking Changes
 
-- The type of several existing values in the `EventData.SystemProperties` collection have been changed so that they are properly represented as .NET string types.  Previously, the underlying AMQP types were unintentionally returned, forcing callers to call `ToString()` to read the value.  
+- The type of several existing values in the `EventData.SystemProperties` collection have been changed so that they are properly represented as .NET string types.  Previously, the underlying AMQP types were unintentionally returned, forcing callers to call `ToString()` to read the value.
 
   This is a behavioral breaking change that will impacts only those callers who were explicitly casting system property values to `AmqpAddress` or `AmqpMessageId` before calling `ToString()`.   The affected system properties are:
   - MessageId
@@ -19,7 +34,7 @@ Thank you to our developer community members who helped to make the Event Hubs c
   - To
   - ReplyTo
 
-- The base implementations of both `UpdateCheckpointAsync` method overloads in `PluggableCheckpointStoreEventProcessor<TPartition>` and `EventProcessor<TPartition>` now choose sequence number over offset when writing a checkpoint and both values are provided. Previously, writing a checkpoint prioritized offset over sequence number.  There is no difference in behavior for normal usage scenarios.
+- The base implementations of both `UpdateCheckpointAsync` method overloads in `PluggableCheckpointStoreEventProcessor<TPartition>` and `EventProcessor<TPartition>` now choose sequence number over offset when writing a checkpoint and both values are provided. Previously, writing a checkpoint prioritized offset over sequence number.  **There is no difference in behavior for normal usage scenarios.**
 
 ### Bugs Fixed
 

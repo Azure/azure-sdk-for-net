@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteStartObject();
             writer.WritePropertyName("taskType"u8);
             writer.WriteStringValue(TaskType.ToString());
-            if (options.Format != "W" && Optional.IsCollectionDefined(Errors))
+            if (options.Format != "W" && !(Errors is ChangeTrackingList<ODataError> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W" && State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Commands))
+            if (options.Format != "W" && !(Commands is ChangeTrackingList<CommandProperties> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("commands"u8);
                 writer.WriteStartArray();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ClientData))
+            if (!(ClientData is ChangeTrackingDictionary<string, string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("clientData"u8);
                 writer.WriteStartObject();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownProjectTaskProperties(document.RootElement, options);
+            return DeserializeProjectTaskProperties(document.RootElement, options);
         }
 
         internal static UnknownProjectTaskProperties DeserializeUnknownProjectTaskProperties(JsonElement element, ModelReaderWriterOptions options = null)
@@ -103,10 +103,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             TaskType taskType = "Unknown";
-            Optional<IReadOnlyList<ODataError>> errors = default;
+            IReadOnlyList<ODataError> errors = default;
             Optional<TaskState> state = default;
-            Optional<IReadOnlyList<CommandProperties>> commands = default;
-            Optional<IDictionary<string, string>> clientData = default;
+            IReadOnlyList<CommandProperties> commands = default;
+            IDictionary<string, string> clientData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ODataError> array = new List<ODataError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ODataError.DeserializeODataError(item));
+                        array.Add(ODataError.DeserializeODataError(item, options));
                     }
                     errors = array;
                     continue;
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<CommandProperties> array = new List<CommandProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CommandProperties.DeserializeCommandProperties(item));
+                        array.Add(CommandProperties.DeserializeCommandProperties(item, options));
                     }
                     commands = array;
                     continue;
@@ -173,7 +173,13 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownProjectTaskProperties(taskType, Optional.ToList(errors), Optional.ToNullable(state), Optional.ToList(commands), Optional.ToDictionary(clientData), serializedAdditionalRawData);
+            return new UnknownProjectTaskProperties(
+                taskType,
+                errors ?? new ChangeTrackingList<ODataError>(),
+                Optional.ToNullable(state),
+                commands ?? new ChangeTrackingList<CommandProperties>(),
+                clientData ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProjectTaskProperties>.Write(ModelReaderWriterOptions options)
@@ -198,7 +204,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownProjectTaskProperties(document.RootElement, options);
+                        return DeserializeProjectTaskProperties(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(ProjectTaskProperties)} does not support '{options.Format}' format.");

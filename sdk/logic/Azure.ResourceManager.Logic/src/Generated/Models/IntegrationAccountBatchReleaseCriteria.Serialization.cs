@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MessageCount))
+            if (MessageCount.HasValue)
             {
                 writer.WritePropertyName("messageCount"u8);
                 writer.WriteNumberValue(MessageCount.Value);
             }
-            if (Optional.IsDefined(BatchSize))
+            if (BatchSize.HasValue)
             {
                 writer.WritePropertyName("batchSize"u8);
                 writer.WriteNumberValue(BatchSize.Value);
             }
-            if (Optional.IsDefined(Recurrence))
+            if (Recurrence != null)
             {
                 writer.WritePropertyName("recurrence"u8);
                 writer.WriteObjectValue(Recurrence);
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    recurrence = LogicWorkflowTriggerRecurrence.DeserializeLogicWorkflowTriggerRecurrence(property.Value);
+                    recurrence = LogicWorkflowTriggerRecurrence.DeserializeLogicWorkflowTriggerRecurrence(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

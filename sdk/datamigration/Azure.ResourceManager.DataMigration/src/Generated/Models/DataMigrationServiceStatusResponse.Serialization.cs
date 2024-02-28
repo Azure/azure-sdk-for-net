@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AgentVersion))
+            if (AgentVersion != null)
             {
                 writer.WritePropertyName("agentVersion"u8);
                 writer.WriteStringValue(AgentVersion);
             }
-            if (Optional.IsDefined(AgentConfiguration))
+            if (AgentConfiguration != null)
             {
                 writer.WritePropertyName("agentConfiguration"u8);
 #if NET6_0_OR_GREATER
@@ -43,17 +43,17 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
 #endif
             }
-            if (Optional.IsDefined(Status))
+            if (Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Optional.IsDefined(VmSize))
+            if (VmSize != null)
             {
                 writer.WritePropertyName("vmSize"u8);
                 writer.WriteStringValue(VmSize);
             }
-            if (Optional.IsCollectionDefined(SupportedTaskTypes))
+            if (!(SupportedTaskTypes is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportedTaskTypes"u8);
                 writer.WriteStartArray();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<BinaryData> agentConfiguration = default;
             Optional<string> status = default;
             Optional<string> vmSize = default;
-            Optional<IReadOnlyList<string>> supportedTaskTypes = default;
+            IReadOnlyList<string> supportedTaskTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -154,7 +154,13 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataMigrationServiceStatusResponse(agentVersion.Value, agentConfiguration.Value, status.Value, vmSize.Value, Optional.ToList(supportedTaskTypes), serializedAdditionalRawData);
+            return new DataMigrationServiceStatusResponse(
+                agentVersion.Value,
+                agentConfiguration.Value,
+                status.Value,
+                vmSize.Value,
+                supportedTaskTypes ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataMigrationServiceStatusResponse>.Write(ModelReaderWriterOptions options)

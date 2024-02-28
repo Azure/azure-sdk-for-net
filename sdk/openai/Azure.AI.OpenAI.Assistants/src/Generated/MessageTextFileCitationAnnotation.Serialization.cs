@@ -86,7 +86,7 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 if (property.NameEquals("file_citation"u8))
                 {
-                    fileCitation = InternalMessageTextFileCitationDetails.DeserializeInternalMessageTextFileCitationDetails(property.Value);
+                    fileCitation = InternalMessageTextFileCitationDetails.DeserializeInternalMessageTextFileCitationDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -115,7 +115,13 @@ namespace Azure.AI.OpenAI.Assistants
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MessageTextFileCitationAnnotation(type, text, startIndex, endIndex, serializedAdditionalRawData, fileCitation);
+            return new MessageTextFileCitationAnnotation(
+                type,
+                text,
+                startIndex,
+                endIndex,
+                serializedAdditionalRawData,
+                fileCitation);
         }
 
         BinaryData IPersistableModel<MessageTextFileCitationAnnotation>.Write(ModelReaderWriterOptions options)

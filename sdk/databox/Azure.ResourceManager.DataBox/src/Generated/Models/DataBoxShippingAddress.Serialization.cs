@@ -28,22 +28,22 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStartObject();
             writer.WritePropertyName("streetAddress1"u8);
             writer.WriteStringValue(StreetAddress1);
-            if (Optional.IsDefined(StreetAddress2))
+            if (StreetAddress2 != null)
             {
                 writer.WritePropertyName("streetAddress2"u8);
                 writer.WriteStringValue(StreetAddress2);
             }
-            if (Optional.IsDefined(StreetAddress3))
+            if (StreetAddress3 != null)
             {
                 writer.WritePropertyName("streetAddress3"u8);
                 writer.WriteStringValue(StreetAddress3);
             }
-            if (Optional.IsDefined(City))
+            if (City != null)
             {
                 writer.WritePropertyName("city"u8);
                 writer.WriteStringValue(City);
             }
-            if (Optional.IsDefined(StateOrProvince))
+            if (StateOrProvince != null)
             {
                 writer.WritePropertyName("stateOrProvince"u8);
                 writer.WriteStringValue(StateOrProvince);
@@ -52,27 +52,27 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStringValue(Country);
             writer.WritePropertyName("postalCode"u8);
             writer.WriteStringValue(PostalCode);
-            if (Optional.IsDefined(ZipExtendedCode))
+            if (ZipExtendedCode != null)
             {
                 writer.WritePropertyName("zipExtendedCode"u8);
                 writer.WriteStringValue(ZipExtendedCode);
             }
-            if (Optional.IsDefined(CompanyName))
+            if (CompanyName != null)
             {
                 writer.WritePropertyName("companyName"u8);
                 writer.WriteStringValue(CompanyName);
             }
-            if (Optional.IsDefined(AddressType))
+            if (AddressType.HasValue)
             {
                 writer.WritePropertyName("addressType"u8);
                 writer.WriteStringValue(AddressType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(SkipAddressValidation))
+            if (SkipAddressValidation.HasValue)
             {
                 writer.WritePropertyName("skipAddressValidation"u8);
                 writer.WriteBooleanValue(SkipAddressValidation.Value);
             }
-            if (Optional.IsDefined(TaxIdentificationNumber))
+            if (TaxIdentificationNumber != null)
             {
                 writer.WritePropertyName("taxIdentificationNumber"u8);
                 writer.WriteStringValue(TaxIdentificationNumber);
@@ -205,7 +205,20 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxShippingAddress(streetAddress1, streetAddress2.Value, streetAddress3.Value, city.Value, stateOrProvince.Value, country, postalCode, zipExtendedCode.Value, companyName.Value, Optional.ToNullable(addressType), Optional.ToNullable(skipAddressValidation), taxIdentificationNumber.Value, serializedAdditionalRawData);
+            return new DataBoxShippingAddress(
+                streetAddress1,
+                streetAddress2.Value,
+                streetAddress3.Value,
+                city.Value,
+                stateOrProvince.Value,
+                country,
+                postalCode,
+                zipExtendedCode.Value,
+                companyName.Value,
+                Optional.ToNullable(addressType),
+                Optional.ToNullable(skipAddressValidation),
+                taxIdentificationNumber.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxShippingAddress>.Write(ModelReaderWriterOptions options)

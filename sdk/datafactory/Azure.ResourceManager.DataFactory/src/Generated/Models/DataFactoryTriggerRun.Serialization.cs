@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(TriggerRunId))
+            if (options.Format != "W" && TriggerRunId != null)
             {
                 writer.WritePropertyName("triggerRunId"u8);
                 writer.WriteStringValue(TriggerRunId);
             }
-            if (options.Format != "W" && Optional.IsDefined(TriggerName))
+            if (options.Format != "W" && TriggerName != null)
             {
                 writer.WritePropertyName("triggerName"u8);
                 writer.WriteStringValue(TriggerName);
             }
-            if (options.Format != "W" && Optional.IsDefined(TriggerType))
+            if (options.Format != "W" && TriggerType != null)
             {
                 writer.WritePropertyName("triggerType"u8);
                 writer.WriteStringValue(TriggerType);
             }
-            if (options.Format != "W" && Optional.IsDefined(TriggerRunTimestamp))
+            if (options.Format != "W" && TriggerRunTimestamp.HasValue)
             {
                 writer.WritePropertyName("triggerRunTimestamp"u8);
                 writer.WriteStringValue(TriggerRunTimestamp.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Message))
+            if (options.Format != "W" && Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Properties))
+            if (options.Format != "W" && !(Properties is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteStartObject();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(TriggeredPipelines))
+            if (options.Format != "W" && !(TriggeredPipelines is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("triggeredPipelines"u8);
                 writer.WriteStartObject();
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(RunDimension))
+            if (options.Format != "W" && !(RunDimension is ChangeTrackingDictionary<string, string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("runDimension"u8);
                 writer.WriteStartObject();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DependencyStatus))
+            if (options.Format != "W" && !(DependencyStatus is ChangeTrackingDictionary<string, BinaryData> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("dependencyStatus"u8);
                 writer.WriteStartObject();
@@ -153,10 +153,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<DateTimeOffset> triggerRunTimestamp = default;
             Optional<DataFactoryTriggerRunStatus> status = default;
             Optional<string> message = default;
-            Optional<IReadOnlyDictionary<string, string>> properties = default;
-            Optional<IReadOnlyDictionary<string, string>> triggeredPipelines = default;
-            Optional<IReadOnlyDictionary<string, string>> runDimension = default;
-            Optional<IReadOnlyDictionary<string, BinaryData>> dependencyStatus = default;
+            IReadOnlyDictionary<string, string> properties = default;
+            IReadOnlyDictionary<string, string> triggeredPipelines = default;
+            IReadOnlyDictionary<string, string> runDimension = default;
+            IReadOnlyDictionary<string, BinaryData> dependencyStatus = default;
             IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -265,7 +265,18 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataFactoryTriggerRun(triggerRunId.Value, triggerName.Value, triggerType.Value, Optional.ToNullable(triggerRunTimestamp), Optional.ToNullable(status), message.Value, Optional.ToDictionary(properties), Optional.ToDictionary(triggeredPipelines), Optional.ToDictionary(runDimension), Optional.ToDictionary(dependencyStatus), additionalProperties);
+            return new DataFactoryTriggerRun(
+                triggerRunId.Value,
+                triggerName.Value,
+                triggerType.Value,
+                Optional.ToNullable(triggerRunTimestamp),
+                Optional.ToNullable(status),
+                message.Value,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                triggeredPipelines ?? new ChangeTrackingDictionary<string, string>(),
+                runDimension ?? new ChangeTrackingDictionary<string, string>(),
+                dependencyStatus ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<DataFactoryTriggerRun>.Write(ModelReaderWriterOptions options)

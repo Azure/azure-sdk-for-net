@@ -42,39 +42,39 @@ namespace Azure.ResourceManager.Chaos.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartedOn))
+            if (options.Format != "W" && StartedOn.HasValue)
             {
                 writer.WritePropertyName("startedAt"u8);
                 writer.WriteStringValue(StartedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(StoppedOn))
+            if (options.Format != "W" && StoppedOn.HasValue)
             {
                 writer.WritePropertyName("stoppedAt"u8);
                 writer.WriteStringValue(StoppedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(FailureReason))
+            if (options.Format != "W" && FailureReason != null)
             {
                 writer.WritePropertyName("failureReason"u8);
                 writer.WriteStringValue(FailureReason);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastActionOn))
+            if (options.Format != "W" && LastActionOn.HasValue)
             {
                 writer.WritePropertyName("lastActionAt"u8);
                 writer.WriteStringValue(LastActionOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(RunInformation))
+            if (options.Format != "W" && RunInformation != null)
             {
                 writer.WritePropertyName("runInformation"u8);
                 writer.WriteObjectValue(RunInformation);
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Chaos.Models
                             {
                                 continue;
                             }
-                            runInformation = ChaosExperimentRunInformation.DeserializeChaosExperimentRunInformation(property0.Value);
+                            runInformation = ChaosExperimentRunInformation.DeserializeChaosExperimentRunInformation(property0.Value, options);
                             continue;
                         }
                     }
@@ -220,7 +220,18 @@ namespace Azure.ResourceManager.Chaos.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExperimentExecutionDetails(id, name, type, systemData.Value, status.Value, Optional.ToNullable(startedAt), Optional.ToNullable(stoppedAt), failureReason.Value, Optional.ToNullable(lastActionAt), runInformation.Value, serializedAdditionalRawData);
+            return new ExperimentExecutionDetails(
+                id,
+                name,
+                type,
+                systemData.Value,
+                status.Value,
+                Optional.ToNullable(startedAt),
+                Optional.ToNullable(stoppedAt),
+                failureReason.Value,
+                Optional.ToNullable(lastActionAt),
+                runInformation.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExperimentExecutionDetails>.Write(ModelReaderWriterOptions options)

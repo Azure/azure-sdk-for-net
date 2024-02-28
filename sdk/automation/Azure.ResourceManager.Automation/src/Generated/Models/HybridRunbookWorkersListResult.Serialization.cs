@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<HybridRunbookWorkerData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<HybridRunbookWorkerData>> value = default;
+            IReadOnlyList<HybridRunbookWorkerData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<HybridRunbookWorkerData> array = new List<HybridRunbookWorkerData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HybridRunbookWorkerData.DeserializeHybridRunbookWorkerData(item));
+                        array.Add(HybridRunbookWorkerData.DeserializeHybridRunbookWorkerData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridRunbookWorkersListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new HybridRunbookWorkersListResult(value ?? new ChangeTrackingList<HybridRunbookWorkerData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridRunbookWorkersListResult>.Write(ModelReaderWriterOptions options)

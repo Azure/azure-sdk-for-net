@@ -42,39 +42,39 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(LastAvailableBackupOn))
+            if (options.Format != "W" && LastAvailableBackupOn.HasValue)
             {
                 writer.WritePropertyName("lastAvailableBackupDateTime"u8);
                 writer.WriteStringValue(LastAvailableBackupOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ServiceLevelObjective))
+            if (options.Format != "W" && ServiceLevelObjective != null)
             {
                 writer.WritePropertyName("serviceLevelObjective"u8);
                 writer.WriteStringValue(ServiceLevelObjective);
             }
-            if (options.Format != "W" && Optional.IsDefined(Edition))
+            if (options.Format != "W" && Edition != null)
             {
                 writer.WritePropertyName("edition"u8);
                 writer.WriteStringValue(Edition);
             }
-            if (options.Format != "W" && Optional.IsDefined(VCores))
+            if (options.Format != "W" && VCores.HasValue)
             {
                 writer.WritePropertyName("vCore"u8);
                 writer.WriteNumberValue(VCores.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(HardwareGeneration))
+            if (options.Format != "W" && HardwareGeneration != null)
             {
                 writer.WritePropertyName("hardwareGeneration"u8);
                 writer.WriteStringValue(HardwareGeneration);
             }
-            if (options.Format != "W" && Optional.IsDefined(Version))
+            if (options.Format != "W" && Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
@@ -212,7 +212,18 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlRecoverableServerResourceData(id, name, type, systemData.Value, Optional.ToNullable(lastAvailableBackupDateTime), serviceLevelObjective.Value, edition.Value, Optional.ToNullable(vCore), hardwareGeneration.Value, version.Value, serializedAdditionalRawData);
+            return new PostgreSqlRecoverableServerResourceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(lastAvailableBackupDateTime),
+                serviceLevelObjective.Value,
+                edition.Value,
+                Optional.ToNullable(vCore),
+                hardwareGeneration.Value,
+                version.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlRecoverableServerResourceData>.Write(ModelReaderWriterOptions options)

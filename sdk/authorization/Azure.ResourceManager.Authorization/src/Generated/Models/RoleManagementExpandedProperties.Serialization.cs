@@ -28,22 +28,22 @@ namespace Azure.ResourceManager.Authorization.Models
             writer.WriteStartObject();
             writer.WritePropertyName("principal"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrincipalId))
+            if (PrincipalId.HasValue)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(PrincipalId.Value);
             }
-            if (Optional.IsDefined(PrincipalDisplayName))
+            if (PrincipalDisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(PrincipalDisplayName);
             }
-            if (Optional.IsDefined(Email))
+            if (Email != null)
             {
                 writer.WritePropertyName("email"u8);
                 writer.WriteStringValue(Email);
             }
-            if (Optional.IsDefined(PrincipalType))
+            if (PrincipalType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(PrincipalType.Value.ToString());
@@ -51,17 +51,17 @@ namespace Azure.ResourceManager.Authorization.Models
             writer.WriteEndObject();
             writer.WritePropertyName("roleDefinition"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(RoleDefinitionId))
+            if (RoleDefinitionId != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(RoleDefinitionId);
             }
-            if (Optional.IsDefined(RoleDefinitionDisplayName))
+            if (RoleDefinitionDisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(RoleDefinitionDisplayName);
             }
-            if (Optional.IsDefined(RoleType))
+            if (RoleType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(RoleType.Value.ToString());
@@ -69,17 +69,17 @@ namespace Azure.ResourceManager.Authorization.Models
             writer.WriteEndObject();
             writer.WritePropertyName("scope"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ScopeId))
+            if (ScopeId != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(ScopeId);
             }
-            if (Optional.IsDefined(ScopeDisplayName))
+            if (ScopeDisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(ScopeDisplayName);
             }
-            if (Optional.IsDefined(ScopeType))
+            if (ScopeType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ScopeType.Value.ToString());
@@ -253,7 +253,18 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoleManagementExpandedProperties(Optional.ToNullable(id), displayName.Value, email.Value, Optional.ToNullable(type), id0.Value, displayName0.Value, Optional.ToNullable(type0), id1.Value, displayName1.Value, Optional.ToNullable(type1), serializedAdditionalRawData);
+            return new RoleManagementExpandedProperties(
+                Optional.ToNullable(id),
+                displayName.Value,
+                email.Value,
+                Optional.ToNullable(type),
+                id0.Value,
+                displayName0.Value,
+                Optional.ToNullable(type0),
+                id1.Value,
+                displayName1.Value,
+                Optional.ToNullable(type1),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoleManagementExpandedProperties>.Write(ModelReaderWriterOptions options)

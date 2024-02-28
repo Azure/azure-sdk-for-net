@@ -60,7 +60,17 @@ namespace Azure.AI.AnomalyDetector
         /// <returns> A new <see cref="AnomalyDetector.UnivariateLastDetectionResult"/> instance for mocking. </returns>
         public static UnivariateLastDetectionResult UnivariateLastDetectionResult(int period = default, int suggestedWindow = default, float expectedValue = default, float upperMargin = default, float lowerMargin = default, bool isAnomaly = default, bool isNegativeAnomaly = default, bool isPositiveAnomaly = default, float? severity = null)
         {
-            return new UnivariateLastDetectionResult(period, suggestedWindow, expectedValue, upperMargin, lowerMargin, isAnomaly, isNegativeAnomaly, isPositiveAnomaly, severity, serializedAdditionalRawData: null);
+            return new UnivariateLastDetectionResult(
+                period,
+                suggestedWindow,
+                expectedValue,
+                upperMargin,
+                lowerMargin,
+                isAnomaly,
+                isNegativeAnomaly,
+                isPositiveAnomaly,
+                severity,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AnomalyDetector.UnivariateChangePointDetectionOptions"/>. </summary>
@@ -92,7 +102,14 @@ namespace Azure.AI.AnomalyDetector
         {
             series ??= new List<TimeSeriesPoint>();
 
-            return new UnivariateChangePointDetectionOptions(series?.ToList(), granularity, customInterval, period, stableTrendWindow, threshold, serializedAdditionalRawData: null);
+            return new UnivariateChangePointDetectionOptions(
+                series?.ToList(),
+                granularity,
+                customInterval,
+                period,
+                stableTrendWindow,
+                threshold,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AnomalyDetector.UnivariateChangePointDetectionResult"/>. </summary>
@@ -230,7 +247,18 @@ namespace Azure.AI.AnomalyDetector
         {
             errors ??= new List<ErrorResponse>();
 
-            return new ModelInfo(dataSource, dataSchema, startTime, endTime, displayName, slidingWindow, alignPolicy, status, errors?.ToList(), diagnosticsInfo, serializedAdditionalRawData: null);
+            return new ModelInfo(
+                dataSource,
+                dataSchema,
+                startTime,
+                endTime,
+                displayName,
+                slidingWindow,
+                alignPolicy,
+                status,
+                errors?.ToList(),
+                diagnosticsInfo,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AnomalyDetector.AnomalyDetectionModel"/>. </summary>

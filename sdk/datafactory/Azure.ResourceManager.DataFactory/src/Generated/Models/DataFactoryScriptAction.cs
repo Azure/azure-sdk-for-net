@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -53,9 +52,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="uri"/> or <paramref name="roles"/> is null. </exception>
         public DataFactoryScriptAction(string name, Uri uri, BinaryData roles)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(uri, nameof(uri));
-            Argument.AssertNotNull(roles, nameof(roles));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (uri == null)
+            {
+                throw new ArgumentNullException(nameof(uri));
+            }
+            if (roles == null)
+            {
+                throw new ArgumentNullException(nameof(roles));
+            }
 
             Name = name;
             Uri = uri;

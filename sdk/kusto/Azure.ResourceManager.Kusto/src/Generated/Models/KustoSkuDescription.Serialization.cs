@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Kusto.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType != null)
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(Tier))
+            if (options.Format != "W" && Tier != null)
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Locations))
+            if (options.Format != "W" && !(Locations is ChangeTrackingList<AzureLocation> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(LocationInfo))
+            if (options.Format != "W" && !(LocationInfo is ChangeTrackingList<KustoSkuLocationInfoItem> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("locationInfo"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Restrictions))
+            if (options.Format != "W" && !(Restrictions is ChangeTrackingList<BinaryData> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("restrictions"u8);
                 writer.WriteStartArray();
@@ -124,9 +124,9 @@ namespace Azure.ResourceManager.Kusto.Models
             Optional<string> resourceType = default;
             Optional<string> name = default;
             Optional<string> tier = default;
-            Optional<IReadOnlyList<AzureLocation>> locations = default;
-            Optional<IReadOnlyList<KustoSkuLocationInfoItem>> locationInfo = default;
-            Optional<IReadOnlyList<BinaryData>> restrictions = default;
+            IReadOnlyList<AzureLocation> locations = default;
+            IReadOnlyList<KustoSkuLocationInfoItem> locationInfo = default;
+            IReadOnlyList<BinaryData> restrictions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     List<KustoSkuLocationInfoItem> array = new List<KustoSkuLocationInfoItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KustoSkuLocationInfoItem.DeserializeKustoSkuLocationInfoItem(item));
+                        array.Add(KustoSkuLocationInfoItem.DeserializeKustoSkuLocationInfoItem(item, options));
                     }
                     locationInfo = array;
                     continue;
@@ -201,7 +201,14 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KustoSkuDescription(resourceType.Value, name.Value, tier.Value, Optional.ToList(locations), Optional.ToList(locationInfo), Optional.ToList(restrictions), serializedAdditionalRawData);
+            return new KustoSkuDescription(
+                resourceType.Value,
+                name.Value,
+                tier.Value,
+                locations ?? new ChangeTrackingList<AzureLocation>(),
+                locationInfo ?? new ChangeTrackingList<KustoSkuLocationInfoItem>(),
+                restrictions ?? new ChangeTrackingList<BinaryData>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KustoSkuDescription>.Write(ModelReaderWriterOptions options)

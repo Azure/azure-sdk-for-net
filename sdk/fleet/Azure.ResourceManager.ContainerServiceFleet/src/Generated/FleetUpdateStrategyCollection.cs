@@ -84,8 +84,18 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <exception cref="ArgumentNullException"> <paramref name="updateStrategyName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<FleetUpdateStrategyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string updateStrategyName, FleetUpdateStrategyData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(updateStrategyName, nameof(updateStrategyName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (updateStrategyName == null)
+            {
+                throw new ArgumentNullException(nameof(updateStrategyName));
+            }
+            if (updateStrategyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(updateStrategyName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _fleetUpdateStrategyClientDiagnostics.CreateScope("FleetUpdateStrategyCollection.CreateOrUpdate");
             scope.Start();
@@ -135,8 +145,18 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <exception cref="ArgumentNullException"> <paramref name="updateStrategyName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<FleetUpdateStrategyResource> CreateOrUpdate(WaitUntil waitUntil, string updateStrategyName, FleetUpdateStrategyData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(updateStrategyName, nameof(updateStrategyName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (updateStrategyName == null)
+            {
+                throw new ArgumentNullException(nameof(updateStrategyName));
+            }
+            if (updateStrategyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(updateStrategyName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _fleetUpdateStrategyClientDiagnostics.CreateScope("FleetUpdateStrategyCollection.CreateOrUpdate");
             scope.Start();
@@ -182,7 +202,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <exception cref="ArgumentNullException"> <paramref name="updateStrategyName"/> is null. </exception>
         public virtual async Task<Response<FleetUpdateStrategyResource>> GetAsync(string updateStrategyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(updateStrategyName, nameof(updateStrategyName));
+            if (updateStrategyName == null)
+            {
+                throw new ArgumentNullException(nameof(updateStrategyName));
+            }
+            if (updateStrategyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(updateStrategyName));
+            }
 
             using var scope = _fleetUpdateStrategyClientDiagnostics.CreateScope("FleetUpdateStrategyCollection.Get");
             scope.Start();
@@ -227,7 +254,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <exception cref="ArgumentNullException"> <paramref name="updateStrategyName"/> is null. </exception>
         public virtual Response<FleetUpdateStrategyResource> Get(string updateStrategyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(updateStrategyName, nameof(updateStrategyName));
+            if (updateStrategyName == null)
+            {
+                throw new ArgumentNullException(nameof(updateStrategyName));
+            }
+            if (updateStrategyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(updateStrategyName));
+            }
 
             using var scope = _fleetUpdateStrategyClientDiagnostics.CreateScope("FleetUpdateStrategyCollection.Get");
             scope.Start();
@@ -332,7 +366,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <exception cref="ArgumentNullException"> <paramref name="updateStrategyName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string updateStrategyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(updateStrategyName, nameof(updateStrategyName));
+            if (updateStrategyName == null)
+            {
+                throw new ArgumentNullException(nameof(updateStrategyName));
+            }
+            if (updateStrategyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(updateStrategyName));
+            }
 
             using var scope = _fleetUpdateStrategyClientDiagnostics.CreateScope("FleetUpdateStrategyCollection.Exists");
             scope.Start();
@@ -375,7 +416,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <exception cref="ArgumentNullException"> <paramref name="updateStrategyName"/> is null. </exception>
         public virtual Response<bool> Exists(string updateStrategyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(updateStrategyName, nameof(updateStrategyName));
+            if (updateStrategyName == null)
+            {
+                throw new ArgumentNullException(nameof(updateStrategyName));
+            }
+            if (updateStrategyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(updateStrategyName));
+            }
 
             using var scope = _fleetUpdateStrategyClientDiagnostics.CreateScope("FleetUpdateStrategyCollection.Exists");
             scope.Start();
@@ -418,7 +466,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <exception cref="ArgumentNullException"> <paramref name="updateStrategyName"/> is null. </exception>
         public virtual async Task<NullableResponse<FleetUpdateStrategyResource>> GetIfExistsAsync(string updateStrategyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(updateStrategyName, nameof(updateStrategyName));
+            if (updateStrategyName == null)
+            {
+                throw new ArgumentNullException(nameof(updateStrategyName));
+            }
+            if (updateStrategyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(updateStrategyName));
+            }
 
             using var scope = _fleetUpdateStrategyClientDiagnostics.CreateScope("FleetUpdateStrategyCollection.GetIfExists");
             scope.Start();
@@ -463,7 +518,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <exception cref="ArgumentNullException"> <paramref name="updateStrategyName"/> is null. </exception>
         public virtual NullableResponse<FleetUpdateStrategyResource> GetIfExists(string updateStrategyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(updateStrategyName, nameof(updateStrategyName));
+            if (updateStrategyName == null)
+            {
+                throw new ArgumentNullException(nameof(updateStrategyName));
+            }
+            if (updateStrategyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(updateStrategyName));
+            }
 
             using var scope = _fleetUpdateStrategyClientDiagnostics.CreateScope("FleetUpdateStrategyCollection.GetIfExists");
             scope.Start();

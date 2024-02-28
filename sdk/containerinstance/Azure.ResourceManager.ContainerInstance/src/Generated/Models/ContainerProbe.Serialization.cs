@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Exec))
+            if (Exec != null)
             {
                 writer.WritePropertyName("exec"u8);
                 writer.WriteObjectValue(Exec);
             }
-            if (Optional.IsDefined(HttpGet))
+            if (HttpGet != null)
             {
                 writer.WritePropertyName("httpGet"u8);
                 writer.WriteObjectValue(HttpGet);
             }
-            if (Optional.IsDefined(InitialDelayInSeconds))
+            if (InitialDelayInSeconds.HasValue)
             {
                 writer.WritePropertyName("initialDelaySeconds"u8);
                 writer.WriteNumberValue(InitialDelayInSeconds.Value);
             }
-            if (Optional.IsDefined(PeriodInSeconds))
+            if (PeriodInSeconds.HasValue)
             {
                 writer.WritePropertyName("periodSeconds"u8);
                 writer.WriteNumberValue(PeriodInSeconds.Value);
             }
-            if (Optional.IsDefined(FailureThreshold))
+            if (FailureThreshold.HasValue)
             {
                 writer.WritePropertyName("failureThreshold"u8);
                 writer.WriteNumberValue(FailureThreshold.Value);
             }
-            if (Optional.IsDefined(SuccessThreshold))
+            if (SuccessThreshold.HasValue)
             {
                 writer.WritePropertyName("successThreshold"u8);
                 writer.WriteNumberValue(SuccessThreshold.Value);
             }
-            if (Optional.IsDefined(TimeoutInSeconds))
+            if (TimeoutInSeconds.HasValue)
             {
                 writer.WritePropertyName("timeoutSeconds"u8);
                 writer.WriteNumberValue(TimeoutInSeconds.Value);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    exec = ContainerExec.DeserializeContainerExec(property.Value);
+                    exec = ContainerExec.DeserializeContainerExec(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("httpGet"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    httpGet = ContainerHttpGet.DeserializeContainerHttpGet(property.Value);
+                    httpGet = ContainerHttpGet.DeserializeContainerHttpGet(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("initialDelaySeconds"u8))
@@ -179,7 +179,15 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerProbe(exec.Value, httpGet.Value, Optional.ToNullable(initialDelaySeconds), Optional.ToNullable(periodSeconds), Optional.ToNullable(failureThreshold), Optional.ToNullable(successThreshold), Optional.ToNullable(timeoutSeconds), serializedAdditionalRawData);
+            return new ContainerProbe(
+                exec.Value,
+                httpGet.Value,
+                Optional.ToNullable(initialDelaySeconds),
+                Optional.ToNullable(periodSeconds),
+                Optional.ToNullable(failureThreshold),
+                Optional.ToNullable(successThreshold),
+                Optional.ToNullable(timeoutSeconds),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerProbe>.Write(ModelReaderWriterOptions options)

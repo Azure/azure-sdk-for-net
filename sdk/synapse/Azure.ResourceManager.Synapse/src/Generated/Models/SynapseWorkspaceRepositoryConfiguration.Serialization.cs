@@ -26,47 +26,47 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(WorkspaceRepositoryConfigurationType))
+            if (WorkspaceRepositoryConfigurationType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(WorkspaceRepositoryConfigurationType);
             }
-            if (Optional.IsDefined(HostName))
+            if (HostName != null)
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (Optional.IsDefined(AccountName))
+            if (AccountName != null)
             {
                 writer.WritePropertyName("accountName"u8);
                 writer.WriteStringValue(AccountName);
             }
-            if (Optional.IsDefined(ProjectName))
+            if (ProjectName != null)
             {
                 writer.WritePropertyName("projectName"u8);
                 writer.WriteStringValue(ProjectName);
             }
-            if (Optional.IsDefined(RepositoryName))
+            if (RepositoryName != null)
             {
                 writer.WritePropertyName("repositoryName"u8);
                 writer.WriteStringValue(RepositoryName);
             }
-            if (Optional.IsDefined(CollaborationBranch))
+            if (CollaborationBranch != null)
             {
                 writer.WritePropertyName("collaborationBranch"u8);
                 writer.WriteStringValue(CollaborationBranch);
             }
-            if (Optional.IsDefined(RootFolder))
+            if (RootFolder != null)
             {
                 writer.WritePropertyName("rootFolder"u8);
                 writer.WriteStringValue(RootFolder);
             }
-            if (Optional.IsDefined(LastCommitId))
+            if (LastCommitId != null)
             {
                 writer.WritePropertyName("lastCommitId"u8);
                 writer.WriteStringValue(LastCommitId);
             }
-            if (Optional.IsDefined(TenantId))
+            if (TenantId.HasValue)
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
@@ -177,7 +177,17 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseWorkspaceRepositoryConfiguration(type.Value, hostName.Value, accountName.Value, projectName.Value, repositoryName.Value, collaborationBranch.Value, rootFolder.Value, lastCommitId.Value, Optional.ToNullable(tenantId), serializedAdditionalRawData);
+            return new SynapseWorkspaceRepositoryConfiguration(
+                type.Value,
+                hostName.Value,
+                accountName.Value,
+                projectName.Value,
+                repositoryName.Value,
+                collaborationBranch.Value,
+                rootFolder.Value,
+                lastCommitId.Value,
+                Optional.ToNullable(tenantId),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseWorkspaceRepositoryConfiguration>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<OperationalInsightsUsageMetric> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<OperationalInsightsUsageMetric>> value = default;
+            IReadOnlyList<OperationalInsightsUsageMetric> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     List<OperationalInsightsUsageMetric> array = new List<OperationalInsightsUsageMetric>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OperationalInsightsUsageMetric.DeserializeOperationalInsightsUsageMetric(item));
+                        array.Add(OperationalInsightsUsageMetric.DeserializeOperationalInsightsUsageMetric(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkspaceListUsagesResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new WorkspaceListUsagesResult(value ?? new ChangeTrackingList<OperationalInsightsUsageMetric>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkspaceListUsagesResult>.Write(ModelReaderWriterOptions options)

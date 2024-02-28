@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(CustomerSubscriptionDetails))
+            if (CustomerSubscriptionDetails != null)
             {
                 writer.WritePropertyName("customerSubscriptionDetails"u8);
                 writer.WriteObjectValue(CustomerSubscriptionDetails);
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     List<ConfigurationFilters> array = new List<ConfigurationFilters>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.ConfigurationFilters.DeserializeConfigurationFilters(item));
+                        array.Add(Models.ConfigurationFilters.DeserializeConfigurationFilters(item, options));
                     }
                     configurationFilters = array;
                     continue;
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    customerSubscriptionDetails = CustomerSubscriptionDetails.DeserializeCustomerSubscriptionDetails(property.Value);
+                    customerSubscriptionDetails = CustomerSubscriptionDetails.DeserializeCustomerSubscriptionDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

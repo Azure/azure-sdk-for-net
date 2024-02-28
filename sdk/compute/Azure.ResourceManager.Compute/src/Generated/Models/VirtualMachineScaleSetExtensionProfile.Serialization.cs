@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Extensions))
+            if (!(Extensions is ChangeTrackingList<VirtualMachineScaleSetExtensionData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("extensions"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ExtensionsTimeBudget))
+            if (ExtensionsTimeBudget != null)
             {
                 writer.WritePropertyName("extensionsTimeBudget"u8);
                 writer.WriteStringValue(ExtensionsTimeBudget);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IList<VirtualMachineScaleSetExtensionData>> extensions = default;
+            IList<VirtualMachineScaleSetExtensionData> extensions = default;
             Optional<string> extensionsTimeBudget = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<VirtualMachineScaleSetExtensionData> array = new List<VirtualMachineScaleSetExtensionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualMachineScaleSetExtensionData.DeserializeVirtualMachineScaleSetExtensionData(item));
+                        array.Add(VirtualMachineScaleSetExtensionData.DeserializeVirtualMachineScaleSetExtensionData(item, options));
                     }
                     extensions = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineScaleSetExtensionProfile(Optional.ToList(extensions), extensionsTimeBudget.Value, serializedAdditionalRawData);
+            return new VirtualMachineScaleSetExtensionProfile(extensions ?? new ChangeTrackingList<VirtualMachineScaleSetExtensionData>(), extensionsTimeBudget.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineScaleSetExtensionProfile>.Write(ModelReaderWriterOptions options)

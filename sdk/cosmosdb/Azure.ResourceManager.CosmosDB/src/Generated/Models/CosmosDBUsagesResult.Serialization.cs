@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<CosmosDBBaseUsage> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CosmosDBBaseUsage>> value = default;
+            IReadOnlyList<CosmosDBBaseUsage> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CosmosDBBaseUsage> array = new List<CosmosDBBaseUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CosmosDBBaseUsage.DeserializeCosmosDBBaseUsage(item));
+                        array.Add(CosmosDBBaseUsage.DeserializeCosmosDBBaseUsage(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBUsagesResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new CosmosDBUsagesResult(value ?? new ChangeTrackingList<CosmosDBBaseUsage>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBUsagesResult>.Write(ModelReaderWriterOptions options)

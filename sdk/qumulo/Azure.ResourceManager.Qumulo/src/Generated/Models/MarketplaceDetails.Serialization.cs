@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Qumulo.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MarketplaceSubscriptionId))
+            if (MarketplaceSubscriptionId != null)
             {
                 writer.WritePropertyName("marketplaceSubscriptionId"u8);
                 writer.WriteStringValue(MarketplaceSubscriptionId);
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Qumulo.Models
             writer.WriteStringValue(OfferId);
             writer.WritePropertyName("publisherId"u8);
             writer.WriteStringValue(PublisherId);
-            if (options.Format != "W" && Optional.IsDefined(MarketplaceSubscriptionStatus))
+            if (options.Format != "W" && MarketplaceSubscriptionStatus.HasValue)
             {
                 writer.WritePropertyName("marketplaceSubscriptionStatus"u8);
                 writer.WriteStringValue(MarketplaceSubscriptionStatus.Value.ToSerialString());
@@ -124,7 +124,13 @@ namespace Azure.ResourceManager.Qumulo.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MarketplaceDetails(marketplaceSubscriptionId.Value, planId, offerId, publisherId, Optional.ToNullable(marketplaceSubscriptionStatus), serializedAdditionalRawData);
+            return new MarketplaceDetails(
+                marketplaceSubscriptionId.Value,
+                planId,
+                offerId,
+                publisherId,
+                Optional.ToNullable(marketplaceSubscriptionStatus),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MarketplaceDetails>.Write(ModelReaderWriterOptions options)

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(OperationId))
+            if (OperationId != null)
             {
                 writer.WritePropertyName("operationId"u8);
                 writer.WriteStringValue(OperationId);
             }
-            if (Optional.IsDefined(ValuePath))
+            if (ValuePath != null)
             {
                 writer.WritePropertyName("valuePath"u8);
                 writer.WriteStringValue(ValuePath);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
             Optional<string> operationId = default;
             Optional<string> valuePath = default;
-            Optional<IDictionary<string, BinaryData>> parameters = default;
+            IDictionary<string, BinaryData> parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SwaggerCustomDynamicSchema(operationId.Value, valuePath.Value, Optional.ToDictionary(parameters), serializedAdditionalRawData);
+            return new SwaggerCustomDynamicSchema(operationId.Value, valuePath.Value, parameters ?? new ChangeTrackingDictionary<string, BinaryData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SwaggerCustomDynamicSchema>.Write(ModelReaderWriterOptions options)

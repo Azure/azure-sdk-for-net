@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStringValue(ContactName);
             writer.WritePropertyName("phone"u8);
             writer.WriteStringValue(Phone);
-            if (Optional.IsDefined(PhoneExtension))
+            if (PhoneExtension != null)
             {
                 writer.WritePropertyName("phoneExtension"u8);
                 writer.WriteStringValue(PhoneExtension);
             }
-            if (Optional.IsDefined(Mobile))
+            if (Mobile != null)
             {
                 writer.WritePropertyName("mobile"u8);
                 writer.WriteStringValue(Mobile);
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(NotificationPreference))
+            if (!(NotificationPreference is ChangeTrackingList<NotificationPreference> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("notificationPreference"u8);
                 writer.WriteStartArray();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<string> phoneExtension = default;
             Optional<string> mobile = default;
             IList<string> emailList = default;
-            Optional<IList<NotificationPreference>> notificationPreference = default;
+            IList<NotificationPreference> notificationPreference = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     List<NotificationPreference> array = new List<NotificationPreference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.NotificationPreference.DeserializeNotificationPreference(item));
+                        array.Add(Models.NotificationPreference.DeserializeNotificationPreference(item, options));
                     }
                     notificationPreference = array;
                     continue;
@@ -155,7 +155,14 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxContactDetails(contactName, phone, phoneExtension.Value, mobile.Value, emailList, Optional.ToList(notificationPreference), serializedAdditionalRawData);
+            return new DataBoxContactDetails(
+                contactName,
+                phone,
+                phoneExtension.Value,
+                mobile.Value,
+                emailList,
+                notificationPreference ?? new ChangeTrackingList<NotificationPreference>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxContactDetails>.Write(ModelReaderWriterOptions options)

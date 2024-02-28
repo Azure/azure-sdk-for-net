@@ -23,7 +23,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteObjectValue(Text);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingList<ScriptActivityParameter> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
@@ -44,7 +44,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             object text = default;
             ScriptType type = default;
-            Optional<IList<ScriptActivityParameter>> parameters = default;
+            IList<ScriptActivityParameter> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("text"u8))
@@ -72,7 +72,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new ScriptActivityScriptBlock(text, type, Optional.ToList(parameters));
+            return new ScriptActivityScriptBlock(text, type, parameters ?? new ChangeTrackingList<ScriptActivityParameter>());
         }
 
         internal partial class ScriptActivityScriptBlockConverter : JsonConverter<ScriptActivityScriptBlock>

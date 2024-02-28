@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(Description))
+            if (options.Format != "W" && Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsDefined(Author))
+            if (options.Format != "W" && Author != null)
             {
                 writer.WritePropertyName("author"u8);
                 writer.WriteStringValue(Author);
             }
-            if (options.Format != "W" && Optional.IsDefined(Category))
+            if (options.Format != "W" && Category != null)
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportTopicList))
+            if (options.Format != "W" && !(SupportTopicList is ChangeTrackingList<DetectorSupportTopic> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportTopicList"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AnalysisType))
+            if (options.Format != "W" && !(AnalysisType is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("analysisType"u8);
                 writer.WriteStartArray();
@@ -71,12 +71,12 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(DetectorType))
+            if (options.Format != "W" && DetectorType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(DetectorType.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Score))
+            if (options.Format != "W" && Score.HasValue)
             {
                 writer.WritePropertyName("score"u8);
                 writer.WriteNumberValue(Score.Value);
@@ -124,8 +124,8 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> description = default;
             Optional<string> author = default;
             Optional<string> category = default;
-            Optional<IReadOnlyList<DetectorSupportTopic>> supportTopicList = default;
-            Optional<IReadOnlyList<string>> analysisType = default;
+            IReadOnlyList<DetectorSupportTopic> supportTopicList = default;
+            IReadOnlyList<string> analysisType = default;
             Optional<DetectorType> type = default;
             Optional<float> score = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<DetectorSupportTopic> array = new List<DetectorSupportTopic>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DetectorSupportTopic.DeserializeDetectorSupportTopic(item));
+                        array.Add(DetectorSupportTopic.DeserializeDetectorSupportTopic(item, options));
                     }
                     supportTopicList = array;
                     continue;
@@ -209,7 +209,17 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DetectorInfo(id.Value, name.Value, description.Value, author.Value, category.Value, Optional.ToList(supportTopicList), Optional.ToList(analysisType), Optional.ToNullable(type), Optional.ToNullable(score), serializedAdditionalRawData);
+            return new DetectorInfo(
+                id.Value,
+                name.Value,
+                description.Value,
+                author.Value,
+                category.Value,
+                supportTopicList ?? new ChangeTrackingList<DetectorSupportTopic>(),
+                analysisType ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(type),
+                Optional.ToNullable(score),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DetectorInfo>.Write(ModelReaderWriterOptions options)

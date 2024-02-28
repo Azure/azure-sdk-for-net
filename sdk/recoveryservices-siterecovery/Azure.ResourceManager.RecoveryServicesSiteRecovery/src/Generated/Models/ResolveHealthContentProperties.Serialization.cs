@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(HealthErrors))
+            if (!(HealthErrors is ChangeTrackingList<ResolveHealthError> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("healthErrors"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<IList<ResolveHealthError>> healthErrors = default;
+            IList<ResolveHealthError> healthErrors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<ResolveHealthError> array = new List<ResolveHealthError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResolveHealthError.DeserializeResolveHealthError(item));
+                        array.Add(ResolveHealthError.DeserializeResolveHealthError(item, options));
                     }
                     healthErrors = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResolveHealthContentProperties(Optional.ToList(healthErrors), serializedAdditionalRawData);
+            return new ResolveHealthContentProperties(healthErrors ?? new ChangeTrackingList<ResolveHealthError>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResolveHealthContentProperties>.Write(ModelReaderWriterOptions options)

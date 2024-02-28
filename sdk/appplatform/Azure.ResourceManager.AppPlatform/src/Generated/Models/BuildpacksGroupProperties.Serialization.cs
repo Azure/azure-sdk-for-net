@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsCollectionDefined(Buildpacks))
+            if (!(Buildpacks is ChangeTrackingList<WritableSubResource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("buildpacks"u8);
                 writer.WriteStartArray();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 return null;
             }
             Optional<string> name = default;
-            Optional<IList<WritableSubResource>> buildpacks = default;
+            IList<WritableSubResource> buildpacks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BuildpacksGroupProperties(name.Value, Optional.ToList(buildpacks), serializedAdditionalRawData);
+            return new BuildpacksGroupProperties(name.Value, buildpacks ?? new ChangeTrackingList<WritableSubResource>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BuildpacksGroupProperties>.Write(ModelReaderWriterOptions options)

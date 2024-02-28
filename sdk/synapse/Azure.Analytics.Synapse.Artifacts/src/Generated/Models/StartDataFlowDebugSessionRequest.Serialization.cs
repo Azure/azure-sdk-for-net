@@ -19,17 +19,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SessionId))
+            if (SessionId != null)
             {
                 writer.WritePropertyName("sessionId"u8);
                 writer.WriteStringValue(SessionId);
             }
-            if (Optional.IsDefined(DataFlow))
+            if (DataFlow != null)
             {
                 writer.WritePropertyName("dataFlow"u8);
                 writer.WriteObjectValue(DataFlow);
             }
-            if (Optional.IsCollectionDefined(DataFlows))
+            if (!(DataFlows is ChangeTrackingList<DataFlowResource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dataFlows"u8);
                 writer.WriteStartArray();
@@ -39,7 +39,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Datasets))
+            if (!(Datasets is ChangeTrackingList<DatasetResource> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("datasets"u8);
                 writer.WriteStartArray();
@@ -49,7 +49,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(LinkedServices))
+            if (!(LinkedServices is ChangeTrackingList<LinkedServiceResource> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("linkedServices"u8);
                 writer.WriteStartArray();
@@ -59,17 +59,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Staging))
+            if (Staging != null)
             {
                 writer.WritePropertyName("staging"u8);
                 writer.WriteObjectValue(Staging);
             }
-            if (Optional.IsDefined(DebugSettings))
+            if (DebugSettings != null)
             {
                 writer.WritePropertyName("debugSettings"u8);
                 writer.WriteObjectValue(DebugSettings);
             }
-            if (Optional.IsDefined(IncrementalDebug))
+            if (IncrementalDebug.HasValue)
             {
                 writer.WritePropertyName("incrementalDebug"u8);
                 writer.WriteBooleanValue(IncrementalDebug.Value);
@@ -85,9 +85,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             Optional<string> sessionId = default;
             Optional<DataFlowResource> dataFlow = default;
-            Optional<IList<DataFlowResource>> dataFlows = default;
-            Optional<IList<DatasetResource>> datasets = default;
-            Optional<IList<LinkedServiceResource>> linkedServices = default;
+            IList<DataFlowResource> dataFlows = default;
+            IList<DatasetResource> datasets = default;
+            IList<LinkedServiceResource> linkedServices = default;
             Optional<object> staging = default;
             Optional<object> debugSettings = default;
             Optional<bool> incrementalDebug = default;
@@ -177,7 +177,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new StartDataFlowDebugSessionRequest(sessionId.Value, dataFlow.Value, Optional.ToList(dataFlows), Optional.ToList(datasets), Optional.ToList(linkedServices), staging.Value, debugSettings.Value, Optional.ToNullable(incrementalDebug));
+            return new StartDataFlowDebugSessionRequest(
+                sessionId.Value,
+                dataFlow.Value,
+                dataFlows ?? new ChangeTrackingList<DataFlowResource>(),
+                datasets ?? new ChangeTrackingList<DatasetResource>(),
+                linkedServices ?? new ChangeTrackingList<LinkedServiceResource>(),
+                staging.Value,
+                debugSettings.Value,
+                Optional.ToNullable(incrementalDebug));
         }
 
         internal partial class StartDataFlowDebugSessionRequestConverter : JsonConverter<StartDataFlowDebugSessionRequest>

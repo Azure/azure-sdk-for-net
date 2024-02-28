@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FilesystemSubnet))
+            if (FilesystemSubnet != null)
             {
                 writer.WritePropertyName("filesystemSubnet"u8);
                 writer.WriteStringValue(FilesystemSubnet);
             }
-            if (Optional.IsDefined(StorageCapacityTiB))
+            if (StorageCapacityTiB.HasValue)
             {
                 writer.WritePropertyName("storageCapacityTiB"u8);
                 writer.WriteNumberValue(StorageCapacityTiB.Value);
             }
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     {
                         continue;
                     }
-                    sku = StorageCacheSkuName.DeserializeStorageCacheSkuName(property.Value);
+                    sku = StorageCacheSkuName.DeserializeStorageCacheSkuName(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("location"u8))

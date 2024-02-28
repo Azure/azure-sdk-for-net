@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(OpenIdIssuer))
+            if (OpenIdIssuer != null)
             {
                 writer.WritePropertyName("openIdIssuer"u8);
                 writer.WriteStringValue(OpenIdIssuer);
             }
-            if (Optional.IsDefined(ClientId))
+            if (ClientId != null)
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
-            if (Optional.IsDefined(ClientSecretSettingName))
+            if (ClientSecretSettingName != null)
             {
                 writer.WritePropertyName("clientSecretSettingName"u8);
                 writer.WriteStringValue(ClientSecretSettingName);
             }
-            if (Optional.IsDefined(ClientSecretCertificateThumbprint))
+            if (ClientSecretCertificateThumbprint != null)
             {
                 writer.WritePropertyName("clientSecretCertificateThumbprint"u8);
                 writer.WriteStringValue(ClientSecretCertificateThumbprint);
             }
-            if (Optional.IsDefined(ClientSecretCertificateSubjectAlternativeName))
+            if (ClientSecretCertificateSubjectAlternativeName != null)
             {
                 writer.WritePropertyName("clientSecretCertificateSubjectAlternativeName"u8);
                 writer.WriteStringValue(ClientSecretCertificateSubjectAlternativeName);
             }
-            if (Optional.IsDefined(ClientSecretCertificateIssuer))
+            if (ClientSecretCertificateIssuer != null)
             {
                 writer.WritePropertyName("clientSecretCertificateIssuer"u8);
                 writer.WriteStringValue(ClientSecretCertificateIssuer);
@@ -140,7 +140,14 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppAzureActiveDirectoryRegistrationConfiguration(openIdIssuer.Value, clientId.Value, clientSecretSettingName.Value, clientSecretCertificateThumbprint.Value, clientSecretCertificateSubjectAlternativeName.Value, clientSecretCertificateIssuer.Value, serializedAdditionalRawData);
+            return new ContainerAppAzureActiveDirectoryRegistrationConfiguration(
+                openIdIssuer.Value,
+                clientId.Value,
+                clientSecretSettingName.Value,
+                clientSecretCertificateThumbprint.Value,
+                clientSecretCertificateSubjectAlternativeName.Value,
+                clientSecretCertificateIssuer.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppAzureActiveDirectoryRegistrationConfiguration>.Write(ModelReaderWriterOptions options)

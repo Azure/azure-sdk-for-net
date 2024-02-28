@@ -26,24 +26,24 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(SourceControlSyncJobStreamId))
+            if (SourceControlSyncJobStreamId != null)
             {
                 writer.WritePropertyName("sourceControlSyncJobStreamId"u8);
                 writer.WriteStringValue(SourceControlSyncJobStreamId);
             }
-            if (Optional.IsDefined(Summary))
+            if (Summary != null)
             {
                 writer.WritePropertyName("summary"u8);
                 writer.WriteStringValue(Summary);
             }
-            if (options.Format != "W" && Optional.IsDefined(Time))
+            if (options.Format != "W" && Time.HasValue)
             {
                 if (Time != null)
                 {
@@ -55,17 +55,17 @@ namespace Azure.ResourceManager.Automation.Models
                     writer.WriteNull("time");
                 }
             }
-            if (Optional.IsDefined(StreamType))
+            if (StreamType.HasValue)
             {
                 writer.WritePropertyName("streamType"u8);
                 writer.WriteStringValue(StreamType.Value.ToString());
             }
-            if (Optional.IsDefined(StreamText))
+            if (StreamText != null)
             {
                 writer.WritePropertyName("streamText"u8);
                 writer.WriteStringValue(StreamText);
             }
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartObject();
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Automation.Models
             Optional<DateTimeOffset?> time = default;
             Optional<SourceControlStreamType> streamType = default;
             Optional<string> streamText = default;
-            Optional<IReadOnlyDictionary<string, BinaryData>> value = default;
+            IReadOnlyDictionary<string, BinaryData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -220,7 +220,15 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SourceControlSyncJobStreamResult(id.Value, sourceControlSyncJobStreamId.Value, summary.Value, Optional.ToNullable(time), Optional.ToNullable(streamType), streamText.Value, Optional.ToDictionary(value), serializedAdditionalRawData);
+            return new SourceControlSyncJobStreamResult(
+                id.Value,
+                sourceControlSyncJobStreamId.Value,
+                summary.Value,
+                Optional.ToNullable(time),
+                Optional.ToNullable(streamType),
+                streamText.Value,
+                value ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SourceControlSyncJobStreamResult>.Write(ModelReaderWriterOptions options)

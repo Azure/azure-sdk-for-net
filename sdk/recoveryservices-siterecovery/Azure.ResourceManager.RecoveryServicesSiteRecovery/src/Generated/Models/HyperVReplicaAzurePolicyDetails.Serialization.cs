@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RecoveryPointHistoryDurationInHours))
+            if (RecoveryPointHistoryDurationInHours.HasValue)
             {
                 writer.WritePropertyName("recoveryPointHistoryDurationInHours"u8);
                 writer.WriteNumberValue(RecoveryPointHistoryDurationInHours.Value);
             }
-            if (Optional.IsDefined(ApplicationConsistentSnapshotFrequencyInHours))
+            if (ApplicationConsistentSnapshotFrequencyInHours.HasValue)
             {
                 writer.WritePropertyName("applicationConsistentSnapshotFrequencyInHours"u8);
                 writer.WriteNumberValue(ApplicationConsistentSnapshotFrequencyInHours.Value);
             }
-            if (Optional.IsDefined(ReplicationInterval))
+            if (ReplicationInterval.HasValue)
             {
                 writer.WritePropertyName("replicationInterval"u8);
                 writer.WriteNumberValue(ReplicationInterval.Value);
             }
-            if (Optional.IsDefined(OnlineReplicationStartTime))
+            if (OnlineReplicationStartTime != null)
             {
                 writer.WritePropertyName("onlineReplicationStartTime"u8);
                 writer.WriteStringValue(OnlineReplicationStartTime);
             }
-            if (Optional.IsDefined(Encryption))
+            if (Encryption != null)
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteStringValue(Encryption);
             }
-            if (Optional.IsDefined(ActiveStorageAccountId))
+            if (ActiveStorageAccountId != null)
             {
                 writer.WritePropertyName("activeStorageAccountId"u8);
                 writer.WriteStringValue(ActiveStorageAccountId);
@@ -164,7 +164,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HyperVReplicaAzurePolicyDetails(instanceType, serializedAdditionalRawData, Optional.ToNullable(recoveryPointHistoryDurationInHours), Optional.ToNullable(applicationConsistentSnapshotFrequencyInHours), Optional.ToNullable(replicationInterval), onlineReplicationStartTime.Value, encryption.Value, activeStorageAccountId.Value);
+            return new HyperVReplicaAzurePolicyDetails(
+                instanceType,
+                serializedAdditionalRawData,
+                Optional.ToNullable(recoveryPointHistoryDurationInHours),
+                Optional.ToNullable(applicationConsistentSnapshotFrequencyInHours),
+                Optional.ToNullable(replicationInterval),
+                onlineReplicationStartTime.Value,
+                encryption.Value,
+                activeStorageAccountId.Value);
         }
 
         BinaryData IPersistableModel<HyperVReplicaAzurePolicyDetails>.Write(ModelReaderWriterOptions options)

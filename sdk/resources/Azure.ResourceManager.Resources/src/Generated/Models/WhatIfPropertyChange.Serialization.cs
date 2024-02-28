@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteStringValue(Path);
             writer.WritePropertyName("propertyChangeType"u8);
             writer.WriteStringValue(PropertyChangeType.ToSerialString());
-            if (Optional.IsDefined(Before))
+            if (Before != null)
             {
                 writer.WritePropertyName("before"u8);
 #if NET6_0_OR_GREATER
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
 #endif
             }
-            if (Optional.IsDefined(After))
+            if (After != null)
             {
                 writer.WritePropertyName("after"u8);
 #if NET6_0_OR_GREATER
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
 #endif
             }
-            if (Optional.IsCollectionDefined(Children))
+            if (!(Children is ChangeTrackingList<WhatIfPropertyChange> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("children"u8);
                 writer.WriteStartArray();
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Resources.Models
             WhatIfPropertyChangeType propertyChangeType = default;
             Optional<BinaryData> before = default;
             Optional<BinaryData> after = default;
-            Optional<IReadOnlyList<WhatIfPropertyChange>> children = default;
+            IReadOnlyList<WhatIfPropertyChange> children = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<WhatIfPropertyChange> array = new List<WhatIfPropertyChange>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeWhatIfPropertyChange(item));
+                        array.Add(DeserializeWhatIfPropertyChange(item, options));
                     }
                     children = array;
                     continue;
@@ -159,7 +159,13 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WhatIfPropertyChange(path, propertyChangeType, before.Value, after.Value, Optional.ToList(children), serializedAdditionalRawData);
+            return new WhatIfPropertyChange(
+                path,
+                propertyChangeType,
+                before.Value,
+                after.Value,
+                children ?? new ChangeTrackingList<WhatIfPropertyChange>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WhatIfPropertyChange>.Write(ModelReaderWriterOptions options)

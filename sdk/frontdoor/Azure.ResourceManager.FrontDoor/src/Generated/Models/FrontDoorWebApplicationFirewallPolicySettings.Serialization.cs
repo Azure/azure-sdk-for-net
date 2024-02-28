@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EnabledState))
+            if (EnabledState.HasValue)
             {
                 writer.WritePropertyName("enabledState"u8);
                 writer.WriteStringValue(EnabledState.Value.ToString());
             }
-            if (Optional.IsDefined(Mode))
+            if (Mode.HasValue)
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (Optional.IsDefined(RedirectUri))
+            if (RedirectUri != null)
             {
                 writer.WritePropertyName("redirectUrl"u8);
                 writer.WriteStringValue(RedirectUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(CustomBlockResponseStatusCode))
+            if (CustomBlockResponseStatusCode.HasValue)
             {
                 writer.WritePropertyName("customBlockResponseStatusCode"u8);
                 writer.WriteNumberValue(CustomBlockResponseStatusCode.Value);
             }
-            if (Optional.IsDefined(CustomBlockResponseBody))
+            if (CustomBlockResponseBody != null)
             {
                 writer.WritePropertyName("customBlockResponseBody"u8);
                 writer.WriteStringValue(CustomBlockResponseBody);
             }
-            if (Optional.IsDefined(RequestBodyCheck))
+            if (RequestBodyCheck.HasValue)
             {
                 writer.WritePropertyName("requestBodyCheck"u8);
                 writer.WriteStringValue(RequestBodyCheck.Value.ToString());
@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorWebApplicationFirewallPolicySettings(Optional.ToNullable(enabledState), Optional.ToNullable(mode), redirectUrl.Value, Optional.ToNullable(customBlockResponseStatusCode), customBlockResponseBody.Value, Optional.ToNullable(requestBodyCheck), serializedAdditionalRawData);
+            return new FrontDoorWebApplicationFirewallPolicySettings(
+                Optional.ToNullable(enabledState),
+                Optional.ToNullable(mode),
+                redirectUrl.Value,
+                Optional.ToNullable(customBlockResponseStatusCode),
+                customBlockResponseBody.Value,
+                Optional.ToNullable(requestBodyCheck),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorWebApplicationFirewallPolicySettings>.Write(ModelReaderWriterOptions options)

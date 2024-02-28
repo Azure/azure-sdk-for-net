@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(LastStatus))
+            if (LastStatus != null)
             {
                 writer.WritePropertyName("lastStatus"u8);
                 writer.WriteObjectValue(LastStatus);
             }
-            if (Optional.IsDefined(SecretIdentifier))
+            if (SecretIdentifier != null)
             {
                 writer.WritePropertyName("secretIdentifier"u8);
                 writer.WriteStringValue(SecretIdentifier);
             }
-            if (Optional.IsDefined(IdentityClientId))
+            if (IdentityClientId != null)
             {
                 writer.WritePropertyName("identityClientId"u8);
                 writer.WriteStringValue(IdentityClientId);
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    lastStatus = KeyVaultLastAccessStatusContractProperties.DeserializeKeyVaultLastAccessStatusContractProperties(property.Value);
+                    lastStatus = KeyVaultLastAccessStatusContractProperties.DeserializeKeyVaultLastAccessStatusContractProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("secretIdentifier"u8))

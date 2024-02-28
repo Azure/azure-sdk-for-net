@@ -28,27 +28,27 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsDefined(ETag))
+            if (ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             Optional<RecoveryServicesSku> sku = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    properties = RecoveryServicesVaultProperties.DeserializeRecoveryServicesVaultProperties(property.Value);
+                    properties = RecoveryServicesVaultProperties.DeserializeRecoveryServicesVaultProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    sku = RecoveryServicesSku.DeserializeRecoveryServicesSku(property.Value);
+                    sku = RecoveryServicesSku.DeserializeRecoveryServicesSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -218,7 +218,18 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecoveryServicesVaultPatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties.Value, sku.Value, identity, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new RecoveryServicesVaultPatch(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties.Value,
+                sku.Value,
+                identity,
+                Optional.ToNullable(etag),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecoveryServicesVaultPatch>.Write(ModelReaderWriterOptions options)

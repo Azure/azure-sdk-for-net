@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Profiles))
+            if (!(Profiles is ChangeTrackingList<AutoscaleProfile> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("profiles"u8);
                 writer.WriteStartArray();
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Notifications))
+            if (!(Notifications is ChangeTrackingList<AutoscaleNotification> collection1 && collection1.IsUndefined))
             {
                 if (Notifications != null)
                 {
@@ -66,12 +66,12 @@ namespace Azure.ResourceManager.Monitor.Models
                     writer.WriteNull("notifications");
                 }
             }
-            if (Optional.IsDefined(IsEnabled))
+            if (IsEnabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(PredictiveAutoscalePolicy))
+            if (PredictiveAutoscalePolicy != null)
             {
                 if (PredictiveAutoscalePolicy != null)
                 {
@@ -83,17 +83,17 @@ namespace Azure.ResourceManager.Monitor.Models
                     writer.WriteNull("predictiveAutoscalePolicy");
                 }
             }
-            if (Optional.IsDefined(AutoscaleSettingName))
+            if (AutoscaleSettingName != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(AutoscaleSettingName);
             }
-            if (Optional.IsDefined(TargetResourceId))
+            if (TargetResourceId != null)
             {
                 writer.WritePropertyName("targetResourceUri"u8);
                 writer.WriteStringValue(TargetResourceId);
             }
-            if (Optional.IsDefined(TargetResourceLocation))
+            if (TargetResourceLocation.HasValue)
             {
                 writer.WritePropertyName("targetResourceLocation"u8);
                 writer.WriteStringValue(TargetResourceLocation.Value);
@@ -137,9 +137,9 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<IList<AutoscaleProfile>> profiles = default;
-            Optional<IList<AutoscaleNotification>> notifications = default;
+            IDictionary<string, string> tags = default;
+            IList<AutoscaleProfile> profiles = default;
+            IList<AutoscaleNotification> notifications = default;
             Optional<bool> enabled = default;
             Optional<PredictiveAutoscalePolicy> predictiveAutoscalePolicy = default;
             Optional<string> name = default;
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Monitor.Models
                             List<AutoscaleProfile> array = new List<AutoscaleProfile>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AutoscaleProfile.DeserializeAutoscaleProfile(item));
+                                array.Add(AutoscaleProfile.DeserializeAutoscaleProfile(item, options));
                             }
                             profiles = array;
                             continue;
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Monitor.Models
                             List<AutoscaleNotification> array = new List<AutoscaleNotification>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AutoscaleNotification.DeserializeAutoscaleNotification(item));
+                                array.Add(AutoscaleNotification.DeserializeAutoscaleNotification(item, options));
                             }
                             notifications = array;
                             continue;
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Monitor.Models
                                 predictiveAutoscalePolicy = null;
                                 continue;
                             }
-                            predictiveAutoscalePolicy = PredictiveAutoscalePolicy.DeserializePredictiveAutoscalePolicy(property0.Value);
+                            predictiveAutoscalePolicy = PredictiveAutoscalePolicy.DeserializePredictiveAutoscalePolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("name"u8))
@@ -252,7 +252,16 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutoscaleSettingPatch(Optional.ToDictionary(tags), Optional.ToList(profiles), Optional.ToList(notifications), Optional.ToNullable(enabled), predictiveAutoscalePolicy.Value, name.Value, targetResourceUri.Value, Optional.ToNullable(targetResourceLocation), serializedAdditionalRawData);
+            return new AutoscaleSettingPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                profiles ?? new ChangeTrackingList<AutoscaleProfile>(),
+                notifications ?? new ChangeTrackingList<AutoscaleNotification>(),
+                Optional.ToNullable(enabled),
+                predictiveAutoscalePolicy.Value,
+                name.Value,
+                targetResourceUri.Value,
+                Optional.ToNullable(targetResourceLocation),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutoscaleSettingPatch>.Write(ModelReaderWriterOptions options)

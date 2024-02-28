@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<GitHubConnectorData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<GitHubConnectorData>> value = default;
+            IReadOnlyList<GitHubConnectorData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                     List<GitHubConnectorData> array = new List<GitHubConnectorData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GitHubConnectorData.DeserializeGitHubConnectorData(item));
+                        array.Add(GitHubConnectorData.DeserializeGitHubConnectorData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GitHubConnectorListResponse(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new GitHubConnectorListResponse(value ?? new ChangeTrackingList<GitHubConnectorData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GitHubConnectorListResponse>.Write(ModelReaderWriterOptions options)

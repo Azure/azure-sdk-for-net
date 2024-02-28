@@ -27,7 +27,7 @@ namespace Azure.AI.OpenAI
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Grounding))
+            if (Grounding != null)
             {
                 writer.WritePropertyName("grounding"u8);
                 writer.WriteObjectValue(Grounding);
@@ -81,7 +81,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    grounding = AzureGroundingEnhancement.DeserializeAzureGroundingEnhancement(property.Value);
+                    grounding = AzureGroundingEnhancement.DeserializeAzureGroundingEnhancement(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -29,22 +29,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CopySourceType);
-            if (Optional.IsDefined(SourceRetryCount))
+            if (SourceRetryCount != null)
             {
                 writer.WritePropertyName("sourceRetryCount"u8);
                 JsonSerializer.Serialize(writer, SourceRetryCount);
             }
-            if (Optional.IsDefined(SourceRetryWait))
+            if (SourceRetryWait != null)
             {
                 writer.WritePropertyName("sourceRetryWait"u8);
                 JsonSerializer.Serialize(writer, SourceRetryWait);
             }
-            if (Optional.IsDefined(MaxConcurrentConnections))
+            if (MaxConcurrentConnections != null)
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 JsonSerializer.Serialize(writer, MaxConcurrentConnections);
             }
-            if (Optional.IsDefined(DisableMetricsCollection))
+            if (DisableMetricsCollection != null)
             {
                 writer.WritePropertyName("disableMetricsCollection"u8);
                 JsonSerializer.Serialize(writer, DisableMetricsCollection);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownCopySource(document.RootElement, options);
+            return DeserializeCopyActivitySource(document.RootElement, options);
         }
 
         internal static UnknownCopySource DeserializeUnknownCopySource(JsonElement element, ModelReaderWriterOptions options = null)
@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new UnknownCopySource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties);
+            return new UnknownCopySource(
+                type,
+                sourceRetryCount.Value,
+                sourceRetryWait.Value,
+                maxConcurrentConnections.Value,
+                disableMetricsCollection.Value,
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<CopyActivitySource>.Write(ModelReaderWriterOptions options)
@@ -162,7 +168,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownCopySource(document.RootElement, options);
+                        return DeserializeCopyActivitySource(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(CopyActivitySource)} does not support '{options.Format}' format.");

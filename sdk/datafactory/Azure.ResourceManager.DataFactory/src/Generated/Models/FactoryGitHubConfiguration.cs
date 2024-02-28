@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -22,10 +21,22 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/>, <paramref name="repositoryName"/>, <paramref name="collaborationBranch"/> or <paramref name="rootFolder"/> is null. </exception>
         public FactoryGitHubConfiguration(string accountName, string repositoryName, string collaborationBranch, string rootFolder) : base(accountName, repositoryName, collaborationBranch, rootFolder)
         {
-            Argument.AssertNotNull(accountName, nameof(accountName));
-            Argument.AssertNotNull(repositoryName, nameof(repositoryName));
-            Argument.AssertNotNull(collaborationBranch, nameof(collaborationBranch));
-            Argument.AssertNotNull(rootFolder, nameof(rootFolder));
+            if (accountName == null)
+            {
+                throw new ArgumentNullException(nameof(accountName));
+            }
+            if (repositoryName == null)
+            {
+                throw new ArgumentNullException(nameof(repositoryName));
+            }
+            if (collaborationBranch == null)
+            {
+                throw new ArgumentNullException(nameof(collaborationBranch));
+            }
+            if (rootFolder == null)
+            {
+                throw new ArgumentNullException(nameof(rootFolder));
+            }
 
             FactoryRepoConfigurationType = "FactoryGitHubConfiguration";
         }

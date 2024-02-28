@@ -32,17 +32,17 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStringValue(MessageVersion);
             writer.WritePropertyName("messageRelease"u8);
             writer.WriteStringValue(MessageRelease);
-            if (Optional.IsDefined(SenderApplicationId))
+            if (SenderApplicationId != null)
             {
                 writer.WritePropertyName("senderApplicationId"u8);
                 writer.WriteStringValue(SenderApplicationId);
             }
-            if (Optional.IsDefined(SenderApplicationQualifier))
+            if (SenderApplicationQualifier != null)
             {
                 writer.WritePropertyName("senderApplicationQualifier"u8);
                 writer.WriteStringValue(SenderApplicationQualifier);
             }
-            if (Optional.IsDefined(AssociationAssignedCode))
+            if (AssociationAssignedCode != null)
             {
                 writer.WritePropertyName("associationAssignedCode"u8);
                 writer.WriteStringValue(AssociationAssignedCode);
@@ -139,7 +139,15 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdifactSchemaReference(messageId, messageVersion, messageRelease, senderApplicationId.Value, senderApplicationQualifier.Value, associationAssignedCode.Value, schemaName, serializedAdditionalRawData);
+            return new EdifactSchemaReference(
+                messageId,
+                messageVersion,
+                messageRelease,
+                senderApplicationId.Value,
+                senderApplicationQualifier.Value,
+                associationAssignedCode.Value,
+                schemaName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdifactSchemaReference>.Write(ModelReaderWriterOptions options)

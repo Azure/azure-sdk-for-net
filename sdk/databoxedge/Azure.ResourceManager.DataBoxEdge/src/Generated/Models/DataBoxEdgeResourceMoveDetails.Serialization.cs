@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(OperationInProgress))
+            if (OperationInProgress.HasValue)
             {
                 writer.WritePropertyName("operationInProgress"u8);
                 writer.WriteStringValue(OperationInProgress.Value.ToString());
             }
-            if (Optional.IsDefined(OperationInProgressLockTimeoutInUtc))
+            if (OperationInProgressLockTimeoutInUtc.HasValue)
             {
                 writer.WritePropertyName("operationInProgressLockTimeoutInUTC"u8);
                 writer.WriteStringValue(OperationInProgressLockTimeoutInUtc.Value, "O");

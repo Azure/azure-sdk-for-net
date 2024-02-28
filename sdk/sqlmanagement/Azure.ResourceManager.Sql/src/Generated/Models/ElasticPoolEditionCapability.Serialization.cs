@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedElasticPoolPerformanceLevels))
+            if (options.Format != "W" && !(SupportedElasticPoolPerformanceLevels is ChangeTrackingList<ElasticPoolPerformanceLevelCapability> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportedElasticPoolPerformanceLevels"u8);
                 writer.WriteStartArray();
@@ -41,17 +41,17 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(IsZoneRedundant))
+            if (options.Format != "W" && IsZoneRedundant.HasValue)
             {
                 writer.WritePropertyName("zoneRedundant"u8);
                 writer.WriteBooleanValue(IsZoneRedundant.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Reason))
+            if (Reason != null)
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Sql.Models
                 return null;
             }
             Optional<string> name = default;
-            Optional<IReadOnlyList<ElasticPoolPerformanceLevelCapability>> supportedElasticPoolPerformanceLevels = default;
+            IReadOnlyList<ElasticPoolPerformanceLevelCapability> supportedElasticPoolPerformanceLevels = default;
             Optional<bool> zoneRedundant = default;
             Optional<SqlCapabilityStatus> status = default;
             Optional<string> reason = default;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ElasticPoolPerformanceLevelCapability> array = new List<ElasticPoolPerformanceLevelCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ElasticPoolPerformanceLevelCapability.DeserializeElasticPoolPerformanceLevelCapability(item));
+                        array.Add(ElasticPoolPerformanceLevelCapability.DeserializeElasticPoolPerformanceLevelCapability(item, options));
                     }
                     supportedElasticPoolPerformanceLevels = array;
                     continue;
@@ -151,7 +151,13 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ElasticPoolEditionCapability(name.Value, Optional.ToList(supportedElasticPoolPerformanceLevels), Optional.ToNullable(zoneRedundant), Optional.ToNullable(status), reason.Value, serializedAdditionalRawData);
+            return new ElasticPoolEditionCapability(
+                name.Value,
+                supportedElasticPoolPerformanceLevels ?? new ChangeTrackingList<ElasticPoolPerformanceLevelCapability>(),
+                Optional.ToNullable(zoneRedundant),
+                Optional.ToNullable(status),
+                reason.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticPoolEditionCapability>.Write(ModelReaderWriterOptions options)

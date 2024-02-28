@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<BandwidthScheduleData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<BandwidthScheduleData>> value = default;
+            IReadOnlyList<BandwidthScheduleData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     List<BandwidthScheduleData> array = new List<BandwidthScheduleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BandwidthScheduleData.DeserializeBandwidthScheduleData(item));
+                        array.Add(BandwidthScheduleData.DeserializeBandwidthScheduleData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BandwidthSchedulesList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new BandwidthSchedulesList(value ?? new ChangeTrackingList<BandwidthScheduleData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BandwidthSchedulesList>.Write(ModelReaderWriterOptions options)

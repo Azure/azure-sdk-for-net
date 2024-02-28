@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Marketplace.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(PublisherId))
+            if (PublisherId != null)
             {
                 writer.WritePropertyName("publisherId"u8);
                 writer.WriteStringValue(PublisherId);
             }
-            if (Optional.IsCollectionDefined(PlanIds))
+            if (!(PlanIds is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("planIds"u8);
                 writer.WriteStartArray();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SubscriptionId))
+            if (SubscriptionId != null)
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 return null;
             }
             Optional<string> publisherId = default;
-            Optional<IList<string>> planIds = default;
+            IList<string> planIds = default;
             Optional<string> subscriptionId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QueryApprovalRequestContent(publisherId.Value, Optional.ToList(planIds), subscriptionId.Value, serializedAdditionalRawData);
+            return new QueryApprovalRequestContent(publisherId.Value, planIds ?? new ChangeTrackingList<string>(), subscriptionId.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QueryApprovalRequestContent>.Write(ModelReaderWriterOptions options)

@@ -27,7 +27,7 @@ namespace Azure.AI.OpenAI.Assistants
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Messages))
+            if (!(Messages is ChangeTrackingList<ThreadInitializationMessage> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("messages"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.AI.OpenAI.Assistants
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Metadata))
+            if (!(Metadata is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 if (Metadata != null)
                 {
@@ -93,8 +93,8 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 return null;
             }
-            Optional<IList<ThreadInitializationMessage>> messages = default;
-            Optional<IDictionary<string, string>> metadata = default;
+            IList<ThreadInitializationMessage> messages = default;
+            IDictionary<string, string> metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +108,7 @@ namespace Azure.AI.OpenAI.Assistants
                     List<ThreadInitializationMessage> array = new List<ThreadInitializationMessage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ThreadInitializationMessage.DeserializeThreadInitializationMessage(item));
+                        array.Add(ThreadInitializationMessage.DeserializeThreadInitializationMessage(item, options));
                     }
                     messages = array;
                     continue;
@@ -133,7 +133,7 @@ namespace Azure.AI.OpenAI.Assistants
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AssistantThreadCreationOptions(Optional.ToList(messages), Optional.ToDictionary(metadata), serializedAdditionalRawData);
+            return new AssistantThreadCreationOptions(messages ?? new ChangeTrackingList<ThreadInitializationMessage>(), metadata ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AssistantThreadCreationOptions>.Write(ModelReaderWriterOptions options)

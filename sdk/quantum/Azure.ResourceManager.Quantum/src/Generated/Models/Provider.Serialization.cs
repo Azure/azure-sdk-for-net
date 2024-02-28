@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.Quantum.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProviderId))
+            if (ProviderId != null)
             {
                 writer.WritePropertyName("providerId"u8);
                 writer.WriteStringValue(ProviderId);
             }
-            if (Optional.IsDefined(ProviderSku))
+            if (ProviderSku != null)
             {
                 writer.WritePropertyName("providerSku"u8);
                 writer.WriteStringValue(ProviderSku);
             }
-            if (Optional.IsDefined(InstanceUri))
+            if (InstanceUri != null)
             {
                 writer.WritePropertyName("instanceUri"u8);
                 writer.WriteStringValue(InstanceUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ApplicationName))
+            if (ApplicationName != null)
             {
                 writer.WritePropertyName("applicationName"u8);
                 writer.WriteStringValue(ApplicationName);
             }
-            if (Optional.IsDefined(ProvisioningState))
+            if (ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(ResourceUsageId))
+            if (ResourceUsageId != null)
             {
                 writer.WritePropertyName("resourceUsageId"u8);
                 writer.WriteStringValue(ResourceUsageId);
@@ -148,7 +148,14 @@ namespace Azure.ResourceManager.Quantum.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new Provider(providerId.Value, providerSku.Value, instanceUri.Value, applicationName.Value, Optional.ToNullable(provisioningState), resourceUsageId.Value, serializedAdditionalRawData);
+            return new Provider(
+                providerId.Value,
+                providerSku.Value,
+                instanceUri.Value,
+                applicationName.Value,
+                Optional.ToNullable(provisioningState),
+                resourceUsageId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<Provider>.Write(ModelReaderWriterOptions options)

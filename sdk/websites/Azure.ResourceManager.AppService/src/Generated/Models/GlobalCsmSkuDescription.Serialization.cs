@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Tier))
+            if (Tier != null)
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier);
             }
-            if (Optional.IsDefined(Size))
+            if (Size != null)
             {
                 writer.WritePropertyName("size"u8);
                 writer.WriteStringValue(Size);
             }
-            if (Optional.IsDefined(Family))
+            if (Family != null)
             {
                 writer.WritePropertyName("family"u8);
                 writer.WriteStringValue(Family);
             }
-            if (Optional.IsDefined(Capacity))
+            if (Capacity != null)
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteObjectValue(Capacity);
             }
-            if (Optional.IsCollectionDefined(Locations))
+            if (!(Locations is ChangeTrackingList<AzureLocation> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Capabilities))
+            if (!(Capabilities is ChangeTrackingList<AppServiceSkuCapability> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartArray();
@@ -114,8 +114,8 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> size = default;
             Optional<string> family = default;
             Optional<AppServiceSkuCapacity> capacity = default;
-            Optional<IReadOnlyList<AzureLocation>> locations = default;
-            Optional<IReadOnlyList<AppServiceSkuCapability>> capabilities = default;
+            IReadOnlyList<AzureLocation> locations = default;
+            IReadOnlyList<AppServiceSkuCapability> capabilities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    capacity = AppServiceSkuCapacity.DeserializeAppServiceSkuCapacity(property.Value);
+                    capacity = AppServiceSkuCapacity.DeserializeAppServiceSkuCapacity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("locations"u8))
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<AppServiceSkuCapability> array = new List<AppServiceSkuCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppServiceSkuCapability.DeserializeAppServiceSkuCapability(item));
+                        array.Add(AppServiceSkuCapability.DeserializeAppServiceSkuCapability(item, options));
                     }
                     capabilities = array;
                     continue;
@@ -183,7 +183,15 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GlobalCsmSkuDescription(name.Value, tier.Value, size.Value, family.Value, capacity.Value, Optional.ToList(locations), Optional.ToList(capabilities), serializedAdditionalRawData);
+            return new GlobalCsmSkuDescription(
+                name.Value,
+                tier.Value,
+                size.Value,
+                family.Value,
+                capacity.Value,
+                locations ?? new ChangeTrackingList<AzureLocation>(),
+                capabilities ?? new ChangeTrackingList<AppServiceSkuCapability>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GlobalCsmSkuDescription>.Write(ModelReaderWriterOptions options)

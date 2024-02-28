@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<BackendAddressPoolData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<BackendAddressPoolData>> value = default;
+            IReadOnlyList<BackendAddressPoolData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<BackendAddressPoolData> array = new List<BackendAddressPoolData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BackendAddressPoolData.DeserializeBackendAddressPoolData(item));
+                        array.Add(BackendAddressPoolData.DeserializeBackendAddressPoolData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LoadBalancerBackendAddressPoolListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new LoadBalancerBackendAddressPoolListResult(value ?? new ChangeTrackingList<BackendAddressPoolData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LoadBalancerBackendAddressPoolListResult>.Write(ModelReaderWriterOptions options)

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TierType))
+            if (TierType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(TierType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (Optional.IsCollectionDefined(ExtendedInfo))
+            if (!(ExtendedInfo is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("extendedInfo"u8);
                 writer.WriteStartObject();
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             Optional<RecoveryPointTierType> type = default;
             Optional<RecoveryPointTierStatus> status = default;
-            Optional<IDictionary<string, string>> extendedInfo = default;
+            IDictionary<string, string> extendedInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecoveryPointTierInformationV2(Optional.ToNullable(type), Optional.ToNullable(status), Optional.ToDictionary(extendedInfo), serializedAdditionalRawData);
+            return new RecoveryPointTierInformationV2(Optional.ToNullable(type), Optional.ToNullable(status), extendedInfo ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecoveryPointTierInformationV2>.Write(ModelReaderWriterOptions options)

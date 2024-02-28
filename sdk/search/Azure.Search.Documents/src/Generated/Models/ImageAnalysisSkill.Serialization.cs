@@ -16,7 +16,7 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DefaultLanguageCode))
+            if (DefaultLanguageCode.HasValue)
             {
                 if (DefaultLanguageCode != null)
                 {
@@ -28,7 +28,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("defaultLanguageCode");
                 }
             }
-            if (Optional.IsCollectionDefined(VisualFeatures))
+            if (!(VisualFeatures is ChangeTrackingList<VisualFeature> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("visualFeatures"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Details))
+            if (!(Details is ChangeTrackingList<ImageDetail> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStartArray();
@@ -50,17 +50,17 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(ODataType);
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Context))
+            if (Context != null)
             {
                 writer.WritePropertyName("context"u8);
                 writer.WriteStringValue(Context);
@@ -89,8 +89,8 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             Optional<ImageAnalysisSkillLanguage?> defaultLanguageCode = default;
-            Optional<IList<VisualFeature>> visualFeatures = default;
-            Optional<IList<ImageDetail>> details = default;
+            IList<VisualFeature> visualFeatures = default;
+            IList<ImageDetail> details = default;
             string odataType = default;
             Optional<string> name = default;
             Optional<string> description = default;
@@ -178,7 +178,16 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new ImageAnalysisSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, Optional.ToNullable(defaultLanguageCode), Optional.ToList(visualFeatures), Optional.ToList(details));
+            return new ImageAnalysisSkill(
+                odataType,
+                name.Value,
+                description.Value,
+                context.Value,
+                inputs,
+                outputs,
+                Optional.ToNullable(defaultLanguageCode),
+                visualFeatures ?? new ChangeTrackingList<VisualFeature>(),
+                details ?? new ChangeTrackingList<ImageDetail>());
         }
     }
 }

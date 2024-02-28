@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.HealthBot.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -43,17 +43,17 @@ namespace Azure.ResourceManager.HealthBot.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.HealthBot.Models
                 return null;
             }
             Optional<HealthBotProperties> properties = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<HealthBotSku> sku = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<AzureLocation> location = default;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.HealthBot.Models
                     {
                         continue;
                     }
-                    properties = HealthBotProperties.DeserializeHealthBotProperties(property.Value);
+                    properties = HealthBotProperties.DeserializeHealthBotProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.HealthBot.Models
                     {
                         continue;
                     }
-                    sku = HealthBotSku.DeserializeHealthBotSku(property.Value);
+                    sku = HealthBotSku.DeserializeHealthBotSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -161,7 +161,13 @@ namespace Azure.ResourceManager.HealthBot.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HealthBotPatch(properties.Value, Optional.ToDictionary(tags), sku.Value, identity, Optional.ToNullable(location), serializedAdditionalRawData);
+            return new HealthBotPatch(
+                properties.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                sku.Value,
+                identity,
+                Optional.ToNullable(location),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HealthBotPatch>.Write(ModelReaderWriterOptions options)

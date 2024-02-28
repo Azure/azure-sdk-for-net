@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(LastRevisionApplied))
+            if (LastRevisionApplied.HasValue)
             {
                 if (LastRevisionApplied != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("lastRevisionApplied");
                 }
             }
-            if (Optional.IsDefined(HelmChartRef))
+            if (HelmChartRef != null)
             {
                 if (HelmChartRef != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("helmChartRef");
                 }
             }
-            if (Optional.IsDefined(FailureCount))
+            if (FailureCount.HasValue)
             {
                 if (FailureCount != null)
                 {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("failureCount");
                 }
             }
-            if (Optional.IsDefined(InstallFailureCount))
+            if (InstallFailureCount.HasValue)
             {
                 if (InstallFailureCount != null)
                 {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("installFailureCount");
                 }
             }
-            if (Optional.IsDefined(UpgradeFailureCount))
+            if (UpgradeFailureCount.HasValue)
             {
                 if (UpgradeFailureCount != null)
                 {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                         helmChartRef = null;
                         continue;
                     }
-                    helmChartRef = KubernetesObjectReference.DeserializeKubernetesObjectReference(property.Value);
+                    helmChartRef = KubernetesObjectReference.DeserializeKubernetesObjectReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("failureCount"u8))
@@ -189,7 +189,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HelmReleaseProperties(Optional.ToNullable(lastRevisionApplied), helmChartRef.Value, Optional.ToNullable(failureCount), Optional.ToNullable(installFailureCount), Optional.ToNullable(upgradeFailureCount), serializedAdditionalRawData);
+            return new HelmReleaseProperties(
+                Optional.ToNullable(lastRevisionApplied),
+                helmChartRef.Value,
+                Optional.ToNullable(failureCount),
+                Optional.ToNullable(installFailureCount),
+                Optional.ToNullable(upgradeFailureCount),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HelmReleaseProperties>.Write(ModelReaderWriterOptions options)

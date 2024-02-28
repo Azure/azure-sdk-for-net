@@ -26,47 +26,47 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ClusterFreeMemoryInMB))
+            if (ClusterFreeMemoryInMB.HasValue)
             {
                 writer.WritePropertyName("clusterFreeMemoryMb"u8);
                 writer.WriteNumberValue(ClusterFreeMemoryInMB.Value);
             }
-            if (Optional.IsDefined(ClusterUsedMemoryInMB))
+            if (ClusterUsedMemoryInMB.HasValue)
             {
                 writer.WritePropertyName("clusterUsedMemoryMb"u8);
                 writer.WriteNumberValue(ClusterUsedMemoryInMB.Value);
             }
-            if (Optional.IsDefined(ClusterFailoverMemoryInMB))
+            if (ClusterFailoverMemoryInMB.HasValue)
             {
                 writer.WritePropertyName("clusterFailoverMemoryMb"u8);
                 writer.WriteNumberValue(ClusterFailoverMemoryInMB.Value);
             }
-            if (Optional.IsDefined(ClusterFragmentationMemoryInMB))
+            if (ClusterFragmentationMemoryInMB.HasValue)
             {
                 writer.WritePropertyName("clusterFragmentationMemoryMb"u8);
                 writer.WriteNumberValue(ClusterFragmentationMemoryInMB.Value);
             }
-            if (Optional.IsDefined(ClusterHyperVReserveMemoryMb))
+            if (ClusterHyperVReserveMemoryMb.HasValue)
             {
                 writer.WritePropertyName("clusterHypervReserveMemoryMb"u8);
                 writer.WriteNumberValue(ClusterHyperVReserveMemoryMb.Value);
             }
-            if (Optional.IsDefined(ClusterInfraVmMemoryInMB))
+            if (ClusterInfraVmMemoryInMB.HasValue)
             {
                 writer.WritePropertyName("clusterInfraVmMemoryMb"u8);
                 writer.WriteNumberValue(ClusterInfraVmMemoryInMB.Value);
             }
-            if (Optional.IsDefined(ClusterTotalMemoryInMB))
+            if (ClusterTotalMemoryInMB.HasValue)
             {
                 writer.WritePropertyName("clusterTotalMemoryMb"u8);
                 writer.WriteNumberValue(ClusterTotalMemoryInMB.Value);
             }
-            if (Optional.IsDefined(ClusterNonFailoverVmInMB))
+            if (ClusterNonFailoverVmInMB.HasValue)
             {
                 writer.WritePropertyName("clusterNonFailoverVmMb"u8);
                 writer.WriteNumberValue(ClusterNonFailoverVmInMB.Value);
             }
-            if (Optional.IsDefined(ClusterMemoryUsedByVmsInMB))
+            if (ClusterMemoryUsedByVmsInMB.HasValue)
             {
                 writer.WritePropertyName("clusterMemoryUsedByVmsMb"u8);
                 writer.WriteNumberValue(ClusterMemoryUsedByVmsInMB.Value);
@@ -209,7 +209,17 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeClusterMemoryCapacity(Optional.ToNullable(clusterFreeMemoryMb), Optional.ToNullable(clusterUsedMemoryMb), Optional.ToNullable(clusterFailoverMemoryMb), Optional.ToNullable(clusterFragmentationMemoryMb), Optional.ToNullable(clusterHyperVReserveMemoryMb), Optional.ToNullable(clusterInfraVmMemoryMb), Optional.ToNullable(clusterTotalMemoryMb), Optional.ToNullable(clusterNonFailoverVmMb), Optional.ToNullable(clusterMemoryUsedByVmsMb), serializedAdditionalRawData);
+            return new EdgeClusterMemoryCapacity(
+                Optional.ToNullable(clusterFreeMemoryMb),
+                Optional.ToNullable(clusterUsedMemoryMb),
+                Optional.ToNullable(clusterFailoverMemoryMb),
+                Optional.ToNullable(clusterFragmentationMemoryMb),
+                Optional.ToNullable(clusterHyperVReserveMemoryMb),
+                Optional.ToNullable(clusterInfraVmMemoryMb),
+                Optional.ToNullable(clusterTotalMemoryMb),
+                Optional.ToNullable(clusterNonFailoverVmMb),
+                Optional.ToNullable(clusterMemoryUsedByVmsMb),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeClusterMemoryCapacity>.Write(ModelReaderWriterOptions options)

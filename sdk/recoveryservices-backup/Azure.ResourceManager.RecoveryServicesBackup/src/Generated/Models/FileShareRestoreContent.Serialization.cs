@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RecoveryType))
+            if (RecoveryType.HasValue)
             {
                 writer.WritePropertyName("recoveryType"u8);
                 writer.WriteStringValue(RecoveryType.Value.ToString());
             }
-            if (Optional.IsDefined(SourceResourceId))
+            if (SourceResourceId != null)
             {
                 writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);
             }
-            if (Optional.IsDefined(CopyOptions))
+            if (CopyOptions.HasValue)
             {
                 writer.WritePropertyName("copyOptions"u8);
                 writer.WriteStringValue(CopyOptions.Value.ToString());
             }
-            if (Optional.IsDefined(RestoreRequestType))
+            if (RestoreRequestType.HasValue)
             {
                 writer.WritePropertyName("restoreRequestType"u8);
                 writer.WriteStringValue(RestoreRequestType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(RestoreFileSpecs))
+            if (!(RestoreFileSpecs is ChangeTrackingList<RestoreFileSpecs> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("restoreFileSpecs"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(TargetDetails))
+            if (TargetDetails != null)
             {
                 writer.WritePropertyName("targetDetails"u8);
                 writer.WriteObjectValue(TargetDetails);
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<ResourceIdentifier> sourceResourceId = default;
             Optional<FileShareCopyOption> copyOptions = default;
             Optional<FileShareRestoreType> restoreRequestType = default;
-            Optional<IList<RestoreFileSpecs>> restoreFileSpecs = default;
+            IList<RestoreFileSpecs> restoreFileSpecs = default;
             Optional<TargetAfsRestoreInfo> targetDetails = default;
             string objectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<RestoreFileSpecs> array = new List<RestoreFileSpecs>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.RestoreFileSpecs.DeserializeRestoreFileSpecs(item));
+                        array.Add(Models.RestoreFileSpecs.DeserializeRestoreFileSpecs(item, options));
                     }
                     restoreFileSpecs = array;
                     continue;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    targetDetails = TargetAfsRestoreInfo.DeserializeTargetAfsRestoreInfo(property.Value);
+                    targetDetails = TargetAfsRestoreInfo.DeserializeTargetAfsRestoreInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("objectType"u8))
@@ -182,7 +182,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FileShareRestoreContent(objectType, serializedAdditionalRawData, Optional.ToNullable(recoveryType), sourceResourceId.Value, Optional.ToNullable(copyOptions), Optional.ToNullable(restoreRequestType), Optional.ToList(restoreFileSpecs), targetDetails.Value);
+            return new FileShareRestoreContent(
+                objectType,
+                serializedAdditionalRawData,
+                Optional.ToNullable(recoveryType),
+                sourceResourceId.Value,
+                Optional.ToNullable(copyOptions),
+                Optional.ToNullable(restoreRequestType),
+                restoreFileSpecs ?? new ChangeTrackingList<RestoreFileSpecs>(),
+                targetDetails.Value);
         }
 
         BinaryData IPersistableModel<FileShareRestoreContent>.Write(ModelReaderWriterOptions options)

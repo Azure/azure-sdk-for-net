@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(VolumeConfigurations))
+            if (!(VolumeConfigurations is ChangeTrackingDictionary<string, SapDiskConfiguration> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("volumeConfigurations"u8);
                 writer.WriteStartObject();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<IReadOnlyDictionary<string, SapDiskConfiguration>> volumeConfigurations = default;
+            IReadOnlyDictionary<string, SapDiskConfiguration> volumeConfigurations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     Dictionary<string, SapDiskConfiguration> dictionary = new Dictionary<string, SapDiskConfiguration>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, SapDiskConfiguration.DeserializeSapDiskConfiguration(property0.Value));
+                        dictionary.Add(property0.Name, SapDiskConfiguration.DeserializeSapDiskConfiguration(property0.Value, options));
                     }
                     volumeConfigurations = dictionary;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SapDiskConfigurationsResult(Optional.ToDictionary(volumeConfigurations), serializedAdditionalRawData);
+            return new SapDiskConfigurationsResult(volumeConfigurations ?? new ChangeTrackingDictionary<string, SapDiskConfiguration>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SapDiskConfigurationsResult>.Write(ModelReaderWriterOptions options)

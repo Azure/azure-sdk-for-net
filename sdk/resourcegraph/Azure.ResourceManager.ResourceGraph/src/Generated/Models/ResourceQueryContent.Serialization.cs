@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Subscriptions))
+            if (!(Subscriptions is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("subscriptions"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ManagementGroups))
+            if (!(ManagementGroups is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("managementGroups"u8);
                 writer.WriteStartArray();
@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             }
             writer.WritePropertyName("query"u8);
             writer.WriteStringValue(Query);
-            if (Optional.IsDefined(Options))
+            if (Options != null)
             {
                 writer.WritePropertyName("options"u8);
                 writer.WriteObjectValue(Options);
             }
-            if (Optional.IsCollectionDefined(Facets))
+            if (!(Facets is ChangeTrackingList<FacetRequest> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("facets"u8);
                 writer.WriteStartArray();
@@ -101,11 +101,11 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             {
                 return null;
             }
-            Optional<IList<string>> subscriptions = default;
-            Optional<IList<string>> managementGroups = default;
+            IList<string> subscriptions = default;
+            IList<string> managementGroups = default;
             string query = default;
             Optional<ResourceQueryRequestOptions> options0 = default;
-            Optional<IList<FacetRequest>> facets = default;
+            IList<FacetRequest> facets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                     {
                         continue;
                     }
-                    options0 = ResourceQueryRequestOptions.DeserializeResourceQueryRequestOptions(property.Value);
+                    options0 = ResourceQueryRequestOptions.DeserializeResourceQueryRequestOptions(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("facets"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                     List<FacetRequest> array = new List<FacetRequest>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FacetRequest.DeserializeFacetRequest(item));
+                        array.Add(FacetRequest.DeserializeFacetRequest(item, options));
                     }
                     facets = array;
                     continue;
@@ -172,7 +172,13 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceQueryContent(Optional.ToList(subscriptions), Optional.ToList(managementGroups), query, options0.Value, Optional.ToList(facets), serializedAdditionalRawData);
+            return new ResourceQueryContent(
+                subscriptions ?? new ChangeTrackingList<string>(),
+                managementGroups ?? new ChangeTrackingList<string>(),
+                query,
+                options0.Value,
+                facets ?? new ChangeTrackingList<FacetRequest>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceQueryContent>.Write(ModelReaderWriterOptions options)

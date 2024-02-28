@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<CassandraClusterData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CassandraClusterData>> value = default;
+            IReadOnlyList<CassandraClusterData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CassandraClusterData> array = new List<CassandraClusterData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CassandraClusterData.DeserializeCassandraClusterData(item));
+                        array.Add(CassandraClusterData.DeserializeCassandraClusterData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CassandraClusterListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new CassandraClusterListResult(value ?? new ChangeTrackingList<CassandraClusterData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CassandraClusterListResult>.Write(ModelReaderWriterOptions options)

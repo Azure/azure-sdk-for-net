@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     List<ResourceHealthEventImpactedResourceData> array = new List<ResourceHealthEventImpactedResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceHealthEventImpactedResourceData.DeserializeResourceHealthEventImpactedResourceData(item));
+                        array.Add(ResourceHealthEventImpactedResourceData.DeserializeResourceHealthEventImpactedResourceData(item, options));
                     }
                     value = array;
                     continue;

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Field))
+            if (Field != null)
             {
                 writer.WritePropertyName("field"u8);
                 writer.WriteStringValue(Field);
             }
-            if (Optional.IsDefined(Order))
+            if (Order.HasValue)
             {
                 writer.WritePropertyName("order"u8);
                 writer.WriteStringValue(Order.Value.ToString());

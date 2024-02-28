@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<HubVirtualNetworkConnectionData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<HubVirtualNetworkConnectionData>> value = default;
+            IReadOnlyList<HubVirtualNetworkConnectionData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<HubVirtualNetworkConnectionData> array = new List<HubVirtualNetworkConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HubVirtualNetworkConnectionData.DeserializeHubVirtualNetworkConnectionData(item));
+                        array.Add(HubVirtualNetworkConnectionData.DeserializeHubVirtualNetworkConnectionData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ListHubVirtualNetworkConnectionsResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ListHubVirtualNetworkConnectionsResult(value ?? new ChangeTrackingList<HubVirtualNetworkConnectionData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ListHubVirtualNetworkConnectionsResult>.Write(ModelReaderWriterOptions options)

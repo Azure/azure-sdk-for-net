@@ -78,13 +78,58 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="region"/>, <paramref name="databaseRid"/> or <paramref name="collectionRid"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PartitionMetricListResult>> ListMetricsAsync(string subscriptionId, string resourceGroupName, string accountName, string region, string databaseRid, string collectionRid, string filter, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNullOrEmpty(region, nameof(region));
-            Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
-            Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
-            Argument.AssertNotNull(filter, nameof(filter));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (accountName == null)
+            {
+                throw new ArgumentNullException(nameof(accountName));
+            }
+            if (accountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
+            }
+            if (region == null)
+            {
+                throw new ArgumentNullException(nameof(region));
+            }
+            if (region.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(region));
+            }
+            if (databaseRid == null)
+            {
+                throw new ArgumentNullException(nameof(databaseRid));
+            }
+            if (databaseRid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseRid));
+            }
+            if (collectionRid == null)
+            {
+                throw new ArgumentNullException(nameof(collectionRid));
+            }
+            if (collectionRid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(collectionRid));
+            }
+            if (filter == null)
+            {
+                throw new ArgumentNullException(nameof(filter));
+            }
 
             using var message = CreateListMetricsRequest(subscriptionId, resourceGroupName, accountName, region, databaseRid, collectionRid, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -115,13 +160,58 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="region"/>, <paramref name="databaseRid"/> or <paramref name="collectionRid"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PartitionMetricListResult> ListMetrics(string subscriptionId, string resourceGroupName, string accountName, string region, string databaseRid, string collectionRid, string filter, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNullOrEmpty(region, nameof(region));
-            Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
-            Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
-            Argument.AssertNotNull(filter, nameof(filter));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (accountName == null)
+            {
+                throw new ArgumentNullException(nameof(accountName));
+            }
+            if (accountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
+            }
+            if (region == null)
+            {
+                throw new ArgumentNullException(nameof(region));
+            }
+            if (region.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(region));
+            }
+            if (databaseRid == null)
+            {
+                throw new ArgumentNullException(nameof(databaseRid));
+            }
+            if (databaseRid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseRid));
+            }
+            if (collectionRid == null)
+            {
+                throw new ArgumentNullException(nameof(collectionRid));
+            }
+            if (collectionRid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(collectionRid));
+            }
+            if (filter == null)
+            {
+                throw new ArgumentNullException(nameof(filter));
+            }
 
             using var message = CreateListMetricsRequest(subscriptionId, resourceGroupName, accountName, region, databaseRid, collectionRid, filter);
             _pipeline.Send(message, cancellationToken);

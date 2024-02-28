@@ -281,7 +281,10 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SecurityInsightsSentinelOnboardingStateResource>> UpdateAsync(WaitUntil waitUntil, SecurityInsightsSentinelOnboardingStateData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _securityInsightsSentinelOnboardingStateSentinelOnboardingStatesClientDiagnostics.CreateScope("SecurityInsightsSentinelOnboardingStateResource.Update");
             scope.Start();
@@ -327,7 +330,10 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SecurityInsightsSentinelOnboardingStateResource> Update(WaitUntil waitUntil, SecurityInsightsSentinelOnboardingStateData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _securityInsightsSentinelOnboardingStateSentinelOnboardingStatesClientDiagnostics.CreateScope("SecurityInsightsSentinelOnboardingStateResource.Update");
             scope.Start();

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,27 +39,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Annotation))
+            if (Annotation != null)
             {
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);
             }
-            if (Optional.IsDefined(RedistributeConnectedSubnets))
+            if (RedistributeConnectedSubnets.HasValue)
             {
                 writer.WritePropertyName("redistributeConnectedSubnets"u8);
                 writer.WriteStringValue(RedistributeConnectedSubnets.Value.ToString());
             }
-            if (Optional.IsDefined(RedistributeStaticRoutes))
+            if (RedistributeStaticRoutes.HasValue)
             {
                 writer.WritePropertyName("redistributeStaticRoutes"u8);
                 writer.WriteStringValue(RedistributeStaticRoutes.Value.ToString());
             }
-            if (Optional.IsDefined(AggregateRouteConfiguration))
+            if (AggregateRouteConfiguration != null)
             {
                 writer.WritePropertyName("aggregateRouteConfiguration"u8);
                 writer.WriteObjectValue(AggregateRouteConfiguration);
             }
-            if (Optional.IsDefined(ConnectedSubnetRoutePolicy))
+            if (ConnectedSubnetRoutePolicy != null)
             {
                 writer.WritePropertyName("connectedSubnetRoutePolicy"u8);
                 writer.WriteObjectValue(ConnectedSubnetRoutePolicy);
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<string> annotation = default;
             Optional<RedistributeConnectedSubnet> redistributeConnectedSubnets = default;
             Optional<RedistributeStaticRoute> redistributeStaticRoutes = default;
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            aggregateRouteConfiguration = AggregateRouteConfiguration.DeserializeAggregateRouteConfiguration(property0.Value);
+                            aggregateRouteConfiguration = AggregateRouteConfiguration.DeserializeAggregateRouteConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("connectedSubnetRoutePolicy"u8))
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            connectedSubnetRoutePolicy = ConnectedSubnetRoutePolicy.DeserializeConnectedSubnetRoutePolicy(property0.Value);
+                            connectedSubnetRoutePolicy = ConnectedSubnetRoutePolicy.DeserializeConnectedSubnetRoutePolicy(property0.Value, options);
                             continue;
                         }
                     }
@@ -186,7 +186,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkFabricL3IsolationDomainPatch(Optional.ToDictionary(tags), serializedAdditionalRawData, annotation.Value, Optional.ToNullable(redistributeConnectedSubnets), Optional.ToNullable(redistributeStaticRoutes), aggregateRouteConfiguration.Value, connectedSubnetRoutePolicy.Value);
+            return new NetworkFabricL3IsolationDomainPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                annotation.Value,
+                Optional.ToNullable(redistributeConnectedSubnets),
+                Optional.ToNullable(redistributeStaticRoutes),
+                aggregateRouteConfiguration.Value,
+                connectedSubnetRoutePolicy.Value);
         }
 
         BinaryData IPersistableModel<NetworkFabricL3IsolationDomainPatch>.Write(ModelReaderWriterOptions options)

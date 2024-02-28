@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Workspaces))
+            if (!(Workspaces is ChangeTrackingList<FirewallPolicyLogAnalyticsWorkspace> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("workspaces"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DefaultWorkspaceId))
+            if (DefaultWorkspaceId != null)
             {
                 writer.WritePropertyName("defaultWorkspaceId"u8);
                 JsonSerializer.Serialize(writer, DefaultWorkspaceId);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IList<FirewallPolicyLogAnalyticsWorkspace>> workspaces = default;
+            IList<FirewallPolicyLogAnalyticsWorkspace> workspaces = default;
             Optional<WritableSubResource> defaultWorkspaceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<FirewallPolicyLogAnalyticsWorkspace> array = new List<FirewallPolicyLogAnalyticsWorkspace>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FirewallPolicyLogAnalyticsWorkspace.DeserializeFirewallPolicyLogAnalyticsWorkspace(item));
+                        array.Add(FirewallPolicyLogAnalyticsWorkspace.DeserializeFirewallPolicyLogAnalyticsWorkspace(item, options));
                     }
                     workspaces = array;
                     continue;
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirewallPolicyLogAnalyticsResources(Optional.ToList(workspaces), defaultWorkspaceId, serializedAdditionalRawData);
+            return new FirewallPolicyLogAnalyticsResources(workspaces ?? new ChangeTrackingList<FirewallPolicyLogAnalyticsWorkspace>(), defaultWorkspaceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirewallPolicyLogAnalyticsResources>.Write(ModelReaderWriterOptions options)

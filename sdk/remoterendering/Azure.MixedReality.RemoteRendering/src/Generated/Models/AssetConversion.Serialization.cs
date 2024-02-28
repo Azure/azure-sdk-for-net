@@ -67,7 +67,13 @@ namespace Azure.MixedReality.RemoteRendering
                     continue;
                 }
             }
-            return new AssetConversion(id, settings, output.Value, error, status, creationTime);
+            return new AssetConversion(
+                id,
+                settings,
+                output.Value,
+                error,
+                status,
+                creationTime);
         }
     }
 }

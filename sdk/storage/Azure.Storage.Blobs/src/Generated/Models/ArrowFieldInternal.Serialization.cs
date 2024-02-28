@@ -18,19 +18,19 @@ namespace Azure.Storage.Blobs.Models
             writer.WriteStartElement("Type");
             writer.WriteValue(Type);
             writer.WriteEndElement();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WriteStartElement("Name");
                 writer.WriteValue(Name);
                 writer.WriteEndElement();
             }
-            if (Optional.IsDefined(Precision))
+            if (Precision.HasValue)
             {
                 writer.WriteStartElement("Precision");
                 writer.WriteValue(Precision.Value);
                 writer.WriteEndElement();
             }
-            if (Optional.IsDefined(Scale))
+            if (Scale.HasValue)
             {
                 writer.WriteStartElement("Scale");
                 writer.WriteValue(Scale.Value);

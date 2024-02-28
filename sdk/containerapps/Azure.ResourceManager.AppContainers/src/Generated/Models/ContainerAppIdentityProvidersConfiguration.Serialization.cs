@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AzureActiveDirectory))
+            if (AzureActiveDirectory != null)
             {
                 writer.WritePropertyName("azureActiveDirectory"u8);
                 writer.WriteObjectValue(AzureActiveDirectory);
             }
-            if (Optional.IsDefined(Facebook))
+            if (Facebook != null)
             {
                 writer.WritePropertyName("facebook"u8);
                 writer.WriteObjectValue(Facebook);
             }
-            if (Optional.IsDefined(GitHub))
+            if (GitHub != null)
             {
                 writer.WritePropertyName("gitHub"u8);
                 writer.WriteObjectValue(GitHub);
             }
-            if (Optional.IsDefined(Google))
+            if (Google != null)
             {
                 writer.WritePropertyName("google"u8);
                 writer.WriteObjectValue(Google);
             }
-            if (Optional.IsDefined(Twitter))
+            if (Twitter != null)
             {
                 writer.WritePropertyName("twitter"u8);
                 writer.WriteObjectValue(Twitter);
             }
-            if (Optional.IsDefined(Apple))
+            if (Apple != null)
             {
                 writer.WritePropertyName("apple"u8);
                 writer.WriteObjectValue(Apple);
             }
-            if (Optional.IsDefined(AzureStaticWebApps))
+            if (AzureStaticWebApps != null)
             {
                 writer.WritePropertyName("azureStaticWebApps"u8);
                 writer.WriteObjectValue(AzureStaticWebApps);
             }
-            if (Optional.IsCollectionDefined(CustomOpenIdConnectProviders))
+            if (!(CustomOpenIdConnectProviders is ChangeTrackingDictionary<string, ContainerAppCustomOpenIdConnectProviderConfiguration> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("customOpenIdConnectProviders"u8);
                 writer.WriteStartObject();
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<ContainerAppTwitterConfiguration> twitter = default;
             Optional<ContainerAppAppleConfiguration> apple = default;
             Optional<ContainerAppAzureStaticWebAppsConfiguration> azureStaticWebApps = default;
-            Optional<IDictionary<string, ContainerAppCustomOpenIdConnectProviderConfiguration>> customOpenIdConnectProviders = default;
+            IDictionary<string, ContainerAppCustomOpenIdConnectProviderConfiguration> customOpenIdConnectProviders = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    azureActiveDirectory = ContainerAppAzureActiveDirectoryConfiguration.DeserializeContainerAppAzureActiveDirectoryConfiguration(property.Value);
+                    azureActiveDirectory = ContainerAppAzureActiveDirectoryConfiguration.DeserializeContainerAppAzureActiveDirectoryConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("facebook"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    facebook = ContainerAppFacebookConfiguration.DeserializeContainerAppFacebookConfiguration(property.Value);
+                    facebook = ContainerAppFacebookConfiguration.DeserializeContainerAppFacebookConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("gitHub"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    gitHub = ContainerAppGitHubConfiguration.DeserializeContainerAppGitHubConfiguration(property.Value);
+                    gitHub = ContainerAppGitHubConfiguration.DeserializeContainerAppGitHubConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("google"u8))
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    google = ContainerAppGoogleConfiguration.DeserializeContainerAppGoogleConfiguration(property.Value);
+                    google = ContainerAppGoogleConfiguration.DeserializeContainerAppGoogleConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("twitter"u8))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    twitter = ContainerAppTwitterConfiguration.DeserializeContainerAppTwitterConfiguration(property.Value);
+                    twitter = ContainerAppTwitterConfiguration.DeserializeContainerAppTwitterConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("apple"u8))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    apple = ContainerAppAppleConfiguration.DeserializeContainerAppAppleConfiguration(property.Value);
+                    apple = ContainerAppAppleConfiguration.DeserializeContainerAppAppleConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("azureStaticWebApps"u8))
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    azureStaticWebApps = ContainerAppAzureStaticWebAppsConfiguration.DeserializeContainerAppAzureStaticWebAppsConfiguration(property.Value);
+                    azureStaticWebApps = ContainerAppAzureStaticWebAppsConfiguration.DeserializeContainerAppAzureStaticWebAppsConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("customOpenIdConnectProviders"u8))
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     Dictionary<string, ContainerAppCustomOpenIdConnectProviderConfiguration> dictionary = new Dictionary<string, ContainerAppCustomOpenIdConnectProviderConfiguration>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, ContainerAppCustomOpenIdConnectProviderConfiguration.DeserializeContainerAppCustomOpenIdConnectProviderConfiguration(property0.Value));
+                        dictionary.Add(property0.Name, ContainerAppCustomOpenIdConnectProviderConfiguration.DeserializeContainerAppCustomOpenIdConnectProviderConfiguration(property0.Value, options));
                     }
                     customOpenIdConnectProviders = dictionary;
                     continue;
@@ -205,7 +205,16 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppIdentityProvidersConfiguration(azureActiveDirectory.Value, facebook.Value, gitHub.Value, google.Value, twitter.Value, apple.Value, azureStaticWebApps.Value, Optional.ToDictionary(customOpenIdConnectProviders), serializedAdditionalRawData);
+            return new ContainerAppIdentityProvidersConfiguration(
+                azureActiveDirectory.Value,
+                facebook.Value,
+                gitHub.Value,
+                google.Value,
+                twitter.Value,
+                apple.Value,
+                azureStaticWebApps.Value,
+                customOpenIdConnectProviders ?? new ChangeTrackingDictionary<string, ContainerAppCustomOpenIdConnectProviderConfiguration>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppIdentityProvidersConfiguration>.Write(ModelReaderWriterOptions options)

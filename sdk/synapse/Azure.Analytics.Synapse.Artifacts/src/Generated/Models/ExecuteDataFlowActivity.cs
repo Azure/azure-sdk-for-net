@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -20,8 +19,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="dataflow"/> is null. </exception>
         public ExecuteDataFlowActivity(string name, DataFlowReference dataflow) : base(name)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(dataflow, nameof(dataflow));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (dataflow == null)
+            {
+                throw new ArgumentNullException(nameof(dataflow));
+            }
 
             Dataflow = dataflow;
             Type = "ExecuteDataFlow";

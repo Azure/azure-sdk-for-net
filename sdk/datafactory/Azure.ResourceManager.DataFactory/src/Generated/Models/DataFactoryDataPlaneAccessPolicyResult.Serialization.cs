@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Policy))
+            if (Policy != null)
             {
                 writer.WritePropertyName("policy"u8);
                 writer.WriteObjectValue(Policy);
             }
-            if (Optional.IsDefined(AccessToken))
+            if (AccessToken != null)
             {
                 writer.WritePropertyName("accessToken"u8);
                 writer.WriteStringValue(AccessToken);
             }
-            if (Optional.IsDefined(DataPlaneUri))
+            if (DataPlaneUri != null)
             {
                 writer.WritePropertyName("dataPlaneUrl"u8);
                 writer.WriteStringValue(DataPlaneUri.AbsoluteUri);
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    policy = DataFactoryDataPlaneUserAccessPolicy.DeserializeDataFactoryDataPlaneUserAccessPolicy(property.Value);
+                    policy = DataFactoryDataPlaneUserAccessPolicy.DeserializeDataFactoryDataPlaneUserAccessPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("accessToken"u8))

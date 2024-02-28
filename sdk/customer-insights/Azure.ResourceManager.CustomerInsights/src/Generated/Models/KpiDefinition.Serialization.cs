@@ -30,17 +30,17 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             writer.WriteStringValue(EntityType.ToSerialString());
             writer.WritePropertyName("entityTypeName"u8);
             writer.WriteStringValue(EntityTypeName);
-            if (options.Format != "W" && Optional.IsDefined(TenantId))
+            if (options.Format != "W" && TenantId.HasValue)
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(KpiName))
+            if (options.Format != "W" && KpiName != null)
             {
                 writer.WritePropertyName("kpiName"u8);
                 writer.WriteStringValue(KpiName);
             }
-            if (Optional.IsCollectionDefined(DisplayName))
+            if (!(DisplayName is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Description))
+            if (!(Description is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
             writer.WritePropertyName("calculationWindow"u8);
             writer.WriteStringValue(CalculationWindow.ToSerialString());
-            if (Optional.IsDefined(CalculationWindowFieldName))
+            if (CalculationWindowFieldName != null)
             {
                 writer.WritePropertyName("calculationWindowFieldName"u8);
                 writer.WriteStringValue(CalculationWindowFieldName);
@@ -73,17 +73,17 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             writer.WriteStringValue(Function.ToSerialString());
             writer.WritePropertyName("expression"u8);
             writer.WriteStringValue(Expression);
-            if (Optional.IsDefined(Unit))
+            if (Unit != null)
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit);
             }
-            if (Optional.IsDefined(Filter))
+            if (Filter != null)
             {
                 writer.WritePropertyName("filter"u8);
                 writer.WriteStringValue(Filter);
             }
-            if (Optional.IsCollectionDefined(GroupBy))
+            if (!(GroupBy is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("groupBy"u8);
                 writer.WriteStartArray();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(GroupByMetadata))
+            if (options.Format != "W" && !(GroupByMetadata is ChangeTrackingList<KpiGroupByMetadata> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("groupByMetadata"u8);
                 writer.WriteStartArray();
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ParticipantProfilesMetadata))
+            if (options.Format != "W" && !(ParticipantProfilesMetadata is ChangeTrackingList<KpiParticipantProfilesMetadata> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("participantProfilesMetadata"u8);
                 writer.WriteStartArray();
@@ -113,17 +113,17 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(ThresHolds))
+            if (ThresHolds != null)
             {
                 writer.WritePropertyName("thresHolds"u8);
                 writer.WriteObjectValue(ThresHolds);
             }
-            if (Optional.IsCollectionDefined(Aliases))
+            if (!(Aliases is ChangeTrackingList<KpiAlias> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("aliases"u8);
                 writer.WriteStartArray();
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Extracts))
+            if (!(Extracts is ChangeTrackingList<KpiExtract> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("extracts"u8);
                 writer.WriteStartArray();
@@ -185,21 +185,21 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             string entityTypeName = default;
             Optional<Guid> tenantId = default;
             Optional<string> kpiName = default;
-            Optional<IReadOnlyDictionary<string, string>> displayName = default;
-            Optional<IReadOnlyDictionary<string, string>> description = default;
+            IReadOnlyDictionary<string, string> displayName = default;
+            IReadOnlyDictionary<string, string> description = default;
             CalculationWindowType calculationWindow = default;
             Optional<string> calculationWindowFieldName = default;
             KpiFunction function = default;
             string expression = default;
             Optional<string> unit = default;
             Optional<string> filter = default;
-            Optional<IReadOnlyList<string>> groupBy = default;
-            Optional<IReadOnlyList<KpiGroupByMetadata>> groupByMetadata = default;
-            Optional<IReadOnlyList<KpiParticipantProfilesMetadata>> participantProfilesMetadata = default;
+            IReadOnlyList<string> groupBy = default;
+            IReadOnlyList<KpiGroupByMetadata> groupByMetadata = default;
+            IReadOnlyList<KpiParticipantProfilesMetadata> participantProfilesMetadata = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<KpiThresholds> thresHolds = default;
-            Optional<IReadOnlyList<KpiAlias>> aliases = default;
-            Optional<IReadOnlyList<KpiExtract>> extracts = default;
+            IReadOnlyList<KpiAlias> aliases = default;
+            IReadOnlyList<KpiExtract> extracts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<KpiGroupByMetadata> array = new List<KpiGroupByMetadata>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KpiGroupByMetadata.DeserializeKpiGroupByMetadata(item));
+                        array.Add(KpiGroupByMetadata.DeserializeKpiGroupByMetadata(item, options));
                     }
                     groupByMetadata = array;
                     continue;
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<KpiParticipantProfilesMetadata> array = new List<KpiParticipantProfilesMetadata>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KpiParticipantProfilesMetadata.DeserializeKpiParticipantProfilesMetadata(item));
+                        array.Add(KpiParticipantProfilesMetadata.DeserializeKpiParticipantProfilesMetadata(item, options));
                     }
                     participantProfilesMetadata = array;
                     continue;
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     {
                         continue;
                     }
-                    thresHolds = KpiThresholds.DeserializeKpiThresholds(property.Value);
+                    thresHolds = KpiThresholds.DeserializeKpiThresholds(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("aliases"u8))
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<KpiAlias> array = new List<KpiAlias>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KpiAlias.DeserializeKpiAlias(item));
+                        array.Add(KpiAlias.DeserializeKpiAlias(item, options));
                     }
                     aliases = array;
                     continue;
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<KpiExtract> array = new List<KpiExtract>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KpiExtract.DeserializeKpiExtract(item));
+                        array.Add(KpiExtract.DeserializeKpiExtract(item, options));
                     }
                     extracts = array;
                     continue;
@@ -380,7 +380,27 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KpiDefinition(entityType, entityTypeName, Optional.ToNullable(tenantId), kpiName.Value, Optional.ToDictionary(displayName), Optional.ToDictionary(description), calculationWindow, calculationWindowFieldName.Value, function, expression, unit.Value, filter.Value, Optional.ToList(groupBy), Optional.ToList(groupByMetadata), Optional.ToList(participantProfilesMetadata), Optional.ToNullable(provisioningState), thresHolds.Value, Optional.ToList(aliases), Optional.ToList(extracts), serializedAdditionalRawData);
+            return new KpiDefinition(
+                entityType,
+                entityTypeName,
+                Optional.ToNullable(tenantId),
+                kpiName.Value,
+                displayName ?? new ChangeTrackingDictionary<string, string>(),
+                description ?? new ChangeTrackingDictionary<string, string>(),
+                calculationWindow,
+                calculationWindowFieldName.Value,
+                function,
+                expression,
+                unit.Value,
+                filter.Value,
+                groupBy ?? new ChangeTrackingList<string>(),
+                groupByMetadata ?? new ChangeTrackingList<KpiGroupByMetadata>(),
+                participantProfilesMetadata ?? new ChangeTrackingList<KpiParticipantProfilesMetadata>(),
+                Optional.ToNullable(provisioningState),
+                thresHolds.Value,
+                aliases ?? new ChangeTrackingList<KpiAlias>(),
+                extracts ?? new ChangeTrackingList<KpiExtract>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KpiDefinition>.Write(ModelReaderWriterOptions options)

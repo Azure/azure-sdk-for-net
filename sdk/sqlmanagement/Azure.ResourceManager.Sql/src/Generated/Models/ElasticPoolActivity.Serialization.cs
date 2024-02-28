@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -47,109 +47,109 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(EndOn))
+            if (options.Format != "W" && EndOn.HasValue)
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ErrorCode))
+            if (options.Format != "W" && ErrorCode.HasValue)
             {
                 writer.WritePropertyName("errorCode"u8);
                 writer.WriteNumberValue(ErrorCode.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ErrorMessage))
+            if (options.Format != "W" && ErrorMessage != null)
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
             }
-            if (options.Format != "W" && Optional.IsDefined(ErrorSeverity))
+            if (options.Format != "W" && ErrorSeverity.HasValue)
             {
                 writer.WritePropertyName("errorSeverity"u8);
                 writer.WriteNumberValue(ErrorSeverity.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Operation))
+            if (options.Format != "W" && Operation != null)
             {
                 writer.WritePropertyName("operation"u8);
                 writer.WriteStringValue(Operation);
             }
-            if (options.Format != "W" && Optional.IsDefined(OperationId))
+            if (options.Format != "W" && OperationId.HasValue)
             {
                 writer.WritePropertyName("operationId"u8);
                 writer.WriteStringValue(OperationId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(PercentComplete))
+            if (options.Format != "W" && PercentComplete.HasValue)
             {
                 writer.WritePropertyName("percentComplete"u8);
                 writer.WriteNumberValue(PercentComplete.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(RequestedDatabaseDtuMax))
+            if (options.Format != "W" && RequestedDatabaseDtuMax.HasValue)
             {
                 writer.WritePropertyName("requestedDatabaseDtuMax"u8);
                 writer.WriteNumberValue(RequestedDatabaseDtuMax.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(RequestedDatabaseDtuMin))
+            if (options.Format != "W" && RequestedDatabaseDtuMin.HasValue)
             {
                 writer.WritePropertyName("requestedDatabaseDtuMin"u8);
                 writer.WriteNumberValue(RequestedDatabaseDtuMin.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(RequestedDtu))
+            if (options.Format != "W" && RequestedDtu.HasValue)
             {
                 writer.WritePropertyName("requestedDtu"u8);
                 writer.WriteNumberValue(RequestedDtu.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(RequestedElasticPoolName))
+            if (options.Format != "W" && RequestedElasticPoolName != null)
             {
                 writer.WritePropertyName("requestedElasticPoolName"u8);
                 writer.WriteStringValue(RequestedElasticPoolName);
             }
-            if (options.Format != "W" && Optional.IsDefined(RequestedStorageLimitInGB))
+            if (options.Format != "W" && RequestedStorageLimitInGB.HasValue)
             {
                 writer.WritePropertyName("requestedStorageLimitInGB"u8);
                 writer.WriteNumberValue(RequestedStorageLimitInGB.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ElasticPoolName))
+            if (options.Format != "W" && ElasticPoolName != null)
             {
                 writer.WritePropertyName("elasticPoolName"u8);
                 writer.WriteStringValue(ElasticPoolName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ServerName))
+            if (options.Format != "W" && ServerName != null)
             {
                 writer.WritePropertyName("serverName"u8);
                 writer.WriteStringValue(ServerName);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W" && State != null)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
             }
-            if (options.Format != "W" && Optional.IsDefined(RequestedStorageLimitInMB))
+            if (options.Format != "W" && RequestedStorageLimitInMB.HasValue)
             {
                 writer.WritePropertyName("requestedStorageLimitInMB"u8);
                 writer.WriteNumberValue(RequestedStorageLimitInMB.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(RequestedDatabaseDtuGuarantee))
+            if (options.Format != "W" && RequestedDatabaseDtuGuarantee.HasValue)
             {
                 writer.WritePropertyName("requestedDatabaseDtuGuarantee"u8);
                 writer.WriteNumberValue(RequestedDatabaseDtuGuarantee.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(RequestedDatabaseDtuCap))
+            if (options.Format != "W" && RequestedDatabaseDtuCap.HasValue)
             {
                 writer.WritePropertyName("requestedDatabaseDtuCap"u8);
                 writer.WriteNumberValue(RequestedDatabaseDtuCap.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(RequestedDtuGuarantee))
+            if (options.Format != "W" && RequestedDtuGuarantee.HasValue)
             {
                 writer.WritePropertyName("requestedDtuGuarantee"u8);
                 writer.WriteNumberValue(RequestedDtuGuarantee.Value);
@@ -429,7 +429,33 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ElasticPoolActivity(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToNullable(endTime), Optional.ToNullable(errorCode), errorMessage.Value, Optional.ToNullable(errorSeverity), operation.Value, Optional.ToNullable(operationId), Optional.ToNullable(percentComplete), Optional.ToNullable(requestedDatabaseDtuMax), Optional.ToNullable(requestedDatabaseDtuMin), Optional.ToNullable(requestedDtu), requestedElasticPoolName.Value, Optional.ToNullable(requestedStorageLimitInGB), elasticPoolName.Value, serverName.Value, Optional.ToNullable(startTime), state.Value, Optional.ToNullable(requestedStorageLimitInMB), Optional.ToNullable(requestedDatabaseDtuGuarantee), Optional.ToNullable(requestedDatabaseDtuCap), Optional.ToNullable(requestedDtuGuarantee), serializedAdditionalRawData);
+            return new ElasticPoolActivity(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(location),
+                Optional.ToNullable(endTime),
+                Optional.ToNullable(errorCode),
+                errorMessage.Value,
+                Optional.ToNullable(errorSeverity),
+                operation.Value,
+                Optional.ToNullable(operationId),
+                Optional.ToNullable(percentComplete),
+                Optional.ToNullable(requestedDatabaseDtuMax),
+                Optional.ToNullable(requestedDatabaseDtuMin),
+                Optional.ToNullable(requestedDtu),
+                requestedElasticPoolName.Value,
+                Optional.ToNullable(requestedStorageLimitInGB),
+                elasticPoolName.Value,
+                serverName.Value,
+                Optional.ToNullable(startTime),
+                state.Value,
+                Optional.ToNullable(requestedStorageLimitInMB),
+                Optional.ToNullable(requestedDatabaseDtuGuarantee),
+                Optional.ToNullable(requestedDatabaseDtuCap),
+                Optional.ToNullable(requestedDtuGuarantee),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticPoolActivity>.Write(ModelReaderWriterOptions options)

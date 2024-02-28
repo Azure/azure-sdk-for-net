@@ -42,14 +42,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Resource))
+            if (Resource != null)
             {
                 writer.WritePropertyName("resource"u8);
                 writer.WriteObjectValue(Resource);
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             {
                                 continue;
                             }
-                            resource = ExtendedRestorableSqlDatabaseResourceInfo.DeserializeExtendedRestorableSqlDatabaseResourceInfo(property0.Value);
+                            resource = ExtendedRestorableSqlDatabaseResourceInfo.DeserializeExtendedRestorableSqlDatabaseResourceInfo(property0.Value, options);
                             continue;
                         }
                     }
@@ -153,7 +153,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RestorableSqlDatabase(id, name, type, systemData.Value, resource.Value, serializedAdditionalRawData);
+            return new RestorableSqlDatabase(
+                id,
+                name,
+                type,
+                systemData.Value,
+                resource.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RestorableSqlDatabase>.Write(ModelReaderWriterOptions options)

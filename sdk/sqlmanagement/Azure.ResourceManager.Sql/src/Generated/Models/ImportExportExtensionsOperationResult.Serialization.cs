@@ -42,44 +42,44 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(RequestId))
+            if (options.Format != "W" && RequestId.HasValue)
             {
                 writer.WritePropertyName("requestId"u8);
                 writer.WriteStringValue(RequestId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(RequestType))
+            if (options.Format != "W" && RequestType != null)
             {
                 writer.WritePropertyName("requestType"u8);
                 writer.WriteStringValue(RequestType);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastModifiedTime))
+            if (options.Format != "W" && LastModifiedTime != null)
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedTime);
             }
-            if (options.Format != "W" && Optional.IsDefined(ServerName))
+            if (options.Format != "W" && ServerName != null)
             {
                 writer.WritePropertyName("serverName"u8);
                 writer.WriteStringValue(ServerName);
             }
-            if (options.Format != "W" && Optional.IsDefined(DatabaseName))
+            if (options.Format != "W" && DatabaseName != null)
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && Optional.IsDefined(ErrorMessage))
+            if (options.Format != "W" && ErrorMessage != null)
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
@@ -219,7 +219,19 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ImportExportExtensionsOperationResult(id, name, type, systemData.Value, Optional.ToNullable(requestId), requestType.Value, lastModifiedTime.Value, serverName.Value, databaseName.Value, status.Value, errorMessage.Value, serializedAdditionalRawData);
+            return new ImportExportExtensionsOperationResult(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(requestId),
+                requestType.Value,
+                lastModifiedTime.Value,
+                serverName.Value,
+                databaseName.Value,
+                status.Value,
+                errorMessage.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ImportExportExtensionsOperationResult>.Write(ModelReaderWriterOptions options)

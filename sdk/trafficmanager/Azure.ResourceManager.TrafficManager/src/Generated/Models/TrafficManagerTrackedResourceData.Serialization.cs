@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -37,22 +37,22 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(ResourceType))
+            if (ResourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<AzureLocation> location = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
@@ -156,7 +156,13 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrafficManagerTrackedResourceData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToDictionary(tags), Optional.ToNullable(location));
+            return new TrafficManagerTrackedResourceData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(location));
         }
 
         BinaryData IPersistableModel<TrafficManagerTrackedResourceData>.Write(ModelReaderWriterOptions options)

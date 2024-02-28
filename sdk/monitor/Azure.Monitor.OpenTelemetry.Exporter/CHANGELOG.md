@@ -1,5 +1,19 @@
 # Release History
 
+## 1.3.0-beta.2 (Unreleased)
+
+### Features Added
+
+* All three signals (Traces, Metrics, and Logs) now support OpenTelemetry's ["service.version"](https://github.com/open-telemetry/semantic-conventions/tree/main/docs/resource#service) in Resource attributes.
+  This is mapped as [Application Version](https://learn.microsoft.com/azure/azure-monitor/app/data-model-complete#application-version) in Application Insights.
+  ([#42174](https://github.com/Azure/azure-sdk-for-net/pull/42174))
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.3.0-beta.1 (2024-02-08)
 
 ### Bugs Fixed
@@ -9,10 +23,8 @@
   `_OTELRESOURCE_` metrics.
   ([#41761](https://github.com/Azure/azure-sdk-for-net/pull/41761))
 
-* Fixed an issue where tags associated with Exceptions, specifically those logged using
-  [Activity.RecordException()](https://github.com/open-telemetry/opentelemetry-dotnet/blob/f69c025178216d1879e5884f0a74ab15ca759a23/src/OpenTelemetry.Api/Trace/ActivityExtensions.cs#L81),
-  were not being included.
-  Now, tags linked to an `ActivityEvent` of type exception are correctly exported as Custom Properties.
+* Fixed an issue where tags associated with Exceptions were not being included.
+  Now, tags linked to an `ActivityEvent` following the [otel convention for storing exception](https://github.com/open-telemetry/semantic-conventions/blob/main/docs/exceptions/exceptions-spans.md) are correctly exported as Custom Properties.
   ([#41767](https://github.com/Azure/azure-sdk-for-net/pull/41767))
 
 ### Other Changes

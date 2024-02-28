@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AllowedTrainingAlgorithms))
+            if (!(AllowedTrainingAlgorithms is ChangeTrackingList<AutoMLVerticalRegressionModel> collection && collection.IsUndefined))
             {
                 if (AllowedTrainingAlgorithms != null)
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("allowedTrainingAlgorithms");
                 }
             }
-            if (Optional.IsCollectionDefined(BlockedTrainingAlgorithms))
+            if (!(BlockedTrainingAlgorithms is ChangeTrackingList<AutoMLVerticalRegressionModel> collection0 && collection0.IsUndefined))
             {
                 if (BlockedTrainingAlgorithms != null)
                 {
@@ -60,37 +60,37 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("blockedTrainingAlgorithms");
                 }
             }
-            if (Optional.IsDefined(IsDnnTrainingEnabled))
+            if (IsDnnTrainingEnabled.HasValue)
             {
                 writer.WritePropertyName("enableDnnTraining"u8);
                 writer.WriteBooleanValue(IsDnnTrainingEnabled.Value);
             }
-            if (Optional.IsDefined(IsModelExplainabilityEnabled))
+            if (IsModelExplainabilityEnabled.HasValue)
             {
                 writer.WritePropertyName("enableModelExplainability"u8);
                 writer.WriteBooleanValue(IsModelExplainabilityEnabled.Value);
             }
-            if (Optional.IsDefined(IsOnnxCompatibleModelsEnabled))
+            if (IsOnnxCompatibleModelsEnabled.HasValue)
             {
                 writer.WritePropertyName("enableOnnxCompatibleModels"u8);
                 writer.WriteBooleanValue(IsOnnxCompatibleModelsEnabled.Value);
             }
-            if (Optional.IsDefined(IsStackEnsembleEnabled))
+            if (IsStackEnsembleEnabled.HasValue)
             {
                 writer.WritePropertyName("enableStackEnsemble"u8);
                 writer.WriteBooleanValue(IsStackEnsembleEnabled.Value);
             }
-            if (Optional.IsDefined(IsVoteEnsembleEnabled))
+            if (IsVoteEnsembleEnabled.HasValue)
             {
                 writer.WritePropertyName("enableVoteEnsemble"u8);
                 writer.WriteBooleanValue(IsVoteEnsembleEnabled.Value);
             }
-            if (Optional.IsDefined(EnsembleModelDownloadTimeout))
+            if (EnsembleModelDownloadTimeout.HasValue)
             {
                 writer.WritePropertyName("ensembleModelDownloadTimeout"u8);
                 writer.WriteStringValue(EnsembleModelDownloadTimeout.Value, "P");
             }
-            if (Optional.IsDefined(StackEnsembleSettings))
+            if (StackEnsembleSettings != null)
             {
                 if (StackEnsembleSettings != null)
                 {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("stackEnsembleSettings");
                 }
             }
-            if (Optional.IsDefined(TrainingMode))
+            if (TrainingMode.HasValue)
             {
                 writer.WritePropertyName("trainingMode"u8);
                 writer.WriteStringValue(TrainingMode.Value.ToString());
@@ -145,8 +145,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<IList<AutoMLVerticalRegressionModel>> allowedTrainingAlgorithms = default;
-            Optional<IList<AutoMLVerticalRegressionModel>> blockedTrainingAlgorithms = default;
+            IList<AutoMLVerticalRegressionModel> allowedTrainingAlgorithms = default;
+            IList<AutoMLVerticalRegressionModel> blockedTrainingAlgorithms = default;
             Optional<bool> enableDnnTraining = default;
             Optional<bool> enableModelExplainability = default;
             Optional<bool> enableOnnxCompatibleModels = default;
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         stackEnsembleSettings = null;
                         continue;
                     }
-                    stackEnsembleSettings = MachineLearningStackEnsembleSettings.DeserializeMachineLearningStackEnsembleSettings(property.Value);
+                    stackEnsembleSettings = MachineLearningStackEnsembleSettings.DeserializeMachineLearningStackEnsembleSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("trainingMode"u8))
@@ -268,7 +268,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RegressionTrainingSettings(Optional.ToNullable(enableDnnTraining), Optional.ToNullable(enableModelExplainability), Optional.ToNullable(enableOnnxCompatibleModels), Optional.ToNullable(enableStackEnsemble), Optional.ToNullable(enableVoteEnsemble), Optional.ToNullable(ensembleModelDownloadTimeout), stackEnsembleSettings.Value, Optional.ToNullable(trainingMode), serializedAdditionalRawData, Optional.ToList(allowedTrainingAlgorithms), Optional.ToList(blockedTrainingAlgorithms));
+            return new RegressionTrainingSettings(
+                Optional.ToNullable(enableDnnTraining),
+                Optional.ToNullable(enableModelExplainability),
+                Optional.ToNullable(enableOnnxCompatibleModels),
+                Optional.ToNullable(enableStackEnsemble),
+                Optional.ToNullable(enableVoteEnsemble),
+                Optional.ToNullable(ensembleModelDownloadTimeout),
+                stackEnsembleSettings.Value,
+                Optional.ToNullable(trainingMode),
+                serializedAdditionalRawData,
+                allowedTrainingAlgorithms ?? new ChangeTrackingList<AutoMLVerticalRegressionModel>(),
+                blockedTrainingAlgorithms ?? new ChangeTrackingList<AutoMLVerticalRegressionModel>());
         }
 
         BinaryData IPersistableModel<RegressionTrainingSettings>.Write(ModelReaderWriterOptions options)

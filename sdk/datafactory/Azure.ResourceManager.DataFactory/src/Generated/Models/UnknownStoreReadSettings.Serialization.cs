@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(StoreReadSettingsType);
-            if (Optional.IsDefined(MaxConcurrentConnections))
+            if (MaxConcurrentConnections != null)
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 JsonSerializer.Serialize(writer, MaxConcurrentConnections);
             }
-            if (Optional.IsDefined(DisableMetricsCollection))
+            if (DisableMetricsCollection != null)
             {
                 writer.WritePropertyName("disableMetricsCollection"u8);
                 JsonSerializer.Serialize(writer, DisableMetricsCollection);
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownStoreReadSettings(document.RootElement, options);
+            return DeserializeStoreReadSettings(document.RootElement, options);
         }
 
         internal static UnknownStoreReadSettings DeserializeUnknownStoreReadSettings(JsonElement element, ModelReaderWriterOptions options = null)
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownStoreReadSettings(document.RootElement, options);
+                        return DeserializeStoreReadSettings(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(StoreReadSettings)} does not support '{options.Format}' format.");

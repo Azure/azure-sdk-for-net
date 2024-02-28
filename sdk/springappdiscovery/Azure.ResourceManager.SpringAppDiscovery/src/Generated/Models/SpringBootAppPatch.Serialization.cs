@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 return null;
             }
             Optional<SpringBootAppProperties> properties = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                     {
                         continue;
                     }
-                    properties = SpringBootAppProperties.DeserializeSpringBootAppProperties(property.Value);
+                    properties = SpringBootAppProperties.DeserializeSpringBootAppProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SpringBootAppPatch(id, name, type, systemData.Value, properties.Value, Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new SpringBootAppPatch(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SpringBootAppPatch>.Write(ModelReaderWriterOptions options)

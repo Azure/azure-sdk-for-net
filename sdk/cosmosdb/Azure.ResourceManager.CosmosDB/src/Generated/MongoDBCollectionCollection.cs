@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="collectionName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<MongoDBCollectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string collectionName, MongoDBCollectionCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionName, nameof(collectionName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (collectionName == null)
+            {
+                throw new ArgumentNullException(nameof(collectionName));
+            }
+            if (collectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(collectionName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _mongoDBCollectionMongoDBResourcesClientDiagnostics.CreateScope("MongoDBCollectionCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="collectionName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<MongoDBCollectionResource> CreateOrUpdate(WaitUntil waitUntil, string collectionName, MongoDBCollectionCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionName, nameof(collectionName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (collectionName == null)
+            {
+                throw new ArgumentNullException(nameof(collectionName));
+            }
+            if (collectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(collectionName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _mongoDBCollectionMongoDBResourcesClientDiagnostics.CreateScope("MongoDBCollectionCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="collectionName"/> is null. </exception>
         public virtual async Task<Response<MongoDBCollectionResource>> GetAsync(string collectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionName, nameof(collectionName));
+            if (collectionName == null)
+            {
+                throw new ArgumentNullException(nameof(collectionName));
+            }
+            if (collectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(collectionName));
+            }
 
             using var scope = _mongoDBCollectionMongoDBResourcesClientDiagnostics.CreateScope("MongoDBCollectionCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="collectionName"/> is null. </exception>
         public virtual Response<MongoDBCollectionResource> Get(string collectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionName, nameof(collectionName));
+            if (collectionName == null)
+            {
+                throw new ArgumentNullException(nameof(collectionName));
+            }
+            if (collectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(collectionName));
+            }
 
             using var scope = _mongoDBCollectionMongoDBResourcesClientDiagnostics.CreateScope("MongoDBCollectionCollection.Get");
             scope.Start();
@@ -327,7 +361,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="collectionName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string collectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionName, nameof(collectionName));
+            if (collectionName == null)
+            {
+                throw new ArgumentNullException(nameof(collectionName));
+            }
+            if (collectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(collectionName));
+            }
 
             using var scope = _mongoDBCollectionMongoDBResourcesClientDiagnostics.CreateScope("MongoDBCollectionCollection.Exists");
             scope.Start();
@@ -370,7 +411,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="collectionName"/> is null. </exception>
         public virtual Response<bool> Exists(string collectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionName, nameof(collectionName));
+            if (collectionName == null)
+            {
+                throw new ArgumentNullException(nameof(collectionName));
+            }
+            if (collectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(collectionName));
+            }
 
             using var scope = _mongoDBCollectionMongoDBResourcesClientDiagnostics.CreateScope("MongoDBCollectionCollection.Exists");
             scope.Start();
@@ -413,7 +461,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="collectionName"/> is null. </exception>
         public virtual async Task<NullableResponse<MongoDBCollectionResource>> GetIfExistsAsync(string collectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionName, nameof(collectionName));
+            if (collectionName == null)
+            {
+                throw new ArgumentNullException(nameof(collectionName));
+            }
+            if (collectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(collectionName));
+            }
 
             using var scope = _mongoDBCollectionMongoDBResourcesClientDiagnostics.CreateScope("MongoDBCollectionCollection.GetIfExists");
             scope.Start();
@@ -458,7 +513,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="collectionName"/> is null. </exception>
         public virtual NullableResponse<MongoDBCollectionResource> GetIfExists(string collectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionName, nameof(collectionName));
+            if (collectionName == null)
+            {
+                throw new ArgumentNullException(nameof(collectionName));
+            }
+            if (collectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(collectionName));
+            }
 
             using var scope = _mongoDBCollectionMongoDBResourcesClientDiagnostics.CreateScope("MongoDBCollectionCollection.GetIfExists");
             scope.Start();

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceHealthStatus))
+            if (ResourceHealthStatus.HasValue)
             {
                 writer.WritePropertyName("resourceHealthStatus"u8);
                 writer.WriteStringValue(ResourceHealthStatus.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(ResourceHealthDetails))
+            if (!(ResourceHealthDetails is ChangeTrackingList<ResourceHealthDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("resourceHealthDetails"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 return null;
             }
             Optional<ResourceHealthStatus> resourceHealthStatus = default;
-            Optional<IList<ResourceHealthDetails>> resourceHealthDetails = default;
+            IList<ResourceHealthDetails> resourceHealthDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<ResourceHealthDetails> array = new List<ResourceHealthDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.ResourceHealthDetails.DeserializeResourceHealthDetails(item));
+                        array.Add(Models.ResourceHealthDetails.DeserializeResourceHealthDetails(item, options));
                     }
                     resourceHealthDetails = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KpiResourceHealthDetails(Optional.ToNullable(resourceHealthStatus), Optional.ToList(resourceHealthDetails), serializedAdditionalRawData);
+            return new KpiResourceHealthDetails(Optional.ToNullable(resourceHealthStatus), resourceHealthDetails ?? new ChangeTrackingList<ResourceHealthDetails>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KpiResourceHealthDetails>.Write(ModelReaderWriterOptions options)

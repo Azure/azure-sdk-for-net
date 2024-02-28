@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(StartTimestamp))
+            if (StartTimestamp.HasValue)
             {
                 writer.WritePropertyName("startTimestamp"u8);
                 writer.WriteNumberValue(StartTimestamp.Value);
             }
-            if (Optional.IsDefined(EndTimestamp))
+            if (EndTimestamp.HasValue)
             {
                 writer.WritePropertyName("endTimestamp"u8);
                 writer.WriteNumberValue(EndTimestamp.Value);
             }
-            if (Optional.IsDefined(PresentationWindowDuration))
+            if (PresentationWindowDuration.HasValue)
             {
                 writer.WritePropertyName("presentationWindowDuration"u8);
                 writer.WriteNumberValue(PresentationWindowDuration.Value);
             }
-            if (Optional.IsDefined(LiveBackoffDuration))
+            if (LiveBackoffDuration.HasValue)
             {
                 writer.WritePropertyName("liveBackoffDuration"u8);
                 writer.WriteNumberValue(LiveBackoffDuration.Value);
             }
-            if (Optional.IsDefined(Timescale))
+            if (Timescale.HasValue)
             {
                 writer.WritePropertyName("timescale"u8);
                 writer.WriteNumberValue(Timescale.Value);
             }
-            if (Optional.IsDefined(ForceEndTimestamp))
+            if (ForceEndTimestamp.HasValue)
             {
                 writer.WritePropertyName("forceEndTimestamp"u8);
                 writer.WriteBooleanValue(ForceEndTimestamp.Value);
@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PresentationTimeRange(Optional.ToNullable(startTimestamp), Optional.ToNullable(endTimestamp), Optional.ToNullable(presentationWindowDuration), Optional.ToNullable(liveBackoffDuration), Optional.ToNullable(timescale), Optional.ToNullable(forceEndTimestamp), serializedAdditionalRawData);
+            return new PresentationTimeRange(
+                Optional.ToNullable(startTimestamp),
+                Optional.ToNullable(endTimestamp),
+                Optional.ToNullable(presentationWindowDuration),
+                Optional.ToNullable(liveBackoffDuration),
+                Optional.ToNullable(timescale),
+                Optional.ToNullable(forceEndTimestamp),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PresentationTimeRange>.Write(ModelReaderWriterOptions options)

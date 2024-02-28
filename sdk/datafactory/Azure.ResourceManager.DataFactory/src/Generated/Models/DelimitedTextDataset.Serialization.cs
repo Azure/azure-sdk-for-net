@@ -29,24 +29,24 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DatasetType);
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Structure))
+            if (Structure != null)
             {
                 writer.WritePropertyName("structure"u8);
                 JsonSerializer.Serialize(writer, Structure);
             }
-            if (Optional.IsDefined(Schema))
+            if (Schema != null)
             {
                 writer.WritePropertyName("schema"u8);
                 JsonSerializer.Serialize(writer, Schema);
             }
             writer.WritePropertyName("linkedServiceName"u8);
             JsonSerializer.Serialize(writer, LinkedServiceName);
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingDictionary<string, EntityParameterSpecification> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Annotations))
+            if (!(Annotations is ChangeTrackingList<BinaryData> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -79,59 +79,59 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Folder))
+            if (Folder != null)
             {
                 writer.WritePropertyName("folder"u8);
                 writer.WriteObjectValue(Folder);
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DataLocation))
+            if (DataLocation != null)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteObjectValue(DataLocation);
             }
-            if (Optional.IsDefined(ColumnDelimiter))
+            if (ColumnDelimiter != null)
             {
                 writer.WritePropertyName("columnDelimiter"u8);
                 JsonSerializer.Serialize(writer, ColumnDelimiter);
             }
-            if (Optional.IsDefined(RowDelimiter))
+            if (RowDelimiter != null)
             {
                 writer.WritePropertyName("rowDelimiter"u8);
                 JsonSerializer.Serialize(writer, RowDelimiter);
             }
-            if (Optional.IsDefined(EncodingName))
+            if (EncodingName != null)
             {
                 writer.WritePropertyName("encodingName"u8);
                 JsonSerializer.Serialize(writer, EncodingName);
             }
-            if (Optional.IsDefined(CompressionCodec))
+            if (CompressionCodec != null)
             {
                 writer.WritePropertyName("compressionCodec"u8);
                 JsonSerializer.Serialize(writer, CompressionCodec);
             }
-            if (Optional.IsDefined(CompressionLevel))
+            if (CompressionLevel != null)
             {
                 writer.WritePropertyName("compressionLevel"u8);
                 JsonSerializer.Serialize(writer, CompressionLevel);
             }
-            if (Optional.IsDefined(QuoteChar))
+            if (QuoteChar != null)
             {
                 writer.WritePropertyName("quoteChar"u8);
                 JsonSerializer.Serialize(writer, QuoteChar);
             }
-            if (Optional.IsDefined(EscapeChar))
+            if (EscapeChar != null)
             {
                 writer.WritePropertyName("escapeChar"u8);
                 JsonSerializer.Serialize(writer, EscapeChar);
             }
-            if (Optional.IsDefined(FirstRowAsHeader))
+            if (FirstRowAsHeader != null)
             {
                 writer.WritePropertyName("firstRowAsHeader"u8);
                 JsonSerializer.Serialize(writer, FirstRowAsHeader);
             }
-            if (Optional.IsDefined(NullValue))
+            if (NullValue != null)
             {
                 writer.WritePropertyName("nullValue"u8);
                 JsonSerializer.Serialize(writer, NullValue);
@@ -177,8 +177,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<DataFactoryElement<IList<DatasetDataElement>>> structure = default;
             Optional<DataFactoryElement<IList<DatasetSchemaDataElement>>> schema = default;
             DataFactoryLinkedServiceReference linkedServiceName = default;
-            Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
-            Optional<IList<BinaryData>> annotations = default;
+            IDictionary<string, EntityParameterSpecification> parameters = default;
+            IList<BinaryData> annotations = default;
             Optional<DatasetFolder> folder = default;
             Optional<DatasetLocation> location = default;
             Optional<DataFactoryElement<string>> columnDelimiter = default;
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     Dictionary<string, EntityParameterSpecification> dictionary = new Dictionary<string, EntityParameterSpecification>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, EntityParameterSpecification.DeserializeEntityParameterSpecification(property0.Value));
+                        dictionary.Add(property0.Name, EntityParameterSpecification.DeserializeEntityParameterSpecification(property0.Value, options));
                     }
                     parameters = dictionary;
                     continue;
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    folder = DatasetFolder.DeserializeDatasetFolder(property.Value);
+                    folder = DatasetFolder.DeserializeDatasetFolder(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("typeProperties"u8))
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            location = DatasetLocation.DeserializeDatasetLocation(property0.Value);
+                            location = DatasetLocation.DeserializeDatasetLocation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("columnDelimiter"u8))
@@ -376,7 +376,26 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DelimitedTextDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties, location.Value, columnDelimiter.Value, rowDelimiter.Value, encodingName.Value, compressionCodec.Value, compressionLevel.Value, quoteChar.Value, escapeChar.Value, firstRowAsHeader.Value, nullValue.Value);
+            return new DelimitedTextDataset(
+                type,
+                description.Value,
+                structure.Value,
+                schema.Value,
+                linkedServiceName,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                folder.Value,
+                additionalProperties,
+                location.Value,
+                columnDelimiter.Value,
+                rowDelimiter.Value,
+                encodingName.Value,
+                compressionCodec.Value,
+                compressionLevel.Value,
+                quoteChar.Value,
+                escapeChar.Value,
+                firstRowAsHeader.Value,
+                nullValue.Value);
         }
 
         BinaryData IPersistableModel<DelimitedTextDataset>.Write(ModelReaderWriterOptions options)

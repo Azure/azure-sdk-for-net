@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ActivityId))
+            if (ActivityId != null)
             {
                 writer.WritePropertyName("activityId"u8);
                 writer.WriteStringValue(ActivityId);
             }
-            if (Optional.IsDefined(ScenarioName))
+            if (ScenarioName != null)
             {
                 writer.WritePropertyName("scenarioName"u8);
                 writer.WriteStringValue(ScenarioName);
             }
-            if (Optional.IsDefined(FriendlyName))
+            if (FriendlyName != null)
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Optional.IsDefined(State))
+            if (State != null)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
             }
-            if (Optional.IsDefined(StateDescription))
+            if (StateDescription != null)
             {
                 writer.WritePropertyName("stateDescription"u8);
                 writer.WriteStringValue(StateDescription);
             }
-            if (Optional.IsCollectionDefined(Tasks))
+            if (!(Tasks is ChangeTrackingList<AsrTask> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tasks"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Errors))
+            if (!(Errors is ChangeTrackingList<SiteRecoveryJobErrorDetails> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
@@ -71,17 +71,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(StartOn))
+            if (StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (EndOn.HasValue)
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(AllowedActions))
+            if (!(AllowedActions is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("allowedActions"u8);
                 writer.WriteStartArray();
@@ -91,22 +91,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(TargetObjectId))
+            if (TargetObjectId != null)
             {
                 writer.WritePropertyName("targetObjectId"u8);
                 writer.WriteStringValue(TargetObjectId);
             }
-            if (Optional.IsDefined(TargetObjectName))
+            if (TargetObjectName != null)
             {
                 writer.WritePropertyName("targetObjectName"u8);
                 writer.WriteStringValue(TargetObjectName);
             }
-            if (Optional.IsDefined(TargetInstanceType))
+            if (TargetInstanceType != null)
             {
                 writer.WritePropertyName("targetInstanceType"u8);
                 writer.WriteStringValue(TargetInstanceType);
             }
-            if (Optional.IsDefined(CustomDetails))
+            if (CustomDetails != null)
             {
                 writer.WritePropertyName("customDetails"u8);
                 writer.WriteObjectValue(CustomDetails);
@@ -154,11 +154,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> friendlyName = default;
             Optional<string> state = default;
             Optional<string> stateDescription = default;
-            Optional<IReadOnlyList<AsrTask>> tasks = default;
-            Optional<IReadOnlyList<SiteRecoveryJobErrorDetails>> errors = default;
+            IReadOnlyList<AsrTask> tasks = default;
+            IReadOnlyList<SiteRecoveryJobErrorDetails> errors = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;
-            Optional<IReadOnlyList<string>> allowedActions = default;
+            IReadOnlyList<string> allowedActions = default;
             Optional<string> targetObjectId = default;
             Optional<string> targetObjectName = default;
             Optional<string> targetInstanceType = default;
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<AsrTask> array = new List<AsrTask>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AsrTask.DeserializeAsrTask(item));
+                        array.Add(AsrTask.DeserializeAsrTask(item, options));
                     }
                     tasks = array;
                     continue;
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryJobErrorDetails> array = new List<SiteRecoveryJobErrorDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryJobErrorDetails.DeserializeSiteRecoveryJobErrorDetails(item));
+                        array.Add(SiteRecoveryJobErrorDetails.DeserializeSiteRecoveryJobErrorDetails(item, options));
                     }
                     errors = array;
                     continue;
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    customDetails = SiteRecoveryJobDetails.DeserializeSiteRecoveryJobDetails(property.Value);
+                    customDetails = SiteRecoveryJobDetails.DeserializeSiteRecoveryJobDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -282,7 +282,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryJobProperties(activityId.Value, scenarioName.Value, friendlyName.Value, state.Value, stateDescription.Value, Optional.ToList(tasks), Optional.ToList(errors), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToList(allowedActions), targetObjectId.Value, targetObjectName.Value, targetInstanceType.Value, customDetails.Value, serializedAdditionalRawData);
+            return new SiteRecoveryJobProperties(
+                activityId.Value,
+                scenarioName.Value,
+                friendlyName.Value,
+                state.Value,
+                stateDescription.Value,
+                tasks ?? new ChangeTrackingList<AsrTask>(),
+                errors ?? new ChangeTrackingList<SiteRecoveryJobErrorDetails>(),
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                allowedActions ?? new ChangeTrackingList<string>(),
+                targetObjectId.Value,
+                targetObjectName.Value,
+                targetInstanceType.Value,
+                customDetails.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryJobProperties>.Write(ModelReaderWriterOptions options)

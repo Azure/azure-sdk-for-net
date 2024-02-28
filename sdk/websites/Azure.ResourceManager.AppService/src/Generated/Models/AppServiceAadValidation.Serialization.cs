@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(JwtClaimChecks))
+            if (JwtClaimChecks != null)
             {
                 writer.WritePropertyName("jwtClaimChecks"u8);
                 writer.WriteObjectValue(JwtClaimChecks);
             }
-            if (Optional.IsCollectionDefined(AllowedAudiences))
+            if (!(AllowedAudiences is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("allowedAudiences"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DefaultAuthorizationPolicy))
+            if (DefaultAuthorizationPolicy != null)
             {
                 writer.WritePropertyName("defaultAuthorizationPolicy"u8);
                 writer.WriteObjectValue(DefaultAuthorizationPolicy);
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             Optional<JwtClaimChecks> jwtClaimChecks = default;
-            Optional<IList<string>> allowedAudiences = default;
+            IList<string> allowedAudiences = default;
             Optional<DefaultAuthorizationPolicy> defaultAuthorizationPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    jwtClaimChecks = JwtClaimChecks.DeserializeJwtClaimChecks(property.Value);
+                    jwtClaimChecks = JwtClaimChecks.DeserializeJwtClaimChecks(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("allowedAudiences"u8))
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    defaultAuthorizationPolicy = DefaultAuthorizationPolicy.DeserializeDefaultAuthorizationPolicy(property.Value);
+                    defaultAuthorizationPolicy = DefaultAuthorizationPolicy.DeserializeDefaultAuthorizationPolicy(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceAadValidation(jwtClaimChecks.Value, Optional.ToList(allowedAudiences), defaultAuthorizationPolicy.Value, serializedAdditionalRawData);
+            return new AppServiceAadValidation(jwtClaimChecks.Value, allowedAudiences ?? new ChangeTrackingList<string>(), defaultAuthorizationPolicy.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceAadValidation>.Write(ModelReaderWriterOptions options)

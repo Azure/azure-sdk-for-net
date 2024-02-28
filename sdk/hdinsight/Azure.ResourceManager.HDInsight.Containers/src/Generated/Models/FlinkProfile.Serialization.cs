@@ -28,21 +28,21 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteStartObject();
             writer.WritePropertyName("storage"u8);
             writer.WriteObjectValue(Storage);
-            if (Optional.IsDefined(NumReplicas))
+            if (NumReplicas.HasValue)
             {
                 writer.WritePropertyName("numReplicas"u8);
                 writer.WriteNumberValue(NumReplicas.Value);
             }
             writer.WritePropertyName("jobManager"u8);
             writer.WriteObjectValue(JobManager);
-            if (Optional.IsDefined(HistoryServer))
+            if (HistoryServer != null)
             {
                 writer.WritePropertyName("historyServer"u8);
                 writer.WriteObjectValue(HistoryServer);
             }
             writer.WritePropertyName("taskManager"u8);
             writer.WriteObjectValue(TaskManager);
-            if (Optional.IsDefined(CatalogOptions))
+            if (CatalogOptions != null)
             {
                 writer.WritePropertyName("catalogOptions"u8);
                 writer.WriteObjectValue(CatalogOptions);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 if (property.NameEquals("storage"u8))
                 {
-                    storage = FlinkStorageProfile.DeserializeFlinkStorageProfile(property.Value);
+                    storage = FlinkStorageProfile.DeserializeFlinkStorageProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("numReplicas"u8))
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
                 if (property.NameEquals("jobManager"u8))
                 {
-                    jobManager = ComputeResourceRequirement.DeserializeComputeResourceRequirement(property.Value);
+                    jobManager = ComputeResourceRequirement.DeserializeComputeResourceRequirement(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("historyServer"u8))
@@ -120,12 +120,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    historyServer = ComputeResourceRequirement.DeserializeComputeResourceRequirement(property.Value);
+                    historyServer = ComputeResourceRequirement.DeserializeComputeResourceRequirement(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("taskManager"u8))
                 {
-                    taskManager = ComputeResourceRequirement.DeserializeComputeResourceRequirement(property.Value);
+                    taskManager = ComputeResourceRequirement.DeserializeComputeResourceRequirement(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("catalogOptions"u8))
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    catalogOptions = FlinkCatalogOptions.DeserializeFlinkCatalogOptions(property.Value);
+                    catalogOptions = FlinkCatalogOptions.DeserializeFlinkCatalogOptions(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -143,7 +143,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FlinkProfile(storage, Optional.ToNullable(numReplicas), jobManager, historyServer.Value, taskManager, catalogOptions.Value, serializedAdditionalRawData);
+            return new FlinkProfile(
+                storage,
+                Optional.ToNullable(numReplicas),
+                jobManager,
+                historyServer.Value,
+                taskManager,
+                catalogOptions.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FlinkProfile>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Nodes))
+            if (!(Nodes is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("nodes"u8);
                 writer.WriteStartArray();
@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsForced))
+            if (IsForced.HasValue)
             {
                 writer.WritePropertyName("force"u8);
                 writer.WriteBooleanValue(IsForced.Value);
             }
-            if (Optional.IsDefined(UpdateType))
+            if (UpdateType.HasValue)
             {
                 writer.WritePropertyName("updateType"u8);
                 writer.WriteStringValue(UpdateType.Value.ToString());
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 return null;
             }
-            Optional<IList<string>> nodes = default;
+            IList<string> nodes = default;
             Optional<bool> force = default;
             Optional<ServiceFabricManagedClusterUpdateType> updateType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NodeTypeActionContent(Optional.ToList(nodes), Optional.ToNullable(force), Optional.ToNullable(updateType), serializedAdditionalRawData);
+            return new NodeTypeActionContent(nodes ?? new ChangeTrackingList<string>(), Optional.ToNullable(force), Optional.ToNullable(updateType), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NodeTypeActionContent>.Write(ModelReaderWriterOptions options)

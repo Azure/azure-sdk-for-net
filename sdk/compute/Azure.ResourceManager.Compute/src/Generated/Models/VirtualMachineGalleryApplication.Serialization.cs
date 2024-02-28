@@ -26,29 +26,29 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Tags))
+            if (Tags != null)
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStringValue(Tags);
             }
-            if (Optional.IsDefined(Order))
+            if (Order.HasValue)
             {
                 writer.WritePropertyName("order"u8);
                 writer.WriteNumberValue(Order.Value);
             }
             writer.WritePropertyName("packageReferenceId"u8);
             writer.WriteStringValue(PackageReferenceId);
-            if (Optional.IsDefined(ConfigurationReference))
+            if (ConfigurationReference != null)
             {
                 writer.WritePropertyName("configurationReference"u8);
                 writer.WriteStringValue(ConfigurationReference);
             }
-            if (Optional.IsDefined(TreatFailureAsDeploymentFailure))
+            if (TreatFailureAsDeploymentFailure.HasValue)
             {
                 writer.WritePropertyName("treatFailureAsDeploymentFailure"u8);
                 writer.WriteBooleanValue(TreatFailureAsDeploymentFailure.Value);
             }
-            if (Optional.IsDefined(EnableAutomaticUpgrade))
+            if (EnableAutomaticUpgrade.HasValue)
             {
                 writer.WritePropertyName("enableAutomaticUpgrade"u8);
                 writer.WriteBooleanValue(EnableAutomaticUpgrade.Value);
@@ -149,7 +149,14 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineGalleryApplication(tags.Value, Optional.ToNullable(order), packageReferenceId, configurationReference.Value, Optional.ToNullable(treatFailureAsDeploymentFailure), Optional.ToNullable(enableAutomaticUpgrade), serializedAdditionalRawData);
+            return new VirtualMachineGalleryApplication(
+                tags.Value,
+                Optional.ToNullable(order),
+                packageReferenceId,
+                configurationReference.Value,
+                Optional.ToNullable(treatFailureAsDeploymentFailure),
+                Optional.ToNullable(enableAutomaticUpgrade),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineGalleryApplication>.Write(ModelReaderWriterOptions options)

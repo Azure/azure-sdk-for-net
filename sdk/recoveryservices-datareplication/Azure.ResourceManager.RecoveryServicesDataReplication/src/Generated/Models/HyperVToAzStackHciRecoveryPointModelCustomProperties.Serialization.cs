@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(DiskIds))
+            if (options.Format != "W" && !(DiskIds is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("diskIds"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> diskIds = default;
+            IReadOnlyList<string> diskIds = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HyperVToAzStackHciRecoveryPointModelCustomProperties(instanceType, serializedAdditionalRawData, Optional.ToList(diskIds));
+            return new HyperVToAzStackHciRecoveryPointModelCustomProperties(instanceType, serializedAdditionalRawData, diskIds ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<HyperVToAzStackHciRecoveryPointModelCustomProperties>.Write(ModelReaderWriterOptions options)

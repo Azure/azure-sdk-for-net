@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NetworkSiblingSetId))
+            if (NetworkSiblingSetId != null)
             {
                 writer.WritePropertyName("networkSiblingSetId"u8);
                 writer.WriteStringValue(NetworkSiblingSetId);
             }
-            if (Optional.IsDefined(SubnetId))
+            if (SubnetId != null)
             {
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
-            if (Optional.IsDefined(NetworkSiblingSetStateId))
+            if (NetworkSiblingSetStateId != null)
             {
                 writer.WritePropertyName("networkSiblingSetStateId"u8);
                 writer.WriteStringValue(NetworkSiblingSetStateId);
             }
-            if (Optional.IsDefined(NetworkFeatures))
+            if (NetworkFeatures.HasValue)
             {
                 writer.WritePropertyName("networkFeatures"u8);
                 writer.WriteStringValue(NetworkFeatures.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(NicInfoList))
+            if (!(NicInfoList is ChangeTrackingList<NicInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("nicInfoList"u8);
                 writer.WriteStartArray();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.NetApp.Models
             Optional<string> networkSiblingSetStateId = default;
             Optional<NetAppNetworkFeature> networkFeatures = default;
             Optional<NetworkSiblingSetProvisioningState> provisioningState = default;
-            Optional<IReadOnlyList<NicInfo>> nicInfoList = default;
+            IReadOnlyList<NicInfo> nicInfoList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     List<NicInfo> array = new List<NicInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NicInfo.DeserializeNicInfo(item));
+                        array.Add(NicInfo.DeserializeNicInfo(item, options));
                     }
                     nicInfoList = array;
                     continue;
@@ -166,7 +166,14 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkSiblingSet(networkSiblingSetId.Value, subnetId.Value, networkSiblingSetStateId.Value, Optional.ToNullable(networkFeatures), Optional.ToNullable(provisioningState), Optional.ToList(nicInfoList), serializedAdditionalRawData);
+            return new NetworkSiblingSet(
+                networkSiblingSetId.Value,
+                subnetId.Value,
+                networkSiblingSetStateId.Value,
+                Optional.ToNullable(networkFeatures),
+                Optional.ToNullable(provisioningState),
+                nicInfoList ?? new ChangeTrackingList<NicInfo>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkSiblingSet>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(SelectedNodeImageVersions))
+            if (options.Format != "W" && !(SelectedNodeImageVersions is ChangeTrackingList<NodeImageVersion> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("selectedNodeImageVersions"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<NodeImageVersion>> selectedNodeImageVersions = default;
+            IReadOnlyList<NodeImageVersion> selectedNodeImageVersions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     List<NodeImageVersion> array = new List<NodeImageVersion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NodeImageVersion.DeserializeNodeImageVersion(item));
+                        array.Add(NodeImageVersion.DeserializeNodeImageVersion(item, options));
                     }
                     selectedNodeImageVersions = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NodeImageSelectionStatus(Optional.ToList(selectedNodeImageVersions), serializedAdditionalRawData);
+            return new NodeImageSelectionStatus(selectedNodeImageVersions ?? new ChangeTrackingList<NodeImageVersion>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NodeImageSelectionStatus>.Write(ModelReaderWriterOptions options)

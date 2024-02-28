@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,29 +47,29 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(LocalLogErrors))
+            if (LocalLogErrors != null)
             {
                 writer.WritePropertyName("localLogErrors"u8);
                 writer.WriteStringValue(LocalLogErrors);
             }
-            if (Optional.IsDefined(MasterLogErrors))
+            if (MasterLogErrors != null)
             {
                 writer.WritePropertyName("masterLogErrors"u8);
                 writer.WriteStringValue(MasterLogErrors);
             }
-            if (Optional.IsDefined(LocalLogErrorsMaxLength))
+            if (LocalLogErrorsMaxLength != null)
             {
                 writer.WritePropertyName("localLogErrorsMaxLength"u8);
                 writer.WriteStringValue(LocalLogErrorsMaxLength);
             }
-            if (Optional.IsDefined(MasterLogErrorsMaxLength))
+            if (MasterLogErrorsMaxLength != null)
             {
                 writer.WritePropertyName("masterLogErrorsMaxLength"u8);
                 writer.WriteStringValue(MasterLogErrorsMaxLength);
@@ -193,7 +193,17 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SitePhpErrorLogFlag(id, name, type, systemData.Value, localLogErrors.Value, masterLogErrors.Value, localLogErrorsMaxLength.Value, masterLogErrorsMaxLength.Value, kind.Value, serializedAdditionalRawData);
+            return new SitePhpErrorLogFlag(
+                id,
+                name,
+                type,
+                systemData.Value,
+                localLogErrors.Value,
+                masterLogErrors.Value,
+                localLogErrorsMaxLength.Value,
+                masterLogErrorsMaxLength.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SitePhpErrorLogFlag>.Write(ModelReaderWriterOptions options)

@@ -22,7 +22,10 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <exception cref="ArgumentNullException"> <paramref name="synapseWorkspaceSqlPoolTableResourceId"/> is null. </exception>
         public SynapseWorkspaceSqlPoolTableDataSetMapping(Guid dataSetId, ResourceIdentifier synapseWorkspaceSqlPoolTableResourceId)
         {
-            Argument.AssertNotNull(synapseWorkspaceSqlPoolTableResourceId, nameof(synapseWorkspaceSqlPoolTableResourceId));
+            if (synapseWorkspaceSqlPoolTableResourceId == null)
+            {
+                throw new ArgumentNullException(nameof(synapseWorkspaceSqlPoolTableResourceId));
+            }
 
             DataSetId = dataSetId;
             SynapseWorkspaceSqlPoolTableResourceId = synapseWorkspaceSqlPoolTableResourceId;

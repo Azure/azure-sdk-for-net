@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<CostManagementViewData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CostManagementViewData>> value = default;
+            IReadOnlyList<CostManagementViewData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     List<CostManagementViewData> array = new List<CostManagementViewData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CostManagementViewData.DeserializeCostManagementViewData(item));
+                        array.Add(CostManagementViewData.DeserializeCostManagementViewData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ViewListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ViewListResult(value ?? new ChangeTrackingList<CostManagementViewData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ViewListResult>.Write(ModelReaderWriterOptions options)

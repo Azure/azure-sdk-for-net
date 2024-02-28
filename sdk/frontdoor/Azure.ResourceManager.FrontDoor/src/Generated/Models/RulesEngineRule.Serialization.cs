@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             writer.WriteNumberValue(Priority);
             writer.WritePropertyName("action"u8);
             writer.WriteObjectValue(Action);
-            if (Optional.IsCollectionDefined(MatchConditions))
+            if (!(MatchConditions is ChangeTrackingList<RulesEngineMatchCondition> collection && collection.IsUndefined))
             {
                 if (MatchConditions != null)
                 {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     writer.WriteNull("matchConditions");
                 }
             }
-            if (Optional.IsDefined(MatchProcessingBehavior))
+            if (MatchProcessingBehavior.HasValue)
             {
                 if (MatchProcessingBehavior != null)
                 {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             string name = default;
             int priority = default;
             RulesEngineAction action = default;
-            Optional<IList<RulesEngineMatchCondition>> matchConditions = default;
+            IList<RulesEngineMatchCondition> matchConditions = default;
             Optional<MatchProcessingBehavior?> matchProcessingBehavior = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
                 if (property.NameEquals("action"u8))
                 {
-                    action = RulesEngineAction.DeserializeRulesEngineAction(property.Value);
+                    action = RulesEngineAction.DeserializeRulesEngineAction(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("matchConditions"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     List<RulesEngineMatchCondition> array = new List<RulesEngineMatchCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RulesEngineMatchCondition.DeserializeRulesEngineMatchCondition(item));
+                        array.Add(RulesEngineMatchCondition.DeserializeRulesEngineMatchCondition(item, options));
                     }
                     matchConditions = array;
                     continue;
@@ -154,7 +154,13 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RulesEngineRule(name, priority, action, Optional.ToList(matchConditions), Optional.ToNullable(matchProcessingBehavior), serializedAdditionalRawData);
+            return new RulesEngineRule(
+                name,
+                priority,
+                action,
+                matchConditions ?? new ChangeTrackingList<RulesEngineMatchCondition>(),
+                Optional.ToNullable(matchProcessingBehavior),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RulesEngineRule>.Write(ModelReaderWriterOptions options)

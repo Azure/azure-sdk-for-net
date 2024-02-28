@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(JobId))
+            if (JobId != null)
             {
                 writer.WritePropertyName("jobId"u8);
                 writer.WriteStringValue(JobId);
             }
-            if (Optional.IsDefined(JobFriendlyName))
+            if (JobFriendlyName != null)
             {
                 writer.WritePropertyName("jobFriendlyName"u8);
                 writer.WriteStringValue(JobFriendlyName);
             }
-            if (Optional.IsDefined(JobStatus))
+            if (JobStatus != null)
             {
                 writer.WritePropertyName("jobStatus"u8);
                 writer.WriteStringValue(JobStatus);
             }
-            if (Optional.IsDefined(AffectedObjectType))
+            if (AffectedObjectType != null)
             {
                 writer.WritePropertyName("affectedObjectType"u8);
                 writer.WriteStringValue(AffectedObjectType);
@@ -130,7 +130,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryJobStatusEventDetails(instanceType, serializedAdditionalRawData, jobId.Value, jobFriendlyName.Value, jobStatus.Value, affectedObjectType.Value);
+            return new SiteRecoveryJobStatusEventDetails(
+                instanceType,
+                serializedAdditionalRawData,
+                jobId.Value,
+                jobFriendlyName.Value,
+                jobStatus.Value,
+                affectedObjectType.Value);
         }
 
         BinaryData IPersistableModel<SiteRecoveryJobStatusEventDetails>.Write(ModelReaderWriterOptions options)

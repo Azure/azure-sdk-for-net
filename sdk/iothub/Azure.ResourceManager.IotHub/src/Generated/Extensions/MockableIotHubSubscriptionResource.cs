@@ -135,7 +135,10 @@ namespace Azure.ResourceManager.IotHub.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<IotHubNameAvailabilityResponse>> CheckIotHubNameAvailabilityAsync(IotHubNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = IotHubDescriptionIotHubResourceClientDiagnostics.CreateScope("MockableIotHubSubscriptionResource.CheckIotHubNameAvailability");
             scope.Start();
@@ -177,7 +180,10 @@ namespace Azure.ResourceManager.IotHub.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<IotHubNameAvailabilityResponse> CheckIotHubNameAvailability(IotHubNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = IotHubDescriptionIotHubResourceClientDiagnostics.CreateScope("MockableIotHubSubscriptionResource.CheckIotHubNameAvailability");
             scope.Start();

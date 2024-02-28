@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceRequests))
+            if (options.Format != "W" && ResourceRequests != null)
             {
                 writer.WritePropertyName("resourceRequests"u8);
                 writer.WriteObjectValue(ResourceRequests);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Instances))
+            if (options.Format != "W" && !(Instances is ChangeTrackingList<AppPlatformServiceRegistryInstance> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("instances"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
             Optional<AppPlatformServiceRegistryProvisioningState> provisioningState = default;
             Optional<AppPlatformServiceRegistryResourceRequirements> resourceRequests = default;
-            Optional<IReadOnlyList<AppPlatformServiceRegistryInstance>> instances = default;
+            IReadOnlyList<AppPlatformServiceRegistryInstance> instances = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    resourceRequests = AppPlatformServiceRegistryResourceRequirements.DeserializeAppPlatformServiceRegistryResourceRequirements(property.Value);
+                    resourceRequests = AppPlatformServiceRegistryResourceRequirements.DeserializeAppPlatformServiceRegistryResourceRequirements(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("instances"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppPlatformServiceRegistryInstance> array = new List<AppPlatformServiceRegistryInstance>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppPlatformServiceRegistryInstance.DeserializeAppPlatformServiceRegistryInstance(item));
+                        array.Add(AppPlatformServiceRegistryInstance.DeserializeAppPlatformServiceRegistryInstance(item, options));
                     }
                     instances = array;
                     continue;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformServiceRegistryProperties(Optional.ToNullable(provisioningState), resourceRequests.Value, Optional.ToList(instances), serializedAdditionalRawData);
+            return new AppPlatformServiceRegistryProperties(Optional.ToNullable(provisioningState), resourceRequests.Value, instances ?? new ChangeTrackingList<AppPlatformServiceRegistryInstance>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformServiceRegistryProperties>.Write(ModelReaderWriterOptions options)

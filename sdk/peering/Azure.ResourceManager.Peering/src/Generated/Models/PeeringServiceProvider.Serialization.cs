@@ -42,19 +42,19 @@ namespace Azure.ResourceManager.Peering.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ServiceProviderName))
+            if (ServiceProviderName != null)
             {
                 writer.WritePropertyName("serviceProviderName"u8);
                 writer.WriteStringValue(ServiceProviderName);
             }
-            if (Optional.IsCollectionDefined(PeeringLocations))
+            if (!(PeeringLocations is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("peeringLocations"u8);
                 writer.WriteStartArray();
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Peering.Models
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> serviceProviderName = default;
-            Optional<IList<string>> peeringLocations = default;
+            IList<string> peeringLocations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -174,7 +174,14 @@ namespace Azure.ResourceManager.Peering.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PeeringServiceProvider(id, name, type, systemData.Value, serviceProviderName.Value, Optional.ToList(peeringLocations), serializedAdditionalRawData);
+            return new PeeringServiceProvider(
+                id,
+                name,
+                type,
+                systemData.Value,
+                serviceProviderName.Value,
+                peeringLocations ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PeeringServiceProvider>.Write(ModelReaderWriterOptions options)

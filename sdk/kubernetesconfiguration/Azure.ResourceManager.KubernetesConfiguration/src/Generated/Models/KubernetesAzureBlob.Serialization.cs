@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Uri))
+            if (Uri != null)
             {
                 if (Uri != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("url");
                 }
             }
-            if (Optional.IsDefined(ContainerName))
+            if (ContainerName != null)
             {
                 if (ContainerName != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("containerName");
                 }
             }
-            if (Optional.IsDefined(TimeoutInSeconds))
+            if (TimeoutInSeconds.HasValue)
             {
                 if (TimeoutInSeconds != null)
                 {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("timeoutInSeconds");
                 }
             }
-            if (Optional.IsDefined(SyncIntervalInSeconds))
+            if (SyncIntervalInSeconds.HasValue)
             {
                 if (SyncIntervalInSeconds != null)
                 {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("syncIntervalInSeconds");
                 }
             }
-            if (Optional.IsDefined(ServicePrincipal))
+            if (ServicePrincipal != null)
             {
                 if (ServicePrincipal != null)
                 {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("servicePrincipal");
                 }
             }
-            if (Optional.IsDefined(AccountKey))
+            if (AccountKey != null)
             {
                 if (AccountKey != null)
                 {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("accountKey");
                 }
             }
-            if (Optional.IsDefined(SasToken))
+            if (SasToken != null)
             {
                 if (SasToken != null)
                 {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("sasToken");
                 }
             }
-            if (Optional.IsDefined(ManagedIdentity))
+            if (ManagedIdentity != null)
             {
                 if (ManagedIdentity != null)
                 {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("managedIdentity");
                 }
             }
-            if (Optional.IsDefined(LocalAuthRef))
+            if (LocalAuthRef != null)
             {
                 if (LocalAuthRef != null)
                 {
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                         servicePrincipal = null;
                         continue;
                     }
-                    servicePrincipal = KubernetesServicePrincipal.DeserializeKubernetesServicePrincipal(property.Value);
+                    servicePrincipal = KubernetesServicePrincipal.DeserializeKubernetesServicePrincipal(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("accountKey"u8))
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                         managedIdentity = null;
                         continue;
                     }
-                    managedIdentity = KubernetesAzureBlobManagedIdentity.DeserializeKubernetesAzureBlobManagedIdentity(property.Value);
+                    managedIdentity = KubernetesAzureBlobManagedIdentity.DeserializeKubernetesAzureBlobManagedIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("localAuthRef"u8))
@@ -281,7 +281,17 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesAzureBlob(url.Value, containerName.Value, Optional.ToNullable(timeoutInSeconds), Optional.ToNullable(syncIntervalInSeconds), servicePrincipal.Value, accountKey.Value, sasToken.Value, managedIdentity.Value, localAuthRef.Value, serializedAdditionalRawData);
+            return new KubernetesAzureBlob(
+                url.Value,
+                containerName.Value,
+                Optional.ToNullable(timeoutInSeconds),
+                Optional.ToNullable(syncIntervalInSeconds),
+                servicePrincipal.Value,
+                accountKey.Value,
+                sasToken.Value,
+                managedIdentity.Value,
+                localAuthRef.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesAzureBlob>.Write(ModelReaderWriterOptions options)

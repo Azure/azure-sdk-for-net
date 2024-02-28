@@ -26,24 +26,24 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(InstanceSize))
+            if (InstanceSize.HasValue)
             {
                 writer.WritePropertyName("instanceSize"u8);
                 writer.WriteStringValue(InstanceSize.Value.ToString());
             }
-            if (Optional.IsDefined(InstanceCount))
+            if (InstanceCount.HasValue)
             {
                 writer.WritePropertyName("instanceCount"u8);
                 writer.WriteNumberValue(InstanceCount.Value);
             }
             writer.WritePropertyName("serviceType"u8);
             writer.WriteStringValue(ServiceType.ToString());
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownServiceResourceProperties(document.RootElement, options);
+            return DeserializeCosmosDBServiceProperties(document.RootElement, options);
         }
 
         internal static UnknownServiceResourceProperties DeserializeUnknownServiceResourceProperties(JsonElement element, ModelReaderWriterOptions options = null)
@@ -136,7 +136,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new UnknownServiceResourceProperties(Optional.ToNullable(creationTime), Optional.ToNullable(instanceSize), Optional.ToNullable(instanceCount), serviceType, Optional.ToNullable(status), additionalProperties);
+            return new UnknownServiceResourceProperties(
+                Optional.ToNullable(creationTime),
+                Optional.ToNullable(instanceSize),
+                Optional.ToNullable(instanceCount),
+                serviceType,
+                Optional.ToNullable(status),
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<CosmosDBServiceProperties>.Write(ModelReaderWriterOptions options)
@@ -161,7 +167,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownServiceResourceProperties(document.RootElement, options);
+                        return DeserializeCosmosDBServiceProperties(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(CosmosDBServiceProperties)} does not support '{options.Format}' format.");

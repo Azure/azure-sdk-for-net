@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DeploymentProfile))
+            if (options.Format != "W" && DeploymentProfile != null)
             {
                 writer.WritePropertyName("deploymentProfile"u8);
                 writer.WriteStringValue(DeploymentProfile);
             }
-            if (options.Format != "W" && Optional.IsDefined(DeploymentStatus))
+            if (options.Format != "W" && DeploymentStatus != null)
             {
                 writer.WritePropertyName("deploymentStatus"u8);
                 writer.WriteObjectValue(DeploymentStatus);
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    deploymentStatus = DeploymentStatusProperties.DeserializeDeploymentStatusProperties(property.Value);
+                    deploymentStatus = DeploymentStatusProperties.DeserializeDeploymentStatusProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

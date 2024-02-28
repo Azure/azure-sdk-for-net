@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 if (Id != null)
                 {
@@ -38,37 +38,37 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("id");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningStatus))
+            if (options.Format != "W" && ProvisioningStatus.HasValue)
             {
                 writer.WritePropertyName("provisioningStatus"u8);
                 writer.WriteStringValue(ProvisioningStatus.Value.ToString());
             }
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(Action))
+            if (Action.HasValue)
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action.Value.ToString());
             }
-            if (Optional.IsDefined(TriggerType))
+            if (TriggerType.HasValue)
             {
                 writer.WritePropertyName("triggerType"u8);
                 writer.WriteStringValue(TriggerType.Value.ToString());
             }
-            if (Optional.IsDefined(RecurrenceSchedule))
+            if (RecurrenceSchedule != null)
             {
                 writer.WritePropertyName("recurrence"u8);
                 writer.WriteObjectValue(RecurrenceSchedule);
             }
-            if (Optional.IsDefined(CronSchedule))
+            if (CronSchedule != null)
             {
                 writer.WritePropertyName("cron"u8);
                 writer.WriteObjectValue(CronSchedule);
             }
-            if (Optional.IsDefined(Schedule))
+            if (Schedule != null)
             {
                 writer.WritePropertyName("schedule"u8);
                 writer.WriteObjectValue(Schedule);
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    recurrence = ComputeStartStopRecurrenceSchedule.DeserializeComputeStartStopRecurrenceSchedule(property.Value);
+                    recurrence = ComputeStartStopRecurrenceSchedule.DeserializeComputeStartStopRecurrenceSchedule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("cron"u8))
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    cron = ComputeStartStopCronSchedule.DeserializeComputeStartStopCronSchedule(property.Value);
+                    cron = ComputeStartStopCronSchedule.DeserializeComputeStartStopCronSchedule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("schedule"u8))
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    schedule = MachineLearningScheduleBase.DeserializeMachineLearningScheduleBase(property.Value);
+                    schedule = MachineLearningScheduleBase.DeserializeMachineLearningScheduleBase(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -202,7 +202,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningComputeStartStopSchedule(id.Value, Optional.ToNullable(provisioningStatus), Optional.ToNullable(status), Optional.ToNullable(action), Optional.ToNullable(triggerType), recurrence.Value, cron.Value, schedule.Value, serializedAdditionalRawData);
+            return new MachineLearningComputeStartStopSchedule(
+                id.Value,
+                Optional.ToNullable(provisioningStatus),
+                Optional.ToNullable(status),
+                Optional.ToNullable(action),
+                Optional.ToNullable(triggerType),
+                recurrence.Value,
+                cron.Value,
+                schedule.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningComputeStartStopSchedule>.Write(ModelReaderWriterOptions options)

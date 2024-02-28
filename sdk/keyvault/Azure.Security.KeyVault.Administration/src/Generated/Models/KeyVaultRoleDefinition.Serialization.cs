@@ -18,22 +18,22 @@ namespace Azure.Security.KeyVault.Administration
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(RoleName))
+            if (RoleName != null)
             {
                 writer.WritePropertyName("roleName"u8);
                 writer.WriteStringValue(RoleName);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(RoleType))
+            if (RoleType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(RoleType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Permissions))
+            if (!(Permissions is ChangeTrackingList<KeyVaultPermission> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("permissions"u8);
                 writer.WriteStartArray();
@@ -43,7 +43,7 @@ namespace Azure.Security.KeyVault.Administration
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AssignableScopes))
+            if (!(AssignableScopes is ChangeTrackingList<KeyVaultRoleScope> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("assignableScopes"u8);
                 writer.WriteStartArray();
@@ -69,8 +69,8 @@ namespace Azure.Security.KeyVault.Administration
             Optional<string> roleName = default;
             Optional<string> description = default;
             Optional<KeyVaultRoleType> type0 = default;
-            Optional<IList<KeyVaultPermission>> permissions = default;
-            Optional<IList<KeyVaultRoleScope>> assignableScopes = default;
+            IList<KeyVaultPermission> permissions = default;
+            IList<KeyVaultRoleScope> assignableScopes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -152,7 +152,15 @@ namespace Azure.Security.KeyVault.Administration
                     continue;
                 }
             }
-            return new KeyVaultRoleDefinition(id.Value, name.Value, Optional.ToNullable(type), roleName.Value, description.Value, Optional.ToNullable(type0), Optional.ToList(permissions), Optional.ToList(assignableScopes));
+            return new KeyVaultRoleDefinition(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                roleName.Value,
+                description.Value,
+                Optional.ToNullable(type0),
+                permissions ?? new ChangeTrackingList<KeyVaultPermission>(),
+                assignableScopes ?? new ChangeTrackingList<KeyVaultRoleScope>());
         }
     }
 }

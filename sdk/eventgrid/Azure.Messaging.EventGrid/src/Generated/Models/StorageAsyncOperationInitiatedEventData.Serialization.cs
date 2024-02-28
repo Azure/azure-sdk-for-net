@@ -92,7 +92,17 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new StorageAsyncOperationInitiatedEventData(api.Value, clientRequestId.Value, requestId.Value, contentType.Value, Optional.ToNullable(contentLength), blobType.Value, url.Value, sequencer.Value, identity.Value, storageDiagnostics.Value);
+            return new StorageAsyncOperationInitiatedEventData(
+                api.Value,
+                clientRequestId.Value,
+                requestId.Value,
+                contentType.Value,
+                Optional.ToNullable(contentLength),
+                blobType.Value,
+                url.Value,
+                sequencer.Value,
+                identity.Value,
+                storageDiagnostics.Value);
         }
 
         internal partial class StorageAsyncOperationInitiatedEventDataConverter : JsonConverter<StorageAsyncOperationInitiatedEventData>

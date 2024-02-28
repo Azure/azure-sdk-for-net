@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ErrorMessage))
+            if (ErrorMessage != null)
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
             }
-            if (Optional.IsCollectionDefined(Events))
+            if (!(Events is ChangeTrackingList<SyncMigrationDatabaseErrorEvent> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("events"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             Optional<string> errorMessage = default;
-            Optional<IReadOnlyList<SyncMigrationDatabaseErrorEvent>> events = default;
+            IReadOnlyList<SyncMigrationDatabaseErrorEvent> events = default;
             Optional<string> id = default;
             string resultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<SyncMigrationDatabaseErrorEvent> array = new List<SyncMigrationDatabaseErrorEvent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SyncMigrationDatabaseErrorEvent.DeserializeSyncMigrationDatabaseErrorEvent(item));
+                        array.Add(SyncMigrationDatabaseErrorEvent.DeserializeSyncMigrationDatabaseErrorEvent(item, options));
                     }
                     events = array;
                     continue;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseError(id.Value, resultType, serializedAdditionalRawData, errorMessage.Value, Optional.ToList(events));
+            return new MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseError(id.Value, resultType, serializedAdditionalRawData, errorMessage.Value, events ?? new ChangeTrackingList<SyncMigrationDatabaseErrorEvent>());
         }
 
         BinaryData IPersistableModel<MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseError>.Write(ModelReaderWriterOptions options)

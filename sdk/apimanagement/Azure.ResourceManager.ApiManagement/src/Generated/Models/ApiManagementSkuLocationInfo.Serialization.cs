@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Location))
+            if (options.Format != "W" && Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Zones))
+            if (options.Format != "W" && !(Zones is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ZoneDetails))
+            if (options.Format != "W" && !(ZoneDetails is ChangeTrackingList<ApiManagementSkuZoneDetails> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("zoneDetails"u8);
                 writer.WriteStartArray();
@@ -90,8 +90,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 return null;
             }
             Optional<AzureLocation> location = default;
-            Optional<IReadOnlyList<string>> zones = default;
-            Optional<IReadOnlyList<ApiManagementSkuZoneDetails>> zoneDetails = default;
+            IReadOnlyList<string> zones = default;
+            IReadOnlyList<ApiManagementSkuZoneDetails> zoneDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ApiManagementSkuZoneDetails> array = new List<ApiManagementSkuZoneDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiManagementSkuZoneDetails.DeserializeApiManagementSkuZoneDetails(item));
+                        array.Add(ApiManagementSkuZoneDetails.DeserializeApiManagementSkuZoneDetails(item, options));
                     }
                     zoneDetails = array;
                     continue;
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementSkuLocationInfo(Optional.ToNullable(location), Optional.ToList(zones), Optional.ToList(zoneDetails), serializedAdditionalRawData);
+            return new ApiManagementSkuLocationInfo(Optional.ToNullable(location), zones ?? new ChangeTrackingList<string>(), zoneDetails ?? new ChangeTrackingList<ApiManagementSkuZoneDetails>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementSkuLocationInfo>.Write(ModelReaderWriterOptions options)

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<SqlServerJobStepData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SqlServerJobStepData>> value = default;
+            IReadOnlyList<SqlServerJobStepData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SqlServerJobStepData> array = new List<SqlServerJobStepData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlServerJobStepData.DeserializeSqlServerJobStepData(item));
+                        array.Add(SqlServerJobStepData.DeserializeSqlServerJobStepData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JobStepListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new JobStepListResult(value ?? new ChangeTrackingList<SqlServerJobStepData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<JobStepListResult>.Write(ModelReaderWriterOptions options)

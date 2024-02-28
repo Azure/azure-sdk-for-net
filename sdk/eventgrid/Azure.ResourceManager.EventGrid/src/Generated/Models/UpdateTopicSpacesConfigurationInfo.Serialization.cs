@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(State))
+            if (State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(RouteTopicResourceId))
+            if (RouteTopicResourceId != null)
             {
                 writer.WritePropertyName("routeTopicResourceId"u8);
                 writer.WriteStringValue(RouteTopicResourceId);
             }
-            if (Optional.IsDefined(RoutingEnrichments))
+            if (RoutingEnrichments != null)
             {
                 writer.WritePropertyName("routingEnrichments"u8);
                 writer.WriteObjectValue(RoutingEnrichments);
             }
-            if (Optional.IsDefined(ClientAuthentication))
+            if (ClientAuthentication != null)
             {
                 writer.WritePropertyName("clientAuthentication"u8);
                 writer.WriteObjectValue(ClientAuthentication);
             }
-            if (Optional.IsDefined(MaximumSessionExpiryInHours))
+            if (MaximumSessionExpiryInHours.HasValue)
             {
                 writer.WritePropertyName("maximumSessionExpiryInHours"u8);
                 writer.WriteNumberValue(MaximumSessionExpiryInHours.Value);
             }
-            if (Optional.IsDefined(MaximumClientSessionsPerAuthenticationName))
+            if (MaximumClientSessionsPerAuthenticationName.HasValue)
             {
                 writer.WritePropertyName("maximumClientSessionsPerAuthenticationName"u8);
                 writer.WriteNumberValue(MaximumClientSessionsPerAuthenticationName.Value);
             }
-            if (Optional.IsDefined(RoutingIdentityInfo))
+            if (RoutingIdentityInfo != null)
             {
                 writer.WritePropertyName("routingIdentityInfo"u8);
                 writer.WriteObjectValue(RoutingIdentityInfo);
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         continue;
                     }
-                    routingEnrichments = RoutingEnrichments.DeserializeRoutingEnrichments(property.Value);
+                    routingEnrichments = RoutingEnrichments.DeserializeRoutingEnrichments(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("clientAuthentication"u8))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         continue;
                     }
-                    clientAuthentication = ClientAuthenticationSettings.DeserializeClientAuthenticationSettings(property.Value);
+                    clientAuthentication = ClientAuthenticationSettings.DeserializeClientAuthenticationSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("maximumSessionExpiryInHours"u8))
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         continue;
                     }
-                    routingIdentityInfo = RoutingIdentityInfo.DeserializeRoutingIdentityInfo(property.Value);
+                    routingIdentityInfo = RoutingIdentityInfo.DeserializeRoutingIdentityInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -175,7 +175,15 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UpdateTopicSpacesConfigurationInfo(Optional.ToNullable(state), routeTopicResourceId.Value, routingEnrichments.Value, clientAuthentication.Value, Optional.ToNullable(maximumSessionExpiryInHours), Optional.ToNullable(maximumClientSessionsPerAuthenticationName), routingIdentityInfo.Value, serializedAdditionalRawData);
+            return new UpdateTopicSpacesConfigurationInfo(
+                Optional.ToNullable(state),
+                routeTopicResourceId.Value,
+                routingEnrichments.Value,
+                clientAuthentication.Value,
+                Optional.ToNullable(maximumSessionExpiryInHours),
+                Optional.ToNullable(maximumClientSessionsPerAuthenticationName),
+                routingIdentityInfo.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UpdateTopicSpacesConfigurationInfo>.Write(ModelReaderWriterOptions options)

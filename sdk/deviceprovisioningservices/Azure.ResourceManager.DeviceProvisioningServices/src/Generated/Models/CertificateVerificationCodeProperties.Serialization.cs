@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(VerificationCode))
+            if (VerificationCode != null)
             {
                 writer.WritePropertyName("verificationCode"u8);
                 writer.WriteStringValue(VerificationCode);
             }
-            if (Optional.IsDefined(Subject))
+            if (Subject != null)
             {
                 writer.WritePropertyName("subject"u8);
                 writer.WriteStringValue(Subject);
             }
-            if (Optional.IsDefined(ExpireOn))
+            if (ExpireOn.HasValue)
             {
                 writer.WritePropertyName("expiry"u8);
                 writer.WriteStringValue(ExpireOn.Value, "R");
             }
-            if (Optional.IsDefined(Thumbprint))
+            if (Thumbprint != null)
             {
                 writer.WritePropertyName("thumbprint"u8);
 #if NET6_0_OR_GREATER
@@ -53,12 +53,12 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 }
 #endif
             }
-            if (Optional.IsDefined(IsVerified))
+            if (IsVerified.HasValue)
             {
                 writer.WritePropertyName("isVerified"u8);
                 writer.WriteBooleanValue(IsVerified.Value);
             }
-            if (Optional.IsDefined(Certificate))
+            if (Certificate != null)
             {
                 writer.WritePropertyName("certificate"u8);
 #if NET6_0_OR_GREATER
@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 }
 #endif
             }
-            if (Optional.IsDefined(CreatedOn))
+            if (CreatedOn.HasValue)
             {
                 writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(CreatedOn.Value, "R");
             }
-            if (Optional.IsDefined(UpdatedOn))
+            if (UpdatedOn.HasValue)
             {
                 writer.WritePropertyName("updated"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "R");
@@ -200,7 +200,16 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CertificateVerificationCodeProperties(verificationCode.Value, subject.Value, Optional.ToNullable(expiry), thumbprint.Value, Optional.ToNullable(isVerified), certificate.Value, Optional.ToNullable(created), Optional.ToNullable(updated), serializedAdditionalRawData);
+            return new CertificateVerificationCodeProperties(
+                verificationCode.Value,
+                subject.Value,
+                Optional.ToNullable(expiry),
+                thumbprint.Value,
+                Optional.ToNullable(isVerified),
+                certificate.Value,
+                Optional.ToNullable(created),
+                Optional.ToNullable(updated),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CertificateVerificationCodeProperties>.Write(ModelReaderWriterOptions options)

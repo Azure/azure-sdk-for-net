@@ -28,22 +28,22 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Location))
+            if (options.Format != "W" && Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Sku))
+            if (options.Format != "W" && Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteStringValue(Sku);
             }
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Tags))
+            if (options.Format != "W" && !(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -69,29 +69,29 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Description))
+            if (options.Format != "W" && Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsFilterEnabled))
+            if (options.Format != "W" && IsFilterEnabled.HasValue)
             {
                 writer.WritePropertyName("filterEnabled"u8);
                 writer.WriteBooleanValue(IsFilterEnabled.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsGroupingEnabled))
+            if (options.Format != "W" && IsGroupingEnabled.HasValue)
             {
                 writer.WritePropertyName("groupingEnabled"u8);
                 writer.WriteBooleanValue(IsGroupingEnabled.Value);
             }
-            if (Optional.IsCollectionDefined(Data))
+            if (!(Data is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("data"u8);
                 writer.WriteStartArray();
@@ -101,27 +101,27 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(Total))
+            if (options.Format != "W" && Total.HasValue)
             {
                 writer.WritePropertyName("total"u8);
                 writer.WriteNumberValue(Total.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Category))
+            if (options.Format != "W" && Category != null)
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (options.Format != "W" && Optional.IsDefined(UsageStart))
+            if (options.Format != "W" && UsageStart.HasValue)
             {
                 writer.WritePropertyName("usageStart"u8);
                 writer.WriteStringValue(UsageStart.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(UsageEnd))
+            if (options.Format != "W" && UsageEnd.HasValue)
             {
                 writer.WritePropertyName("usageEnd"u8);
                 writer.WriteStringValue(UsageEnd.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             Optional<AzureLocation> location = default;
             Optional<string> sku = default;
             Optional<ETag> eTag = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            IReadOnlyDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             Optional<string> description = default;
             Optional<bool> filterEnabled = default;
             Optional<bool> groupingEnabled = default;
-            Optional<IReadOnlyList<string>> data = default;
+            IReadOnlyList<string> data = default;
             Optional<int> total = default;
             Optional<string> category = default;
             Optional<DateTimeOffset> usageStart = default;
@@ -339,7 +339,25 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CostManagementDimension(id, name, type, systemData.Value, description.Value, Optional.ToNullable(filterEnabled), Optional.ToNullable(groupingEnabled), Optional.ToList(data), Optional.ToNullable(total), category.Value, Optional.ToNullable(usageStart), Optional.ToNullable(usageEnd), nextLink.Value, Optional.ToNullable(location), sku.Value, Optional.ToNullable(eTag), Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new CostManagementDimension(
+                id,
+                name,
+                type,
+                systemData.Value,
+                description.Value,
+                Optional.ToNullable(filterEnabled),
+                Optional.ToNullable(groupingEnabled),
+                data ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(total),
+                category.Value,
+                Optional.ToNullable(usageStart),
+                Optional.ToNullable(usageEnd),
+                nextLink.Value,
+                Optional.ToNullable(location),
+                sku.Value,
+                Optional.ToNullable(eTag),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CostManagementDimension>.Write(ModelReaderWriterOptions options)

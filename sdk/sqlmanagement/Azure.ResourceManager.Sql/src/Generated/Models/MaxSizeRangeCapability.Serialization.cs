@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(MinValue))
+            if (options.Format != "W" && MinValue != null)
             {
                 writer.WritePropertyName("minValue"u8);
                 writer.WriteObjectValue(MinValue);
             }
-            if (options.Format != "W" && Optional.IsDefined(MaxValue))
+            if (options.Format != "W" && MaxValue != null)
             {
                 writer.WritePropertyName("maxValue"u8);
                 writer.WriteObjectValue(MaxValue);
             }
-            if (options.Format != "W" && Optional.IsDefined(ScaleSize))
+            if (options.Format != "W" && ScaleSize != null)
             {
                 writer.WritePropertyName("scaleSize"u8);
                 writer.WriteObjectValue(ScaleSize);
             }
-            if (options.Format != "W" && Optional.IsDefined(LogSize))
+            if (options.Format != "W" && LogSize != null)
             {
                 writer.WritePropertyName("logSize"u8);
                 writer.WriteObjectValue(LogSize);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Reason))
+            if (Reason != null)
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    minValue = MaxSizeCapability.DeserializeMaxSizeCapability(property.Value);
+                    minValue = MaxSizeCapability.DeserializeMaxSizeCapability(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("maxValue"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    maxValue = MaxSizeCapability.DeserializeMaxSizeCapability(property.Value);
+                    maxValue = MaxSizeCapability.DeserializeMaxSizeCapability(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("scaleSize"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    scaleSize = MaxSizeCapability.DeserializeMaxSizeCapability(property.Value);
+                    scaleSize = MaxSizeCapability.DeserializeMaxSizeCapability(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("logSize"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    logSize = LogSizeCapability.DeserializeLogSizeCapability(property.Value);
+                    logSize = LogSizeCapability.DeserializeLogSizeCapability(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MaxSizeRangeCapability(minValue.Value, maxValue.Value, scaleSize.Value, logSize.Value, Optional.ToNullable(status), reason.Value, serializedAdditionalRawData);
+            return new MaxSizeRangeCapability(
+                minValue.Value,
+                maxValue.Value,
+                scaleSize.Value,
+                logSize.Value,
+                Optional.ToNullable(status),
+                reason.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MaxSizeRangeCapability>.Write(ModelReaderWriterOptions options)

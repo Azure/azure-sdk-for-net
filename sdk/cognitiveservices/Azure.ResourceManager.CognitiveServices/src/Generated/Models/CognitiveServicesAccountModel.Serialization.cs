@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(BaseModel))
+            if (BaseModel != null)
             {
                 writer.WritePropertyName("baseModel"u8);
                 writer.WriteObjectValue(BaseModel);
             }
-            if (Optional.IsDefined(IsDefaultVersion))
+            if (IsDefaultVersion.HasValue)
             {
                 writer.WritePropertyName("isDefaultVersion"u8);
                 writer.WriteBooleanValue(IsDefaultVersion.Value);
             }
-            if (Optional.IsCollectionDefined(Skus))
+            if (!(Skus is ChangeTrackingList<CognitiveServicesModelSku> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("skus"u8);
                 writer.WriteStartArray();
@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(MaxCapacity))
+            if (MaxCapacity.HasValue)
             {
                 writer.WritePropertyName("maxCapacity"u8);
                 writer.WriteNumberValue(MaxCapacity.Value);
             }
-            if (Optional.IsCollectionDefined(Capabilities))
+            if (!(Capabilities is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartObject();
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(FinetuneCapabilities))
+            if (!(FinetuneCapabilities is ChangeTrackingDictionary<string, string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("finetuneCapabilities"u8);
                 writer.WriteStartObject();
@@ -74,42 +74,42 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Deprecation))
+            if (Deprecation != null)
             {
                 writer.WritePropertyName("deprecation"u8);
                 writer.WriteObjectValue(Deprecation);
             }
-            if (Optional.IsDefined(LifecycleStatus))
+            if (LifecycleStatus.HasValue)
             {
                 writer.WritePropertyName("lifecycleStatus"u8);
                 writer.WriteStringValue(LifecycleStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
-            if (Optional.IsDefined(Format))
+            if (Format != null)
             {
                 writer.WritePropertyName("format"u8);
                 writer.WriteStringValue(Format);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Version))
+            if (Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Optional.IsDefined(Source))
+            if (Source != null)
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
-            if (options.Format != "W" && Optional.IsDefined(CallRateLimit))
+            if (options.Format != "W" && CallRateLimit != null)
             {
                 writer.WritePropertyName("callRateLimit"u8);
                 writer.WriteObjectValue(CallRateLimit);
@@ -154,10 +154,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
             Optional<CognitiveServicesAccountDeploymentModel> baseModel = default;
             Optional<bool> isDefaultVersion = default;
-            Optional<IList<CognitiveServicesModelSku>> skus = default;
+            IList<CognitiveServicesModelSku> skus = default;
             Optional<int> maxCapacity = default;
-            Optional<IDictionary<string, string>> capabilities = default;
-            Optional<IDictionary<string, string>> finetuneCapabilities = default;
+            IDictionary<string, string> capabilities = default;
+            IDictionary<string, string> finetuneCapabilities = default;
             Optional<ServiceAccountModelDeprecationInfo> deprecation = default;
             Optional<ModelLifecycleStatus> lifecycleStatus = default;
             Optional<SystemData> systemData = default;
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    baseModel = DeserializeCognitiveServicesAccountDeploymentModel(property.Value);
+                    baseModel = DeserializeCognitiveServicesAccountDeploymentModel(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("isDefaultVersion"u8))
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     List<CognitiveServicesModelSku> array = new List<CognitiveServicesModelSku>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CognitiveServicesModelSku.DeserializeCognitiveServicesModelSku(item));
+                        array.Add(CognitiveServicesModelSku.DeserializeCognitiveServicesModelSku(item, options));
                     }
                     skus = array;
                     continue;
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    deprecation = ServiceAccountModelDeprecationInfo.DeserializeServiceAccountModelDeprecationInfo(property.Value);
+                    deprecation = ServiceAccountModelDeprecationInfo.DeserializeServiceAccountModelDeprecationInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("lifecycleStatus"u8))
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    callRateLimit = ServiceAccountCallRateLimit.DeserializeServiceAccountCallRateLimit(property.Value);
+                    callRateLimit = ServiceAccountCallRateLimit.DeserializeServiceAccountCallRateLimit(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -301,7 +301,22 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CognitiveServicesAccountModel(format.Value, name.Value, version.Value, source.Value, callRateLimit.Value, serializedAdditionalRawData, baseModel.Value, Optional.ToNullable(isDefaultVersion), Optional.ToList(skus), Optional.ToNullable(maxCapacity), Optional.ToDictionary(capabilities), Optional.ToDictionary(finetuneCapabilities), deprecation.Value, Optional.ToNullable(lifecycleStatus), systemData);
+            return new CognitiveServicesAccountModel(
+                format.Value,
+                name.Value,
+                version.Value,
+                source.Value,
+                callRateLimit.Value,
+                serializedAdditionalRawData,
+                baseModel.Value,
+                Optional.ToNullable(isDefaultVersion),
+                skus ?? new ChangeTrackingList<CognitiveServicesModelSku>(),
+                Optional.ToNullable(maxCapacity),
+                capabilities ?? new ChangeTrackingDictionary<string, string>(),
+                finetuneCapabilities ?? new ChangeTrackingDictionary<string, string>(),
+                deprecation.Value,
+                Optional.ToNullable(lifecycleStatus),
+                systemData);
         }
 
         BinaryData IPersistableModel<CognitiveServicesAccountModel>.Write(ModelReaderWriterOptions options)

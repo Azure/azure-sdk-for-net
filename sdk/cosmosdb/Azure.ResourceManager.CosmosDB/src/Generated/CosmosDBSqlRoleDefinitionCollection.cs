@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<CosmosDBSqlRoleDefinitionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string roleDefinitionId, CosmosDBSqlRoleDefinitionCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(roleDefinitionId, nameof(roleDefinitionId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (roleDefinitionId == null)
+            {
+                throw new ArgumentNullException(nameof(roleDefinitionId));
+            }
+            if (roleDefinitionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(roleDefinitionId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _cosmosDBSqlRoleDefinitionSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlRoleDefinitionCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<CosmosDBSqlRoleDefinitionResource> CreateOrUpdate(WaitUntil waitUntil, string roleDefinitionId, CosmosDBSqlRoleDefinitionCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(roleDefinitionId, nameof(roleDefinitionId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (roleDefinitionId == null)
+            {
+                throw new ArgumentNullException(nameof(roleDefinitionId));
+            }
+            if (roleDefinitionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(roleDefinitionId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _cosmosDBSqlRoleDefinitionSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlRoleDefinitionCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
         public virtual async Task<Response<CosmosDBSqlRoleDefinitionResource>> GetAsync(string roleDefinitionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(roleDefinitionId, nameof(roleDefinitionId));
+            if (roleDefinitionId == null)
+            {
+                throw new ArgumentNullException(nameof(roleDefinitionId));
+            }
+            if (roleDefinitionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(roleDefinitionId));
+            }
 
             using var scope = _cosmosDBSqlRoleDefinitionSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlRoleDefinitionCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
         public virtual Response<CosmosDBSqlRoleDefinitionResource> Get(string roleDefinitionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(roleDefinitionId, nameof(roleDefinitionId));
+            if (roleDefinitionId == null)
+            {
+                throw new ArgumentNullException(nameof(roleDefinitionId));
+            }
+            if (roleDefinitionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(roleDefinitionId));
+            }
 
             using var scope = _cosmosDBSqlRoleDefinitionSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlRoleDefinitionCollection.Get");
             scope.Start();
@@ -327,7 +361,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string roleDefinitionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(roleDefinitionId, nameof(roleDefinitionId));
+            if (roleDefinitionId == null)
+            {
+                throw new ArgumentNullException(nameof(roleDefinitionId));
+            }
+            if (roleDefinitionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(roleDefinitionId));
+            }
 
             using var scope = _cosmosDBSqlRoleDefinitionSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlRoleDefinitionCollection.Exists");
             scope.Start();
@@ -370,7 +411,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
         public virtual Response<bool> Exists(string roleDefinitionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(roleDefinitionId, nameof(roleDefinitionId));
+            if (roleDefinitionId == null)
+            {
+                throw new ArgumentNullException(nameof(roleDefinitionId));
+            }
+            if (roleDefinitionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(roleDefinitionId));
+            }
 
             using var scope = _cosmosDBSqlRoleDefinitionSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlRoleDefinitionCollection.Exists");
             scope.Start();
@@ -413,7 +461,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
         public virtual async Task<NullableResponse<CosmosDBSqlRoleDefinitionResource>> GetIfExistsAsync(string roleDefinitionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(roleDefinitionId, nameof(roleDefinitionId));
+            if (roleDefinitionId == null)
+            {
+                throw new ArgumentNullException(nameof(roleDefinitionId));
+            }
+            if (roleDefinitionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(roleDefinitionId));
+            }
 
             using var scope = _cosmosDBSqlRoleDefinitionSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlRoleDefinitionCollection.GetIfExists");
             scope.Start();
@@ -458,7 +513,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
         public virtual NullableResponse<CosmosDBSqlRoleDefinitionResource> GetIfExists(string roleDefinitionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(roleDefinitionId, nameof(roleDefinitionId));
+            if (roleDefinitionId == null)
+            {
+                throw new ArgumentNullException(nameof(roleDefinitionId));
+            }
+            if (roleDefinitionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(roleDefinitionId));
+            }
 
             using var scope = _cosmosDBSqlRoleDefinitionSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlRoleDefinitionCollection.GetIfExists");
             scope.Start();

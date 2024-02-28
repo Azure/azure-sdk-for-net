@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProjectNumber))
+            if (ProjectNumber != null)
             {
                 writer.WritePropertyName("projectNumber"u8);
                 writer.WriteStringValue(ProjectNumber);
             }
-            if (Optional.IsDefined(ProjectId))
+            if (ProjectId != null)
             {
                 writer.WritePropertyName("projectId"u8);
                 writer.WriteStringValue(ProjectId);
             }
-            if (options.Format != "W" && Optional.IsDefined(WorkloadIdentityPoolId))
+            if (options.Format != "W" && WorkloadIdentityPoolId != null)
             {
                 writer.WritePropertyName("workloadIdentityPoolId"u8);
                 writer.WriteStringValue(WorkloadIdentityPoolId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProjectName))
+            if (options.Format != "W" && ProjectName != null)
             {
                 writer.WritePropertyName("projectName"u8);
                 writer.WriteStringValue(ProjectName);

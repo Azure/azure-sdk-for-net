@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(UefiSettings))
+            if (UefiSettings != null)
             {
                 writer.WritePropertyName("uefiSettings"u8);
                 writer.WriteObjectValue(UefiSettings);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    uefiSettings = GalleryImageVersionUefiSettings.DeserializeGalleryImageVersionUefiSettings(property.Value);
+                    uefiSettings = GalleryImageVersionUefiSettings.DeserializeGalleryImageVersionUefiSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

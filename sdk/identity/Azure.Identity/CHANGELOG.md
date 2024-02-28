@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- `AzurePowerShellCredential` now handles the case where it falls back to legacy powershell without relying on the error message string.
 
 ### Other Changes
 

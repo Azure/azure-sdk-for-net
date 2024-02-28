@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Green))
+            if (Green.HasValue)
             {
                 writer.WritePropertyName("green"u8);
                 writer.WriteNumberValue(Green.Value);
             }
-            if (Optional.IsDefined(Yellow))
+            if (Yellow.HasValue)
             {
                 writer.WritePropertyName("yellow"u8);
                 writer.WriteNumberValue(Yellow.Value);
             }
-            if (Optional.IsDefined(Red))
+            if (Red.HasValue)
             {
                 writer.WritePropertyName("red"u8);
                 writer.WriteNumberValue(Red.Value);

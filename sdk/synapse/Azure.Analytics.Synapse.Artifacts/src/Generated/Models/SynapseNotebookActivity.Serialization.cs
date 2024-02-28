@@ -19,12 +19,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(LinkedServiceName))
+            if (LinkedServiceName != null)
             {
                 writer.WritePropertyName("linkedServiceName"u8);
                 writer.WriteObjectValue(LinkedServiceName);
             }
-            if (Optional.IsDefined(Policy))
+            if (Policy != null)
             {
                 writer.WritePropertyName("policy"u8);
                 writer.WriteObjectValue(Policy);
@@ -33,22 +33,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(State))
+            if (State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(OnInactiveMarkAs))
+            if (OnInactiveMarkAs.HasValue)
             {
                 writer.WritePropertyName("onInactiveMarkAs"u8);
                 writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(DependsOn))
+            if (!(DependsOn is ChangeTrackingList<ActivityDependency> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
@@ -58,7 +58,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(UserProperties))
+            if (!(UserProperties is ChangeTrackingList<UserProperty> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("userProperties"u8);
                 writer.WriteStartArray();
@@ -72,12 +72,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("notebook"u8);
             writer.WriteObjectValue(Notebook);
-            if (Optional.IsDefined(SparkPool))
+            if (SparkPool != null)
             {
                 writer.WritePropertyName("sparkPool"u8);
                 writer.WriteObjectValue(SparkPool);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingDictionary<string, NotebookParameter> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -88,37 +88,37 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(ExecutorSize))
+            if (ExecutorSize != null)
             {
                 writer.WritePropertyName("executorSize"u8);
                 writer.WriteObjectValue(ExecutorSize);
             }
-            if (Optional.IsDefined(Conf))
+            if (Conf != null)
             {
                 writer.WritePropertyName("conf"u8);
                 writer.WriteObjectValue(Conf);
             }
-            if (Optional.IsDefined(DriverSize))
+            if (DriverSize != null)
             {
                 writer.WritePropertyName("driverSize"u8);
                 writer.WriteObjectValue(DriverSize);
             }
-            if (Optional.IsDefined(NumExecutors))
+            if (NumExecutors != null)
             {
                 writer.WritePropertyName("numExecutors"u8);
                 writer.WriteObjectValue(NumExecutors);
             }
-            if (Optional.IsDefined(ConfigurationType))
+            if (ConfigurationType.HasValue)
             {
                 writer.WritePropertyName("configurationType"u8);
                 writer.WriteStringValue(ConfigurationType.Value.ToString());
             }
-            if (Optional.IsDefined(TargetSparkConfiguration))
+            if (TargetSparkConfiguration != null)
             {
                 writer.WritePropertyName("targetSparkConfiguration"u8);
                 writer.WriteObjectValue(TargetSparkConfiguration);
             }
-            if (Optional.IsCollectionDefined(SparkConfig))
+            if (!(SparkConfig is ChangeTrackingDictionary<string, object> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("sparkConfig"u8);
                 writer.WriteStartObject();
@@ -156,18 +156,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> description = default;
             Optional<ActivityState> state = default;
             Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
-            Optional<IList<ActivityDependency>> dependsOn = default;
-            Optional<IList<UserProperty>> userProperties = default;
+            IList<ActivityDependency> dependsOn = default;
+            IList<UserProperty> userProperties = default;
             SynapseNotebookReference notebook = default;
             Optional<BigDataPoolParametrizationReference> sparkPool = default;
-            Optional<IDictionary<string, NotebookParameter>> parameters = default;
+            IDictionary<string, NotebookParameter> parameters = default;
             Optional<object> executorSize = default;
             Optional<object> conf = default;
             Optional<object> driverSize = default;
             Optional<object> numExecutors = default;
             Optional<ConfigurationType> configurationType = default;
             Optional<SparkConfigurationParametrizationReference> targetSparkConfiguration = default;
-            Optional<IDictionary<string, object>> sparkConfig = default;
+            IDictionary<string, object> sparkConfig = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -369,7 +369,27 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SynapseNotebookActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, notebook, sparkPool.Value, Optional.ToDictionary(parameters), executorSize.Value, conf.Value, driverSize.Value, numExecutors.Value, Optional.ToNullable(configurationType), targetSparkConfiguration.Value, Optional.ToDictionary(sparkConfig));
+            return new SynapseNotebookActivity(
+                name,
+                type,
+                description.Value,
+                Optional.ToNullable(state),
+                Optional.ToNullable(onInactiveMarkAs),
+                dependsOn ?? new ChangeTrackingList<ActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<UserProperty>(),
+                additionalProperties,
+                linkedServiceName.Value,
+                policy.Value,
+                notebook,
+                sparkPool.Value,
+                parameters ?? new ChangeTrackingDictionary<string, NotebookParameter>(),
+                executorSize.Value,
+                conf.Value,
+                driverSize.Value,
+                numExecutors.Value,
+                Optional.ToNullable(configurationType),
+                targetSparkConfiguration.Value,
+                sparkConfig ?? new ChangeTrackingDictionary<string, object>());
         }
 
         internal partial class SynapseNotebookActivityConverter : JsonConverter<SynapseNotebookActivity>

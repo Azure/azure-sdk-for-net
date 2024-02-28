@@ -26,97 +26,97 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Severity))
+            if (options.Format != "W" && Severity.HasValue)
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(SignalType))
+            if (options.Format != "W" && SignalType.HasValue)
             {
                 writer.WritePropertyName("signalType"u8);
                 writer.WriteStringValue(SignalType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(AlertState))
+            if (options.Format != "W" && AlertState.HasValue)
             {
                 writer.WritePropertyName("alertState"u8);
                 writer.WriteStringValue(AlertState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(MonitorCondition))
+            if (options.Format != "W" && MonitorCondition.HasValue)
             {
                 writer.WritePropertyName("monitorCondition"u8);
                 writer.WriteStringValue(MonitorCondition.Value.ToString());
             }
-            if (Optional.IsDefined(TargetResource))
+            if (TargetResource != null)
             {
                 writer.WritePropertyName("targetResource"u8);
                 writer.WriteStringValue(TargetResource);
             }
-            if (Optional.IsDefined(TargetResourceName))
+            if (TargetResourceName != null)
             {
                 writer.WritePropertyName("targetResourceName"u8);
                 writer.WriteStringValue(TargetResourceName);
             }
-            if (Optional.IsDefined(TargetResourceGroup))
+            if (TargetResourceGroup != null)
             {
                 writer.WritePropertyName("targetResourceGroup"u8);
                 writer.WriteStringValue(TargetResourceGroup);
             }
-            if (Optional.IsDefined(TargetResourceType))
+            if (TargetResourceType != null)
             {
                 writer.WritePropertyName("targetResourceType"u8);
                 writer.WriteStringValue(TargetResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(MonitorService))
+            if (options.Format != "W" && MonitorService.HasValue)
             {
                 writer.WritePropertyName("monitorService"u8);
                 writer.WriteStringValue(MonitorService.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(AlertRule))
+            if (options.Format != "W" && AlertRule != null)
             {
                 writer.WritePropertyName("alertRule"u8);
                 writer.WriteStringValue(AlertRule);
             }
-            if (options.Format != "W" && Optional.IsDefined(SourceCreatedId))
+            if (options.Format != "W" && SourceCreatedId != null)
             {
                 writer.WritePropertyName("sourceCreatedId"u8);
                 writer.WriteStringValue(SourceCreatedId);
             }
-            if (options.Format != "W" && Optional.IsDefined(SmartGroupId))
+            if (options.Format != "W" && SmartGroupId.HasValue)
             {
                 writer.WritePropertyName("smartGroupId"u8);
                 writer.WriteStringValue(SmartGroupId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(SmartGroupingReason))
+            if (options.Format != "W" && SmartGroupingReason != null)
             {
                 writer.WritePropertyName("smartGroupingReason"u8);
                 writer.WriteStringValue(SmartGroupingReason);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && StartOn.HasValue)
             {
                 writer.WritePropertyName("startDateTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
+            if (options.Format != "W" && LastModifiedOn.HasValue)
             {
                 writer.WritePropertyName("lastModifiedDateTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(MonitorConditionResolvedOn))
+            if (options.Format != "W" && MonitorConditionResolvedOn.HasValue)
             {
                 writer.WritePropertyName("monitorConditionResolvedDateTime"u8);
                 writer.WriteStringValue(MonitorConditionResolvedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastModifiedBy))
+            if (options.Format != "W" && LastModifiedBy != null)
             {
                 writer.WritePropertyName("lastModifiedUserName"u8);
                 writer.WriteStringValue(LastModifiedBy);
             }
-            if (Optional.IsDefined(ActionStatus))
+            if (ActionStatus != null)
             {
                 writer.WritePropertyName("actionStatus"u8);
                 writer.WriteObjectValue(ActionStatus);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     {
                         continue;
                     }
-                    actionStatus = ServiceAlertActionStatus.DeserializeServiceAlertActionStatus(property.Value);
+                    actionStatus = ServiceAlertActionStatus.DeserializeServiceAlertActionStatus(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("description"u8))
@@ -323,7 +323,27 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceAlertEssentials(Optional.ToNullable(severity), Optional.ToNullable(signalType), Optional.ToNullable(alertState), Optional.ToNullable(monitorCondition), targetResource.Value, targetResourceName.Value, targetResourceGroup.Value, targetResourceType.Value, Optional.ToNullable(monitorService), alertRule.Value, sourceCreatedId.Value, Optional.ToNullable(smartGroupId), smartGroupingReason.Value, Optional.ToNullable(startDateTime), Optional.ToNullable(lastModifiedDateTime), Optional.ToNullable(monitorConditionResolvedDateTime), lastModifiedUserName.Value, actionStatus.Value, description.Value, serializedAdditionalRawData);
+            return new ServiceAlertEssentials(
+                Optional.ToNullable(severity),
+                Optional.ToNullable(signalType),
+                Optional.ToNullable(alertState),
+                Optional.ToNullable(monitorCondition),
+                targetResource.Value,
+                targetResourceName.Value,
+                targetResourceGroup.Value,
+                targetResourceType.Value,
+                Optional.ToNullable(monitorService),
+                alertRule.Value,
+                sourceCreatedId.Value,
+                Optional.ToNullable(smartGroupId),
+                smartGroupingReason.Value,
+                Optional.ToNullable(startDateTime),
+                Optional.ToNullable(lastModifiedDateTime),
+                Optional.ToNullable(monitorConditionResolvedDateTime),
+                lastModifiedUserName.Value,
+                actionStatus.Value,
+                description.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceAlertEssentials>.Write(ModelReaderWriterOptions options)

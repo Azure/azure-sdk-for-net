@@ -26,57 +26,57 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(StorageContainerId))
+            if (options.Format != "W" && StorageContainerId != null)
             {
                 writer.WritePropertyName("storageContainerId"u8);
                 writer.WriteStringValue(StorageContainerId);
             }
-            if (options.Format != "W" && Optional.IsDefined(StorageContainerLocalPath))
+            if (options.Format != "W" && StorageContainerLocalPath != null)
             {
                 writer.WritePropertyName("storageContainerLocalPath"u8);
                 writer.WriteStringValue(StorageContainerLocalPath);
             }
-            if (options.Format != "W" && Optional.IsDefined(SourceDiskId))
+            if (options.Format != "W" && SourceDiskId != null)
             {
                 writer.WritePropertyName("sourceDiskId"u8);
                 writer.WriteStringValue(SourceDiskId);
             }
-            if (options.Format != "W" && Optional.IsDefined(SourceDiskName))
+            if (options.Format != "W" && SourceDiskName != null)
             {
                 writer.WritePropertyName("sourceDiskName"u8);
                 writer.WriteStringValue(SourceDiskName);
             }
-            if (options.Format != "W" && Optional.IsDefined(SeedDiskName))
+            if (options.Format != "W" && SeedDiskName != null)
             {
                 writer.WritePropertyName("seedDiskName"u8);
                 writer.WriteStringValue(SeedDiskName);
             }
-            if (options.Format != "W" && Optional.IsDefined(TestMigrateDiskName))
+            if (options.Format != "W" && TestMigrateDiskName != null)
             {
                 writer.WritePropertyName("testMigrateDiskName"u8);
                 writer.WriteStringValue(TestMigrateDiskName);
             }
-            if (options.Format != "W" && Optional.IsDefined(MigrateDiskName))
+            if (options.Format != "W" && MigrateDiskName != null)
             {
                 writer.WritePropertyName("migrateDiskName"u8);
                 writer.WriteStringValue(MigrateDiskName);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsOSDisk))
+            if (options.Format != "W" && IsOSDisk.HasValue)
             {
                 writer.WritePropertyName("isOsDisk"u8);
                 writer.WriteBooleanValue(IsOSDisk.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CapacityInBytes))
+            if (options.Format != "W" && CapacityInBytes.HasValue)
             {
                 writer.WritePropertyName("capacityInBytes"u8);
                 writer.WriteNumberValue(CapacityInBytes.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsDynamic))
+            if (options.Format != "W" && IsDynamic.HasValue)
             {
                 writer.WritePropertyName("isDynamic"u8);
                 writer.WriteBooleanValue(IsDynamic.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(DiskType))
+            if (options.Format != "W" && DiskType != null)
             {
                 writer.WritePropertyName("diskType"u8);
                 writer.WriteStringValue(DiskType);
@@ -211,7 +211,19 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HyperVToAzStackHciProtectedDiskProperties(storageContainerId.Value, storageContainerLocalPath.Value, sourceDiskId.Value, sourceDiskName.Value, seedDiskName.Value, testMigrateDiskName.Value, migrateDiskName.Value, Optional.ToNullable(isOSDisk), Optional.ToNullable(capacityInBytes), Optional.ToNullable(isDynamic), diskType.Value, serializedAdditionalRawData);
+            return new HyperVToAzStackHciProtectedDiskProperties(
+                storageContainerId.Value,
+                storageContainerLocalPath.Value,
+                sourceDiskId.Value,
+                sourceDiskName.Value,
+                seedDiskName.Value,
+                testMigrateDiskName.Value,
+                migrateDiskName.Value,
+                Optional.ToNullable(isOSDisk),
+                Optional.ToNullable(capacityInBytes),
+                Optional.ToNullable(isDynamic),
+                diskType.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HyperVToAzStackHciProtectedDiskProperties>.Write(ModelReaderWriterOptions options)

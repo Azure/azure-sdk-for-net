@@ -20,8 +20,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="on"/> is null. </exception>
         public SwitchActivity(string name, Expression @on) : base(name)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(@on, nameof(@on));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (@on == null)
+            {
+                throw new ArgumentNullException(nameof(@on));
+            }
 
             On = @on;
             Cases = new ChangeTrackingList<SwitchCase>();

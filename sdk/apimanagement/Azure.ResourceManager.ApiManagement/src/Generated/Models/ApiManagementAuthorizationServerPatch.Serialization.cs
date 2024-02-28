@@ -42,19 +42,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(AuthorizationMethods))
+            if (!(AuthorizationMethods is ChangeTrackingList<AuthorizationMethod> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("authorizationMethods"u8);
                 writer.WriteStartArray();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ClientAuthenticationMethods))
+            if (!(ClientAuthenticationMethods is ChangeTrackingList<ClientAuthenticationMethod> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("clientAuthenticationMethod"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(TokenBodyParameters))
+            if (!(TokenBodyParameters is ChangeTrackingList<TokenBodyParameterContract> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("tokenBodyParameters"u8);
                 writer.WriteStartArray();
@@ -84,22 +84,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(TokenEndpoint))
+            if (TokenEndpoint != null)
             {
                 writer.WritePropertyName("tokenEndpoint"u8);
                 writer.WriteStringValue(TokenEndpoint);
             }
-            if (Optional.IsDefined(DoesSupportState))
+            if (DoesSupportState.HasValue)
             {
                 writer.WritePropertyName("supportState"u8);
                 writer.WriteBooleanValue(DoesSupportState.Value);
             }
-            if (Optional.IsDefined(DefaultScope))
+            if (DefaultScope != null)
             {
                 writer.WritePropertyName("defaultScope"u8);
                 writer.WriteStringValue(DefaultScope);
             }
-            if (Optional.IsCollectionDefined(BearerTokenSendingMethods))
+            if (!(BearerTokenSendingMethods is ChangeTrackingList<BearerTokenSendingMethod> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("bearerTokenSendingMethods"u8);
                 writer.WriteStartArray();
@@ -109,32 +109,32 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ResourceOwnerUsername))
+            if (ResourceOwnerUsername != null)
             {
                 writer.WritePropertyName("resourceOwnerUsername"u8);
                 writer.WriteStringValue(ResourceOwnerUsername);
             }
-            if (Optional.IsDefined(ResourceOwnerPassword))
+            if (ResourceOwnerPassword != null)
             {
                 writer.WritePropertyName("resourceOwnerPassword"u8);
                 writer.WriteStringValue(ResourceOwnerPassword);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(ClientRegistrationEndpoint))
+            if (ClientRegistrationEndpoint != null)
             {
                 writer.WritePropertyName("clientRegistrationEndpoint"u8);
                 writer.WriteStringValue(ClientRegistrationEndpoint);
             }
-            if (Optional.IsDefined(AuthorizationEndpoint))
+            if (AuthorizationEndpoint != null)
             {
                 writer.WritePropertyName("authorizationEndpoint"u8);
                 writer.WriteStringValue(AuthorizationEndpoint);
             }
-            if (Optional.IsCollectionDefined(GrantTypes))
+            if (!(GrantTypes is ChangeTrackingList<GrantType> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("grantTypes"u8);
                 writer.WriteStartArray();
@@ -144,12 +144,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ClientId))
+            if (ClientId != null)
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
-            if (Optional.IsDefined(ClientSecret))
+            if (ClientSecret != null)
             {
                 writer.WritePropertyName("clientSecret"u8);
                 writer.WriteStringValue(ClientSecret);
@@ -198,19 +198,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> description = default;
-            Optional<IList<AuthorizationMethod>> authorizationMethods = default;
-            Optional<IList<ClientAuthenticationMethod>> clientAuthenticationMethod = default;
-            Optional<IList<TokenBodyParameterContract>> tokenBodyParameters = default;
+            IList<AuthorizationMethod> authorizationMethods = default;
+            IList<ClientAuthenticationMethod> clientAuthenticationMethod = default;
+            IList<TokenBodyParameterContract> tokenBodyParameters = default;
             Optional<string> tokenEndpoint = default;
             Optional<bool> supportState = default;
             Optional<string> defaultScope = default;
-            Optional<IList<BearerTokenSendingMethod>> bearerTokenSendingMethods = default;
+            IList<BearerTokenSendingMethod> bearerTokenSendingMethods = default;
             Optional<string> resourceOwnerUsername = default;
             Optional<string> resourceOwnerPassword = default;
             Optional<string> displayName = default;
             Optional<string> clientRegistrationEndpoint = default;
             Optional<string> authorizationEndpoint = default;
-            Optional<IList<GrantType>> grantTypes = default;
+            IList<GrantType> grantTypes = default;
             Optional<string> clientId = default;
             Optional<string> clientSecret = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             List<TokenBodyParameterContract> array = new List<TokenBodyParameterContract>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(TokenBodyParameterContract.DeserializeTokenBodyParameterContract(item));
+                                array.Add(TokenBodyParameterContract.DeserializeTokenBodyParameterContract(item, options));
                             }
                             tokenBodyParameters = array;
                             continue;
@@ -388,7 +388,28 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementAuthorizationServerPatch(id, name, type, systemData.Value, description.Value, Optional.ToList(authorizationMethods), Optional.ToList(clientAuthenticationMethod), Optional.ToList(tokenBodyParameters), tokenEndpoint.Value, Optional.ToNullable(supportState), defaultScope.Value, Optional.ToList(bearerTokenSendingMethods), resourceOwnerUsername.Value, resourceOwnerPassword.Value, displayName.Value, clientRegistrationEndpoint.Value, authorizationEndpoint.Value, Optional.ToList(grantTypes), clientId.Value, clientSecret.Value, serializedAdditionalRawData);
+            return new ApiManagementAuthorizationServerPatch(
+                id,
+                name,
+                type,
+                systemData.Value,
+                description.Value,
+                authorizationMethods ?? new ChangeTrackingList<AuthorizationMethod>(),
+                clientAuthenticationMethod ?? new ChangeTrackingList<ClientAuthenticationMethod>(),
+                tokenBodyParameters ?? new ChangeTrackingList<TokenBodyParameterContract>(),
+                tokenEndpoint.Value,
+                Optional.ToNullable(supportState),
+                defaultScope.Value,
+                bearerTokenSendingMethods ?? new ChangeTrackingList<BearerTokenSendingMethod>(),
+                resourceOwnerUsername.Value,
+                resourceOwnerPassword.Value,
+                displayName.Value,
+                clientRegistrationEndpoint.Value,
+                authorizationEndpoint.Value,
+                grantTypes ?? new ChangeTrackingList<GrantType>(),
+                clientId.Value,
+                clientSecret.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementAuthorizationServerPatch>.Write(ModelReaderWriterOptions options)

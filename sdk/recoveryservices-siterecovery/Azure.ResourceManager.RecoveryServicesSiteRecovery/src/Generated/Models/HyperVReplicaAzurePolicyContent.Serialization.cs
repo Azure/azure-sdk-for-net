@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RecoveryPointHistoryDuration))
+            if (RecoveryPointHistoryDuration.HasValue)
             {
                 writer.WritePropertyName("recoveryPointHistoryDuration"u8);
                 writer.WriteNumberValue(RecoveryPointHistoryDuration.Value);
             }
-            if (Optional.IsDefined(ApplicationConsistentSnapshotFrequencyInHours))
+            if (ApplicationConsistentSnapshotFrequencyInHours.HasValue)
             {
                 writer.WritePropertyName("applicationConsistentSnapshotFrequencyInHours"u8);
                 writer.WriteNumberValue(ApplicationConsistentSnapshotFrequencyInHours.Value);
             }
-            if (Optional.IsDefined(ReplicationInterval))
+            if (ReplicationInterval.HasValue)
             {
                 writer.WritePropertyName("replicationInterval"u8);
                 writer.WriteNumberValue(ReplicationInterval.Value);
             }
-            if (Optional.IsDefined(OnlineReplicationStartTime))
+            if (OnlineReplicationStartTime != null)
             {
                 writer.WritePropertyName("onlineReplicationStartTime"u8);
                 writer.WriteStringValue(OnlineReplicationStartTime);
             }
-            if (Optional.IsCollectionDefined(StorageAccounts))
+            if (!(StorageAccounts is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("storageAccounts"u8);
                 writer.WriteStartArray();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<int> applicationConsistentSnapshotFrequencyInHours = default;
             Optional<int> replicationInterval = default;
             Optional<string> onlineReplicationStartTime = default;
-            Optional<IList<string>> storageAccounts = default;
+            IList<string> storageAccounts = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -163,7 +163,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HyperVReplicaAzurePolicyContent(instanceType, serializedAdditionalRawData, Optional.ToNullable(recoveryPointHistoryDuration), Optional.ToNullable(applicationConsistentSnapshotFrequencyInHours), Optional.ToNullable(replicationInterval), onlineReplicationStartTime.Value, Optional.ToList(storageAccounts));
+            return new HyperVReplicaAzurePolicyContent(
+                instanceType,
+                serializedAdditionalRawData,
+                Optional.ToNullable(recoveryPointHistoryDuration),
+                Optional.ToNullable(applicationConsistentSnapshotFrequencyInHours),
+                Optional.ToNullable(replicationInterval),
+                onlineReplicationStartTime.Value,
+                storageAccounts ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<HyperVReplicaAzurePolicyContent>.Write(ModelReaderWriterOptions options)

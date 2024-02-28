@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Databases))
+            if (options.Format != "W" && Databases != null)
             {
                 writer.WritePropertyName("databases"u8);
                 writer.WriteStringValue(Databases);
             }
-            if (options.Format != "W" && Optional.IsDefined(Logins))
+            if (options.Format != "W" && Logins != null)
             {
                 writer.WritePropertyName("logins"u8);
                 writer.WriteStringValue(Logins);
             }
-            if (options.Format != "W" && Optional.IsDefined(AgentJobs))
+            if (options.Format != "W" && AgentJobs != null)
             {
                 writer.WritePropertyName("agentJobs"u8);
                 writer.WriteStringValue(AgentJobs);
             }
-            if (options.Format != "W" && Optional.IsDefined(DatabaseTdeCertificateMapping))
+            if (options.Format != "W" && DatabaseTdeCertificateMapping != null)
             {
                 writer.WritePropertyName("databaseTdeCertificateMapping"u8);
                 writer.WriteStringValue(DatabaseTdeCertificateMapping);
             }
-            if (options.Format != "W" && Optional.IsDefined(SourceServerVersion))
+            if (options.Format != "W" && SourceServerVersion != null)
             {
                 writer.WritePropertyName("sourceServerVersion"u8);
                 writer.WriteStringValue(SourceServerVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(SourceServerBrandVersion))
+            if (options.Format != "W" && SourceServerBrandVersion != null)
             {
                 writer.WritePropertyName("sourceServerBrandVersion"u8);
                 writer.WriteStringValue(SourceServerBrandVersion);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ValidationErrors))
+            if (options.Format != "W" && !(ValidationErrors is ChangeTrackingList<ReportableException> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("validationErrors"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<string> databaseTdeCertificateMapping = default;
             Optional<string> sourceServerVersion = default;
             Optional<string> sourceServerBrandVersion = default;
-            Optional<IReadOnlyList<ReportableException>> validationErrors = default;
+            IReadOnlyList<ReportableException> validationErrors = default;
             Optional<string> id = default;
             string resultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ReportableException> array = new List<ReportableException>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReportableException.DeserializeReportableException(item));
+                        array.Add(ReportableException.DeserializeReportableException(item, options));
                     }
                     validationErrors = array;
                     continue;
@@ -184,7 +184,17 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectToSourceSqlServerTaskOutputTaskLevel(id.Value, resultType, serializedAdditionalRawData, databases.Value, logins.Value, agentJobs.Value, databaseTdeCertificateMapping.Value, sourceServerVersion.Value, sourceServerBrandVersion.Value, Optional.ToList(validationErrors));
+            return new ConnectToSourceSqlServerTaskOutputTaskLevel(
+                id.Value,
+                resultType,
+                serializedAdditionalRawData,
+                databases.Value,
+                logins.Value,
+                agentJobs.Value,
+                databaseTdeCertificateMapping.Value,
+                sourceServerVersion.Value,
+                sourceServerBrandVersion.Value,
+                validationErrors ?? new ChangeTrackingList<ReportableException>());
         }
 
         BinaryData IPersistableModel<ConnectToSourceSqlServerTaskOutputTaskLevel>.Write(ModelReaderWriterOptions options)

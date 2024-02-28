@@ -31,22 +31,22 @@ namespace Azure.Health.Insights.ClinicalMatching
             writer.WriteStringValue(System);
             writer.WritePropertyName("code"u8);
             writer.WriteStringValue(Code);
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Value))
+            if (Value != null)
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (Optional.IsDefined(SemanticType))
+            if (SemanticType != null)
             {
                 writer.WritePropertyName("semanticType"u8);
                 writer.WriteStringValue(SemanticType);
             }
-            if (Optional.IsDefined(Category))
+            if (Category != null)
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
@@ -135,7 +135,14 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExtendedClinicalCodedElement(system, code, name.Value, value.Value, semanticType.Value, category.Value, serializedAdditionalRawData);
+            return new ExtendedClinicalCodedElement(
+                system,
+                code,
+                name.Value,
+                value.Value,
+                semanticType.Value,
+                category.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExtendedClinicalCodedElement>.Write(ModelReaderWriterOptions options)

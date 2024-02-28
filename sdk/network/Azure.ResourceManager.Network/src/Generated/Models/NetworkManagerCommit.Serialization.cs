@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(CommitId))
+            if (options.Format != "W" && CommitId != null)
             {
                 writer.WritePropertyName("commitId"u8);
                 writer.WriteStringValue(CommitId);
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(ConfigurationIds))
+            if (!(ConfigurationIds is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("configurationIds"u8);
                 writer.WriteStartArray();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             Optional<string> commitId = default;
             IList<string> targetLocations = default;
-            Optional<IList<string>> configurationIds = default;
+            IList<string> configurationIds = default;
             NetworkConfigurationDeploymentType commitType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkManagerCommit(commitId.Value, targetLocations, Optional.ToList(configurationIds), commitType, serializedAdditionalRawData);
+            return new NetworkManagerCommit(commitId.Value, targetLocations, configurationIds ?? new ChangeTrackingList<string>(), commitType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkManagerCommit>.Write(ModelReaderWriterOptions options)

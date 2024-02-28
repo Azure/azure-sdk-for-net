@@ -30,17 +30,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteObjectValue(Source);
             writer.WritePropertyName("destination"u8);
             writer.WriteObjectValue(Destination);
-            if (Optional.IsDefined(PreferredIPVersion))
+            if (PreferredIPVersion.HasValue)
             {
                 writer.WritePropertyName("preferredIPVersion"u8);
                 writer.WriteStringValue(PreferredIPVersion.Value.ToString());
             }
-            if (Optional.IsDefined(Protocol))
+            if (Protocol.HasValue)
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (Optional.IsDefined(ProtocolConfiguration))
+            if (ProtocolConfiguration != null)
             {
                 writer.WritePropertyName("protocolConfiguration"u8);
                 writer.WriteObjectValue(ProtocolConfiguration);
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 if (property.NameEquals("source"u8))
                 {
-                    source = ConnectivityCheckRequestSource.DeserializeConnectivityCheckRequestSource(property.Value);
+                    source = ConnectivityCheckRequestSource.DeserializeConnectivityCheckRequestSource(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("destination"u8))
                 {
-                    destination = ConnectivityCheckRequestDestination.DeserializeConnectivityCheckRequestDestination(property.Value);
+                    destination = ConnectivityCheckRequestDestination.DeserializeConnectivityCheckRequestDestination(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("preferredIPVersion"u8))
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    protocolConfiguration = ConnectivityCheckRequestProtocolConfiguration.DeserializeConnectivityCheckRequestProtocolConfiguration(property.Value);
+                    protocolConfiguration = ConnectivityCheckRequestProtocolConfiguration.DeserializeConnectivityCheckRequestProtocolConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -135,7 +135,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectivityCheckContent(source, destination, Optional.ToNullable(preferredIPVersion), Optional.ToNullable(protocol), protocolConfiguration.Value, serializedAdditionalRawData);
+            return new ConnectivityCheckContent(
+                source,
+                destination,
+                Optional.ToNullable(preferredIPVersion),
+                Optional.ToNullable(protocol),
+                protocolConfiguration.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectivityCheckContent>.Write(ModelReaderWriterOptions options)

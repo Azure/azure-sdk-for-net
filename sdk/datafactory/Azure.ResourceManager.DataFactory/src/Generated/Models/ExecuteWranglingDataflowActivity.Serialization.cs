@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Policy))
+            if (Policy != null)
             {
                 writer.WritePropertyName("policy"u8);
                 writer.WriteObjectValue(Policy);
@@ -36,22 +36,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ActivityType);
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(State))
+            if (State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(OnInactiveMarkAs))
+            if (OnInactiveMarkAs.HasValue)
             {
                 writer.WritePropertyName("onInactiveMarkAs"u8);
                 writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(DependsOn))
+            if (!(DependsOn is ChangeTrackingList<PipelineActivityDependency> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(UserProperties))
+            if (!(UserProperties is ChangeTrackingList<PipelineActivityUserProperty> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("userProperties"u8);
                 writer.WriteStartArray();
@@ -75,42 +75,42 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("dataFlow"u8);
             writer.WriteObjectValue(DataFlow);
-            if (Optional.IsDefined(Staging))
+            if (Staging != null)
             {
                 writer.WritePropertyName("staging"u8);
                 writer.WriteObjectValue(Staging);
             }
-            if (Optional.IsDefined(IntegrationRuntime))
+            if (IntegrationRuntime != null)
             {
                 writer.WritePropertyName("integrationRuntime"u8);
                 writer.WriteObjectValue(IntegrationRuntime);
             }
-            if (Optional.IsDefined(Compute))
+            if (Compute != null)
             {
                 writer.WritePropertyName("compute"u8);
                 writer.WriteObjectValue(Compute);
             }
-            if (Optional.IsDefined(TraceLevel))
+            if (TraceLevel != null)
             {
                 writer.WritePropertyName("traceLevel"u8);
                 JsonSerializer.Serialize(writer, TraceLevel);
             }
-            if (Optional.IsDefined(ContinueOnError))
+            if (ContinueOnError != null)
             {
                 writer.WritePropertyName("continueOnError"u8);
                 JsonSerializer.Serialize(writer, ContinueOnError);
             }
-            if (Optional.IsDefined(RunConcurrently))
+            if (RunConcurrently != null)
             {
                 writer.WritePropertyName("runConcurrently"u8);
                 JsonSerializer.Serialize(writer, RunConcurrently);
             }
-            if (Optional.IsDefined(SourceStagingConcurrency))
+            if (SourceStagingConcurrency != null)
             {
                 writer.WritePropertyName("sourceStagingConcurrency"u8);
                 JsonSerializer.Serialize(writer, SourceStagingConcurrency);
             }
-            if (Optional.IsCollectionDefined(Sinks))
+            if (!(Sinks is ChangeTrackingDictionary<string, PowerQuerySink> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("sinks"u8);
                 writer.WriteStartObject();
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Queries))
+            if (!(Queries is ChangeTrackingList<PowerQuerySinkMapping> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("queries"u8);
                 writer.WriteStartArray();
@@ -173,8 +173,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> description = default;
             Optional<PipelineActivityState> state = default;
             Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
-            Optional<IList<PipelineActivityDependency>> dependsOn = default;
-            Optional<IList<PipelineActivityUserProperty>> userProperties = default;
+            IList<PipelineActivityDependency> dependsOn = default;
+            IList<PipelineActivityUserProperty> userProperties = default;
             DataFlowReference dataFlow = default;
             Optional<DataFlowStagingInfo> staging = default;
             Optional<IntegrationRuntimeReference> integrationRuntime = default;
@@ -183,8 +183,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<DataFactoryElement<bool>> continueOnError = default;
             Optional<DataFactoryElement<bool>> runConcurrently = default;
             Optional<DataFactoryElement<int>> sourceStagingConcurrency = default;
-            Optional<IDictionary<string, PowerQuerySink>> sinks = default;
-            Optional<IList<PowerQuerySinkMapping>> queries = default;
+            IDictionary<string, PowerQuerySink> sinks = default;
+            IList<PowerQuerySinkMapping> queries = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    policy = PipelineActivityPolicy.DeserializePipelineActivityPolicy(property.Value);
+                    policy = PipelineActivityPolicy.DeserializePipelineActivityPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<PipelineActivityDependency> array = new List<PipelineActivityDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PipelineActivityDependency.DeserializePipelineActivityDependency(item));
+                        array.Add(PipelineActivityDependency.DeserializePipelineActivityDependency(item, options));
                     }
                     dependsOn = array;
                     continue;
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<PipelineActivityUserProperty> array = new List<PipelineActivityUserProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PipelineActivityUserProperty.DeserializePipelineActivityUserProperty(item));
+                        array.Add(PipelineActivityUserProperty.DeserializePipelineActivityUserProperty(item, options));
                     }
                     userProperties = array;
                     continue;
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("dataFlow"u8))
                         {
-                            dataFlow = DataFlowReference.DeserializeDataFlowReference(property0.Value);
+                            dataFlow = DataFlowReference.DeserializeDataFlowReference(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("staging"u8))
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            staging = DataFlowStagingInfo.DeserializeDataFlowStagingInfo(property0.Value);
+                            staging = DataFlowStagingInfo.DeserializeDataFlowStagingInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("integrationRuntime"u8))
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            integrationRuntime = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property0.Value);
+                            integrationRuntime = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("compute"u8))
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            compute = ExecuteDataFlowActivityComputeType.DeserializeExecuteDataFlowActivityComputeType(property0.Value);
+                            compute = ExecuteDataFlowActivityComputeType.DeserializeExecuteDataFlowActivityComputeType(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("traceLevel"u8))
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             Dictionary<string, PowerQuerySink> dictionary = new Dictionary<string, PowerQuerySink>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, PowerQuerySink.DeserializePowerQuerySink(property1.Value));
+                                dictionary.Add(property1.Name, PowerQuerySink.DeserializePowerQuerySink(property1.Value, options));
                             }
                             sinks = dictionary;
                             continue;
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             List<PowerQuerySinkMapping> array = new List<PowerQuerySinkMapping>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PowerQuerySinkMapping.DeserializePowerQuerySinkMapping(item));
+                                array.Add(PowerQuerySinkMapping.DeserializePowerQuerySinkMapping(item, options));
                             }
                             queries = array;
                             continue;
@@ -370,7 +370,26 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ExecuteWranglingDataflowActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, policy.Value, dataFlow, staging.Value, integrationRuntime.Value, compute.Value, traceLevel.Value, continueOnError.Value, runConcurrently.Value, sourceStagingConcurrency.Value, Optional.ToDictionary(sinks), Optional.ToList(queries));
+            return new ExecuteWranglingDataflowActivity(
+                name,
+                type,
+                description.Value,
+                Optional.ToNullable(state),
+                Optional.ToNullable(onInactiveMarkAs),
+                dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(),
+                additionalProperties,
+                policy.Value,
+                dataFlow,
+                staging.Value,
+                integrationRuntime.Value,
+                compute.Value,
+                traceLevel.Value,
+                continueOnError.Value,
+                runConcurrently.Value,
+                sourceStagingConcurrency.Value,
+                sinks ?? new ChangeTrackingDictionary<string, PowerQuerySink>(),
+                queries ?? new ChangeTrackingList<PowerQuerySinkMapping>());
         }
 
         BinaryData IPersistableModel<ExecuteWranglingDataflowActivity>.Write(ModelReaderWriterOptions options)

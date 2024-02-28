@@ -29,22 +29,22 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ValidationType))
+            if (ValidationType.HasValue)
             {
                 writer.WritePropertyName("validationType"u8);
                 writer.WriteStringValue(ValidationType.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Error))
+            if (options.Format != "W" && Error != null)
             {
                 writer.WritePropertyName("error"u8);
                 JsonSerializer.Serialize(writer, Error);
             }
-            if (options.Format != "W" && Optional.IsDefined(ValidationStatus))
+            if (options.Format != "W" && ValidationStatus.HasValue)
             {
                 writer.WritePropertyName("validationStatus"u8);
                 writer.WriteStringValue(ValidationStatus.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AlternateAddresses))
+            if (options.Format != "W" && !(AlternateAddresses is ChangeTrackingList<DataBoxShippingAddress> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("alternateAddresses"u8);
                 writer.WriteStartArray();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<DataBoxValidationInputDiscriminator> validationType = default;
             Optional<ResponseError> error = default;
             Optional<AddressValidationStatus> validationStatus = default;
-            Optional<IReadOnlyList<DataBoxShippingAddress>> alternateAddresses = default;
+            IReadOnlyList<DataBoxShippingAddress> alternateAddresses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DataBox.Models
                             List<DataBoxShippingAddress> array = new List<DataBoxShippingAddress>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataBoxShippingAddress.DeserializeDataBoxShippingAddress(item));
+                                array.Add(DataBoxShippingAddress.DeserializeDataBoxShippingAddress(item, options));
                             }
                             alternateAddresses = array;
                             continue;
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AddressValidationOutput(Optional.ToNullable(validationType), error.Value, Optional.ToNullable(validationStatus), Optional.ToList(alternateAddresses), serializedAdditionalRawData);
+            return new AddressValidationOutput(Optional.ToNullable(validationType), error.Value, Optional.ToNullable(validationStatus), alternateAddresses ?? new ChangeTrackingList<DataBoxShippingAddress>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AddressValidationOutput>.Write(ModelReaderWriterOptions options)

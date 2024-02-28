@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(OperationId))
+            if (options.Format != "W" && OperationId != null)
             {
                 writer.WritePropertyName("operationId"u8);
                 writer.WriteStringValue(OperationId);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && StartOn.HasValue)
             {
                 writer.WritePropertyName("startTimeUtc"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(CompletedOn))
+            if (options.Format != "W" && CompletedOn.HasValue)
             {
                 writer.WritePropertyName("completionTimeUtc"u8);
                 writer.WriteStringValue(CompletedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(SourceResourceId))
+            if (options.Format != "W" && SourceResourceId != null)
             {
                 writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetResourceId))
+            if (options.Format != "W" && TargetResourceId != null)
             {
                 writer.WritePropertyName("targetResourceId"u8);
                 writer.WriteStringValue(TargetResourceId);
@@ -145,7 +145,13 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VaultPropertiesMoveDetails(operationId.Value, Optional.ToNullable(startTimeUtc), Optional.ToNullable(completionTimeUtc), sourceResourceId.Value, targetResourceId.Value, serializedAdditionalRawData);
+            return new VaultPropertiesMoveDetails(
+                operationId.Value,
+                Optional.ToNullable(startTimeUtc),
+                Optional.ToNullable(completionTimeUtc),
+                sourceResourceId.Value,
+                targetResourceId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VaultPropertiesMoveDetails>.Write(ModelReaderWriterOptions options)

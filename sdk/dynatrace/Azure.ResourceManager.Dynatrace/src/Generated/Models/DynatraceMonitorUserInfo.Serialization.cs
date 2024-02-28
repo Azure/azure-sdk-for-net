@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Dynatrace.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FirstName))
+            if (FirstName != null)
             {
                 writer.WritePropertyName("firstName"u8);
                 writer.WriteStringValue(FirstName);
             }
-            if (Optional.IsDefined(LastName))
+            if (LastName != null)
             {
                 writer.WritePropertyName("lastName"u8);
                 writer.WriteStringValue(LastName);
             }
-            if (Optional.IsDefined(EmailAddress))
+            if (EmailAddress != null)
             {
                 writer.WritePropertyName("emailAddress"u8);
                 writer.WriteStringValue(EmailAddress);
             }
-            if (Optional.IsDefined(PhoneNumber))
+            if (PhoneNumber != null)
             {
                 writer.WritePropertyName("phoneNumber"u8);
                 writer.WriteStringValue(PhoneNumber);
             }
-            if (Optional.IsDefined(Country))
+            if (Country != null)
             {
                 writer.WritePropertyName("country"u8);
                 writer.WriteStringValue(Country);
@@ -129,7 +129,13 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DynatraceMonitorUserInfo(firstName.Value, lastName.Value, emailAddress.Value, phoneNumber.Value, country.Value, serializedAdditionalRawData);
+            return new DynatraceMonitorUserInfo(
+                firstName.Value,
+                lastName.Value,
+                emailAddress.Value,
+                phoneNumber.Value,
+                country.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DynatraceMonitorUserInfo>.Write(ModelReaderWriterOptions options)

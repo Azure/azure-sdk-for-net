@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Datadog.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(LogRules))
+            if (LogRules != null)
             {
                 writer.WritePropertyName("logRules"u8);
                 writer.WriteObjectValue(LogRules);
             }
-            if (Optional.IsDefined(MetricRules))
+            if (MetricRules != null)
             {
                 writer.WritePropertyName("metricRules"u8);
                 writer.WriteObjectValue(MetricRules);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     {
                         continue;
                     }
-                    logRules = LogRules.DeserializeLogRules(property.Value);
+                    logRules = LogRules.DeserializeLogRules(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("metricRules"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     {
                         continue;
                     }
-                    metricRules = MetricRules.DeserializeMetricRules(property.Value);
+                    metricRules = MetricRules.DeserializeMetricRules(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

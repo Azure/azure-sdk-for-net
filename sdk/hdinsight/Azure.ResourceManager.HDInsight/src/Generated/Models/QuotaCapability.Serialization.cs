@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CoresUsed))
+            if (CoresUsed.HasValue)
             {
                 writer.WritePropertyName("coresUsed"u8);
                 writer.WriteNumberValue(CoresUsed.Value);
             }
-            if (Optional.IsDefined(MaxCoresAllowed))
+            if (MaxCoresAllowed.HasValue)
             {
                 writer.WritePropertyName("maxCoresAllowed"u8);
                 writer.WriteNumberValue(MaxCoresAllowed.Value);
             }
-            if (Optional.IsCollectionDefined(RegionalQuotas))
+            if (!(RegionalQuotas is ChangeTrackingList<RegionalQuotaCapability> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("regionalQuotas"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
             Optional<long> coresUsed = default;
             Optional<long> maxCoresAllowed = default;
-            Optional<IReadOnlyList<RegionalQuotaCapability>> regionalQuotas = default;
+            IReadOnlyList<RegionalQuotaCapability> regionalQuotas = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<RegionalQuotaCapability> array = new List<RegionalQuotaCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RegionalQuotaCapability.DeserializeRegionalQuotaCapability(item));
+                        array.Add(RegionalQuotaCapability.DeserializeRegionalQuotaCapability(item, options));
                     }
                     regionalQuotas = array;
                     continue;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QuotaCapability(Optional.ToNullable(coresUsed), Optional.ToNullable(maxCoresAllowed), Optional.ToList(regionalQuotas), serializedAdditionalRawData);
+            return new QuotaCapability(Optional.ToNullable(coresUsed), Optional.ToNullable(maxCoresAllowed), regionalQuotas ?? new ChangeTrackingList<RegionalQuotaCapability>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QuotaCapability>.Write(ModelReaderWriterOptions options)

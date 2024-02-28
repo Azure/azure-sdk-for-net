@@ -26,62 +26,62 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(FirstConsumptionOn))
+            if (options.Format != "W" && FirstConsumptionOn.HasValue)
             {
                 writer.WritePropertyName("firstConsumptionDate"u8);
                 writer.WriteStringValue(FirstConsumptionOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastConsumptionOn))
+            if (options.Format != "W" && LastConsumptionOn.HasValue)
             {
                 writer.WritePropertyName("lastConsumptionDate"u8);
                 writer.WriteStringValue(LastConsumptionOn.Value, "O");
             }
-            if (Optional.IsDefined(LookBackPeriod))
+            if (LookBackPeriod.HasValue)
             {
                 writer.WritePropertyName("lookBackPeriod"u8);
                 writer.WriteStringValue(LookBackPeriod.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(TotalHours))
+            if (options.Format != "W" && TotalHours.HasValue)
             {
                 writer.WritePropertyName("totalHours"u8);
                 writer.WriteNumberValue(TotalHours.Value);
             }
-            if (Optional.IsDefined(Usage))
+            if (Usage != null)
             {
                 writer.WritePropertyName("usage"u8);
                 writer.WriteObjectValue(Usage);
             }
-            if (options.Format != "W" && Optional.IsDefined(ArmSkuName))
+            if (options.Format != "W" && ArmSkuName != null)
             {
                 writer.WritePropertyName("armSkuName"u8);
                 writer.WriteStringValue(ArmSkuName);
             }
-            if (Optional.IsDefined(Term))
+            if (Term.HasValue)
             {
                 writer.WritePropertyName("term"u8);
                 writer.WriteStringValue(Term.Value.ToString());
             }
-            if (Optional.IsDefined(CommitmentGranularity))
+            if (CommitmentGranularity.HasValue)
             {
                 writer.WritePropertyName("commitmentGranularity"u8);
                 writer.WriteStringValue(CommitmentGranularity.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CurrencyCode))
+            if (options.Format != "W" && CurrencyCode != null)
             {
                 writer.WritePropertyName("currencyCode"u8);
                 writer.WriteStringValue(CurrencyCode);
             }
-            if (options.Format != "W" && Optional.IsDefined(CostWithoutBenefit))
+            if (options.Format != "W" && CostWithoutBenefit.HasValue)
             {
                 writer.WritePropertyName("costWithoutBenefit"u8);
                 writer.WriteNumberValue(CostWithoutBenefit.Value);
             }
-            if (Optional.IsDefined(RecommendationDetails))
+            if (RecommendationDetails != null)
             {
                 writer.WritePropertyName("recommendationDetails"u8);
                 writer.WriteObjectValue(RecommendationDetails);
             }
-            if (options.Format != "W" && Optional.IsDefined(AllRecommendationDetails))
+            if (options.Format != "W" && AllRecommendationDetails != null)
             {
                 writer.WritePropertyName("allRecommendationDetails"u8);
                 writer.WriteObjectValue(AllRecommendationDetails);
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownBenefitRecommendationProperties(document.RootElement, options);
+            return DeserializeBenefitRecommendationProperties(document.RootElement, options);
         }
 
         internal static UnknownBenefitRecommendationProperties DeserializeUnknownBenefitRecommendationProperties(JsonElement element, ModelReaderWriterOptions options = null)
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    usage = RecommendationUsageDetails.DeserializeRecommendationUsageDetails(property.Value);
+                    usage = RecommendationUsageDetails.DeserializeRecommendationUsageDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("armSkuName"u8))
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    recommendationDetails = AllSavingsBenefitDetails.DeserializeAllSavingsBenefitDetails(property.Value);
+                    recommendationDetails = AllSavingsBenefitDetails.DeserializeAllSavingsBenefitDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("allRecommendationDetails"u8))
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    allRecommendationDetails = AllSavingsList.DeserializeAllSavingsList(property.Value);
+                    allRecommendationDetails = AllSavingsList.DeserializeAllSavingsList(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("scope"u8))
@@ -254,7 +254,21 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownBenefitRecommendationProperties(Optional.ToNullable(firstConsumptionDate), Optional.ToNullable(lastConsumptionDate), Optional.ToNullable(lookBackPeriod), Optional.ToNullable(totalHours), usage.Value, armSkuName.Value, Optional.ToNullable(term), Optional.ToNullable(commitmentGranularity), currencyCode.Value, Optional.ToNullable(costWithoutBenefit), recommendationDetails.Value, allRecommendationDetails.Value, scope, serializedAdditionalRawData);
+            return new UnknownBenefitRecommendationProperties(
+                Optional.ToNullable(firstConsumptionDate),
+                Optional.ToNullable(lastConsumptionDate),
+                Optional.ToNullable(lookBackPeriod),
+                Optional.ToNullable(totalHours),
+                usage.Value,
+                armSkuName.Value,
+                Optional.ToNullable(term),
+                Optional.ToNullable(commitmentGranularity),
+                currencyCode.Value,
+                Optional.ToNullable(costWithoutBenefit),
+                recommendationDetails.Value,
+                allRecommendationDetails.Value,
+                scope,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BenefitRecommendationProperties>.Write(ModelReaderWriterOptions options)
@@ -279,7 +293,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownBenefitRecommendationProperties(document.RootElement, options);
+                        return DeserializeBenefitRecommendationProperties(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(BenefitRecommendationProperties)} does not support '{options.Format}' format.");

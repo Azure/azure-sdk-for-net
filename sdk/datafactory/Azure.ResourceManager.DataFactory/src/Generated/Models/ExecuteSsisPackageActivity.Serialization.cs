@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(LinkedServiceName))
+            if (LinkedServiceName != null)
             {
                 writer.WritePropertyName("linkedServiceName"u8);
                 JsonSerializer.Serialize(writer, LinkedServiceName);
             }
-            if (Optional.IsDefined(Policy))
+            if (Policy != null)
             {
                 writer.WritePropertyName("policy"u8);
                 writer.WriteObjectValue(Policy);
@@ -41,22 +41,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ActivityType);
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(State))
+            if (State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(OnInactiveMarkAs))
+            if (OnInactiveMarkAs.HasValue)
             {
                 writer.WritePropertyName("onInactiveMarkAs"u8);
                 writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(DependsOn))
+            if (!(DependsOn is ChangeTrackingList<PipelineActivityDependency> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(UserProperties))
+            if (!(UserProperties is ChangeTrackingList<PipelineActivityUserProperty> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("userProperties"u8);
                 writer.WriteStartArray();
@@ -80,29 +80,29 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("packageLocation"u8);
             writer.WriteObjectValue(PackageLocation);
-            if (Optional.IsDefined(Runtime))
+            if (Runtime != null)
             {
                 writer.WritePropertyName("runtime"u8);
                 JsonSerializer.Serialize(writer, Runtime);
             }
-            if (Optional.IsDefined(LoggingLevel))
+            if (LoggingLevel != null)
             {
                 writer.WritePropertyName("loggingLevel"u8);
                 JsonSerializer.Serialize(writer, LoggingLevel);
             }
-            if (Optional.IsDefined(EnvironmentPath))
+            if (EnvironmentPath != null)
             {
                 writer.WritePropertyName("environmentPath"u8);
                 JsonSerializer.Serialize(writer, EnvironmentPath);
             }
-            if (Optional.IsDefined(ExecutionCredential))
+            if (ExecutionCredential != null)
             {
                 writer.WritePropertyName("executionCredential"u8);
                 writer.WriteObjectValue(ExecutionCredential);
             }
             writer.WritePropertyName("connectVia"u8);
             writer.WriteObjectValue(ConnectVia);
-            if (Optional.IsCollectionDefined(ProjectParameters))
+            if (!(ProjectParameters is ChangeTrackingDictionary<string, SsisExecutionParameter> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("projectParameters"u8);
                 writer.WriteStartObject();
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(PackageParameters))
+            if (!(PackageParameters is ChangeTrackingDictionary<string, SsisExecutionParameter> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("packageParameters"u8);
                 writer.WriteStartObject();
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(ProjectConnectionManagers))
+            if (!(ProjectConnectionManagers is ChangeTrackingDictionary<string, IDictionary<string, SsisExecutionParameter>> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("projectConnectionManagers"u8);
                 writer.WriteStartObject();
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(PackageConnectionManagers))
+            if (!(PackageConnectionManagers is ChangeTrackingDictionary<string, IDictionary<string, SsisExecutionParameter>> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("packageConnectionManagers"u8);
                 writer.WriteStartObject();
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(PropertyOverrides))
+            if (!(PropertyOverrides is ChangeTrackingDictionary<string, SsisPropertyOverride> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("propertyOverrides"u8);
                 writer.WriteStartObject();
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(LogLocation))
+            if (LogLocation != null)
             {
                 writer.WritePropertyName("logLocation"u8);
                 writer.WriteObjectValue(LogLocation);
@@ -227,19 +227,19 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> description = default;
             Optional<PipelineActivityState> state = default;
             Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
-            Optional<IList<PipelineActivityDependency>> dependsOn = default;
-            Optional<IList<PipelineActivityUserProperty>> userProperties = default;
+            IList<PipelineActivityDependency> dependsOn = default;
+            IList<PipelineActivityUserProperty> userProperties = default;
             SsisPackageLocation packageLocation = default;
             Optional<DataFactoryElement<string>> runtime = default;
             Optional<DataFactoryElement<string>> loggingLevel = default;
             Optional<DataFactoryElement<string>> environmentPath = default;
             Optional<SsisExecutionCredential> executionCredential = default;
             IntegrationRuntimeReference connectVia = default;
-            Optional<IDictionary<string, SsisExecutionParameter>> projectParameters = default;
-            Optional<IDictionary<string, SsisExecutionParameter>> packageParameters = default;
-            Optional<IDictionary<string, IDictionary<string, SsisExecutionParameter>>> projectConnectionManagers = default;
-            Optional<IDictionary<string, IDictionary<string, SsisExecutionParameter>>> packageConnectionManagers = default;
-            Optional<IDictionary<string, SsisPropertyOverride>> propertyOverrides = default;
+            IDictionary<string, SsisExecutionParameter> projectParameters = default;
+            IDictionary<string, SsisExecutionParameter> packageParameters = default;
+            IDictionary<string, IDictionary<string, SsisExecutionParameter>> projectConnectionManagers = default;
+            IDictionary<string, IDictionary<string, SsisExecutionParameter>> packageConnectionManagers = default;
+            IDictionary<string, SsisPropertyOverride> propertyOverrides = default;
             Optional<SsisLogLocation> logLocation = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    policy = PipelineActivityPolicy.DeserializePipelineActivityPolicy(property.Value);
+                    policy = PipelineActivityPolicy.DeserializePipelineActivityPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<PipelineActivityDependency> array = new List<PipelineActivityDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PipelineActivityDependency.DeserializePipelineActivityDependency(item));
+                        array.Add(PipelineActivityDependency.DeserializePipelineActivityDependency(item, options));
                     }
                     dependsOn = array;
                     continue;
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<PipelineActivityUserProperty> array = new List<PipelineActivityUserProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PipelineActivityUserProperty.DeserializePipelineActivityUserProperty(item));
+                        array.Add(PipelineActivityUserProperty.DeserializePipelineActivityUserProperty(item, options));
                     }
                     userProperties = array;
                     continue;
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("packageLocation"u8))
                         {
-                            packageLocation = SsisPackageLocation.DeserializeSsisPackageLocation(property0.Value);
+                            packageLocation = SsisPackageLocation.DeserializeSsisPackageLocation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("runtime"u8))
@@ -371,12 +371,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            executionCredential = SsisExecutionCredential.DeserializeSsisExecutionCredential(property0.Value);
+                            executionCredential = SsisExecutionCredential.DeserializeSsisExecutionCredential(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("connectVia"u8))
                         {
-                            connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property0.Value);
+                            connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("projectParameters"u8))
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             Dictionary<string, SsisExecutionParameter> dictionary = new Dictionary<string, SsisExecutionParameter>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, SsisExecutionParameter.DeserializeSsisExecutionParameter(property1.Value));
+                                dictionary.Add(property1.Name, SsisExecutionParameter.DeserializeSsisExecutionParameter(property1.Value, options));
                             }
                             projectParameters = dictionary;
                             continue;
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             Dictionary<string, SsisExecutionParameter> dictionary = new Dictionary<string, SsisExecutionParameter>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, SsisExecutionParameter.DeserializeSsisExecutionParameter(property1.Value));
+                                dictionary.Add(property1.Name, SsisExecutionParameter.DeserializeSsisExecutionParameter(property1.Value, options));
                             }
                             packageParameters = dictionary;
                             continue;
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                     Dictionary<string, SsisExecutionParameter> dictionary0 = new Dictionary<string, SsisExecutionParameter>();
                                     foreach (var property2 in property1.Value.EnumerateObject())
                                     {
-                                        dictionary0.Add(property2.Name, SsisExecutionParameter.DeserializeSsisExecutionParameter(property2.Value));
+                                        dictionary0.Add(property2.Name, SsisExecutionParameter.DeserializeSsisExecutionParameter(property2.Value, options));
                                     }
                                     dictionary.Add(property1.Name, dictionary0);
                                 }
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                     Dictionary<string, SsisExecutionParameter> dictionary0 = new Dictionary<string, SsisExecutionParameter>();
                                     foreach (var property2 in property1.Value.EnumerateObject())
                                     {
-                                        dictionary0.Add(property2.Name, SsisExecutionParameter.DeserializeSsisExecutionParameter(property2.Value));
+                                        dictionary0.Add(property2.Name, SsisExecutionParameter.DeserializeSsisExecutionParameter(property2.Value, options));
                                     }
                                     dictionary.Add(property1.Name, dictionary0);
                                 }
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             Dictionary<string, SsisPropertyOverride> dictionary = new Dictionary<string, SsisPropertyOverride>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, SsisPropertyOverride.DeserializeSsisPropertyOverride(property1.Value));
+                                dictionary.Add(property1.Name, SsisPropertyOverride.DeserializeSsisPropertyOverride(property1.Value, options));
                             }
                             propertyOverrides = dictionary;
                             continue;
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            logLocation = SsisLogLocation.DeserializeSsisLogLocation(property0.Value);
+                            logLocation = SsisLogLocation.DeserializeSsisLogLocation(property0.Value, options);
                             continue;
                         }
                     }
@@ -488,7 +488,29 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ExecuteSsisPackageActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName, policy.Value, packageLocation, runtime.Value, loggingLevel.Value, environmentPath.Value, executionCredential.Value, connectVia, Optional.ToDictionary(projectParameters), Optional.ToDictionary(packageParameters), Optional.ToDictionary(projectConnectionManagers), Optional.ToDictionary(packageConnectionManagers), Optional.ToDictionary(propertyOverrides), logLocation.Value);
+            return new ExecuteSsisPackageActivity(
+                name,
+                type,
+                description.Value,
+                Optional.ToNullable(state),
+                Optional.ToNullable(onInactiveMarkAs),
+                dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(),
+                additionalProperties,
+                linkedServiceName,
+                policy.Value,
+                packageLocation,
+                runtime.Value,
+                loggingLevel.Value,
+                environmentPath.Value,
+                executionCredential.Value,
+                connectVia,
+                projectParameters ?? new ChangeTrackingDictionary<string, SsisExecutionParameter>(),
+                packageParameters ?? new ChangeTrackingDictionary<string, SsisExecutionParameter>(),
+                projectConnectionManagers ?? new ChangeTrackingDictionary<string, IDictionary<string, SsisExecutionParameter>>(),
+                packageConnectionManagers ?? new ChangeTrackingDictionary<string, IDictionary<string, SsisExecutionParameter>>(),
+                propertyOverrides ?? new ChangeTrackingDictionary<string, SsisPropertyOverride>(),
+                logLocation.Value);
         }
 
         BinaryData IPersistableModel<ExecuteSsisPackageActivity>.Write(ModelReaderWriterOptions options)

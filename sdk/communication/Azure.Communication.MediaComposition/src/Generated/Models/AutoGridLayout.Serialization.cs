@@ -24,24 +24,24 @@ namespace Azure.Communication.MediaComposition
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(HighlightDominantSpeaker))
+            if (HighlightDominantSpeaker.HasValue)
             {
                 writer.WritePropertyName("highlightDominantSpeaker"u8);
                 writer.WriteBooleanValue(HighlightDominantSpeaker.Value);
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (Optional.IsDefined(Resolution))
+            if (Resolution != null)
             {
                 writer.WritePropertyName("resolution"u8);
                 writer.WriteObjectValue(Resolution);
             }
-            if (Optional.IsDefined(PlaceholderImageUri))
+            if (PlaceholderImageUri != null)
             {
                 writer.WritePropertyName("placeholderImageUri"u8);
                 writer.WriteStringValue(PlaceholderImageUri);
             }
-            if (Optional.IsDefined(ScalingMode))
+            if (ScalingMode.HasValue)
             {
                 writer.WritePropertyName("scalingMode"u8);
                 writer.WriteStringValue(ScalingMode.Value.ToString());
@@ -111,7 +111,13 @@ namespace Azure.Communication.MediaComposition
                     continue;
                 }
             }
-            return new AutoGridLayout(kind, resolution.Value, placeholderImageUri.Value, Optional.ToNullable(scalingMode), inputIds, Optional.ToNullable(highlightDominantSpeaker));
+            return new AutoGridLayout(
+                kind,
+                resolution.Value,
+                placeholderImageUri.Value,
+                Optional.ToNullable(scalingMode),
+                inputIds,
+                Optional.ToNullable(highlightDominantSpeaker));
         }
     }
 }

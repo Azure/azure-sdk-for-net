@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Kusto.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(GeneratedInvitation))
+            if (GeneratedInvitation != null)
             {
                 writer.WritePropertyName("generatedInvitation"u8);
                 writer.WriteStringValue(GeneratedInvitation);

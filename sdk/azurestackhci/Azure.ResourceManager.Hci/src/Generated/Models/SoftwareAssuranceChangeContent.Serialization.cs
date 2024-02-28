@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    properties = SoftwareAssuranceChangeRequestProperties.DeserializeSoftwareAssuranceChangeRequestProperties(property.Value);
+                    properties = SoftwareAssuranceChangeRequestProperties.DeserializeSoftwareAssuranceChangeRequestProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

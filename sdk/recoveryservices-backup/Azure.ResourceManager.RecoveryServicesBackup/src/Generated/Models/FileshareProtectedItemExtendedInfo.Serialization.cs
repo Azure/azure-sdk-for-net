@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(OldestRecoverOn))
+            if (OldestRecoverOn.HasValue)
             {
                 writer.WritePropertyName("oldestRecoveryPoint"u8);
                 writer.WriteStringValue(OldestRecoverOn.Value, "O");
             }
-            if (Optional.IsDefined(RecoveryPointCount))
+            if (RecoveryPointCount.HasValue)
             {
                 writer.WritePropertyName("recoveryPointCount"u8);
                 writer.WriteNumberValue(RecoveryPointCount.Value);
             }
-            if (Optional.IsDefined(PolicyState))
+            if (PolicyState != null)
             {
                 writer.WritePropertyName("policyState"u8);
                 writer.WriteStringValue(PolicyState);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceState))
+            if (options.Format != "W" && ResourceState != null)
             {
                 writer.WritePropertyName("resourceState"u8);
                 writer.WriteStringValue(ResourceState);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceStateSyncOn))
+            if (options.Format != "W" && ResourceStateSyncOn.HasValue)
             {
                 writer.WritePropertyName("resourceStateSyncTime"u8);
                 writer.WriteStringValue(ResourceStateSyncOn.Value, "O");
@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FileshareProtectedItemExtendedInfo(Optional.ToNullable(oldestRecoveryPoint), Optional.ToNullable(recoveryPointCount), policyState.Value, resourceState.Value, Optional.ToNullable(resourceStateSyncTime), serializedAdditionalRawData);
+            return new FileshareProtectedItemExtendedInfo(
+                Optional.ToNullable(oldestRecoveryPoint),
+                Optional.ToNullable(recoveryPointCount),
+                policyState.Value,
+                resourceState.Value,
+                Optional.ToNullable(resourceStateSyncTime),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FileshareProtectedItemExtendedInfo>.Write(ModelReaderWriterOptions options)

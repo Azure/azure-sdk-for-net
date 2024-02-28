@@ -27,92 +27,92 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ApiId))
+            if (ApiId != null)
             {
                 writer.WritePropertyName("apiId"u8);
                 writer.WriteStringValue(ApiId);
             }
-            if (Optional.IsDefined(OperationId))
+            if (OperationId != null)
             {
                 writer.WritePropertyName("operationId"u8);
                 writer.WriteStringValue(OperationId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProductId))
+            if (options.Format != "W" && ProductId != null)
             {
                 writer.WritePropertyName("productId"u8);
                 writer.WriteStringValue(ProductId);
             }
-            if (options.Format != "W" && Optional.IsDefined(UserId))
+            if (options.Format != "W" && UserId != null)
             {
                 writer.WritePropertyName("userId"u8);
                 writer.WriteStringValue(UserId);
             }
-            if (Optional.IsDefined(Method))
+            if (Method.HasValue)
             {
                 writer.WritePropertyName("method"u8);
                 writer.WriteStringValue(Method.Value.ToString());
             }
-            if (Optional.IsDefined(Uri))
+            if (Uri != null)
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (Optional.IsDefined(IPAddress))
+            if (IPAddress != null)
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress.ToString());
             }
-            if (Optional.IsDefined(BackendResponseCode))
+            if (BackendResponseCode != null)
             {
                 writer.WritePropertyName("backendResponseCode"u8);
                 writer.WriteStringValue(BackendResponseCode);
             }
-            if (Optional.IsDefined(ResponseCode))
+            if (ResponseCode.HasValue)
             {
                 writer.WritePropertyName("responseCode"u8);
                 writer.WriteNumberValue(ResponseCode.Value);
             }
-            if (Optional.IsDefined(ResponseSize))
+            if (ResponseSize.HasValue)
             {
                 writer.WritePropertyName("responseSize"u8);
                 writer.WriteNumberValue(ResponseSize.Value);
             }
-            if (Optional.IsDefined(Timestamp))
+            if (Timestamp.HasValue)
             {
                 writer.WritePropertyName("timestamp"u8);
                 writer.WriteStringValue(Timestamp.Value, "O");
             }
-            if (Optional.IsDefined(Cache))
+            if (Cache != null)
             {
                 writer.WritePropertyName("cache"u8);
                 writer.WriteStringValue(Cache);
             }
-            if (Optional.IsDefined(ApiTime))
+            if (ApiTime.HasValue)
             {
                 writer.WritePropertyName("apiTime"u8);
                 writer.WriteNumberValue(ApiTime.Value);
             }
-            if (Optional.IsDefined(ServiceTime))
+            if (ServiceTime.HasValue)
             {
                 writer.WritePropertyName("serviceTime"u8);
                 writer.WriteNumberValue(ServiceTime.Value);
             }
-            if (Optional.IsDefined(ApiRegion))
+            if (ApiRegion != null)
             {
                 writer.WritePropertyName("apiRegion"u8);
                 writer.WriteStringValue(ApiRegion);
             }
-            if (Optional.IsDefined(SubscriptionResourceId))
+            if (SubscriptionResourceId != null)
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionResourceId);
             }
-            if (Optional.IsDefined(RequestId))
+            if (RequestId != null)
             {
                 writer.WritePropertyName("requestId"u8);
                 writer.WriteStringValue(RequestId);
             }
-            if (Optional.IsDefined(RequestSize))
+            if (RequestSize.HasValue)
             {
                 writer.WritePropertyName("requestSize"u8);
                 writer.WriteNumberValue(RequestSize.Value);
@@ -313,7 +313,26 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RequestReportRecordContract(apiId.Value, operationId.Value, productId.Value, userId.Value, Optional.ToNullable(method), uri.Value, ipAddress.Value, backendResponseCode.Value, Optional.ToNullable(responseCode), Optional.ToNullable(responseSize), Optional.ToNullable(timestamp), cache.Value, Optional.ToNullable(apiTime), Optional.ToNullable(serviceTime), apiRegion.Value, subscriptionId.Value, requestId.Value, Optional.ToNullable(requestSize), serializedAdditionalRawData);
+            return new RequestReportRecordContract(
+                apiId.Value,
+                operationId.Value,
+                productId.Value,
+                userId.Value,
+                Optional.ToNullable(method),
+                uri.Value,
+                ipAddress.Value,
+                backendResponseCode.Value,
+                Optional.ToNullable(responseCode),
+                Optional.ToNullable(responseSize),
+                Optional.ToNullable(timestamp),
+                cache.Value,
+                Optional.ToNullable(apiTime),
+                Optional.ToNullable(serviceTime),
+                apiRegion.Value,
+                subscriptionId.Value,
+                requestId.Value,
+                Optional.ToNullable(requestSize),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RequestReportRecordContract>.Write(ModelReaderWriterOptions options)

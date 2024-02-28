@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TargetVmSecurityType))
+            if (TargetVmSecurityType.HasValue)
             {
                 writer.WritePropertyName("targetVmSecurityType"u8);
                 writer.WriteStringValue(TargetVmSecurityType.Value.ToString());
             }
-            if (Optional.IsDefined(IsTargetVmSecureBootEnabled))
+            if (IsTargetVmSecureBootEnabled != null)
             {
                 writer.WritePropertyName("isTargetVmSecureBootEnabled"u8);
                 writer.WriteStringValue(IsTargetVmSecureBootEnabled);
             }
-            if (Optional.IsDefined(IsTargetVmTpmEnabled))
+            if (IsTargetVmTpmEnabled != null)
             {
                 writer.WritePropertyName("isTargetVmTpmEnabled"u8);
                 writer.WriteStringValue(IsTargetVmTpmEnabled);
             }
-            if (Optional.IsDefined(IsTargetVmIntegrityMonitoringEnabled))
+            if (IsTargetVmIntegrityMonitoringEnabled != null)
             {
                 writer.WritePropertyName("isTargetVmIntegrityMonitoringEnabled"u8);
                 writer.WriteStringValue(IsTargetVmIntegrityMonitoringEnabled);
             }
-            if (Optional.IsDefined(IsTargetVmConfidentialEncryptionEnabled))
+            if (IsTargetVmConfidentialEncryptionEnabled != null)
             {
                 writer.WritePropertyName("isTargetVmConfidentialEncryptionEnabled"u8);
                 writer.WriteStringValue(IsTargetVmConfidentialEncryptionEnabled);
@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareCbtSecurityProfileProperties(Optional.ToNullable(targetVmSecurityType), isTargetVmSecureBootEnabled.Value, isTargetVmTpmEnabled.Value, isTargetVmIntegrityMonitoringEnabled.Value, isTargetVmConfidentialEncryptionEnabled.Value, serializedAdditionalRawData);
+            return new VMwareCbtSecurityProfileProperties(
+                Optional.ToNullable(targetVmSecurityType),
+                isTargetVmSecureBootEnabled.Value,
+                isTargetVmTpmEnabled.Value,
+                isTargetVmIntegrityMonitoringEnabled.Value,
+                isTargetVmConfidentialEncryptionEnabled.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VMwareCbtSecurityProfileProperties>.Write(ModelReaderWriterOptions options)

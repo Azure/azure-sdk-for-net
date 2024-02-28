@@ -31,18 +31,54 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <exception cref="ArgumentNullException"> <paramref name="targetHciClusterId"/>, <paramref name="targetArcClusterCustomLocationId"/>, <paramref name="fabricDiscoveryMachineId"/>, <paramref name="disksToInclude"/>, <paramref name="nicsToInclude"/>, <paramref name="targetResourceGroupId"/>, <paramref name="storageContainerId"/>, <paramref name="hyperVGeneration"/>, <paramref name="runAsAccountId"/>, <paramref name="sourceDraName"/>, <paramref name="targetDraName"/> or <paramref name="customLocationRegion"/> is null. </exception>
         public HyperVToAzStackHciProtectedItemModelCustomProperties(ResourceIdentifier targetHciClusterId, ResourceIdentifier targetArcClusterCustomLocationId, ResourceIdentifier fabricDiscoveryMachineId, IEnumerable<HyperVToAzStackHciDiskInput> disksToInclude, IEnumerable<HyperVToAzStackHciNicInput> nicsToInclude, ResourceIdentifier targetResourceGroupId, ResourceIdentifier storageContainerId, string hyperVGeneration, string runAsAccountId, string sourceDraName, string targetDraName, string customLocationRegion)
         {
-            Argument.AssertNotNull(targetHciClusterId, nameof(targetHciClusterId));
-            Argument.AssertNotNull(targetArcClusterCustomLocationId, nameof(targetArcClusterCustomLocationId));
-            Argument.AssertNotNull(fabricDiscoveryMachineId, nameof(fabricDiscoveryMachineId));
-            Argument.AssertNotNull(disksToInclude, nameof(disksToInclude));
-            Argument.AssertNotNull(nicsToInclude, nameof(nicsToInclude));
-            Argument.AssertNotNull(targetResourceGroupId, nameof(targetResourceGroupId));
-            Argument.AssertNotNull(storageContainerId, nameof(storageContainerId));
-            Argument.AssertNotNull(hyperVGeneration, nameof(hyperVGeneration));
-            Argument.AssertNotNull(runAsAccountId, nameof(runAsAccountId));
-            Argument.AssertNotNull(sourceDraName, nameof(sourceDraName));
-            Argument.AssertNotNull(targetDraName, nameof(targetDraName));
-            Argument.AssertNotNull(customLocationRegion, nameof(customLocationRegion));
+            if (targetHciClusterId == null)
+            {
+                throw new ArgumentNullException(nameof(targetHciClusterId));
+            }
+            if (targetArcClusterCustomLocationId == null)
+            {
+                throw new ArgumentNullException(nameof(targetArcClusterCustomLocationId));
+            }
+            if (fabricDiscoveryMachineId == null)
+            {
+                throw new ArgumentNullException(nameof(fabricDiscoveryMachineId));
+            }
+            if (disksToInclude == null)
+            {
+                throw new ArgumentNullException(nameof(disksToInclude));
+            }
+            if (nicsToInclude == null)
+            {
+                throw new ArgumentNullException(nameof(nicsToInclude));
+            }
+            if (targetResourceGroupId == null)
+            {
+                throw new ArgumentNullException(nameof(targetResourceGroupId));
+            }
+            if (storageContainerId == null)
+            {
+                throw new ArgumentNullException(nameof(storageContainerId));
+            }
+            if (hyperVGeneration == null)
+            {
+                throw new ArgumentNullException(nameof(hyperVGeneration));
+            }
+            if (runAsAccountId == null)
+            {
+                throw new ArgumentNullException(nameof(runAsAccountId));
+            }
+            if (sourceDraName == null)
+            {
+                throw new ArgumentNullException(nameof(sourceDraName));
+            }
+            if (targetDraName == null)
+            {
+                throw new ArgumentNullException(nameof(targetDraName));
+            }
+            if (customLocationRegion == null)
+            {
+                throw new ArgumentNullException(nameof(customLocationRegion));
+            }
 
             TargetHciClusterId = targetHciClusterId;
             TargetArcClusterCustomLocationId = targetArcClusterCustomLocationId;

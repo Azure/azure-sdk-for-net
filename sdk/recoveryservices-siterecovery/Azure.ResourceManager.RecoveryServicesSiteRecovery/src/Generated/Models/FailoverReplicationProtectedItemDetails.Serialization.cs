@@ -26,47 +26,47 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(FriendlyName))
+            if (FriendlyName != null)
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Optional.IsDefined(TestVmName))
+            if (TestVmName != null)
             {
                 writer.WritePropertyName("testVmName"u8);
                 writer.WriteStringValue(TestVmName);
             }
-            if (Optional.IsDefined(TestVmFriendlyName))
+            if (TestVmFriendlyName != null)
             {
                 writer.WritePropertyName("testVmFriendlyName"u8);
                 writer.WriteStringValue(TestVmFriendlyName);
             }
-            if (Optional.IsDefined(NetworkConnectionStatus))
+            if (NetworkConnectionStatus != null)
             {
                 writer.WritePropertyName("networkConnectionStatus"u8);
                 writer.WriteStringValue(NetworkConnectionStatus);
             }
-            if (Optional.IsDefined(NetworkFriendlyName))
+            if (NetworkFriendlyName != null)
             {
                 writer.WritePropertyName("networkFriendlyName"u8);
                 writer.WriteStringValue(NetworkFriendlyName);
             }
-            if (Optional.IsDefined(Subnet))
+            if (Subnet != null)
             {
                 writer.WritePropertyName("subnet"u8);
                 writer.WriteStringValue(Subnet);
             }
-            if (Optional.IsDefined(RecoveryPointId))
+            if (RecoveryPointId != null)
             {
                 writer.WritePropertyName("recoveryPointId"u8);
                 writer.WriteStringValue(RecoveryPointId);
             }
-            if (Optional.IsDefined(RecoveryPointOn))
+            if (RecoveryPointOn.HasValue)
             {
                 writer.WritePropertyName("recoveryPointTime"u8);
                 writer.WriteStringValue(RecoveryPointOn.Value, "O");
@@ -181,7 +181,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FailoverReplicationProtectedItemDetails(name.Value, friendlyName.Value, testVmName.Value, testVmFriendlyName.Value, networkConnectionStatus.Value, networkFriendlyName.Value, subnet.Value, recoveryPointId.Value, Optional.ToNullable(recoveryPointTime), serializedAdditionalRawData);
+            return new FailoverReplicationProtectedItemDetails(
+                name.Value,
+                friendlyName.Value,
+                testVmName.Value,
+                testVmFriendlyName.Value,
+                networkConnectionStatus.Value,
+                networkFriendlyName.Value,
+                subnet.Value,
+                recoveryPointId.Value,
+                Optional.ToNullable(recoveryPointTime),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FailoverReplicationProtectedItemDetails>.Write(ModelReaderWriterOptions options)

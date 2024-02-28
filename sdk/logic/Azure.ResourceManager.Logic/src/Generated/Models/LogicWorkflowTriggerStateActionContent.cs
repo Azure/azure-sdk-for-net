@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.Logic.Models
         /// <exception cref="ArgumentNullException"> <paramref name="source"/> is null. </exception>
         public LogicWorkflowTriggerStateActionContent(LogicWorkflowTriggerReference source)
         {
-            Argument.AssertNotNull(source, nameof(source));
+            if (source == null)
+            {
+                throw new ArgumentNullException(nameof(source));
+            }
 
             Source = source;
         }

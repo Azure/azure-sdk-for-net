@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = AppServicePrivateLinkResourceProperties.DeserializeAppServicePrivateLinkResourceProperties(property.Value);
+                    properties = AppServicePrivateLinkResourceProperties.DeserializeAppServicePrivateLinkResourceProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -131,7 +131,13 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServicePrivateLinkResourceData(id, name, type, systemData.Value, properties, serializedAdditionalRawData);
+            return new AppServicePrivateLinkResourceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServicePrivateLinkResourceData>.Write(ModelReaderWriterOptions options)

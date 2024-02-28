@@ -27,8 +27,8 @@ namespace Azure.AI.OpenAI
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
+            writer.WritePropertyName("function"u8);
+            writer.WriteObjectValue(Function);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -69,15 +69,15 @@ namespace Azure.AI.OpenAI
             {
                 return null;
             }
-            string name = default;
+            ChatCompletionsFunctionToolSelection function = default;
             string type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"u8))
+                if (property.NameEquals("function"u8))
                 {
-                    name = property.Value.GetString();
+                    function = ChatCompletionsFunctionToolSelection.DeserializeChatCompletionsFunctionToolSelection(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -91,7 +91,7 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ChatCompletionsNamedFunctionToolSelection(type, serializedAdditionalRawData, name);
+            return new ChatCompletionsNamedFunctionToolSelection(type, serializedAdditionalRawData, function);
         }
 
         BinaryData IPersistableModel<ChatCompletionsNamedFunctionToolSelection>.Write(ModelReaderWriterOptions options)

@@ -26,47 +26,47 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DomainFqdn))
+            if (DomainFqdn != null)
             {
                 writer.WritePropertyName("domainFqdn"u8);
                 writer.WriteStringValue(DomainFqdn);
             }
-            if (Optional.IsDefined(OrganizationalUnitPath))
+            if (OrganizationalUnitPath != null)
             {
                 writer.WritePropertyName("ouPath"u8);
                 writer.WriteStringValue(OrganizationalUnitPath);
             }
-            if (Optional.IsDefined(ClusterBootstrapAccount))
+            if (ClusterBootstrapAccount != null)
             {
                 writer.WritePropertyName("clusterBootstrapAccount"u8);
                 writer.WriteStringValue(ClusterBootstrapAccount);
             }
-            if (Optional.IsDefined(ClusterOperatorAccount))
+            if (ClusterOperatorAccount != null)
             {
                 writer.WritePropertyName("clusterOperatorAccount"u8);
                 writer.WriteStringValue(ClusterOperatorAccount);
             }
-            if (Optional.IsDefined(SqlServiceAccount))
+            if (SqlServiceAccount != null)
             {
                 writer.WritePropertyName("sqlServiceAccount"u8);
                 writer.WriteStringValue(SqlServiceAccount);
             }
-            if (Optional.IsDefined(FileShareWitnessPath))
+            if (FileShareWitnessPath != null)
             {
                 writer.WritePropertyName("fileShareWitnessPath"u8);
                 writer.WriteStringValue(FileShareWitnessPath);
             }
-            if (Optional.IsDefined(StorageAccountUri))
+            if (StorageAccountUri != null)
             {
                 writer.WritePropertyName("storageAccountUrl"u8);
                 writer.WriteStringValue(StorageAccountUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(StorageAccountPrimaryKey))
+            if (StorageAccountPrimaryKey != null)
             {
                 writer.WritePropertyName("storageAccountPrimaryKey"u8);
                 writer.WriteStringValue(StorageAccountPrimaryKey);
             }
-            if (Optional.IsDefined(ClusterSubnetType))
+            if (ClusterSubnetType.HasValue)
             {
                 writer.WritePropertyName("clusterSubnetType"u8);
                 writer.WriteStringValue(ClusterSubnetType.Value.ToString());
@@ -181,7 +181,17 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WindowsServerFailoverClusterDomainProfile(domainFqdn.Value, ouPath.Value, clusterBootstrapAccount.Value, clusterOperatorAccount.Value, sqlServiceAccount.Value, fileShareWitnessPath.Value, storageAccountUrl.Value, storageAccountPrimaryKey.Value, Optional.ToNullable(clusterSubnetType), serializedAdditionalRawData);
+            return new WindowsServerFailoverClusterDomainProfile(
+                domainFqdn.Value,
+                ouPath.Value,
+                clusterBootstrapAccount.Value,
+                clusterOperatorAccount.Value,
+                sqlServiceAccount.Value,
+                fileShareWitnessPath.Value,
+                storageAccountUrl.Value,
+                storageAccountPrimaryKey.Value,
+                Optional.ToNullable(clusterSubnetType),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WindowsServerFailoverClusterDomainProfile>.Write(ModelReaderWriterOptions options)

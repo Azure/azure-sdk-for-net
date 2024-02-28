@@ -29,27 +29,27 @@ namespace Azure.AI.OpenAI
             writer.WriteStartObject();
             writer.WritePropertyName("file"u8);
             writer.WriteBase64StringValue(AudioData.ToArray(), "D");
-            if (Optional.IsDefined(Filename))
+            if (Filename != null)
             {
                 writer.WritePropertyName("filename"u8);
                 writer.WriteStringValue(Filename);
             }
-            if (Optional.IsDefined(ResponseFormat))
+            if (ResponseFormat.HasValue)
             {
                 writer.WritePropertyName("response_format"u8);
                 writer.WriteStringValue(ResponseFormat.Value.ToString());
             }
-            if (Optional.IsDefined(Prompt))
+            if (Prompt != null)
             {
                 writer.WritePropertyName("prompt"u8);
                 writer.WriteStringValue(Prompt);
             }
-            if (Optional.IsDefined(Temperature))
+            if (Temperature.HasValue)
             {
                 writer.WritePropertyName("temperature"u8);
                 writer.WriteNumberValue(Temperature.Value);
             }
-            if (Optional.IsDefined(DeploymentName))
+            if (DeploymentName != null)
             {
                 writer.WritePropertyName("model"u8);
                 writer.WriteStringValue(DeploymentName);
@@ -146,7 +146,14 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AudioTranslationOptions(file, filename.Value, Optional.ToNullable(responseFormat), prompt.Value, Optional.ToNullable(temperature), model.Value, serializedAdditionalRawData);
+            return new AudioTranslationOptions(
+                file,
+                filename.Value,
+                Optional.ToNullable(responseFormat),
+                prompt.Value,
+                Optional.ToNullable(temperature),
+                model.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AudioTranslationOptions>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,22 +39,22 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Severity))
+            if (Severity.HasValue)
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteNumberValue(Severity.Value);
             }
-            if (Optional.IsDefined(IsEnabled))
+            if (IsEnabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsCollectionDefined(Scopes))
+            if (!(Scopes is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("scopes"u8);
                 writer.WriteStartArray();
@@ -64,37 +64,37 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(EvaluationFrequency))
+            if (EvaluationFrequency.HasValue)
             {
                 writer.WritePropertyName("evaluationFrequency"u8);
                 writer.WriteStringValue(EvaluationFrequency.Value, "P");
             }
-            if (Optional.IsDefined(WindowSize))
+            if (WindowSize.HasValue)
             {
                 writer.WritePropertyName("windowSize"u8);
                 writer.WriteStringValue(WindowSize.Value, "P");
             }
-            if (Optional.IsDefined(TargetResourceType))
+            if (TargetResourceType.HasValue)
             {
                 writer.WritePropertyName("targetResourceType"u8);
                 writer.WriteStringValue(TargetResourceType.Value);
             }
-            if (Optional.IsDefined(TargetResourceRegion))
+            if (TargetResourceRegion.HasValue)
             {
                 writer.WritePropertyName("targetResourceRegion"u8);
                 writer.WriteStringValue(TargetResourceRegion.Value);
             }
-            if (Optional.IsDefined(Criteria))
+            if (Criteria != null)
             {
                 writer.WritePropertyName("criteria"u8);
                 writer.WriteObjectValue(Criteria);
             }
-            if (Optional.IsDefined(IsAutoMitigateEnabled))
+            if (IsAutoMitigateEnabled.HasValue)
             {
                 writer.WritePropertyName("autoMitigate"u8);
                 writer.WriteBooleanValue(IsAutoMitigateEnabled.Value);
             }
-            if (Optional.IsCollectionDefined(Actions))
+            if (!(Actions is ChangeTrackingList<MetricAlertAction> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();
@@ -104,12 +104,12 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
+            if (options.Format != "W" && LastUpdatedOn.HasValue)
             {
                 writer.WritePropertyName("lastUpdatedTime"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(IsMigrated))
+            if (options.Format != "W" && IsMigrated.HasValue)
             {
                 writer.WritePropertyName("isMigrated"u8);
                 writer.WriteBooleanValue(IsMigrated.Value);
@@ -153,18 +153,18 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<string> description = default;
             Optional<int> severity = default;
             Optional<bool> enabled = default;
-            Optional<IList<string>> scopes = default;
+            IList<string> scopes = default;
             Optional<TimeSpan> evaluationFrequency = default;
             Optional<TimeSpan> windowSize = default;
             Optional<ResourceType> targetResourceType = default;
             Optional<AzureLocation> targetResourceRegion = default;
             Optional<MetricAlertCriteria> criteria = default;
             Optional<bool> autoMitigate = default;
-            Optional<IList<MetricAlertAction>> actions = default;
+            IList<MetricAlertAction> actions = default;
             Optional<DateTimeOffset> lastUpdatedTime = default;
             Optional<bool> isMigrated = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Monitor.Models
                             {
                                 continue;
                             }
-                            criteria = MetricAlertCriteria.DeserializeMetricAlertCriteria(property0.Value);
+                            criteria = MetricAlertCriteria.DeserializeMetricAlertCriteria(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("autoMitigate"u8))
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Monitor.Models
                             List<MetricAlertAction> array = new List<MetricAlertAction>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MetricAlertAction.DeserializeMetricAlertAction(item));
+                                array.Add(MetricAlertAction.DeserializeMetricAlertAction(item, options));
                             }
                             actions = array;
                             continue;
@@ -326,7 +326,22 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MetricAlertPatch(Optional.ToDictionary(tags), description.Value, Optional.ToNullable(severity), Optional.ToNullable(enabled), Optional.ToList(scopes), Optional.ToNullable(evaluationFrequency), Optional.ToNullable(windowSize), Optional.ToNullable(targetResourceType), Optional.ToNullable(targetResourceRegion), criteria.Value, Optional.ToNullable(autoMitigate), Optional.ToList(actions), Optional.ToNullable(lastUpdatedTime), Optional.ToNullable(isMigrated), serializedAdditionalRawData);
+            return new MetricAlertPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                description.Value,
+                Optional.ToNullable(severity),
+                Optional.ToNullable(enabled),
+                scopes ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(evaluationFrequency),
+                Optional.ToNullable(windowSize),
+                Optional.ToNullable(targetResourceType),
+                Optional.ToNullable(targetResourceRegion),
+                criteria.Value,
+                Optional.ToNullable(autoMitigate),
+                actions ?? new ChangeTrackingList<MetricAlertAction>(),
+                Optional.ToNullable(lastUpdatedTime),
+                Optional.ToNullable(isMigrated),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MetricAlertPatch>.Write(ModelReaderWriterOptions options)

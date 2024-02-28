@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<NotificationHubAuthorizationRuleData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<NotificationHubAuthorizationRuleData>> value = default;
+            IReadOnlyList<NotificationHubAuthorizationRuleData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                     List<NotificationHubAuthorizationRuleData> array = new List<NotificationHubAuthorizationRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NotificationHubAuthorizationRuleData.DeserializeNotificationHubAuthorizationRuleData(item));
+                        array.Add(NotificationHubAuthorizationRuleData.DeserializeNotificationHubAuthorizationRuleData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SharedAccessAuthorizationRuleListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SharedAccessAuthorizationRuleListResult(value ?? new ChangeTrackingList<NotificationHubAuthorizationRuleData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SharedAccessAuthorizationRuleListResult>.Write(ModelReaderWriterOptions options)

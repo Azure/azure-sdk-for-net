@@ -26,54 +26,54 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(BillingScopeId))
+            if (BillingScopeId != null)
             {
                 writer.WritePropertyName("billingScopeId"u8);
                 writer.WriteStringValue(BillingScopeId);
             }
-            if (Optional.IsDefined(Term))
+            if (Term.HasValue)
             {
                 writer.WritePropertyName("term"u8);
                 writer.WriteStringValue(Term.Value.ToString());
             }
-            if (Optional.IsDefined(BillingPlan))
+            if (BillingPlan.HasValue)
             {
                 writer.WritePropertyName("billingPlan"u8);
                 writer.WriteStringValue(BillingPlan.Value.ToString());
             }
-            if (Optional.IsDefined(AppliedScopeType))
+            if (AppliedScopeType.HasValue)
             {
                 writer.WritePropertyName("appliedScopeType"u8);
                 writer.WriteStringValue(AppliedScopeType.Value.ToString());
             }
-            if (Optional.IsDefined(Commitment))
+            if (Commitment != null)
             {
                 writer.WritePropertyName("commitment"u8);
                 writer.WriteObjectValue(Commitment);
             }
-            if (options.Format != "W" && Optional.IsDefined(EffectOn))
+            if (options.Format != "W" && EffectOn.HasValue)
             {
                 writer.WritePropertyName("effectiveDateTime"u8);
                 writer.WriteStringValue(EffectOn.Value, "O");
             }
-            if (Optional.IsDefined(IsRenewed))
+            if (IsRenewed.HasValue)
             {
                 writer.WritePropertyName("renew"u8);
                 writer.WriteBooleanValue(IsRenewed.Value);
             }
-            if (Optional.IsDefined(AppliedScopeProperties))
+            if (AppliedScopeProperties != null)
             {
                 writer.WritePropertyName("appliedScopeProperties"u8);
                 writer.WriteObjectValue(AppliedScopeProperties);
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     {
                         continue;
                     }
-                    sku = BillingBenefitsSku.DeserializeBillingBenefitsSku(property.Value);
+                    sku = BillingBenefitsSku.DeserializeBillingBenefitsSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                             {
                                 continue;
                             }
-                            commitment = BillingBenefitsCommitment.DeserializeBillingBenefitsCommitment(property0.Value);
+                            commitment = BillingBenefitsCommitment.DeserializeBillingBenefitsCommitment(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("effectiveDateTime"u8))
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                             {
                                 continue;
                             }
-                            appliedScopeProperties = BillingBenefitsAppliedScopeProperties.DeserializeBillingBenefitsAppliedScopeProperties(property0.Value);
+                            appliedScopeProperties = BillingBenefitsAppliedScopeProperties.DeserializeBillingBenefitsAppliedScopeProperties(property0.Value, options);
                             continue;
                         }
                     }
@@ -235,7 +235,18 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BillingBenefitsPurchaseContent(sku.Value, displayName.Value, billingScopeId.Value, Optional.ToNullable(term), Optional.ToNullable(billingPlan), Optional.ToNullable(appliedScopeType), commitment.Value, Optional.ToNullable(effectiveDateTime), Optional.ToNullable(renew), appliedScopeProperties.Value, serializedAdditionalRawData);
+            return new BillingBenefitsPurchaseContent(
+                sku.Value,
+                displayName.Value,
+                billingScopeId.Value,
+                Optional.ToNullable(term),
+                Optional.ToNullable(billingPlan),
+                Optional.ToNullable(appliedScopeType),
+                commitment.Value,
+                Optional.ToNullable(effectiveDateTime),
+                Optional.ToNullable(renew),
+                appliedScopeProperties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BillingBenefitsPurchaseContent>.Write(ModelReaderWriterOptions options)

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(StartOn))
+            if (StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(StartInMinutes))
+            if (options.Format != "W" && StartInMinutes.HasValue)
             {
                 writer.WritePropertyName("startTimeOffsetMinutes"u8);
                 writer.WriteNumberValue(StartInMinutes.Value);
             }
-            if (Optional.IsDefined(ExpireOn))
+            if (ExpireOn.HasValue)
             {
                 if (ExpireOn != null)
                 {
@@ -48,17 +48,17 @@ namespace Azure.ResourceManager.Automation.Models
                     writer.WriteNull("expiryTime");
                 }
             }
-            if (Optional.IsDefined(ExpireInMinutes))
+            if (ExpireInMinutes.HasValue)
             {
                 writer.WritePropertyName("expiryTimeOffsetMinutes"u8);
                 writer.WriteNumberValue(ExpireInMinutes.Value);
             }
-            if (Optional.IsDefined(IsEnabled))
+            if (IsEnabled.HasValue)
             {
                 writer.WritePropertyName("isEnabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(NextRunOn))
+            if (NextRunOn.HasValue)
             {
                 if (NextRunOn != null)
                 {
@@ -70,42 +70,42 @@ namespace Azure.ResourceManager.Automation.Models
                     writer.WriteNull("nextRun");
                 }
             }
-            if (Optional.IsDefined(NextRunInMinutes))
+            if (NextRunInMinutes.HasValue)
             {
                 writer.WritePropertyName("nextRunOffsetMinutes"u8);
                 writer.WriteNumberValue(NextRunInMinutes.Value);
             }
-            if (Optional.IsDefined(Interval))
+            if (Interval.HasValue)
             {
                 writer.WritePropertyName("interval"u8);
                 writer.WriteNumberValue(Interval.Value);
             }
-            if (Optional.IsDefined(Frequency))
+            if (Frequency.HasValue)
             {
                 writer.WritePropertyName("frequency"u8);
                 writer.WriteStringValue(Frequency.Value.ToString());
             }
-            if (Optional.IsDefined(TimeZone))
+            if (TimeZone != null)
             {
                 writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
             }
-            if (Optional.IsDefined(AdvancedSchedule))
+            if (AdvancedSchedule != null)
             {
                 writer.WritePropertyName("advancedSchedule"u8);
                 writer.WriteObjectValue(AdvancedSchedule);
             }
-            if (Optional.IsDefined(CreatedOn))
+            if (CreatedOn.HasValue)
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(LastModifiedOn))
+            if (LastModifiedOn.HasValue)
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    advancedSchedule = AutomationAdvancedSchedule.DeserializeAutomationAdvancedSchedule(property.Value);
+                    advancedSchedule = AutomationAdvancedSchedule.DeserializeAutomationAdvancedSchedule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("creationTime"u8))
@@ -292,7 +292,22 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SoftwareUpdateConfigurationScheduleProperties(Optional.ToNullable(startTime), Optional.ToNullable(startTimeOffsetMinutes), Optional.ToNullable(expiryTime), Optional.ToNullable(expiryTimeOffsetMinutes), Optional.ToNullable(isEnabled), Optional.ToNullable(nextRun), Optional.ToNullable(nextRunOffsetMinutes), Optional.ToNullable(interval), Optional.ToNullable(frequency), timeZone.Value, advancedSchedule.Value, Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), description.Value, serializedAdditionalRawData);
+            return new SoftwareUpdateConfigurationScheduleProperties(
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(startTimeOffsetMinutes),
+                Optional.ToNullable(expiryTime),
+                Optional.ToNullable(expiryTimeOffsetMinutes),
+                Optional.ToNullable(isEnabled),
+                Optional.ToNullable(nextRun),
+                Optional.ToNullable(nextRunOffsetMinutes),
+                Optional.ToNullable(interval),
+                Optional.ToNullable(frequency),
+                timeZone.Value,
+                advancedSchedule.Value,
+                Optional.ToNullable(creationTime),
+                Optional.ToNullable(lastModifiedTime),
+                description.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SoftwareUpdateConfigurationScheduleProperties>.Write(ModelReaderWriterOptions options)

@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.FrontDoor.Models
             writer.WriteStartObject();
             writer.WritePropertyName("rulesEngineMatchVariable"u8);
             writer.WriteStringValue(RulesEngineMatchVariable.ToString());
-            if (Optional.IsDefined(Selector))
+            if (Selector != null)
             {
                 writer.WritePropertyName("selector"u8);
                 writer.WriteStringValue(Selector);
             }
             writer.WritePropertyName("rulesEngineOperator"u8);
             writer.WriteStringValue(RulesEngineOperator.ToString());
-            if (Optional.IsDefined(IsNegateCondition))
+            if (IsNegateCondition.HasValue)
             {
                 writer.WritePropertyName("negateCondition"u8);
                 writer.WriteBooleanValue(IsNegateCondition.Value);
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(Transforms))
+            if (!(Transforms is ChangeTrackingList<RulesEngineMatchTransform> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("transforms"u8);
                 writer.WriteStartArray();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             RulesEngineOperator rulesEngineOperator = default;
             Optional<bool> negateCondition = default;
             IList<string> rulesEngineMatchValue = default;
-            Optional<IList<RulesEngineMatchTransform>> transforms = default;
+            IList<RulesEngineMatchTransform> transforms = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -159,7 +159,14 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RulesEngineMatchCondition(rulesEngineMatchVariable, selector.Value, rulesEngineOperator, Optional.ToNullable(negateCondition), rulesEngineMatchValue, Optional.ToList(transforms), serializedAdditionalRawData);
+            return new RulesEngineMatchCondition(
+                rulesEngineMatchVariable,
+                selector.Value,
+                rulesEngineOperator,
+                Optional.ToNullable(negateCondition),
+                rulesEngineMatchValue,
+                transforms ?? new ChangeTrackingList<RulesEngineMatchTransform>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RulesEngineMatchCondition>.Write(ModelReaderWriterOptions options)

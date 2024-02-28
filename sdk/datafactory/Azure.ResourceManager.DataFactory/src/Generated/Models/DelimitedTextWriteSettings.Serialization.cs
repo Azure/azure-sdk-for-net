@@ -27,19 +27,19 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(QuoteAllText))
+            if (QuoteAllText != null)
             {
                 writer.WritePropertyName("quoteAllText"u8);
                 JsonSerializer.Serialize(writer, QuoteAllText);
             }
             writer.WritePropertyName("fileExtension"u8);
             JsonSerializer.Serialize(writer, FileExtension);
-            if (Optional.IsDefined(MaxRowsPerFile))
+            if (MaxRowsPerFile != null)
             {
                 writer.WritePropertyName("maxRowsPerFile"u8);
                 JsonSerializer.Serialize(writer, MaxRowsPerFile);
             }
-            if (Optional.IsDefined(FileNamePrefix))
+            if (FileNamePrefix != null)
             {
                 writer.WritePropertyName("fileNamePrefix"u8);
                 JsonSerializer.Serialize(writer, FileNamePrefix);
@@ -130,7 +130,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DelimitedTextWriteSettings(type, additionalProperties, quoteAllText.Value, fileExtension, maxRowsPerFile.Value, fileNamePrefix.Value);
+            return new DelimitedTextWriteSettings(
+                type,
+                additionalProperties,
+                quoteAllText.Value,
+                fileExtension,
+                maxRowsPerFile.Value,
+                fileNamePrefix.Value);
         }
 
         BinaryData IPersistableModel<DelimitedTextWriteSettings>.Write(ModelReaderWriterOptions options)

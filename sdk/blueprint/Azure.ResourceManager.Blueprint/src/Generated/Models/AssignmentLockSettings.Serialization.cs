@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Blueprint.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Mode))
+            if (Mode.HasValue)
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(ExcludedPrincipals))
+            if (!(ExcludedPrincipals is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("excludedPrincipals"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ExcludedActions))
+            if (!(ExcludedActions is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("excludedActions"u8);
                 writer.WriteStartArray();
@@ -90,8 +90,8 @@ namespace Azure.ResourceManager.Blueprint.Models
                 return null;
             }
             Optional<AssignmentLockMode> mode = default;
-            Optional<IList<string>> excludedPrincipals = default;
-            Optional<IList<string>> excludedActions = default;
+            IList<string> excludedPrincipals = default;
+            IList<string> excludedActions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AssignmentLockSettings(Optional.ToNullable(mode), Optional.ToList(excludedPrincipals), Optional.ToList(excludedActions), serializedAdditionalRawData);
+            return new AssignmentLockSettings(Optional.ToNullable(mode), excludedPrincipals ?? new ChangeTrackingList<string>(), excludedActions ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AssignmentLockSettings>.Write(ModelReaderWriterOptions options)

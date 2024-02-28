@@ -49,7 +49,13 @@ namespace Azure.Storage.Queues.Models
                 }
                 queueItems = array;
             }
-            return new ListQueuesSegmentResponse(serviceEndpoint, prefix, marker, maxResults, queueItems, nextMarker);
+            return new ListQueuesSegmentResponse(
+                serviceEndpoint,
+                prefix,
+                marker,
+                maxResults,
+                queueItems,
+                nextMarker);
         }
     }
 }

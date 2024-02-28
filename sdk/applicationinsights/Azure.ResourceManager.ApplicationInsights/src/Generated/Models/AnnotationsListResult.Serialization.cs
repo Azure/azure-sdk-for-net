@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<Annotation> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<Annotation>> value = default;
+            IReadOnlyList<Annotation> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     List<Annotation> array = new List<Annotation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Annotation.DeserializeAnnotation(item));
+                        array.Add(Annotation.DeserializeAnnotation(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AnnotationsListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new AnnotationsListResult(value ?? new ChangeTrackingList<Annotation>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AnnotationsListResult>.Write(ModelReaderWriterOptions options)

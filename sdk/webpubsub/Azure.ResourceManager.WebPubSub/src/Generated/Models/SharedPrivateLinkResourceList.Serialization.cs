@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<WebPubSubSharedPrivateLinkData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<WebPubSubSharedPrivateLinkData>> value = default;
+            IReadOnlyList<WebPubSubSharedPrivateLinkData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     List<WebPubSubSharedPrivateLinkData> array = new List<WebPubSubSharedPrivateLinkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WebPubSubSharedPrivateLinkData.DeserializeWebPubSubSharedPrivateLinkData(item));
+                        array.Add(WebPubSubSharedPrivateLinkData.DeserializeWebPubSubSharedPrivateLinkData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SharedPrivateLinkResourceList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SharedPrivateLinkResourceList(value ?? new ChangeTrackingList<WebPubSubSharedPrivateLinkData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SharedPrivateLinkResourceList>.Write(ModelReaderWriterOptions options)

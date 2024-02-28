@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Error))
+            if (Error != null)
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     {
                         continue;
                     }
-                    error = ErrorResponse.DeserializeErrorResponse(property.Value);
+                    error = ErrorResponse.DeserializeErrorResponse(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

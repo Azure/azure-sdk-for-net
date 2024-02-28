@@ -44,14 +44,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(AdditionalData))
+            if (options.Format != "W" && !(AdditionalData is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("additionalData"u8);
                 writer.WriteStartObject();
@@ -74,12 +74,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsDefined(FriendlyName))
+            if (options.Format != "W" && FriendlyName != null)
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(NetworkMessageIds))
+            if (options.Format != "W" && !(NetworkMessageIds is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("networkMessageIds"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(CountByDeliveryStatus))
+            if (options.Format != "W" && CountByDeliveryStatus != null)
             {
                 writer.WritePropertyName("countByDeliveryStatus"u8);
 #if NET6_0_OR_GREATER
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
 #endif
             }
-            if (options.Format != "W" && Optional.IsDefined(CountByThreatType))
+            if (options.Format != "W" && CountByThreatType != null)
             {
                 writer.WritePropertyName("countByThreatType"u8);
 #if NET6_0_OR_GREATER
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
 #endif
             }
-            if (options.Format != "W" && Optional.IsDefined(CountByProtectionStatus))
+            if (options.Format != "W" && CountByProtectionStatus != null)
             {
                 writer.WritePropertyName("countByProtectionStatus"u8);
 #if NET6_0_OR_GREATER
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
 #endif
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Threats))
+            if (options.Format != "W" && !(Threats is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("threats"u8);
                 writer.WriteStartArray();
@@ -135,52 +135,52 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(Query))
+            if (options.Format != "W" && Query != null)
             {
                 writer.WritePropertyName("query"u8);
                 writer.WriteStringValue(Query);
             }
-            if (options.Format != "W" && Optional.IsDefined(QueryOn))
+            if (options.Format != "W" && QueryOn.HasValue)
             {
                 writer.WritePropertyName("queryTime"u8);
                 writer.WriteStringValue(QueryOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(MailCount))
+            if (options.Format != "W" && MailCount.HasValue)
             {
                 writer.WritePropertyName("mailCount"u8);
                 writer.WriteNumberValue(MailCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsVolumeAnomaly))
+            if (options.Format != "W" && IsVolumeAnomaly.HasValue)
             {
                 writer.WritePropertyName("isVolumeAnomaly"u8);
                 writer.WriteBooleanValue(IsVolumeAnomaly.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Source))
+            if (options.Format != "W" && Source != null)
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
-            if (options.Format != "W" && Optional.IsDefined(ClusterSourceIdentifier))
+            if (options.Format != "W" && ClusterSourceIdentifier != null)
             {
                 writer.WritePropertyName("clusterSourceIdentifier"u8);
                 writer.WriteStringValue(ClusterSourceIdentifier);
             }
-            if (options.Format != "W" && Optional.IsDefined(ClusterSourceType))
+            if (options.Format != "W" && ClusterSourceType != null)
             {
                 writer.WritePropertyName("clusterSourceType"u8);
                 writer.WriteStringValue(ClusterSourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(ClusterQueryStartOn))
+            if (options.Format != "W" && ClusterQueryStartOn.HasValue)
             {
                 writer.WritePropertyName("clusterQueryStartTime"u8);
                 writer.WriteStringValue(ClusterQueryStartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ClusterQueryEndOn))
+            if (options.Format != "W" && ClusterQueryEndOn.HasValue)
             {
                 writer.WritePropertyName("clusterQueryEndTime"u8);
                 writer.WriteStringValue(ClusterQueryEndOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ClusterGroup))
+            if (options.Format != "W" && ClusterGroup != null)
             {
                 writer.WritePropertyName("clusterGroup"u8);
                 writer.WriteStringValue(ClusterGroup);
@@ -229,13 +229,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IReadOnlyDictionary<string, BinaryData>> additionalData = default;
+            IReadOnlyDictionary<string, BinaryData> additionalData = default;
             Optional<string> friendlyName = default;
-            Optional<IReadOnlyList<string>> networkMessageIds = default;
+            IReadOnlyList<string> networkMessageIds = default;
             Optional<BinaryData> countByDeliveryStatus = default;
             Optional<BinaryData> countByThreatType = default;
             Optional<BinaryData> countByProtectionStatus = default;
-            Optional<IReadOnlyList<string>> threats = default;
+            IReadOnlyList<string> threats = default;
             Optional<string> query = default;
             Optional<DateTimeOffset> queryTime = default;
             Optional<int> mailCount = default;
@@ -448,7 +448,30 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsMailClusterEntity(id, name, type, systemData.Value, kind, serializedAdditionalRawData, Optional.ToDictionary(additionalData), friendlyName.Value, Optional.ToList(networkMessageIds), countByDeliveryStatus.Value, countByThreatType.Value, countByProtectionStatus.Value, Optional.ToList(threats), query.Value, Optional.ToNullable(queryTime), Optional.ToNullable(mailCount), Optional.ToNullable(isVolumeAnomaly), source.Value, clusterSourceIdentifier.Value, clusterSourceType.Value, Optional.ToNullable(clusterQueryStartTime), Optional.ToNullable(clusterQueryEndTime), clusterGroup.Value);
+            return new SecurityInsightsMailClusterEntity(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData,
+                additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                friendlyName.Value,
+                networkMessageIds ?? new ChangeTrackingList<string>(),
+                countByDeliveryStatus.Value,
+                countByThreatType.Value,
+                countByProtectionStatus.Value,
+                threats ?? new ChangeTrackingList<string>(),
+                query.Value,
+                Optional.ToNullable(queryTime),
+                Optional.ToNullable(mailCount),
+                Optional.ToNullable(isVolumeAnomaly),
+                source.Value,
+                clusterSourceIdentifier.Value,
+                clusterSourceType.Value,
+                Optional.ToNullable(clusterQueryStartTime),
+                Optional.ToNullable(clusterQueryEndTime),
+                clusterGroup.Value);
         }
 
         BinaryData IPersistableModel<SecurityInsightsMailClusterEntity>.Write(ModelReaderWriterOptions options)

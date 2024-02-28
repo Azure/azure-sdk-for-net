@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Probes))
+            if (!(Probes is ChangeTrackingList<ContainerAppProbe> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("probes"u8);
                 writer.WriteStartArray();
@@ -36,17 +36,17 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Image))
+            if (Image != null)
             {
                 writer.WritePropertyName("image"u8);
                 writer.WriteStringValue(Image);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsCollectionDefined(Command))
+            if (!(Command is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("command"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Args))
+            if (!(Args is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("args"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Env))
+            if (!(Env is ChangeTrackingList<ContainerAppEnvironmentVariable> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("env"u8);
                 writer.WriteStartArray();
@@ -76,12 +76,12 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Resources))
+            if (Resources != null)
             {
                 writer.WritePropertyName("resources"u8);
                 writer.WriteObjectValue(Resources);
             }
-            if (Optional.IsCollectionDefined(VolumeMounts))
+            if (!(VolumeMounts is ChangeTrackingList<ContainerAppVolumeMount> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("volumeMounts"u8);
                 writer.WriteStartArray();
@@ -129,14 +129,14 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<IList<ContainerAppProbe>> probes = default;
+            IList<ContainerAppProbe> probes = default;
             Optional<string> image = default;
             Optional<string> name = default;
-            Optional<IList<string>> command = default;
-            Optional<IList<string>> args = default;
-            Optional<IList<ContainerAppEnvironmentVariable>> env = default;
+            IList<string> command = default;
+            IList<string> args = default;
+            IList<ContainerAppEnvironmentVariable> env = default;
             Optional<AppContainerResources> resources = default;
-            Optional<IList<ContainerAppVolumeMount>> volumeMounts = default;
+            IList<ContainerAppVolumeMount> volumeMounts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppProbe> array = new List<ContainerAppProbe>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppProbe.DeserializeContainerAppProbe(item));
+                        array.Add(ContainerAppProbe.DeserializeContainerAppProbe(item, options));
                     }
                     probes = array;
                     continue;
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppEnvironmentVariable> array = new List<ContainerAppEnvironmentVariable>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppEnvironmentVariable.DeserializeContainerAppEnvironmentVariable(item));
+                        array.Add(ContainerAppEnvironmentVariable.DeserializeContainerAppEnvironmentVariable(item, options));
                     }
                     env = array;
                     continue;
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    resources = AppContainerResources.DeserializeAppContainerResources(property.Value);
+                    resources = AppContainerResources.DeserializeAppContainerResources(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("volumeMounts"u8))
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppVolumeMount> array = new List<ContainerAppVolumeMount>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppVolumeMount.DeserializeContainerAppVolumeMount(item));
+                        array.Add(ContainerAppVolumeMount.DeserializeContainerAppVolumeMount(item, options));
                     }
                     volumeMounts = array;
                     continue;
@@ -236,7 +236,16 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppContainer(image.Value, name.Value, Optional.ToList(command), Optional.ToList(args), Optional.ToList(env), resources.Value, Optional.ToList(volumeMounts), serializedAdditionalRawData, Optional.ToList(probes));
+            return new ContainerAppContainer(
+                image.Value,
+                name.Value,
+                command ?? new ChangeTrackingList<string>(),
+                args ?? new ChangeTrackingList<string>(),
+                env ?? new ChangeTrackingList<ContainerAppEnvironmentVariable>(),
+                resources.Value,
+                volumeMounts ?? new ChangeTrackingList<ContainerAppVolumeMount>(),
+                serializedAdditionalRawData,
+                probes ?? new ChangeTrackingList<ContainerAppProbe>());
         }
 
         BinaryData IPersistableModel<ContainerAppContainer>.Write(ModelReaderWriterOptions options)

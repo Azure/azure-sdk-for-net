@@ -54,8 +54,14 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> or <paramref name="span"/> is null. </exception>
         internal DocumentFormula(DocumentFormulaKind kind, string value, DocumentSpan span, float confidence)
         {
-            Argument.AssertNotNull(value, nameof(value));
-            Argument.AssertNotNull(span, nameof(span));
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+            if (span == null)
+            {
+                throw new ArgumentNullException(nameof(span));
+            }
 
             Kind = kind;
             Value = value;

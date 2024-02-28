@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Email))
+            if (Email != null)
             {
                 writer.WritePropertyName("email"u8);
                 writer.WriteStringValue(Email);
             }
-            if (Optional.IsDefined(AssignedTo))
+            if (AssignedTo != null)
             {
                 writer.WritePropertyName("assignedTo"u8);
                 writer.WriteStringValue(AssignedTo);
             }
-            if (Optional.IsDefined(ObjectId))
+            if (ObjectId.HasValue)
             {
                 writer.WritePropertyName("objectId"u8);
                 writer.WriteStringValue(ObjectId.Value);
             }
-            if (Optional.IsDefined(UserPrincipalName))
+            if (UserPrincipalName != null)
             {
                 writer.WritePropertyName("userPrincipalName"u8);
                 writer.WriteStringValue(UserPrincipalName);
             }
-            if (Optional.IsDefined(OwnerType))
+            if (OwnerType.HasValue)
             {
                 writer.WritePropertyName("ownerType"u8);
                 writer.WriteStringValue(OwnerType.Value.ToString());
@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsIncidentOwnerInfo(email.Value, assignedTo.Value, Optional.ToNullable(objectId), userPrincipalName.Value, Optional.ToNullable(ownerType), serializedAdditionalRawData);
+            return new SecurityInsightsIncidentOwnerInfo(
+                email.Value,
+                assignedTo.Value,
+                Optional.ToNullable(objectId),
+                userPrincipalName.Value,
+                Optional.ToNullable(ownerType),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityInsightsIncidentOwnerInfo>.Write(ModelReaderWriterOptions options)
