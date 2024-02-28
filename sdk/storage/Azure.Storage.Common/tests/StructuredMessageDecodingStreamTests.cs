@@ -85,17 +85,17 @@ namespace Azure.Storage.Tests
             [Values(true, false)] bool useCrc)
         {
             int segmentContentLength = seglen ?? int.MaxValue;
-            Flags flags = useCrc ? Flags.CrcSegment : Flags.None;
+            Flags flags = useCrc ? Flags.StorageCrc64 : Flags.None;
 
             byte[] originalData = new byte[dataLength];
             new Random().NextBytes(originalData);
             byte[] encodedData = StructuredMessageHelper.MakeEncodedData(originalData, segmentContentLength, flags);
 
-            Stream encodingStream = new StructuredMessageDecodingStream(new MemoryStream(encodedData));
+            Stream decodingStream = new StructuredMessageDecodingStream(new MemoryStream(encodedData));
             byte[] decodedData;
             using (MemoryStream dest = new())
             {
-                await CopyStream(encodingStream, dest, readLen);
+                await CopyStream(decodingStream, dest, readLen);
                 decodedData = dest.ToArray();
             }
 

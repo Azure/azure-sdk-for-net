@@ -5,7 +5,6 @@ using System;
 using System.Buffers;
 using System.Buffers.Binary;
 using System.IO;
-using System.Security.Cryptography;
 using Azure.Core;
 
 namespace Azure.Storage.Shared;
@@ -18,7 +17,7 @@ internal static class StructuredMessage
     public enum Flags
     {
         None = 0,
-        CrcSegment = 1,
+        StorageCrc64 = 1,
     }
 
     public static class V1_0
@@ -86,7 +85,62 @@ internal static class StructuredMessage
         }
         #endregion
 
-        // no stream footer content in 1.0
+        #region StreamFooter
+        public static void ReadStreamFooter(
+            ReadOnlySpan<byte> buffer,
+            Span<byte> crc64 = default)
+        {
+            int expectedBufferSize = 0;
+            if (!crc64.IsEmpty)
+            {
+                Errors.AssertBufferExactSize(crc64, Crc64Length, nameof(crc64));
+                expectedBufferSize += Crc64Length;
+            }
+            Errors.AssertBufferExactSize(buffer, expectedBufferSize, nameof(buffer));
+
+            if (!crc64.IsEmpty)
+            {
+                buffer.Slice(0, Crc64Length).CopyTo(crc64);
+            }
+        }
+
+        public static int WriteStreamFooter(Span<byte> buffer, ReadOnlySpan<byte> crc64 = default)
+        {
+            int requiredSpace = 0;
+            if (!crc64.IsEmpty)
+            {
+                Errors.AssertBufferExactSize(crc64, Crc64Length, nameof(crc64));
+                requiredSpace += Crc64Length;
+            }
+
+            Errors.AssertBufferMinimumSize(buffer, requiredSpace, nameof(buffer));
+            int offset = 0;
+            if (!crc64.IsEmpty)
+            {
+                crc64.CopyTo(buffer.Slice(offset, Crc64Length));
+                offset += Crc64Length;
+            }
+
+            return offset;
+        }
+
+        /// <summary>
+        /// Gets stream header in a buffer rented from the provided ArrayPool.
+        /// </summary>
+        /// <returns>
+        /// Disposable to return the buffer to the pool.
+        /// </returns>
+        public static IDisposable GetStreamFooterBytes(
+            ArrayPool<byte> pool,
+            out Memory<byte> bytes,
+            ReadOnlySpan<byte> crc64 = default)
+        {
+            Argument.AssertNotNull(pool, nameof(pool));
+            IDisposable disposable = pool.RentAsMemoryDisposable(StreamHeaderLength, out bytes);
+            WriteStreamFooter(bytes.Span, crc64);
+            return disposable;
+        }
+        #endregion
 
         #region SegmentHeader
         public static void ReadSegmentHeader(
