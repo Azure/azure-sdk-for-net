@@ -7,7 +7,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -81,16 +80,20 @@ namespace Azure.Core
 
             var lroDetails = ModelReaderWriter.Write(rehydrationToken!, new ModelReaderWriterOptions("J")).ToObjectFromJson<Dictionary<string, string>>();
             if (!Uri.TryCreate(lroDetails["initialUri"], UriKind.Absolute, out var startRequestUri))
+            {
                 throw new InvalidOperationException("Invalid initial URI");
+            }
+
             if (!lroDetails.TryGetValue("nextRequestUri", out var nextRequestUri))
+            {
                 throw new InvalidOperationException("Invalid next request URI");
+            }
+
             RequestMethod requestMethod = new RequestMethod(lroDetails["requestMethod"]);
             string lastKnownLocation = lroDetails["lastKnownLocation"];
-            if (!Enum.TryParse(lroDetails["finalStateVia"], out OperationFinalStateVia finalStateVia))
-                finalStateVia = OperationFinalStateVia.Location;
+            OperationFinalStateVia finalStateVia = Enum.IsDefined(typeof(OperationFinalStateVia), lroDetails["finalStateVia"]) ? (OperationFinalStateVia)Enum.Parse(typeof(OperationFinalStateVia), lroDetails["finalStateVia"]) : OperationFinalStateVia.Location;
             string? apiVersionStr = apiVersionOverride ?? (TryGetApiVersion(startRequestUri, out ReadOnlySpan<char> apiVersion) ? apiVersion.ToString() : null);
-            if (!Enum.TryParse(lroDetails["headerSource"], out HeaderSource headerSource))
-                headerSource = HeaderSource.None;
+            HeaderSource headerSource = Enum.IsDefined(typeof(HeaderSource), lroDetails["headerSource"]) ? (HeaderSource)Enum.Parse(typeof(HeaderSource), lroDetails["headerSource"]) : HeaderSource.None;
 
             return new NextLinkOperationImplementation(pipeline, requestMethod, startRequestUri, nextRequestUri, headerSource, lastKnownLocation, finalStateVia, apiVersionStr);
         }
@@ -100,12 +103,7 @@ namespace Azure.Core
             HttpPipeline pipeline,
             RehydrationToken? rehydrationToken,
             string? apiVersionOverride = null)
-        {
-            Argument.AssertNotNull(rehydrationToken, nameof(rehydrationToken));
-
-            var operation = Create(pipeline, rehydrationToken, apiVersionOverride);
-            return new OperationToOperationOfT<T>(operationSource, operation);
-        }
+            => new OperationToOperationOfT<T>(operationSource, Create(pipeline, rehydrationToken, apiVersionOverride));
 
         private NextLinkOperationImplementation(
             HttpPipeline pipeline,
@@ -117,6 +115,8 @@ namespace Azure.Core
             OperationFinalStateVia finalStateVia,
             string? apiVersion)
         {
+            Argument.AssertNotNull(pipeline, nameof(pipeline));
+
             _requestMethod = requestMethod;
             _headerSource = headerSource;
             _startRequestUri = startRequestUri;
@@ -157,9 +157,8 @@ namespace Azure.Core
             string? lastKnownLocation,
             string finalStateVia)
         {
-            var parameters = new object?[] { null, null, headerSource, nextRequestUri, startRequestUri.AbsoluteUri, requestMethod, lastKnownLocation, finalStateVia };
-            var rehydrationToken = Activator.CreateInstance(typeof(RehydrationToken), BindingFlags.NonPublic | BindingFlags.Instance, null, parameters, null);
-            return (RehydrationToken)rehydrationToken!;
+            var test = BinaryData.FromObjectAsJson(new { requestMethod = requestMethod.ToString(), initialUri = startRequestUri.AbsoluteUri, nextRequestUri, headerSource, lastKnownLocation, finalStateVia });
+            return ModelReaderWriter.Read<RehydrationToken>(test);
         }
 
         public async ValueTask<OperationState> UpdateStateAsync(bool async, CancellationToken cancellationToken)
@@ -471,7 +470,7 @@ namespace Azure.Core
             return HeaderSource.None;
         }
 
-        internal enum HeaderSource
+        private enum HeaderSource
         {
             None,
             OperationLocation,
