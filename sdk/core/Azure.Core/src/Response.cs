@@ -38,7 +38,8 @@ namespace Azure
         /// Gets the contents of HTTP response, if it is available.
         /// </summary>
         /// <remarks>
-        /// Throws <see cref="InvalidOperationException"/> when content is not buffered.
+        /// Throws <see cref="InvalidOperationException"/> when response content
+        /// has not been buffered by the pipeline.
         /// </remarks>
         public override BinaryData Content
         {
@@ -53,10 +54,7 @@ namespace Azure
             }
         }
 
-        /// <summary>
-        /// Gets the value of <see cref="PipelineResponse.Headers"/> on
-        /// the base <see cref="PipelineResponse"/> type.
-        /// </summary>
+        /// <inheritdoc/>
         protected override PipelineResponseHeaders HeadersCore
             => new ResponseHeadersAdapter(Headers);
 
