@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Confluent
             Uri ssoUrl = default;
             ConfluentOfferDetail offerDetail = default;
             ConfluentUserDetail userDetail = default;
-            Optional<LinkOrganization> linkOrganization = default;
+            LinkOrganization linkOrganization = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Confluent
                 ssoUrl,
                 offerDetail,
                 userDetail,
-                linkOrganization.Value,
+                linkOrganization,
                 serializedAdditionalRawData);
         }
 

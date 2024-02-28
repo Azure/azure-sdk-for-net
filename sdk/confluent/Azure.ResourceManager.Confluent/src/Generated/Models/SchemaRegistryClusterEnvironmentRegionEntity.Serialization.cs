@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Confluent.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> related = default;
-            Optional<string> resourceName = default;
+            string id = default;
+            string related = default;
+            string resourceName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SchemaRegistryClusterEnvironmentRegionEntity(id.Value, related.Value, resourceName.Value, serializedAdditionalRawData);
+            return new SchemaRegistryClusterEnvironmentRegionEntity(id, related, resourceName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SchemaRegistryClusterEnvironmentRegionEntity>.Write(ModelReaderWriterOptions options)

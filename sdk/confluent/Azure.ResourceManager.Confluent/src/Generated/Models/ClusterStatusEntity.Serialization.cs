@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Confluent.Models
             {
                 return null;
             }
-            Optional<string> phase = default;
-            Optional<int> cku = default;
+            string phase = default;
+            int? cku = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterStatusEntity(phase.Value, Optional.ToNullable(cku), serializedAdditionalRawData);
+            return new ClusterStatusEntity(phase, cku, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterStatusEntity>.Write(ModelReaderWriterOptions options)

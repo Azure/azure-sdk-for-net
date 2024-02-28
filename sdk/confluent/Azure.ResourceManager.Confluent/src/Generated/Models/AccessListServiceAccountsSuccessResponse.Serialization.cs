@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.Confluent.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
-            Optional<ConfluentListMetadata> metadata = default;
+            string kind = default;
+            ConfluentListMetadata metadata = default;
             IReadOnlyList<ServiceAccountRecord> data = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AccessListServiceAccountsSuccessResponse(kind.Value, metadata.Value, data ?? new ChangeTrackingList<ServiceAccountRecord>(), serializedAdditionalRawData);
+            return new AccessListServiceAccountsSuccessResponse(kind, metadata, data ?? new ChangeTrackingList<ServiceAccountRecord>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AccessListServiceAccountsSuccessResponse>.Write(ModelReaderWriterOptions options)

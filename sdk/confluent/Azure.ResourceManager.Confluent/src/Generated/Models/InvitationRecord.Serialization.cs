@@ -104,14 +104,14 @@ namespace Azure.ResourceManager.Confluent.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
-            Optional<string> id = default;
-            Optional<MetadataEntity> metadata = default;
-            Optional<string> email = default;
-            Optional<string> authType = default;
-            Optional<string> status = default;
-            Optional<string> acceptedAt = default;
-            Optional<string> expiresAt = default;
+            string kind = default;
+            string id = default;
+            MetadataEntity metadata = default;
+            string email = default;
+            string authType = default;
+            string status = default;
+            string acceptedAt = default;
+            string expiresAt = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -167,14 +167,14 @@ namespace Azure.ResourceManager.Confluent.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new InvitationRecord(
-                kind.Value,
-                id.Value,
-                metadata.Value,
-                email.Value,
-                authType.Value,
-                status.Value,
-                acceptedAt.Value,
-                expiresAt.Value,
+                kind,
+                id,
+                metadata,
+                email,
+                authType,
+                status,
+                acceptedAt,
+                expiresAt,
                 serializedAdditionalRawData);
         }
 

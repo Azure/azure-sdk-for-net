@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.Confluent.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> httpEndpoint = default;
-            Optional<string> package = default;
-            Optional<SchemaRegistryClusterEnvironmentRegionEntity> region = default;
-            Optional<SchemaRegistryClusterEnvironmentRegionEntity> environment = default;
-            Optional<string> cloud = default;
+            string name = default;
+            string httpEndpoint = default;
+            string package = default;
+            SchemaRegistryClusterEnvironmentRegionEntity region = default;
+            SchemaRegistryClusterEnvironmentRegionEntity environment = default;
+            string cloud = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,12 +149,12 @@ namespace Azure.ResourceManager.Confluent.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SchemaRegistryClusterSpecEntity(
-                name.Value,
-                httpEndpoint.Value,
-                package.Value,
-                region.Value,
-                environment.Value,
-                cloud.Value,
+                name,
+                httpEndpoint,
+                package,
+                region,
+                environment,
+                cloud,
                 serializedAdditionalRawData);
         }
 

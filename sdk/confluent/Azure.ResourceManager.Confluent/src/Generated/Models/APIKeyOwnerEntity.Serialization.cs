@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Confluent.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> related = default;
-            Optional<string> resourceName = default;
-            Optional<string> kind = default;
+            string id = default;
+            string related = default;
+            string resourceName = default;
+            string kind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new APIKeyOwnerEntity(id.Value, related.Value, resourceName.Value, kind.Value, serializedAdditionalRawData);
+            return new APIKeyOwnerEntity(id, related, resourceName, kind, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<APIKeyOwnerEntity>.Write(ModelReaderWriterOptions options)

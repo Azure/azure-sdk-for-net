@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 return null;
             }
             IReadOnlyList<SchemaRegistryClusterRecord> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ListSchemaRegistryClustersResponse(value ?? new ChangeTrackingList<SchemaRegistryClusterRecord>(), nextLink.Value, serializedAdditionalRawData);
+            return new ListSchemaRegistryClustersResponse(value ?? new ChangeTrackingList<SchemaRegistryClusterRecord>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ListSchemaRegistryClustersResponse>.Write(ModelReaderWriterOptions options)

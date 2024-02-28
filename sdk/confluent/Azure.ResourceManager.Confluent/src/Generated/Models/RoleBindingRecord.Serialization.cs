@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.Confluent.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
-            Optional<string> id = default;
-            Optional<MetadataEntity> metadata = default;
-            Optional<string> principal = default;
-            Optional<string> roleName = default;
-            Optional<string> crnPattern = default;
+            string kind = default;
+            string id = default;
+            MetadataEntity metadata = default;
+            string principal = default;
+            string roleName = default;
+            string crnPattern = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -145,12 +145,12 @@ namespace Azure.ResourceManager.Confluent.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new RoleBindingRecord(
-                kind.Value,
-                id.Value,
-                metadata.Value,
-                principal.Value,
-                roleName.Value,
-                crnPattern.Value,
+                kind,
+                id,
+                metadata,
+                principal,
+                roleName,
+                crnPattern,
                 serializedAdditionalRawData);
         }
 

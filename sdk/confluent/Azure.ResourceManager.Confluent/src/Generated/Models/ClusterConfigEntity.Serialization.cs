@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Confluent.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterConfigEntity(kind.Value, serializedAdditionalRawData);
+            return new ClusterConfigEntity(kind, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterConfigEntity>.Write(ModelReaderWriterOptions options)

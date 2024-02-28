@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Confluent.Models
             {
                 return null;
             }
-            Optional<string> principal = default;
-            Optional<string> roleName = default;
-            Optional<string> crnPattern = default;
+            string principal = default;
+            string roleName = default;
+            string crnPattern = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AccessCreateRoleBindingRequestModel(principal.Value, roleName.Value, crnPattern.Value, serializedAdditionalRawData);
+            return new AccessCreateRoleBindingRequestModel(principal, roleName, crnPattern, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AccessCreateRoleBindingRequestModel>.Write(ModelReaderWriterOptions options)

@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Confluent.Models
             {
                 return null;
             }
-            Optional<string> self = default;
-            Optional<string> resourceName = default;
-            Optional<string> createdAt = default;
-            Optional<string> updatedAt = default;
-            Optional<string> deletedAt = default;
+            string self = default;
+            string resourceName = default;
+            string createdAt = default;
+            string updatedAt = default;
+            string deletedAt = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,11 +130,11 @@ namespace Azure.ResourceManager.Confluent.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MetadataEntity(
-                self.Value,
-                resourceName.Value,
-                createdAt.Value,
-                updatedAt.Value,
-                deletedAt.Value,
+                self,
+                resourceName,
+                createdAt,
+                updatedAt,
+                deletedAt,
                 serializedAdditionalRawData);
         }
 

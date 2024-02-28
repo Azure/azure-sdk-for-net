@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Confluent.Models
             {
                 return null;
             }
-            Optional<string> organizationId = default;
-            Optional<string> email = default;
-            Optional<string> upn = default;
-            Optional<AccessInvitedUserDetails> invitedUserDetails = default;
+            string organizationId = default;
+            string email = default;
+            string upn = default;
+            AccessInvitedUserDetails invitedUserDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AccessInviteUserAccountModel(organizationId.Value, email.Value, upn.Value, invitedUserDetails.Value, serializedAdditionalRawData);
+            return new AccessInviteUserAccountModel(organizationId, email, upn, invitedUserDetails, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AccessInviteUserAccountModel>.Write(ModelReaderWriterOptions options)

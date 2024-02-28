@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Confluent.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> environment = default;
-            Optional<string> related = default;
-            Optional<string> resourceName = default;
-            Optional<string> kind = default;
+            string id = default;
+            string environment = default;
+            string related = default;
+            string resourceName = default;
+            string kind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,11 +130,11 @@ namespace Azure.ResourceManager.Confluent.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new APIKeyResourceEntity(
-                id.Value,
-                environment.Value,
-                related.Value,
-                resourceName.Value,
-                kind.Value,
+                id,
+                environment,
+                related,
+                resourceName,
+                kind,
                 serializedAdditionalRawData);
         }
 

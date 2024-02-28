@@ -104,6 +104,9 @@ namespace Azure.ResourceManager.Confluent.Models
             string planId = default;
             string planName = default;
             string termUnit = default;
+            string termId = default;
+            string privateOfferId = default;
+            IList<string> privateOfferIds = default;
             ConfluentSaaSOfferStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -179,7 +182,10 @@ namespace Azure.ResourceManager.Confluent.Models
                 planId,
                 planName,
                 termUnit,
-                Optional.ToNullable(status),
+                termId,
+                privateOfferId,
+                privateOfferIds ?? new ChangeTrackingList<string>(),
+                status,
                 serializedAdditionalRawData);
         }
 

@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.Confluent.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
-            Optional<string> id = default;
-            Optional<SCMetadataEntity> metadata = default;
-            Optional<RegionSpecEntity> spec = default;
+            string kind = default;
+            string id = default;
+            SCMetadataEntity metadata = default;
+            RegionSpecEntity spec = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RegionRecord(kind.Value, id.Value, metadata.Value, spec.Value, serializedAdditionalRawData);
+            return new RegionRecord(kind, id, metadata, spec, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RegionRecord>.Write(ModelReaderWriterOptions options)

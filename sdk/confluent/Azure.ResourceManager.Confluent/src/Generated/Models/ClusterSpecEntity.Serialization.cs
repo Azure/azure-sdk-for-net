@@ -124,18 +124,18 @@ namespace Azure.ResourceManager.Confluent.Models
             {
                 return null;
             }
-            Optional<string> displayName = default;
-            Optional<string> availability = default;
-            Optional<string> cloud = default;
-            Optional<string> zone = default;
-            Optional<string> region = default;
-            Optional<string> kafkaBootstrapEndpoint = default;
-            Optional<string> httpEndpoint = default;
-            Optional<string> apiEndpoint = default;
-            Optional<ClusterConfigEntity> config = default;
-            Optional<ClusterEnvironmentEntity> environment = default;
-            Optional<ClusterNetworkEntity> network = default;
-            Optional<ClusterByokEntity> byok = default;
+            string displayName = default;
+            string availability = default;
+            string cloud = default;
+            string zone = default;
+            string region = default;
+            string kafkaBootstrapEndpoint = default;
+            string httpEndpoint = default;
+            string apiEndpoint = default;
+            ClusterConfigEntity config = default;
+            ClusterEnvironmentEntity environment = default;
+            ClusterNetworkEntity network = default;
+            ClusterByokEntity byok = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -223,18 +223,18 @@ namespace Azure.ResourceManager.Confluent.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ClusterSpecEntity(
-                displayName.Value,
-                availability.Value,
-                cloud.Value,
-                zone.Value,
-                region.Value,
-                kafkaBootstrapEndpoint.Value,
-                httpEndpoint.Value,
-                apiEndpoint.Value,
-                config.Value,
-                environment.Value,
-                network.Value,
-                byok.Value,
+                displayName,
+                availability,
+                cloud,
+                zone,
+                region,
+                kafkaBootstrapEndpoint,
+                httpEndpoint,
+                apiEndpoint,
+                config,
+                environment,
+                network,
+                byok,
                 serializedAdditionalRawData);
         }
 

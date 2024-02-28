@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.Confluent.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<SCMetadataEntity> metadata = default;
+            string kind = default;
+            string id = default;
+            string name = default;
+            SCMetadataEntity metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SCEnvironmentRecord(kind.Value, id.Value, name.Value, metadata.Value, serializedAdditionalRawData);
+            return new SCEnvironmentRecord(kind, id, name, metadata, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SCEnvironmentRecord>.Write(ModelReaderWriterOptions options)

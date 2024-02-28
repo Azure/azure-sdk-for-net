@@ -97,12 +97,12 @@ namespace Azure.ResourceManager.Confluent.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<SCMetadataEntity> metadata = default;
-            Optional<SCClusterSpecEntity> spec = default;
-            Optional<ClusterStatusEntity> status = default;
+            string kind = default;
+            string id = default;
+            string name = default;
+            SCMetadataEntity metadata = default;
+            SCClusterSpecEntity spec = default;
+            ClusterStatusEntity status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -168,12 +168,12 @@ namespace Azure.ResourceManager.Confluent.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SCClusterRecord(
-                kind.Value,
-                id.Value,
-                name.Value,
-                metadata.Value,
-                spec.Value,
-                status.Value,
+                kind,
+                id,
+                name,
+                metadata,
+                spec,
+                status,
                 serializedAdditionalRawData);
         }
 

@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Confluent.Models
             {
                 return null;
             }
-            Optional<string> phase = default;
+            string phase = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SchemaRegistryClusterStatusEntity(phase.Value, serializedAdditionalRawData);
+            return new SchemaRegistryClusterStatusEntity(phase, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SchemaRegistryClusterStatusEntity>.Write(ModelReaderWriterOptions options)

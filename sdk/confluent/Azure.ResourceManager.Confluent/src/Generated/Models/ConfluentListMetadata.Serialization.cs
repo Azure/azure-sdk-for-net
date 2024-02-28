@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Confluent.Models
             {
                 return null;
             }
-            Optional<string> first = default;
-            Optional<string> last = default;
-            Optional<string> prev = default;
-            Optional<string> next = default;
-            Optional<int> totalSize = default;
+            string first = default;
+            string last = default;
+            string prev = default;
+            string next = default;
+            int? totalSize = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,11 +134,11 @@ namespace Azure.ResourceManager.Confluent.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ConfluentListMetadata(
-                first.Value,
-                last.Value,
-                prev.Value,
-                next.Value,
-                Optional.ToNullable(totalSize),
+                first,
+                last,
+                prev,
+                next,
+                totalSize,
                 serializedAdditionalRawData);
         }
 

@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.Confluent.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
-            Optional<ConfluentListMetadata> metadata = default;
+            string kind = default;
+            ConfluentListMetadata metadata = default;
             IReadOnlyList<EnvironmentRecord> data = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AccessListEnvironmentsSuccessResponse(kind.Value, metadata.Value, data ?? new ChangeTrackingList<EnvironmentRecord>(), serializedAdditionalRawData);
+            return new AccessListEnvironmentsSuccessResponse(kind, metadata, data ?? new ChangeTrackingList<EnvironmentRecord>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AccessListEnvironmentsSuccessResponse>.Write(ModelReaderWriterOptions options)

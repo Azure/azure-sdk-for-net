@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.Confluent.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> cloud = default;
-            Optional<string> regionName = default;
+            string name = default;
+            string cloud = default;
+            string regionName = default;
             IReadOnlyList<string> packages = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RegionSpecEntity(name.Value, cloud.Value, regionName.Value, packages ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new RegionSpecEntity(name, cloud, regionName, packages ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RegionSpecEntity>.Write(ModelReaderWriterOptions options)

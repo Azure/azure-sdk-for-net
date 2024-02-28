@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.Confluent.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
-            Optional<string> id = default;
-            Optional<MetadataEntity> metadata = default;
-            Optional<string> email = default;
-            Optional<string> fullName = default;
-            Optional<string> authType = default;
+            string kind = default;
+            string id = default;
+            MetadataEntity metadata = default;
+            string email = default;
+            string fullName = default;
+            string authType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -145,12 +145,12 @@ namespace Azure.ResourceManager.Confluent.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new UserRecord(
-                kind.Value,
-                id.Value,
-                metadata.Value,
-                email.Value,
-                fullName.Value,
-                authType.Value,
+                kind,
+                id,
+                metadata,
+                email,
+                fullName,
+                authType,
                 serializedAdditionalRawData);
         }
 
