@@ -51,4 +51,5 @@ extends:
     LiveTestStages:
       - template: /eng/pipelines/templates/stages/archetype-sdk-tests.yml
         parameters:
+          Extend1es: false
           ServiceDirectory: template
