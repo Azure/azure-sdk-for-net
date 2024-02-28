@@ -104,12 +104,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 return null;
             }
             string encodedTaskContent = default;
-            Optional<string> encodedValuesContent = default;
+            string encodedValuesContent = default;
             IList<ContainerRegistryTaskOverridableValue> values = default;
             ContainerRegistryTaskStepType type = default;
             IReadOnlyList<ContainerRegistryBaseImageDependency> baseImageDependencies = default;
-            Optional<string> contextPath = default;
-            Optional<string> contextAccessToken = default;
+            string contextPath = default;
+            string contextAccessToken = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -176,11 +176,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             return new ContainerRegistryEncodedTaskStep(
                 type,
                 baseImageDependencies ?? new ChangeTrackingList<ContainerRegistryBaseImageDependency>(),
-                contextPath.Value,
-                contextAccessToken.Value,
+                contextPath,
+                contextAccessToken,
                 serializedAdditionalRawData,
                 encodedTaskContent,
-                encodedValuesContent.Value,
+                encodedValuesContent,
                 values ?? new ChangeTrackingList<ContainerRegistryTaskOverridableValue>());
         }
 

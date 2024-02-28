@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
@@ -18,8 +17,8 @@ namespace Azure.Monitor.Query.Models
             {
                 return null;
             }
-            Optional<string> type = default;
-            Optional<string> info = default;
+            string type = default;
+            string info = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -33,7 +32,7 @@ namespace Azure.Monitor.Query.Models
                     continue;
                 }
             }
-            return new AdditionalInfoErrorResponseErrorAdditionalInfoItem(type.Value, info.Value);
+            return new AdditionalInfoErrorResponseErrorAdditionalInfoItem(type, info);
         }
     }
 }

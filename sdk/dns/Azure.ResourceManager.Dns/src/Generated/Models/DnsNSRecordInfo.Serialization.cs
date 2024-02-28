@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Dns.Models
             {
                 return null;
             }
-            Optional<string> nsdname = default;
+            string nsdname = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Dns.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DnsNSRecordInfo(nsdname.Value, serializedAdditionalRawData);
+            return new DnsNSRecordInfo(nsdname, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DnsNSRecordInfo>.Write(ModelReaderWriterOptions options)

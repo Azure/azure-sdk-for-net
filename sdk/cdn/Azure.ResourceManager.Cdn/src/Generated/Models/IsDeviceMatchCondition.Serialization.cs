@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             IsDeviceMatchConditionType typeName = default;
             IsDeviceOperator @operator = default;
-            Optional<bool> negateCondition = default;
+            bool? negateCondition = default;
             IList<IsDeviceMatchConditionMatchValue> matchValues = default;
             IList<PreTransformCategory> transforms = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Cdn.Models
             return new IsDeviceMatchCondition(
                 typeName,
                 @operator,
-                Optional.ToNullable(negateCondition),
+                negateCondition,
                 matchValues ?? new ChangeTrackingList<IsDeviceMatchConditionMatchValue>(),
                 transforms ?? new ChangeTrackingList<PreTransformCategory>(),
                 serializedAdditionalRawData);

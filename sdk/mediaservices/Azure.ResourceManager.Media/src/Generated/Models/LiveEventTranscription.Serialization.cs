@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<string> language = default;
+            string language = default;
             IList<LiveEventInputTrackSelection> inputTrackSelection = default;
-            Optional<LiveEventOutputTranscriptionTrack> outputTranscriptionTrack = default;
+            LiveEventOutputTranscriptionTrack outputTranscriptionTrack = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LiveEventTranscription(language.Value, inputTrackSelection ?? new ChangeTrackingList<LiveEventInputTrackSelection>(), outputTranscriptionTrack.Value, serializedAdditionalRawData);
+            return new LiveEventTranscription(language, inputTrackSelection ?? new ChangeTrackingList<LiveEventInputTrackSelection>(), outputTranscriptionTrack, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LiveEventTranscription>.Write(ModelReaderWriterOptions options)

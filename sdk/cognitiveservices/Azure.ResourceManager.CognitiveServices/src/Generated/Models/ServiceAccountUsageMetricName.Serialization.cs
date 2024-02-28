@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<string> value = default;
-            Optional<string> localizedValue = default;
+            string value = default;
+            string localizedValue = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceAccountUsageMetricName(value.Value, localizedValue.Value, serializedAdditionalRawData);
+            return new ServiceAccountUsageMetricName(value, localizedValue, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceAccountUsageMetricName>.Write(ModelReaderWriterOptions options)

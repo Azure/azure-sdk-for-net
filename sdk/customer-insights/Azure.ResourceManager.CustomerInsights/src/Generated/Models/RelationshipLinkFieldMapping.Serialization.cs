@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 return null;
             }
             string interactionFieldName = default;
-            Optional<LinkType> linkType = default;
+            LinkType? linkType = default;
             string relationshipFieldName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RelationshipLinkFieldMapping(interactionFieldName, Optional.ToNullable(linkType), relationshipFieldName, serializedAdditionalRawData);
+            return new RelationshipLinkFieldMapping(interactionFieldName, linkType, relationshipFieldName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RelationshipLinkFieldMapping>.Write(ModelReaderWriterOptions options)

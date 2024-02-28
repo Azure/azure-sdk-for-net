@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<int> sizeInGB = default;
-            Optional<int> usedInGB = default;
-            Optional<string> mountPath = default;
+            int? sizeInGB = default;
+            int? usedInGB = default;
+            string mountPath = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPersistentDisk(Optional.ToNullable(sizeInGB), Optional.ToNullable(usedInGB), mountPath.Value, serializedAdditionalRawData);
+            return new AppPersistentDisk(sizeInGB, usedInGB, mountPath, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPersistentDisk>.Write(ModelReaderWriterOptions options)

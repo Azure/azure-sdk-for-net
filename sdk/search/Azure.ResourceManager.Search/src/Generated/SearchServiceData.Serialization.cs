@@ -206,27 +206,27 @@ namespace Azure.ResourceManager.Search
             {
                 return null;
             }
-            Optional<SearchSku> sku = default;
-            Optional<ManagedServiceIdentity> identity = default;
+            SearchSku sku = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> replicaCount = default;
-            Optional<int> partitionCount = default;
-            Optional<SearchServiceHostingMode> hostingMode = default;
-            Optional<SearchServicePublicNetworkAccess> publicNetworkAccess = default;
-            Optional<SearchServiceStatus> status = default;
-            Optional<string> statusDetails = default;
-            Optional<SearchServiceProvisioningState> provisioningState = default;
-            Optional<NetworkRuleSet> networkRuleSet = default;
-            Optional<SearchEncryptionWithCmk> encryptionWithCmk = default;
-            Optional<bool?> disableLocalAuth = default;
-            Optional<SearchAadAuthDataPlaneAuthOptions> authOptions = default;
+            SystemData systemData = default;
+            int? replicaCount = default;
+            int? partitionCount = default;
+            SearchServiceHostingMode? hostingMode = default;
+            SearchServicePublicNetworkAccess? publicNetworkAccess = default;
+            SearchServiceStatus? status = default;
+            string statusDetails = default;
+            SearchServiceProvisioningState? provisioningState = default;
+            NetworkRuleSet networkRuleSet = default;
+            SearchEncryptionWithCmk encryptionWithCmk = default;
+            bool? disableLocalAuth = default;
+            SearchAadAuthDataPlaneAuthOptions authOptions = default;
             IReadOnlyList<SearchPrivateEndpointConnectionData> privateEndpointConnections = default;
-            Optional<SearchSemanticSearch?> semanticSearch = default;
+            SearchSemanticSearch? semanticSearch = default;
             IReadOnlyList<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -449,24 +449,24 @@ namespace Azure.ResourceManager.Search
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                sku.Value,
+                sku,
                 identity,
-                Optional.ToNullable(replicaCount),
-                Optional.ToNullable(partitionCount),
-                Optional.ToNullable(hostingMode),
-                Optional.ToNullable(publicNetworkAccess),
-                Optional.ToNullable(status),
-                statusDetails.Value,
-                Optional.ToNullable(provisioningState),
-                networkRuleSet.Value,
-                encryptionWithCmk.Value,
-                Optional.ToNullable(disableLocalAuth),
-                authOptions.Value,
+                replicaCount,
+                partitionCount,
+                hostingMode,
+                publicNetworkAccess,
+                status,
+                statusDetails,
+                provisioningState,
+                networkRuleSet,
+                encryptionWithCmk,
+                disableLocalAuth,
+                authOptions,
                 privateEndpointConnections ?? new ChangeTrackingList<SearchPrivateEndpointConnectionData>(),
-                Optional.ToNullable(semanticSearch),
+                semanticSearch,
                 sharedPrivateLinkResources ?? new ChangeTrackingList<SharedSearchServicePrivateLinkResourceData>(),
                 serializedAdditionalRawData);
         }

@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<string> adminPassword = default;
-            Optional<string> adminUsername = default;
-            Optional<string> computerName = default;
-            Optional<VirtualMachineInstancePropertiesOSProfileLinuxConfiguration> linuxConfiguration = default;
-            Optional<VirtualMachineInstancePropertiesOSProfileWindowsConfiguration> windowsConfiguration = default;
+            string adminPassword = default;
+            string adminUsername = default;
+            string computerName = default;
+            VirtualMachineInstancePropertiesOSProfileLinuxConfiguration linuxConfiguration = default;
+            VirtualMachineInstancePropertiesOSProfileWindowsConfiguration windowsConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,11 +138,11 @@ namespace Azure.ResourceManager.Hci.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new VirtualMachineInstancePropertiesOSProfile(
-                adminPassword.Value,
-                adminUsername.Value,
-                computerName.Value,
-                linuxConfiguration.Value,
-                windowsConfiguration.Value,
+                adminPassword,
+                adminUsername,
+                computerName,
+                linuxConfiguration,
+                windowsConfiguration,
                 serializedAdditionalRawData);
         }
 

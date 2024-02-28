@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<string> operationId = default;
-            Optional<DateTimeOffset> startTimeUtc = default;
-            Optional<DateTimeOffset> completionTimeUtc = default;
-            Optional<string> sourceResourcePath = default;
-            Optional<string> targetResourcePath = default;
+            string operationId = default;
+            DateTimeOffset? startTimeUtc = default;
+            DateTimeOffset? completionTimeUtc = default;
+            string sourceResourcePath = default;
+            string targetResourcePath = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,11 +138,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new BackupVaultResourceMoveDetails(
-                operationId.Value,
-                Optional.ToNullable(startTimeUtc),
-                Optional.ToNullable(completionTimeUtc),
-                sourceResourcePath.Value,
-                targetResourcePath.Value,
+                operationId,
+                startTimeUtc,
+                completionTimeUtc,
+                sourceResourcePath,
+                targetResourcePath,
                 serializedAdditionalRawData);
         }
 

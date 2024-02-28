@@ -86,11 +86,11 @@ namespace Azure.Communication.JobRouter
             {
                 return null;
             }
-            Optional<RouterRule> scoringRule = default;
-            Optional<ScoringRuleOptions> scoringRuleOptions = default;
-            Optional<int> minConcurrentOffers = default;
-            Optional<int> maxConcurrentOffers = default;
-            Optional<bool> bypassSelectors = default;
+            RouterRule scoringRule = default;
+            ScoringRuleOptions scoringRuleOptions = default;
+            int minConcurrentOffers = default;
+            int maxConcurrentOffers = default;
+            bool? bypassSelectors = default;
             DistributionModeKind kind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -155,11 +155,11 @@ namespace Azure.Communication.JobRouter
             return new BestWorkerMode(
                 minConcurrentOffers,
                 maxConcurrentOffers,
-                Optional.ToNullable(bypassSelectors),
+                bypassSelectors,
                 kind,
                 serializedAdditionalRawData,
-                scoringRule.Value,
-                scoringRuleOptions.Value);
+                scoringRule,
+                scoringRuleOptions);
         }
 
         BinaryData IPersistableModel<BestWorkerMode>.Write(ModelReaderWriterOptions options)

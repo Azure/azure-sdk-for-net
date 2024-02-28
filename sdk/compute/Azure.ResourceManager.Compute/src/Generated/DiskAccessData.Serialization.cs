@@ -127,16 +127,16 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
-            Optional<ExtendedLocation> extendedLocation = default;
+            ExtendedLocation extendedLocation = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IReadOnlyList<ComputePrivateEndpointConnectionData> privateEndpointConnections = default;
-            Optional<string> provisioningState = default;
-            Optional<DateTimeOffset> timeCreated = default;
+            string provisioningState = default;
+            DateTimeOffset? timeCreated = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -243,13 +243,13 @@ namespace Azure.ResourceManager.Compute
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 extendedLocation,
                 privateEndpointConnections ?? new ChangeTrackingList<ComputePrivateEndpointConnectionData>(),
-                provisioningState.Value,
-                Optional.ToNullable(timeCreated),
+                provisioningState,
+                timeCreated,
                 serializedAdditionalRawData);
         }
 

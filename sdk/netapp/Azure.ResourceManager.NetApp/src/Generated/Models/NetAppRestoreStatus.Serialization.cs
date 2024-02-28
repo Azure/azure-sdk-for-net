@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<bool> healthy = default;
-            Optional<NetAppRelationshipStatus> relationshipStatus = default;
-            Optional<NetAppMirrorState> mirrorState = default;
-            Optional<string> unhealthyReason = default;
-            Optional<string> errorMessage = default;
-            Optional<long> totalTransferBytes = default;
+            bool? healthy = default;
+            NetAppRelationshipStatus? relationshipStatus = default;
+            NetAppMirrorState? mirrorState = default;
+            string unhealthyReason = default;
+            string errorMessage = default;
+            long? totalTransferBytes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,12 +157,12 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new NetAppRestoreStatus(
-                Optional.ToNullable(healthy),
-                Optional.ToNullable(relationshipStatus),
-                Optional.ToNullable(mirrorState),
-                unhealthyReason.Value,
-                errorMessage.Value,
-                Optional.ToNullable(totalTransferBytes),
+                healthy,
+                relationshipStatus,
+                mirrorState,
+                unhealthyReason,
+                errorMessage,
+                totalTransferBytes,
                 serializedAdditionalRawData);
         }
 

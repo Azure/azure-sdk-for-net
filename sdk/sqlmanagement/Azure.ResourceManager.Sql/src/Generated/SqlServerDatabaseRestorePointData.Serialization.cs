@@ -114,15 +114,15 @@ namespace Azure.ResourceManager.Sql
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<RestorePointType> restorePointType = default;
-            Optional<DateTimeOffset> earliestRestoreDate = default;
-            Optional<DateTimeOffset> restorePointCreationDate = default;
-            Optional<string> restorePointLabel = default;
+            SystemData systemData = default;
+            RestorePointType? restorePointType = default;
+            DateTimeOffset? earliestRestoreDate = default;
+            DateTimeOffset? restorePointCreationDate = default;
+            string restorePointLabel = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -214,12 +214,12 @@ namespace Azure.ResourceManager.Sql
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(location),
-                Optional.ToNullable(restorePointType),
-                Optional.ToNullable(earliestRestoreDate),
-                Optional.ToNullable(restorePointCreationDate),
-                restorePointLabel.Value,
+                systemData,
+                location,
+                restorePointType,
+                earliestRestoreDate,
+                restorePointCreationDate,
+                restorePointLabel,
                 serializedAdditionalRawData);
         }
 

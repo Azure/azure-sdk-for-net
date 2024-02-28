@@ -23,8 +23,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 return null;
             }
             IReadOnlyList<MediaJobOutput> outputs = default;
-            Optional<MediaJobState> previousState = default;
-            Optional<MediaJobState> state = default;
+            MediaJobState? previousState = default;
+            MediaJobState? state = default;
             IReadOnlyDictionary<string, string> correlationData = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -75,7 +75,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new MediaJobErroredEventData(Optional.ToNullable(previousState), Optional.ToNullable(state), correlationData ?? new ChangeTrackingDictionary<string, string>(), outputs ?? new ChangeTrackingList<MediaJobOutput>());
+            return new MediaJobErroredEventData(previousState, state, correlationData ?? new ChangeTrackingDictionary<string, string>(), outputs ?? new ChangeTrackingList<MediaJobOutput>());
         }
 
         internal partial class MediaJobErroredEventDataConverter : JsonConverter<MediaJobErroredEventData>

@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<string> name = default;
+            string name = default;
             IReadOnlyList<RankingsResponseTablesPropertiesItemsMetricsItem> metrics = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RankingsResponseTablesPropertiesItemsItem(name.Value, metrics ?? new ChangeTrackingList<RankingsResponseTablesPropertiesItemsMetricsItem>(), serializedAdditionalRawData);
+            return new RankingsResponseTablesPropertiesItemsItem(name, metrics ?? new ChangeTrackingList<RankingsResponseTablesPropertiesItemsMetricsItem>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RankingsResponseTablesPropertiesItemsItem>.Write(ModelReaderWriterOptions options)

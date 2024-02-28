@@ -129,13 +129,13 @@ namespace Azure.ResourceManager.LabServices
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> startAt = default;
-            Optional<DateTimeOffset> stopAt = default;
-            Optional<LabServicesRecurrencePattern> recurrencePattern = default;
-            Optional<string> timeZoneId = default;
-            Optional<BinaryData> notes = default;
-            Optional<LabServicesProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            DateTimeOffset? startAt = default;
+            DateTimeOffset? stopAt = default;
+            LabServicesRecurrencePattern recurrencePattern = default;
+            string timeZoneId = default;
+            BinaryData notes = default;
+            LabServicesProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -236,13 +236,13 @@ namespace Azure.ResourceManager.LabServices
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(startAt),
-                Optional.ToNullable(stopAt),
-                recurrencePattern.Value,
-                timeZoneId.Value,
-                notes.Value,
-                Optional.ToNullable(provisioningState),
+                systemData,
+                startAt,
+                stopAt,
+                recurrencePattern,
+                timeZoneId,
+                notes,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

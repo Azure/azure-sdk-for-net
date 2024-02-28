@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<CalculateExchangeOperationResultStatus> status = default;
-            Optional<CalculateExchangeResultProperties> properties = default;
-            Optional<OperationResultError> error = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            CalculateExchangeOperationResultStatus? status = default;
+            CalculateExchangeResultProperties properties = default;
+            OperationResultError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,11 +146,11 @@ namespace Azure.ResourceManager.Reservations.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new CalculateExchangeResult(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(status),
-                properties.Value,
-                error.Value,
+                id,
+                name,
+                status,
+                properties,
+                error,
                 serializedAdditionalRawData);
         }
 

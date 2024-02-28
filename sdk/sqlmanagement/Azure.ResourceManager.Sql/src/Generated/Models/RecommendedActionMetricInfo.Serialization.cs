@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<string> metricName = default;
-            Optional<string> unit = default;
-            Optional<string> timeGrain = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<double> value = default;
+            string metricName = default;
+            string unit = default;
+            string timeGrain = default;
+            DateTimeOffset? startTime = default;
+            double? value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,11 +138,11 @@ namespace Azure.ResourceManager.Sql.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new RecommendedActionMetricInfo(
-                metricName.Value,
-                unit.Value,
-                timeGrain.Value,
-                Optional.ToNullable(startTime),
-                Optional.ToNullable(value),
+                metricName,
+                unit,
+                timeGrain,
+                startTime,
+                value,
                 serializedAdditionalRawData);
         }
 

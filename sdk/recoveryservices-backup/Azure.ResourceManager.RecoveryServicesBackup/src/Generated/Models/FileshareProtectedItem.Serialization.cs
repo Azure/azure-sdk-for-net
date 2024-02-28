@@ -202,32 +202,32 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<string> friendlyName = default;
-            Optional<string> protectionStatus = default;
-            Optional<BackupProtectionState> protectionState = default;
-            Optional<string> lastBackupStatus = default;
-            Optional<DateTimeOffset> lastBackupTime = default;
+            string friendlyName = default;
+            string protectionStatus = default;
+            BackupProtectionState? protectionState = default;
+            string lastBackupStatus = default;
+            DateTimeOffset? lastBackupTime = default;
             IDictionary<string, KpiResourceHealthDetails> kpisHealths = default;
-            Optional<FileshareProtectedItemExtendedInfo> extendedInfo = default;
+            FileshareProtectedItemExtendedInfo extendedInfo = default;
             string protectedItemType = default;
-            Optional<BackupManagementType> backupManagementType = default;
-            Optional<BackupDataSourceType> workloadType = default;
-            Optional<string> containerName = default;
-            Optional<ResourceIdentifier> sourceResourceId = default;
-            Optional<ResourceIdentifier> policyId = default;
-            Optional<DateTimeOffset> lastRecoveryPoint = default;
-            Optional<string> backupSetName = default;
-            Optional<BackupCreateMode> createMode = default;
-            Optional<DateTimeOffset> deferredDeleteTimeInUTC = default;
-            Optional<bool> isScheduledForDeferredDelete = default;
-            Optional<string> deferredDeleteTimeRemaining = default;
-            Optional<bool> isDeferredDeleteScheduleUpcoming = default;
-            Optional<bool> isRehydrate = default;
+            BackupManagementType? backupManagementType = default;
+            BackupDataSourceType? workloadType = default;
+            string containerName = default;
+            ResourceIdentifier sourceResourceId = default;
+            ResourceIdentifier policyId = default;
+            DateTimeOffset? lastRecoveryPoint = default;
+            string backupSetName = default;
+            BackupCreateMode? createMode = default;
+            DateTimeOffset? deferredDeleteTimeInUTC = default;
+            bool? isScheduledForDeferredDelete = default;
+            string deferredDeleteTimeRemaining = default;
+            bool? isDeferredDeleteScheduleUpcoming = default;
+            bool? isRehydrate = default;
             IList<string> resourceGuardOperationRequests = default;
-            Optional<bool> isArchiveEnabled = default;
-            Optional<string> policyName = default;
-            Optional<int> softDeleteRetentionPeriodInDays = default;
-            Optional<string> vaultId = default;
+            bool? isArchiveEnabled = default;
+            string policyName = default;
+            int? softDeleteRetentionPeriodInDays = default;
+            string vaultId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -448,32 +448,32 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new FileshareProtectedItem(
                 protectedItemType,
-                Optional.ToNullable(backupManagementType),
-                Optional.ToNullable(workloadType),
-                containerName.Value,
-                sourceResourceId.Value,
-                policyId.Value,
-                Optional.ToNullable(lastRecoveryPoint),
-                backupSetName.Value,
-                Optional.ToNullable(createMode),
-                Optional.ToNullable(deferredDeleteTimeInUTC),
-                Optional.ToNullable(isScheduledForDeferredDelete),
-                deferredDeleteTimeRemaining.Value,
-                Optional.ToNullable(isDeferredDeleteScheduleUpcoming),
-                Optional.ToNullable(isRehydrate),
+                backupManagementType,
+                workloadType,
+                containerName,
+                sourceResourceId,
+                policyId,
+                lastRecoveryPoint,
+                backupSetName,
+                createMode,
+                deferredDeleteTimeInUTC,
+                isScheduledForDeferredDelete,
+                deferredDeleteTimeRemaining,
+                isDeferredDeleteScheduleUpcoming,
+                isRehydrate,
                 resourceGuardOperationRequests ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(isArchiveEnabled),
-                policyName.Value,
-                Optional.ToNullable(softDeleteRetentionPeriodInDays),
-                vaultId.Value,
+                isArchiveEnabled,
+                policyName,
+                softDeleteRetentionPeriodInDays,
+                vaultId,
                 serializedAdditionalRawData,
-                friendlyName.Value,
-                protectionStatus.Value,
-                Optional.ToNullable(protectionState),
-                lastBackupStatus.Value,
-                Optional.ToNullable(lastBackupTime),
+                friendlyName,
+                protectionStatus,
+                protectionState,
+                lastBackupStatus,
+                lastBackupTime,
                 kpisHealths ?? new ChangeTrackingDictionary<string, KpiResourceHealthDetails>(),
-                extendedInfo.Value);
+                extendedInfo);
         }
 
         BinaryData IPersistableModel<FileshareProtectedItem>.Write(ModelReaderWriterOptions options)

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Maps.Routing.Models
 {
@@ -18,8 +17,8 @@ namespace Azure.Maps.Routing.Models
             {
                 return null;
             }
-            Optional<int> providedIndex = default;
-            Optional<int> optimizedIndex = default;
+            int? providedIndex = default;
+            int? optimizedIndex = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("providedIndex"u8))
@@ -41,7 +40,7 @@ namespace Azure.Maps.Routing.Models
                     continue;
                 }
             }
-            return new RouteOptimizedWaypoint(Optional.ToNullable(providedIndex), Optional.ToNullable(optimizedIndex));
+            return new RouteOptimizedWaypoint(providedIndex, optimizedIndex);
         }
     }
 }

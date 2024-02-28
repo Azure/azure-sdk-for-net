@@ -115,15 +115,15 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<long> peerAsn = default;
-            Optional<string> peerIP = default;
-            Optional<WritableSubResource> hubVirtualNetworkConnection = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<HubBgpConnectionStatus> connectionState = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            long? peerAsn = default;
+            string peerIP = default;
+            WritableSubResource hubVirtualNetworkConnection = default;
+            NetworkProvisioningState? provisioningState = default;
+            HubBgpConnectionStatus? connectionState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -220,16 +220,16 @@ namespace Azure.ResourceManager.Network
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new BgpConnectionData(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
+                id,
+                name,
+                type,
                 serializedAdditionalRawData,
-                Optional.ToNullable(etag),
-                Optional.ToNullable(peerAsn),
-                peerIP.Value,
+                etag,
+                peerAsn,
+                peerIP,
                 hubVirtualNetworkConnection,
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(connectionState));
+                provisioningState,
+                connectionState);
         }
 
         BinaryData IPersistableModel<BgpConnectionData>.Write(ModelReaderWriterOptions options)

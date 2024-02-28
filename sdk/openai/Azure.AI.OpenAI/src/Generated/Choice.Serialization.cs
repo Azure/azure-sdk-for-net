@@ -94,7 +94,7 @@ namespace Azure.AI.OpenAI
             }
             string text = default;
             int index = default;
-            Optional<ContentFilterResultsForChoice> contentFilterResults = default;
+            ContentFilterResultsForChoice contentFilterResults = default;
             CompletionsLogProbabilityModel logprobs = default;
             CompletionsFinishReason? finishReason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -149,7 +149,7 @@ namespace Azure.AI.OpenAI
             return new Choice(
                 text,
                 index,
-                contentFilterResults.Value,
+                contentFilterResults,
                 logprobs,
                 finishReason,
                 serializedAdditionalRawData);

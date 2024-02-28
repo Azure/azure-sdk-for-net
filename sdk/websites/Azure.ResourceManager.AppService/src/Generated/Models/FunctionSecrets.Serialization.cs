@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> key = default;
-            Optional<Uri> triggerUrl = default;
+            string key = default;
+            Uri triggerUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FunctionSecrets(key.Value, triggerUrl.Value, serializedAdditionalRawData);
+            return new FunctionSecrets(key, triggerUrl, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FunctionSecrets>.Write(ModelReaderWriterOptions options)

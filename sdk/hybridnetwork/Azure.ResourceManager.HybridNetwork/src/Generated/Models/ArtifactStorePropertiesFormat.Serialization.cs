@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<ArtifactStoreType> storeType = default;
-            Optional<ArtifactReplicationStrategy> replicationStrategy = default;
-            Optional<ArtifactStorePropertiesFormatManagedResourceGroupConfiguration> managedResourceGroupConfiguration = default;
-            Optional<ResourceIdentifier> storageResourceId = default;
+            ProvisioningState? provisioningState = default;
+            ArtifactStoreType? storeType = default;
+            ArtifactReplicationStrategy? replicationStrategy = default;
+            ArtifactStorePropertiesFormatManagedResourceGroupConfiguration managedResourceGroupConfiguration = default;
+            ResourceIdentifier storageResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,11 +150,11 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ArtifactStorePropertiesFormat(
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(storeType),
-                Optional.ToNullable(replicationStrategy),
-                managedResourceGroupConfiguration.Value,
-                storageResourceId.Value,
+                provisioningState,
+                storeType,
+                replicationStrategy,
+                managedResourceGroupConfiguration,
+                storageResourceId,
                 serializedAdditionalRawData);
         }
 

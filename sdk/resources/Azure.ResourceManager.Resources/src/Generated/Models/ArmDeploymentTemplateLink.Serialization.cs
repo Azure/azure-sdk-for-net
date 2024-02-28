@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<Uri> uri = default;
-            Optional<string> id = default;
-            Optional<string> relativePath = default;
-            Optional<string> contentVersion = default;
-            Optional<string> queryString = default;
+            Uri uri = default;
+            string id = default;
+            string relativePath = default;
+            string contentVersion = default;
+            string queryString = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,11 +134,11 @@ namespace Azure.ResourceManager.Resources.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ArmDeploymentTemplateLink(
-                uri.Value,
-                id.Value,
-                relativePath.Value,
-                contentVersion.Value,
-                queryString.Value,
+                uri,
+                id,
+                relativePath,
+                contentVersion,
+                queryString,
                 serializedAdditionalRawData);
         }
 

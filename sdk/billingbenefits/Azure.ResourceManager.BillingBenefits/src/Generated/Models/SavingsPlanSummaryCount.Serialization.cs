@@ -109,15 +109,15 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             {
                 return null;
             }
-            Optional<float> succeededCount = default;
-            Optional<float> failedCount = default;
-            Optional<float> expiringCount = default;
-            Optional<float> expiredCount = default;
-            Optional<float> pendingCount = default;
-            Optional<float> cancelledCount = default;
-            Optional<float> processingCount = default;
-            Optional<float> noBenefitCount = default;
-            Optional<float> warningCount = default;
+            float? succeededCount = default;
+            float? failedCount = default;
+            float? expiringCount = default;
+            float? expiredCount = default;
+            float? pendingCount = default;
+            float? cancelledCount = default;
+            float? processingCount = default;
+            float? noBenefitCount = default;
+            float? warningCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -210,15 +210,15 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SavingsPlanSummaryCount(
-                Optional.ToNullable(succeededCount),
-                Optional.ToNullable(failedCount),
-                Optional.ToNullable(expiringCount),
-                Optional.ToNullable(expiredCount),
-                Optional.ToNullable(pendingCount),
-                Optional.ToNullable(cancelledCount),
-                Optional.ToNullable(processingCount),
-                Optional.ToNullable(noBenefitCount),
-                Optional.ToNullable(warningCount),
+                succeededCount,
+                failedCount,
+                expiringCount,
+                expiredCount,
+                pendingCount,
+                cancelledCount,
+                processingCount,
+                noBenefitCount,
+                warningCount,
                 serializedAdditionalRawData);
         }
 

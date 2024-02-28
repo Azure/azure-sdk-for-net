@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             string id = default;
-            Optional<int> defaultTtl = default;
-            Optional<CassandraSchema> schema = default;
-            Optional<int> analyticalStorageTtl = default;
+            int? defaultTtl = default;
+            CassandraSchema schema = default;
+            int? analyticalStorageTtl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CassandraTableResourceInfo(id, Optional.ToNullable(defaultTtl), schema.Value, Optional.ToNullable(analyticalStorageTtl), serializedAdditionalRawData);
+            return new CassandraTableResourceInfo(id, defaultTtl, schema, analyticalStorageTtl, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CassandraTableResourceInfo>.Write(ModelReaderWriterOptions options)

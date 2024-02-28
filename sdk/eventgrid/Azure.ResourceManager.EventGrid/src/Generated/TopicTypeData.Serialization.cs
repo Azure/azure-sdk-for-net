@@ -157,16 +157,16 @@ namespace Azure.ResourceManager.EventGrid
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> provider = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<EventGridResourceRegionType> resourceRegionType = default;
-            Optional<TopicTypeProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            string provider = default;
+            string displayName = default;
+            string description = default;
+            EventGridResourceRegionType? resourceRegionType = default;
+            TopicTypeProvisioningState? provisioningState = default;
             IList<string> supportedLocations = default;
-            Optional<string> sourceResourceFormat = default;
+            string sourceResourceFormat = default;
             IList<TopicTypeSourceScope> supportedScopesForSource = default;
-            Optional<bool> areRegionalAndGlobalSourcesSupported = default;
+            bool? areRegionalAndGlobalSourcesSupported = default;
             IList<TopicTypeAdditionalEnforcedPermission> additionalEnforcedPermissions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -307,16 +307,16 @@ namespace Azure.ResourceManager.EventGrid
                 id,
                 name,
                 type,
-                systemData.Value,
-                provider.Value,
-                displayName.Value,
-                description.Value,
-                Optional.ToNullable(resourceRegionType),
-                Optional.ToNullable(provisioningState),
+                systemData,
+                provider,
+                displayName,
+                description,
+                resourceRegionType,
+                provisioningState,
                 supportedLocations ?? new ChangeTrackingList<string>(),
-                sourceResourceFormat.Value,
+                sourceResourceFormat,
                 supportedScopesForSource ?? new ChangeTrackingList<TopicTypeSourceScope>(),
-                Optional.ToNullable(areRegionalAndGlobalSourcesSupported),
+                areRegionalAndGlobalSourcesSupported,
                 additionalEnforcedPermissions ?? new ChangeTrackingList<TopicTypeAdditionalEnforcedPermission>(),
                 serializedAdditionalRawData);
         }

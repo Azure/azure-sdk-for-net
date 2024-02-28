@@ -94,8 +94,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<string> metric = default;
-            Optional<MetricsResponseSeriesItemUnit> unit = default;
+            string metric = default;
+            MetricsResponseSeriesItemUnit? unit = default;
             IReadOnlyList<MetricsResponseSeriesPropertiesItemsItem> groups = default;
             IReadOnlyList<Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems> data = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MetricsResponseSeriesItem(metric.Value, Optional.ToNullable(unit), groups ?? new ChangeTrackingList<MetricsResponseSeriesPropertiesItemsItem>(), data ?? new ChangeTrackingList<Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems>(), serializedAdditionalRawData);
+            return new MetricsResponseSeriesItem(metric, unit, groups ?? new ChangeTrackingList<MetricsResponseSeriesPropertiesItemsItem>(), data ?? new ChangeTrackingList<Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MetricsResponseSeriesItem>.Write(ModelReaderWriterOptions options)

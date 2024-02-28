@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         // deserialization hook for required property
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static void ReadExtendedLocationType(JsonProperty property, ref Optional<Azure.ResourceManager.Resources.Models.ExtendedLocationType> type)
+        internal static void ReadExtendedLocationType(JsonProperty property, ref Azure.ResourceManager.Resources.Models.ExtendedLocationType? type)
         {
             if (property.Value.ValueKind == JsonValueKind.Null)
                 return;

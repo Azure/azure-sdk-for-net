@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> filterData = default;
+            string filterData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VpnGatewayPacketCaptureStartContent(filterData.Value, serializedAdditionalRawData);
+            return new VpnGatewayPacketCaptureStartContent(filterData, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VpnGatewayPacketCaptureStartContent>.Write(ModelReaderWriterOptions options)

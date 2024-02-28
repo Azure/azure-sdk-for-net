@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 return null;
             }
             bool enabled = default;
-            Optional<int> gracefulDecommissionTimeout = default;
-            Optional<ClusterAutoscaleType> autoscaleType = default;
-            Optional<ScheduleBasedConfig> scheduleBasedConfig = default;
-            Optional<LoadBasedConfig> loadBasedConfig = default;
+            int? gracefulDecommissionTimeout = default;
+            ClusterAutoscaleType? autoscaleType = default;
+            ScheduleBasedConfig scheduleBasedConfig = default;
+            LoadBasedConfig loadBasedConfig = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,10 +144,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ClusterAutoscaleProfile(
                 enabled,
-                Optional.ToNullable(gracefulDecommissionTimeout),
-                Optional.ToNullable(autoscaleType),
-                scheduleBasedConfig.Value,
-                loadBasedConfig.Value,
+                gracefulDecommissionTimeout,
+                autoscaleType,
+                scheduleBasedConfig,
+                loadBasedConfig,
                 serializedAdditionalRawData);
         }
 

@@ -86,9 +86,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> startTime = default;
-            Optional<string> timeZone = default;
-            Optional<string> expression = default;
+            string startTime = default;
+            string timeZone = default;
+            string expression = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComputeStartStopCronSchedule(startTime.Value, timeZone.Value, expression.Value, serializedAdditionalRawData);
+            return new ComputeStartStopCronSchedule(startTime, timeZone, expression, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComputeStartStopCronSchedule>.Write(ModelReaderWriterOptions options)

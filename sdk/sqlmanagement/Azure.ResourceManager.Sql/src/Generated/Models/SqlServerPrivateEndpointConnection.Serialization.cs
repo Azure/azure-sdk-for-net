@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<ServerPrivateEndpointConnectionProperties> properties = default;
+            ResourceIdentifier id = default;
+            ServerPrivateEndpointConnectionProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlServerPrivateEndpointConnection(id.Value, properties.Value, serializedAdditionalRawData);
+            return new SqlServerPrivateEndpointConnection(id, properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlServerPrivateEndpointConnection>.Write(ModelReaderWriterOptions options)

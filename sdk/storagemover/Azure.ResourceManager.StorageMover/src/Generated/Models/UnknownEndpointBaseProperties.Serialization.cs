@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.StorageMover.Models
                 return null;
             }
             EndpointType endpointType = "Unknown";
-            Optional<string> description = default;
-            Optional<StorageMoverProvisioningState> provisioningState = default;
+            string description = default;
+            StorageMoverProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownEndpointBaseProperties(endpointType, description.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new UnknownEndpointBaseProperties(endpointType, description, provisioningState, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EndpointBaseProperties>.Write(ModelReaderWriterOptions options)

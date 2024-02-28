@@ -83,11 +83,11 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<TimeSpan> sasTtlAsIso8601 = default;
+            TimeSpan? sasTtlAsIso8601 = default;
             string connectionString = default;
             string containerName = default;
-            Optional<IotHubAuthenticationType> authenticationType = default;
-            Optional<ManagedIdentity> identity = default;
+            IotHubAuthenticationType? authenticationType = default;
+            ManagedIdentity identity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -136,11 +136,11 @@ namespace Azure.ResourceManager.IotHub.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new IotHubStorageEndpointProperties(
-                Optional.ToNullable(sasTtlAsIso8601),
+                sasTtlAsIso8601,
                 connectionString,
                 containerName,
-                Optional.ToNullable(authenticationType),
-                identity.Value,
+                authenticationType,
+                identity,
                 serializedAdditionalRawData);
         }
 

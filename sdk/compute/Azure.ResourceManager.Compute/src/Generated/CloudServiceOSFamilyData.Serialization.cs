@@ -119,14 +119,14 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<AzureLocation> location = default;
+            string name = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name0 = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> name1 = default;
-            Optional<string> label = default;
+            SystemData systemData = default;
+            string name1 = default;
+            string label = default;
             IReadOnlyList<OSVersionPropertiesBase> versions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -216,11 +216,11 @@ namespace Azure.ResourceManager.Compute
                 id,
                 name0,
                 type,
-                systemData.Value,
-                name.Value,
-                Optional.ToNullable(location),
-                name1.Value,
-                label.Value,
+                systemData,
+                name,
+                location,
+                name1,
+                label,
                 versions ?? new ChangeTrackingList<OSVersionPropertiesBase>(),
                 serializedAdditionalRawData);
         }

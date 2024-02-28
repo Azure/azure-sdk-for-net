@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Optional<string> filesystemPath = default;
-            Optional<AmlFileSystemArchiveStatus> status = default;
+            string filesystemPath = default;
+            AmlFileSystemArchiveStatus status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AmlFileSystemArchive(filesystemPath.Value, status.Value, serializedAdditionalRawData);
+            return new AmlFileSystemArchive(filesystemPath, status, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AmlFileSystemArchive>.Write(ModelReaderWriterOptions options)

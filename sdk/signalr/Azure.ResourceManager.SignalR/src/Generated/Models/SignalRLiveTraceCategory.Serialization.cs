@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.SignalR.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> enabled = default;
+            string name = default;
+            string enabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SignalRLiveTraceCategory(name.Value, enabled.Value, serializedAdditionalRawData);
+            return new SignalRLiveTraceCategory(name, enabled, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SignalRLiveTraceCategory>.Write(ModelReaderWriterOptions options)

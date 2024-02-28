@@ -124,16 +124,16 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<SoftwareUpdateConfigurationSpecificProperties> updateConfiguration = default;
-            Optional<SoftwareUpdateConfigurationTasks> tasks = default;
-            Optional<AutomationScheduleFrequency> frequency = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<string> provisioningState = default;
-            Optional<DateTimeOffset?> nextRun = default;
+            string name = default;
+            ResourceIdentifier id = default;
+            SoftwareUpdateConfigurationSpecificProperties updateConfiguration = default;
+            SoftwareUpdateConfigurationTasks tasks = default;
+            AutomationScheduleFrequency? frequency = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? creationTime = default;
+            DateTimeOffset? lastModifiedTime = default;
+            string provisioningState = default;
+            DateTimeOffset? nextRun = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -240,16 +240,16 @@ namespace Azure.ResourceManager.Automation.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SoftwareUpdateConfigurationCollectionItem(
-                name.Value,
-                id.Value,
-                updateConfiguration.Value,
-                tasks.Value,
-                Optional.ToNullable(frequency),
-                Optional.ToNullable(startTime),
-                Optional.ToNullable(creationTime),
-                Optional.ToNullable(lastModifiedTime),
-                provisioningState.Value,
-                Optional.ToNullable(nextRun),
+                name,
+                id,
+                updateConfiguration,
+                tasks,
+                frequency,
+                startTime,
+                creationTime,
+                lastModifiedTime,
+                provisioningState,
+                nextRun,
                 serializedAdditionalRawData);
         }
 

@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> time = default;
-            Optional<string> content = default;
-            Optional<string> filename = default;
-            Optional<SynapseSparkConfigurationType> configurationType = default;
+            DateTimeOffset? time = default;
+            string content = default;
+            string filename = default;
+            SynapseSparkConfigurationType? configurationType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BigDataPoolSparkConfigProperties(Optional.ToNullable(time), content.Value, filename.Value, Optional.ToNullable(configurationType), serializedAdditionalRawData);
+            return new BigDataPoolSparkConfigProperties(time, content, filename, configurationType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BigDataPoolSparkConfigProperties>.Write(ModelReaderWriterOptions options)

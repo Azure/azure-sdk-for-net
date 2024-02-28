@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Batch.Models
             Uri azureFileUrl = default;
             string accountKey = default;
             string relativeMountPath = default;
-            Optional<string> mountOptions = default;
+            string mountOptions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Batch.Models
                 azureFileUrl,
                 accountKey,
                 relativeMountPath,
-                mountOptions.Value,
+                mountOptions,
                 serializedAdditionalRawData);
         }
 

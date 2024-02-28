@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             string name = default;
-            Optional<int> regionalReplicaCount = default;
-            Optional<ImageStorageAccountType> storageAccountType = default;
-            Optional<EncryptionImages> encryption = default;
-            Optional<bool> excludeFromLatest = default;
+            int? regionalReplicaCount = default;
+            ImageStorageAccountType? storageAccountType = default;
+            EncryptionImages encryption = default;
+            bool? excludeFromLatest = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,10 +144,10 @@ namespace Azure.ResourceManager.Compute.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new TargetRegion(
                 name,
-                Optional.ToNullable(regionalReplicaCount),
-                Optional.ToNullable(storageAccountType),
-                encryption.Value,
-                Optional.ToNullable(excludeFromLatest),
+                regionalReplicaCount,
+                storageAccountType,
+                encryption,
+                excludeFromLatest,
                 serializedAdditionalRawData);
         }
 

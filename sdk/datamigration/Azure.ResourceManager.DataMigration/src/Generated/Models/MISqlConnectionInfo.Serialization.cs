@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             string managedInstanceResourceId = default;
             string type = default;
-            Optional<string> userName = default;
-            Optional<string> password = default;
+            string userName = default;
+            string password = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MISqlConnectionInfo(type, userName.Value, password.Value, serializedAdditionalRawData, managedInstanceResourceId);
+            return new MISqlConnectionInfo(type, userName, password, serializedAdditionalRawData, managedInstanceResourceId);
         }
 
         BinaryData IPersistableModel<MISqlConnectionInfo>.Write(ModelReaderWriterOptions options)

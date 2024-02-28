@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.Logic.Models
                 return null;
             }
             string keyName = default;
-            Optional<string> keyVersion = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
+            string keyVersion = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -151,10 +151,10 @@ namespace Azure.ResourceManager.Logic.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new IntegrationAccountKeyVaultKeyReference(
                 keyName,
-                keyVersion.Value,
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
+                keyVersion,
+                id,
+                name,
+                type,
                 serializedAdditionalRawData);
         }
 

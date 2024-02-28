@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> ruleName = default;
-            Optional<string> action = default;
+            string ruleName = default;
+            string action = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MatchedRule(ruleName.Value, action.Value, serializedAdditionalRawData);
+            return new MatchedRule(ruleName, action, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MatchedRule>.Write(ModelReaderWriterOptions options)

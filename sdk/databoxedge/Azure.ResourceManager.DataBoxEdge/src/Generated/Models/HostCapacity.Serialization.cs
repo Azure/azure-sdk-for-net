@@ -105,11 +105,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<string> hostName = default;
-            Optional<long> effectiveAvailableMemoryMbOnHost = default;
-            Optional<int> availableGpuCount = default;
+            string hostName = default;
+            long? effectiveAvailableMemoryMbOnHost = default;
+            int? availableGpuCount = default;
             IDictionary<string, DataBoxEdgeVmMemory> vmUsedMemory = default;
-            Optional<string> gpuType = default;
+            string gpuType = default;
             IList<NumaNodeInfo> numaNodesData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -178,11 +178,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new HostCapacity(
-                hostName.Value,
-                Optional.ToNullable(effectiveAvailableMemoryMbOnHost),
-                Optional.ToNullable(availableGpuCount),
+                hostName,
+                effectiveAvailableMemoryMbOnHost,
+                availableGpuCount,
                 vmUsedMemory ?? new ChangeTrackingDictionary<string, DataBoxEdgeVmMemory>(),
-                gpuType.Value,
+                gpuType,
                 numaNodesData ?? new ChangeTrackingList<NumaNodeInfo>(),
                 serializedAdditionalRawData);
         }

@@ -31,7 +31,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<string> quality = default;
+            string quality = default;
             string type = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -46,7 +46,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new ImageFormatJpeg(type, quality.Value);
+            return new ImageFormatJpeg(type, quality);
         }
     }
 }

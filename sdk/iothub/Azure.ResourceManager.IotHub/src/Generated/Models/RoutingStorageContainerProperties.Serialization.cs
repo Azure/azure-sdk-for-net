@@ -123,19 +123,19 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<Guid> id = default;
-            Optional<string> connectionString = default;
-            Optional<string> endpointUri = default;
-            Optional<IotHubAuthenticationType> authenticationType = default;
-            Optional<ManagedIdentity> identity = default;
+            Guid? id = default;
+            string connectionString = default;
+            string endpointUri = default;
+            IotHubAuthenticationType? authenticationType = default;
+            ManagedIdentity identity = default;
             string name = default;
-            Optional<string> subscriptionId = default;
-            Optional<string> resourceGroup = default;
+            string subscriptionId = default;
+            string resourceGroup = default;
             string containerName = default;
-            Optional<string> fileNameFormat = default;
-            Optional<int> batchFrequencyInSeconds = default;
-            Optional<int> maxChunkSizeInBytes = default;
-            Optional<RoutingStorageContainerPropertiesEncoding> encoding = default;
+            string fileNameFormat = default;
+            int? batchFrequencyInSeconds = default;
+            int? maxChunkSizeInBytes = default;
+            RoutingStorageContainerPropertiesEncoding? encoding = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -236,19 +236,19 @@ namespace Azure.ResourceManager.IotHub.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new RoutingStorageContainerProperties(
-                Optional.ToNullable(id),
-                connectionString.Value,
-                endpointUri.Value,
-                Optional.ToNullable(authenticationType),
-                identity.Value,
+                id,
+                connectionString,
+                endpointUri,
+                authenticationType,
+                identity,
                 name,
-                subscriptionId.Value,
-                resourceGroup.Value,
+                subscriptionId,
+                resourceGroup,
                 containerName,
-                fileNameFormat.Value,
-                Optional.ToNullable(batchFrequencyInSeconds),
-                Optional.ToNullable(maxChunkSizeInBytes),
-                Optional.ToNullable(encoding),
+                fileNameFormat,
+                batchFrequencyInSeconds,
+                maxChunkSizeInBytes,
+                encoding,
                 serializedAdditionalRawData);
         }
 

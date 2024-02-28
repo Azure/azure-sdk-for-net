@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -21,11 +20,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> firstTimestamp = default;
-            Optional<string> firstDuration = default;
-            Optional<string> secondTimestamp = default;
-            Optional<string> secondDuration = default;
-            Optional<string> timescale = default;
+            string firstTimestamp = default;
+            string firstDuration = default;
+            string secondTimestamp = default;
+            string secondDuration = default;
+            string timescale = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("firstTimestamp"u8))
@@ -54,7 +53,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new MediaLiveEventIncomingVideoStreamsOutOfSyncEventData(firstTimestamp.Value, firstDuration.Value, secondTimestamp.Value, secondDuration.Value, timescale.Value);
+            return new MediaLiveEventIncomingVideoStreamsOutOfSyncEventData(firstTimestamp, firstDuration, secondTimestamp, secondDuration, timescale);
         }
 
         internal partial class MediaLiveEventIncomingVideoStreamsOutOfSyncEventDataConverter : JsonConverter<MediaLiveEventIncomingVideoStreamsOutOfSyncEventData>

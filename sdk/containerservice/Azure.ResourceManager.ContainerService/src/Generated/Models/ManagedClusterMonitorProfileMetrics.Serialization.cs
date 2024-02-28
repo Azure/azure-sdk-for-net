@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             bool enabled = default;
-            Optional<ManagedClusterMonitorProfileKubeStateMetrics> kubeStateMetrics = default;
+            ManagedClusterMonitorProfileKubeStateMetrics kubeStateMetrics = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterMonitorProfileMetrics(enabled, kubeStateMetrics.Value, serializedAdditionalRawData);
+            return new ManagedClusterMonitorProfileMetrics(enabled, kubeStateMetrics, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterMonitorProfileMetrics>.Write(ModelReaderWriterOptions options)

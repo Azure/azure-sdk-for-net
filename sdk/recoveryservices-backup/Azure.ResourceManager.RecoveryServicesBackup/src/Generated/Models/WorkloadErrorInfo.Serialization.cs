@@ -94,11 +94,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<int> errorCode = default;
-            Optional<string> errorString = default;
-            Optional<string> errorTitle = default;
+            int? errorCode = default;
+            string errorString = default;
+            string errorTitle = default;
             IList<string> recommendations = default;
-            Optional<string> additionalDetails = default;
+            string additionalDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -148,11 +148,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new WorkloadErrorInfo(
-                Optional.ToNullable(errorCode),
-                errorString.Value,
-                errorTitle.Value,
+                errorCode,
+                errorString,
+                errorTitle,
                 recommendations ?? new ChangeTrackingList<string>(),
-                additionalDetails.Value,
+                additionalDetails,
                 serializedAdditionalRawData);
         }
 

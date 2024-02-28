@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Optional<string> bindDn = default;
-            Optional<string> bindPassword = default;
+            string bindDn = default;
+            string bindPassword = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageCacheUsernameDownloadCredential(bindDn.Value, bindPassword.Value, serializedAdditionalRawData);
+            return new StorageCacheUsernameDownloadCredential(bindDn, bindPassword, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageCacheUsernameDownloadCredential>.Write(ModelReaderWriterOptions options)

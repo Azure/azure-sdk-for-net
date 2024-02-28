@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.Redis
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<AccessPolicyProvisioningState> provisioningState = default;
-            Optional<AccessPolicyType> type0 = default;
-            Optional<string> permissions = default;
+            SystemData systemData = default;
+            AccessPolicyProvisioningState? provisioningState = default;
+            AccessPolicyType? type0 = default;
+            string permissions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -184,10 +184,10 @@ namespace Azure.ResourceManager.Redis
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(type0),
-                permissions.Value,
+                systemData,
+                provisioningState,
+                type0,
+                permissions,
                 serializedAdditionalRawData);
         }
 

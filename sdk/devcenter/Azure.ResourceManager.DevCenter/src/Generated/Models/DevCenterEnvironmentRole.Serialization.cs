@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            Optional<string> roleName = default;
-            Optional<string> description = default;
+            string roleName = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevCenterEnvironmentRole(roleName.Value, description.Value, serializedAdditionalRawData);
+            return new DevCenterEnvironmentRole(roleName, description, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevCenterEnvironmentRole>.Write(ModelReaderWriterOptions options)

@@ -132,12 +132,12 @@ namespace Azure.ResourceManager.DevCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> devCenterId = default;
-            Optional<string> description = default;
-            Optional<int> maxDevBoxesPerUser = default;
-            Optional<DevCenterProvisioningState> provisioningState = default;
-            Optional<Uri> devCenterUri = default;
+            SystemData systemData = default;
+            ResourceIdentifier devCenterId = default;
+            string description = default;
+            int? maxDevBoxesPerUser = default;
+            DevCenterProvisioningState? provisioningState = default;
+            Uri devCenterUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -248,14 +248,14 @@ namespace Azure.ResourceManager.DevCenter
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                devCenterId.Value,
-                description.Value,
-                Optional.ToNullable(maxDevBoxesPerUser),
-                Optional.ToNullable(provisioningState),
-                devCenterUri.Value,
+                devCenterId,
+                description,
+                maxDevBoxesPerUser,
+                provisioningState,
+                devCenterUri,
                 serializedAdditionalRawData);
         }
 

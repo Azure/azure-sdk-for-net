@@ -129,17 +129,17 @@ namespace Azure.ResourceManager.KeyVault
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ManagedHsmSku> sku = default;
+            ETag? etag = default;
+            ManagedHsmSku sku = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SubResource> privateEndpoint = default;
-            Optional<ManagedHsmPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
-            Optional<ManagedHsmPrivateEndpointConnectionProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            SubResource privateEndpoint = default;
+            ManagedHsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
+            ManagedHsmPrivateEndpointConnectionProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -254,14 +254,14 @@ namespace Azure.ResourceManager.KeyVault
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                Optional.ToNullable(etag),
+                etag,
                 privateEndpoint,
-                privateLinkServiceConnectionState.Value,
-                Optional.ToNullable(provisioningState),
-                sku.Value,
+                privateLinkServiceConnectionState,
+                provisioningState,
+                sku,
                 serializedAdditionalRawData);
         }
 

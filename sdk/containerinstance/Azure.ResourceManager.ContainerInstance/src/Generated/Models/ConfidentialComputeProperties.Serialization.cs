@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            Optional<string> ccePolicy = default;
+            string ccePolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConfidentialComputeProperties(ccePolicy.Value, serializedAdditionalRawData);
+            return new ConfidentialComputeProperties(ccePolicy, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConfidentialComputeProperties>.Write(ModelReaderWriterOptions options)

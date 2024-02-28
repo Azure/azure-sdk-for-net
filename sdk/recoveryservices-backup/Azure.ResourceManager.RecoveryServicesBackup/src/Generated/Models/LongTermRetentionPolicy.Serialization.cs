@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<DailyRetentionSchedule> dailySchedule = default;
-            Optional<WeeklyRetentionSchedule> weeklySchedule = default;
-            Optional<MonthlyRetentionSchedule> monthlySchedule = default;
-            Optional<YearlyRetentionSchedule> yearlySchedule = default;
+            DailyRetentionSchedule dailySchedule = default;
+            WeeklyRetentionSchedule weeklySchedule = default;
+            MonthlyRetentionSchedule monthlySchedule = default;
+            YearlyRetentionSchedule yearlySchedule = default;
             string retentionPolicyType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -145,10 +145,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new LongTermRetentionPolicy(
                 retentionPolicyType,
                 serializedAdditionalRawData,
-                dailySchedule.Value,
-                weeklySchedule.Value,
-                monthlySchedule.Value,
-                yearlySchedule.Value);
+                dailySchedule,
+                weeklySchedule,
+                monthlySchedule,
+                yearlySchedule);
         }
 
         BinaryData IPersistableModel<LongTermRetentionPolicy>.Write(ModelReaderWriterOptions options)

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 return null;
             }
             IReadOnlyList<NetAppSubvolumeInfoData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubvolumesList(value ?? new ChangeTrackingList<NetAppSubvolumeInfoData>(), nextLink.Value, serializedAdditionalRawData);
+            return new SubvolumesList(value ?? new ChangeTrackingList<NetAppSubvolumeInfoData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubvolumesList>.Write(ModelReaderWriterOptions options)

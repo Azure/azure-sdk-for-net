@@ -114,14 +114,14 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 return null;
             }
             string authType = "Unknown";
-            Optional<byte[]> certificate = default;
-            Optional<string> friendlyName = default;
-            Optional<string> issuer = default;
-            Optional<long> resourceId = default;
-            Optional<string> subject = default;
-            Optional<BinaryData> thumbprint = default;
-            Optional<DateTimeOffset> validFrom = default;
-            Optional<DateTimeOffset> validTo = default;
+            byte[] certificate = default;
+            string friendlyName = default;
+            string issuer = default;
+            long? resourceId = default;
+            string subject = default;
+            BinaryData thumbprint = default;
+            DateTimeOffset? validFrom = default;
+            DateTimeOffset? validTo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -199,14 +199,14 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new UnknownResourceCertificateDetails(
                 authType,
-                certificate.Value,
-                friendlyName.Value,
-                issuer.Value,
-                Optional.ToNullable(resourceId),
-                subject.Value,
-                thumbprint.Value,
-                Optional.ToNullable(validFrom),
-                Optional.ToNullable(validTo),
+                certificate,
+                friendlyName,
+                issuer,
+                resourceId,
+                subject,
+                thumbprint,
+                validFrom,
+                validTo,
                 serializedAdditionalRawData);
         }
 

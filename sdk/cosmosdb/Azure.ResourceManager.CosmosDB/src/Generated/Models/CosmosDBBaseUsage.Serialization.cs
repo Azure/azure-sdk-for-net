@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<CosmosDBMetricUnitType> unit = default;
-            Optional<CosmosDBMetricName> name = default;
-            Optional<string> quotaPeriod = default;
-            Optional<long> limit = default;
-            Optional<long> currentValue = default;
+            CosmosDBMetricUnitType? unit = default;
+            CosmosDBMetricName name = default;
+            string quotaPeriod = default;
+            long? limit = default;
+            long? currentValue = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,11 +146,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new CosmosDBBaseUsage(
-                Optional.ToNullable(unit),
-                name.Value,
-                quotaPeriod.Value,
-                Optional.ToNullable(limit),
-                Optional.ToNullable(currentValue),
+                unit,
+                name,
+                quotaPeriod,
+                limit,
+                currentValue,
                 serializedAdditionalRawData);
         }
 

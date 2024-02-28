@@ -28,7 +28,7 @@ namespace Azure.DigitalTwins.Core
             {
                 return null;
             }
-            Optional<string> id = default;
+            string id = default;
             string endpointName = default;
             string filter = default;
             foreach (var property in element.EnumerateObject())
@@ -49,7 +49,7 @@ namespace Azure.DigitalTwins.Core
                     continue;
                 }
             }
-            return new DigitalTwinsEventRoute(id.Value, endpointName, filter);
+            return new DigitalTwinsEventRoute(id, endpointName, filter);
         }
     }
 }

@@ -157,22 +157,22 @@ namespace Azure.ResourceManager.DataFactory
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<ETag> eTag = default;
+            ManagedServiceIdentity identity = default;
+            ETag? eTag = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> provisioningState = default;
-            Optional<DateTimeOffset> createTime = default;
-            Optional<string> version = default;
-            Optional<DataFactoryPurviewConfiguration> purviewConfiguration = default;
-            Optional<FactoryRepoConfiguration> repoConfiguration = default;
+            SystemData systemData = default;
+            string provisioningState = default;
+            DateTimeOffset? createTime = default;
+            string version = default;
+            DataFactoryPurviewConfiguration purviewConfiguration = default;
+            FactoryRepoConfiguration repoConfiguration = default;
             IDictionary<string, DataFactoryGlobalParameterProperties> globalParameters = default;
-            Optional<DataFactoryEncryptionConfiguration> encryption = default;
-            Optional<DataFactoryPublicNetworkAccess> publicNetworkAccess = default;
+            DataFactoryEncryptionConfiguration encryption = default;
+            DataFactoryPublicNetworkAccess? publicNetworkAccess = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -327,19 +327,19 @@ namespace Azure.ResourceManager.DataFactory
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 identity,
-                provisioningState.Value,
-                Optional.ToNullable(createTime),
-                version.Value,
-                purviewConfiguration.Value,
-                repoConfiguration.Value,
+                provisioningState,
+                createTime,
+                version,
+                purviewConfiguration,
+                repoConfiguration,
                 globalParameters ?? new ChangeTrackingDictionary<string, DataFactoryGlobalParameterProperties>(),
-                encryption.Value,
-                Optional.ToNullable(publicNetworkAccess),
-                Optional.ToNullable(eTag),
+                encryption,
+                publicNetworkAccess,
+                eTag,
                 additionalProperties);
         }
 

@@ -94,11 +94,11 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<string> groupDescription = default;
-            Optional<NetAppApplicationType> applicationType = default;
-            Optional<string> applicationIdentifier = default;
+            string groupDescription = default;
+            NetAppApplicationType? applicationType = default;
+            string applicationIdentifier = default;
             IList<NetAppVolumePlacementRule> globalPlacementRules = default;
-            Optional<long> volumesCount = default;
+            long volumesCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -152,11 +152,11 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new NetAppVolumeGroupMetadata(
-                groupDescription.Value,
-                Optional.ToNullable(applicationType),
-                applicationIdentifier.Value,
+                groupDescription,
+                applicationType,
+                applicationIdentifier,
                 globalPlacementRules ?? new ChangeTrackingList<NetAppVolumePlacementRule>(),
-                Optional.ToNullable(volumesCount),
+                volumesCount,
                 serializedAdditionalRawData);
         }
 

@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<LogAnalyticsOutput> properties = default;
+            LogAnalyticsOutput properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogAnalytics(properties.Value, serializedAdditionalRawData);
+            return new LogAnalytics(properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogAnalytics>.Write(ModelReaderWriterOptions options)

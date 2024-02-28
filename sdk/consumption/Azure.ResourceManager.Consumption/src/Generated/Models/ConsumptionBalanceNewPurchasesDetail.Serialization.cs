@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<decimal> value = default;
+            string name = default;
+            decimal? value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionBalanceNewPurchasesDetail(name.Value, Optional.ToNullable(value), serializedAdditionalRawData);
+            return new ConsumptionBalanceNewPurchasesDetail(name, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumptionBalanceNewPurchasesDetail>.Write(ModelReaderWriterOptions options)

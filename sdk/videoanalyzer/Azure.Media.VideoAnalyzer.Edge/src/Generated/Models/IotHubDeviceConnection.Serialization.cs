@@ -32,7 +32,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 return null;
             }
             string deviceId = default;
-            Optional<CredentialsBase> credentials = default;
+            CredentialsBase credentials = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deviceId"u8))
@@ -50,7 +50,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new IotHubDeviceConnection(deviceId, credentials.Value);
+            return new IotHubDeviceConnection(deviceId, credentials);
         }
     }
 }

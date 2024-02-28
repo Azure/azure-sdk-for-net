@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<AutomationRulePropertyChangedConditionSupportedPropertyType> propertyName = default;
-            Optional<AutomationRulePropertyChangedConditionSupportedChangedType> changeType = default;
-            Optional<AutomationRulePropertyConditionSupportedOperator> @operator = default;
+            AutomationRulePropertyChangedConditionSupportedPropertyType? propertyName = default;
+            AutomationRulePropertyChangedConditionSupportedChangedType? changeType = default;
+            AutomationRulePropertyConditionSupportedOperator? @operator = default;
             IList<string> propertyValues = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationRulePropertyValuesChangedCondition(Optional.ToNullable(propertyName), Optional.ToNullable(changeType), Optional.ToNullable(@operator), propertyValues ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new AutomationRulePropertyValuesChangedCondition(propertyName, changeType, @operator, propertyValues ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationRulePropertyValuesChangedCondition>.Write(ModelReaderWriterOptions options)

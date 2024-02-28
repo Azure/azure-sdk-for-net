@@ -19,7 +19,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IReadOnlyList<EnrichmentStatus> value = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -43,7 +43,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new EnrichmentStatusList(nextLink.Value, value ?? new ChangeTrackingList<EnrichmentStatus>());
+            return new EnrichmentStatusList(nextLink, value ?? new ChangeTrackingList<EnrichmentStatus>());
         }
     }
 }

@@ -325,20 +325,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
             IDictionary<string, MachineLearningJobInput> inputs = default;
             IDictionary<string, BinaryData> jobs = default;
             IDictionary<string, MachineLearningJobOutput> outputs = default;
-            Optional<BinaryData> settings = default;
-            Optional<ResourceIdentifier> sourceJobId = default;
-            Optional<ResourceIdentifier> componentId = default;
-            Optional<ResourceIdentifier> computeId = default;
-            Optional<string> displayName = default;
-            Optional<string> experimentName = default;
-            Optional<MachineLearningIdentityConfiguration> identity = default;
-            Optional<bool> isArchived = default;
+            BinaryData settings = default;
+            ResourceIdentifier sourceJobId = default;
+            ResourceIdentifier componentId = default;
+            ResourceIdentifier computeId = default;
+            string displayName = default;
+            string experimentName = default;
+            MachineLearningIdentityConfiguration identity = default;
+            bool? isArchived = default;
             JobType jobType = default;
-            Optional<NotificationSetting> notificationSetting = default;
+            NotificationSetting notificationSetting = default;
             IDictionary<string, SecretConfiguration> secretsConfiguration = default;
             IDictionary<string, MachineLearningJobService> services = default;
-            Optional<MachineLearningJobStatus> status = default;
-            Optional<string> description = default;
+            MachineLearningJobStatus? status = default;
+            string description = default;
             IDictionary<string, string> properties = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -572,26 +572,26 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MachineLearningPipelineJob(
-                description.Value,
+                description,
                 properties ?? new ChangeTrackingDictionary<string, string>(),
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
-                componentId.Value,
-                computeId.Value,
-                displayName.Value,
-                experimentName.Value,
-                identity.Value,
-                Optional.ToNullable(isArchived),
+                componentId,
+                computeId,
+                displayName,
+                experimentName,
+                identity,
+                isArchived,
                 jobType,
-                notificationSetting.Value,
+                notificationSetting,
                 secretsConfiguration ?? new ChangeTrackingDictionary<string, SecretConfiguration>(),
                 services ?? new ChangeTrackingDictionary<string, MachineLearningJobService>(),
-                Optional.ToNullable(status),
+                status,
                 inputs ?? new ChangeTrackingDictionary<string, MachineLearningJobInput>(),
                 jobs ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 outputs ?? new ChangeTrackingDictionary<string, MachineLearningJobOutput>(),
-                settings.Value,
-                sourceJobId.Value);
+                settings,
+                sourceJobId);
         }
 
         BinaryData IPersistableModel<MachineLearningPipelineJob>.Write(ModelReaderWriterOptions options)

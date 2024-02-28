@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Optional<Guid> workspaceId = default;
-            Optional<string> workspaceName = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<DateTimeOffset> associateDate = default;
+            Guid? workspaceId = default;
+            string workspaceName = default;
+            ResourceIdentifier resourceId = default;
+            DateTimeOffset? associateDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationalInsightsClusterAssociatedWorkspace(Optional.ToNullable(workspaceId), workspaceName.Value, resourceId.Value, Optional.ToNullable(associateDate), serializedAdditionalRawData);
+            return new OperationalInsightsClusterAssociatedWorkspace(workspaceId, workspaceName, resourceId, associateDate, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationalInsightsClusterAssociatedWorkspace>.Write(ModelReaderWriterOptions options)

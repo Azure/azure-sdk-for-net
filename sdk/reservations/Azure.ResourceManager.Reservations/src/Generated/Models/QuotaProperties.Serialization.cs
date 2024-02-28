@@ -106,13 +106,13 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<int> limit = default;
-            Optional<int> currentValue = default;
-            Optional<string> unit = default;
-            Optional<ReservationResourceName> name = default;
-            Optional<ResourceTypeName> resourceType = default;
-            Optional<string> quotaPeriod = default;
-            Optional<BinaryData> properties = default;
+            int? limit = default;
+            int? currentValue = default;
+            string unit = default;
+            ReservationResourceName name = default;
+            ResourceTypeName? resourceType = default;
+            string quotaPeriod = default;
+            BinaryData properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,13 +179,13 @@ namespace Azure.ResourceManager.Reservations.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new QuotaProperties(
-                Optional.ToNullable(limit),
-                Optional.ToNullable(currentValue),
-                unit.Value,
-                name.Value,
-                Optional.ToNullable(resourceType),
-                quotaPeriod.Value,
-                properties.Value,
+                limit,
+                currentValue,
+                unit,
+                name,
+                resourceType,
+                quotaPeriod,
+                properties,
                 serializedAdditionalRawData);
         }
 

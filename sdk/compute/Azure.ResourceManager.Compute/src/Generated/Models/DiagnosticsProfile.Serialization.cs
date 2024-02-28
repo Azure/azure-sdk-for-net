@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<BootDiagnostics> bootDiagnostics = default;
+            BootDiagnostics bootDiagnostics = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiagnosticsProfile(bootDiagnostics.Value, serializedAdditionalRawData);
+            return new DiagnosticsProfile(bootDiagnostics, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiagnosticsProfile>.Write(ModelReaderWriterOptions options)

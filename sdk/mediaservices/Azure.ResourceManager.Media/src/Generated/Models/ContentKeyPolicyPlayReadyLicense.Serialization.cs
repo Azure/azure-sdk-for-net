@@ -108,13 +108,13 @@ namespace Azure.ResourceManager.Media.Models
                 return null;
             }
             bool allowTestDevices = default;
-            Optional<PlayReadySecurityLevel> securityLevel = default;
-            Optional<DateTimeOffset> beginDate = default;
-            Optional<DateTimeOffset> expirationDate = default;
-            Optional<TimeSpan> relativeBeginDate = default;
-            Optional<TimeSpan> relativeExpirationDate = default;
-            Optional<TimeSpan> gracePeriod = default;
-            Optional<ContentKeyPolicyPlayReadyPlayRight> playRight = default;
+            PlayReadySecurityLevel? securityLevel = default;
+            DateTimeOffset? beginDate = default;
+            DateTimeOffset? expirationDate = default;
+            TimeSpan? relativeBeginDate = default;
+            TimeSpan? relativeExpirationDate = default;
+            TimeSpan? gracePeriod = default;
+            ContentKeyPolicyPlayReadyPlayRight playRight = default;
             ContentKeyPolicyPlayReadyLicenseType licenseType = default;
             ContentKeyPolicyPlayReadyContentKeyLocation contentKeyLocation = default;
             ContentKeyPolicyPlayReadyContentType contentType = default;
@@ -213,13 +213,13 @@ namespace Azure.ResourceManager.Media.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ContentKeyPolicyPlayReadyLicense(
                 allowTestDevices,
-                Optional.ToNullable(securityLevel),
-                Optional.ToNullable(beginDate),
-                Optional.ToNullable(expirationDate),
-                Optional.ToNullable(relativeBeginDate),
-                Optional.ToNullable(relativeExpirationDate),
-                Optional.ToNullable(gracePeriod),
-                playRight.Value,
+                securityLevel,
+                beginDate,
+                expirationDate,
+                relativeBeginDate,
+                relativeExpirationDate,
+                gracePeriod,
+                playRight,
                 licenseType,
                 contentKeyLocation,
                 contentType,

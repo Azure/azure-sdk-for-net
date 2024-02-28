@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<string> port = default;
-            Optional<string> ipAddress = default;
+            string port = default;
+            string ipAddress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeKubernetesIPConfiguration(port.Value, ipAddress.Value, serializedAdditionalRawData);
+            return new EdgeKubernetesIPConfiguration(port, ipAddress, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeKubernetesIPConfiguration>.Write(ModelReaderWriterOptions options)

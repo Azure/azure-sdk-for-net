@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             MonitorScaleDirection direction = default;
             MonitorScaleType type = default;
-            Optional<string> value = default;
+            string value = default;
             TimeSpan cooldown = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorScaleAction(direction, type, value.Value, cooldown, serializedAdditionalRawData);
+            return new MonitorScaleAction(direction, type, value, cooldown, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorScaleAction>.Write(ModelReaderWriterOptions options)

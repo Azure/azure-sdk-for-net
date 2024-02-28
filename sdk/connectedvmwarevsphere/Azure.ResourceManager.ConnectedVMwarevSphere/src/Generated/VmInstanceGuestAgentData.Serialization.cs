@@ -142,16 +142,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> uuid = default;
-            Optional<VmInstanceGuestCredential> credentials = default;
-            Optional<ResourceIdentifier> privateLinkScopeResourceId = default;
-            Optional<HttpProxyConfiguration> httpProxyConfig = default;
-            Optional<GuestAgentProvisioningAction> provisioningAction = default;
-            Optional<string> status = default;
-            Optional<string> customResourceName = default;
+            SystemData systemData = default;
+            string uuid = default;
+            VmInstanceGuestCredential credentials = default;
+            ResourceIdentifier privateLinkScopeResourceId = default;
+            HttpProxyConfiguration httpProxyConfig = default;
+            GuestAgentProvisioningAction? provisioningAction = default;
+            string status = default;
+            string customResourceName = default;
             IReadOnlyList<VMwareResourceStatus> statuses = default;
-            Optional<VMwareResourceProvisioningState> provisioningState = default;
+            VMwareResourceProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -276,16 +276,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 id,
                 name,
                 type,
-                systemData.Value,
-                uuid.Value,
-                credentials.Value,
-                privateLinkScopeResourceId.Value,
-                httpProxyConfig.Value,
-                Optional.ToNullable(provisioningAction),
-                status.Value,
-                customResourceName.Value,
+                systemData,
+                uuid,
+                credentials,
+                privateLinkScopeResourceId,
+                httpProxyConfig,
+                provisioningAction,
+                status,
+                customResourceName,
                 statuses ?? new ChangeTrackingList<VMwareResourceStatus>(),
-                Optional.ToNullable(provisioningState),
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

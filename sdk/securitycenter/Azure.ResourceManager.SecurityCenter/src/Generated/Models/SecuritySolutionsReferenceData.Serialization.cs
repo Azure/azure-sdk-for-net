@@ -107,11 +107,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             SecurityFamily securityFamily = default;
             string alertVendorName = default;
             Uri packageInfoUrl = default;
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 securityFamily,
                 alertVendorName,
                 packageInfoUrl,
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 publisher,
                 publisherDisplayName,
                 template,
-                Optional.ToNullable(location),
+                location,
                 serializedAdditionalRawData);
         }
 

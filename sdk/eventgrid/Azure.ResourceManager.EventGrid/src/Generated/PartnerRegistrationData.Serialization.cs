@@ -117,9 +117,9 @@ namespace Azure.ResourceManager.EventGrid
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<PartnerRegistrationProvisioningState> provisioningState = default;
-            Optional<Guid> partnerRegistrationImmutableId = default;
+            SystemData systemData = default;
+            PartnerRegistrationProvisioningState? provisioningState = default;
+            Guid? partnerRegistrationImmutableId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -207,11 +207,11 @@ namespace Azure.ResourceManager.EventGrid
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(partnerRegistrationImmutableId),
+                provisioningState,
+                partnerRegistrationImmutableId,
                 serializedAdditionalRawData);
         }
 

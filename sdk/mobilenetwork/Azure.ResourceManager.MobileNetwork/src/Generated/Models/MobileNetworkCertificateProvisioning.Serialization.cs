@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 return null;
             }
-            Optional<CertificateProvisioningState> state = default;
-            Optional<string> reason = default;
+            CertificateProvisioningState? state = default;
+            string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MobileNetworkCertificateProvisioning(Optional.ToNullable(state), reason.Value, serializedAdditionalRawData);
+            return new MobileNetworkCertificateProvisioning(state, reason, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MobileNetworkCertificateProvisioning>.Write(ModelReaderWriterOptions options)

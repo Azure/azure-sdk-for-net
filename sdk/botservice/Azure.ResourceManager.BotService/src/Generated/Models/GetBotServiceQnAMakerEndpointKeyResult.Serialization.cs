@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Optional<string> primaryEndpointKey = default;
-            Optional<string> secondaryEndpointKey = default;
-            Optional<string> installedVersion = default;
-            Optional<string> lastStableVersion = default;
+            string primaryEndpointKey = default;
+            string secondaryEndpointKey = default;
+            string installedVersion = default;
+            string lastStableVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GetBotServiceQnAMakerEndpointKeyResult(primaryEndpointKey.Value, secondaryEndpointKey.Value, installedVersion.Value, lastStableVersion.Value, serializedAdditionalRawData);
+            return new GetBotServiceQnAMakerEndpointKeyResult(primaryEndpointKey, secondaryEndpointKey, installedVersion, lastStableVersion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GetBotServiceQnAMakerEndpointKeyResult>.Write(ModelReaderWriterOptions options)

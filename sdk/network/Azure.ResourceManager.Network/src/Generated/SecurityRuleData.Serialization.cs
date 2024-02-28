@@ -199,26 +199,26 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<string> description = default;
-            Optional<SecurityRuleProtocol> protocol = default;
-            Optional<string> sourcePortRange = default;
-            Optional<string> destinationPortRange = default;
-            Optional<string> sourceAddressPrefix = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            string description = default;
+            SecurityRuleProtocol? protocol = default;
+            string sourcePortRange = default;
+            string destinationPortRange = default;
+            string sourceAddressPrefix = default;
             IList<string> sourceAddressPrefixes = default;
             IList<ApplicationSecurityGroupData> sourceApplicationSecurityGroups = default;
-            Optional<string> destinationAddressPrefix = default;
+            string destinationAddressPrefix = default;
             IList<string> destinationAddressPrefixes = default;
             IList<ApplicationSecurityGroupData> destinationApplicationSecurityGroups = default;
             IList<string> sourcePortRanges = default;
             IList<string> destinationPortRanges = default;
-            Optional<SecurityRuleAccess> access = default;
-            Optional<int> priority = default;
-            Optional<SecurityRuleDirection> direction = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            SecurityRuleAccess? access = default;
+            int? priority = default;
+            SecurityRuleDirection? direction = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -428,27 +428,27 @@ namespace Azure.ResourceManager.Network
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SecurityRuleData(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
+                id,
+                name,
+                type,
                 serializedAdditionalRawData,
-                Optional.ToNullable(etag),
-                description.Value,
-                Optional.ToNullable(protocol),
-                sourcePortRange.Value,
-                destinationPortRange.Value,
-                sourceAddressPrefix.Value,
+                etag,
+                description,
+                protocol,
+                sourcePortRange,
+                destinationPortRange,
+                sourceAddressPrefix,
                 sourceAddressPrefixes ?? new ChangeTrackingList<string>(),
                 sourceApplicationSecurityGroups ?? new ChangeTrackingList<ApplicationSecurityGroupData>(),
-                destinationAddressPrefix.Value,
+                destinationAddressPrefix,
                 destinationAddressPrefixes ?? new ChangeTrackingList<string>(),
                 destinationApplicationSecurityGroups ?? new ChangeTrackingList<ApplicationSecurityGroupData>(),
                 sourcePortRanges ?? new ChangeTrackingList<string>(),
                 destinationPortRanges ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(access),
-                Optional.ToNullable(priority),
-                Optional.ToNullable(direction),
-                Optional.ToNullable(provisioningState));
+                access,
+                priority,
+                direction,
+                provisioningState);
         }
 
         BinaryData IPersistableModel<SecurityRuleData>.Write(ModelReaderWriterOptions options)

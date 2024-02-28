@@ -212,21 +212,21 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<string> kind = default;
-            Optional<MachineLearningSku> sku = default;
+            ManagedServiceIdentity identity = default;
+            string kind = default;
+            MachineLearningSku sku = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Uri> discoveryUrl = default;
-            Optional<string> intellectualPropertyPublisher = default;
-            Optional<ArmResourceId> managedResourceGroup = default;
-            Optional<Uri> mlFlowRegistryUri = default;
+            SystemData systemData = default;
+            Uri discoveryUrl = default;
+            string intellectualPropertyPublisher = default;
+            ArmResourceId managedResourceGroup = default;
+            Uri mlFlowRegistryUri = default;
             IList<RegistryPrivateEndpointConnection> privateEndpointConnections = default;
-            Optional<string> publicNetworkAccess = default;
+            string publicNetworkAccess = default;
             IList<RegistryRegionArmDetails> regionDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -401,18 +401,18 @@ namespace Azure.ResourceManager.MachineLearning
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 identity,
-                kind.Value,
-                sku.Value,
-                discoveryUrl.Value,
-                intellectualPropertyPublisher.Value,
-                managedResourceGroup.Value,
-                mlFlowRegistryUri.Value,
+                kind,
+                sku,
+                discoveryUrl,
+                intellectualPropertyPublisher,
+                managedResourceGroup,
+                mlFlowRegistryUri,
                 privateEndpointConnections ?? new ChangeTrackingList<RegistryPrivateEndpointConnection>(),
-                publicNetworkAccess.Value,
+                publicNetworkAccess,
                 regionDetails ?? new ChangeTrackingList<RegistryRegionArmDetails>(),
                 serializedAdditionalRawData);
         }

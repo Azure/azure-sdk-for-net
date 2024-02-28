@@ -137,17 +137,17 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<ManagedResourceGroupConfiguration> managedResourceGroupConfiguration = default;
-            Optional<WritableSubResource> siteReference = default;
-            Optional<string> publisherName = default;
-            Optional<PublisherScope> publisherScope = default;
-            Optional<string> networkServiceDesignGroupName = default;
-            Optional<string> networkServiceDesignVersionName = default;
-            Optional<string> networkServiceDesignVersionOfferingLocation = default;
-            Optional<DeploymentResourceIdReference> networkServiceDesignVersionResourceReference = default;
+            ProvisioningState? provisioningState = default;
+            ManagedResourceGroupConfiguration managedResourceGroupConfiguration = default;
+            WritableSubResource siteReference = default;
+            string publisherName = default;
+            PublisherScope? publisherScope = default;
+            string networkServiceDesignGroupName = default;
+            string networkServiceDesignVersionName = default;
+            string networkServiceDesignVersionOfferingLocation = default;
+            DeploymentResourceIdReference networkServiceDesignVersionResourceReference = default;
             IDictionary<string, WritableSubResource> desiredStateConfigurationGroupValueReferences = default;
-            Optional<string> lastStateNetworkServiceDesignVersionName = default;
+            string lastStateNetworkServiceDesignVersionName = default;
             IReadOnlyDictionary<string, WritableSubResource> lastStateConfigurationGroupValueReferences = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -258,17 +258,17 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SiteNetworkServicePropertiesFormat(
-                Optional.ToNullable(provisioningState),
-                managedResourceGroupConfiguration.Value,
+                provisioningState,
+                managedResourceGroupConfiguration,
                 siteReference,
-                publisherName.Value,
-                Optional.ToNullable(publisherScope),
-                networkServiceDesignGroupName.Value,
-                networkServiceDesignVersionName.Value,
-                networkServiceDesignVersionOfferingLocation.Value,
-                networkServiceDesignVersionResourceReference.Value,
+                publisherName,
+                publisherScope,
+                networkServiceDesignGroupName,
+                networkServiceDesignVersionName,
+                networkServiceDesignVersionOfferingLocation,
+                networkServiceDesignVersionResourceReference,
                 desiredStateConfigurationGroupValueReferences ?? new ChangeTrackingDictionary<string, WritableSubResource>(),
-                lastStateNetworkServiceDesignVersionName.Value,
+                lastStateNetworkServiceDesignVersionName,
                 lastStateConfigurationGroupValueReferences ?? new ChangeTrackingDictionary<string, WritableSubResource>(),
                 serializedAdditionalRawData);
         }

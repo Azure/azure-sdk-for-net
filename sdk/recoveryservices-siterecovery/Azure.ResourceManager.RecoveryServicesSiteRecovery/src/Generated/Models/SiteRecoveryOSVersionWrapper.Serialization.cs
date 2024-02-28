@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> version = default;
-            Optional<string> servicePack = default;
+            string version = default;
+            string servicePack = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryOSVersionWrapper(version.Value, servicePack.Value, serializedAdditionalRawData);
+            return new SiteRecoveryOSVersionWrapper(version, servicePack, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryOSVersionWrapper>.Write(ModelReaderWriterOptions options)

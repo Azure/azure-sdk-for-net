@@ -96,9 +96,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<Uri> authorityUrl = default;
+            Uri authorityUrl = default;
             Guid clientId = default;
-            Optional<Uri> resourceUrl = default;
+            Uri resourceUrl = default;
             MachineLearningServicePrincipalDatastoreSecrets secrets = default;
             Guid tenantId = default;
             CredentialsType credentialsType = default;
@@ -155,9 +155,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new MachineLearningServicePrincipalDatastoreCredentials(
                 credentialsType,
                 serializedAdditionalRawData,
-                authorityUrl.Value,
+                authorityUrl,
                 clientId,
-                resourceUrl.Value,
+                resourceUrl,
                 secrets,
                 tenantId);
         }

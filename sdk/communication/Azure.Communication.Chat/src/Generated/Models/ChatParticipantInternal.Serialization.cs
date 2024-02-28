@@ -51,9 +51,9 @@ namespace Azure.Communication.Chat
                 return null;
             }
             CommunicationIdentifierModel communicationIdentifier = default;
-            Optional<string> displayName = default;
-            Optional<DateTimeOffset> shareHistoryTime = default;
-            Optional<IDictionary<string, string>> metadata = default;
+            string displayName = default;
+            DateTimeOffset? shareHistoryTime = default;
+            IDictionary<string, string> metadata = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("communicationIdentifier"u8))

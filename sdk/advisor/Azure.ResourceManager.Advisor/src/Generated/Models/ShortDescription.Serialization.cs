@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Advisor.Models
             {
                 return null;
             }
-            Optional<string> problem = default;
-            Optional<string> solution = default;
+            string problem = default;
+            string solution = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Advisor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ShortDescription(problem.Value, solution.Value, serializedAdditionalRawData);
+            return new ShortDescription(problem, solution, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ShortDescription>.Write(ModelReaderWriterOptions options)

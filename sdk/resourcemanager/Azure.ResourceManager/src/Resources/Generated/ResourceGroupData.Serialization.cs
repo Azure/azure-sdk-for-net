@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.Resources
             {
                 return null;
             }
-            Optional<ResourceGroupProperties> properties = default;
-            Optional<string> managedBy = default;
+            ResourceGroupProperties properties = default;
+            string managedBy = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -188,11 +188,11 @@ namespace Azure.ResourceManager.Resources
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                properties.Value,
-                managedBy.Value,
+                properties,
+                managedBy,
                 serializedAdditionalRawData);
         }
 

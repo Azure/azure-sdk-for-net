@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 return null;
             }
             string ready = default;
-            Optional<string> reason = default;
-            Optional<string> message = default;
+            string reason = default;
+            string message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterInstanceViewStatus(ready, reason.Value, message.Value, serializedAdditionalRawData);
+            return new ClusterInstanceViewStatus(ready, reason, message, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterInstanceViewStatus>.Write(ModelReaderWriterOptions options)

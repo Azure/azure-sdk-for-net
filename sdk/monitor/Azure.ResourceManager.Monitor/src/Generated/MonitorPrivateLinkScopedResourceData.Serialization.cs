@@ -101,9 +101,9 @@ namespace Azure.ResourceManager.Monitor
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> linkedResourceId = default;
-            Optional<string> provisioningState = default;
+            SystemData systemData = default;
+            ResourceIdentifier linkedResourceId = default;
+            string provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -168,9 +168,9 @@ namespace Azure.ResourceManager.Monitor
                 id,
                 name,
                 type,
-                systemData.Value,
-                linkedResourceId.Value,
-                provisioningState.Value,
+                systemData,
+                linkedResourceId,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

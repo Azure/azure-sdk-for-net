@@ -93,9 +93,9 @@ namespace Azure.AI.OpenAI
                 return null;
             }
             string text = default;
-            Optional<AudioTaskLabel> task = default;
-            Optional<string> language = default;
-            Optional<TimeSpan> duration = default;
+            AudioTaskLabel? task = default;
+            string language = default;
+            TimeSpan? duration = default;
             IReadOnlyList<AudioTranscriptionSegment> segments = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -151,9 +151,9 @@ namespace Azure.AI.OpenAI
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AudioTranscription(
                 text,
-                Optional.ToNullable(task),
-                language.Value,
-                Optional.ToNullable(duration),
+                task,
+                language,
+                duration,
                 segments ?? new ChangeTrackingList<AudioTranscriptionSegment>(),
                 serializedAdditionalRawData);
         }

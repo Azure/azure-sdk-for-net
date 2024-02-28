@@ -110,14 +110,14 @@ namespace Azure.AI.OpenAI
             {
                 return null;
             }
-            Optional<ContentFilterResult> sexual = default;
-            Optional<ContentFilterResult> violence = default;
-            Optional<ContentFilterResult> hate = default;
-            Optional<ContentFilterResult> selfHarm = default;
-            Optional<ContentFilterDetectionResult> profanity = default;
+            ContentFilterResult sexual = default;
+            ContentFilterResult violence = default;
+            ContentFilterResult hate = default;
+            ContentFilterResult selfHarm = default;
+            ContentFilterDetectionResult profanity = default;
             IReadOnlyList<ContentFilterBlocklistIdResult> customBlocklists = default;
-            Optional<ResponseError> error = default;
-            Optional<ContentFilterDetectionResult> jailbreak = default;
+            ResponseError error = default;
+            ContentFilterDetectionResult jailbreak = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -206,14 +206,14 @@ namespace Azure.AI.OpenAI
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ContentFilterResultDetailsForPrompt(
-                sexual.Value,
-                violence.Value,
-                hate.Value,
-                selfHarm.Value,
-                profanity.Value,
+                sexual,
+                violence,
+                hate,
+                selfHarm,
+                profanity,
                 customBlocklists ?? new ChangeTrackingList<ContentFilterBlocklistIdResult>(),
-                error.Value,
-                jailbreak.Value,
+                error,
+                jailbreak,
                 serializedAdditionalRawData);
         }
 

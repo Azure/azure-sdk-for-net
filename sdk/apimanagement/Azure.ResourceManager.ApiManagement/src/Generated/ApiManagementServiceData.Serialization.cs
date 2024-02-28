@@ -307,41 +307,41 @@ namespace Azure.ResourceManager.ApiManagement
                 return null;
             }
             ApiManagementServiceSkuProperties sku = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<ETag> etag = default;
+            ManagedServiceIdentity identity = default;
+            ETag? etag = default;
             IList<string> zones = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> notificationSenderEmail = default;
-            Optional<string> provisioningState = default;
-            Optional<string> targetProvisioningState = default;
-            Optional<DateTimeOffset> createdAtUtc = default;
-            Optional<Uri> gatewayUri = default;
-            Optional<Uri> gatewayRegionalUri = default;
-            Optional<Uri> portalUri = default;
-            Optional<Uri> managementApiUri = default;
-            Optional<Uri> scmUri = default;
-            Optional<Uri> developerPortalUri = default;
+            SystemData systemData = default;
+            string notificationSenderEmail = default;
+            string provisioningState = default;
+            string targetProvisioningState = default;
+            DateTimeOffset? createdAtUtc = default;
+            Uri gatewayUri = default;
+            Uri gatewayRegionalUri = default;
+            Uri portalUri = default;
+            Uri managementApiUri = default;
+            Uri scmUri = default;
+            Uri developerPortalUri = default;
             IList<HostnameConfiguration> hostnameConfigurations = default;
             IReadOnlyList<IPAddress> publicIPAddresses = default;
             IReadOnlyList<IPAddress> privateIPAddresses = default;
-            Optional<ResourceIdentifier> publicIPAddressId = default;
-            Optional<PublicNetworkAccess> publicNetworkAccess = default;
-            Optional<VirtualNetworkConfiguration> virtualNetworkConfiguration = default;
+            ResourceIdentifier publicIPAddressId = default;
+            PublicNetworkAccess? publicNetworkAccess = default;
+            VirtualNetworkConfiguration virtualNetworkConfiguration = default;
             IList<AdditionalLocation> additionalLocations = default;
             IDictionary<string, string> customProperties = default;
             IList<CertificateConfiguration> certificates = default;
-            Optional<bool> enableClientCertificate = default;
-            Optional<bool> disableGateway = default;
-            Optional<VirtualNetworkType> virtualNetworkType = default;
-            Optional<ApiVersionConstraint> apiVersionConstraint = default;
-            Optional<bool> restore = default;
+            bool? enableClientCertificate = default;
+            bool? disableGateway = default;
+            VirtualNetworkType? virtualNetworkType = default;
+            ApiVersionConstraint apiVersionConstraint = default;
+            bool? restore = default;
             IList<RemotePrivateEndpointConnectionWrapper> privateEndpointConnections = default;
-            Optional<PlatformVersion> platformVersion = default;
+            PlatformVersion? platformVersion = default;
             string publisherEmail = default;
             string publisherName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -731,39 +731,39 @@ namespace Azure.ResourceManager.ApiManagement
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 sku,
                 identity,
-                Optional.ToNullable(etag),
+                etag,
                 zones ?? new ChangeTrackingList<string>(),
-                notificationSenderEmail.Value,
-                provisioningState.Value,
-                targetProvisioningState.Value,
-                Optional.ToNullable(createdAtUtc),
-                gatewayUri.Value,
-                gatewayRegionalUri.Value,
-                portalUri.Value,
-                managementApiUri.Value,
-                scmUri.Value,
-                developerPortalUri.Value,
+                notificationSenderEmail,
+                provisioningState,
+                targetProvisioningState,
+                createdAtUtc,
+                gatewayUri,
+                gatewayRegionalUri,
+                portalUri,
+                managementApiUri,
+                scmUri,
+                developerPortalUri,
                 hostnameConfigurations ?? new ChangeTrackingList<HostnameConfiguration>(),
                 publicIPAddresses ?? new ChangeTrackingList<IPAddress>(),
                 privateIPAddresses ?? new ChangeTrackingList<IPAddress>(),
-                publicIPAddressId.Value,
-                Optional.ToNullable(publicNetworkAccess),
-                virtualNetworkConfiguration.Value,
+                publicIPAddressId,
+                publicNetworkAccess,
+                virtualNetworkConfiguration,
                 additionalLocations ?? new ChangeTrackingList<AdditionalLocation>(),
                 customProperties ?? new ChangeTrackingDictionary<string, string>(),
                 certificates ?? new ChangeTrackingList<CertificateConfiguration>(),
-                Optional.ToNullable(enableClientCertificate),
-                Optional.ToNullable(disableGateway),
-                Optional.ToNullable(virtualNetworkType),
-                apiVersionConstraint.Value,
-                Optional.ToNullable(restore),
+                enableClientCertificate,
+                disableGateway,
+                virtualNetworkType,
+                apiVersionConstraint,
+                restore,
                 privateEndpointConnections ?? new ChangeTrackingList<RemotePrivateEndpointConnectionWrapper>(),
-                Optional.ToNullable(platformVersion),
+                platformVersion,
                 publisherEmail,
                 publisherName,
                 serializedAdditionalRawData);

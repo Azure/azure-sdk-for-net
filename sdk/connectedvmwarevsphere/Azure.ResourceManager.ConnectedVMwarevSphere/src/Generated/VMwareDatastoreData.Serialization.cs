@@ -168,24 +168,24 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             {
                 return null;
             }
-            Optional<ExtendedLocation> extendedLocation = default;
-            Optional<string> kind = default;
+            ExtendedLocation extendedLocation = default;
+            string kind = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> uuid = default;
-            Optional<string> vCenterId = default;
-            Optional<string> moRefId = default;
-            Optional<string> inventoryItemId = default;
-            Optional<string> moName = default;
+            SystemData systemData = default;
+            string uuid = default;
+            string vCenterId = default;
+            string moRefId = default;
+            string inventoryItemId = default;
+            string moName = default;
             IReadOnlyList<VMwareResourceStatus> statuses = default;
-            Optional<string> customResourceName = default;
-            Optional<long> capacityGB = default;
-            Optional<long> freeSpaceGB = default;
-            Optional<VMwareResourceProvisioningState> provisioningState = default;
+            string customResourceName = default;
+            long? capacityGB = default;
+            long? freeSpaceGB = default;
+            VMwareResourceProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -340,21 +340,21 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 extendedLocation,
-                kind.Value,
-                uuid.Value,
-                vCenterId.Value,
-                moRefId.Value,
-                inventoryItemId.Value,
-                moName.Value,
+                kind,
+                uuid,
+                vCenterId,
+                moRefId,
+                inventoryItemId,
+                moName,
                 statuses ?? new ChangeTrackingList<VMwareResourceStatus>(),
-                customResourceName.Value,
-                Optional.ToNullable(capacityGB),
-                Optional.ToNullable(freeSpaceGB),
-                Optional.ToNullable(provisioningState),
+                customResourceName,
+                capacityGB,
+                freeSpaceGB,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

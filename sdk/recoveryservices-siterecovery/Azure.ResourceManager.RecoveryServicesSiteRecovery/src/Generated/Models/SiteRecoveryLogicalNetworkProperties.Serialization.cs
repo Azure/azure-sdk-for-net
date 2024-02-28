@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> friendlyName = default;
-            Optional<string> networkVirtualizationStatus = default;
-            Optional<string> logicalNetworkUsage = default;
-            Optional<string> logicalNetworkDefinitionsStatus = default;
+            string friendlyName = default;
+            string networkVirtualizationStatus = default;
+            string logicalNetworkUsage = default;
+            string logicalNetworkDefinitionsStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryLogicalNetworkProperties(friendlyName.Value, networkVirtualizationStatus.Value, logicalNetworkUsage.Value, logicalNetworkDefinitionsStatus.Value, serializedAdditionalRawData);
+            return new SiteRecoveryLogicalNetworkProperties(friendlyName, networkVirtualizationStatus, logicalNetworkUsage, logicalNetworkDefinitionsStatus, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryLogicalNetworkProperties>.Write(ModelReaderWriterOptions options)

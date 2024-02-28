@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             IReadOnlyList<RouteData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RouteListResult(value ?? new ChangeTrackingList<RouteData>(), nextLink.Value, serializedAdditionalRawData);
+            return new RouteListResult(value ?? new ChangeTrackingList<RouteData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RouteListResult>.Write(ModelReaderWriterOptions options)

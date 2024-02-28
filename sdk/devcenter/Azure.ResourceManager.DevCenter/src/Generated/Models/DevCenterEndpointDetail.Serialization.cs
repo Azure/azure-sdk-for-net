@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            Optional<int> port = default;
+            int? port = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevCenterEndpointDetail(Optional.ToNullable(port), serializedAdditionalRawData);
+            return new DevCenterEndpointDetail(port, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevCenterEndpointDetail>.Write(ModelReaderWriterOptions options)

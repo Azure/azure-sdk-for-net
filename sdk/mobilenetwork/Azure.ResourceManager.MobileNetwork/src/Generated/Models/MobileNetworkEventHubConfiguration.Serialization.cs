@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 return null;
             }
             ResourceIdentifier id = default;
-            Optional<int> reportingInterval = default;
+            int? reportingInterval = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MobileNetworkEventHubConfiguration(id, Optional.ToNullable(reportingInterval), serializedAdditionalRawData);
+            return new MobileNetworkEventHubConfiguration(id, reportingInterval, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MobileNetworkEventHubConfiguration>.Write(ModelReaderWriterOptions options)

@@ -152,15 +152,15 @@ namespace Azure.ResourceManager.Grafana
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<GrafanaProvisioningState> provisioningState = default;
-            Optional<ResourceIdentifier> privateLinkResourceId = default;
-            Optional<string> privateLinkResourceRegion = default;
+            SystemData systemData = default;
+            GrafanaProvisioningState? provisioningState = default;
+            ResourceIdentifier privateLinkResourceId = default;
+            string privateLinkResourceRegion = default;
             IList<string> groupIds = default;
-            Optional<string> requestMessage = default;
-            Optional<ManagedPrivateEndpointConnectionState> connectionState = default;
-            Optional<Uri> privateLinkServiceUrl = default;
-            Optional<string> privateLinkServicePrivateIP = default;
+            string requestMessage = default;
+            ManagedPrivateEndpointConnectionState connectionState = default;
+            Uri privateLinkServiceUrl = default;
+            string privateLinkServicePrivateIP = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -295,17 +295,17 @@ namespace Azure.ResourceManager.Grafana
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                Optional.ToNullable(provisioningState),
-                privateLinkResourceId.Value,
-                privateLinkResourceRegion.Value,
+                provisioningState,
+                privateLinkResourceId,
+                privateLinkResourceRegion,
                 groupIds ?? new ChangeTrackingList<string>(),
-                requestMessage.Value,
-                connectionState.Value,
-                privateLinkServiceUrl.Value,
-                privateLinkServicePrivateIP.Value,
+                requestMessage,
+                connectionState,
+                privateLinkServiceUrl,
+                privateLinkServicePrivateIP,
                 serializedAdditionalRawData);
         }
 

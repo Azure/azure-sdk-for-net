@@ -150,20 +150,20 @@ namespace Azure.ResourceManager.Relay.Models
             {
                 return null;
             }
-            Optional<RelaySku> sku = default;
+            RelaySku sku = default;
             IDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> provisioningState = default;
-            Optional<string> status = default;
-            Optional<DateTimeOffset> createdAt = default;
-            Optional<DateTimeOffset> updatedAt = default;
-            Optional<string> serviceBusEndpoint = default;
-            Optional<string> metricId = default;
+            SystemData systemData = default;
+            string provisioningState = default;
+            string status = default;
+            DateTimeOffset? createdAt = default;
+            DateTimeOffset? updatedAt = default;
+            string serviceBusEndpoint = default;
+            string metricId = default;
             IList<RelayPrivateEndpointConnectionData> privateEndpointConnections = default;
-            Optional<RelayPublicNetworkAccess> publicNetworkAccess = default;
+            RelayPublicNetworkAccess? publicNetworkAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -298,16 +298,16 @@ namespace Azure.ResourceManager.Relay.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                sku.Value,
-                provisioningState.Value,
-                status.Value,
-                Optional.ToNullable(createdAt),
-                Optional.ToNullable(updatedAt),
-                serviceBusEndpoint.Value,
-                metricId.Value,
+                systemData,
+                sku,
+                provisioningState,
+                status,
+                createdAt,
+                updatedAt,
+                serviceBusEndpoint,
+                metricId,
                 privateEndpointConnections ?? new ChangeTrackingList<RelayPrivateEndpointConnectionData>(),
-                Optional.ToNullable(publicNetworkAccess),
+                publicNetworkAccess,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }

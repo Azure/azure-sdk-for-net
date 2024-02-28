@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
+            ResourceIdentifier id = default;
             FrontDoorUsageUnit unit = default;
             long currentValue = default;
             long limit = default;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new FrontDoorUsage(
-                id.Value,
+                id,
                 unit,
                 currentValue,
                 limit,

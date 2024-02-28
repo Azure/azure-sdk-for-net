@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<string> queryName = default;
+            string queryName = default;
             IList<PowerQuerySink> dataflowSinks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PowerQuerySinkMapping(queryName.Value, dataflowSinks ?? new ChangeTrackingList<PowerQuerySink>(), serializedAdditionalRawData);
+            return new PowerQuerySinkMapping(queryName, dataflowSinks ?? new ChangeTrackingList<PowerQuerySink>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PowerQuerySinkMapping>.Write(ModelReaderWriterOptions options)

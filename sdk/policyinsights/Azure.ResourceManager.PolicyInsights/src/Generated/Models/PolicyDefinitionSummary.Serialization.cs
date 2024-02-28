@@ -94,11 +94,11 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> policyDefinitionId = default;
-            Optional<string> policyDefinitionReferenceId = default;
+            ResourceIdentifier policyDefinitionId = default;
+            string policyDefinitionReferenceId = default;
             IReadOnlyList<string> policyDefinitionGroupNames = default;
-            Optional<string> effect = default;
-            Optional<PolicySummaryResults> results = default;
+            string effect = default;
+            PolicySummaryResults results = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -152,11 +152,11 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new PolicyDefinitionSummary(
-                policyDefinitionId.Value,
-                policyDefinitionReferenceId.Value,
+                policyDefinitionId,
+                policyDefinitionReferenceId,
                 policyDefinitionGroupNames ?? new ChangeTrackingList<string>(),
-                effect.Value,
-                results.Value,
+                effect,
+                results,
                 serializedAdditionalRawData);
         }
 

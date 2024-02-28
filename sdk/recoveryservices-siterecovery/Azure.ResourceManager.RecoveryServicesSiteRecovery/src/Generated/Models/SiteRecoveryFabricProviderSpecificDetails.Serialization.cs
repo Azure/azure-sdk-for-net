@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             IReadOnlyList<ResourceIdentifier> containerIds = default;
             IReadOnlyList<A2AZoneDetails> zones = default;
             IReadOnlyList<A2AExtendedLocationDetails> extendedLocations = default;
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryFabricProviderSpecificDetails(
                 instanceType,
                 serializedAdditionalRawData,
-                Optional.ToNullable(location),
+                location,
                 containerIds ?? new ChangeTrackingList<ResourceIdentifier>(),
                 zones ?? new ChangeTrackingList<A2AZoneDetails>(),
                 extendedLocations ?? new ChangeTrackingList<A2AExtendedLocationDetails>(),

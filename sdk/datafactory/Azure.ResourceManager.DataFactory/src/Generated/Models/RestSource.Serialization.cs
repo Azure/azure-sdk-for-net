@@ -126,18 +126,18 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryElement<string>> requestMethod = default;
-            Optional<DataFactoryElement<string>> requestBody = default;
-            Optional<DataFactoryElement<string>> additionalHeaders = default;
-            Optional<DataFactoryElement<string>> paginationRules = default;
-            Optional<DataFactoryElement<string>> httpRequestTimeout = default;
-            Optional<BinaryData> requestInterval = default;
-            Optional<DataFactoryElement<IDictionary<string, string>>> additionalColumns = default;
+            DataFactoryElement<string> requestMethod = default;
+            DataFactoryElement<string> requestBody = default;
+            DataFactoryElement<string> additionalHeaders = default;
+            DataFactoryElement<string> paginationRules = default;
+            DataFactoryElement<string> httpRequestTimeout = default;
+            BinaryData requestInterval = default;
+            DataFactoryElement<IDictionary<string, string>> additionalColumns = default;
             string type = default;
-            Optional<DataFactoryElement<int>> sourceRetryCount = default;
-            Optional<DataFactoryElement<string>> sourceRetryWait = default;
-            Optional<DataFactoryElement<int>> maxConcurrentConnections = default;
-            Optional<DataFactoryElement<bool>> disableMetricsCollection = default;
+            DataFactoryElement<int> sourceRetryCount = default;
+            DataFactoryElement<string> sourceRetryWait = default;
+            DataFactoryElement<int> maxConcurrentConnections = default;
+            DataFactoryElement<bool> disableMetricsCollection = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -251,18 +251,18 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new RestSource(
                 type,
-                sourceRetryCount.Value,
-                sourceRetryWait.Value,
-                maxConcurrentConnections.Value,
-                disableMetricsCollection.Value,
+                sourceRetryCount,
+                sourceRetryWait,
+                maxConcurrentConnections,
+                disableMetricsCollection,
                 additionalProperties,
-                requestMethod.Value,
-                requestBody.Value,
-                additionalHeaders.Value,
-                paginationRules.Value,
-                httpRequestTimeout.Value,
-                requestInterval.Value,
-                additionalColumns.Value);
+                requestMethod,
+                requestBody,
+                additionalHeaders,
+                paginationRules,
+                httpRequestTimeout,
+                requestInterval,
+                additionalColumns);
         }
 
         BinaryData IPersistableModel<RestSource>.Write(ModelReaderWriterOptions options)
