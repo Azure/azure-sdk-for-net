@@ -3,12 +3,9 @@ resources:
     - repository: 1ESPipelineTemplates
       type: git
       name: 1ESPipelineTemplates/1ESPipelineTemplates
-      ref: refs/tags/release
+      ref: refs/tags/stable
 
 parameters:
-  - name: Extend1es
-    type: boolean
-    default: true
   - name: AdditionalPlatforms
     type: object
     default: {}
@@ -113,35 +110,32 @@ parameters:
           artifactName: SessionRecords
 
 extends:
-  ${{ if ne(parameters.Extend1es, true) }}:
-    template: stage-redirect.yml
-  ${{ elseif eq(variables['System.TeamProject'], 'internal') }}:
+  ${{ if eq(variables['System.TeamProject'], 'internal') }}:
     template: v1/1ES.Official.PipelineTemplate.yml@1ESPipelineTemplates
   ${{ else }}:
     template: v1/1ES.Unofficial.PipelineTemplate.yml@1ESPipelineTemplates
   parameters:
-    ${{ eq(parameters.Extend1es, true) }}:
-      sdl:
-        sourceAnalysisPool:
-          name: $(WINDOWSPOOL)
-          image: $(WINDOWSVMIMAGE)
-          os: windows
-        eslint:
+    sdl:
+      sourceAnalysisPool:
+        name: $(WINDOWSPOOL)
+        image: $(WINDOWSVMIMAGE)
+        os: windows
+      eslint:
+        enabled: false
+        justificationForDisabling: 'ESLint injected task has failures because it uses an old version of mkdirp. We should not fail for tools not controlled by the repo. See: https://dev.azure.com/azure-sdk/internal/_build/results?buildId=3499746'
+      codeql:
+        compiled:
           enabled: false
-          justificationForDisabling: 'ESLint injected task has failures because it uses an old version of mkdirp. We should not fail for tools not controlled by the repo. See: https://dev.azure.com/azure-sdk/internal/_build/results?buildId=3499746'
-        codeql:
-          compiled:
-            enabled: false
-            justificationForDisabling: CodeQL times our pipelines out by running for 2+ hours before being force canceled.
-        psscriptanalyzer:
-          compiled: true
-          break: true
-        policy: M365
-        credscan:
-          suppressionsFile: $(Build.SourcesDirectory)/eng/CredScanSuppression.json
-          scanFolder: $(Build.SourcesDirectory)/credscan.tsv
-          toolVersion: 2.3.12.23
-          baselineFiles: $(Build.SourcesDirectory)/eng/<language>.gdnbaselines
+          justificationForDisabling: CodeQL times our pipelines out by running for 2+ hours before being force canceled.
+      psscriptanalyzer:
+        compiled: true
+        break: true
+      policy: M365
+      credscan:
+        suppressionsFile: $(Build.SourcesDirectory)/eng/CredScanSuppression.json
+        scanFolder: $(Build.SourcesDirectory)/credscan.tsv
+        toolVersion: 2.3.12.23
+        baselineFiles: $(Build.SourcesDirectory)/eng/<language>.gdnbaselines
 
     stages:
       - ${{ each cloud in parameters.CloudConfig }}:
