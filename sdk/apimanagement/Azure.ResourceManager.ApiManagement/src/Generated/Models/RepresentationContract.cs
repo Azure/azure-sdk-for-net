@@ -51,7 +51,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <exception cref="ArgumentNullException"> <paramref name="contentType"/> is null. </exception>
         public RepresentationContract(string contentType)
         {
-            Argument.AssertNotNull(contentType, nameof(contentType));
+            if (contentType == null)
+            {
+                throw new ArgumentNullException(nameof(contentType));
+            }
 
             ContentType = contentType;
             FormParameters = new ChangeTrackingList<ParameterContract>();

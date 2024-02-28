@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<OperationalInsightsLinkedServiceData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<OperationalInsightsLinkedServiceData>> value = default;
+            IReadOnlyList<OperationalInsightsLinkedServiceData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     List<OperationalInsightsLinkedServiceData> array = new List<OperationalInsightsLinkedServiceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OperationalInsightsLinkedServiceData.DeserializeOperationalInsightsLinkedServiceData(item));
+                        array.Add(OperationalInsightsLinkedServiceData.DeserializeOperationalInsightsLinkedServiceData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LinkedServiceListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new LinkedServiceListResult(value ?? new ChangeTrackingList<OperationalInsightsLinkedServiceData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LinkedServiceListResult>.Write(ModelReaderWriterOptions options)

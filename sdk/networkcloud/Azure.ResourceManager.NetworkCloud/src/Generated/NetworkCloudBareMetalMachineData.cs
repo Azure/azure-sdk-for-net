@@ -68,16 +68,46 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="extendedLocation"/>, <paramref name="bmcConnectionString"/>, <paramref name="bmcCredentials"/>, <paramref name="bmcMacAddress"/>, <paramref name="bootMacAddress"/>, <paramref name="machineDetails"/>, <paramref name="machineName"/>, <paramref name="machineSkuId"/>, <paramref name="rackId"/> or <paramref name="serialNumber"/> is null. </exception>
         public NetworkCloudBareMetalMachineData(AzureLocation location, ExtendedLocation extendedLocation, string bmcConnectionString, AdministrativeCredentials bmcCredentials, string bmcMacAddress, string bootMacAddress, string machineDetails, string machineName, string machineSkuId, ResourceIdentifier rackId, long rackSlot, string serialNumber) : base(location)
         {
-            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
-            Argument.AssertNotNull(bmcConnectionString, nameof(bmcConnectionString));
-            Argument.AssertNotNull(bmcCredentials, nameof(bmcCredentials));
-            Argument.AssertNotNull(bmcMacAddress, nameof(bmcMacAddress));
-            Argument.AssertNotNull(bootMacAddress, nameof(bootMacAddress));
-            Argument.AssertNotNull(machineDetails, nameof(machineDetails));
-            Argument.AssertNotNull(machineName, nameof(machineName));
-            Argument.AssertNotNull(machineSkuId, nameof(machineSkuId));
-            Argument.AssertNotNull(rackId, nameof(rackId));
-            Argument.AssertNotNull(serialNumber, nameof(serialNumber));
+            if (extendedLocation == null)
+            {
+                throw new ArgumentNullException(nameof(extendedLocation));
+            }
+            if (bmcConnectionString == null)
+            {
+                throw new ArgumentNullException(nameof(bmcConnectionString));
+            }
+            if (bmcCredentials == null)
+            {
+                throw new ArgumentNullException(nameof(bmcCredentials));
+            }
+            if (bmcMacAddress == null)
+            {
+                throw new ArgumentNullException(nameof(bmcMacAddress));
+            }
+            if (bootMacAddress == null)
+            {
+                throw new ArgumentNullException(nameof(bootMacAddress));
+            }
+            if (machineDetails == null)
+            {
+                throw new ArgumentNullException(nameof(machineDetails));
+            }
+            if (machineName == null)
+            {
+                throw new ArgumentNullException(nameof(machineName));
+            }
+            if (machineSkuId == null)
+            {
+                throw new ArgumentNullException(nameof(machineSkuId));
+            }
+            if (rackId == null)
+            {
+                throw new ArgumentNullException(nameof(rackId));
+            }
+            if (serialNumber == null)
+            {
+                throw new ArgumentNullException(nameof(serialNumber));
+            }
 
             ExtendedLocation = extendedLocation;
             AssociatedResourceIds = new ChangeTrackingList<ResourceIdentifier>();

@@ -495,7 +495,10 @@ namespace Azure.ResourceManager.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<WebPubSubResource>> UpdateAsync(WaitUntil waitUntil, WebPubSubData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSubResource.Update");
             scope.Start();
@@ -541,7 +544,10 @@ namespace Azure.ResourceManager.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<WebPubSubResource> Update(WaitUntil waitUntil, WebPubSubData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSubResource.Update");
             scope.Start();
@@ -663,7 +669,10 @@ namespace Azure.ResourceManager.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<WebPubSubKeys>> RegenerateKeyAsync(WaitUntil waitUntil, WebPubSubRegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSubResource.RegenerateKey");
             scope.Start();
@@ -709,7 +718,10 @@ namespace Azure.ResourceManager.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<WebPubSubKeys> RegenerateKey(WaitUntil waitUntil, WebPubSubRegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSubResource.RegenerateKey");
             scope.Start();
@@ -838,7 +850,7 @@ namespace Azure.ResourceManager.WebPubSub
         public virtual AsyncPageable<WebPubSubSku> GetSkusAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webPubSubRestClient.CreateListSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, WebPubSubSku.DeserializeWebPubSubSku, _webPubSubClientDiagnostics, Pipeline, "WebPubSubResource.GetSkus", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => WebPubSubSku.DeserializeWebPubSubSku(e), _webPubSubClientDiagnostics, Pipeline, "WebPubSubResource.GetSkus", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -867,7 +879,7 @@ namespace Azure.ResourceManager.WebPubSub
         public virtual Pageable<WebPubSubSku> GetSkus(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webPubSubRestClient.CreateListSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, WebPubSubSku.DeserializeWebPubSubSku, _webPubSubClientDiagnostics, Pipeline, "WebPubSubResource.GetSkus", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => WebPubSubSku.DeserializeWebPubSubSku(e), _webPubSubClientDiagnostics, Pipeline, "WebPubSubResource.GetSkus", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -893,7 +905,7 @@ namespace Azure.ResourceManager.WebPubSub
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webPubSubPrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webPubSubPrivateLinkResourcesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, WebPubSubPrivateLink.DeserializeWebPubSubPrivateLink, _webPubSubPrivateLinkResourcesClientDiagnostics, Pipeline, "WebPubSubResource.GetWebPubSubPrivateLinkResources", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => WebPubSubPrivateLink.DeserializeWebPubSubPrivateLink(e), _webPubSubPrivateLinkResourcesClientDiagnostics, Pipeline, "WebPubSubResource.GetWebPubSubPrivateLinkResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -919,7 +931,7 @@ namespace Azure.ResourceManager.WebPubSub
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webPubSubPrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webPubSubPrivateLinkResourcesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, WebPubSubPrivateLink.DeserializeWebPubSubPrivateLink, _webPubSubPrivateLinkResourcesClientDiagnostics, Pipeline, "WebPubSubResource.GetWebPubSubPrivateLinkResources", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => WebPubSubPrivateLink.DeserializeWebPubSubPrivateLink(e), _webPubSubPrivateLinkResourcesClientDiagnostics, Pipeline, "WebPubSubResource.GetWebPubSubPrivateLinkResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -949,8 +961,14 @@ namespace Azure.ResourceManager.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<WebPubSubResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSubResource.AddTag");
             scope.Start();
@@ -1011,8 +1029,14 @@ namespace Azure.ResourceManager.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<WebPubSubResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSubResource.AddTag");
             scope.Start();
@@ -1072,7 +1096,10 @@ namespace Azure.ResourceManager.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<WebPubSubResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSubResource.SetTags");
             scope.Start();
@@ -1129,7 +1156,10 @@ namespace Azure.ResourceManager.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<WebPubSubResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSubResource.SetTags");
             scope.Start();
@@ -1186,7 +1216,10 @@ namespace Azure.ResourceManager.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<WebPubSubResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSubResource.RemoveTag");
             scope.Start();
@@ -1246,7 +1279,10 @@ namespace Azure.ResourceManager.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<WebPubSubResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSubResource.RemoveTag");
             scope.Start();

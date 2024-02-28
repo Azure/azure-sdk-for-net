@@ -36,44 +36,44 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             writer.WriteStringValue(ServicePrincipalObjectId);
             writer.WritePropertyName("azureManagementEndpointAudience"u8);
             writer.WriteStringValue(AzureManagementEndpointAudience);
-            if (Optional.IsDefined(ServiceResourceId))
+            if (ServiceResourceId != null)
             {
                 writer.WritePropertyName("serviceResourceId"u8);
                 writer.WriteStringValue(ServiceResourceId);
             }
-            if (Optional.IsDefined(AadAudience))
+            if (AadAudience != null)
             {
                 writer.WritePropertyName("aadAudience"u8);
                 writer.WriteStringValue(AadAudience);
             }
             writer.WritePropertyName("authType"u8);
             writer.WriteStringValue(AuthType);
-            if (Optional.IsDefined(Certificate))
+            if (Certificate != null)
             {
                 writer.WritePropertyName("certificate"u8);
                 writer.WriteBase64StringValue(Certificate, "D");
             }
-            if (Optional.IsDefined(FriendlyName))
+            if (FriendlyName != null)
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Optional.IsDefined(Issuer))
+            if (Issuer != null)
             {
                 writer.WritePropertyName("issuer"u8);
                 writer.WriteStringValue(Issuer);
             }
-            if (Optional.IsDefined(ResourceId))
+            if (ResourceId.HasValue)
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteNumberValue(ResourceId.Value);
             }
-            if (Optional.IsDefined(Subject))
+            if (Subject != null)
             {
                 writer.WritePropertyName("subject"u8);
                 writer.WriteStringValue(Subject);
             }
-            if (Optional.IsDefined(Thumbprint))
+            if (Thumbprint != null)
             {
                 writer.WritePropertyName("thumbprint"u8);
 #if NET6_0_OR_GREATER
@@ -85,12 +85,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
 #endif
             }
-            if (Optional.IsDefined(ValidStartOn))
+            if (ValidStartOn.HasValue)
             {
                 writer.WritePropertyName("validFrom"u8);
                 writer.WriteStringValue(ValidStartOn.Value, "O");
             }
-            if (Optional.IsDefined(ValidEndOn))
+            if (ValidEndOn.HasValue)
             {
                 writer.WritePropertyName("validTo"u8);
                 writer.WriteStringValue(ValidEndOn.Value, "O");
@@ -138,17 +138,17 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             string servicePrincipalClientId = default;
             string servicePrincipalObjectId = default;
             string azureManagementEndpointAudience = default;
-            Optional<ResourceIdentifier> serviceResourceId = default;
-            Optional<string> aadAudience = default;
+            ResourceIdentifier serviceResourceId = default;
+            string aadAudience = default;
             string authType = default;
-            Optional<byte[]> certificate = default;
-            Optional<string> friendlyName = default;
-            Optional<string> issuer = default;
-            Optional<long> resourceId = default;
-            Optional<string> subject = default;
-            Optional<BinaryData> thumbprint = default;
-            Optional<DateTimeOffset> validFrom = default;
-            Optional<DateTimeOffset> validTo = default;
+            byte[] certificate = default;
+            string friendlyName = default;
+            string issuer = default;
+            long? resourceId = default;
+            string subject = default;
+            BinaryData thumbprint = default;
+            DateTimeOffset? validFrom = default;
+            DateTimeOffset? validTo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -263,7 +263,24 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceCertificateAndAadDetails(authType, certificate.Value, friendlyName.Value, issuer.Value, Optional.ToNullable(resourceId), subject.Value, thumbprint.Value, Optional.ToNullable(validFrom), Optional.ToNullable(validTo), serializedAdditionalRawData, aadAuthority, aadTenantId, servicePrincipalClientId, servicePrincipalObjectId, azureManagementEndpointAudience, serviceResourceId.Value, aadAudience.Value);
+            return new ResourceCertificateAndAadDetails(
+                authType,
+                certificate,
+                friendlyName,
+                issuer,
+                resourceId,
+                subject,
+                thumbprint,
+                validFrom,
+                validTo,
+                serializedAdditionalRawData,
+                aadAuthority,
+                aadTenantId,
+                servicePrincipalClientId,
+                servicePrincipalObjectId,
+                azureManagementEndpointAudience,
+                serviceResourceId,
+                aadAudience);
         }
 
         BinaryData IPersistableModel<ResourceCertificateAndAadDetails>.Write(ModelReaderWriterOptions options)

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrivateEndpointConnectionName))
+            if (PrivateEndpointConnectionName != null)
             {
                 writer.WritePropertyName("privateEndpointConnectionName"u8);
                 writer.WriteStringValue(PrivateEndpointConnectionName);
             }
-            if (Optional.IsDefined(QueryAccessMode))
+            if (QueryAccessMode.HasValue)
             {
                 writer.WritePropertyName("queryAccessMode"u8);
                 writer.WriteStringValue(QueryAccessMode.Value.ToString());
             }
-            if (Optional.IsDefined(IngestionAccessMode))
+            if (IngestionAccessMode.HasValue)
             {
                 writer.WritePropertyName("ingestionAccessMode"u8);
                 writer.WriteStringValue(IngestionAccessMode.Value.ToString());
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<string> privateEndpointConnectionName = default;
-            Optional<MonitorPrivateLinkAccessMode> queryAccessMode = default;
-            Optional<MonitorPrivateLinkAccessMode> ingestionAccessMode = default;
+            string privateEndpointConnectionName = default;
+            MonitorPrivateLinkAccessMode? queryAccessMode = default;
+            MonitorPrivateLinkAccessMode? ingestionAccessMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorPrivateLinkAccessModeSettingsExclusion(privateEndpointConnectionName.Value, Optional.ToNullable(queryAccessMode), Optional.ToNullable(ingestionAccessMode), serializedAdditionalRawData);
+            return new MonitorPrivateLinkAccessModeSettingsExclusion(privateEndpointConnectionName, queryAccessMode, ingestionAccessMode, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorPrivateLinkAccessModeSettingsExclusion>.Write(ModelReaderWriterOptions options)

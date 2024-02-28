@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Content))
+            if (Content != null)
             {
                 writer.WritePropertyName("content"u8);
                 writer.WriteStringValue(Content);
             }
-            if (Optional.IsCollectionDefined(Headers))
+            if (!(Headers is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("headers"u8);
                 writer.WriteStartObject();
@@ -42,17 +42,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(ReasonPhrase))
+            if (ReasonPhrase != null)
             {
                 writer.WritePropertyName("reasonPhrase"u8);
                 writer.WriteStringValue(ReasonPhrase);
             }
-            if (Optional.IsDefined(StatusCode))
+            if (StatusCode != null)
             {
                 writer.WritePropertyName("statusCode"u8);
                 writer.WriteStringValue(StatusCode);
             }
-            if (Optional.IsDefined(Version))
+            if (Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
@@ -95,11 +95,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<string> content = default;
-            Optional<IReadOnlyDictionary<string, string>> headers = default;
-            Optional<string> reasonPhrase = default;
-            Optional<string> statusCode = default;
-            Optional<string> version = default;
+            string content = default;
+            IReadOnlyDictionary<string, string> headers = default;
+            string reasonPhrase = default;
+            string statusCode = default;
+            string version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,7 +144,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryWebhookEventResponseMessage(content.Value, Optional.ToDictionary(headers), reasonPhrase.Value, statusCode.Value, version.Value, serializedAdditionalRawData);
+            return new ContainerRegistryWebhookEventResponseMessage(
+                content,
+                headers ?? new ChangeTrackingDictionary<string, string>(),
+                reasonPhrase,
+                statusCode,
+                version,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryWebhookEventResponseMessage>.Write(ModelReaderWriterOptions options)

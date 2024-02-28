@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.Authorization.Models
             writer.WriteStartObject();
             writer.WritePropertyName("scope"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ScopeId))
+            if (ScopeId != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(ScopeId);
             }
-            if (Optional.IsDefined(ScopeDisplayName))
+            if (ScopeDisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(ScopeDisplayName);
             }
-            if (Optional.IsDefined(ScopeType))
+            if (ScopeType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ScopeType.Value.ToString());
@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> displayName = default;
-            Optional<RoleManagementScopeType> type = default;
+            ResourceIdentifier id = default;
+            string displayName = default;
+            RoleManagementScopeType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoleManagementPolicyProperties(id.Value, displayName.Value, Optional.ToNullable(type), serializedAdditionalRawData);
+            return new RoleManagementPolicyProperties(id, displayName, type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoleManagementPolicyProperties>.Write(ModelReaderWriterOptions options)

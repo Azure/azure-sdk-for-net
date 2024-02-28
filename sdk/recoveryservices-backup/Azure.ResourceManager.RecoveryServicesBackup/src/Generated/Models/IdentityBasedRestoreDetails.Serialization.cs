@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ObjectType))
+            if (ObjectType != null)
             {
                 writer.WritePropertyName("objectType"u8);
                 writer.WriteStringValue(ObjectType);
             }
-            if (Optional.IsDefined(TargetStorageAccountId))
+            if (TargetStorageAccountId != null)
             {
                 writer.WritePropertyName("targetStorageAccountId"u8);
                 writer.WriteStringValue(TargetStorageAccountId);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<string> objectType = default;
-            Optional<ResourceIdentifier> targetStorageAccountId = default;
+            string objectType = default;
+            ResourceIdentifier targetStorageAccountId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IdentityBasedRestoreDetails(objectType.Value, targetStorageAccountId.Value, serializedAdditionalRawData);
+            return new IdentityBasedRestoreDetails(objectType, targetStorageAccountId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IdentityBasedRestoreDetails>.Write(ModelReaderWriterOptions options)

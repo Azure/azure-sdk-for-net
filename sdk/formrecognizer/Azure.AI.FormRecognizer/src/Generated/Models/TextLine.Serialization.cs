@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -22,7 +21,7 @@ namespace Azure.AI.FormRecognizer.Models
             string text = default;
             IReadOnlyList<float> boundingBox = default;
             IReadOnlyList<TextWord> words = default;
-            Optional<TextAppearance> appearance = default;
+            TextAppearance appearance = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("text"u8))
@@ -60,7 +59,7 @@ namespace Azure.AI.FormRecognizer.Models
                     continue;
                 }
             }
-            return new TextLine(text, boundingBox, words, appearance.Value);
+            return new TextLine(text, boundingBox, words, appearance);
         }
     }
 }

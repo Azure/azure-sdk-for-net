@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<MachineLearningQuotaProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<IList<MachineLearningQuotaProperties>> value = default;
-            Optional<AzureLocation> location = default;
+            IList<MachineLearningQuotaProperties> value = default;
+            AzureLocation? location = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningQuotaProperties> array = new List<MachineLearningQuotaProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningQuotaProperties.DeserializeMachineLearningQuotaProperties(item));
+                        array.Add(MachineLearningQuotaProperties.DeserializeMachineLearningQuotaProperties(item, options));
                     }
                     value = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningQuotaUpdateContent(Optional.ToList(value), Optional.ToNullable(location), serializedAdditionalRawData);
+            return new MachineLearningQuotaUpdateContent(value ?? new ChangeTrackingList<MachineLearningQuotaProperties>(), location, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningQuotaUpdateContent>.Write(ModelReaderWriterOptions options)

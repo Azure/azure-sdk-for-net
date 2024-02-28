@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Destination))
+            if (Destination != null)
             {
                 writer.WritePropertyName("destination"u8);
                 writer.WriteStringValue(Destination);
             }
-            if (Optional.IsDefined(LogAnalyticsConfiguration))
+            if (LogAnalyticsConfiguration != null)
             {
                 writer.WritePropertyName("logAnalyticsConfiguration"u8);
                 writer.WriteObjectValue(LogAnalyticsConfiguration);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> destination = default;
-            Optional<ContainerAppLogAnalyticsConfiguration> logAnalyticsConfiguration = default;
+            string destination = default;
+            ContainerAppLogAnalyticsConfiguration logAnalyticsConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    logAnalyticsConfiguration = ContainerAppLogAnalyticsConfiguration.DeserializeContainerAppLogAnalyticsConfiguration(property.Value);
+                    logAnalyticsConfiguration = ContainerAppLogAnalyticsConfiguration.DeserializeContainerAppLogAnalyticsConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppLogsConfiguration(destination.Value, logAnalyticsConfiguration.Value, serializedAdditionalRawData);
+            return new ContainerAppLogsConfiguration(destination, logAnalyticsConfiguration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppLogsConfiguration>.Write(ModelReaderWriterOptions options)

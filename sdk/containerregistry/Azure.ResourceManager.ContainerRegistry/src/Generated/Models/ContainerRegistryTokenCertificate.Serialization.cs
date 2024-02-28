@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name.HasValue)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name.Value.ToString());
             }
-            if (Optional.IsDefined(ExpireOn))
+            if (ExpireOn.HasValue)
             {
                 writer.WritePropertyName("expiry"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (Optional.IsDefined(Thumbprint))
+            if (Thumbprint != null)
             {
                 writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(Thumbprint);
             }
-            if (Optional.IsDefined(EncodedPemCertificate))
+            if (EncodedPemCertificate != null)
             {
                 writer.WritePropertyName("encodedPemCertificate"u8);
                 writer.WriteStringValue(EncodedPemCertificate);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<ContainerRegistryTokenCertificateName> name = default;
-            Optional<DateTimeOffset> expiry = default;
-            Optional<string> thumbprint = default;
-            Optional<string> encodedPemCertificate = default;
+            ContainerRegistryTokenCertificateName? name = default;
+            DateTimeOffset? expiry = default;
+            string thumbprint = default;
+            string encodedPemCertificate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryTokenCertificate(Optional.ToNullable(name), Optional.ToNullable(expiry), thumbprint.Value, encodedPemCertificate.Value, serializedAdditionalRawData);
+            return new ContainerRegistryTokenCertificate(name, expiry, thumbprint, encodedPemCertificate, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryTokenCertificate>.Write(ModelReaderWriterOptions options)

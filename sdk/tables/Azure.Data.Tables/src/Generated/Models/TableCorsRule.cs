@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Data.Tables.Models
 {
@@ -22,10 +21,22 @@ namespace Azure.Data.Tables.Models
         /// <exception cref="ArgumentNullException"> <paramref name="allowedOrigins"/>, <paramref name="allowedMethods"/>, <paramref name="allowedHeaders"/> or <paramref name="exposedHeaders"/> is null. </exception>
         public TableCorsRule(string allowedOrigins, string allowedMethods, string allowedHeaders, string exposedHeaders, int maxAgeInSeconds)
         {
-            Argument.AssertNotNull(allowedOrigins, nameof(allowedOrigins));
-            Argument.AssertNotNull(allowedMethods, nameof(allowedMethods));
-            Argument.AssertNotNull(allowedHeaders, nameof(allowedHeaders));
-            Argument.AssertNotNull(exposedHeaders, nameof(exposedHeaders));
+            if (allowedOrigins == null)
+            {
+                throw new ArgumentNullException(nameof(allowedOrigins));
+            }
+            if (allowedMethods == null)
+            {
+                throw new ArgumentNullException(nameof(allowedMethods));
+            }
+            if (allowedHeaders == null)
+            {
+                throw new ArgumentNullException(nameof(allowedHeaders));
+            }
+            if (exposedHeaders == null)
+            {
+                throw new ArgumentNullException(nameof(exposedHeaders));
+            }
 
             AllowedOrigins = allowedOrigins;
             AllowedMethods = allowedMethods;

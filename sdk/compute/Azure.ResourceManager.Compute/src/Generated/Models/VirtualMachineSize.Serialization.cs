@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(NumberOfCores))
+            if (NumberOfCores.HasValue)
             {
                 writer.WritePropertyName("numberOfCores"u8);
                 writer.WriteNumberValue(NumberOfCores.Value);
             }
-            if (Optional.IsDefined(OSDiskSizeInMB))
+            if (OSDiskSizeInMB.HasValue)
             {
                 writer.WritePropertyName("osDiskSizeInMB"u8);
                 writer.WriteNumberValue(OSDiskSizeInMB.Value);
             }
-            if (Optional.IsDefined(ResourceDiskSizeInMB))
+            if (ResourceDiskSizeInMB.HasValue)
             {
                 writer.WritePropertyName("resourceDiskSizeInMB"u8);
                 writer.WriteNumberValue(ResourceDiskSizeInMB.Value);
             }
-            if (Optional.IsDefined(MemoryInMB))
+            if (MemoryInMB.HasValue)
             {
                 writer.WritePropertyName("memoryInMB"u8);
                 writer.WriteNumberValue(MemoryInMB.Value);
             }
-            if (Optional.IsDefined(MaxDataDiskCount))
+            if (MaxDataDiskCount.HasValue)
             {
                 writer.WritePropertyName("maxDataDiskCount"u8);
                 writer.WriteNumberValue(MaxDataDiskCount.Value);
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<int> numberOfCores = default;
-            Optional<int> osDiskSizeInMB = default;
-            Optional<int> resourceDiskSizeInMB = default;
-            Optional<int> memoryInMB = default;
-            Optional<int> maxDataDiskCount = default;
+            string name = default;
+            int? numberOfCores = default;
+            int? osDiskSizeInMB = default;
+            int? resourceDiskSizeInMB = default;
+            int? memoryInMB = default;
+            int? maxDataDiskCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineSize(name.Value, Optional.ToNullable(numberOfCores), Optional.ToNullable(osDiskSizeInMB), Optional.ToNullable(resourceDiskSizeInMB), Optional.ToNullable(memoryInMB), Optional.ToNullable(maxDataDiskCount), serializedAdditionalRawData);
+            return new VirtualMachineSize(
+                name,
+                numberOfCores,
+                osDiskSizeInMB,
+                resourceDiskSizeInMB,
+                memoryInMB,
+                maxDataDiskCount,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineSize>.Write(ModelReaderWriterOptions options)

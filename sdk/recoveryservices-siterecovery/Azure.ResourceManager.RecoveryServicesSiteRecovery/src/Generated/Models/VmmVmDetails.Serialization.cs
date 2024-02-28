@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SourceItemId))
+            if (SourceItemId != null)
             {
                 writer.WritePropertyName("sourceItemId"u8);
                 writer.WriteStringValue(SourceItemId);
             }
-            if (Optional.IsDefined(Generation))
+            if (Generation != null)
             {
                 writer.WritePropertyName("generation"u8);
                 writer.WriteStringValue(Generation);
             }
-            if (Optional.IsDefined(OSDetails))
+            if (OSDetails != null)
             {
                 writer.WritePropertyName("osDetails"u8);
                 writer.WriteObjectValue(OSDetails);
             }
-            if (Optional.IsCollectionDefined(DiskDetails))
+            if (!(DiskDetails is ChangeTrackingList<SiteRecoveryDiskDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("diskDetails"u8);
                 writer.WriteStartArray();
@@ -51,22 +51,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(HasPhysicalDisk))
+            if (HasPhysicalDisk.HasValue)
             {
                 writer.WritePropertyName("hasPhysicalDisk"u8);
                 writer.WriteStringValue(HasPhysicalDisk.Value.ToString());
             }
-            if (Optional.IsDefined(HasFibreChannelAdapter))
+            if (HasFibreChannelAdapter.HasValue)
             {
                 writer.WritePropertyName("hasFibreChannelAdapter"u8);
                 writer.WriteStringValue(HasFibreChannelAdapter.Value.ToString());
             }
-            if (Optional.IsDefined(HasSharedVhd))
+            if (HasSharedVhd.HasValue)
             {
                 writer.WritePropertyName("hasSharedVhd"u8);
                 writer.WriteStringValue(HasSharedVhd.Value.ToString());
             }
-            if (Optional.IsDefined(HyperVHostId))
+            if (HyperVHostId != null)
             {
                 writer.WritePropertyName("hyperVHostId"u8);
                 writer.WriteStringValue(HyperVHostId);
@@ -111,14 +111,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> sourceItemId = default;
-            Optional<string> generation = default;
-            Optional<SiteRecoveryOSDetails> osDetails = default;
-            Optional<IReadOnlyList<SiteRecoveryDiskDetails>> diskDetails = default;
-            Optional<HyperVVmDiskPresenceStatus> hasPhysicalDisk = default;
-            Optional<HyperVVmDiskPresenceStatus> hasFibreChannelAdapter = default;
-            Optional<HyperVVmDiskPresenceStatus> hasSharedVhd = default;
-            Optional<string> hyperVHostId = default;
+            string sourceItemId = default;
+            string generation = default;
+            SiteRecoveryOSDetails osDetails = default;
+            IReadOnlyList<SiteRecoveryDiskDetails> diskDetails = default;
+            HyperVVmDiskPresenceStatus? hasPhysicalDisk = default;
+            HyperVVmDiskPresenceStatus? hasFibreChannelAdapter = default;
+            HyperVVmDiskPresenceStatus? hasSharedVhd = default;
+            string hyperVHostId = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    osDetails = SiteRecoveryOSDetails.DeserializeSiteRecoveryOSDetails(property.Value);
+                    osDetails = SiteRecoveryOSDetails.DeserializeSiteRecoveryOSDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("diskDetails"u8))
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryDiskDetails> array = new List<SiteRecoveryDiskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryDiskDetails.DeserializeSiteRecoveryDiskDetails(item));
+                        array.Add(SiteRecoveryDiskDetails.DeserializeSiteRecoveryDiskDetails(item, options));
                     }
                     diskDetails = array;
                     continue;
@@ -200,7 +200,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VmmVmDetails(instanceType, serializedAdditionalRawData, sourceItemId.Value, generation.Value, osDetails.Value, Optional.ToList(diskDetails), Optional.ToNullable(hasPhysicalDisk), Optional.ToNullable(hasFibreChannelAdapter), Optional.ToNullable(hasSharedVhd), hyperVHostId.Value);
+            return new VmmVmDetails(
+                instanceType,
+                serializedAdditionalRawData,
+                sourceItemId,
+                generation,
+                osDetails,
+                diskDetails ?? new ChangeTrackingList<SiteRecoveryDiskDetails>(),
+                hasPhysicalDisk,
+                hasFibreChannelAdapter,
+                hasSharedVhd,
+                hyperVHostId);
         }
 
         BinaryData IPersistableModel<VmmVmDetails>.Write(ModelReaderWriterOptions options)

@@ -81,8 +81,18 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderAliasName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<BillingBenefitsReservationOrderAliasResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string reservationOrderAliasName, BillingBenefitsReservationOrderAliasCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(reservationOrderAliasName, nameof(reservationOrderAliasName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (reservationOrderAliasName == null)
+            {
+                throw new ArgumentNullException(nameof(reservationOrderAliasName));
+            }
+            if (reservationOrderAliasName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(reservationOrderAliasName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _billingBenefitsReservationOrderAliasReservationOrderAliasClientDiagnostics.CreateScope("BillingBenefitsReservationOrderAliasCollection.CreateOrUpdate");
             scope.Start();
@@ -130,8 +140,18 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderAliasName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<BillingBenefitsReservationOrderAliasResource> CreateOrUpdate(WaitUntil waitUntil, string reservationOrderAliasName, BillingBenefitsReservationOrderAliasCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(reservationOrderAliasName, nameof(reservationOrderAliasName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (reservationOrderAliasName == null)
+            {
+                throw new ArgumentNullException(nameof(reservationOrderAliasName));
+            }
+            if (reservationOrderAliasName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(reservationOrderAliasName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _billingBenefitsReservationOrderAliasReservationOrderAliasClientDiagnostics.CreateScope("BillingBenefitsReservationOrderAliasCollection.CreateOrUpdate");
             scope.Start();
@@ -177,7 +197,14 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderAliasName"/> is null. </exception>
         public virtual async Task<Response<BillingBenefitsReservationOrderAliasResource>> GetAsync(string reservationOrderAliasName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(reservationOrderAliasName, nameof(reservationOrderAliasName));
+            if (reservationOrderAliasName == null)
+            {
+                throw new ArgumentNullException(nameof(reservationOrderAliasName));
+            }
+            if (reservationOrderAliasName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(reservationOrderAliasName));
+            }
 
             using var scope = _billingBenefitsReservationOrderAliasReservationOrderAliasClientDiagnostics.CreateScope("BillingBenefitsReservationOrderAliasCollection.Get");
             scope.Start();
@@ -222,7 +249,14 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderAliasName"/> is null. </exception>
         public virtual Response<BillingBenefitsReservationOrderAliasResource> Get(string reservationOrderAliasName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(reservationOrderAliasName, nameof(reservationOrderAliasName));
+            if (reservationOrderAliasName == null)
+            {
+                throw new ArgumentNullException(nameof(reservationOrderAliasName));
+            }
+            if (reservationOrderAliasName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(reservationOrderAliasName));
+            }
 
             using var scope = _billingBenefitsReservationOrderAliasReservationOrderAliasClientDiagnostics.CreateScope("BillingBenefitsReservationOrderAliasCollection.Get");
             scope.Start();
@@ -267,7 +301,14 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderAliasName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string reservationOrderAliasName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(reservationOrderAliasName, nameof(reservationOrderAliasName));
+            if (reservationOrderAliasName == null)
+            {
+                throw new ArgumentNullException(nameof(reservationOrderAliasName));
+            }
+            if (reservationOrderAliasName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(reservationOrderAliasName));
+            }
 
             using var scope = _billingBenefitsReservationOrderAliasReservationOrderAliasClientDiagnostics.CreateScope("BillingBenefitsReservationOrderAliasCollection.Exists");
             scope.Start();
@@ -310,7 +351,14 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderAliasName"/> is null. </exception>
         public virtual Response<bool> Exists(string reservationOrderAliasName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(reservationOrderAliasName, nameof(reservationOrderAliasName));
+            if (reservationOrderAliasName == null)
+            {
+                throw new ArgumentNullException(nameof(reservationOrderAliasName));
+            }
+            if (reservationOrderAliasName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(reservationOrderAliasName));
+            }
 
             using var scope = _billingBenefitsReservationOrderAliasReservationOrderAliasClientDiagnostics.CreateScope("BillingBenefitsReservationOrderAliasCollection.Exists");
             scope.Start();
@@ -353,7 +401,14 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderAliasName"/> is null. </exception>
         public virtual async Task<NullableResponse<BillingBenefitsReservationOrderAliasResource>> GetIfExistsAsync(string reservationOrderAliasName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(reservationOrderAliasName, nameof(reservationOrderAliasName));
+            if (reservationOrderAliasName == null)
+            {
+                throw new ArgumentNullException(nameof(reservationOrderAliasName));
+            }
+            if (reservationOrderAliasName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(reservationOrderAliasName));
+            }
 
             using var scope = _billingBenefitsReservationOrderAliasReservationOrderAliasClientDiagnostics.CreateScope("BillingBenefitsReservationOrderAliasCollection.GetIfExists");
             scope.Start();
@@ -398,7 +453,14 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderAliasName"/> is null. </exception>
         public virtual NullableResponse<BillingBenefitsReservationOrderAliasResource> GetIfExists(string reservationOrderAliasName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(reservationOrderAliasName, nameof(reservationOrderAliasName));
+            if (reservationOrderAliasName == null)
+            {
+                throw new ArgumentNullException(nameof(reservationOrderAliasName));
+            }
+            if (reservationOrderAliasName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(reservationOrderAliasName));
+            }
 
             using var scope = _billingBenefitsReservationOrderAliasReservationOrderAliasClientDiagnostics.CreateScope("BillingBenefitsReservationOrderAliasCollection.GetIfExists");
             scope.Start();

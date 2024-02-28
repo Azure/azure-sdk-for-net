@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.LargeInstance.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(HardwareType))
+            if (options.Format != "W" && HardwareType.HasValue)
             {
                 writer.WritePropertyName("hardwareType"u8);
                 writer.WriteStringValue(HardwareType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(AzureLargeInstanceSize))
+            if (options.Format != "W" && AzureLargeInstanceSize.HasValue)
             {
                 writer.WritePropertyName("azureLargeInstanceSize"u8);
                 writer.WriteStringValue(AzureLargeInstanceSize.Value.ToString());
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.LargeInstance.Models
             {
                 return null;
             }
-            Optional<LargeInstanceHardwareTypeName> hardwareType = default;
-            Optional<LargeInstanceSizeName> azureLargeInstanceSize = default;
+            LargeInstanceHardwareTypeName? hardwareType = default;
+            LargeInstanceSizeName? azureLargeInstanceSize = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LargeInstanceHardwareProfile(Optional.ToNullable(hardwareType), Optional.ToNullable(azureLargeInstanceSize), serializedAdditionalRawData);
+            return new LargeInstanceHardwareProfile(hardwareType, azureLargeInstanceSize, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LargeInstanceHardwareProfile>.Write(ModelReaderWriterOptions options)

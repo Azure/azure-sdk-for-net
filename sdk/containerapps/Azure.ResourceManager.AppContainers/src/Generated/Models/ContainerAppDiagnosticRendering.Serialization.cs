@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DiagnosticRenderingType))
+            if (DiagnosticRenderingType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteNumberValue(DiagnosticRenderingType.Value);
             }
-            if (Optional.IsDefined(Title))
+            if (Title != null)
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(IsVisible))
+            if (IsVisible.HasValue)
             {
                 writer.WritePropertyName("isVisible"u8);
                 writer.WriteBooleanValue(IsVisible.Value);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<int> type = default;
-            Optional<string> title = default;
-            Optional<string> description = default;
-            Optional<bool> isVisible = default;
+            int? type = default;
+            string title = default;
+            string description = default;
+            bool? isVisible = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppDiagnosticRendering(Optional.ToNullable(type), title.Value, description.Value, Optional.ToNullable(isVisible), serializedAdditionalRawData);
+            return new ContainerAppDiagnosticRendering(type, title, description, isVisible, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppDiagnosticRendering>.Write(ModelReaderWriterOptions options)

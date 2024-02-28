@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Issue))
+            if (Issue.HasValue)
             {
                 writer.WritePropertyName("issue"u8);
                 writer.WriteStringValue(Issue.Value.ToString());
             }
-            if (Optional.IsDefined(NumberOfVms))
+            if (NumberOfVms.HasValue)
             {
                 writer.WritePropertyName("numberOfVms"u8);
                 writer.WriteNumberValue(NumberOfVms.Value);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<AdaptiveApplicationControlIssue> issue = default;
-            Optional<float> numberOfVms = default;
+            AdaptiveApplicationControlIssue? issue = default;
+            float? numberOfVms = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AdaptiveApplicationControlIssueSummary(Optional.ToNullable(issue), Optional.ToNullable(numberOfVms), serializedAdditionalRawData);
+            return new AdaptiveApplicationControlIssueSummary(issue, numberOfVms, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AdaptiveApplicationControlIssueSummary>.Write(ModelReaderWriterOptions options)

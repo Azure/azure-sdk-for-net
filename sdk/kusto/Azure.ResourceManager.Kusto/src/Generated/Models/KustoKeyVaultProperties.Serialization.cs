@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Kusto.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(KeyName))
+            if (KeyName != null)
             {
                 writer.WritePropertyName("keyName"u8);
                 writer.WriteStringValue(KeyName);
             }
-            if (Optional.IsDefined(KeyVersion))
+            if (KeyVersion != null)
             {
                 writer.WritePropertyName("keyVersion"u8);
                 writer.WriteStringValue(KeyVersion);
             }
-            if (Optional.IsDefined(KeyVaultUri))
+            if (KeyVaultUri != null)
             {
                 writer.WritePropertyName("keyVaultUri"u8);
                 writer.WriteStringValue(KeyVaultUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(UserIdentity))
+            if (UserIdentity != null)
             {
                 writer.WritePropertyName("userIdentity"u8);
                 writer.WriteStringValue(UserIdentity);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Optional<string> keyName = default;
-            Optional<string> keyVersion = default;
-            Optional<Uri> keyVaultUri = default;
-            Optional<string> userIdentity = default;
+            string keyName = default;
+            string keyVersion = default;
+            Uri keyVaultUri = default;
+            string userIdentity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KustoKeyVaultProperties(keyName.Value, keyVersion.Value, keyVaultUri.Value, userIdentity.Value, serializedAdditionalRawData);
+            return new KustoKeyVaultProperties(keyName, keyVersion, keyVaultUri, userIdentity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KustoKeyVaultProperties>.Write(ModelReaderWriterOptions options)

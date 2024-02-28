@@ -256,7 +256,10 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="nameAvailabilityRequest"/> is null. </exception>
         public virtual async Task<Response<NameAvailabilityResponse>> CheckNameAvailabilityServiceAsync(AzureLocation location, NameAvailabilityRequest nameAvailabilityRequest, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nameAvailabilityRequest, nameof(nameAvailabilityRequest));
+            if (nameAvailabilityRequest == null)
+            {
+                throw new ArgumentNullException(nameof(nameAvailabilityRequest));
+            }
 
             using var scope = DataMigrationServiceServicesClientDiagnostics.CreateScope("MockableDataMigrationSubscriptionResource.CheckNameAvailabilityService");
             scope.Start();
@@ -299,7 +302,10 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="nameAvailabilityRequest"/> is null. </exception>
         public virtual Response<NameAvailabilityResponse> CheckNameAvailabilityService(AzureLocation location, NameAvailabilityRequest nameAvailabilityRequest, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nameAvailabilityRequest, nameof(nameAvailabilityRequest));
+            if (nameAvailabilityRequest == null)
+            {
+                throw new ArgumentNullException(nameof(nameAvailabilityRequest));
+            }
 
             using var scope = DataMigrationServiceServicesClientDiagnostics.CreateScope("MockableDataMigrationSubscriptionResource.CheckNameAvailabilityService");
             scope.Start();

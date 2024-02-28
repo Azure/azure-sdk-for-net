@@ -26,62 +26,62 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProductSku))
+            if (ProductSku != null)
             {
                 writer.WritePropertyName("productSku"u8);
                 writer.WriteStringValue(ProductSku);
             }
-            if (Optional.IsDefined(ProductSerial))
+            if (ProductSerial != null)
             {
                 writer.WritePropertyName("productSerial"u8);
                 writer.WriteStringValue(ProductSerial);
             }
-            if (Optional.IsDefined(AccountRegistered))
+            if (AccountRegistered.HasValue)
             {
                 writer.WritePropertyName("accountRegistered"u8);
                 writer.WriteStringValue(AccountRegistered.Value.ToString());
             }
-            if (Optional.IsDefined(AccountId))
+            if (AccountId != null)
             {
                 writer.WritePropertyName("accountId"u8);
                 writer.WriteStringValue(AccountId);
             }
-            if (Optional.IsDefined(UserDomainSupported))
+            if (UserDomainSupported.HasValue)
             {
                 writer.WritePropertyName("userDomainSupported"u8);
                 writer.WriteStringValue(UserDomainSupported.Value.ToString());
             }
-            if (Optional.IsDefined(UserRegistered))
+            if (UserRegistered.HasValue)
             {
                 writer.WritePropertyName("userRegistered"u8);
                 writer.WriteStringValue(UserRegistered.Value.ToString());
             }
-            if (Optional.IsDefined(FreeTrial))
+            if (FreeTrial.HasValue)
             {
                 writer.WritePropertyName("freeTrial"u8);
                 writer.WriteStringValue(FreeTrial.Value.ToString());
             }
-            if (Optional.IsDefined(FreeTrialDaysLeft))
+            if (FreeTrialDaysLeft.HasValue)
             {
                 writer.WritePropertyName("freeTrialDaysLeft"u8);
                 writer.WriteNumberValue(FreeTrialDaysLeft.Value);
             }
-            if (Optional.IsDefined(FreeTrialCreditLeft))
+            if (FreeTrialCreditLeft.HasValue)
             {
                 writer.WritePropertyName("freeTrialCreditLeft"u8);
                 writer.WriteNumberValue(FreeTrialCreditLeft.Value);
             }
-            if (Optional.IsDefined(HelpURL))
+            if (HelpURL != null)
             {
                 writer.WritePropertyName("helpURL"u8);
                 writer.WriteStringValue(HelpURL);
             }
-            if (Optional.IsDefined(SupportURL))
+            if (SupportURL != null)
             {
                 writer.WritePropertyName("supportURL"u8);
                 writer.WriteStringValue(SupportURL);
             }
-            if (Optional.IsDefined(RegisterURL))
+            if (RegisterURL != null)
             {
                 writer.WritePropertyName("registerURL"u8);
                 writer.WriteStringValue(RegisterURL);
@@ -124,18 +124,18 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 return null;
             }
-            Optional<string> productSku = default;
-            Optional<string> productSerial = default;
-            Optional<FirewallBooleanType> accountRegistered = default;
-            Optional<string> accountId = default;
-            Optional<FirewallBooleanType> userDomainSupported = default;
-            Optional<FirewallBooleanType> userRegistered = default;
-            Optional<FirewallBooleanType> freeTrial = default;
-            Optional<int> freeTrialDaysLeft = default;
-            Optional<int> freeTrialCreditLeft = default;
-            Optional<string> helpURL = default;
-            Optional<string> supportURL = default;
-            Optional<string> registerURL = default;
+            string productSku = default;
+            string productSerial = default;
+            FirewallBooleanType? accountRegistered = default;
+            string accountId = default;
+            FirewallBooleanType? userDomainSupported = default;
+            FirewallBooleanType? userRegistered = default;
+            FirewallBooleanType? freeTrial = default;
+            int? freeTrialDaysLeft = default;
+            int? freeTrialCreditLeft = default;
+            string helpURL = default;
+            string supportURL = default;
+            string registerURL = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -230,7 +230,20 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirewallSupportInfo(productSku.Value, productSerial.Value, Optional.ToNullable(accountRegistered), accountId.Value, Optional.ToNullable(userDomainSupported), Optional.ToNullable(userRegistered), Optional.ToNullable(freeTrial), Optional.ToNullable(freeTrialDaysLeft), Optional.ToNullable(freeTrialCreditLeft), helpURL.Value, supportURL.Value, registerURL.Value, serializedAdditionalRawData);
+            return new FirewallSupportInfo(
+                productSku,
+                productSerial,
+                accountRegistered,
+                accountId,
+                userDomainSupported,
+                userRegistered,
+                freeTrial,
+                freeTrialDaysLeft,
+                freeTrialCreditLeft,
+                helpURL,
+                supportURL,
+                registerURL,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirewallSupportInfo>.Write(ModelReaderWriterOptions options)

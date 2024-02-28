@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -52,7 +51,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sensitiveInfoTypesIds"/> is null. </exception>
         public SensitivitySettingCreateOrUpdateContent(IEnumerable<Guid> sensitiveInfoTypesIds)
         {
-            Argument.AssertNotNull(sensitiveInfoTypesIds, nameof(sensitiveInfoTypesIds));
+            if (sensitiveInfoTypesIds == null)
+            {
+                throw new ArgumentNullException(nameof(sensitiveInfoTypesIds));
+            }
 
             SensitiveInfoTypesIds = sensitiveInfoTypesIds.ToList();
         }

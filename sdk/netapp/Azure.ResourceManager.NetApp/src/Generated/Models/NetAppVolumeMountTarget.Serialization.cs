@@ -27,19 +27,19 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(MountTargetId))
+            if (options.Format != "W" && MountTargetId.HasValue)
             {
                 writer.WritePropertyName("mountTargetId"u8);
                 writer.WriteStringValue(MountTargetId.Value);
             }
             writer.WritePropertyName("fileSystemId"u8);
             writer.WriteStringValue(FileSystemId);
-            if (options.Format != "W" && Optional.IsDefined(IPAddress))
+            if (options.Format != "W" && IPAddress != null)
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress.ToString());
             }
-            if (Optional.IsDefined(SmbServerFqdn))
+            if (SmbServerFqdn != null)
             {
                 writer.WritePropertyName("smbServerFqdn"u8);
                 writer.WriteStringValue(SmbServerFqdn);
@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<Guid> mountTargetId = default;
+            Guid? mountTargetId = default;
             Guid fileSystemId = default;
-            Optional<IPAddress> ipAddress = default;
-            Optional<string> smbServerFqdn = default;
+            IPAddress ipAddress = default;
+            string smbServerFqdn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppVolumeMountTarget(Optional.ToNullable(mountTargetId), fileSystemId, ipAddress.Value, smbServerFqdn.Value, serializedAdditionalRawData);
+            return new NetAppVolumeMountTarget(mountTargetId, fileSystemId, ipAddress, smbServerFqdn, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppVolumeMountTarget>.Write(ModelReaderWriterOptions options)

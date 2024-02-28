@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Mode))
+            if (Mode.HasValue)
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Properties))
+            if (!(Properties is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 if (Properties != null)
                 {
@@ -93,17 +93,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Custom": return CustomMonitoringSignal.DeserializeCustomMonitoringSignal(element);
-                    case "DataDrift": return DataDriftMonitoringSignal.DeserializeDataDriftMonitoringSignal(element);
-                    case "DataQuality": return DataQualityMonitoringSignal.DeserializeDataQualityMonitoringSignal(element);
-                    case "FeatureAttributionDrift": return FeatureAttributionDriftMonitoringSignal.DeserializeFeatureAttributionDriftMonitoringSignal(element);
-                    case "GenerationSafetyQuality": return GenerationSafetyQualityMonitoringSignal.DeserializeGenerationSafetyQualityMonitoringSignal(element);
-                    case "GenerationTokenStatistics": return GenerationTokenStatisticsSignal.DeserializeGenerationTokenStatisticsSignal(element);
-                    case "ModelPerformance": return ModelPerformanceSignal.DeserializeModelPerformanceSignal(element);
-                    case "PredictionDrift": return PredictionDriftMonitoringSignal.DeserializePredictionDriftMonitoringSignal(element);
+                    case "Custom": return CustomMonitoringSignal.DeserializeCustomMonitoringSignal(element, options);
+                    case "DataDrift": return DataDriftMonitoringSignal.DeserializeDataDriftMonitoringSignal(element, options);
+                    case "DataQuality": return DataQualityMonitoringSignal.DeserializeDataQualityMonitoringSignal(element, options);
+                    case "FeatureAttributionDrift": return FeatureAttributionDriftMonitoringSignal.DeserializeFeatureAttributionDriftMonitoringSignal(element, options);
+                    case "GenerationSafetyQuality": return GenerationSafetyQualityMonitoringSignal.DeserializeGenerationSafetyQualityMonitoringSignal(element, options);
+                    case "GenerationTokenStatistics": return GenerationTokenStatisticsSignal.DeserializeGenerationTokenStatisticsSignal(element, options);
+                    case "ModelPerformance": return ModelPerformanceSignal.DeserializeModelPerformanceSignal(element, options);
+                    case "PredictionDrift": return PredictionDriftMonitoringSignal.DeserializePredictionDriftMonitoringSignal(element, options);
                 }
             }
-            return UnknownMonitoringSignalBase.DeserializeUnknownMonitoringSignalBase(element);
+            return UnknownMonitoringSignalBase.DeserializeUnknownMonitoringSignalBase(element, options);
         }
 
         BinaryData IPersistableModel<MonitoringSignalBase>.Write(ModelReaderWriterOptions options)

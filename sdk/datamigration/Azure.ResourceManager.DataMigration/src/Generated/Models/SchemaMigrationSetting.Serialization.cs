@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SchemaOption))
+            if (SchemaOption.HasValue)
             {
                 writer.WritePropertyName("schemaOption"u8);
                 writer.WriteStringValue(SchemaOption.Value.ToString());
             }
-            if (Optional.IsDefined(FileId))
+            if (FileId != null)
             {
                 writer.WritePropertyName("fileId"u8);
                 writer.WriteStringValue(FileId);
             }
-            if (Optional.IsDefined(FileName))
+            if (FileName != null)
             {
                 writer.WritePropertyName("fileName"u8);
                 writer.WriteStringValue(FileName);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<SchemaMigrationOption> schemaOption = default;
-            Optional<string> fileId = default;
-            Optional<string> fileName = default;
+            SchemaMigrationOption? schemaOption = default;
+            string fileId = default;
+            string fileName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SchemaMigrationSetting(Optional.ToNullable(schemaOption), fileId.Value, fileName.Value, serializedAdditionalRawData);
+            return new SchemaMigrationSetting(schemaOption, fileId, fileName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SchemaMigrationSetting>.Write(ModelReaderWriterOptions options)

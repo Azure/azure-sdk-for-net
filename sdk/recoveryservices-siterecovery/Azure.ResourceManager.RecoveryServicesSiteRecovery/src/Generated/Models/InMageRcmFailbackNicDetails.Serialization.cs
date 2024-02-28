@@ -27,22 +27,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(MacAddress))
+            if (options.Format != "W" && MacAddress != null)
             {
                 writer.WritePropertyName("macAddress"u8);
                 writer.WriteStringValue(MacAddress);
             }
-            if (options.Format != "W" && Optional.IsDefined(NetworkName))
+            if (options.Format != "W" && NetworkName != null)
             {
                 writer.WritePropertyName("networkName"u8);
                 writer.WriteStringValue(NetworkName);
             }
-            if (options.Format != "W" && Optional.IsDefined(AdapterType))
+            if (options.Format != "W" && AdapterType != null)
             {
                 writer.WritePropertyName("adapterType"u8);
                 writer.WriteStringValue(AdapterType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SourceIPAddress))
+            if (options.Format != "W" && SourceIPAddress != null)
             {
                 writer.WritePropertyName("sourceIpAddress"u8);
                 writer.WriteStringValue(SourceIPAddress.ToString());
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> macAddress = default;
-            Optional<string> networkName = default;
-            Optional<string> adapterType = default;
-            Optional<IPAddress> sourceIPAddress = default;
+            string macAddress = default;
+            string networkName = default;
+            string adapterType = default;
+            IPAddress sourceIPAddress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageRcmFailbackNicDetails(macAddress.Value, networkName.Value, adapterType.Value, sourceIPAddress.Value, serializedAdditionalRawData);
+            return new InMageRcmFailbackNicDetails(macAddress, networkName, adapterType, sourceIPAddress, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InMageRcmFailbackNicDetails>.Write(ModelReaderWriterOptions options)

@@ -23,7 +23,7 @@ namespace Azure.AI.MetricsAdvisor
             writer.WriteStringValue(EndsOn, "O");
             writer.WritePropertyName("value"u8);
             writer.WriteObjectValue(ValueInternal);
-            if (Optional.IsDefined(DetectionConfigurationId))
+            if (DetectionConfigurationId != null)
             {
                 if (DetectionConfigurationId != null)
                 {
@@ -35,7 +35,7 @@ namespace Azure.AI.MetricsAdvisor
                     writer.WriteNull("anomalyDetectionConfigurationId");
                 }
             }
-            if (Optional.IsDefined(DetectionConfigurationSnapshot))
+            if (DetectionConfigurationSnapshot != null)
             {
                 if (DetectionConfigurationSnapshot != null)
                 {
@@ -65,12 +65,12 @@ namespace Azure.AI.MetricsAdvisor
             DateTimeOffset startTime = default;
             DateTimeOffset endTime = default;
             AnomalyFeedbackValue value = default;
-            Optional<string> anomalyDetectionConfigurationId = default;
-            Optional<AnomalyDetectionConfiguration> anomalyDetectionConfigurationSnapshot = default;
+            string anomalyDetectionConfigurationId = default;
+            AnomalyDetectionConfiguration anomalyDetectionConfigurationSnapshot = default;
             MetricFeedbackKind feedbackType = default;
-            Optional<string> feedbackId = default;
-            Optional<DateTimeOffset> createdTime = default;
-            Optional<string> userPrincipal = default;
+            string feedbackId = default;
+            DateTimeOffset? createdTime = default;
+            string userPrincipal = default;
             string metricId = default;
             FeedbackFilter dimensionFilter = default;
             foreach (var property in element.EnumerateObject())
@@ -145,7 +145,18 @@ namespace Azure.AI.MetricsAdvisor
                     continue;
                 }
             }
-            return new MetricAnomalyFeedback(feedbackType, feedbackId.Value, Optional.ToNullable(createdTime), userPrincipal.Value, metricId, dimensionFilter, startTime, endTime, value, anomalyDetectionConfigurationId.Value, anomalyDetectionConfigurationSnapshot.Value);
+            return new MetricAnomalyFeedback(
+                feedbackType,
+                feedbackId,
+                createdTime,
+                userPrincipal,
+                metricId,
+                dimensionFilter,
+                startTime,
+                endTime,
+                value,
+                anomalyDetectionConfigurationId,
+                anomalyDetectionConfigurationSnapshot);
         }
     }
 }

@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(HelmArtifactProfile))
+            if (HelmArtifactProfile != null)
             {
                 writer.WritePropertyName("helmArtifactProfile"u8);
                 writer.WriteObjectValue(HelmArtifactProfile);
             }
-            if (Optional.IsDefined(ArtifactStore))
+            if (ArtifactStore != null)
             {
                 writer.WritePropertyName("artifactStore"u8);
                 JsonSerializer.Serialize(writer, ArtifactStore);
@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<HelmArtifactProfile> helmArtifactProfile = default;
-            Optional<WritableSubResource> artifactStore = default;
+            HelmArtifactProfile helmArtifactProfile = default;
+            WritableSubResource artifactStore = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    helmArtifactProfile = HelmArtifactProfile.DeserializeHelmArtifactProfile(property.Value);
+                    helmArtifactProfile = HelmArtifactProfile.DeserializeHelmArtifactProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("artifactStore"u8))
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureArcKubernetesArtifactProfile(artifactStore, serializedAdditionalRawData, helmArtifactProfile.Value);
+            return new AzureArcKubernetesArtifactProfile(artifactStore, serializedAdditionalRawData, helmArtifactProfile);
         }
 
         BinaryData IPersistableModel<AzureArcKubernetesArtifactProfile>.Write(ModelReaderWriterOptions options)

@@ -80,7 +80,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="backupId"/> is null. </exception>
         public virtual async Task<Response<SiteSlotBackupResource>> GetAsync(string backupId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(backupId, nameof(backupId));
+            if (backupId == null)
+            {
+                throw new ArgumentNullException(nameof(backupId));
+            }
+            if (backupId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(backupId));
+            }
 
             using var scope = _siteSlotBackupWebAppsClientDiagnostics.CreateScope("SiteSlotBackupCollection.Get");
             scope.Start();
@@ -125,7 +132,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="backupId"/> is null. </exception>
         public virtual Response<SiteSlotBackupResource> Get(string backupId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(backupId, nameof(backupId));
+            if (backupId == null)
+            {
+                throw new ArgumentNullException(nameof(backupId));
+            }
+            if (backupId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(backupId));
+            }
 
             using var scope = _siteSlotBackupWebAppsClientDiagnostics.CreateScope("SiteSlotBackupCollection.Get");
             scope.Start();
@@ -230,7 +244,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="backupId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string backupId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(backupId, nameof(backupId));
+            if (backupId == null)
+            {
+                throw new ArgumentNullException(nameof(backupId));
+            }
+            if (backupId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(backupId));
+            }
 
             using var scope = _siteSlotBackupWebAppsClientDiagnostics.CreateScope("SiteSlotBackupCollection.Exists");
             scope.Start();
@@ -273,7 +294,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="backupId"/> is null. </exception>
         public virtual Response<bool> Exists(string backupId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(backupId, nameof(backupId));
+            if (backupId == null)
+            {
+                throw new ArgumentNullException(nameof(backupId));
+            }
+            if (backupId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(backupId));
+            }
 
             using var scope = _siteSlotBackupWebAppsClientDiagnostics.CreateScope("SiteSlotBackupCollection.Exists");
             scope.Start();
@@ -316,7 +344,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="backupId"/> is null. </exception>
         public virtual async Task<NullableResponse<SiteSlotBackupResource>> GetIfExistsAsync(string backupId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(backupId, nameof(backupId));
+            if (backupId == null)
+            {
+                throw new ArgumentNullException(nameof(backupId));
+            }
+            if (backupId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(backupId));
+            }
 
             using var scope = _siteSlotBackupWebAppsClientDiagnostics.CreateScope("SiteSlotBackupCollection.GetIfExists");
             scope.Start();
@@ -361,7 +396,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="backupId"/> is null. </exception>
         public virtual NullableResponse<SiteSlotBackupResource> GetIfExists(string backupId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(backupId, nameof(backupId));
+            if (backupId == null)
+            {
+                throw new ArgumentNullException(nameof(backupId));
+            }
+            if (backupId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(backupId));
+            }
 
             using var scope = _siteSlotBackupWebAppsClientDiagnostics.CreateScope("SiteSlotBackupCollection.GetIfExists");
             scope.Start();

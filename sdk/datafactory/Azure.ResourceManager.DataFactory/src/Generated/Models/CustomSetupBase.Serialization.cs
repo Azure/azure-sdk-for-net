@@ -5,23 +5,63 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class CustomSetupBase : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownCustomSetupBase))]
+    public partial class CustomSetupBase : IUtf8JsonSerializable, IJsonModel<CustomSetupBase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomSetupBase>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CustomSetupBase>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomSetupBase>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CustomSetupBase)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CustomSetupBaseType);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CustomSetupBase DeserializeCustomSetupBase(JsonElement element)
+        CustomSetupBase IJsonModel<CustomSetupBase>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomSetupBase>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CustomSetupBase)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCustomSetupBase(document.RootElement, options);
+        }
+
+        internal static CustomSetupBase DeserializeCustomSetupBase(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -30,13 +70,44 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzPowerShellSetup": return AzPowerShellSetup.DeserializeAzPowerShellSetup(element);
-                    case "CmdkeySetup": return CmdkeySetup.DeserializeCmdkeySetup(element);
-                    case "ComponentSetup": return ComponentSetup.DeserializeComponentSetup(element);
-                    case "EnvironmentVariableSetup": return EnvironmentVariableSetup.DeserializeEnvironmentVariableSetup(element);
+                    case "AzPowerShellSetup": return AzPowerShellSetup.DeserializeAzPowerShellSetup(element, options);
+                    case "CmdkeySetup": return CmdkeySetup.DeserializeCmdkeySetup(element, options);
+                    case "ComponentSetup": return ComponentSetup.DeserializeComponentSetup(element, options);
+                    case "EnvironmentVariableSetup": return EnvironmentVariableSetup.DeserializeEnvironmentVariableSetup(element, options);
                 }
             }
-            return UnknownCustomSetupBase.DeserializeUnknownCustomSetupBase(element);
+            return UnknownCustomSetupBase.DeserializeUnknownCustomSetupBase(element, options);
         }
+
+        BinaryData IPersistableModel<CustomSetupBase>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomSetupBase>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CustomSetupBase)} does not support '{options.Format}' format.");
+            }
+        }
+
+        CustomSetupBase IPersistableModel<CustomSetupBase>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomSetupBase>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCustomSetupBase(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CustomSetupBase)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CustomSetupBase>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsEnabled))
+            if (IsEnabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(DnsServer))
+            if (DnsServer != null)
             {
                 writer.WritePropertyName("dnsServer"u8);
                 writer.WriteStringValue(DnsServer);
             }
-            if (Optional.IsDefined(RootDomainName))
+            if (RootDomainName != null)
             {
                 writer.WritePropertyName("rootDomainName"u8);
                 writer.WriteStringValue(RootDomainName);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<string> dnsServer = default;
-            Optional<string> rootDomainName = default;
+            bool? enabled = default;
+            string dnsServer = default;
+            string rootDomainName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WindowsGmsaProfile(Optional.ToNullable(enabled), dnsServer.Value, rootDomainName.Value, serializedAdditionalRawData);
+            return new WindowsGmsaProfile(enabled, dnsServer, rootDomainName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WindowsGmsaProfile>.Write(ModelReaderWriterOptions options)

@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.DataShare.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "ScheduleBased": return ScheduledSourceSynchronizationSetting.DeserializeScheduledSourceSynchronizationSetting(element);
+                    case "ScheduleBased": return ScheduledSourceSynchronizationSetting.DeserializeScheduledSourceSynchronizationSetting(element, options);
                 }
             }
-            return UnknownSourceShareSynchronizationSetting.DeserializeUnknownSourceShareSynchronizationSetting(element);
+            return UnknownSourceShareSynchronizationSetting.DeserializeUnknownSourceShareSynchronizationSetting(element, options);
         }
 
         BinaryData IPersistableModel<SourceShareSynchronizationSetting>.Write(ModelReaderWriterOptions options)

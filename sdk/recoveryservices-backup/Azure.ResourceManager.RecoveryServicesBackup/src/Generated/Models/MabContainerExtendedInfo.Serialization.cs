@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(LastRefreshedOn))
+            if (LastRefreshedOn.HasValue)
             {
                 writer.WritePropertyName("lastRefreshedAt"u8);
                 writer.WriteStringValue(LastRefreshedOn.Value, "O");
             }
-            if (Optional.IsDefined(BackupItemType))
+            if (BackupItemType.HasValue)
             {
                 writer.WritePropertyName("backupItemType"u8);
                 writer.WriteStringValue(BackupItemType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(BackupItems))
+            if (!(BackupItems is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("backupItems"u8);
                 writer.WriteStartArray();
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PolicyName))
+            if (PolicyName != null)
             {
                 writer.WritePropertyName("policyName"u8);
                 writer.WriteStringValue(PolicyName);
             }
-            if (Optional.IsDefined(LastBackupStatus))
+            if (LastBackupStatus != null)
             {
                 writer.WritePropertyName("lastBackupStatus"u8);
                 writer.WriteStringValue(LastBackupStatus);
@@ -94,11 +94,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> lastRefreshedAt = default;
-            Optional<BackupItemType> backupItemType = default;
-            Optional<IList<string>> backupItems = default;
-            Optional<string> policyName = default;
-            Optional<string> lastBackupStatus = default;
+            DateTimeOffset? lastRefreshedAt = default;
+            BackupItemType? backupItemType = default;
+            IList<string> backupItems = default;
+            string policyName = default;
+            string lastBackupStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -151,7 +151,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MabContainerExtendedInfo(Optional.ToNullable(lastRefreshedAt), Optional.ToNullable(backupItemType), Optional.ToList(backupItems), policyName.Value, lastBackupStatus.Value, serializedAdditionalRawData);
+            return new MabContainerExtendedInfo(
+                lastRefreshedAt,
+                backupItemType,
+                backupItems ?? new ChangeTrackingList<string>(),
+                policyName,
+                lastBackupStatus,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MabContainerExtendedInfo>.Write(ModelReaderWriterOptions options)

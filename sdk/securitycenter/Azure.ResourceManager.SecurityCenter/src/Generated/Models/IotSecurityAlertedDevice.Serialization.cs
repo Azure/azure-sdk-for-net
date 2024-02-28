@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(DeviceId))
+            if (options.Format != "W" && DeviceId != null)
             {
                 writer.WritePropertyName("deviceId"u8);
                 writer.WriteStringValue(DeviceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(AlertsCount))
+            if (options.Format != "W" && AlertsCount.HasValue)
             {
                 writer.WritePropertyName("alertsCount"u8);
                 writer.WriteNumberValue(AlertsCount.Value);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> deviceId = default;
-            Optional<long> alertsCount = default;
+            string deviceId = default;
+            long? alertsCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotSecurityAlertedDevice(deviceId.Value, Optional.ToNullable(alertsCount), serializedAdditionalRawData);
+            return new IotSecurityAlertedDevice(deviceId, alertsCount, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotSecurityAlertedDevice>.Write(ModelReaderWriterOptions options)

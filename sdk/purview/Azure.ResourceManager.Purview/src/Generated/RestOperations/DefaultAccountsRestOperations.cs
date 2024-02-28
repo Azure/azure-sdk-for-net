@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Purview
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-07-01";
+            _apiVersion = apiVersion ?? "2023-05-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -104,73 +104,6 @@ namespace Azure.ResourceManager.Purview
             }
         }
 
-        internal HttpMessage CreateSetRequest(DefaultPurviewAccountPayload defaultAccountPayload)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Purview/setDefaultAccount", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(defaultAccountPayload);
-            request.Content = content;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Sets the default account for the scope. </summary>
-        /// <param name="defaultAccountPayload"> The payload containing the default account information and the scope. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="defaultAccountPayload"/> is null. </exception>
-        public async Task<Response<DefaultPurviewAccountPayload>> SetAsync(DefaultPurviewAccountPayload defaultAccountPayload, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(defaultAccountPayload, nameof(defaultAccountPayload));
-
-            using var message = CreateSetRequest(defaultAccountPayload);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DefaultPurviewAccountPayload value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DefaultPurviewAccountPayload.DeserializeDefaultPurviewAccountPayload(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Sets the default account for the scope. </summary>
-        /// <param name="defaultAccountPayload"> The payload containing the default account information and the scope. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="defaultAccountPayload"/> is null. </exception>
-        public Response<DefaultPurviewAccountPayload> Set(DefaultPurviewAccountPayload defaultAccountPayload, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(defaultAccountPayload, nameof(defaultAccountPayload));
-
-            using var message = CreateSetRequest(defaultAccountPayload);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DefaultPurviewAccountPayload value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DefaultPurviewAccountPayload.DeserializeDefaultPurviewAccountPayload(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
         internal HttpMessage CreateRemoveRequest(Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope)
         {
             var message = _pipeline.CreateMessage();
@@ -225,6 +158,79 @@ namespace Azure.ResourceManager.Purview
                 case 200:
                 case 204:
                     return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateSetRequest(DefaultPurviewAccountPayload defaultAccountPayload)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Purview/setDefaultAccount", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(defaultAccountPayload);
+            request.Content = content;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Sets the default account for the scope. </summary>
+        /// <param name="defaultAccountPayload"> The payload containing the default account information and the scope. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="defaultAccountPayload"/> is null. </exception>
+        public async Task<Response<DefaultPurviewAccountPayload>> SetAsync(DefaultPurviewAccountPayload defaultAccountPayload, CancellationToken cancellationToken = default)
+        {
+            if (defaultAccountPayload == null)
+            {
+                throw new ArgumentNullException(nameof(defaultAccountPayload));
+            }
+
+            using var message = CreateSetRequest(defaultAccountPayload);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DefaultPurviewAccountPayload value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = DefaultPurviewAccountPayload.DeserializeDefaultPurviewAccountPayload(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Sets the default account for the scope. </summary>
+        /// <param name="defaultAccountPayload"> The payload containing the default account information and the scope. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="defaultAccountPayload"/> is null. </exception>
+        public Response<DefaultPurviewAccountPayload> Set(DefaultPurviewAccountPayload defaultAccountPayload, CancellationToken cancellationToken = default)
+        {
+            if (defaultAccountPayload == null)
+            {
+                throw new ArgumentNullException(nameof(defaultAccountPayload));
+            }
+
+            using var message = CreateSetRequest(defaultAccountPayload);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DefaultPurviewAccountPayload value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = DefaultPurviewAccountPayload.DeserializeDefaultPurviewAccountPayload(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
                     throw new RequestFailedException(message.Response);
             }

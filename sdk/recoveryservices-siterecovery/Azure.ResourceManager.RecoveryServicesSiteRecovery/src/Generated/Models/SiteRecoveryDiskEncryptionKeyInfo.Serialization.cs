@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SecretIdentifier))
+            if (SecretIdentifier != null)
             {
                 writer.WritePropertyName("secretIdentifier"u8);
                 writer.WriteStringValue(SecretIdentifier);
             }
-            if (Optional.IsDefined(KeyVaultResourceArmId))
+            if (KeyVaultResourceArmId != null)
             {
                 writer.WritePropertyName("keyVaultResourceArmId"u8);
                 writer.WriteStringValue(KeyVaultResourceArmId);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> secretIdentifier = default;
-            Optional<ResourceIdentifier> keyVaultResourceArmId = default;
+            string secretIdentifier = default;
+            ResourceIdentifier keyVaultResourceArmId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryDiskEncryptionKeyInfo(secretIdentifier.Value, keyVaultResourceArmId.Value, serializedAdditionalRawData);
+            return new SiteRecoveryDiskEncryptionKeyInfo(secretIdentifier, keyVaultResourceArmId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryDiskEncryptionKeyInfo>.Write(ModelReaderWriterOptions options)

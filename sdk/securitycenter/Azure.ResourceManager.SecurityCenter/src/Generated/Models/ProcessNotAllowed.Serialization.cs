@@ -33,17 +33,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && Optional.IsDefined(ValueType))
+            if (options.Format != "W" && ValueType.HasValue)
             {
                 writer.WritePropertyName("valueType"u8);
                 writer.WriteStringValue(ValueType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DisplayName))
+            if (options.Format != "W" && DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Description))
+            if (options.Format != "W" && Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 return null;
             }
             IList<string> allowlistValues = default;
-            Optional<SecurityValueType> valueType = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
+            SecurityValueType? valueType = default;
+            string displayName = default;
+            string description = default;
             bool isEnabled = default;
             string ruleType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -145,7 +145,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProcessNotAllowed(displayName.Value, description.Value, isEnabled, ruleType, serializedAdditionalRawData, Optional.ToNullable(valueType), allowlistValues);
+            return new ProcessNotAllowed(
+                displayName,
+                description,
+                isEnabled,
+                ruleType,
+                serializedAdditionalRawData,
+                valueType,
+                allowlistValues);
         }
 
         BinaryData IPersistableModel<ProcessNotAllowed>.Write(ModelReaderWriterOptions options)

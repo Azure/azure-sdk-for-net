@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(MaxNumberOfReplicas))
+            if (options.Format != "W" && MaxNumberOfReplicas.HasValue)
             {
                 writer.WritePropertyName("maxNumberOfReplicas"u8);
                 writer.WriteNumberValue(MaxNumberOfReplicas.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Reason))
+            if (Reason != null)
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<int> maxNumberOfReplicas = default;
-            Optional<SqlCapabilityStatus> status = default;
-            Optional<string> reason = default;
+            int? maxNumberOfReplicas = default;
+            SqlCapabilityStatus? status = default;
+            string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReadScaleCapability(Optional.ToNullable(maxNumberOfReplicas), Optional.ToNullable(status), reason.Value, serializedAdditionalRawData);
+            return new ReadScaleCapability(maxNumberOfReplicas, status, reason, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReadScaleCapability>.Write(ModelReaderWriterOptions options)

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(IssuerCertificateThumbprint))
+            if (IssuerCertificateThumbprint != null)
             {
                 writer.WritePropertyName("issuerCertificateThumbprint"u8);
                 writer.WriteStringValue(IssuerCertificateThumbprint);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> issuerCertificateThumbprint = default;
+            string name = default;
+            string issuerCertificateThumbprint = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new X509CertificateName(name.Value, issuerCertificateThumbprint.Value, serializedAdditionalRawData);
+            return new X509CertificateName(name, issuerCertificateThumbprint, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<X509CertificateName>.Write(ModelReaderWriterOptions options)

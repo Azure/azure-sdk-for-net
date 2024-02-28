@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(Error))
+            if (Error != null)
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);
             }
-            if (Optional.IsDefined(ConfigServer))
+            if (ConfigServer != null)
             {
                 writer.WritePropertyName("configServer"u8);
                 writer.WriteObjectValue(ConfigServer);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<AppPlatformConfigServerState> provisioningState = default;
-            Optional<AppPlatformErrorInfo> error = default;
-            Optional<ConfigServerSettings> configServer = default;
+            AppPlatformConfigServerState? provisioningState = default;
+            AppPlatformErrorInfo error = default;
+            ConfigServerSettings configServer = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    error = AppPlatformErrorInfo.DeserializeAppPlatformErrorInfo(property.Value);
+                    error = AppPlatformErrorInfo.DeserializeAppPlatformErrorInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("configServer"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    configServer = ConfigServerSettings.DeserializeConfigServerSettings(property.Value);
+                    configServer = ConfigServerSettings.DeserializeConfigServerSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformConfigServerProperties(Optional.ToNullable(provisioningState), error.Value, configServer.Value, serializedAdditionalRawData);
+            return new AppPlatformConfigServerProperties(provisioningState, error, configServer, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformConfigServerProperties>.Write(ModelReaderWriterOptions options)

@@ -27,12 +27,7 @@ namespace Azure.ResourceManager.Purview.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Count))
-            {
-                writer.WritePropertyName("count"u8);
-                writer.WriteNumberValue(Count.Value);
-            }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -82,22 +77,12 @@ namespace Azure.ResourceManager.Purview.Models
             {
                 return null;
             }
-            Optional<long> count = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IReadOnlyList<PurviewAccountData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("count"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    count = property.Value.GetInt64();
-                    continue;
-                }
                 if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
@@ -108,7 +93,7 @@ namespace Azure.ResourceManager.Purview.Models
                     List<PurviewAccountData> array = new List<PurviewAccountData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PurviewAccountData.DeserializePurviewAccountData(item));
+                        array.Add(PurviewAccountData.DeserializePurviewAccountData(item, options));
                     }
                     value = array;
                     continue;
@@ -119,7 +104,7 @@ namespace Azure.ResourceManager.Purview.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AccountList(Optional.ToNullable(count), nextLink.Value, value, serializedAdditionalRawData);
+            return new AccountList(nextLink, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AccountList>.Write(ModelReaderWriterOptions options)

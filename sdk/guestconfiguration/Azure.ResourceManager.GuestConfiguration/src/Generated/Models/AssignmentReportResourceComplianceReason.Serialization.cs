@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Phrase))
+            if (options.Format != "W" && Phrase != null)
             {
                 writer.WritePropertyName("phrase"u8);
                 writer.WriteStringValue(Phrase);
             }
-            if (options.Format != "W" && Optional.IsDefined(Code))
+            if (options.Format != "W" && Code != null)
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             {
                 return null;
             }
-            Optional<string> phrase = default;
-            Optional<string> code = default;
+            string phrase = default;
+            string code = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AssignmentReportResourceComplianceReason(phrase.Value, code.Value, serializedAdditionalRawData);
+            return new AssignmentReportResourceComplianceReason(phrase, code, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AssignmentReportResourceComplianceReason>.Write(ModelReaderWriterOptions options)

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CompletionOperationType))
+            if (CompletionOperationType.HasValue)
             {
                 writer.WritePropertyName("completionOperationType"u8);
                 writer.WriteStringValue(CompletionOperationType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(DestinationFolder))
+            if (DestinationFolder != null)
             {
                 writer.WritePropertyName("destinationFolder"u8);
                 writer.WriteStringValue(DestinationFolder);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<CompletionOperationType> completionOperationType = default;
-            Optional<string> destinationFolder = default;
+            CompletionOperationType? completionOperationType = default;
+            string destinationFolder = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectorMappingCompleteOperation(Optional.ToNullable(completionOperationType), destinationFolder.Value, serializedAdditionalRawData);
+            return new ConnectorMappingCompleteOperation(completionOperationType, destinationFolder, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectorMappingCompleteOperation>.Write(ModelReaderWriterOptions options)

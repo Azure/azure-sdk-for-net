@@ -23,5 +23,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             DatasetLocationType = datasetLocationType ?? "Unknown";
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownDatasetLocation"/> for deserialization. </summary>
+        internal UnknownDatasetLocation()
+        {
+        }
     }
 }

@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             writer.WriteEndArray();
             writer.WritePropertyName("strongIdName"u8);
             writer.WriteStringValue(StrongIdName);
-            if (Optional.IsCollectionDefined(DisplayName))
+            if (!(DisplayName is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStartObject();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Description))
+            if (!(Description is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStartObject();
@@ -97,8 +97,8 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
             IList<string> keyPropertyNames = default;
             string strongIdName = default;
-            Optional<IDictionary<string, string>> displayName = default;
-            Optional<IDictionary<string, string>> description = default;
+            IDictionary<string, string> displayName = default;
+            IDictionary<string, string> description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StrongId(keyPropertyNames, strongIdName, Optional.ToDictionary(displayName), Optional.ToDictionary(description), serializedAdditionalRawData);
+            return new StrongId(keyPropertyNames, strongIdName, displayName ?? new ChangeTrackingDictionary<string, string>(), description ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StrongId>.Write(ModelReaderWriterOptions options)

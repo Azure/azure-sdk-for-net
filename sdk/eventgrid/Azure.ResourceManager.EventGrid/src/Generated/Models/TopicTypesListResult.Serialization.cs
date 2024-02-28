@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<TopicTypeData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<TopicTypeData>> value = default;
+            IReadOnlyList<TopicTypeData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     List<TopicTypeData> array = new List<TopicTypeData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TopicTypeData.DeserializeTopicTypeData(item));
+                        array.Add(TopicTypeData.DeserializeTopicTypeData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TopicTypesListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new TopicTypesListResult(value ?? new ChangeTrackingList<TopicTypeData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TopicTypesListResult>.Write(ModelReaderWriterOptions options)

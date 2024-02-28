@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(VmId))
+            if (VmId != null)
             {
                 writer.WritePropertyName("vmId"u8);
                 writer.WriteStringValue(VmId);
             }
-            if (Optional.IsDefined(NicId))
+            if (NicId != null)
             {
                 writer.WritePropertyName("nicId"u8);
                 writer.WriteStringValue(NicId);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> vmId = default;
-            Optional<string> nicId = default;
-            Optional<string> name = default;
+            string vmId = default;
+            string nicId = default;
+            string name = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VmNicUpdatesTaskDetails(instanceType, serializedAdditionalRawData, vmId.Value, nicId.Value, name.Value);
+            return new VmNicUpdatesTaskDetails(instanceType, serializedAdditionalRawData, vmId, nicId, name);
         }
 
         BinaryData IPersistableModel<VmNicUpdatesTaskDetails>.Write(ModelReaderWriterOptions options)

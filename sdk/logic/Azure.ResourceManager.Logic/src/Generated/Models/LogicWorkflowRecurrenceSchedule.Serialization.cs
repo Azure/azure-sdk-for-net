@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Minutes))
+            if (!(Minutes is ChangeTrackingList<int> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("minutes"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Hours))
+            if (!(Hours is ChangeTrackingList<int> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("hours"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(WeekDays))
+            if (!(WeekDays is ChangeTrackingList<LogicWorkflowDayOfWeek> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("weekDays"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(MonthDays))
+            if (!(MonthDays is ChangeTrackingList<int> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("monthDays"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(MonthlyOccurrences))
+            if (!(MonthlyOccurrences is ChangeTrackingList<LogicWorkflowRecurrenceScheduleOccurrence> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("monthlyOccurrences"u8);
                 writer.WriteStartArray();
@@ -114,11 +114,11 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<IList<int>> minutes = default;
-            Optional<IList<int>> hours = default;
-            Optional<IList<LogicWorkflowDayOfWeek>> weekDays = default;
-            Optional<IList<int>> monthDays = default;
-            Optional<IList<LogicWorkflowRecurrenceScheduleOccurrence>> monthlyOccurrences = default;
+            IList<int> minutes = default;
+            IList<int> hours = default;
+            IList<LogicWorkflowDayOfWeek> weekDays = default;
+            IList<int> monthDays = default;
+            IList<LogicWorkflowRecurrenceScheduleOccurrence> monthlyOccurrences = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Logic.Models
                     List<LogicWorkflowRecurrenceScheduleOccurrence> array = new List<LogicWorkflowRecurrenceScheduleOccurrence>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LogicWorkflowRecurrenceScheduleOccurrence.DeserializeLogicWorkflowRecurrenceScheduleOccurrence(item));
+                        array.Add(LogicWorkflowRecurrenceScheduleOccurrence.DeserializeLogicWorkflowRecurrenceScheduleOccurrence(item, options));
                     }
                     monthlyOccurrences = array;
                     continue;
@@ -199,7 +199,13 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicWorkflowRecurrenceSchedule(Optional.ToList(minutes), Optional.ToList(hours), Optional.ToList(weekDays), Optional.ToList(monthDays), Optional.ToList(monthlyOccurrences), serializedAdditionalRawData);
+            return new LogicWorkflowRecurrenceSchedule(
+                minutes ?? new ChangeTrackingList<int>(),
+                hours ?? new ChangeTrackingList<int>(),
+                weekDays ?? new ChangeTrackingList<LogicWorkflowDayOfWeek>(),
+                monthDays ?? new ChangeTrackingList<int>(),
+                monthlyOccurrences ?? new ChangeTrackingList<LogicWorkflowRecurrenceScheduleOccurrence>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicWorkflowRecurrenceSchedule>.Write(ModelReaderWriterOptions options)

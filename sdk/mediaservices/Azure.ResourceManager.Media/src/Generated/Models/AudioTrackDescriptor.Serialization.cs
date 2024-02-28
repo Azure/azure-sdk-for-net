@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ChannelMapping))
+            if (ChannelMapping.HasValue)
             {
                 writer.WritePropertyName("channelMapping"u8);
                 writer.WriteStringValue(ChannelMapping.Value.ToString());
@@ -75,11 +75,11 @@ namespace Azure.ResourceManager.Media.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "#Microsoft.Media.SelectAudioTrackByAttribute": return SelectAudioTrackByAttribute.DeserializeSelectAudioTrackByAttribute(element);
-                    case "#Microsoft.Media.SelectAudioTrackById": return SelectAudioTrackById.DeserializeSelectAudioTrackById(element);
+                    case "#Microsoft.Media.SelectAudioTrackByAttribute": return SelectAudioTrackByAttribute.DeserializeSelectAudioTrackByAttribute(element, options);
+                    case "#Microsoft.Media.SelectAudioTrackById": return SelectAudioTrackById.DeserializeSelectAudioTrackById(element, options);
                 }
             }
-            Optional<ChannelMapping> channelMapping = default;
+            ChannelMapping? channelMapping = default;
             string odataType = "#Microsoft.Media.AudioTrackDescriptor";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AudioTrackDescriptor(odataType, serializedAdditionalRawData, Optional.ToNullable(channelMapping));
+            return new AudioTrackDescriptor(odataType, serializedAdditionalRawData, channelMapping);
         }
 
         BinaryData IPersistableModel<AudioTrackDescriptor>.Write(ModelReaderWriterOptions options)

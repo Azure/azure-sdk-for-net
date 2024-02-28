@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.AI.ContentSafety
 {
@@ -52,7 +51,10 @@ namespace Azure.AI.ContentSafety
         /// <exception cref="ArgumentNullException"> <paramref name="categoriesAnalysis"/> is null. </exception>
         internal AnalyzeImageResult(IEnumerable<ImageCategoriesAnalysis> categoriesAnalysis)
         {
-            Argument.AssertNotNull(categoriesAnalysis, nameof(categoriesAnalysis));
+            if (categoriesAnalysis == null)
+            {
+                throw new ArgumentNullException(nameof(categoriesAnalysis));
+            }
 
             CategoriesAnalysis = categoriesAnalysis.ToList();
         }

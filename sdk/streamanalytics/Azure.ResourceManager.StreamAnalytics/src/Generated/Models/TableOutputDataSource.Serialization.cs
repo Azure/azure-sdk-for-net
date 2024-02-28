@@ -30,32 +30,32 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStringValue(OutputDataSourceType);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AccountName))
+            if (AccountName != null)
             {
                 writer.WritePropertyName("accountName"u8);
                 writer.WriteStringValue(AccountName);
             }
-            if (Optional.IsDefined(AccountKey))
+            if (AccountKey != null)
             {
                 writer.WritePropertyName("accountKey"u8);
                 writer.WriteStringValue(AccountKey);
             }
-            if (Optional.IsDefined(Table))
+            if (Table != null)
             {
                 writer.WritePropertyName("table"u8);
                 writer.WriteStringValue(Table);
             }
-            if (Optional.IsDefined(PartitionKey))
+            if (PartitionKey != null)
             {
                 writer.WritePropertyName("partitionKey"u8);
                 writer.WriteStringValue(PartitionKey);
             }
-            if (Optional.IsDefined(RowKey))
+            if (RowKey != null)
             {
                 writer.WritePropertyName("rowKey"u8);
                 writer.WriteStringValue(RowKey);
             }
-            if (Optional.IsCollectionDefined(ColumnsToRemove))
+            if (!(ColumnsToRemove is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("columnsToRemove"u8);
                 writer.WriteStartArray();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(BatchSize))
+            if (BatchSize.HasValue)
             {
                 writer.WritePropertyName("batchSize"u8);
                 writer.WriteNumberValue(BatchSize.Value);
@@ -110,13 +110,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             string type = default;
-            Optional<string> accountName = default;
-            Optional<string> accountKey = default;
-            Optional<string> table = default;
-            Optional<string> partitionKey = default;
-            Optional<string> rowKey = default;
-            Optional<IList<string>> columnsToRemove = default;
-            Optional<int> batchSize = default;
+            string accountName = default;
+            string accountKey = default;
+            string table = default;
+            string partitionKey = default;
+            string rowKey = default;
+            IList<string> columnsToRemove = default;
+            int? batchSize = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -192,7 +192,16 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TableOutputDataSource(type, serializedAdditionalRawData, accountName.Value, accountKey.Value, table.Value, partitionKey.Value, rowKey.Value, Optional.ToList(columnsToRemove), Optional.ToNullable(batchSize));
+            return new TableOutputDataSource(
+                type,
+                serializedAdditionalRawData,
+                accountName,
+                accountKey,
+                table,
+                partitionKey,
+                rowKey,
+                columnsToRemove ?? new ChangeTrackingList<string>(),
+                batchSize);
         }
 
         BinaryData IPersistableModel<TableOutputDataSource>.Write(ModelReaderWriterOptions options)

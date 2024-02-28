@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ComplianceState))
+            if (ComplianceState != null)
             {
                 writer.WritePropertyName("complianceState"u8);
                 writer.WriteStringValue(ComplianceState);
             }
-            if (Optional.IsDefined(Count))
+            if (Count.HasValue)
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<string> complianceState = default;
-            Optional<int> count = default;
+            string complianceState = default;
+            int? count = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComplianceDetail(complianceState.Value, Optional.ToNullable(count), serializedAdditionalRawData);
+            return new ComplianceDetail(complianceState, count, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComplianceDetail>.Write(ModelReaderWriterOptions options)

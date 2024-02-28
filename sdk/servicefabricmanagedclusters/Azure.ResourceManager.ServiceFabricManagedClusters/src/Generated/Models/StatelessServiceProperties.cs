@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -25,8 +24,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <exception cref="ArgumentNullException"> <paramref name="serviceTypeName"/> or <paramref name="partitionDescription"/> is null. </exception>
         public StatelessServiceProperties(string serviceTypeName, ManagedServicePartitionScheme partitionDescription, int instanceCount) : base(serviceTypeName, partitionDescription)
         {
-            Argument.AssertNotNull(serviceTypeName, nameof(serviceTypeName));
-            Argument.AssertNotNull(partitionDescription, nameof(partitionDescription));
+            if (serviceTypeName == null)
+            {
+                throw new ArgumentNullException(nameof(serviceTypeName));
+            }
+            if (partitionDescription == null)
+            {
+                throw new ArgumentNullException(nameof(partitionDescription));
+            }
 
             InstanceCount = instanceCount;
             ServiceKind = ServiceKind.Stateless;

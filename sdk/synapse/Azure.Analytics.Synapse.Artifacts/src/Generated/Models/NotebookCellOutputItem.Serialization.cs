@@ -18,29 +18,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(ExecutionCount))
+            if (ExecutionCount.HasValue)
             {
                 writer.WritePropertyName("execution_count"u8);
                 writer.WriteNumberValue(ExecutionCount.Value);
             }
             writer.WritePropertyName("output_type"u8);
             writer.WriteStringValue(OutputType.ToString());
-            if (Optional.IsDefined(Text))
+            if (Text != null)
             {
                 writer.WritePropertyName("text"u8);
                 writer.WriteObjectValue(Text);
             }
-            if (Optional.IsDefined(Data))
+            if (Data != null)
             {
                 writer.WritePropertyName("data"u8);
                 writer.WriteObjectValue(Data);
             }
-            if (Optional.IsDefined(Metadata))
+            if (Metadata != null)
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteObjectValue(Metadata);
@@ -54,12 +54,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<int> executionCount = default;
+            string name = default;
+            int? executionCount = default;
             CellOutputType outputType = default;
-            Optional<object> text = default;
-            Optional<object> data = default;
-            Optional<object> metadata = default;
+            object text = default;
+            object data = default;
+            object metadata = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -109,7 +109,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new NotebookCellOutputItem(name.Value, Optional.ToNullable(executionCount), outputType, text.Value, data.Value, metadata.Value);
+            return new NotebookCellOutputItem(
+                name,
+                executionCount,
+                outputType,
+                text,
+                data,
+                metadata);
         }
 
         internal partial class NotebookCellOutputItemConverter : JsonConverter<NotebookCellOutputItem>

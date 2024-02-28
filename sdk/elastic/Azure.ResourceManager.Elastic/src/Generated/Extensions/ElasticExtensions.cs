@@ -48,7 +48,10 @@ namespace Azure.ResourceManager.Elastic
         /// <returns> Returns a <see cref="ElasticMonitorResource"/> object. </returns>
         public static ElasticMonitorResource GetElasticMonitorResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableElasticArmClient(client).GetElasticMonitorResource(id);
         }
@@ -67,7 +70,10 @@ namespace Azure.ResourceManager.Elastic
         /// <returns> Returns a <see cref="MonitoringTagRuleResource"/> object. </returns>
         public static MonitoringTagRuleResource GetMonitoringTagRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableElasticArmClient(client).GetMonitoringTagRuleResource(id);
         }
@@ -84,7 +90,10 @@ namespace Azure.ResourceManager.Elastic
         /// <returns> An object representing collection of ElasticMonitorResources and their operations over a ElasticMonitorResource. </returns>
         public static ElasticMonitorResourceCollection GetElasticMonitorResources(this ResourceGroupResource resourceGroupResource)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableElasticResourceGroupResource(resourceGroupResource).GetElasticMonitorResources();
         }
@@ -122,7 +131,10 @@ namespace Azure.ResourceManager.Elastic
         [ForwardsClientCalls]
         public static async Task<Response<ElasticMonitorResource>> GetElasticMonitorResourceAsync(this ResourceGroupResource resourceGroupResource, string monitorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return await GetMockableElasticResourceGroupResource(resourceGroupResource).GetElasticMonitorResourceAsync(monitorName, cancellationToken).ConfigureAwait(false);
         }
@@ -160,7 +172,10 @@ namespace Azure.ResourceManager.Elastic
         [ForwardsClientCalls]
         public static Response<ElasticMonitorResource> GetElasticMonitorResource(this ResourceGroupResource resourceGroupResource, string monitorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableElasticResourceGroupResource(resourceGroupResource).GetElasticMonitorResource(monitorName, cancellationToken);
         }
@@ -196,7 +211,10 @@ namespace Azure.ResourceManager.Elastic
         /// <returns> An async collection of <see cref="ElasticMonitorResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ElasticMonitorResource> GetElasticMonitorResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableElasticSubscriptionResource(subscriptionResource).GetElasticMonitorResourcesAsync(cancellationToken);
         }
@@ -232,7 +250,10 @@ namespace Azure.ResourceManager.Elastic
         /// <returns> A collection of <see cref="ElasticMonitorResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ElasticMonitorResource> GetElasticMonitorResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableElasticSubscriptionResource(subscriptionResource).GetElasticMonitorResources(cancellationToken);
         }

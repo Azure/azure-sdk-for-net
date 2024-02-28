@@ -26,62 +26,62 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(DatabaseCount))
+            if (options.Format != "W" && DatabaseCount.HasValue)
             {
                 writer.WritePropertyName("databaseCount"u8);
                 writer.WriteNumberValue(DatabaseCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W" && State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(StartedOn))
+            if (options.Format != "W" && StartedOn.HasValue)
             {
                 writer.WritePropertyName("startedOn"u8);
                 writer.WriteStringValue(StartedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EndedOn))
+            if (options.Format != "W" && EndedOn.HasValue)
             {
                 writer.WritePropertyName("endedOn"u8);
                 writer.WriteStringValue(EndedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(SourceServerName))
+            if (options.Format != "W" && SourceServerName != null)
             {
                 writer.WritePropertyName("sourceServerName"u8);
                 writer.WriteStringValue(SourceServerName);
             }
-            if (options.Format != "W" && Optional.IsDefined(SourceServerVersion))
+            if (options.Format != "W" && SourceServerVersion != null)
             {
                 writer.WritePropertyName("sourceServerVersion"u8);
                 writer.WriteStringValue(SourceServerVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(SourceServerBrandVersion))
+            if (options.Format != "W" && SourceServerBrandVersion != null)
             {
                 writer.WritePropertyName("sourceServerBrandVersion"u8);
                 writer.WriteStringValue(SourceServerBrandVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetServerName))
+            if (options.Format != "W" && TargetServerName != null)
             {
                 writer.WritePropertyName("targetServerName"u8);
                 writer.WriteStringValue(TargetServerName);
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetServerVersion))
+            if (options.Format != "W" && TargetServerVersion != null)
             {
                 writer.WritePropertyName("targetServerVersion"u8);
                 writer.WriteStringValue(TargetServerVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetServerBrandVersion))
+            if (options.Format != "W" && TargetServerBrandVersion != null)
             {
                 writer.WritePropertyName("targetServerBrandVersion"u8);
                 writer.WriteStringValue(TargetServerBrandVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(DatabaseErrorCount))
+            if (options.Format != "W" && DatabaseErrorCount.HasValue)
             {
                 writer.WritePropertyName("databaseErrorCount"u8);
                 writer.WriteNumberValue(DatabaseErrorCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -126,18 +126,18 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<int> databaseCount = default;
-            Optional<MigrationState> state = default;
-            Optional<DateTimeOffset> startedOn = default;
-            Optional<DateTimeOffset> endedOn = default;
-            Optional<string> sourceServerName = default;
-            Optional<string> sourceServerVersion = default;
-            Optional<string> sourceServerBrandVersion = default;
-            Optional<string> targetServerName = default;
-            Optional<string> targetServerVersion = default;
-            Optional<string> targetServerBrandVersion = default;
-            Optional<int> databaseErrorCount = default;
-            Optional<string> id = default;
+            int? databaseCount = default;
+            MigrationState? state = default;
+            DateTimeOffset? startedOn = default;
+            DateTimeOffset? endedOn = default;
+            string sourceServerName = default;
+            string sourceServerVersion = default;
+            string sourceServerBrandVersion = default;
+            string targetServerName = default;
+            string targetServerVersion = default;
+            string targetServerBrandVersion = default;
+            int? databaseErrorCount = default;
+            string id = default;
             string resultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -234,7 +234,21 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateSqlServerSqlMISyncTaskOutputMigrationLevel(id.Value, resultType, serializedAdditionalRawData, Optional.ToNullable(databaseCount), Optional.ToNullable(state), Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), sourceServerName.Value, sourceServerVersion.Value, sourceServerBrandVersion.Value, targetServerName.Value, targetServerVersion.Value, targetServerBrandVersion.Value, Optional.ToNullable(databaseErrorCount));
+            return new MigrateSqlServerSqlMISyncTaskOutputMigrationLevel(
+                id,
+                resultType,
+                serializedAdditionalRawData,
+                databaseCount,
+                state,
+                startedOn,
+                endedOn,
+                sourceServerName,
+                sourceServerVersion,
+                sourceServerBrandVersion,
+                targetServerName,
+                targetServerVersion,
+                targetServerBrandVersion,
+                databaseErrorCount);
         }
 
         BinaryData IPersistableModel<MigrateSqlServerSqlMISyncTaskOutputMigrationLevel>.Write(ModelReaderWriterOptions options)

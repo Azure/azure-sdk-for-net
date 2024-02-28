@@ -16,7 +16,7 @@ namespace Azure.Security.KeyVault.Administration
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Actions))
+            if (!(Actions is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.Security.KeyVault.Administration
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(NotActions))
+            if (!(NotActions is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("notActions"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.Security.KeyVault.Administration
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DataActions))
+            if (!(DataActions is ChangeTrackingList<KeyVaultDataAction> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("dataActions"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.Security.KeyVault.Administration
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(NotDataActions))
+            if (!(NotDataActions is ChangeTrackingList<KeyVaultDataAction> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("notDataActions"u8);
                 writer.WriteStartArray();
@@ -65,10 +65,10 @@ namespace Azure.Security.KeyVault.Administration
             {
                 return null;
             }
-            Optional<IList<string>> actions = default;
-            Optional<IList<string>> notActions = default;
-            Optional<IList<KeyVaultDataAction>> dataActions = default;
-            Optional<IList<KeyVaultDataAction>> notDataActions = default;
+            IList<string> actions = default;
+            IList<string> notActions = default;
+            IList<KeyVaultDataAction> dataActions = default;
+            IList<KeyVaultDataAction> notDataActions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("actions"u8))
@@ -128,7 +128,7 @@ namespace Azure.Security.KeyVault.Administration
                     continue;
                 }
             }
-            return new KeyVaultPermission(Optional.ToList(actions), Optional.ToList(notActions), Optional.ToList(dataActions), Optional.ToList(notDataActions));
+            return new KeyVaultPermission(actions ?? new ChangeTrackingList<string>(), notActions ?? new ChangeTrackingList<string>(), dataActions ?? new ChangeTrackingList<KeyVaultDataAction>(), notDataActions ?? new ChangeTrackingList<KeyVaultDataAction>());
         }
     }
 }

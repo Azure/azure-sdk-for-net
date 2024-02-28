@@ -92,7 +92,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="softwareName"/> is null. </exception>
         public virtual async Task<Response<SoftwareInventoryResource>> GetAsync(string softwareName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(softwareName, nameof(softwareName));
+            if (softwareName == null)
+            {
+                throw new ArgumentNullException(nameof(softwareName));
+            }
+            if (softwareName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(softwareName));
+            }
 
             using var scope = _softwareInventoryClientDiagnostics.CreateScope("SoftwareInventoryCollection.Get");
             scope.Start();
@@ -137,7 +144,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="softwareName"/> is null. </exception>
         public virtual Response<SoftwareInventoryResource> Get(string softwareName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(softwareName, nameof(softwareName));
+            if (softwareName == null)
+            {
+                throw new ArgumentNullException(nameof(softwareName));
+            }
+            if (softwareName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(softwareName));
+            }
 
             using var scope = _softwareInventoryClientDiagnostics.CreateScope("SoftwareInventoryCollection.Get");
             scope.Start();
@@ -242,7 +256,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="softwareName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string softwareName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(softwareName, nameof(softwareName));
+            if (softwareName == null)
+            {
+                throw new ArgumentNullException(nameof(softwareName));
+            }
+            if (softwareName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(softwareName));
+            }
 
             using var scope = _softwareInventoryClientDiagnostics.CreateScope("SoftwareInventoryCollection.Exists");
             scope.Start();
@@ -285,7 +306,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="softwareName"/> is null. </exception>
         public virtual Response<bool> Exists(string softwareName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(softwareName, nameof(softwareName));
+            if (softwareName == null)
+            {
+                throw new ArgumentNullException(nameof(softwareName));
+            }
+            if (softwareName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(softwareName));
+            }
 
             using var scope = _softwareInventoryClientDiagnostics.CreateScope("SoftwareInventoryCollection.Exists");
             scope.Start();
@@ -328,7 +356,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="softwareName"/> is null. </exception>
         public virtual async Task<NullableResponse<SoftwareInventoryResource>> GetIfExistsAsync(string softwareName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(softwareName, nameof(softwareName));
+            if (softwareName == null)
+            {
+                throw new ArgumentNullException(nameof(softwareName));
+            }
+            if (softwareName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(softwareName));
+            }
 
             using var scope = _softwareInventoryClientDiagnostics.CreateScope("SoftwareInventoryCollection.GetIfExists");
             scope.Start();
@@ -373,7 +408,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="softwareName"/> is null. </exception>
         public virtual NullableResponse<SoftwareInventoryResource> GetIfExists(string softwareName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(softwareName, nameof(softwareName));
+            if (softwareName == null)
+            {
+                throw new ArgumentNullException(nameof(softwareName));
+            }
+            if (softwareName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(softwareName));
+            }
 
             using var scope = _softwareInventoryClientDiagnostics.CreateScope("SoftwareInventoryCollection.GetIfExists");
             scope.Start();

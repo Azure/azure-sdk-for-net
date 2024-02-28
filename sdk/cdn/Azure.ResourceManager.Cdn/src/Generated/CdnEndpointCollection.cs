@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<CdnEndpointResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string endpointName, CdnEndpointData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (endpointName == null)
+            {
+                throw new ArgumentNullException(nameof(endpointName));
+            }
+            if (endpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(endpointName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<CdnEndpointResource> CreateOrUpdate(WaitUntil waitUntil, string endpointName, CdnEndpointData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (endpointName == null)
+            {
+                throw new ArgumentNullException(nameof(endpointName));
+            }
+            if (endpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(endpointName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         public virtual async Task<Response<CdnEndpointResource>> GetAsync(string endpointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+            if (endpointName == null)
+            {
+                throw new ArgumentNullException(nameof(endpointName));
+            }
+            if (endpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(endpointName));
+            }
 
             using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         public virtual Response<CdnEndpointResource> Get(string endpointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+            if (endpointName == null)
+            {
+                throw new ArgumentNullException(nameof(endpointName));
+            }
+            if (endpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(endpointName));
+            }
 
             using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string endpointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+            if (endpointName == null)
+            {
+                throw new ArgumentNullException(nameof(endpointName));
+            }
+            if (endpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(endpointName));
+            }
 
             using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         public virtual Response<bool> Exists(string endpointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+            if (endpointName == null)
+            {
+                throw new ArgumentNullException(nameof(endpointName));
+            }
+            if (endpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(endpointName));
+            }
 
             using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         public virtual async Task<NullableResponse<CdnEndpointResource>> GetIfExistsAsync(string endpointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+            if (endpointName == null)
+            {
+                throw new ArgumentNullException(nameof(endpointName));
+            }
+            if (endpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(endpointName));
+            }
 
             using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         public virtual NullableResponse<CdnEndpointResource> GetIfExists(string endpointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+            if (endpointName == null)
+            {
+                throw new ArgumentNullException(nameof(endpointName));
+            }
+            if (endpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(endpointName));
+            }
 
             using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointCollection.GetIfExists");
             scope.Start();

@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     List<AutoscaleSchedule> array = new List<AutoscaleSchedule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutoscaleSchedule.DeserializeAutoscaleSchedule(item));
+                        array.Add(AutoscaleSchedule.DeserializeAutoscaleSchedule(item, options));
                     }
                     schedules = array;
                     continue;

@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SingleSignOnState))
+            if (SingleSignOnState.HasValue)
             {
                 writer.WritePropertyName("singleSignOnState"u8);
                 writer.WriteStringValue(SingleSignOnState.Value.ToString());
             }
-            if (Optional.IsDefined(EnterpriseAppId))
+            if (EnterpriseAppId != null)
             {
                 writer.WritePropertyName("enterpriseAppId"u8);
                 writer.WriteStringValue(EnterpriseAppId);
             }
-            if (Optional.IsDefined(SingleSignOnUri))
+            if (SingleSignOnUri != null)
             {
                 writer.WritePropertyName("singleSignOnUrl"u8);
                 writer.WriteStringValue(SingleSignOnUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ProvisioningState))
+            if (ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 return null;
             }
-            Optional<NewRelicSingleSignOnState> singleSignOnState = default;
-            Optional<string> enterpriseAppId = default;
-            Optional<Uri> singleSignOnUrl = default;
-            Optional<NewRelicProvisioningState> provisioningState = default;
+            NewRelicSingleSignOnState? singleSignOnState = default;
+            string enterpriseAppId = default;
+            Uri singleSignOnUrl = default;
+            NewRelicProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NewRelicSingleSignOnProperties(Optional.ToNullable(singleSignOnState), enterpriseAppId.Value, singleSignOnUrl.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new NewRelicSingleSignOnProperties(singleSignOnState, enterpriseAppId, singleSignOnUrl, provisioningState, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NewRelicSingleSignOnProperties>.Write(ModelReaderWriterOptions options)

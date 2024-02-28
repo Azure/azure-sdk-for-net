@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Support.Models
             writer.WriteStringValue(PreferredContactMethod.ToString());
             writer.WritePropertyName("primaryEmailAddress"u8);
             writer.WriteStringValue(PrimaryEmailAddress);
-            if (Optional.IsCollectionDefined(AdditionalEmailAddresses))
+            if (!(AdditionalEmailAddresses is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("additionalEmailAddresses"u8);
                 writer.WriteStartArray();
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Support.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PhoneNumber))
+            if (PhoneNumber != null)
             {
                 writer.WritePropertyName("phoneNumber"u8);
                 writer.WriteStringValue(PhoneNumber);
@@ -97,8 +97,8 @@ namespace Azure.ResourceManager.Support.Models
             string lastName = default;
             PreferredContactMethod preferredContactMethod = default;
             string primaryEmailAddress = default;
-            Optional<IList<string>> additionalEmailAddresses = default;
-            Optional<string> phoneNumber = default;
+            IList<string> additionalEmailAddresses = default;
+            string phoneNumber = default;
             string preferredTimeZone = default;
             string country = default;
             string preferredSupportLanguage = default;
@@ -166,7 +166,17 @@ namespace Azure.ResourceManager.Support.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SupportContactProfile(firstName, lastName, preferredContactMethod, primaryEmailAddress, Optional.ToList(additionalEmailAddresses), phoneNumber.Value, preferredTimeZone, country, preferredSupportLanguage, serializedAdditionalRawData);
+            return new SupportContactProfile(
+                firstName,
+                lastName,
+                preferredContactMethod,
+                primaryEmailAddress,
+                additionalEmailAddresses ?? new ChangeTrackingList<string>(),
+                phoneNumber,
+                preferredTimeZone,
+                country,
+                preferredSupportLanguage,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SupportContactProfile>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AkamaiSignatureHeaderAuthenticationKeyList))
+            if (!(AkamaiSignatureHeaderAuthenticationKeyList is ChangeTrackingList<AkamaiSignatureHeaderAuthenticationKey> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("akamaiSignatureHeaderAuthenticationKeyList"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<IList<AkamaiSignatureHeaderAuthenticationKey>> akamaiSignatureHeaderAuthenticationKeyList = default;
+            IList<AkamaiSignatureHeaderAuthenticationKey> akamaiSignatureHeaderAuthenticationKeyList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<AkamaiSignatureHeaderAuthenticationKey> array = new List<AkamaiSignatureHeaderAuthenticationKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AkamaiSignatureHeaderAuthenticationKey.DeserializeAkamaiSignatureHeaderAuthenticationKey(item));
+                        array.Add(AkamaiSignatureHeaderAuthenticationKey.DeserializeAkamaiSignatureHeaderAuthenticationKey(item, options));
                     }
                     akamaiSignatureHeaderAuthenticationKeyList = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AkamaiAccessControl(Optional.ToList(akamaiSignatureHeaderAuthenticationKeyList), serializedAdditionalRawData);
+            return new AkamaiAccessControl(akamaiSignatureHeaderAuthenticationKeyList ?? new ChangeTrackingList<AkamaiSignatureHeaderAuthenticationKey>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AkamaiAccessControl>.Write(ModelReaderWriterOptions options)

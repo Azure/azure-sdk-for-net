@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Authority))
+            if (Authority != null)
             {
                 writer.WritePropertyName("authority"u8);
                 writer.WriteStringValue(Authority);
             }
-            if (Optional.IsDefined(Audience))
+            if (Audience != null)
             {
                 writer.WritePropertyName("audience"u8);
                 writer.WriteStringValue(Audience);
             }
-            if (Optional.IsDefined(IsSmartProxyEnabled))
+            if (IsSmartProxyEnabled.HasValue)
             {
                 writer.WritePropertyName("smartProxyEnabled"u8);
                 writer.WriteBooleanValue(IsSmartProxyEnabled.Value);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             {
                 return null;
             }
-            Optional<string> authority = default;
-            Optional<string> audience = default;
-            Optional<bool> smartProxyEnabled = default;
+            string authority = default;
+            string audience = default;
+            bool? smartProxyEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FhirServiceAuthenticationConfiguration(authority.Value, audience.Value, Optional.ToNullable(smartProxyEnabled), serializedAdditionalRawData);
+            return new FhirServiceAuthenticationConfiguration(authority, audience, smartProxyEnabled, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FhirServiceAuthenticationConfiguration>.Write(ModelReaderWriterOptions options)

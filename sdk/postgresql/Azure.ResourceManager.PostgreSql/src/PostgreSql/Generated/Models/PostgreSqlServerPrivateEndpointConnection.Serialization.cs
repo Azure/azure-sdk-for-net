@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.PostgreSql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(Properties))
+            if (options.Format != "W" && Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.PostgreSql.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<PostgreSqlServerPrivateEndpointConnectionProperties> properties = default;
+            ResourceIdentifier id = default;
+            PostgreSqlServerPrivateEndpointConnectionProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                     {
                         continue;
                     }
-                    properties = PostgreSqlServerPrivateEndpointConnectionProperties.DeserializePostgreSqlServerPrivateEndpointConnectionProperties(property.Value);
+                    properties = PostgreSqlServerPrivateEndpointConnectionProperties.DeserializePostgreSqlServerPrivateEndpointConnectionProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlServerPrivateEndpointConnection(id.Value, properties.Value, serializedAdditionalRawData);
+            return new PostgreSqlServerPrivateEndpointConnection(id, properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlServerPrivateEndpointConnection>.Write(ModelReaderWriterOptions options)

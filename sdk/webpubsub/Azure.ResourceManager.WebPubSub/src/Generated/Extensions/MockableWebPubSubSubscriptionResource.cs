@@ -76,7 +76,10 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<WebPubSubNameAvailability>> CheckWebPubSubNameAvailabilityAsync(AzureLocation location, WebPubSubNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = WebPubSubClientDiagnostics.CreateScope("MockableWebPubSubSubscriptionResource.CheckWebPubSubNameAvailability");
             scope.Start();
@@ -119,7 +122,10 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<WebPubSubNameAvailability> CheckWebPubSubNameAvailability(AzureLocation location, WebPubSubNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = WebPubSubClientDiagnostics.CreateScope("MockableWebPubSubSubscriptionResource.CheckWebPubSubNameAvailability");
             scope.Start();
@@ -219,7 +225,7 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SignalRServiceUsage.DeserializeSignalRServiceUsage, UsagesClientDiagnostics, Pipeline, "MockableWebPubSubSubscriptionResource.GetUsages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SignalRServiceUsage.DeserializeSignalRServiceUsage(e), UsagesClientDiagnostics, Pipeline, "MockableWebPubSubSubscriptionResource.GetUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -246,7 +252,7 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SignalRServiceUsage.DeserializeSignalRServiceUsage, UsagesClientDiagnostics, Pipeline, "MockableWebPubSubSubscriptionResource.GetUsages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SignalRServiceUsage.DeserializeSignalRServiceUsage(e), UsagesClientDiagnostics, Pipeline, "MockableWebPubSubSubscriptionResource.GetUsages", "value", "nextLink", cancellationToken);
         }
     }
 }

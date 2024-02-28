@@ -20,7 +20,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public RestResourceDataset(DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
         {
-            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
+            if (linkedServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(linkedServiceName));
+            }
 
             AdditionalHeaders = new ChangeTrackingDictionary<string, BinaryData>();
             PaginationRules = new ChangeTrackingDictionary<string, BinaryData>();
@@ -50,6 +53,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalHeaders = additionalHeaders;
             PaginationRules = paginationRules;
             DatasetType = datasetType ?? "RestResource";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RestResourceDataset"/> for deserialization. </summary>
+        internal RestResourceDataset()
+        {
         }
 
         /// <summary> The relative URL to the resource that the RESTful API provides. Type: string (or Expression with resultType string). </summary>

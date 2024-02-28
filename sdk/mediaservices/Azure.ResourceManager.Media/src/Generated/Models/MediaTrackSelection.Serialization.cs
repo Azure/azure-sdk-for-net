@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(TrackSelections))
+            if (!(TrackSelections is ChangeTrackingList<TrackPropertyCondition> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("trackSelections"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<IList<TrackPropertyCondition>> trackSelections = default;
+            IList<TrackPropertyCondition> trackSelections = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<TrackPropertyCondition> array = new List<TrackPropertyCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TrackPropertyCondition.DeserializeTrackPropertyCondition(item));
+                        array.Add(TrackPropertyCondition.DeserializeTrackPropertyCondition(item, options));
                     }
                     trackSelections = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MediaTrackSelection(Optional.ToList(trackSelections), serializedAdditionalRawData);
+            return new MediaTrackSelection(trackSelections ?? new ChangeTrackingList<TrackPropertyCondition>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MediaTrackSelection>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ContinuousBackupInformation))
+            if (options.Format != "W" && ContinuousBackupInformation != null)
             {
                 writer.WritePropertyName("continuousBackupInformation"u8);
                 writer.WriteObjectValue(ContinuousBackupInformation);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<ContinuousBackupInformation> continuousBackupInformation = default;
+            ContinuousBackupInformation continuousBackupInformation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    continuousBackupInformation = ContinuousBackupInformation.DeserializeContinuousBackupInformation(property.Value);
+                    continuousBackupInformation = ContinuousBackupInformation.DeserializeContinuousBackupInformation(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBBackupInformation(continuousBackupInformation.Value, serializedAdditionalRawData);
+            return new CosmosDBBackupInformation(continuousBackupInformation, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBBackupInformation>.Write(ModelReaderWriterOptions options)

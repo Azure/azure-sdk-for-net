@@ -52,7 +52,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <exception cref="ArgumentNullException"> <paramref name="managedRuleSets"/> is null. </exception>
         public ManagedRulesDefinition(IEnumerable<ManagedRuleSet> managedRuleSets)
         {
-            Argument.AssertNotNull(managedRuleSets, nameof(managedRuleSets));
+            if (managedRuleSets == null)
+            {
+                throw new ArgumentNullException(nameof(managedRuleSets));
+            }
 
             Exclusions = new ChangeTrackingList<OwaspCrsExclusionEntry>();
             ManagedRuleSets = managedRuleSets.ToList();

@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="managedCertificateName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ContainerAppManagedCertificateResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string managedCertificateName, ContainerAppManagedCertificateData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(managedCertificateName, nameof(managedCertificateName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (managedCertificateName == null)
+            {
+                throw new ArgumentNullException(nameof(managedCertificateName));
+            }
+            if (managedCertificateName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(managedCertificateName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _containerAppManagedCertificateManagedCertificatesClientDiagnostics.CreateScope("ContainerAppManagedCertificateCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="managedCertificateName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ContainerAppManagedCertificateResource> CreateOrUpdate(WaitUntil waitUntil, string managedCertificateName, ContainerAppManagedCertificateData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(managedCertificateName, nameof(managedCertificateName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (managedCertificateName == null)
+            {
+                throw new ArgumentNullException(nameof(managedCertificateName));
+            }
+            if (managedCertificateName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(managedCertificateName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _containerAppManagedCertificateManagedCertificatesClientDiagnostics.CreateScope("ContainerAppManagedCertificateCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="managedCertificateName"/> is null. </exception>
         public virtual async Task<Response<ContainerAppManagedCertificateResource>> GetAsync(string managedCertificateName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(managedCertificateName, nameof(managedCertificateName));
+            if (managedCertificateName == null)
+            {
+                throw new ArgumentNullException(nameof(managedCertificateName));
+            }
+            if (managedCertificateName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(managedCertificateName));
+            }
 
             using var scope = _containerAppManagedCertificateManagedCertificatesClientDiagnostics.CreateScope("ContainerAppManagedCertificateCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="managedCertificateName"/> is null. </exception>
         public virtual Response<ContainerAppManagedCertificateResource> Get(string managedCertificateName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(managedCertificateName, nameof(managedCertificateName));
+            if (managedCertificateName == null)
+            {
+                throw new ArgumentNullException(nameof(managedCertificateName));
+            }
+            if (managedCertificateName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(managedCertificateName));
+            }
 
             using var scope = _containerAppManagedCertificateManagedCertificatesClientDiagnostics.CreateScope("ContainerAppManagedCertificateCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="managedCertificateName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string managedCertificateName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(managedCertificateName, nameof(managedCertificateName));
+            if (managedCertificateName == null)
+            {
+                throw new ArgumentNullException(nameof(managedCertificateName));
+            }
+            if (managedCertificateName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(managedCertificateName));
+            }
 
             using var scope = _containerAppManagedCertificateManagedCertificatesClientDiagnostics.CreateScope("ContainerAppManagedCertificateCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="managedCertificateName"/> is null. </exception>
         public virtual Response<bool> Exists(string managedCertificateName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(managedCertificateName, nameof(managedCertificateName));
+            if (managedCertificateName == null)
+            {
+                throw new ArgumentNullException(nameof(managedCertificateName));
+            }
+            if (managedCertificateName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(managedCertificateName));
+            }
 
             using var scope = _containerAppManagedCertificateManagedCertificatesClientDiagnostics.CreateScope("ContainerAppManagedCertificateCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="managedCertificateName"/> is null. </exception>
         public virtual async Task<NullableResponse<ContainerAppManagedCertificateResource>> GetIfExistsAsync(string managedCertificateName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(managedCertificateName, nameof(managedCertificateName));
+            if (managedCertificateName == null)
+            {
+                throw new ArgumentNullException(nameof(managedCertificateName));
+            }
+            if (managedCertificateName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(managedCertificateName));
+            }
 
             using var scope = _containerAppManagedCertificateManagedCertificatesClientDiagnostics.CreateScope("ContainerAppManagedCertificateCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="managedCertificateName"/> is null. </exception>
         public virtual NullableResponse<ContainerAppManagedCertificateResource> GetIfExists(string managedCertificateName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(managedCertificateName, nameof(managedCertificateName));
+            if (managedCertificateName == null)
+            {
+                throw new ArgumentNullException(nameof(managedCertificateName));
+            }
+            if (managedCertificateName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(managedCertificateName));
+            }
 
             using var scope = _containerAppManagedCertificateManagedCertificatesClientDiagnostics.CreateScope("ContainerAppManagedCertificateCollection.GetIfExists");
             scope.Start();

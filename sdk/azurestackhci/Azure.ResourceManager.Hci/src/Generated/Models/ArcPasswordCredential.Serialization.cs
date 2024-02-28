@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SecretText))
+            if (SecretText != null)
             {
                 writer.WritePropertyName("secretText"u8);
                 writer.WriteStringValue(SecretText);
             }
-            if (Optional.IsDefined(KeyId))
+            if (KeyId != null)
             {
                 writer.WritePropertyName("keyId"u8);
                 writer.WriteStringValue(KeyId);
             }
-            if (Optional.IsDefined(StartOn))
+            if (StartOn.HasValue)
             {
                 writer.WritePropertyName("startDateTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (EndOn.HasValue)
             {
                 writer.WritePropertyName("endDateTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<string> secretText = default;
-            Optional<string> keyId = default;
-            Optional<DateTimeOffset> startDateTime = default;
-            Optional<DateTimeOffset> endDateTime = default;
+            string secretText = default;
+            string keyId = default;
+            DateTimeOffset? startDateTime = default;
+            DateTimeOffset? endDateTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArcPasswordCredential(secretText.Value, keyId.Value, Optional.ToNullable(startDateTime), Optional.ToNullable(endDateTime), serializedAdditionalRawData);
+            return new ArcPasswordCredential(secretText, keyId, startDateTime, endDateTime, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArcPasswordCredential>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FirmwareName))
+            if (FirmwareName != null)
             {
                 writer.WritePropertyName("firmwareId"u8);
                 writer.WriteStringValue(FirmwareName);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            Optional<string> firmwareName = default;
+            string firmwareName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UploadUrlContent(firmwareName.Value, serializedAdditionalRawData);
+            return new UploadUrlContent(firmwareName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UploadUrlContent>.Write(ModelReaderWriterOptions options)

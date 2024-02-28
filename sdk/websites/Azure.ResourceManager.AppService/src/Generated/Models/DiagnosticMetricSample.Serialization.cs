@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Timestamp))
+            if (Timestamp.HasValue)
             {
                 writer.WritePropertyName("timestamp"u8);
                 writer.WriteStringValue(Timestamp.Value, "O");
             }
-            if (Optional.IsDefined(RoleInstance))
+            if (RoleInstance != null)
             {
                 writer.WritePropertyName("roleInstance"u8);
                 writer.WriteStringValue(RoleInstance);
             }
-            if (Optional.IsDefined(Total))
+            if (Total.HasValue)
             {
                 writer.WritePropertyName("total"u8);
                 writer.WriteNumberValue(Total.Value);
             }
-            if (Optional.IsDefined(Maximum))
+            if (Maximum.HasValue)
             {
                 writer.WritePropertyName("maximum"u8);
                 writer.WriteNumberValue(Maximum.Value);
             }
-            if (Optional.IsDefined(Minimum))
+            if (Minimum.HasValue)
             {
                 writer.WritePropertyName("minimum"u8);
                 writer.WriteNumberValue(Minimum.Value);
             }
-            if (Optional.IsDefined(IsAggregated))
+            if (IsAggregated.HasValue)
             {
                 writer.WritePropertyName("isAggregated"u8);
                 writer.WriteBooleanValue(IsAggregated.Value);
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> timestamp = default;
-            Optional<string> roleInstance = default;
-            Optional<double> total = default;
-            Optional<double> maximum = default;
-            Optional<double> minimum = default;
-            Optional<bool> isAggregated = default;
+            DateTimeOffset? timestamp = default;
+            string roleInstance = default;
+            double? total = default;
+            double? maximum = default;
+            double? minimum = default;
+            bool? isAggregated = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiagnosticMetricSample(Optional.ToNullable(timestamp), roleInstance.Value, Optional.ToNullable(total), Optional.ToNullable(maximum), Optional.ToNullable(minimum), Optional.ToNullable(isAggregated), serializedAdditionalRawData);
+            return new DiagnosticMetricSample(
+                timestamp,
+                roleInstance,
+                total,
+                maximum,
+                minimum,
+                isAggregated,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiagnosticMetricSample>.Write(ModelReaderWriterOptions options)

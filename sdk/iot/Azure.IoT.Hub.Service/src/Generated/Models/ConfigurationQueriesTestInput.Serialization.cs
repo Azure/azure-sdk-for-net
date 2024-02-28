@@ -15,12 +15,12 @@ namespace Azure.IoT.Hub.Service.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(TargetCondition))
+            if (TargetCondition != null)
             {
                 writer.WritePropertyName("targetCondition"u8);
                 writer.WriteStringValue(TargetCondition);
             }
-            if (Optional.IsCollectionDefined(CustomMetricQueries))
+            if (!(CustomMetricQueries is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("customMetricQueries"u8);
                 writer.WriteStartObject();

@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(RunRequestType);
-            if (Optional.IsDefined(IsArchiveEnabled))
+            if (IsArchiveEnabled.HasValue)
             {
                 writer.WritePropertyName("isArchiveEnabled"u8);
                 writer.WriteBooleanValue(IsArchiveEnabled.Value);
             }
-            if (Optional.IsDefined(AgentPoolName))
+            if (AgentPoolName != null)
             {
                 writer.WritePropertyName("agentPoolName"u8);
                 writer.WriteStringValue(AgentPoolName);
             }
-            if (Optional.IsDefined(LogTemplate))
+            if (LogTemplate != null)
             {
                 writer.WritePropertyName("logTemplate"u8);
                 writer.WriteStringValue(LogTemplate);
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownRunRequest(document.RootElement, options);
+            return DeserializeContainerRegistryRunContent(document.RootElement, options);
         }
 
         internal static UnknownRunRequest DeserializeUnknownRunRequest(JsonElement element, ModelReaderWriterOptions options = null)
@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 return null;
             }
             string type = "Unknown";
-            Optional<bool> isArchiveEnabled = default;
-            Optional<string> agentPoolName = default;
-            Optional<string> logTemplate = default;
+            bool? isArchiveEnabled = default;
+            string agentPoolName = default;
+            string logTemplate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownRunRequest(type, Optional.ToNullable(isArchiveEnabled), agentPoolName.Value, logTemplate.Value, serializedAdditionalRawData);
+            return new UnknownRunRequest(type, isArchiveEnabled, agentPoolName, logTemplate, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryRunContent>.Write(ModelReaderWriterOptions options)
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownRunRequest(document.RootElement, options);
+                        return DeserializeContainerRegistryRunContent(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(ContainerRegistryRunContent)} does not support '{options.Format}' format.");

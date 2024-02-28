@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DayOfWeek))
+            if (DayOfWeek.HasValue)
             {
                 writer.WritePropertyName("dayOfWeek"u8);
                 writer.WriteStringValue(DayOfWeek.Value.ToString());
             }
-            if (Optional.IsDefined(StartTime))
+            if (StartTime != null)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartTime);
             }
-            if (Optional.IsDefined(Duration))
+            if (Duration.HasValue)
             {
                 writer.WritePropertyName("duration"u8);
                 writer.WriteStringValue(Duration.Value, "P");
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<SqlDayOfWeek> dayOfWeek = default;
-            Optional<string> startTime = default;
-            Optional<TimeSpan> duration = default;
+            SqlDayOfWeek? dayOfWeek = default;
+            string startTime = default;
+            TimeSpan? duration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MaintenanceWindowTimeRange(Optional.ToNullable(dayOfWeek), startTime.Value, Optional.ToNullable(duration), serializedAdditionalRawData);
+            return new MaintenanceWindowTimeRange(dayOfWeek, startTime, duration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MaintenanceWindowTimeRange>.Write(ModelReaderWriterOptions options)

@@ -7,19 +7,21 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Abstract class to share properties between concrete selectors. </summary>
-    public abstract partial class KnowledgeStoreStorageProjectionSelector : KnowledgeStoreProjectionSelector
+    public partial class KnowledgeStoreStorageProjectionSelector : KnowledgeStoreProjectionSelector
     {
         /// <summary> Initializes a new instance of <see cref="KnowledgeStoreStorageProjectionSelector"/>. </summary>
         /// <param name="storageContainer"> Blob container to store projections in. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageContainer"/> is null. </exception>
         public KnowledgeStoreStorageProjectionSelector(string storageContainer)
         {
-            Argument.AssertNotNull(storageContainer, nameof(storageContainer));
+            if (storageContainer == null)
+            {
+                throw new ArgumentNullException(nameof(storageContainer));
+            }
 
             StorageContainer = storageContainer;
         }

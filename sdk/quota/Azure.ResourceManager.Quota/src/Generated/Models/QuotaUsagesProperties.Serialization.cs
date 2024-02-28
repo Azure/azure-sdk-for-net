@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.Quota.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Usages))
+            if (Usages != null)
             {
                 writer.WritePropertyName("usages"u8);
                 writer.WriteObjectValue(Usages);
             }
-            if (options.Format != "W" && Optional.IsDefined(Unit))
+            if (options.Format != "W" && Unit != null)
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteObjectValue(Name);
             }
-            if (Optional.IsDefined(ResourceTypeName))
+            if (ResourceTypeName != null)
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceTypeName);
             }
-            if (options.Format != "W" && Optional.IsDefined(QuotaPeriod))
+            if (options.Format != "W" && QuotaPeriod.HasValue)
             {
                 writer.WritePropertyName("quotaPeriod"u8);
                 writer.WriteStringValue(QuotaPeriod.Value, "P");
             }
-            if (options.Format != "W" && Optional.IsDefined(IsQuotaApplicable))
+            if (options.Format != "W" && IsQuotaApplicable.HasValue)
             {
                 writer.WritePropertyName("isQuotaApplicable"u8);
                 writer.WriteBooleanValue(IsQuotaApplicable.Value);
             }
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
 #if NET6_0_OR_GREATER
@@ -106,13 +106,13 @@ namespace Azure.ResourceManager.Quota.Models
             {
                 return null;
             }
-            Optional<QuotaUsagesObject> usages = default;
-            Optional<string> unit = default;
-            Optional<QuotaRequestResourceName> name = default;
-            Optional<string> resourceType = default;
-            Optional<TimeSpan> quotaPeriod = default;
-            Optional<bool> isQuotaApplicable = default;
-            Optional<BinaryData> properties = default;
+            QuotaUsagesObject usages = default;
+            string unit = default;
+            QuotaRequestResourceName name = default;
+            string resourceType = default;
+            TimeSpan? quotaPeriod = default;
+            bool? isQuotaApplicable = default;
+            BinaryData properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Quota.Models
                     {
                         continue;
                     }
-                    usages = QuotaUsagesObject.DeserializeQuotaUsagesObject(property.Value);
+                    usages = QuotaUsagesObject.DeserializeQuotaUsagesObject(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("unit"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Quota.Models
                     {
                         continue;
                     }
-                    name = QuotaRequestResourceName.DeserializeQuotaRequestResourceName(property.Value);
+                    name = QuotaRequestResourceName.DeserializeQuotaRequestResourceName(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("resourceType"u8))
@@ -178,7 +178,15 @@ namespace Azure.ResourceManager.Quota.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QuotaUsagesProperties(usages.Value, unit.Value, name.Value, resourceType.Value, Optional.ToNullable(quotaPeriod), Optional.ToNullable(isQuotaApplicable), properties.Value, serializedAdditionalRawData);
+            return new QuotaUsagesProperties(
+                usages,
+                unit,
+                name,
+                resourceType,
+                quotaPeriod,
+                isQuotaApplicable,
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QuotaUsagesProperties>.Write(ModelReaderWriterOptions options)

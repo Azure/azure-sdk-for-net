@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(LinkType))
+            if (LinkType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(LinkType.Value.ToString());
             }
-            if (Optional.IsDefined(DisplayText))
+            if (DisplayText != null)
             {
                 writer.WritePropertyName("displayText"u8);
                 writer.WriteObjectValue(DisplayText);
             }
-            if (Optional.IsDefined(ExtensionName))
+            if (ExtensionName != null)
             {
                 writer.WritePropertyName("extensionName"u8);
                 writer.WriteStringValue(ExtensionName);
             }
-            if (Optional.IsDefined(BladeName))
+            if (BladeName != null)
             {
                 writer.WritePropertyName("bladeName"u8);
                 writer.WriteStringValue(BladeName);
             }
-            if (Optional.IsDefined(Parameters))
+            if (Parameters != null)
             {
                 writer.WritePropertyName("parameters"u8);
 #if NET6_0_OR_GREATER
@@ -96,11 +96,11 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 return null;
             }
-            Optional<ResourceHealthEventLinkTypeValue> type = default;
-            Optional<ResourceHealthEventLinkDisplayText> displayText = default;
-            Optional<string> extensionName = default;
-            Optional<string> bladeName = default;
-            Optional<BinaryData> parameters = default;
+            ResourceHealthEventLinkTypeValue? type = default;
+            ResourceHealthEventLinkDisplayText displayText = default;
+            string extensionName = default;
+            string bladeName = default;
+            BinaryData parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     {
                         continue;
                     }
-                    displayText = ResourceHealthEventLinkDisplayText.DeserializeResourceHealthEventLinkDisplayText(property.Value);
+                    displayText = ResourceHealthEventLinkDisplayText.DeserializeResourceHealthEventLinkDisplayText(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("extensionName"u8))
@@ -148,7 +148,13 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceHealthEventLink(Optional.ToNullable(type), displayText.Value, extensionName.Value, bladeName.Value, parameters.Value, serializedAdditionalRawData);
+            return new ResourceHealthEventLink(
+                type,
+                displayText,
+                extensionName,
+                bladeName,
+                parameters,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceHealthEventLink>.Write(ModelReaderWriterOptions options)

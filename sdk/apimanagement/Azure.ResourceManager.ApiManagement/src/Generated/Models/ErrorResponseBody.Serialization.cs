@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Code))
+            if (Code != null)
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (Optional.IsDefined(Message))
+            if (Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Optional.IsCollectionDefined(Details))
+            if (!(Details is ChangeTrackingList<ErrorFieldContract> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStartArray();
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<string> message = default;
-            Optional<IList<ErrorFieldContract>> details = default;
+            string code = default;
+            string message = default;
+            IList<ErrorFieldContract> details = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ErrorFieldContract> array = new List<ErrorFieldContract>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ErrorFieldContract.DeserializeErrorFieldContract(item));
+                        array.Add(ErrorFieldContract.DeserializeErrorFieldContract(item, options));
                     }
                     details = array;
                     continue;
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ErrorResponseBody(code.Value, message.Value, Optional.ToList(details), serializedAdditionalRawData);
+            return new ErrorResponseBody(code, message, details ?? new ChangeTrackingList<ErrorFieldContract>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ErrorResponseBody>.Write(ModelReaderWriterOptions options)

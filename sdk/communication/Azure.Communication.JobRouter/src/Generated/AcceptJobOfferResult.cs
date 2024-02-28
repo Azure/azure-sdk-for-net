@@ -6,13 +6,45 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Response containing ids for the worker, job, and assignment from an accepted offer. </summary>
     public partial class AcceptJobOfferResult
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AcceptJobOfferResult"/>. </summary>
         /// <param name="assignmentId"> Id of job assignment that assigns a worker that has accepted an offer to a job. </param>
         /// <param name="jobId"> Id of the job assigned. </param>
@@ -20,13 +52,40 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentId"/>, <paramref name="jobId"/> or <paramref name="workerId"/> is null. </exception>
         internal AcceptJobOfferResult(string assignmentId, string jobId, string workerId)
         {
-            Argument.AssertNotNull(assignmentId, nameof(assignmentId));
-            Argument.AssertNotNull(jobId, nameof(jobId));
-            Argument.AssertNotNull(workerId, nameof(workerId));
+            if (assignmentId == null)
+            {
+                throw new ArgumentNullException(nameof(assignmentId));
+            }
+            if (jobId == null)
+            {
+                throw new ArgumentNullException(nameof(jobId));
+            }
+            if (workerId == null)
+            {
+                throw new ArgumentNullException(nameof(workerId));
+            }
 
             AssignmentId = assignmentId;
             JobId = jobId;
             WorkerId = workerId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AcceptJobOfferResult"/>. </summary>
+        /// <param name="assignmentId"> Id of job assignment that assigns a worker that has accepted an offer to a job. </param>
+        /// <param name="jobId"> Id of the job assigned. </param>
+        /// <param name="workerId"> Id of the worker that has been assigned this job. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AcceptJobOfferResult(string assignmentId, string jobId, string workerId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            AssignmentId = assignmentId;
+            JobId = jobId;
+            WorkerId = workerId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AcceptJobOfferResult"/> for deserialization. </summary>
+        internal AcceptJobOfferResult()
+        {
         }
 
         /// <summary> Id of job assignment that assigns a worker that has accepted an offer to a job. </summary>

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Name))
+            if (!(Name is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Capabilities))
+            if (!(Capabilities is ChangeTrackingList<AppPlatformSkuCapabilities> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartArray();
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> name = default;
-            Optional<IReadOnlyList<AppPlatformSkuCapabilities>> capabilities = default;
+            IReadOnlyList<string> name = default;
+            IReadOnlyList<AppPlatformSkuCapabilities> capabilities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppPlatformSkuCapabilities> array = new List<AppPlatformSkuCapabilities>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppPlatformSkuCapabilities.DeserializeAppPlatformSkuCapabilities(item));
+                        array.Add(AppPlatformSkuCapabilities.DeserializeAppPlatformSkuCapabilities(item, options));
                     }
                     capabilities = array;
                     continue;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformSkuZoneDetails(Optional.ToList(name), Optional.ToList(capabilities), serializedAdditionalRawData);
+            return new AppPlatformSkuZoneDetails(name ?? new ChangeTrackingList<string>(), capabilities ?? new ChangeTrackingList<AppPlatformSkuCapabilities>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformSkuZoneDetails>.Write(ModelReaderWriterOptions options)

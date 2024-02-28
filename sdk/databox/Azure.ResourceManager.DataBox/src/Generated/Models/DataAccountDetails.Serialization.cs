@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStartObject();
             writer.WritePropertyName("dataAccountType"u8);
             writer.WriteStringValue(DataAccountType.ToSerialString());
-            if (Optional.IsDefined(SharePassword))
+            if (SharePassword != null)
             {
                 writer.WritePropertyName("sharePassword"u8);
                 writer.WriteStringValue(SharePassword);
@@ -75,11 +75,11 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "ManagedDisk": return ManagedDiskDetails.DeserializeManagedDiskDetails(element);
-                    case "StorageAccount": return DataBoxStorageAccountDetails.DeserializeDataBoxStorageAccountDetails(element);
+                    case "ManagedDisk": return ManagedDiskDetails.DeserializeManagedDiskDetails(element, options);
+                    case "StorageAccount": return DataBoxStorageAccountDetails.DeserializeDataBoxStorageAccountDetails(element, options);
                 }
             }
-            return UnknownDataAccountDetails.DeserializeUnknownDataAccountDetails(element);
+            return UnknownDataAccountDetails.DeserializeUnknownDataAccountDetails(element, options);
         }
 
         BinaryData IPersistableModel<DataAccountDetails>.Write(ModelReaderWriterOptions options)

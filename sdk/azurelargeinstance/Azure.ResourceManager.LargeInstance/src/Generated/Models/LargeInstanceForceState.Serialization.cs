@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ForceState))
+            if (ForceState.HasValue)
             {
                 writer.WritePropertyName("forceState"u8);
                 writer.WriteStringValue(ForceState.Value.ToString());
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
             {
                 return null;
             }
-            Optional<LargeInstanceForcePowerState> forceState = default;
+            LargeInstanceForcePowerState? forceState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LargeInstanceForceState(Optional.ToNullable(forceState), serializedAdditionalRawData);
+            return new LargeInstanceForceState(forceState, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LargeInstanceForceState>.Write(ModelReaderWriterOptions options)

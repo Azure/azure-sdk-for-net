@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "InMage": return InMageDisableProtectionProviderSpecificContent.DeserializeInMageDisableProtectionProviderSpecificContent(element);
+                    case "InMage": return InMageDisableProtectionProviderSpecificContent.DeserializeInMageDisableProtectionProviderSpecificContent(element, options);
                 }
             }
-            return UnknownDisableProtectionProviderSpecificContent.DeserializeUnknownDisableProtectionProviderSpecificContent(element);
+            return UnknownDisableProtectionProviderSpecificContent.DeserializeUnknownDisableProtectionProviderSpecificContent(element, options);
         }
 
         BinaryData IPersistableModel<DisableProtectionProviderSpecificContent>.Write(ModelReaderWriterOptions options)

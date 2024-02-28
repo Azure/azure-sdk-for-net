@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-05-01</description>
+        /// <description>2023-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-05-01</description>
+        /// <description>2023-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-05-01</description>
+        /// <description>2023-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-05-01</description>
+        /// <description>2023-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-05-01</description>
+        /// <description>2023-03-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -204,7 +204,10 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<AppConfigurationNameAvailabilityResult>> CheckAppConfigurationNameAvailabilityAsync(AppConfigurationNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = DefaultClientDiagnostics.CreateScope("MockableAppConfigurationSubscriptionResource.CheckAppConfigurationNameAvailability");
             scope.Start();
@@ -233,7 +236,7 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-05-01</description>
+        /// <description>2023-03-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -242,7 +245,10 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<AppConfigurationNameAvailabilityResult> CheckAppConfigurationNameAvailability(AppConfigurationNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = DefaultClientDiagnostics.CreateScope("MockableAppConfigurationSubscriptionResource.CheckAppConfigurationNameAvailability");
             scope.Start();

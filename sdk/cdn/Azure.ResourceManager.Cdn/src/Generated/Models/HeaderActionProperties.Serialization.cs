@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStringValue(HeaderAction.ToString());
             writer.WritePropertyName("headerName"u8);
             writer.WriteStringValue(HeaderName);
-            if (Optional.IsDefined(Value))
+            if (Value != null)
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Cdn.Models
             HeaderActionType typeName = default;
             HeaderAction headerAction = default;
             string headerName = default;
-            Optional<string> value = default;
+            string value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HeaderActionProperties(typeName, headerAction, headerName, value.Value, serializedAdditionalRawData);
+            return new HeaderActionProperties(typeName, headerAction, headerName, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HeaderActionProperties>.Write(ModelReaderWriterOptions options)

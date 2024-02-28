@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Attestation.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(StringId))
+            if (options.Format != "W" && StringId != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(StringId);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Attestation.Models
             {
                 return null;
             }
-            Optional<string> id = default;
+            string id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Attestation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateEndpoint(id.Value, serializedAdditionalRawData);
+            return new PrivateEndpoint(id, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateEndpoint>.Write(ModelReaderWriterOptions options)

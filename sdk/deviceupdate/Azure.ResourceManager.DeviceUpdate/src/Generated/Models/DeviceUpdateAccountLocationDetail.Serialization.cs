@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Role))
+            if (Role.HasValue)
             {
                 writer.WritePropertyName("role"u8);
                 writer.WriteStringValue(Role.Value.ToString());
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<DeviceUpdateAccountLocationRole> role = default;
+            string name = default;
+            DeviceUpdateAccountLocationRole? role = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeviceUpdateAccountLocationDetail(name.Value, Optional.ToNullable(role), serializedAdditionalRawData);
+            return new DeviceUpdateAccountLocationDetail(name, role, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeviceUpdateAccountLocationDetail>.Write(ModelReaderWriterOptions options)

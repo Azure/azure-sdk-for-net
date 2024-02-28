@@ -18,22 +18,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(LinkedService))
+            if (LinkedService != null)
             {
                 writer.WritePropertyName("linkedService"u8);
                 writer.WriteObjectValue(LinkedService);
             }
-            if (Optional.IsDefined(FileSystem))
+            if (FileSystem != null)
             {
                 writer.WritePropertyName("fileSystem"u8);
                 writer.WriteStringValue(FileSystem);
             }
-            if (Optional.IsDefined(FolderPath))
+            if (FolderPath != null)
             {
                 writer.WritePropertyName("folderPath"u8);
                 writer.WriteStringValue(FolderPath);
             }
-            if (Optional.IsDefined(SasToken))
+            if (SasToken != null)
             {
                 writer.WritePropertyName("sasToken"u8);
                 writer.WriteObjectValue(SasToken);
@@ -47,10 +47,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<LinkedServiceReference> linkedService = default;
-            Optional<string> fileSystem = default;
-            Optional<string> folderPath = default;
-            Optional<SecureString> sasToken = default;
+            LinkedServiceReference linkedService = default;
+            string fileSystem = default;
+            string folderPath = default;
+            SecureString sasToken = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedService"u8))
@@ -82,7 +82,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new LinkConnectionLandingZone(linkedService.Value, fileSystem.Value, folderPath.Value, sasToken.Value);
+            return new LinkConnectionLandingZone(linkedService, fileSystem, folderPath, sasToken);
         }
 
         internal partial class LinkConnectionLandingZoneConverter : JsonConverter<LinkConnectionLandingZone>

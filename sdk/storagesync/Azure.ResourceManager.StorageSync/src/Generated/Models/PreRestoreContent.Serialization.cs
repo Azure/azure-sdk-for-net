@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Partition))
+            if (Partition != null)
             {
                 writer.WritePropertyName("partition"u8);
                 writer.WriteStringValue(Partition);
             }
-            if (Optional.IsDefined(ReplicaGroup))
+            if (ReplicaGroup != null)
             {
                 writer.WritePropertyName("replicaGroup"u8);
                 writer.WriteStringValue(ReplicaGroup);
             }
-            if (Optional.IsDefined(RequestId))
+            if (RequestId != null)
             {
                 writer.WritePropertyName("requestId"u8);
                 writer.WriteStringValue(RequestId);
             }
-            if (Optional.IsDefined(AzureFileShareUri))
+            if (AzureFileShareUri != null)
             {
                 writer.WritePropertyName("azureFileShareUri"u8);
                 writer.WriteStringValue(AzureFileShareUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(Status))
+            if (Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Optional.IsDefined(SourceAzureFileShareUri))
+            if (SourceAzureFileShareUri != null)
             {
                 writer.WritePropertyName("sourceAzureFileShareUri"u8);
                 writer.WriteStringValue(SourceAzureFileShareUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(BackupMetadataPropertyBag))
+            if (BackupMetadataPropertyBag != null)
             {
                 writer.WritePropertyName("backupMetadataPropertyBag"u8);
                 writer.WriteStringValue(BackupMetadataPropertyBag);
             }
-            if (Optional.IsCollectionDefined(RestoreFileSpec))
+            if (!(RestoreFileSpec is ChangeTrackingList<RestoreFileSpec> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("restoreFileSpec"u8);
                 writer.WriteStartArray();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PauseWaitForSyncDrainTimePeriodInSeconds))
+            if (PauseWaitForSyncDrainTimePeriodInSeconds.HasValue)
             {
                 writer.WritePropertyName("pauseWaitForSyncDrainTimePeriodInSeconds"u8);
                 writer.WriteNumberValue(PauseWaitForSyncDrainTimePeriodInSeconds.Value);
@@ -114,15 +114,15 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Optional<string> partition = default;
-            Optional<string> replicaGroup = default;
-            Optional<string> requestId = default;
-            Optional<Uri> azureFileShareUri = default;
-            Optional<string> status = default;
-            Optional<Uri> sourceAzureFileShareUri = default;
-            Optional<string> backupMetadataPropertyBag = default;
-            Optional<IList<RestoreFileSpec>> restoreFileSpec = default;
-            Optional<int> pauseWaitForSyncDrainTimePeriodInSeconds = default;
+            string partition = default;
+            string replicaGroup = default;
+            string requestId = default;
+            Uri azureFileShareUri = default;
+            string status = default;
+            Uri sourceAzureFileShareUri = default;
+            string backupMetadataPropertyBag = default;
+            IList<RestoreFileSpec> restoreFileSpec = default;
+            int? pauseWaitForSyncDrainTimePeriodInSeconds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     List<RestoreFileSpec> array = new List<RestoreFileSpec>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.RestoreFileSpec.DeserializeRestoreFileSpec(item));
+                        array.Add(Models.RestoreFileSpec.DeserializeRestoreFileSpec(item, options));
                     }
                     restoreFileSpec = array;
                     continue;
@@ -199,7 +199,17 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PreRestoreContent(partition.Value, replicaGroup.Value, requestId.Value, azureFileShareUri.Value, status.Value, sourceAzureFileShareUri.Value, backupMetadataPropertyBag.Value, Optional.ToList(restoreFileSpec), Optional.ToNullable(pauseWaitForSyncDrainTimePeriodInSeconds), serializedAdditionalRawData);
+            return new PreRestoreContent(
+                partition,
+                replicaGroup,
+                requestId,
+                azureFileShareUri,
+                status,
+                sourceAzureFileShareUri,
+                backupMetadataPropertyBag,
+                restoreFileSpec ?? new ChangeTrackingList<RestoreFileSpec>(),
+                pauseWaitForSyncDrainTimePeriodInSeconds,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PreRestoreContent>.Write(ModelReaderWriterOptions options)

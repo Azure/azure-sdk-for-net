@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -55,49 +55,49 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Author))
+            if (Author != null)
             {
                 writer.WritePropertyName("author"u8);
                 writer.WriteStringValue(Author);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("createdDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(ImageReference))
+            if (ImageReference != null)
             {
                 writer.WritePropertyName("imageReference"u8);
                 writer.WriteObjectValue(ImageReference);
             }
-            if (Optional.IsDefined(Icon))
+            if (Icon != null)
             {
                 writer.WritePropertyName("icon"u8);
                 writer.WriteStringValue(Icon);
             }
-            if (Optional.IsDefined(IsEnabled))
+            if (IsEnabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(PlanId))
+            if (PlanId != null)
             {
                 writer.WritePropertyName("planId"u8);
                 writer.WriteStringValue(PlanId);
             }
-            if (Optional.IsDefined(IsPlanAuthorized))
+            if (IsPlanAuthorized.HasValue)
             {
                 writer.WritePropertyName("isPlanAuthorized"u8);
                 writer.WriteBooleanValue(IsPlanAuthorized.Value);
@@ -141,20 +141,20 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> author = default;
-            Optional<DateTimeOffset> createdDate = default;
-            Optional<string> description = default;
-            Optional<DevTestLabGalleryImageReference> imageReference = default;
-            Optional<string> icon = default;
-            Optional<bool> enabled = default;
-            Optional<string> planId = default;
-            Optional<bool> isPlanAuthorized = default;
+            SystemData systemData = default;
+            string author = default;
+            DateTimeOffset? createdDate = default;
+            string description = default;
+            DevTestLabGalleryImageReference imageReference = default;
+            string icon = default;
+            bool? enabled = default;
+            string planId = default;
+            bool? isPlanAuthorized = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                             {
                                 continue;
                             }
-                            imageReference = DevTestLabGalleryImageReference.DeserializeDevTestLabGalleryImageReference(property0.Value);
+                            imageReference = DevTestLabGalleryImageReference.DeserializeDevTestLabGalleryImageReference(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("icon"u8))
@@ -276,7 +276,22 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabGalleryImage(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, author.Value, Optional.ToNullable(createdDate), description.Value, imageReference.Value, icon.Value, Optional.ToNullable(enabled), planId.Value, Optional.ToNullable(isPlanAuthorized), serializedAdditionalRawData);
+            return new DevTestLabGalleryImage(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                author,
+                createdDate,
+                description,
+                imageReference,
+                icon,
+                enabled,
+                planId,
+                isPlanAuthorized,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabGalleryImage>.Write(ModelReaderWriterOptions options)

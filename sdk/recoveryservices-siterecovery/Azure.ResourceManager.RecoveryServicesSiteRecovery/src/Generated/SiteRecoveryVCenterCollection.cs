@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="vCenterName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<SiteRecoveryVCenterResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string vCenterName, SiteRecoveryVCenterCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vCenterName, nameof(vCenterName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (vCenterName == null)
+            {
+                throw new ArgumentNullException(nameof(vCenterName));
+            }
+            if (vCenterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(vCenterName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _siteRecoveryVCenterReplicationvCentersClientDiagnostics.CreateScope("SiteRecoveryVCenterCollection.CreateOrUpdate");
             scope.Start();
@@ -116,7 +126,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="vCenterName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<SiteRecoveryVCenterResource> CreateOrUpdate(WaitUntil waitUntil, string vCenterName, SiteRecoveryVCenterCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vCenterName, nameof(vCenterName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (vCenterName == null)
+            {
+                throw new ArgumentNullException(nameof(vCenterName));
+            }
+            if (vCenterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(vCenterName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _siteRecoveryVCenterReplicationvCentersClientDiagnostics.CreateScope("SiteRecoveryVCenterCollection.CreateOrUpdate");
             scope.Start();
@@ -165,7 +185,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="vCenterName"/> is null. </exception>
         public virtual async Task<Response<SiteRecoveryVCenterResource>> GetAsync(string vCenterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vCenterName, nameof(vCenterName));
+            if (vCenterName == null)
+            {
+                throw new ArgumentNullException(nameof(vCenterName));
+            }
+            if (vCenterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(vCenterName));
+            }
 
             using var scope = _siteRecoveryVCenterReplicationvCentersClientDiagnostics.CreateScope("SiteRecoveryVCenterCollection.Get");
             scope.Start();
@@ -210,7 +237,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="vCenterName"/> is null. </exception>
         public virtual Response<SiteRecoveryVCenterResource> Get(string vCenterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vCenterName, nameof(vCenterName));
+            if (vCenterName == null)
+            {
+                throw new ArgumentNullException(nameof(vCenterName));
+            }
+            if (vCenterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(vCenterName));
+            }
 
             using var scope = _siteRecoveryVCenterReplicationvCentersClientDiagnostics.CreateScope("SiteRecoveryVCenterCollection.Get");
             scope.Start();
@@ -255,7 +289,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -285,7 +319,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -315,7 +349,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -329,7 +363,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="vCenterName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string vCenterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vCenterName, nameof(vCenterName));
+            if (vCenterName == null)
+            {
+                throw new ArgumentNullException(nameof(vCenterName));
+            }
+            if (vCenterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(vCenterName));
+            }
 
             using var scope = _siteRecoveryVCenterReplicationvCentersClientDiagnostics.CreateScope("SiteRecoveryVCenterCollection.Exists");
             scope.Start();
@@ -358,7 +399,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -372,7 +413,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="vCenterName"/> is null. </exception>
         public virtual Response<bool> Exists(string vCenterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vCenterName, nameof(vCenterName));
+            if (vCenterName == null)
+            {
+                throw new ArgumentNullException(nameof(vCenterName));
+            }
+            if (vCenterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(vCenterName));
+            }
 
             using var scope = _siteRecoveryVCenterReplicationvCentersClientDiagnostics.CreateScope("SiteRecoveryVCenterCollection.Exists");
             scope.Start();
@@ -401,7 +449,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -415,7 +463,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="vCenterName"/> is null. </exception>
         public virtual async Task<NullableResponse<SiteRecoveryVCenterResource>> GetIfExistsAsync(string vCenterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vCenterName, nameof(vCenterName));
+            if (vCenterName == null)
+            {
+                throw new ArgumentNullException(nameof(vCenterName));
+            }
+            if (vCenterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(vCenterName));
+            }
 
             using var scope = _siteRecoveryVCenterReplicationvCentersClientDiagnostics.CreateScope("SiteRecoveryVCenterCollection.GetIfExists");
             scope.Start();
@@ -446,7 +501,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -460,7 +515,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="vCenterName"/> is null. </exception>
         public virtual NullableResponse<SiteRecoveryVCenterResource> GetIfExists(string vCenterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vCenterName, nameof(vCenterName));
+            if (vCenterName == null)
+            {
+                throw new ArgumentNullException(nameof(vCenterName));
+            }
+            if (vCenterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(vCenterName));
+            }
 
             using var scope = _siteRecoveryVCenterReplicationvCentersClientDiagnostics.CreateScope("SiteRecoveryVCenterCollection.GetIfExists");
             scope.Start();

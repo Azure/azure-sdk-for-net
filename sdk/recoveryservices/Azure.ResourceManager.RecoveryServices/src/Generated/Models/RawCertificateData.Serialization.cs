@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AuthType))
+            if (AuthType.HasValue)
             {
                 writer.WritePropertyName("authType"u8);
                 writer.WriteStringValue(AuthType.Value.ToString());
             }
-            if (Optional.IsDefined(Certificate))
+            if (Certificate != null)
             {
                 writer.WritePropertyName("certificate"u8);
                 writer.WriteBase64StringValue(Certificate, "D");
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Optional<RecoveryServicesAuthType> authType = default;
-            Optional<byte[]> certificate = default;
+            RecoveryServicesAuthType? authType = default;
+            byte[] certificate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RawCertificateData(Optional.ToNullable(authType), certificate.Value, serializedAdditionalRawData);
+            return new RawCertificateData(authType, certificate, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RawCertificateData>.Write(ModelReaderWriterOptions options)

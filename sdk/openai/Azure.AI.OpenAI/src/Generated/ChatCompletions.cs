@@ -66,9 +66,18 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="choices"/> or <paramref name="usage"/> is null. </exception>
         internal ChatCompletions(string id, DateTimeOffset created, IEnumerable<ChatChoice> choices, CompletionsUsage usage)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(choices, nameof(choices));
-            Argument.AssertNotNull(usage, nameof(usage));
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (choices == null)
+            {
+                throw new ArgumentNullException(nameof(choices));
+            }
+            if (usage == null)
+            {
+                throw new ArgumentNullException(nameof(usage));
+            }
 
             Id = id;
             Created = created;

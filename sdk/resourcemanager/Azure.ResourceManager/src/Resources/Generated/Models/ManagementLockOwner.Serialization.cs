@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ApplicationId))
+            if (ApplicationId != null)
             {
                 writer.WritePropertyName("applicationId"u8);
                 writer.WriteStringValue(ApplicationId);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<string> applicationId = default;
+            string applicationId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagementLockOwner(applicationId.Value, serializedAdditionalRawData);
+            return new ManagementLockOwner(applicationId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagementLockOwner>.Write(ModelReaderWriterOptions options)

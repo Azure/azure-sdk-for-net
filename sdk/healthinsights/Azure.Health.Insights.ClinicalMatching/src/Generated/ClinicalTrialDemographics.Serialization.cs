@@ -27,12 +27,12 @@ namespace Azure.Health.Insights.ClinicalMatching
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AcceptedSex))
+            if (AcceptedSex.HasValue)
             {
                 writer.WritePropertyName("acceptedSex"u8);
                 writer.WriteStringValue(AcceptedSex.Value.ToString());
             }
-            if (Optional.IsDefined(AcceptedAgeRange))
+            if (AcceptedAgeRange != null)
             {
                 writer.WritePropertyName("acceptedAgeRange"u8);
                 writer.WriteObjectValue(AcceptedAgeRange);
@@ -75,8 +75,8 @@ namespace Azure.Health.Insights.ClinicalMatching
             {
                 return null;
             }
-            Optional<ClinicalTrialAcceptedSex> acceptedSex = default;
-            Optional<AcceptedAgeRange> acceptedAgeRange = default;
+            ClinicalTrialAcceptedSex? acceptedSex = default;
+            AcceptedAgeRange acceptedAgeRange = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                     {
                         continue;
                     }
-                    acceptedAgeRange = AcceptedAgeRange.DeserializeAcceptedAgeRange(property.Value);
+                    acceptedAgeRange = AcceptedAgeRange.DeserializeAcceptedAgeRange(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -105,7 +105,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClinicalTrialDemographics(Optional.ToNullable(acceptedSex), acceptedAgeRange.Value, serializedAdditionalRawData);
+            return new ClinicalTrialDemographics(acceptedSex, acceptedAgeRange, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClinicalTrialDemographics>.Write(ModelReaderWriterOptions options)

@@ -51,7 +51,10 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public KeyVaultNameAvailabilityContent(string name)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
 
             Name = name;
             ResourceType = "Microsoft.KeyVault/vaults";

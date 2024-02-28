@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(WindowsOSState))
+            if (WindowsOSState.HasValue)
             {
                 writer.WritePropertyName("windowsOsState"u8);
                 writer.WriteStringValue(WindowsOSState.Value.ToString());
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<WindowsOSState> windowsOSState = default;
+            WindowsOSState? windowsOSState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WindowsOSInfo(Optional.ToNullable(windowsOSState), serializedAdditionalRawData);
+            return new WindowsOSInfo(windowsOSState, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WindowsOSInfo>.Write(ModelReaderWriterOptions options)

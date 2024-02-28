@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsAofEnabled))
+            if (IsAofEnabled.HasValue)
             {
                 writer.WritePropertyName("aofEnabled"u8);
                 writer.WriteBooleanValue(IsAofEnabled.Value);
             }
-            if (Optional.IsDefined(IsRdbEnabled))
+            if (IsRdbEnabled.HasValue)
             {
                 writer.WritePropertyName("rdbEnabled"u8);
                 writer.WriteBooleanValue(IsRdbEnabled.Value);
             }
-            if (Optional.IsDefined(AofFrequency))
+            if (AofFrequency.HasValue)
             {
                 writer.WritePropertyName("aofFrequency"u8);
                 writer.WriteStringValue(AofFrequency.Value.ToString());
             }
-            if (Optional.IsDefined(RdbFrequency))
+            if (RdbFrequency.HasValue)
             {
                 writer.WritePropertyName("rdbFrequency"u8);
                 writer.WriteStringValue(RdbFrequency.Value.ToString());
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             {
                 return null;
             }
-            Optional<bool> aofEnabled = default;
-            Optional<bool> rdbEnabled = default;
-            Optional<PersistenceSettingAofFrequency> aofFrequency = default;
-            Optional<PersistenceSettingRdbFrequency> rdbFrequency = default;
+            bool? aofEnabled = default;
+            bool? rdbEnabled = default;
+            PersistenceSettingAofFrequency? aofFrequency = default;
+            PersistenceSettingRdbFrequency? rdbFrequency = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RedisPersistenceSettings(Optional.ToNullable(aofEnabled), Optional.ToNullable(rdbEnabled), Optional.ToNullable(aofFrequency), Optional.ToNullable(rdbFrequency), serializedAdditionalRawData);
+            return new RedisPersistenceSettings(aofEnabled, rdbEnabled, aofFrequency, rdbFrequency, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RedisPersistenceSettings>.Write(ModelReaderWriterOptions options)

@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -21,12 +20,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> minLastTimestamp = default;
-            Optional<string> typeOfStreamWithMinLastTimestamp = default;
-            Optional<string> maxLastTimestamp = default;
-            Optional<string> typeOfStreamWithMaxLastTimestamp = default;
-            Optional<string> timescaleOfMinLastTimestamp = default;
-            Optional<string> timescaleOfMaxLastTimestamp = default;
+            string minLastTimestamp = default;
+            string typeOfStreamWithMinLastTimestamp = default;
+            string maxLastTimestamp = default;
+            string typeOfStreamWithMaxLastTimestamp = default;
+            string timescaleOfMinLastTimestamp = default;
+            string timescaleOfMaxLastTimestamp = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("minLastTimestamp"u8))
@@ -60,7 +59,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new MediaLiveEventIncomingStreamsOutOfSyncEventData(minLastTimestamp.Value, typeOfStreamWithMinLastTimestamp.Value, maxLastTimestamp.Value, typeOfStreamWithMaxLastTimestamp.Value, timescaleOfMinLastTimestamp.Value, timescaleOfMaxLastTimestamp.Value);
+            return new MediaLiveEventIncomingStreamsOutOfSyncEventData(
+                minLastTimestamp,
+                typeOfStreamWithMinLastTimestamp,
+                maxLastTimestamp,
+                typeOfStreamWithMaxLastTimestamp,
+                timescaleOfMinLastTimestamp,
+                timescaleOfMaxLastTimestamp);
         }
 
         internal partial class MediaLiveEventIncomingStreamsOutOfSyncEventDataConverter : JsonConverter<MediaLiveEventIncomingStreamsOutOfSyncEventData>

@@ -36,7 +36,21 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         {
             statusMessages ??= new List<BinaryData>();
 
-            return new FirmwareData(id, name, resourceType, systemData, fileName, vendor, model, version, description, fileSize, status, statusMessages?.ToList(), provisioningState, serializedAdditionalRawData: null);
+            return new FirmwareData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                fileName,
+                vendor,
+                model,
+                version,
+                description,
+                fileSize,
+                status,
+                statusMessages?.ToList(),
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FirmwarePatch"/>. </summary>
@@ -54,7 +68,17 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         {
             statusMessages ??= new List<BinaryData>();
 
-            return new FirmwarePatch(fileName, vendor, model, version, description, fileSize, status, statusMessages?.ToList(), provisioningState, serializedAdditionalRawData: null);
+            return new FirmwarePatch(
+                fileName,
+                vendor,
+                model,
+                version,
+                description,
+                fileSize,
+                status,
+                statusMessages?.ToList(),
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.UriToken"/>. </summary>
@@ -77,7 +101,15 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <returns> A new <see cref="Models.FirmwareSummary"/> instance for mocking. </returns>
         public static FirmwareSummary FirmwareSummary(long? extractedSize = null, long? fileSize = null, long? extractedFileCount = null, long? componentCount = null, long? binaryCount = null, long? analysisTimeSeconds = null, long? rootFileSystems = null)
         {
-            return new FirmwareSummary(extractedSize, fileSize, extractedFileCount, componentCount, binaryCount, analysisTimeSeconds, rootFileSystems, serializedAdditionalRawData: null);
+            return new FirmwareSummary(
+                extractedSize,
+                fileSize,
+                extractedFileCount,
+                componentCount,
+                binaryCount,
+                analysisTimeSeconds,
+                rootFileSystems,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SbomComponent"/>. </summary>
@@ -93,7 +125,15 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         {
             paths ??= new List<string>();
 
-            return new SbomComponent(componentId, componentName, version, license, releaseOn, paths?.ToList(), isUpdateAvailable, serializedAdditionalRawData: null);
+            return new SbomComponent(
+                componentId,
+                componentName,
+                version,
+                license,
+                releaseOn,
+                paths?.ToList(),
+                isUpdateAvailable,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BinaryHardening"/>. </summary>
@@ -111,7 +151,19 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <returns> A new <see cref="Models.BinaryHardening"/> instance for mocking. </returns>
         public static BinaryHardening BinaryHardening(string binaryHardeningId = null, string architecture = null, string path = null, string @class = null, string runpath = null, string rpath = null, NxFlag? nx = null, PieFlag? pie = null, RelroFlag? relro = null, CanaryFlag? canary = null, StrippedFlag? stripped = null)
         {
-            return new BinaryHardening(binaryHardeningId, architecture, path, @class, runpath, rpath, nx, pie, relro, canary, stripped, serializedAdditionalRawData: null);
+            return new BinaryHardening(
+                binaryHardeningId,
+                architecture,
+                path,
+                @class,
+                runpath,
+                rpath,
+                nx,
+                pie,
+                relro,
+                canary,
+                stripped,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BinaryHardeningSummary"/>. </summary>
@@ -124,7 +176,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <returns> A new <see cref="Models.BinaryHardeningSummary"/> instance for mocking. </returns>
         public static BinaryHardeningSummary BinaryHardeningSummary(long? totalFiles = null, int? nx = null, int? pie = null, int? relro = null, int? canary = null, int? stripped = null)
         {
-            return new BinaryHardeningSummary(totalFiles, nx, pie, relro, canary, stripped, serializedAdditionalRawData: null);
+            return new BinaryHardeningSummary(
+                totalFiles,
+                nx,
+                pie,
+                relro,
+                canary,
+                stripped,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PasswordHash"/>. </summary>
@@ -138,7 +197,15 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <returns> A new <see cref="Models.PasswordHash"/> instance for mocking. </returns>
         public static PasswordHash PasswordHash(string passwordHashId = null, string filePath = null, string salt = null, string hash = null, string context = null, string username = null, string algorithm = null)
         {
-            return new PasswordHash(passwordHashId, filePath, salt, hash, context, username, algorithm, serializedAdditionalRawData: null);
+            return new PasswordHash(
+                passwordHashId,
+                filePath,
+                salt,
+                hash,
+                context,
+                username,
+                algorithm,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FirmwareCve"/>. </summary>
@@ -159,7 +226,20 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         {
             links ??= new List<CveLink>();
 
-            return new FirmwareCve(cveId, component, severity, name, cvssScore, cvssVersion, cvssV2Score, cvssV3Score, publishOn, updatedOn, links?.ToList(), description, serializedAdditionalRawData: null);
+            return new FirmwareCve(
+                cveId,
+                component,
+                severity,
+                name,
+                cvssScore,
+                cvssVersion,
+                cvssV2Score,
+                cvssV3Score,
+                publishOn,
+                updatedOn,
+                links?.ToList(),
+                description,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CveLink"/>. </summary>
@@ -181,7 +261,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <returns> A new <see cref="Models.CveSummary"/> instance for mocking. </returns>
         public static CveSummary CveSummary(long? critical = null, long? high = null, long? medium = null, long? low = null, long? unknown = null, long? undefined = null)
         {
-            return new CveSummary(critical, high, medium, low, unknown, undefined, serializedAdditionalRawData: null);
+            return new CveSummary(
+                critical,
+                high,
+                medium,
+                low,
+                unknown,
+                undefined,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FirmwareCryptoCertificateSummary"/>. </summary>
@@ -195,7 +282,15 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <returns> A new <see cref="Models.FirmwareCryptoCertificateSummary"/> instance for mocking. </returns>
         public static FirmwareCryptoCertificateSummary FirmwareCryptoCertificateSummary(long? totalCertificates = null, long? pairedKeys = null, long? expired = null, long? expiringSoon = null, long? weakSignature = null, long? selfSigned = null, long? shortKeySize = null)
         {
-            return new FirmwareCryptoCertificateSummary(totalCertificates, pairedKeys, expired, expiringSoon, weakSignature, selfSigned, shortKeySize, serializedAdditionalRawData: null);
+            return new FirmwareCryptoCertificateSummary(
+                totalCertificates,
+                pairedKeys,
+                expired,
+                expiringSoon,
+                weakSignature,
+                selfSigned,
+                shortKeySize,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FirmwareCryptoKeySummary"/>. </summary>
@@ -207,7 +302,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <returns> A new <see cref="Models.FirmwareCryptoKeySummary"/> instance for mocking. </returns>
         public static FirmwareCryptoKeySummary FirmwareCryptoKeySummary(long? totalKeys = null, long? publicKeys = null, long? privateKeys = null, long? pairedKeys = null, long? shortKeySize = null)
         {
-            return new FirmwareCryptoKeySummary(totalKeys, publicKeys, privateKeys, pairedKeys, shortKeySize, serializedAdditionalRawData: null);
+            return new FirmwareCryptoKeySummary(
+                totalKeys,
+                publicKeys,
+                privateKeys,
+                pairedKeys,
+                shortKeySize,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FirmwareCryptoCertificate"/>. </summary>
@@ -237,7 +338,28 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             usage ??= new List<string>();
             filePaths ??= new List<string>();
 
-            return new FirmwareCryptoCertificate(cryptoCertId, name, subject, issuer, issuedOn, expireOn, role, signatureAlgorithm, keySize, keyAlgorithm, encoding, serialNumber, fingerprint, usage?.ToList(), filePaths?.ToList(), pairedKey, isExpired, isSelfSigned, isWeakSignature, isShortKeySize, serializedAdditionalRawData: null);
+            return new FirmwareCryptoCertificate(
+                cryptoCertId,
+                name,
+                subject,
+                issuer,
+                issuedOn,
+                expireOn,
+                role,
+                signatureAlgorithm,
+                keySize,
+                keyAlgorithm,
+                encoding,
+                serialNumber,
+                fingerprint,
+                usage?.ToList(),
+                filePaths?.ToList(),
+                pairedKey,
+                isExpired,
+                isSelfSigned,
+                isWeakSignature,
+                isShortKeySize,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FirmwareCryptoCertificateEntity"/>. </summary>
@@ -249,7 +371,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <returns> A new <see cref="Models.FirmwareCryptoCertificateEntity"/> instance for mocking. </returns>
         public static FirmwareCryptoCertificateEntity FirmwareCryptoCertificateEntity(string commonName = null, string organization = null, string organizationalUnit = null, string state = null, string country = null)
         {
-            return new FirmwareCryptoCertificateEntity(commonName, organization, organizationalUnit, state, country, serializedAdditionalRawData: null);
+            return new FirmwareCryptoCertificateEntity(
+                commonName,
+                organization,
+                organizationalUnit,
+                state,
+                country,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PairedKey"/>. </summary>
@@ -277,7 +405,16 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             usage ??= new List<string>();
             filePaths ??= new List<string>();
 
-            return new FirmwareCryptoKey(firmwareCryptoKeyId, keyType, keySize, keyAlgorithm, usage?.ToList(), filePaths?.ToList(), pairedKey, isShortKeySize, serializedAdditionalRawData: null);
+            return new FirmwareCryptoKey(
+                firmwareCryptoKeyId,
+                keyType,
+                keySize,
+                keyAlgorithm,
+                usage?.ToList(),
+                filePaths?.ToList(),
+                pairedKey,
+                isShortKeySize,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="IotFirmwareDefense.FirmwareWorkspaceData"/>. </summary>
@@ -293,7 +430,15 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new FirmwareWorkspaceData(id, name, resourceType, systemData, tags, location, provisioningState, serializedAdditionalRawData: null);
+            return new FirmwareWorkspaceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FirmwareWorkspacePatch"/>. </summary>

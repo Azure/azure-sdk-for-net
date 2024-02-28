@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(KeyName))
+            if (KeyName != null)
             {
                 writer.WritePropertyName("keyName"u8);
                 writer.WriteStringValue(KeyName);
             }
-            if (Optional.IsDefined(KeyVersion))
+            if (KeyVersion != null)
             {
                 writer.WritePropertyName("keyVersion"u8);
                 writer.WriteStringValue(KeyVersion);
             }
-            if (Optional.IsDefined(KeyVaultUri))
+            if (KeyVaultUri != null)
             {
                 writer.WritePropertyName("keyVaultUri"u8);
                 writer.WriteStringValue(KeyVaultUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(IdentityClientId))
+            if (IdentityClientId.HasValue)
             {
                 writer.WritePropertyName("identityClientId"u8);
                 writer.WriteStringValue(IdentityClientId.Value);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<string> keyName = default;
-            Optional<string> keyVersion = default;
-            Optional<Uri> keyVaultUri = default;
-            Optional<Guid> identityClientId = default;
+            string keyName = default;
+            string keyVersion = default;
+            Uri keyVaultUri = default;
+            Guid? identityClientId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CognitiveServicesKeyVaultProperties(keyName.Value, keyVersion.Value, keyVaultUri.Value, Optional.ToNullable(identityClientId), serializedAdditionalRawData);
+            return new CognitiveServicesKeyVaultProperties(keyName, keyVersion, keyVaultUri, identityClientId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CognitiveServicesKeyVaultProperties>.Write(ModelReaderWriterOptions options)

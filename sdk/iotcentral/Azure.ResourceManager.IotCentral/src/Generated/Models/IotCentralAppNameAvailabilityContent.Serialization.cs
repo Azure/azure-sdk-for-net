@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.IotCentral.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(ResourceType))
+            if (ResourceType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.IotCentral.Models
                 return null;
             }
             string name = default;
-            Optional<string> type = default;
+            string type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.IotCentral.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotCentralAppNameAvailabilityContent(name, type.Value, serializedAdditionalRawData);
+            return new IotCentralAppNameAvailabilityContent(name, type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotCentralAppNameAvailabilityContent>.Write(ModelReaderWriterOptions options)

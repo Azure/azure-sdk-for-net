@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<KeyVaultSecretData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<KeyVaultSecretData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<KeyVaultSecretData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     List<KeyVaultSecretData> array = new List<KeyVaultSecretData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KeyVaultSecretData.DeserializeKeyVaultSecretData(item));
+                        array.Add(KeyVaultSecretData.DeserializeKeyVaultSecretData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecretListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SecretListResult(value ?? new ChangeTrackingList<KeyVaultSecretData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecretListResult>.Write(ModelReaderWriterOptions options)

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(PanoramaServerStatus))
+            if (options.Format != "W" && PanoramaServerStatus.HasValue)
             {
                 writer.WritePropertyName("panoramaServerStatus"u8);
                 writer.WriteStringValue(PanoramaServerStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(PanoramaServer2Status))
+            if (options.Format != "W" && PanoramaServer2Status.HasValue)
             {
                 writer.WritePropertyName("panoramaServer2Status"u8);
                 writer.WriteStringValue(PanoramaServer2Status.Value.ToString());
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 return null;
             }
-            Optional<FirewallPanoramaServerStatus> panoramaServerStatus = default;
-            Optional<FirewallPanoramaServerStatus> panoramaServer2Status = default;
+            FirewallPanoramaServerStatus? panoramaServerStatus = default;
+            FirewallPanoramaServerStatus? panoramaServer2Status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirewallPanoramaStatus(Optional.ToNullable(panoramaServerStatus), Optional.ToNullable(panoramaServer2Status), serializedAdditionalRawData);
+            return new FirewallPanoramaStatus(panoramaServerStatus, panoramaServer2Status, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirewallPanoramaStatus>.Write(ModelReaderWriterOptions options)

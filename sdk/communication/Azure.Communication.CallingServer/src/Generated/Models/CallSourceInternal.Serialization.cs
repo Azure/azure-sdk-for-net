@@ -16,12 +16,12 @@ namespace Azure.Communication.CallingServer
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CallerId))
+            if (CallerId != null)
             {
                 writer.WritePropertyName("callerId"u8);
                 writer.WriteObjectValue(CallerId);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
@@ -37,8 +37,8 @@ namespace Azure.Communication.CallingServer
             {
                 return null;
             }
-            Optional<PhoneNumberIdentifierModel> callerId = default;
-            Optional<string> displayName = default;
+            PhoneNumberIdentifierModel callerId = default;
+            string displayName = default;
             CommunicationIdentifierModel identifier = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -62,7 +62,7 @@ namespace Azure.Communication.CallingServer
                     continue;
                 }
             }
-            return new CallSourceInternal(callerId.Value, displayName.Value, identifier);
+            return new CallSourceInternal(callerId, displayName, identifier);
         }
     }
 }

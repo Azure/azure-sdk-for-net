@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<GraphResourceGetResultData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<GraphResourceGetResultData>> value = default;
+            IReadOnlyList<GraphResourceGetResultData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<GraphResourceGetResultData> array = new List<GraphResourceGetResultData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GraphResourceGetResultData.DeserializeGraphResourceGetResultData(item));
+                        array.Add(GraphResourceGetResultData.DeserializeGraphResourceGetResultData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GraphResourcesListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new GraphResourcesListResult(value ?? new ChangeTrackingList<GraphResourceGetResultData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GraphResourcesListResult>.Write(ModelReaderWriterOptions options)

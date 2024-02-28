@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ConfigurationState))
+            if (options.Format != "W" && ConfigurationState.HasValue)
             {
                 writer.WritePropertyName("configurationState"u8);
                 writer.WriteStringValue(ConfigurationState.Value.ToString());
             }
-            if (Optional.IsDefined(Uri))
+            if (Uri != null)
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (Optional.IsDefined(Error))
+            if (Error != null)
             {
                 writer.WritePropertyName("error"u8);
                 JsonSerializer.Serialize(writer, Error);
@@ -80,9 +80,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<NetworkFabricConfigurationState> configurationState = default;
-            Optional<Uri> url = default;
-            Optional<ResponseError> error = default;
+            NetworkFabricConfigurationState? configurationState = default;
+            Uri url = default;
+            ResponseError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ValidateConfigurationResult(error.Value, serializedAdditionalRawData, Optional.ToNullable(configurationState), url.Value);
+            return new ValidateConfigurationResult(error, serializedAdditionalRawData, configurationState, url);
         }
 
         BinaryData IPersistableModel<ValidateConfigurationResult>.Write(ModelReaderWriterOptions options)

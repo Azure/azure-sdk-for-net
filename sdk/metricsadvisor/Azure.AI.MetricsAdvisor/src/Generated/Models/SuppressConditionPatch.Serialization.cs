@@ -15,12 +15,12 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(MinNumber))
+            if (MinNumber.HasValue)
             {
                 writer.WritePropertyName("minNumber"u8);
                 writer.WriteNumberValue(MinNumber.Value);
             }
-            if (Optional.IsDefined(MinRatio))
+            if (MinRatio.HasValue)
             {
                 writer.WritePropertyName("minRatio"u8);
                 writer.WriteNumberValue(MinRatio.Value);

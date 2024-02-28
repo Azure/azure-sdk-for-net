@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -47,84 +47,84 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(DatabaseName))
+            if (options.Format != "W" && DatabaseName != null)
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (options.Format != "W" && Optional.IsDefined(EndOn))
+            if (options.Format != "W" && EndOn.HasValue)
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ErrorCode))
+            if (options.Format != "W" && ErrorCode.HasValue)
             {
                 writer.WritePropertyName("errorCode"u8);
                 writer.WriteNumberValue(ErrorCode.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ErrorMessage))
+            if (options.Format != "W" && ErrorMessage != null)
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
             }
-            if (options.Format != "W" && Optional.IsDefined(ErrorSeverity))
+            if (options.Format != "W" && ErrorSeverity.HasValue)
             {
                 writer.WritePropertyName("errorSeverity"u8);
                 writer.WriteNumberValue(ErrorSeverity.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Operation))
+            if (options.Format != "W" && Operation != null)
             {
                 writer.WritePropertyName("operation"u8);
                 writer.WriteStringValue(Operation);
             }
-            if (options.Format != "W" && Optional.IsDefined(OperationId))
+            if (options.Format != "W" && OperationId.HasValue)
             {
                 writer.WritePropertyName("operationId"u8);
                 writer.WriteStringValue(OperationId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(PercentComplete))
+            if (options.Format != "W" && PercentComplete.HasValue)
             {
                 writer.WritePropertyName("percentComplete"u8);
                 writer.WriteNumberValue(PercentComplete.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(RequestedElasticPoolName))
+            if (options.Format != "W" && RequestedElasticPoolName != null)
             {
                 writer.WritePropertyName("requestedElasticPoolName"u8);
                 writer.WriteStringValue(RequestedElasticPoolName);
             }
-            if (options.Format != "W" && Optional.IsDefined(CurrentElasticPoolName))
+            if (options.Format != "W" && CurrentElasticPoolName != null)
             {
                 writer.WritePropertyName("currentElasticPoolName"u8);
                 writer.WriteStringValue(CurrentElasticPoolName);
             }
-            if (options.Format != "W" && Optional.IsDefined(CurrentServiceObjective))
+            if (options.Format != "W" && CurrentServiceObjective != null)
             {
                 writer.WritePropertyName("currentServiceObjective"u8);
                 writer.WriteStringValue(CurrentServiceObjective);
             }
-            if (options.Format != "W" && Optional.IsDefined(RequestedServiceObjective))
+            if (options.Format != "W" && RequestedServiceObjective != null)
             {
                 writer.WritePropertyName("requestedServiceObjective"u8);
                 writer.WriteStringValue(RequestedServiceObjective);
             }
-            if (options.Format != "W" && Optional.IsDefined(ServerName))
+            if (options.Format != "W" && ServerName != null)
             {
                 writer.WritePropertyName("serverName"u8);
                 writer.WriteStringValue(ServerName);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W" && State != null)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
@@ -168,26 +168,26 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> databaseName = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<int> errorCode = default;
-            Optional<string> errorMessage = default;
-            Optional<int> errorSeverity = default;
-            Optional<string> operation = default;
-            Optional<Guid> operationId = default;
-            Optional<int> percentComplete = default;
-            Optional<string> requestedElasticPoolName = default;
-            Optional<string> currentElasticPoolName = default;
-            Optional<string> currentServiceObjective = default;
-            Optional<string> requestedServiceObjective = default;
-            Optional<string> serverName = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<string> state = default;
+            SystemData systemData = default;
+            string databaseName = default;
+            DateTimeOffset? endTime = default;
+            int? errorCode = default;
+            string errorMessage = default;
+            int? errorSeverity = default;
+            string operation = default;
+            Guid? operationId = default;
+            int? percentComplete = default;
+            string requestedElasticPoolName = default;
+            string currentElasticPoolName = default;
+            string currentServiceObjective = default;
+            string requestedServiceObjective = default;
+            string serverName = default;
+            DateTimeOffset? startTime = default;
+            string state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -342,7 +342,28 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ElasticPoolDatabaseActivity(id, name, type, systemData.Value, Optional.ToNullable(location), databaseName.Value, Optional.ToNullable(endTime), Optional.ToNullable(errorCode), errorMessage.Value, Optional.ToNullable(errorSeverity), operation.Value, Optional.ToNullable(operationId), Optional.ToNullable(percentComplete), requestedElasticPoolName.Value, currentElasticPoolName.Value, currentServiceObjective.Value, requestedServiceObjective.Value, serverName.Value, Optional.ToNullable(startTime), state.Value, serializedAdditionalRawData);
+            return new ElasticPoolDatabaseActivity(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                databaseName,
+                endTime,
+                errorCode,
+                errorMessage,
+                errorSeverity,
+                operation,
+                operationId,
+                percentComplete,
+                requestedElasticPoolName,
+                currentElasticPoolName,
+                currentServiceObjective,
+                requestedServiceObjective,
+                serverName,
+                startTime,
+                state,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticPoolDatabaseActivity>.Write(ModelReaderWriterOptions options)

@@ -19,22 +19,22 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             writer.WriteStringValue(Id);
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(Url))
+            if (Url != null)
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Url);
             }
-            if (Optional.IsDefined(Duration))
+            if (Duration != null)
             {
                 writer.WritePropertyName("duration"u8);
                 writer.WriteStringValue(Duration);
             }
-            if (Optional.IsDefined(ReferredUri))
+            if (ReferredUri != null)
             {
                 writer.WritePropertyName("referredUri"u8);
                 writer.WriteStringValue(ReferredUri);
             }
-            if (Optional.IsCollectionDefined(Properties))
+            if (!(Properties is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteStartObject();
@@ -45,7 +45,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Measurements))
+            if (!(Measurements is ChangeTrackingDictionary<string, double> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("measurements"u8);
                 writer.WriteStartObject();

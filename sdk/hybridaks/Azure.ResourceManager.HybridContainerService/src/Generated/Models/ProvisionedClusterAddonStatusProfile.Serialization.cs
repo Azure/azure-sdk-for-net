@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Phase))
+            if (Phase.HasValue)
             {
                 writer.WritePropertyName("phase"u8);
                 writer.WriteStringValue(Phase.Value.ToString());
             }
-            if (Optional.IsDefined(Ready))
+            if (Ready.HasValue)
             {
                 writer.WritePropertyName("ready"u8);
                 writer.WriteBooleanValue(Ready.Value);
             }
-            if (Optional.IsDefined(ErrorMessage))
+            if (ErrorMessage != null)
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<ProvisionedClusterAddonPhase> phase = default;
-            Optional<bool> ready = default;
-            Optional<string> errorMessage = default;
+            string name = default;
+            ProvisionedClusterAddonPhase? phase = default;
+            bool? ready = default;
+            string errorMessage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProvisionedClusterAddonStatusProfile(name.Value, Optional.ToNullable(phase), Optional.ToNullable(ready), errorMessage.Value, serializedAdditionalRawData);
+            return new ProvisionedClusterAddonStatusProfile(name, phase, ready, errorMessage, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProvisionedClusterAddonStatusProfile>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(UsageType))
+            if (UsageType.HasValue)
             {
                 writer.WritePropertyName("usageType"u8);
                 writer.WriteStringValue(UsageType.Value.ToString());
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             writer.WriteStringValue(BillingCycle.ToString());
             writer.WritePropertyName("planId"u8);
             writer.WriteStringValue(PlanId);
-            if (options.Format != "W" && Optional.IsDefined(EffectiveOn))
+            if (options.Format != "W" && EffectiveOn.HasValue)
             {
                 writer.WritePropertyName("effectiveDate"u8);
                 writer.WriteStringValue(EffectiveOn.Value, "O");
@@ -78,10 +78,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 return null;
             }
-            Optional<FirewallBillingPlanUsageType> usageType = default;
+            FirewallBillingPlanUsageType? usageType = default;
             FirewallBillingCycle billingCycle = default;
             string planId = default;
-            Optional<DateTimeOffset> effectiveDate = default;
+            DateTimeOffset? effectiveDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirewallBillingPlanInfo(Optional.ToNullable(usageType), billingCycle, planId, Optional.ToNullable(effectiveDate), serializedAdditionalRawData);
+            return new FirewallBillingPlanInfo(usageType, billingCycle, planId, effectiveDate, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirewallBillingPlanInfo>.Write(ModelReaderWriterOptions options)

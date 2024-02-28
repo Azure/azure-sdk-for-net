@@ -19,32 +19,32 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStringValue(DetectionConfigurationId);
             writer.WritePropertyName("anomalyScopeType"u8);
             writer.WriteStringValue(AnomalyScopeType.ToString());
-            if (Optional.IsDefined(UseDetectionResultToFilterAnomalies))
+            if (UseDetectionResultToFilterAnomalies.HasValue)
             {
                 writer.WritePropertyName("negationOperation"u8);
                 writer.WriteBooleanValue(UseDetectionResultToFilterAnomalies.Value);
             }
-            if (Optional.IsDefined(DimensionAnomalyScope))
+            if (DimensionAnomalyScope != null)
             {
                 writer.WritePropertyName("dimensionAnomalyScope"u8);
                 writer.WriteObjectValue(DimensionAnomalyScope);
             }
-            if (Optional.IsDefined(TopNAnomalyScope))
+            if (TopNAnomalyScope != null)
             {
                 writer.WritePropertyName("topNAnomalyScope"u8);
                 writer.WriteObjectValue(TopNAnomalyScope);
             }
-            if (Optional.IsDefined(SeverityFilter))
+            if (SeverityFilter != null)
             {
                 writer.WritePropertyName("severityFilter"u8);
                 writer.WriteObjectValue(SeverityFilter);
             }
-            if (Optional.IsDefined(AlertSnoozeCondition))
+            if (AlertSnoozeCondition != null)
             {
                 writer.WritePropertyName("snoozeFilter"u8);
                 writer.WriteObjectValue(AlertSnoozeCondition);
             }
-            if (Optional.IsDefined(ValueFilter))
+            if (ValueFilter != null)
             {
                 writer.WritePropertyName("valueFilter"u8);
                 writer.WriteObjectValue(ValueFilter);
@@ -60,12 +60,12 @@ namespace Azure.AI.MetricsAdvisor.Models
             }
             string anomalyDetectionConfigurationId = default;
             MetricAnomalyAlertScopeType anomalyScopeType = default;
-            Optional<bool> negationOperation = default;
-            Optional<DimensionKey> dimensionAnomalyScope = default;
-            Optional<TopNGroupScope> topNAnomalyScope = default;
-            Optional<SeverityCondition> severityFilter = default;
-            Optional<MetricAnomalyAlertSnoozeCondition> snoozeFilter = default;
-            Optional<MetricBoundaryCondition> valueFilter = default;
+            bool? negationOperation = default;
+            DimensionKey dimensionAnomalyScope = default;
+            TopNGroupScope topNAnomalyScope = default;
+            SeverityCondition severityFilter = default;
+            MetricAnomalyAlertSnoozeCondition snoozeFilter = default;
+            MetricBoundaryCondition valueFilter = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("anomalyDetectionConfigurationId"u8))
@@ -133,7 +133,15 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new MetricAlertConfiguration(anomalyDetectionConfigurationId, anomalyScopeType, Optional.ToNullable(negationOperation), dimensionAnomalyScope.Value, topNAnomalyScope.Value, severityFilter.Value, snoozeFilter.Value, valueFilter.Value);
+            return new MetricAlertConfiguration(
+                anomalyDetectionConfigurationId,
+                anomalyScopeType,
+                negationOperation,
+                dimensionAnomalyScope,
+                topNAnomalyScope,
+                severityFilter,
+                snoozeFilter,
+                valueFilter);
         }
     }
 }

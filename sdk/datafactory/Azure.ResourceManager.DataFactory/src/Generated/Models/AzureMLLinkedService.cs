@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -21,8 +20,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="mlEndpoint"/> or <paramref name="apiKey"/> is null. </exception>
         public AzureMLLinkedService(DataFactoryElement<string> mlEndpoint, DataFactorySecretBaseDefinition apiKey)
         {
-            Argument.AssertNotNull(mlEndpoint, nameof(mlEndpoint));
-            Argument.AssertNotNull(apiKey, nameof(apiKey));
+            if (mlEndpoint == null)
+            {
+                throw new ArgumentNullException(nameof(mlEndpoint));
+            }
+            if (apiKey == null)
+            {
+                throw new ArgumentNullException(nameof(apiKey));
+            }
 
             MLEndpoint = mlEndpoint;
             ApiKey = apiKey;
@@ -55,6 +60,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             EncryptedCredential = encryptedCredential;
             Authentication = authentication;
             LinkedServiceType = linkedServiceType ?? "AzureML";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureMLLinkedService"/> for deserialization. </summary>
+        internal AzureMLLinkedService()
+        {
         }
 
         /// <summary> The Batch Execution REST URL for an Azure ML Studio Web Service endpoint. Type: string (or Expression with resultType string). </summary>

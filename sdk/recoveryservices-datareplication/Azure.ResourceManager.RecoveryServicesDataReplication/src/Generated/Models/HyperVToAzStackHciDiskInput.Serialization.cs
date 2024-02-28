@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             writer.WriteStartObject();
             writer.WritePropertyName("diskId"u8);
             writer.WriteStringValue(DiskId);
-            if (Optional.IsDefined(StorageContainerId))
+            if (StorageContainerId != null)
             {
                 writer.WritePropertyName("storageContainerId"u8);
                 writer.WriteStringValue(StorageContainerId);
             }
-            if (Optional.IsDefined(IsDynamic))
+            if (IsDynamic.HasValue)
             {
                 writer.WritePropertyName("isDynamic"u8);
                 writer.WriteBooleanValue(IsDynamic.Value);
@@ -83,8 +83,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 return null;
             }
             string diskId = default;
-            Optional<ResourceIdentifier> storageContainerId = default;
-            Optional<bool> isDynamic = default;
+            ResourceIdentifier storageContainerId = default;
+            bool? isDynamic = default;
             long diskSizeGB = default;
             string diskFileFormat = default;
             bool isOSDisk = default;
@@ -136,7 +136,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HyperVToAzStackHciDiskInput(diskId, storageContainerId.Value, Optional.ToNullable(isDynamic), diskSizeGB, diskFileFormat, isOSDisk, serializedAdditionalRawData);
+            return new HyperVToAzStackHciDiskInput(
+                diskId,
+                storageContainerId,
+                isDynamic,
+                diskSizeGB,
+                diskFileFormat,
+                isOSDisk,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HyperVToAzStackHciDiskInput>.Write(ModelReaderWriterOptions options)

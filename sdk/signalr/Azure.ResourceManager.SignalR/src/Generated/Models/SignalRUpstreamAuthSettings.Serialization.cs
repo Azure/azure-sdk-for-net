@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SignalR.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AuthType))
+            if (AuthType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(AuthType.Value.ToString());
             }
-            if (Optional.IsDefined(ManagedIdentity))
+            if (ManagedIdentity != null)
             {
                 writer.WritePropertyName("managedIdentity"u8);
                 writer.WriteObjectValue(ManagedIdentity);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.SignalR.Models
             {
                 return null;
             }
-            Optional<SignalRUpstreamAuthType> type = default;
-            Optional<ManagedIdentitySettings> managedIdentity = default;
+            SignalRUpstreamAuthType? type = default;
+            ManagedIdentitySettings managedIdentity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SignalR.Models
                     {
                         continue;
                     }
-                    managedIdentity = ManagedIdentitySettings.DeserializeManagedIdentitySettings(property.Value);
+                    managedIdentity = ManagedIdentitySettings.DeserializeManagedIdentitySettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SignalRUpstreamAuthSettings(Optional.ToNullable(type), managedIdentity.Value, serializedAdditionalRawData);
+            return new SignalRUpstreamAuthSettings(type, managedIdentity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SignalRUpstreamAuthSettings>.Write(ModelReaderWriterOptions options)

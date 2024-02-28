@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="certificateId"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ApiManagementGatewayCertificateAuthorityResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string certificateId, ApiManagementGatewayCertificateAuthorityData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(certificateId, nameof(certificateId));
-            Argument.AssertNotNull(data, nameof(data));
+            if (certificateId == null)
+            {
+                throw new ArgumentNullException(nameof(certificateId));
+            }
+            if (certificateId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateId));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _apiManagementGatewayCertificateAuthorityGatewayCertificateAuthorityClientDiagnostics.CreateScope("ApiManagementGatewayCertificateAuthorityCollection.CreateOrUpdate");
             scope.Start();
@@ -133,8 +143,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="certificateId"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ApiManagementGatewayCertificateAuthorityResource> CreateOrUpdate(WaitUntil waitUntil, string certificateId, ApiManagementGatewayCertificateAuthorityData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(certificateId, nameof(certificateId));
-            Argument.AssertNotNull(data, nameof(data));
+            if (certificateId == null)
+            {
+                throw new ArgumentNullException(nameof(certificateId));
+            }
+            if (certificateId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateId));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _apiManagementGatewayCertificateAuthorityGatewayCertificateAuthorityClientDiagnostics.CreateScope("ApiManagementGatewayCertificateAuthorityCollection.CreateOrUpdate");
             scope.Start();
@@ -180,7 +200,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="certificateId"/> is null. </exception>
         public virtual async Task<Response<ApiManagementGatewayCertificateAuthorityResource>> GetAsync(string certificateId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(certificateId, nameof(certificateId));
+            if (certificateId == null)
+            {
+                throw new ArgumentNullException(nameof(certificateId));
+            }
+            if (certificateId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateId));
+            }
 
             using var scope = _apiManagementGatewayCertificateAuthorityGatewayCertificateAuthorityClientDiagnostics.CreateScope("ApiManagementGatewayCertificateAuthorityCollection.Get");
             scope.Start();
@@ -225,7 +252,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="certificateId"/> is null. </exception>
         public virtual Response<ApiManagementGatewayCertificateAuthorityResource> Get(string certificateId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(certificateId, nameof(certificateId));
+            if (certificateId == null)
+            {
+                throw new ArgumentNullException(nameof(certificateId));
+            }
+            if (certificateId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateId));
+            }
 
             using var scope = _apiManagementGatewayCertificateAuthorityGatewayCertificateAuthorityClientDiagnostics.CreateScope("ApiManagementGatewayCertificateAuthorityCollection.Get");
             scope.Start();
@@ -336,7 +370,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="certificateId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string certificateId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(certificateId, nameof(certificateId));
+            if (certificateId == null)
+            {
+                throw new ArgumentNullException(nameof(certificateId));
+            }
+            if (certificateId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateId));
+            }
 
             using var scope = _apiManagementGatewayCertificateAuthorityGatewayCertificateAuthorityClientDiagnostics.CreateScope("ApiManagementGatewayCertificateAuthorityCollection.Exists");
             scope.Start();
@@ -379,7 +420,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="certificateId"/> is null. </exception>
         public virtual Response<bool> Exists(string certificateId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(certificateId, nameof(certificateId));
+            if (certificateId == null)
+            {
+                throw new ArgumentNullException(nameof(certificateId));
+            }
+            if (certificateId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateId));
+            }
 
             using var scope = _apiManagementGatewayCertificateAuthorityGatewayCertificateAuthorityClientDiagnostics.CreateScope("ApiManagementGatewayCertificateAuthorityCollection.Exists");
             scope.Start();
@@ -422,7 +470,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="certificateId"/> is null. </exception>
         public virtual async Task<NullableResponse<ApiManagementGatewayCertificateAuthorityResource>> GetIfExistsAsync(string certificateId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(certificateId, nameof(certificateId));
+            if (certificateId == null)
+            {
+                throw new ArgumentNullException(nameof(certificateId));
+            }
+            if (certificateId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateId));
+            }
 
             using var scope = _apiManagementGatewayCertificateAuthorityGatewayCertificateAuthorityClientDiagnostics.CreateScope("ApiManagementGatewayCertificateAuthorityCollection.GetIfExists");
             scope.Start();
@@ -467,7 +522,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="certificateId"/> is null. </exception>
         public virtual NullableResponse<ApiManagementGatewayCertificateAuthorityResource> GetIfExists(string certificateId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(certificateId, nameof(certificateId));
+            if (certificateId == null)
+            {
+                throw new ArgumentNullException(nameof(certificateId));
+            }
+            if (certificateId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateId));
+            }
 
             using var scope = _apiManagementGatewayCertificateAuthorityGatewayCertificateAuthorityClientDiagnostics.CreateScope("ApiManagementGatewayCertificateAuthorityCollection.GetIfExists");
             scope.Start();

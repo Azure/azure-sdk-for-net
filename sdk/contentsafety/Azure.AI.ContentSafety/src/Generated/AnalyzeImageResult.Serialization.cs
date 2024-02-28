@@ -82,7 +82,7 @@ namespace Azure.AI.ContentSafety
                     List<ImageCategoriesAnalysis> array = new List<ImageCategoriesAnalysis>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ImageCategoriesAnalysis.DeserializeImageCategoriesAnalysis(item));
+                        array.Add(ImageCategoriesAnalysis.DeserializeImageCategoriesAnalysis(item, options));
                     }
                     categoriesAnalysis = array;
                     continue;

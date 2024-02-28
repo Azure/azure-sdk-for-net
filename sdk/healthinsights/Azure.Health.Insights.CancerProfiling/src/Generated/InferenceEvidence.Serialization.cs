@@ -27,17 +27,17 @@ namespace Azure.Health.Insights.CancerProfiling
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PatientDataEvidence))
+            if (PatientDataEvidence != null)
             {
                 writer.WritePropertyName("patientDataEvidence"u8);
                 writer.WriteObjectValue(PatientDataEvidence);
             }
-            if (Optional.IsDefined(PatientInfoEvidence))
+            if (PatientInfoEvidence != null)
             {
                 writer.WritePropertyName("patientInfoEvidence"u8);
                 writer.WriteObjectValue(PatientInfoEvidence);
             }
-            if (Optional.IsDefined(Importance))
+            if (Importance.HasValue)
             {
                 writer.WritePropertyName("importance"u8);
                 writer.WriteNumberValue(Importance.Value);
@@ -80,9 +80,9 @@ namespace Azure.Health.Insights.CancerProfiling
             {
                 return null;
             }
-            Optional<ClinicalNoteEvidence> patientDataEvidence = default;
-            Optional<ClinicalCodedElement> patientInfoEvidence = default;
-            Optional<float> importance = default;
+            ClinicalNoteEvidence patientDataEvidence = default;
+            ClinicalCodedElement patientInfoEvidence = default;
+            float? importance = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +93,7 @@ namespace Azure.Health.Insights.CancerProfiling
                     {
                         continue;
                     }
-                    patientDataEvidence = ClinicalNoteEvidence.DeserializeClinicalNoteEvidence(property.Value);
+                    patientDataEvidence = ClinicalNoteEvidence.DeserializeClinicalNoteEvidence(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("patientInfoEvidence"u8))
@@ -102,7 +102,7 @@ namespace Azure.Health.Insights.CancerProfiling
                     {
                         continue;
                     }
-                    patientInfoEvidence = ClinicalCodedElement.DeserializeClinicalCodedElement(property.Value);
+                    patientInfoEvidence = ClinicalCodedElement.DeserializeClinicalCodedElement(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("importance"u8))
@@ -120,7 +120,7 @@ namespace Azure.Health.Insights.CancerProfiling
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InferenceEvidence(patientDataEvidence.Value, patientInfoEvidence.Value, Optional.ToNullable(importance), serializedAdditionalRawData);
+            return new InferenceEvidence(patientDataEvidence, patientInfoEvidence, importance, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InferenceEvidence>.Write(ModelReaderWriterOptions options)

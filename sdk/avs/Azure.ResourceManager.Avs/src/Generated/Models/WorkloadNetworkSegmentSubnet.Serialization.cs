@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Avs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(DhcpRanges))
+            if (!(DhcpRanges is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dhcpRanges"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(GatewayAddress))
+            if (GatewayAddress != null)
             {
                 writer.WritePropertyName("gatewayAddress"u8);
                 writer.WriteStringValue(GatewayAddress);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Optional<IList<string>> dhcpRanges = default;
-            Optional<string> gatewayAddress = default;
+            IList<string> dhcpRanges = default;
+            string gatewayAddress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadNetworkSegmentSubnet(Optional.ToList(dhcpRanges), gatewayAddress.Value, serializedAdditionalRawData);
+            return new WorkloadNetworkSegmentSubnet(dhcpRanges ?? new ChangeTrackingList<string>(), gatewayAddress, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkloadNetworkSegmentSubnet>.Write(ModelReaderWriterOptions options)

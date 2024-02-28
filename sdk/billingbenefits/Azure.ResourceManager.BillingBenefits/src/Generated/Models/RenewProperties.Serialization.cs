@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PurchaseProperties))
+            if (PurchaseProperties != null)
             {
                 writer.WritePropertyName("purchaseProperties"u8);
                 writer.WriteObjectValue(PurchaseProperties);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             {
                 return null;
             }
-            Optional<BillingBenefitsPurchaseContent> purchaseProperties = default;
+            BillingBenefitsPurchaseContent purchaseProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     {
                         continue;
                     }
-                    purchaseProperties = BillingBenefitsPurchaseContent.DeserializeBillingBenefitsPurchaseContent(property.Value);
+                    purchaseProperties = BillingBenefitsPurchaseContent.DeserializeBillingBenefitsPurchaseContent(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RenewProperties(purchaseProperties.Value, serializedAdditionalRawData);
+            return new RenewProperties(purchaseProperties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RenewProperties>.Write(ModelReaderWriterOptions options)

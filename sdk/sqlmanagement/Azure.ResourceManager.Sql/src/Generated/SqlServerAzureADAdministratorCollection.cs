@@ -82,7 +82,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SqlServerAzureADAdministratorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, SqlAdministratorName administratorName, SqlServerAzureADAdministratorData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _sqlServerAzureADAdministratorServerAzureADAdministratorsClientDiagnostics.CreateScope("SqlServerAzureADAdministratorCollection.CreateOrUpdate");
             scope.Start();
@@ -129,7 +132,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SqlServerAzureADAdministratorResource> CreateOrUpdate(WaitUntil waitUntil, SqlAdministratorName administratorName, SqlServerAzureADAdministratorData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _sqlServerAzureADAdministratorServerAzureADAdministratorsClientDiagnostics.CreateScope("SqlServerAzureADAdministratorCollection.CreateOrUpdate");
             scope.Start();

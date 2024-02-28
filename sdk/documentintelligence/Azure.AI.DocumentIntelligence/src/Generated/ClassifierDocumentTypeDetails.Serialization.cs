@@ -27,17 +27,17 @@ namespace Azure.AI.DocumentIntelligence
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SourceKind))
+            if (SourceKind.HasValue)
             {
                 writer.WritePropertyName("sourceKind"u8);
                 writer.WriteStringValue(SourceKind.Value.ToString());
             }
-            if (Optional.IsDefined(AzureBlobSource))
+            if (AzureBlobSource != null)
             {
                 writer.WritePropertyName("azureBlobSource"u8);
                 writer.WriteObjectValue(AzureBlobSource);
             }
-            if (Optional.IsDefined(AzureBlobFileListSource))
+            if (AzureBlobFileListSource != null)
             {
                 writer.WritePropertyName("azureBlobFileListSource"u8);
                 writer.WriteObjectValue(AzureBlobFileListSource);
@@ -80,9 +80,9 @@ namespace Azure.AI.DocumentIntelligence
             {
                 return null;
             }
-            Optional<ContentSourceKind> sourceKind = default;
-            Optional<AzureBlobContentSource> azureBlobSource = default;
-            Optional<AzureBlobFileListContentSource> azureBlobFileListSource = default;
+            ContentSourceKind? sourceKind = default;
+            AzureBlobContentSource azureBlobSource = default;
+            AzureBlobFileListContentSource azureBlobFileListSource = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -102,7 +102,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    azureBlobSource = AzureBlobContentSource.DeserializeAzureBlobContentSource(property.Value);
+                    azureBlobSource = AzureBlobContentSource.DeserializeAzureBlobContentSource(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("azureBlobFileListSource"u8))
@@ -111,7 +111,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    azureBlobFileListSource = AzureBlobFileListContentSource.DeserializeAzureBlobFileListContentSource(property.Value);
+                    azureBlobFileListSource = AzureBlobFileListContentSource.DeserializeAzureBlobFileListContentSource(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -120,7 +120,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClassifierDocumentTypeDetails(Optional.ToNullable(sourceKind), azureBlobSource.Value, azureBlobFileListSource.Value, serializedAdditionalRawData);
+            return new ClassifierDocumentTypeDetails(sourceKind, azureBlobSource, azureBlobFileListSource, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClassifierDocumentTypeDetails>.Write(ModelReaderWriterOptions options)

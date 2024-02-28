@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Avs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Zones))
+            if (!(Zones is ChangeTrackingList<AvsClusterZone> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AvsClusterZone>> zones = default;
+            IReadOnlyList<AvsClusterZone> zones = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Avs.Models
                     List<AvsClusterZone> array = new List<AvsClusterZone>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvsClusterZone.DeserializeAvsClusterZone(item));
+                        array.Add(AvsClusterZone.DeserializeAvsClusterZone(item, options));
                     }
                     zones = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterZoneList(Optional.ToList(zones), serializedAdditionalRawData);
+            return new ClusterZoneList(zones ?? new ChangeTrackingList<AvsClusterZone>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterZoneList>.Write(ModelReaderWriterOptions options)

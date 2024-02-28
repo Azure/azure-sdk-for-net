@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Batch.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(StorageAccountType))
+            if (StorageAccountType.HasValue)
             {
                 writer.WritePropertyName("storageAccountType"u8);
                 writer.WriteStringValue(StorageAccountType.Value.ToSerialString());
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<BatchStorageAccountType> storageAccountType = default;
+            BatchStorageAccountType? storageAccountType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedDisk(Optional.ToNullable(storageAccountType), serializedAdditionalRawData);
+            return new ManagedDisk(storageAccountType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedDisk>.Write(ModelReaderWriterOptions options)

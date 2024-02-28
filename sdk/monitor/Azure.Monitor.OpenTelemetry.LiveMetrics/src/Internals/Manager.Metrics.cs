@@ -18,8 +18,8 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
         internal readonly DoubleBuffer _documentBuffer = new();
         internal static bool? s_isAzureWebApp = null;
 
-        private readonly PerformanceCounter _performanceCounter_ProcessorTime = new(categoryName: "Processor", counterName: "% Processor Time", instanceName: "_Total");
-        private readonly PerformanceCounter _performanceCounter_CommittedBytes = new(categoryName: "Memory", counterName: "Committed Bytes");
+        //private readonly PerformanceCounter _performanceCounter_ProcessorTime = new(categoryName: "Processor", counterName: "% Processor Time", instanceName: "_Total");
+        //private readonly PerformanceCounter _performanceCounter_CommittedBytes = new(categoryName: "Memory", counterName: "Committed Bytes");
 
         public MonitoringDataPoint GetDataPoint()
         {
@@ -30,11 +30,9 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                 Instance = LiveMetricsResource?.RoleInstance ?? "UNKNOWN_INSTANCE",
                 RoleName = LiveMetricsResource?.RoleName,
                 MachineName = Environment.MachineName, // TODO: MOVE TO PLATFORM
-                                                       // TODO: Is the Stream ID expected to be unique per post? Testing suggests this is not necessary.
                 StreamId = _streamId,
-                Timestamp = DateTime.UtcNow,
-                //TODO: Provide feedback to service team to get this removed, it not a part of AI SDK.
-                TransmissionTime = DateTime.UtcNow,
+                Timestamp = DateTime.UtcNow, // Represents timestamp sample was created
+                TransmissionTime = DateTime.UtcNow, // represents timestamp transmission was sent
                 IsWebApp = IsWebAppRunningInAzure(),
                 PerformanceCollectionSupported = true,
                 // AI SDK relies on PerformanceCounter to collect CPU and Memory metrics.
@@ -48,12 +46,16 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
             DocumentBuffer filledBuffer = _documentBuffer.FlipDocumentBuffers();
             foreach (var item in filledBuffer.ReadAllAndClear())
             {
+                // TODO: Filtering would be taken into account here before adding a document to the dataPoint.
+                // TODO: item.DocumentStreamIds = new List<string> { "" }; - Will add the identifier for the specific filtering rules (if applicable). See also "matchingDocumentStreamIds" in AI SDK.
+                //TODO: Apply filters
+                //foreach (CalculatedMetric<TTelemetry> metric in metrics)
+                //    if (metric.CheckFilters(telemetry, out filteringErrors))
+
                 dataPoint.Documents.Add(item);
 
                 if (item.DocumentType == DocumentIngressDocumentType.Request)
                 {
-                    // Export needs to divide by count to get the average.
-                    // this.AIRequestDurationAveInMs = requestCount > 0 ? (double)requestDurationInTicks / TimeSpan.TicksPerMillisecond / requestCount : 0;
                     if (item.Extension_IsSuccess)
                     {
                         liveMetricsBuffer.RecordRequestSucceeded(item.Extension_Duration);
@@ -65,10 +67,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                 }
                 else if (item.DocumentType == DocumentIngressDocumentType.RemoteDependency)
                 {
-                    // Export needs to divide by count to get the average.
-                    // this.AIDependencyCallDurationAveInMs = dependencyCount > 0 ? (double)dependencyDurationInTicks / TimeSpan.TicksPerMillisecond / dependencyCount : 0;
-                    // Export DependencyDurationLiveMetric, Meter: LiveMetricMeterName
-                    // (2023 - 11 - 03T23: 20:56.0282406Z, 2023 - 11 - 03T23: 21:00.9830153Z] Histogram Value: Sum: 798.9463000000001 Count: 7 Min: 4.9172 Max: 651.8997
                     if (item.Extension_IsSuccess)
                     {
                         liveMetricsBuffer.RecordDependencySucceeded(item.Extension_Duration);
@@ -93,31 +91,32 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                 dataPoint.Metrics.Add(metricPoint);
             }
 
-            foreach (var metricPoint in CollectPerfCounters())
-            {
-                dataPoint.Metrics.Add(metricPoint);
-            }
+            // TODO: Reenable Perf Counters
+            //foreach (var metricPoint in CollectPerfCounters())
+            //{
+            //    dataPoint.Metrics.Add(metricPoint);
+            //}
 
             return dataPoint;
         }
 
-        public IEnumerable<Models.MetricPoint> CollectPerfCounters()
-        {
-            // PERFORMANCE COUNTERS
-            yield return new Models.MetricPoint
-            {
-                Name = LiveMetricConstants.MetricId.MemoryCommittedBytesMetricIdValue,
-                Value = _performanceCounter_CommittedBytes.NextValue(),
-                Weight = 1
-            };
+        //public IEnumerable<Models.MetricPoint> CollectPerfCounters()
+        //{
+        //    // PERFORMANCE COUNTERS
+        //    yield return new Models.MetricPoint
+        //    {
+        //        Name = LiveMetricConstants.MetricId.MemoryCommittedBytesMetricIdValue,
+        //        Value = _performanceCounter_CommittedBytes.NextValue(),
+        //        Weight = 1
+        //    };
 
-            yield return new Models.MetricPoint
-            {
-                Name = LiveMetricConstants.MetricId.ProcessorTimeMetricIdValue,
-                Value = _performanceCounter_ProcessorTime.NextValue(),
-                Weight = 1
-            };
-        }
+        //    yield return new Models.MetricPoint
+        //    {
+        //        Name = LiveMetricConstants.MetricId.ProcessorTimeMetricIdValue,
+        //        Value = _performanceCounter_ProcessorTime.NextValue(),
+        //        Weight = 1
+        //    };
+        //}
 
         /// <summary>
         /// Searches for the environment variable specific to Azure Web App.
@@ -135,7 +134,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                 {
                     // Presence of "WEBSITE_SITE_NAME" indicate web apps.
                     // "WEBSITE_ISOLATION"!="hyperv" indicate premium containers. In this case, perf counters
-                    // can be read using regular mechanism and hence this method retuns false for
+                    // can be read using regular mechanism and hence this method returns false for
                     // premium containers.
                     // TODO: switch to platform. Not necessary for POC.
                     s_isAzureWebApp = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable(WebSiteEnvironmentVariable)) &&

@@ -280,7 +280,10 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<Response<StorageQueueResource>> UpdateAsync(StorageQueueData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _storageQueueQueueClientDiagnostics.CreateScope("StorageQueueResource.Update");
             scope.Start();
@@ -322,7 +325,10 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual Response<StorageQueueResource> Update(StorageQueueData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _storageQueueQueueClientDiagnostics.CreateScope("StorageQueueResource.Update");
             scope.Start();

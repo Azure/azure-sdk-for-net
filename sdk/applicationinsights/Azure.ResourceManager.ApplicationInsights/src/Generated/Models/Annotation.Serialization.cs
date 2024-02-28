@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AnnotationName))
+            if (AnnotationName != null)
             {
                 writer.WritePropertyName("AnnotationName"u8);
                 writer.WriteStringValue(AnnotationName);
             }
-            if (Optional.IsDefined(Category))
+            if (Category != null)
             {
                 writer.WritePropertyName("Category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (Optional.IsDefined(EventOn))
+            if (EventOn.HasValue)
             {
                 writer.WritePropertyName("EventTime"u8);
                 writer.WriteStringValue(EventOn.Value, "O");
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("Id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("Properties"u8);
                 writer.WriteStringValue(Properties);
             }
-            if (Optional.IsDefined(RelatedAnnotation))
+            if (RelatedAnnotation != null)
             {
                 writer.WritePropertyName("RelatedAnnotation"u8);
                 writer.WriteStringValue(RelatedAnnotation);
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<string> annotationName = default;
-            Optional<string> category = default;
-            Optional<DateTimeOffset> eventTime = default;
-            Optional<string> id = default;
-            Optional<string> properties = default;
-            Optional<string> relatedAnnotation = default;
+            string annotationName = default;
+            string category = default;
+            DateTimeOffset? eventTime = default;
+            string id = default;
+            string properties = default;
+            string relatedAnnotation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,7 +144,14 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new Annotation(annotationName.Value, category.Value, Optional.ToNullable(eventTime), id.Value, properties.Value, relatedAnnotation.Value, serializedAdditionalRawData);
+            return new Annotation(
+                annotationName,
+                category,
+                eventTime,
+                id,
+                properties,
+                relatedAnnotation,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<Annotation>.Write(ModelReaderWriterOptions options)

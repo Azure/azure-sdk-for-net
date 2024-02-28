@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkAnalytics.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultUri"/> is null. </exception>
         public NetworkAnalyticsKeyVaultContent(Uri keyVaultUri)
         {
-            Argument.AssertNotNull(keyVaultUri, nameof(keyVaultUri));
+            if (keyVaultUri == null)
+            {
+                throw new ArgumentNullException(nameof(keyVaultUri));
+            }
 
             KeyVaultUri = keyVaultUri;
         }

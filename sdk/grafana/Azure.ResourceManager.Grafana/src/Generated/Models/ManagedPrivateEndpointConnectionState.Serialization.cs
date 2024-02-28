@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Grafana.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Description))
+            if (options.Format != "W" && Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Grafana.Models
             {
                 return null;
             }
-            Optional<ManagedPrivateEndpointConnectionStatus> status = default;
-            Optional<string> description = default;
+            ManagedPrivateEndpointConnectionStatus? status = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedPrivateEndpointConnectionState(Optional.ToNullable(status), description.Value, serializedAdditionalRawData);
+            return new ManagedPrivateEndpointConnectionState(status, description, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedPrivateEndpointConnectionState>.Write(ModelReaderWriterOptions options)

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.LabServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SubnetId))
+            if (SubnetId != null)
             {
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
-            if (Optional.IsDefined(LoadBalancerId))
+            if (LoadBalancerId != null)
             {
                 writer.WritePropertyName("loadBalancerId"u8);
                 writer.WriteStringValue(LoadBalancerId);
             }
-            if (Optional.IsDefined(PublicIPId))
+            if (PublicIPId != null)
             {
                 writer.WritePropertyName("publicIpId"u8);
                 writer.WriteStringValue(PublicIPId);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> subnetId = default;
-            Optional<ResourceIdentifier> loadBalancerId = default;
-            Optional<ResourceIdentifier> publicIPId = default;
+            ResourceIdentifier subnetId = default;
+            ResourceIdentifier loadBalancerId = default;
+            ResourceIdentifier publicIPId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabNetworkProfile(subnetId.Value, loadBalancerId.Value, publicIPId.Value, serializedAdditionalRawData);
+            return new LabNetworkProfile(subnetId, loadBalancerId, publicIPId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabNetworkProfile>.Write(ModelReaderWriterOptions options)

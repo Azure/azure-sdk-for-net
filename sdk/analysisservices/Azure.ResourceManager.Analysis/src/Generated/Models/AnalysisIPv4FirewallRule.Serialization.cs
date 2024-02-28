@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Analysis.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FirewallRuleName))
+            if (FirewallRuleName != null)
             {
                 writer.WritePropertyName("firewallRuleName"u8);
                 writer.WriteStringValue(FirewallRuleName);
             }
-            if (Optional.IsDefined(RangeStart))
+            if (RangeStart != null)
             {
                 writer.WritePropertyName("rangeStart"u8);
                 writer.WriteStringValue(RangeStart);
             }
-            if (Optional.IsDefined(RangeEnd))
+            if (RangeEnd != null)
             {
                 writer.WritePropertyName("rangeEnd"u8);
                 writer.WriteStringValue(RangeEnd);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Analysis.Models
             {
                 return null;
             }
-            Optional<string> firewallRuleName = default;
-            Optional<string> rangeStart = default;
-            Optional<string> rangeEnd = default;
+            string firewallRuleName = default;
+            string rangeStart = default;
+            string rangeEnd = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Analysis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AnalysisIPv4FirewallRule(firewallRuleName.Value, rangeStart.Value, rangeEnd.Value, serializedAdditionalRawData);
+            return new AnalysisIPv4FirewallRule(firewallRuleName, rangeStart, rangeEnd, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AnalysisIPv4FirewallRule>.Write(ModelReaderWriterOptions options)

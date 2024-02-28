@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.BotService.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name.ToString());
-            if (options.Format != "W" && Optional.IsDefined(Tier))
+            if (options.Format != "W" && Tier.HasValue)
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier.Value.ToString());
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.BotService.Models
                 return null;
             }
             BotServiceSkuName name = default;
-            Optional<BotServiceSkuTier> tier = default;
+            BotServiceSkuTier? tier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BotServiceSku(name, Optional.ToNullable(tier), serializedAdditionalRawData);
+            return new BotServiceSku(name, tier, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BotServiceSku>.Write(ModelReaderWriterOptions options)

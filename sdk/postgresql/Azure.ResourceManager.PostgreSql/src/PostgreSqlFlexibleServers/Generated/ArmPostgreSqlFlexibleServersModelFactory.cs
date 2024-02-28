@@ -30,7 +30,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <returns> A new <see cref="FlexibleServers.PostgreSqlFlexibleServerActiveDirectoryAdministratorData"/> instance for mocking. </returns>
         public static PostgreSqlFlexibleServerActiveDirectoryAdministratorData PostgreSqlFlexibleServerActiveDirectoryAdministratorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PostgreSqlFlexibleServerPrincipalType? principalType = null, string principalName = null, Guid? objectId = null, Guid? tenantId = null)
         {
-            return new PostgreSqlFlexibleServerActiveDirectoryAdministratorData(id, name, resourceType, systemData, principalType, principalName, objectId, tenantId, serializedAdditionalRawData: null);
+            return new PostgreSqlFlexibleServerActiveDirectoryAdministratorData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                principalType,
+                principalName,
+                objectId,
+                tenantId,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="FlexibleServers.PostgreSqlFlexibleServerBackupData"/>. </summary>
@@ -44,7 +53,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <returns> A new <see cref="FlexibleServers.PostgreSqlFlexibleServerBackupData"/> instance for mocking. </returns>
         public static PostgreSqlFlexibleServerBackupData PostgreSqlFlexibleServerBackupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PostgreSqlFlexibleServerBackupOrigin? backupType = null, DateTimeOffset? completedOn = null, string source = null)
         {
-            return new PostgreSqlFlexibleServerBackupData(id, name, resourceType, systemData, backupType, completedOn, source, serializedAdditionalRawData: null);
+            return new PostgreSqlFlexibleServerBackupData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                backupType,
+                completedOn,
+                source,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerCapabilityProperties"/>. </summary>
@@ -68,7 +85,21 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             supportedServerVersions ??= new List<PostgreSqlFlexibleServerServerVersionCapability>();
             supportedFastProvisioningEditions ??= new List<PostgreSqlFlexibleServerFastProvisioningEditionCapability>();
 
-            return new PostgreSqlFlexibleServerCapabilityProperties(capabilityStatus, reason, serializedAdditionalRawData: null, name, supportedServerEditions?.ToList(), supportedServerVersions?.ToList(), supportFastProvisioning, supportedFastProvisioningEditions?.ToList(), geoBackupSupported, zoneRedundantHaSupported, zoneRedundantHaAndGeoBackupSupported, storageAutoGrowthSupported, onlineResizeSupported, restricted);
+            return new PostgreSqlFlexibleServerCapabilityProperties(
+                capabilityStatus,
+                reason,
+                serializedAdditionalRawData: null,
+                name,
+                supportedServerEditions?.ToList(),
+                supportedServerVersions?.ToList(),
+                supportFastProvisioning,
+                supportedFastProvisioningEditions?.ToList(),
+                geoBackupSupported,
+                zoneRedundantHaSupported,
+                zoneRedundantHaAndGeoBackupSupported,
+                storageAutoGrowthSupported,
+                onlineResizeSupported,
+                restricted);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerEditionCapability"/>. </summary>
@@ -84,7 +115,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             supportedStorageEditions ??= new List<PostgreSqlFlexibleServerStorageEditionCapability>();
             supportedServerSkus ??= new List<PostgreSqlFlexibleServerSkuCapability>();
 
-            return new PostgreSqlFlexibleServerEditionCapability(capabilityStatus, reason, serializedAdditionalRawData: null, name, defaultSkuName, supportedStorageEditions?.ToList(), supportedServerSkus?.ToList());
+            return new PostgreSqlFlexibleServerEditionCapability(
+                capabilityStatus,
+                reason,
+                serializedAdditionalRawData: null,
+                name,
+                defaultSkuName,
+                supportedStorageEditions?.ToList(),
+                supportedServerSkus?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerStorageEditionCapability"/>. </summary>
@@ -98,7 +136,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         {
             supportedStorageCapabilities ??= new List<PostgreSqlFlexibleServerStorageCapability>();
 
-            return new PostgreSqlFlexibleServerStorageEditionCapability(capabilityStatus, reason, serializedAdditionalRawData: null, name, defaultStorageSizeMb, supportedStorageCapabilities?.ToList());
+            return new PostgreSqlFlexibleServerStorageEditionCapability(
+                capabilityStatus,
+                reason,
+                serializedAdditionalRawData: null,
+                name,
+                defaultStorageSizeMb,
+                supportedStorageCapabilities?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerStorageCapability"/>. </summary>
@@ -113,7 +157,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         {
             supportedIopsTiers ??= new List<PostgreSqlFlexibleServerStorageTierCapability>();
 
-            return new PostgreSqlFlexibleServerStorageCapability(capabilityStatus, reason, serializedAdditionalRawData: null, supportedIops, storageSizeInMB, defaultIopsTier, supportedIopsTiers?.ToList());
+            return new PostgreSqlFlexibleServerStorageCapability(
+                capabilityStatus,
+                reason,
+                serializedAdditionalRawData: null,
+                supportedIops,
+                storageSizeInMB,
+                defaultIopsTier,
+                supportedIopsTiers?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerStorageTierCapability"/>. </summary>
@@ -151,7 +202,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             supportedZones ??= new List<string>();
             supportedHaMode ??= new List<PostgreSqlFlexibleServerHAMode>();
 
-            return new PostgreSqlFlexibleServerSkuCapability(capabilityStatus, reason, serializedAdditionalRawData: null, name, vCores, supportedIops, supportedMemoryPerVcoreMb, supportedZones?.ToList(), supportedHaMode?.ToList());
+            return new PostgreSqlFlexibleServerSkuCapability(
+                capabilityStatus,
+                reason,
+                serializedAdditionalRawData: null,
+                name,
+                vCores,
+                supportedIops,
+                supportedMemoryPerVcoreMb,
+                supportedZones?.ToList(),
+                supportedHaMode?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerServerVersionCapability"/>. </summary>
@@ -178,7 +238,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerFastProvisioningEditionCapability"/> instance for mocking. </returns>
         public static PostgreSqlFlexibleServerFastProvisioningEditionCapability PostgreSqlFlexibleServerFastProvisioningEditionCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus = null, string reason = null, string supportedTier = null, string supportedSku = null, long? supportedStorageGb = null, string supportedServerVersions = null, int? serverCount = null)
         {
-            return new PostgreSqlFlexibleServerFastProvisioningEditionCapability(capabilityStatus, reason, serializedAdditionalRawData: null, supportedTier, supportedSku, supportedStorageGb, supportedServerVersions, serverCount);
+            return new PostgreSqlFlexibleServerFastProvisioningEditionCapability(
+                capabilityStatus,
+                reason,
+                serializedAdditionalRawData: null,
+                supportedTier,
+                supportedSku,
+                supportedStorageGb,
+                supportedServerVersions,
+                serverCount);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerNameAvailabilityContent"/>. </summary>
@@ -199,7 +267,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerNameAvailabilityResult"/> instance for mocking. </returns>
         public static PostgreSqlFlexibleServerNameAvailabilityResult PostgreSqlFlexibleServerNameAvailabilityResult(bool? isNameAvailable = null, PostgreSqlFlexibleServerNameUnavailableReason? reason = null, string message = null, string name = null, ResourceType? resourceType = null)
         {
-            return new PostgreSqlFlexibleServerNameAvailabilityResult(isNameAvailable, reason, message, serializedAdditionalRawData: null, name, resourceType);
+            return new PostgreSqlFlexibleServerNameAvailabilityResult(
+                isNameAvailable,
+                reason,
+                message,
+                serializedAdditionalRawData: null,
+                name,
+                resourceType);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerNameAvailabilityResponse"/>. </summary>
@@ -231,7 +305,23 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <returns> A new <see cref="FlexibleServers.PostgreSqlFlexibleServerConfigurationData"/> instance for mocking. </returns>
         public static PostgreSqlFlexibleServerConfigurationData PostgreSqlFlexibleServerConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string value = null, string description = null, string defaultValue = null, PostgreSqlFlexibleServerConfigurationDataType? dataType = null, string allowedValues = null, string source = null, bool? isDynamicConfig = null, bool? isReadOnly = null, bool? isConfigPendingRestart = null, string unit = null, string documentationLink = null)
         {
-            return new PostgreSqlFlexibleServerConfigurationData(id, name, resourceType, systemData, value, description, defaultValue, dataType, allowedValues, source, isDynamicConfig, isReadOnly, isConfigPendingRestart, unit, documentationLink, serializedAdditionalRawData: null);
+            return new PostgreSqlFlexibleServerConfigurationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                value,
+                description,
+                defaultValue,
+                dataType,
+                allowedValues,
+                source,
+                isDynamicConfig,
+                isReadOnly,
+                isConfigPendingRestart,
+                unit,
+                documentationLink,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="FlexibleServers.PostgreSqlFlexibleServerDatabaseData"/>. </summary>
@@ -244,7 +334,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <returns> A new <see cref="FlexibleServers.PostgreSqlFlexibleServerDatabaseData"/> instance for mocking. </returns>
         public static PostgreSqlFlexibleServerDatabaseData PostgreSqlFlexibleServerDatabaseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string charset = null, string collation = null)
         {
-            return new PostgreSqlFlexibleServerDatabaseData(id, name, resourceType, systemData, charset, collation, serializedAdditionalRawData: null);
+            return new PostgreSqlFlexibleServerDatabaseData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                charset,
+                collation,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="FlexibleServers.PostgreSqlFlexibleServerFirewallRuleData"/>. </summary>
@@ -257,7 +354,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <returns> A new <see cref="FlexibleServers.PostgreSqlFlexibleServerFirewallRuleData"/> instance for mocking. </returns>
         public static PostgreSqlFlexibleServerFirewallRuleData PostgreSqlFlexibleServerFirewallRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IPAddress startIPAddress = null, IPAddress endIPAddress = null)
         {
-            return new PostgreSqlFlexibleServerFirewallRuleData(id, name, resourceType, systemData, startIPAddress, endIPAddress, serializedAdditionalRawData: null);
+            return new PostgreSqlFlexibleServerFirewallRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                startIPAddress,
+                endIPAddress,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="FlexibleServers.PostgreSqlFlexibleServerData"/>. </summary>
@@ -293,7 +397,35 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new PostgreSqlFlexibleServerData(id, name, resourceType, systemData, tags, location, sku, identity, administratorLogin, administratorLoginPassword, version, minorVersion, state, fullyQualifiedDomainName, storage, authConfig, dataEncryption, backup, network, highAvailability, maintenanceWindow, sourceServerResourceId, pointInTimeUtc, availabilityZone, replicationRole, replicaCapacity, createMode, serializedAdditionalRawData: null);
+            return new PostgreSqlFlexibleServerData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                sku,
+                identity,
+                administratorLogin,
+                administratorLoginPassword,
+                version,
+                minorVersion,
+                state,
+                fullyQualifiedDomainName,
+                storage,
+                authConfig,
+                dataEncryption,
+                backup,
+                network,
+                highAvailability,
+                maintenanceWindow,
+                sourceServerResourceId,
+                pointInTimeUtc,
+                availabilityZone,
+                replicationRole,
+                replicaCapacity,
+                createMode,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerUserAssignedIdentity"/>. </summary>
@@ -384,7 +516,34 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             dbsToTriggerCutoverOn ??= new List<string>();
             dbsToCancelMigrationOn ??= new List<string>();
 
-            return new PostgreSqlMigrationData(id, name, resourceType, systemData, tags, location, migrationId, currentStatus, migrationMode, sourceDbServerMetadata, targetDbServerMetadata, sourceDbServerResourceId, sourceDbServerFullyQualifiedDomainName, targetDbServerResourceId, targetDbServerFullyQualifiedDomainName, secretParameters, dbsToMigrate?.ToList(), setupLogicalReplicationOnSourceDbIfNeeded, overwriteDbsInTarget, migrationWindowStartTimeInUtc, migrationWindowEndTimeInUtc, startDataMigration, triggerCutover, dbsToTriggerCutoverOn?.ToList(), cancel, dbsToCancelMigrationOn?.ToList(), serializedAdditionalRawData: null);
+            return new PostgreSqlMigrationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                migrationId,
+                currentStatus,
+                migrationMode,
+                sourceDbServerMetadata,
+                targetDbServerMetadata,
+                sourceDbServerResourceId,
+                sourceDbServerFullyQualifiedDomainName,
+                targetDbServerResourceId,
+                targetDbServerFullyQualifiedDomainName,
+                secretParameters,
+                dbsToMigrate?.ToList(),
+                setupLogicalReplicationOnSourceDbIfNeeded,
+                overwriteDbsInTarget,
+                migrationWindowStartTimeInUtc,
+                migrationWindowEndTimeInUtc,
+                startDataMigration,
+                triggerCutover,
+                dbsToTriggerCutoverOn?.ToList(),
+                cancel,
+                dbsToCancelMigrationOn?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlMigrationStatus"/>. </summary>
@@ -426,7 +585,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <returns> A new <see cref="Models.PostgreSqlCheckMigrationNameAvailabilityContent"/> instance for mocking. </returns>
         public static PostgreSqlCheckMigrationNameAvailabilityContent PostgreSqlCheckMigrationNameAvailabilityContent(string name = null, ResourceType resourceType = default, bool? isNameAvailable = null, PostgreSqlMigrationNameUnavailableReason? reason = null, string message = null)
         {
-            return new PostgreSqlCheckMigrationNameAvailabilityContent(name, resourceType, isNameAvailable, reason, message, serializedAdditionalRawData: null);
+            return new PostgreSqlCheckMigrationNameAvailabilityContent(
+                name,
+                resourceType,
+                isNameAvailable,
+                reason,
+                message,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerLogFile"/>. </summary>
@@ -442,7 +607,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerLogFile"/> instance for mocking. </returns>
         public static PostgreSqlFlexibleServerLogFile PostgreSqlFlexibleServerLogFile(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastModifiedOn = null, long? sizeInKb = null, string typePropertiesType = null, Uri uri = null)
         {
-            return new PostgreSqlFlexibleServerLogFile(id, name, resourceType, systemData, createdOn, lastModifiedOn, sizeInKb, typePropertiesType, uri, serializedAdditionalRawData: null);
+            return new PostgreSqlFlexibleServerLogFile(
+                id,
+                name,
+                resourceType,
+                systemData,
+                createdOn,
+                lastModifiedOn,
+                sizeInKb,
+                typePropertiesType,
+                uri,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult"/>. </summary>
@@ -488,7 +663,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerLtrBackupResult"/> instance for mocking. </returns>
         public static PostgreSqlFlexibleServerLtrBackupResult PostgreSqlFlexibleServerLtrBackupResult(long? datasourceSizeInBytes = null, long? dataTransferredInBytes = null, string backupName = null, string backupMetadata = null, PostgreSqlExecutionStatus? status = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, double? percentComplete = null, string errorCode = null, string errorMessage = null)
         {
-            return new PostgreSqlFlexibleServerLtrBackupResult(datasourceSizeInBytes, dataTransferredInBytes, backupName, backupMetadata, status, startOn, endOn, percentComplete, errorCode, errorMessage, serializedAdditionalRawData: null);
+            return new PostgreSqlFlexibleServerLtrBackupResult(
+                datasourceSizeInBytes,
+                dataTransferredInBytes,
+                backupName,
+                backupMetadata,
+                status,
+                startOn,
+                endOn,
+                percentComplete,
+                errorCode,
+                errorMessage,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="FlexibleServers.PostgreSqlLtrServerBackupOperationData"/>. </summary>
@@ -509,7 +695,22 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <returns> A new <see cref="FlexibleServers.PostgreSqlLtrServerBackupOperationData"/> instance for mocking. </returns>
         public static PostgreSqlLtrServerBackupOperationData PostgreSqlLtrServerBackupOperationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, long? datasourceSizeInBytes = null, long? dataTransferredInBytes = null, string backupName = null, string backupMetadata = null, PostgreSqlExecutionStatus? status = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, double? percentComplete = null, string errorCode = null, string errorMessage = null)
         {
-            return new PostgreSqlLtrServerBackupOperationData(id, name, resourceType, systemData, datasourceSizeInBytes, dataTransferredInBytes, backupName, backupMetadata, status, startOn, endOn, percentComplete, errorCode, errorMessage, serializedAdditionalRawData: null);
+            return new PostgreSqlLtrServerBackupOperationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                datasourceSizeInBytes,
+                dataTransferredInBytes,
+                backupName,
+                backupMetadata,
+                status,
+                startOn,
+                endOn,
+                percentComplete,
+                errorCode,
+                errorMessage,
+                serializedAdditionalRawData: null);
         }
     }
 }

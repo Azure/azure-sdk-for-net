@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartObject();
             writer.WritePropertyName("url"u8);
             writer.WriteStringValue(Uri.AbsoluteUri);
-            if (Optional.IsDefined(Username))
+            if (Username != null)
             {
                 writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(Username);
             }
-            if (Optional.IsDefined(Password))
+            if (Password != null)
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 return null;
             }
             Uri uri = default;
-            Optional<string> username = default;
-            Optional<string> password = default;
+            string username = default;
+            string password = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackendProxyContract(uri, username.Value, password.Value, serializedAdditionalRawData);
+            return new BackendProxyContract(uri, username, password, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackendProxyContract>.Write(ModelReaderWriterOptions options)

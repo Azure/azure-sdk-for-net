@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(UserPrincipal))
+            if (UserPrincipal != null)
             {
                 writer.WritePropertyName("userPrincipal"u8);
                 writer.WriteStringValue(UserPrincipal);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             {
                 return null;
             }
-            Optional<string> userPrincipal = default;
+            string userPrincipal = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DynatraceSsoDetailsContent(userPrincipal.Value, serializedAdditionalRawData);
+            return new DynatraceSsoDetailsContent(userPrincipal, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DynatraceSsoDetailsContent>.Write(ModelReaderWriterOptions options)

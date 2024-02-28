@@ -21,9 +21,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="packageLocation"/> or <paramref name="connectVia"/> is null. </exception>
         public ExecuteSsisPackageActivity(string name, SsisPackageLocation packageLocation, IntegrationRuntimeReference connectVia) : base(name)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(packageLocation, nameof(packageLocation));
-            Argument.AssertNotNull(connectVia, nameof(connectVia));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (packageLocation == null)
+            {
+                throw new ArgumentNullException(nameof(packageLocation));
+            }
+            if (connectVia == null)
+            {
+                throw new ArgumentNullException(nameof(connectVia));
+            }
 
             PackageLocation = packageLocation;
             ConnectVia = connectVia;

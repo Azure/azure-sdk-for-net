@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             writer.WriteStartObject();
             writer.WritePropertyName("artifactType"u8);
             writer.WriteStringValue(ArtifactType.ToString());
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(DependsOnProfile))
+            if (DependsOnProfile != null)
             {
                 writer.WritePropertyName("dependsOnProfile"u8);
                 writer.WriteObjectValue(DependsOnProfile);
@@ -80,11 +80,11 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "ArmTemplate": return AzureOperatorNexusNetworkFunctionArmTemplateApplication.DeserializeAzureOperatorNexusNetworkFunctionArmTemplateApplication(element);
-                    case "ImageFile": return AzureOperatorNexusNetworkFunctionImageApplication.DeserializeAzureOperatorNexusNetworkFunctionImageApplication(element);
+                    case "ArmTemplate": return AzureOperatorNexusNetworkFunctionArmTemplateApplication.DeserializeAzureOperatorNexusNetworkFunctionArmTemplateApplication(element, options);
+                    case "ImageFile": return AzureOperatorNexusNetworkFunctionImageApplication.DeserializeAzureOperatorNexusNetworkFunctionImageApplication(element, options);
                 }
             }
-            return UnknownAzureOperatorNexusNetworkFunctionApplication.DeserializeUnknownAzureOperatorNexusNetworkFunctionApplication(element);
+            return UnknownAzureOperatorNexusNetworkFunctionApplication.DeserializeUnknownAzureOperatorNexusNetworkFunctionApplication(element, options);
         }
 
         BinaryData IPersistableModel<AzureOperatorNexusNetworkFunctionApplication>.Write(ModelReaderWriterOptions options)

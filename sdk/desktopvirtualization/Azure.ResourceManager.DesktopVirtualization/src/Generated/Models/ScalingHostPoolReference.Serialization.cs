@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(HostPoolId))
+            if (HostPoolId != null)
             {
                 writer.WritePropertyName("hostPoolArmPath"u8);
                 writer.WriteStringValue(HostPoolId);
             }
-            if (Optional.IsDefined(IsScalingPlanEnabled))
+            if (IsScalingPlanEnabled.HasValue)
             {
                 writer.WritePropertyName("scalingPlanEnabled"u8);
                 writer.WriteBooleanValue(IsScalingPlanEnabled.Value);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> hostPoolArmPath = default;
-            Optional<bool> scalingPlanEnabled = default;
+            ResourceIdentifier hostPoolArmPath = default;
+            bool? scalingPlanEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScalingHostPoolReference(hostPoolArmPath.Value, Optional.ToNullable(scalingPlanEnabled), serializedAdditionalRawData);
+            return new ScalingHostPoolReference(hostPoolArmPath, scalingPlanEnabled, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScalingHostPoolReference>.Write(ModelReaderWriterOptions options)

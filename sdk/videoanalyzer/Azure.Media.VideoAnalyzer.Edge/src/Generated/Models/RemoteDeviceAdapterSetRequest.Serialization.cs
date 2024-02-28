@@ -17,7 +17,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartObject();
             writer.WritePropertyName("remoteDeviceAdapter"u8);
             writer.WriteObjectValue(RemoteDeviceAdapter);
-            if (Optional.IsDefined(ApiVersion))
+            if (ApiVersion != null)
             {
                 writer.WritePropertyName("@apiVersion"u8);
                 writer.WriteStringValue(ApiVersion);
@@ -33,7 +33,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             }
             RemoteDeviceAdapter remoteDeviceAdapter = default;
             string methodName = default;
-            Optional<string> apiVersion = default;
+            string apiVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("remoteDeviceAdapter"u8))
@@ -52,7 +52,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new RemoteDeviceAdapterSetRequest(methodName, apiVersion.Value, remoteDeviceAdapter);
+            return new RemoteDeviceAdapterSetRequest(methodName, apiVersion, remoteDeviceAdapter);
         }
     }
 }

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(SupportExpiryDate))
+            if (options.Format != "W" && SupportExpiryDate != null)
             {
                 writer.WritePropertyName("supportExpiryDate"u8);
                 writer.WriteStringValue(SupportExpiryDate);
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetClusterVersion))
+            if (options.Format != "W" && TargetClusterVersion != null)
             {
                 writer.WritePropertyName("targetClusterVersion"u8);
                 writer.WriteStringValue(TargetClusterVersion);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<string> supportExpiryDate = default;
-            Optional<string> targetClusterVersion = default;
+            string supportExpiryDate = default;
+            string targetClusterVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterAvailableVersion(supportExpiryDate.Value, targetClusterVersion.Value, serializedAdditionalRawData);
+            return new ClusterAvailableVersion(supportExpiryDate, targetClusterVersion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterAvailableVersion>.Write(ModelReaderWriterOptions options)

@@ -22,10 +22,10 @@ namespace Azure.Monitor.Query.Models
             }
             DateTimeOffset starttime = default;
             DateTimeOffset endtime = default;
-            Optional<TimeSpan> interval = default;
-            Optional<string> @namespace = default;
-            Optional<AzureLocation> resourceregion = default;
-            Optional<ResourceIdentifier> resourceid = default;
+            TimeSpan? interval = default;
+            string @namespace = default;
+            AzureLocation resourceregion = default;
+            ResourceIdentifier resourceid = default;
             IReadOnlyList<MetricResult> value = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -82,7 +82,14 @@ namespace Azure.Monitor.Query.Models
                     continue;
                 }
             }
-            return new MetricsBatchResultValues(starttime, endtime, Optional.ToNullable(interval), @namespace.Value, resourceregion, resourceid.Value, value);
+            return new MetricsBatchResultValues(
+                starttime,
+                endtime,
+                interval,
+                @namespace,
+                resourceregion,
+                resourceid,
+                value);
         }
     }
 }

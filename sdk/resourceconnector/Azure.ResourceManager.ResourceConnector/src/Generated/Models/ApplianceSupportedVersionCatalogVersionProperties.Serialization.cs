@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Audience))
+            if (options.Format != "W" && Audience != null)
             {
                 writer.WritePropertyName("audience"u8);
                 writer.WriteStringValue(Audience);
             }
-            if (options.Format != "W" && Optional.IsDefined(Catalog))
+            if (options.Format != "W" && Catalog != null)
             {
                 writer.WritePropertyName("catalog"u8);
                 writer.WriteStringValue(Catalog);
             }
-            if (options.Format != "W" && Optional.IsDefined(Offer))
+            if (options.Format != "W" && Offer != null)
             {
                 writer.WritePropertyName("offer"u8);
                 writer.WriteStringValue(Offer);
             }
-            if (options.Format != "W" && Optional.IsDefined(Version))
+            if (options.Format != "W" && Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             {
                 return null;
             }
-            Optional<string> audience = default;
-            Optional<string> catalog = default;
-            Optional<string> offer = default;
-            Optional<string> version = default;
+            string audience = default;
+            string catalog = default;
+            string offer = default;
+            string version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplianceSupportedVersionCatalogVersionProperties(audience.Value, catalog.Value, offer.Value, version.Value, serializedAdditionalRawData);
+            return new ApplianceSupportedVersionCatalogVersionProperties(audience, catalog, offer, version, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplianceSupportedVersionCatalogVersionProperties>.Write(ModelReaderWriterOptions options)

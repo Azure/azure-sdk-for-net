@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Mode))
+            if (Mode.HasValue)
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (Optional.IsDefined(NoSquashNidLists))
+            if (NoSquashNidLists != null)
             {
                 writer.WritePropertyName("noSquashNidLists"u8);
                 writer.WriteStringValue(NoSquashNidLists);
             }
-            if (Optional.IsDefined(SquashUID))
+            if (SquashUID.HasValue)
             {
                 writer.WritePropertyName("squashUID"u8);
                 writer.WriteNumberValue(SquashUID.Value);
             }
-            if (Optional.IsDefined(SquashGID))
+            if (SquashGID.HasValue)
             {
                 writer.WritePropertyName("squashGID"u8);
                 writer.WriteNumberValue(SquashGID.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Optional<AmlFileSystemSquashMode> mode = default;
-            Optional<string> noSquashNidLists = default;
-            Optional<long> squashUID = default;
-            Optional<long> squashGID = default;
-            Optional<string> status = default;
+            AmlFileSystemSquashMode? mode = default;
+            string noSquashNidLists = default;
+            long? squashUID = default;
+            long? squashGID = default;
+            string status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AmlFileSystemRootSquashSettings(Optional.ToNullable(mode), noSquashNidLists.Value, Optional.ToNullable(squashUID), Optional.ToNullable(squashGID), status.Value, serializedAdditionalRawData);
+            return new AmlFileSystemRootSquashSettings(
+                mode,
+                noSquashNidLists,
+                squashUID,
+                squashGID,
+                status,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AmlFileSystemRootSquashSettings>.Write(ModelReaderWriterOptions options)

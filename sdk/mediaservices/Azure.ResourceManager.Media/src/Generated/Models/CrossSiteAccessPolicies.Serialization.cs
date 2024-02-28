@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ClientAccessPolicy))
+            if (ClientAccessPolicy != null)
             {
                 writer.WritePropertyName("clientAccessPolicy"u8);
                 writer.WriteStringValue(ClientAccessPolicy);
             }
-            if (Optional.IsDefined(CrossDomainPolicy))
+            if (CrossDomainPolicy != null)
             {
                 writer.WritePropertyName("crossDomainPolicy"u8);
                 writer.WriteStringValue(CrossDomainPolicy);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<string> clientAccessPolicy = default;
-            Optional<string> crossDomainPolicy = default;
+            string clientAccessPolicy = default;
+            string crossDomainPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CrossSiteAccessPolicies(clientAccessPolicy.Value, crossDomainPolicy.Value, serializedAdditionalRawData);
+            return new CrossSiteAccessPolicies(clientAccessPolicy, crossDomainPolicy, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CrossSiteAccessPolicies>.Write(ModelReaderWriterOptions options)

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -20,7 +19,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public SalesforceServiceCloudObjectDataset(DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
         {
-            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
+            if (linkedServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(linkedServiceName));
+            }
 
             DatasetType = "SalesforceServiceCloudObject";
         }
@@ -40,6 +42,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             ObjectApiName = objectApiName;
             DatasetType = datasetType ?? "SalesforceServiceCloudObject";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SalesforceServiceCloudObjectDataset"/> for deserialization. </summary>
+        internal SalesforceServiceCloudObjectDataset()
+        {
         }
 
         /// <summary> The Salesforce Service Cloud object API name. Type: string (or Expression with resultType string). </summary>

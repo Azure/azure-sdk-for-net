@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(State))
+            if (State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(StatusCode))
+            if (StatusCode != null)
             {
                 writer.WritePropertyName("statusCode"u8);
                 writer.WriteStringValue(StatusCode);
             }
-            if (Optional.IsDefined(StatusDescription))
+            if (StatusDescription != null)
             {
                 writer.WritePropertyName("statusDescription"u8);
                 writer.WriteStringValue(StatusDescription);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Optional<AmlFileSystemHealthStateType> state = default;
-            Optional<string> statusCode = default;
-            Optional<string> statusDescription = default;
+            AmlFileSystemHealthStateType? state = default;
+            string statusCode = default;
+            string statusDescription = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AmlFileSystemHealth(Optional.ToNullable(state), statusCode.Value, statusDescription.Value, serializedAdditionalRawData);
+            return new AmlFileSystemHealth(state, statusCode, statusDescription, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AmlFileSystemHealth>.Write(ModelReaderWriterOptions options)

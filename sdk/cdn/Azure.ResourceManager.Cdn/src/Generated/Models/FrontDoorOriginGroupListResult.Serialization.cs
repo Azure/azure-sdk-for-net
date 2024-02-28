@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<FrontDoorOriginGroupData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<FrontDoorOriginGroupData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<FrontDoorOriginGroupData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<FrontDoorOriginGroupData> array = new List<FrontDoorOriginGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FrontDoorOriginGroupData.DeserializeFrontDoorOriginGroupData(item));
+                        array.Add(FrontDoorOriginGroupData.DeserializeFrontDoorOriginGroupData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorOriginGroupListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new FrontDoorOriginGroupListResult(value ?? new ChangeTrackingList<FrontDoorOriginGroupData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorOriginGroupListResult>.Write(ModelReaderWriterOptions options)

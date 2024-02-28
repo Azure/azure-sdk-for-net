@@ -52,7 +52,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public AppPlatformNameAvailabilityContent(ResourceType resourceType, string name)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
 
             ResourceType = resourceType;
             Name = name;

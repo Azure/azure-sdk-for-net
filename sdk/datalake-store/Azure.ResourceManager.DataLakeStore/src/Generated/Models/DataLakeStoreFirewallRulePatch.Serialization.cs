@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(StartIPAddress))
+            if (StartIPAddress != null)
             {
                 writer.WritePropertyName("startIpAddress"u8);
                 writer.WriteStringValue(StartIPAddress.ToString());
             }
-            if (Optional.IsDefined(EndIPAddress))
+            if (EndIPAddress != null)
             {
                 writer.WritePropertyName("endIpAddress"u8);
                 writer.WriteStringValue(EndIPAddress.ToString());
@@ -78,8 +78,8 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             {
                 return null;
             }
-            Optional<IPAddress> startIPAddress = default;
-            Optional<IPAddress> endIPAddress = default;
+            IPAddress startIPAddress = default;
+            IPAddress endIPAddress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataLakeStoreFirewallRulePatch(startIPAddress.Value, endIPAddress.Value, serializedAdditionalRawData);
+            return new DataLakeStoreFirewallRulePatch(startIPAddress, endIPAddress, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataLakeStoreFirewallRulePatch>.Write(ModelReaderWriterOptions options)

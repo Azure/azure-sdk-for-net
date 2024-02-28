@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<UpdateMobilityServiceRequestProperties> properties = default;
+            UpdateMobilityServiceRequestProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    properties = UpdateMobilityServiceRequestProperties.DeserializeUpdateMobilityServiceRequestProperties(property.Value);
+                    properties = UpdateMobilityServiceRequestProperties.DeserializeUpdateMobilityServiceRequestProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UpdateMobilityServiceContent(properties.Value, serializedAdditionalRawData);
+            return new UpdateMobilityServiceContent(properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UpdateMobilityServiceContent>.Write(ModelReaderWriterOptions options)

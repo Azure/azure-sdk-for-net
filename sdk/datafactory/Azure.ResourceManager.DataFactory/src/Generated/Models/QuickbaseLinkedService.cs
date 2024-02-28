@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -21,8 +20,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> or <paramref name="userToken"/> is null. </exception>
         public QuickbaseLinkedService(DataFactoryElement<string> uri, DataFactorySecretBaseDefinition userToken)
         {
-            Argument.AssertNotNull(uri, nameof(uri));
-            Argument.AssertNotNull(userToken, nameof(userToken));
+            if (uri == null)
+            {
+                throw new ArgumentNullException(nameof(uri));
+            }
+            if (userToken == null)
+            {
+                throw new ArgumentNullException(nameof(userToken));
+            }
 
             Uri = uri;
             UserToken = userToken;
@@ -45,6 +50,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             UserToken = userToken;
             EncryptedCredential = encryptedCredential;
             LinkedServiceType = linkedServiceType ?? "Quickbase";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="QuickbaseLinkedService"/> for deserialization. </summary>
+        internal QuickbaseLinkedService()
+        {
         }
 
         /// <summary> The url to connect Quickbase source. Type: string (or Expression with resultType string). </summary>

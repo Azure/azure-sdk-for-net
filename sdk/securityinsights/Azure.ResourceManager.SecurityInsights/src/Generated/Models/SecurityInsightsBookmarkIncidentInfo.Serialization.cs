@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IncidentId))
+            if (IncidentId.HasValue)
             {
                 writer.WritePropertyName("incidentId"u8);
                 writer.WriteStringValue(IncidentId.Value);
             }
-            if (Optional.IsDefined(Severity))
+            if (Severity.HasValue)
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
-            if (Optional.IsDefined(Title))
+            if (Title != null)
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Optional.IsDefined(RelationName))
+            if (RelationName != null)
             {
                 writer.WritePropertyName("relationName"u8);
                 writer.WriteStringValue(RelationName);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<Guid> incidentId = default;
-            Optional<SecurityInsightsIncidentSeverity> severity = default;
-            Optional<string> title = default;
-            Optional<string> relationName = default;
+            Guid? incidentId = default;
+            SecurityInsightsIncidentSeverity? severity = default;
+            string title = default;
+            string relationName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsBookmarkIncidentInfo(Optional.ToNullable(incidentId), Optional.ToNullable(severity), title.Value, relationName.Value, serializedAdditionalRawData);
+            return new SecurityInsightsBookmarkIncidentInfo(incidentId, severity, title, relationName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityInsightsBookmarkIncidentInfo>.Write(ModelReaderWriterOptions options)

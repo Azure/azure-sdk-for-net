@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FipsState))
+            if (FipsState.HasValue)
             {
                 writer.WritePropertyName("fipsState"u8);
                 writer.WriteNumberValue(FipsState.Value);
             }
-            if (Optional.IsDefined(ActivationStatus))
+            if (ActivationStatus != null)
             {
                 writer.WritePropertyName("activationStatus"u8);
                 writer.WriteStringValue(ActivationStatus);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             {
                 return null;
             }
-            Optional<int> fipsState = default;
-            Optional<string> activationStatus = default;
+            int? fipsState = default;
+            string activationStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudHsmClusterSecurityDomainProperties(Optional.ToNullable(fipsState), activationStatus.Value, serializedAdditionalRawData);
+            return new CloudHsmClusterSecurityDomainProperties(fipsState, activationStatus, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudHsmClusterSecurityDomainProperties>.Write(ModelReaderWriterOptions options)

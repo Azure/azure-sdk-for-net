@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             writer.WritePropertyName("ruleGroupName"u8);
             writer.WriteStringValue(RuleGroupName);
-            if (Optional.IsCollectionDefined(Rules))
+            if (!(Rules is ChangeTrackingList<int> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             string ruleGroupName = default;
-            Optional<IList<int>> rules = default;
+            IList<int> rules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayFirewallDisabledRuleGroup(ruleGroupName, Optional.ToList(rules), serializedAdditionalRawData);
+            return new ApplicationGatewayFirewallDisabledRuleGroup(ruleGroupName, rules ?? new ChangeTrackingList<int>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayFirewallDisabledRuleGroup>.Write(ModelReaderWriterOptions options)

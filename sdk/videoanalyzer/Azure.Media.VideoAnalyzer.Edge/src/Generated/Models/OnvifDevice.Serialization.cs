@@ -16,22 +16,22 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Hostname))
+            if (Hostname != null)
             {
                 writer.WritePropertyName("hostname"u8);
                 writer.WriteObjectValue(Hostname);
             }
-            if (Optional.IsDefined(SystemDateTime))
+            if (SystemDateTime != null)
             {
                 writer.WritePropertyName("systemDateTime"u8);
                 writer.WriteObjectValue(SystemDateTime);
             }
-            if (Optional.IsDefined(Dns))
+            if (Dns != null)
             {
                 writer.WritePropertyName("dns"u8);
                 writer.WriteObjectValue(Dns);
             }
-            if (Optional.IsCollectionDefined(MediaProfiles))
+            if (!(MediaProfiles is ChangeTrackingList<MediaProfile> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("mediaProfiles"u8);
                 writer.WriteStartArray();
@@ -50,10 +50,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<OnvifHostName> hostname = default;
-            Optional<OnvifSystemDateTime> systemDateTime = default;
-            Optional<OnvifDns> dns = default;
-            Optional<IList<MediaProfile>> mediaProfiles = default;
+            OnvifHostName hostname = default;
+            OnvifSystemDateTime systemDateTime = default;
+            OnvifDns dns = default;
+            IList<MediaProfile> mediaProfiles = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hostname"u8))
@@ -98,7 +98,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new OnvifDevice(hostname.Value, systemDateTime.Value, dns.Value, Optional.ToList(mediaProfiles));
+            return new OnvifDevice(hostname, systemDateTime, dns, mediaProfiles ?? new ChangeTrackingList<MediaProfile>());
         }
     }
 }

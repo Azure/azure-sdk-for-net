@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Hash))
+            if (Hash != null)
             {
                 writer.WritePropertyName("hash"u8);
                 writer.WriteObjectValue(Hash);
             }
-            if (Optional.IsDefined(SourceType))
+            if (SourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(SourceType.Value.ToString());
             }
-            if (Optional.IsDefined(Value))
+            if (Value != null)
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (Optional.IsDefined(Version))
+            if (Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<AutomationContentHash> hash = default;
-            Optional<AutomationContentSourceType> type = default;
-            Optional<string> value = default;
-            Optional<string> version = default;
+            AutomationContentHash hash = default;
+            AutomationContentSourceType? type = default;
+            string value = default;
+            string version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    hash = AutomationContentHash.DeserializeAutomationContentHash(property.Value);
+                    hash = AutomationContentHash.DeserializeAutomationContentHash(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationContentSource(hash.Value, Optional.ToNullable(type), value.Value, version.Value, serializedAdditionalRawData);
+            return new AutomationContentSource(hash, type, value, version, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationContentSource>.Write(ModelReaderWriterOptions options)

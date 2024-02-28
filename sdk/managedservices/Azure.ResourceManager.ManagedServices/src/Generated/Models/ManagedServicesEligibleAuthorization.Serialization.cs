@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.ManagedServices.Models
             writer.WriteStartObject();
             writer.WritePropertyName("principalId"u8);
             writer.WriteStringValue(PrincipalId);
-            if (Optional.IsDefined(PrincipalIdDisplayName))
+            if (PrincipalIdDisplayName != null)
             {
                 writer.WritePropertyName("principalIdDisplayName"u8);
                 writer.WriteStringValue(PrincipalIdDisplayName);
             }
             writer.WritePropertyName("roleDefinitionId"u8);
             writer.WriteStringValue(RoleDefinitionId);
-            if (Optional.IsDefined(JustInTimeAccessPolicy))
+            if (JustInTimeAccessPolicy != null)
             {
                 writer.WritePropertyName("justInTimeAccessPolicy"u8);
                 writer.WriteObjectValue(JustInTimeAccessPolicy);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 return null;
             }
             Guid principalId = default;
-            Optional<string> principalIdDisplayName = default;
+            string principalIdDisplayName = default;
             string roleDefinitionId = default;
-            Optional<ManagedServicesJustInTimeAccessPolicy> justInTimeAccessPolicy = default;
+            ManagedServicesJustInTimeAccessPolicy justInTimeAccessPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                     {
                         continue;
                     }
-                    justInTimeAccessPolicy = ManagedServicesJustInTimeAccessPolicy.DeserializeManagedServicesJustInTimeAccessPolicy(property.Value);
+                    justInTimeAccessPolicy = ManagedServicesJustInTimeAccessPolicy.DeserializeManagedServicesJustInTimeAccessPolicy(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedServicesEligibleAuthorization(principalId, principalIdDisplayName.Value, roleDefinitionId, justInTimeAccessPolicy.Value, serializedAdditionalRawData);
+            return new ManagedServicesEligibleAuthorization(principalId, principalIdDisplayName, roleDefinitionId, justInTimeAccessPolicy, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedServicesEligibleAuthorization>.Write(ModelReaderWriterOptions options)

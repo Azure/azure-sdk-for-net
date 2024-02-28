@@ -28,42 +28,42 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ApnsCertificate))
+            if (ApnsCertificate != null)
             {
                 writer.WritePropertyName("apnsCertificate"u8);
                 writer.WriteStringValue(ApnsCertificate);
             }
-            if (Optional.IsDefined(CertificateKey))
+            if (CertificateKey != null)
             {
                 writer.WritePropertyName("certificateKey"u8);
                 writer.WriteStringValue(CertificateKey);
             }
-            if (Optional.IsDefined(Endpoint))
+            if (Endpoint != null)
             {
                 writer.WritePropertyName("endpoint"u8);
                 writer.WriteStringValue(Endpoint.AbsoluteUri);
             }
-            if (Optional.IsDefined(ThumbprintString))
+            if (ThumbprintString != null)
             {
                 writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(ThumbprintString);
             }
-            if (Optional.IsDefined(KeyId))
+            if (KeyId != null)
             {
                 writer.WritePropertyName("keyId"u8);
                 writer.WriteStringValue(KeyId);
             }
-            if (Optional.IsDefined(AppName))
+            if (AppName != null)
             {
                 writer.WritePropertyName("appName"u8);
                 writer.WriteStringValue(AppName);
             }
-            if (Optional.IsDefined(AppId))
+            if (AppId != null)
             {
                 writer.WritePropertyName("appId"u8);
                 writer.WriteStringValue(AppId);
             }
-            if (Optional.IsDefined(Token))
+            if (Token != null)
             {
                 writer.WritePropertyName("token"u8);
                 writer.WriteStringValue(Token);
@@ -107,14 +107,14 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             {
                 return null;
             }
-            Optional<string> apnsCertificate = default;
-            Optional<string> certificateKey = default;
-            Optional<Uri> endpoint = default;
-            Optional<string> thumbprint = default;
-            Optional<string> keyId = default;
-            Optional<string> appName = default;
-            Optional<string> appId = default;
-            Optional<string> token = default;
+            string apnsCertificate = default;
+            string certificateKey = default;
+            Uri endpoint = default;
+            string thumbprint = default;
+            string keyId = default;
+            string appName = default;
+            string appId = default;
+            string token = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -181,7 +181,16 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NotificationHubApnsCredential(apnsCertificate.Value, certificateKey.Value, endpoint.Value, thumbprint.Value, keyId.Value, appName.Value, appId.Value, token.Value, serializedAdditionalRawData);
+            return new NotificationHubApnsCredential(
+                apnsCertificate,
+                certificateKey,
+                endpoint,
+                thumbprint,
+                keyId,
+                appName,
+                appId,
+                token,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NotificationHubApnsCredential>.Write(ModelReaderWriterOptions options)

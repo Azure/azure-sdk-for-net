@@ -19,59 +19,59 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Recursive))
+            if (Recursive != null)
             {
                 writer.WritePropertyName("recursive"u8);
                 writer.WriteObjectValue(Recursive);
             }
-            if (Optional.IsDefined(WildcardFolderPath))
+            if (WildcardFolderPath != null)
             {
                 writer.WritePropertyName("wildcardFolderPath"u8);
                 writer.WriteObjectValue(WildcardFolderPath);
             }
-            if (Optional.IsDefined(WildcardFileName))
+            if (WildcardFileName != null)
             {
                 writer.WritePropertyName("wildcardFileName"u8);
                 writer.WriteObjectValue(WildcardFileName);
             }
-            if (Optional.IsDefined(EnablePartitionDiscovery))
+            if (EnablePartitionDiscovery != null)
             {
                 writer.WritePropertyName("enablePartitionDiscovery"u8);
                 writer.WriteObjectValue(EnablePartitionDiscovery);
             }
-            if (Optional.IsDefined(PartitionRootPath))
+            if (PartitionRootPath != null)
             {
                 writer.WritePropertyName("partitionRootPath"u8);
                 writer.WriteObjectValue(PartitionRootPath);
             }
-            if (Optional.IsDefined(FileListPath))
+            if (FileListPath != null)
             {
                 writer.WritePropertyName("fileListPath"u8);
                 writer.WriteObjectValue(FileListPath);
             }
-            if (Optional.IsDefined(DeleteFilesAfterCompletion))
+            if (DeleteFilesAfterCompletion != null)
             {
                 writer.WritePropertyName("deleteFilesAfterCompletion"u8);
                 writer.WriteObjectValue(DeleteFilesAfterCompletion);
             }
-            if (Optional.IsDefined(ModifiedDatetimeStart))
+            if (ModifiedDatetimeStart != null)
             {
                 writer.WritePropertyName("modifiedDatetimeStart"u8);
                 writer.WriteObjectValue(ModifiedDatetimeStart);
             }
-            if (Optional.IsDefined(ModifiedDatetimeEnd))
+            if (ModifiedDatetimeEnd != null)
             {
                 writer.WritePropertyName("modifiedDatetimeEnd"u8);
                 writer.WriteObjectValue(ModifiedDatetimeEnd);
             }
-            if (Optional.IsDefined(DisableChunking))
+            if (DisableChunking != null)
             {
                 writer.WritePropertyName("disableChunking"u8);
                 writer.WriteObjectValue(DisableChunking);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Optional.IsDefined(MaxConcurrentConnections))
+            if (MaxConcurrentConnections != null)
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 writer.WriteObjectValue(MaxConcurrentConnections);
@@ -90,18 +90,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> recursive = default;
-            Optional<object> wildcardFolderPath = default;
-            Optional<object> wildcardFileName = default;
-            Optional<object> enablePartitionDiscovery = default;
-            Optional<object> partitionRootPath = default;
-            Optional<object> fileListPath = default;
-            Optional<object> deleteFilesAfterCompletion = default;
-            Optional<object> modifiedDatetimeStart = default;
-            Optional<object> modifiedDatetimeEnd = default;
-            Optional<object> disableChunking = default;
+            object recursive = default;
+            object wildcardFolderPath = default;
+            object wildcardFileName = default;
+            object enablePartitionDiscovery = default;
+            object partitionRootPath = default;
+            object fileListPath = default;
+            object deleteFilesAfterCompletion = default;
+            object modifiedDatetimeStart = default;
+            object modifiedDatetimeEnd = default;
+            object disableChunking = default;
             string type = default;
-            Optional<object> maxConcurrentConnections = default;
+            object maxConcurrentConnections = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -213,7 +213,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SftpReadSettings(type, maxConcurrentConnections.Value, additionalProperties, recursive.Value, wildcardFolderPath.Value, wildcardFileName.Value, enablePartitionDiscovery.Value, partitionRootPath.Value, fileListPath.Value, deleteFilesAfterCompletion.Value, modifiedDatetimeStart.Value, modifiedDatetimeEnd.Value, disableChunking.Value);
+            return new SftpReadSettings(
+                type,
+                maxConcurrentConnections,
+                additionalProperties,
+                recursive,
+                wildcardFolderPath,
+                wildcardFileName,
+                enablePartitionDiscovery,
+                partitionRootPath,
+                fileListPath,
+                deleteFilesAfterCompletion,
+                modifiedDatetimeStart,
+                modifiedDatetimeEnd,
+                disableChunking);
         }
 
         internal partial class SftpReadSettingsConverter : JsonConverter<SftpReadSettings>

@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentNullException"> <paramref name="consumerGroupName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<EventHubsConsumerGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string consumerGroupName, EventHubsConsumerGroupData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(consumerGroupName, nameof(consumerGroupName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (consumerGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(consumerGroupName));
+            }
+            if (consumerGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(consumerGroupName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _eventHubsConsumerGroupConsumerGroupsClientDiagnostics.CreateScope("EventHubsConsumerGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentNullException"> <paramref name="consumerGroupName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<EventHubsConsumerGroupResource> CreateOrUpdate(WaitUntil waitUntil, string consumerGroupName, EventHubsConsumerGroupData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(consumerGroupName, nameof(consumerGroupName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (consumerGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(consumerGroupName));
+            }
+            if (consumerGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(consumerGroupName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _eventHubsConsumerGroupConsumerGroupsClientDiagnostics.CreateScope("EventHubsConsumerGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentNullException"> <paramref name="consumerGroupName"/> is null. </exception>
         public virtual async Task<Response<EventHubsConsumerGroupResource>> GetAsync(string consumerGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(consumerGroupName, nameof(consumerGroupName));
+            if (consumerGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(consumerGroupName));
+            }
+            if (consumerGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(consumerGroupName));
+            }
 
             using var scope = _eventHubsConsumerGroupConsumerGroupsClientDiagnostics.CreateScope("EventHubsConsumerGroupCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentNullException"> <paramref name="consumerGroupName"/> is null. </exception>
         public virtual Response<EventHubsConsumerGroupResource> Get(string consumerGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(consumerGroupName, nameof(consumerGroupName));
+            if (consumerGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(consumerGroupName));
+            }
+            if (consumerGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(consumerGroupName));
+            }
 
             using var scope = _eventHubsConsumerGroupConsumerGroupsClientDiagnostics.CreateScope("EventHubsConsumerGroupCollection.Get");
             scope.Start();
@@ -332,7 +366,14 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentNullException"> <paramref name="consumerGroupName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string consumerGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(consumerGroupName, nameof(consumerGroupName));
+            if (consumerGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(consumerGroupName));
+            }
+            if (consumerGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(consumerGroupName));
+            }
 
             using var scope = _eventHubsConsumerGroupConsumerGroupsClientDiagnostics.CreateScope("EventHubsConsumerGroupCollection.Exists");
             scope.Start();
@@ -375,7 +416,14 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentNullException"> <paramref name="consumerGroupName"/> is null. </exception>
         public virtual Response<bool> Exists(string consumerGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(consumerGroupName, nameof(consumerGroupName));
+            if (consumerGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(consumerGroupName));
+            }
+            if (consumerGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(consumerGroupName));
+            }
 
             using var scope = _eventHubsConsumerGroupConsumerGroupsClientDiagnostics.CreateScope("EventHubsConsumerGroupCollection.Exists");
             scope.Start();
@@ -418,7 +466,14 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentNullException"> <paramref name="consumerGroupName"/> is null. </exception>
         public virtual async Task<NullableResponse<EventHubsConsumerGroupResource>> GetIfExistsAsync(string consumerGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(consumerGroupName, nameof(consumerGroupName));
+            if (consumerGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(consumerGroupName));
+            }
+            if (consumerGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(consumerGroupName));
+            }
 
             using var scope = _eventHubsConsumerGroupConsumerGroupsClientDiagnostics.CreateScope("EventHubsConsumerGroupCollection.GetIfExists");
             scope.Start();
@@ -463,7 +518,14 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentNullException"> <paramref name="consumerGroupName"/> is null. </exception>
         public virtual NullableResponse<EventHubsConsumerGroupResource> GetIfExists(string consumerGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(consumerGroupName, nameof(consumerGroupName));
+            if (consumerGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(consumerGroupName));
+            }
+            if (consumerGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(consumerGroupName));
+            }
 
             using var scope = _eventHubsConsumerGroupConsumerGroupsClientDiagnostics.CreateScope("EventHubsConsumerGroupCollection.GetIfExists");
             scope.Start();

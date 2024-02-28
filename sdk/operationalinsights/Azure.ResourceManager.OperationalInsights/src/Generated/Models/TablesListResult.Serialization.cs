@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<OperationalInsightsTableData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<OperationalInsightsTableData>> value = default;
+            IReadOnlyList<OperationalInsightsTableData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     List<OperationalInsightsTableData> array = new List<OperationalInsightsTableData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OperationalInsightsTableData.DeserializeOperationalInsightsTableData(item));
+                        array.Add(OperationalInsightsTableData.DeserializeOperationalInsightsTableData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TablesListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new TablesListResult(value ?? new ChangeTrackingList<OperationalInsightsTableData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TablesListResult>.Write(ModelReaderWriterOptions options)

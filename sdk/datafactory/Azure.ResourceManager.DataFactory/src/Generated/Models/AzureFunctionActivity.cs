@@ -22,8 +22,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="functionName"/> is null. </exception>
         public AzureFunctionActivity(string name, AzureFunctionActivityMethod method, DataFactoryElement<string> functionName) : base(name)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(functionName, nameof(functionName));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (functionName == null)
+            {
+                throw new ArgumentNullException(nameof(functionName));
+            }
 
             Method = method;
             FunctionName = functionName;
@@ -53,6 +59,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Headers = headers;
             Body = body;
             ActivityType = activityType ?? "AzureFunctionActivity";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureFunctionActivity"/> for deserialization. </summary>
+        internal AzureFunctionActivity()
+        {
         }
 
         /// <summary> Rest API method for target endpoint. </summary>

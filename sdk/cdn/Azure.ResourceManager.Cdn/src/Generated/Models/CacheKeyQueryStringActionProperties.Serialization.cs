@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStringValue(ActionType.ToString());
             writer.WritePropertyName("queryStringBehavior"u8);
             writer.WriteStringValue(QueryStringBehavior.ToString());
-            if (Optional.IsDefined(QueryParameters))
+            if (QueryParameters != null)
             {
                 if (QueryParameters != null)
                 {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             CacheKeyQueryStringActionType typeName = default;
             QueryStringBehavior queryStringBehavior = default;
-            Optional<string> queryParameters = default;
+            string queryParameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CacheKeyQueryStringActionProperties(typeName, queryStringBehavior, queryParameters.Value, serializedAdditionalRawData);
+            return new CacheKeyQueryStringActionProperties(typeName, queryStringBehavior, queryParameters, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CacheKeyQueryStringActionProperties>.Write(ModelReaderWriterOptions options)

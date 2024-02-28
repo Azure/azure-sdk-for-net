@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Azure": return SiteRecoveryFabricProviderCreationContent.DeserializeSiteRecoveryFabricProviderCreationContent(element);
-                    case "InMageRcm": return InMageRcmFabricCreationContent.DeserializeInMageRcmFabricCreationContent(element);
-                    case "VMwareV2": return VMwareV2FabricCreationContent.DeserializeVMwareV2FabricCreationContent(element);
+                    case "Azure": return SiteRecoveryFabricProviderCreationContent.DeserializeSiteRecoveryFabricProviderCreationContent(element, options);
+                    case "InMageRcm": return InMageRcmFabricCreationContent.DeserializeInMageRcmFabricCreationContent(element, options);
+                    case "VMwareV2": return VMwareV2FabricCreationContent.DeserializeVMwareV2FabricCreationContent(element, options);
                 }
             }
-            return UnknownFabricSpecificCreationContent.DeserializeUnknownFabricSpecificCreationContent(element);
+            return UnknownFabricSpecificCreationContent.DeserializeUnknownFabricSpecificCreationContent(element, options);
         }
 
         BinaryData IPersistableModel<FabricSpecificCreationContent>.Write(ModelReaderWriterOptions options)

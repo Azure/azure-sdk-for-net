@@ -18,12 +18,9 @@ namespace Azure.ResourceManager.Models
     {
         /// <summary> Initializes a new instance of <see cref="OperationStatusResult"/>. </summary>
         /// <param name="status"> Operation status. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="status"/> is null. </exception>
         [InitializationConstructor]
         public OperationStatusResult(string status)
         {
-            Argument.AssertNotNull(status, nameof(status));
-
             Status = status;
             Operations = new ChangeTrackingList<OperationStatusResult>();
         }

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -18,9 +17,9 @@ namespace Azure.Communication.CallAutomation
             {
                 return null;
             }
-            Optional<string> dialogId = default;
-            Optional<BaseDialog> dialog = default;
-            Optional<string> operationContext = default;
+            string dialogId = default;
+            BaseDialog dialog = default;
+            string operationContext = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dialogId"u8))
@@ -43,7 +42,7 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new DialogStateResponseInternal(dialogId.Value, dialog.Value, operationContext.Value);
+            return new DialogStateResponseInternal(dialogId, dialog, operationContext);
         }
     }
 }

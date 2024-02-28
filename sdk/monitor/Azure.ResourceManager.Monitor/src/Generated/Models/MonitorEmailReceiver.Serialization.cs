@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("emailAddress"u8);
             writer.WriteStringValue(EmailAddress);
-            if (Optional.IsDefined(UseCommonAlertSchema))
+            if (UseCommonAlertSchema.HasValue)
             {
                 writer.WritePropertyName("useCommonAlertSchema"u8);
                 writer.WriteBooleanValue(UseCommonAlertSchema.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             string name = default;
             string emailAddress = default;
-            Optional<bool> useCommonAlertSchema = default;
-            Optional<MonitorReceiverStatus> status = default;
+            bool? useCommonAlertSchema = default;
+            MonitorReceiverStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorEmailReceiver(name, emailAddress, Optional.ToNullable(useCommonAlertSchema), Optional.ToNullable(status), serializedAdditionalRawData);
+            return new MonitorEmailReceiver(name, emailAddress, useCommonAlertSchema, status, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorEmailReceiver>.Write(ModelReaderWriterOptions options)

@@ -18,12 +18,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ByoaSecretAkvUrl))
+            if (ByoaSecretAkvUrl != null)
             {
                 writer.WritePropertyName("byoaSecretAkvUrl"u8);
                 writer.WriteStringValue(ByoaSecretAkvUrl);
             }
-            if (Optional.IsDefined(ByoaSecretName))
+            if (ByoaSecretName != null)
             {
                 writer.WritePropertyName("byoaSecretName"u8);
                 writer.WriteStringValue(ByoaSecretName);
@@ -37,8 +37,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> byoaSecretAkvUrl = default;
-            Optional<string> byoaSecretName = default;
+            string byoaSecretAkvUrl = default;
+            string byoaSecretName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("byoaSecretAkvUrl"u8))
@@ -52,7 +52,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new GitHubClientSecret(byoaSecretAkvUrl.Value, byoaSecretName.Value);
+            return new GitHubClientSecret(byoaSecretAkvUrl, byoaSecretName);
         }
 
         internal partial class GitHubClientSecretConverter : JsonConverter<GitHubClientSecret>

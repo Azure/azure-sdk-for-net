@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(CollectionIds))
+            if (!(CollectionIds is ChangeTrackingList<Guid> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("collectionIds"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Action))
+            if (Action != null)
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action);
@@ -82,8 +82,8 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<IList<Guid>> collectionIds = default;
-            Optional<string> action = default;
+            IList<Guid> collectionIds = default;
+            string action = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BulkCollectionsActionContent(Optional.ToList(collectionIds), action.Value, serializedAdditionalRawData);
+            return new BulkCollectionsActionContent(collectionIds ?? new ChangeTrackingList<Guid>(), action, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BulkCollectionsActionContent>.Write(ModelReaderWriterOptions options)

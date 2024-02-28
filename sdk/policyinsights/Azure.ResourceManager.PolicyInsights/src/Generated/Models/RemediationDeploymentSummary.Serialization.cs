@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(TotalDeployments))
+            if (options.Format != "W" && TotalDeployments.HasValue)
             {
                 writer.WritePropertyName("totalDeployments"u8);
                 writer.WriteNumberValue(TotalDeployments.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(SuccessfulDeployments))
+            if (options.Format != "W" && SuccessfulDeployments.HasValue)
             {
                 writer.WritePropertyName("successfulDeployments"u8);
                 writer.WriteNumberValue(SuccessfulDeployments.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(FailedDeployments))
+            if (options.Format != "W" && FailedDeployments.HasValue)
             {
                 writer.WritePropertyName("failedDeployments"u8);
                 writer.WriteNumberValue(FailedDeployments.Value);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<int> totalDeployments = default;
-            Optional<int> successfulDeployments = default;
-            Optional<int> failedDeployments = default;
+            int? totalDeployments = default;
+            int? successfulDeployments = default;
+            int? failedDeployments = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RemediationDeploymentSummary(Optional.ToNullable(totalDeployments), Optional.ToNullable(successfulDeployments), Optional.ToNullable(failedDeployments), serializedAdditionalRawData);
+            return new RemediationDeploymentSummary(totalDeployments, successfulDeployments, failedDeployments, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RemediationDeploymentSummary>.Write(ModelReaderWriterOptions options)

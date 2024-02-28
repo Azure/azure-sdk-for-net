@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Elastic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<ElasticMonitorResourceData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Elastic.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Elastic.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ElasticMonitorResourceData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ElasticMonitorResourceData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Elastic.Models
                     List<ElasticMonitorResourceData> array = new List<ElasticMonitorResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ElasticMonitorResourceData.DeserializeElasticMonitorResourceData(item));
+                        array.Add(ElasticMonitorResourceData.DeserializeElasticMonitorResourceData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Elastic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ElasticMonitorResourceListResponse(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ElasticMonitorResourceListResponse(value ?? new ChangeTrackingList<ElasticMonitorResourceData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticMonitorResourceListResponse>.Write(ModelReaderWriterOptions options)

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ActionType))
+            if (ActionType.HasValue)
             {
                 writer.WritePropertyName("actionType"u8);
                 writer.WriteStringValue(ActionType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(CustomAction))
+            if (CustomAction != null)
             {
                 writer.WritePropertyName("customAction"u8);
                 writer.WriteObjectValue(CustomAction);
             }
-            if (Optional.IsDefined(MinProcessExecutionTime))
+            if (MinProcessExecutionTime != null)
             {
                 writer.WritePropertyName("minProcessExecutionTime"u8);
                 writer.WriteStringValue(MinProcessExecutionTime);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<AutoHealActionType> actionType = default;
-            Optional<AutoHealCustomAction> customAction = default;
-            Optional<string> minProcessExecutionTime = default;
+            AutoHealActionType? actionType = default;
+            AutoHealCustomAction customAction = default;
+            string minProcessExecutionTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    customAction = AutoHealCustomAction.DeserializeAutoHealCustomAction(property.Value);
+                    customAction = AutoHealCustomAction.DeserializeAutoHealCustomAction(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("minProcessExecutionTime"u8))
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutoHealActions(Optional.ToNullable(actionType), customAction.Value, minProcessExecutionTime.Value, serializedAdditionalRawData);
+            return new AutoHealActions(actionType, customAction, minProcessExecutionTime, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutoHealActions>.Write(ModelReaderWriterOptions options)

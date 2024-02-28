@@ -18,12 +18,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Type))
+            if (Type != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(Type);
             }
-            if (Optional.IsDefined(DistributionColumn))
+            if (DistributionColumn != null)
             {
                 writer.WritePropertyName("distributionColumn"u8);
                 writer.WriteStringValue(DistributionColumn);
@@ -37,8 +37,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> type = default;
-            Optional<string> distributionColumn = default;
+            string type = default;
+            string distributionColumn = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -52,7 +52,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new LinkTableRequestTargetDistributionOptions(type.Value, distributionColumn.Value);
+            return new LinkTableRequestTargetDistributionOptions(type, distributionColumn);
         }
 
         internal partial class LinkTableRequestTargetDistributionOptionsConverter : JsonConverter<LinkTableRequestTargetDistributionOptions>

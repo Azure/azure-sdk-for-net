@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -75,11 +75,11 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "MigrationLevelOutput": return MigrateSsisTaskOutputMigrationLevel.DeserializeMigrateSsisTaskOutputMigrationLevel(element);
-                    case "SsisProjectLevelOutput": return MigrateSsisTaskOutputProjectLevel.DeserializeMigrateSsisTaskOutputProjectLevel(element);
+                    case "MigrationLevelOutput": return MigrateSsisTaskOutputMigrationLevel.DeserializeMigrateSsisTaskOutputMigrationLevel(element, options);
+                    case "SsisProjectLevelOutput": return MigrateSsisTaskOutputProjectLevel.DeserializeMigrateSsisTaskOutputProjectLevel(element, options);
                 }
             }
-            return UnknownMigrateSsisTaskOutput.DeserializeUnknownMigrateSsisTaskOutput(element);
+            return UnknownMigrateSsisTaskOutput.DeserializeUnknownMigrateSsisTaskOutput(element, options);
         }
 
         BinaryData IPersistableModel<MigrateSsisTaskOutput>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SasToken))
+            if (SasToken != null)
             {
                 if (SasToken != null)
                 {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> sasToken = default;
+            string sasToken = default;
             SecretsType secretsType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningSasDatastoreSecrets(secretsType, serializedAdditionalRawData, sasToken.Value);
+            return new MachineLearningSasDatastoreSecrets(secretsType, serializedAdditionalRawData, sasToken);
         }
 
         BinaryData IPersistableModel<MachineLearningSasDatastoreSecrets>.Write(ModelReaderWriterOptions options)

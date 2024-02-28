@@ -20,8 +20,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="expression"/> is null. </exception>
         public IfConditionActivity(string name, DataFactoryExpression expression) : base(name)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(expression, nameof(expression));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (expression == null)
+            {
+                throw new ArgumentNullException(nameof(expression));
+            }
 
             Expression = expression;
             IfTrueActivities = new ChangeTrackingList<PipelineActivity>();
@@ -55,6 +61,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             IfTrueActivities = ifTrueActivities;
             IfFalseActivities = ifFalseActivities;
             ActivityType = activityType ?? "IfCondition";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IfConditionActivity"/> for deserialization. </summary>
+        internal IfConditionActivity()
+        {
         }
 
         /// <summary> An expression that would evaluate to Boolean. This is used to determine the block of activities (ifTrueActivities or ifFalseActivities) that will be executed. </summary>

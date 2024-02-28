@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EventRequestMessage))
+            if (EventRequestMessage != null)
             {
                 writer.WritePropertyName("eventRequestMessage"u8);
                 writer.WriteObjectValue(EventRequestMessage);
             }
-            if (Optional.IsDefined(EventResponseMessage))
+            if (EventResponseMessage != null)
             {
                 writer.WritePropertyName("eventResponseMessage"u8);
                 writer.WriteObjectValue(EventResponseMessage);
             }
-            if (Optional.IsDefined(Id))
+            if (Id.HasValue)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id.Value);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<ContainerRegistryWebhookEventRequestMessage> eventRequestMessage = default;
-            Optional<ContainerRegistryWebhookEventResponseMessage> eventResponseMessage = default;
-            Optional<Guid> id = default;
+            ContainerRegistryWebhookEventRequestMessage eventRequestMessage = default;
+            ContainerRegistryWebhookEventResponseMessage eventResponseMessage = default;
+            Guid? id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    eventRequestMessage = ContainerRegistryWebhookEventRequestMessage.DeserializeContainerRegistryWebhookEventRequestMessage(property.Value);
+                    eventRequestMessage = ContainerRegistryWebhookEventRequestMessage.DeserializeContainerRegistryWebhookEventRequestMessage(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("eventResponseMessage"u8))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    eventResponseMessage = ContainerRegistryWebhookEventResponseMessage.DeserializeContainerRegistryWebhookEventResponseMessage(property.Value);
+                    eventResponseMessage = ContainerRegistryWebhookEventResponseMessage.DeserializeContainerRegistryWebhookEventResponseMessage(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryWebhookEvent(Optional.ToNullable(id), serializedAdditionalRawData, eventRequestMessage.Value, eventResponseMessage.Value);
+            return new ContainerRegistryWebhookEvent(id, serializedAdditionalRawData, eventRequestMessage, eventResponseMessage);
         }
 
         BinaryData IPersistableModel<ContainerRegistryWebhookEvent>.Write(ModelReaderWriterOptions options)

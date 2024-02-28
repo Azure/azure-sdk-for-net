@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteStringValue(AccountKey);
             writer.WritePropertyName("relativeMountPath"u8);
             writer.WriteStringValue(RelativeMountPath);
-            if (Optional.IsDefined(MountOptions))
+            if (MountOptions != null)
             {
                 writer.WritePropertyName("mountOptions"u8);
                 writer.WriteStringValue(MountOptions);
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Batch.Models
             Uri azureFileUrl = default;
             string accountKey = default;
             string relativeMountPath = default;
-            Optional<string> mountOptions = default;
+            string mountOptions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -117,7 +117,13 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchFileShareConfiguration(accountName, azureFileUrl, accountKey, relativeMountPath, mountOptions.Value, serializedAdditionalRawData);
+            return new BatchFileShareConfiguration(
+                accountName,
+                azureFileUrl,
+                accountKey,
+                relativeMountPath,
+                mountOptions,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchFileShareConfiguration>.Write(ModelReaderWriterOptions options)

@@ -116,7 +116,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="maintenanceWindowOptionsName"/> is null. </exception>
         public virtual async Task<Response<MaintenanceWindowOptionResource>> GetAsync(string maintenanceWindowOptionsName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(maintenanceWindowOptionsName, nameof(maintenanceWindowOptionsName));
+            if (maintenanceWindowOptionsName == null)
+            {
+                throw new ArgumentNullException(nameof(maintenanceWindowOptionsName));
+            }
 
             using var scope = _maintenanceWindowOptionClientDiagnostics.CreateScope("MaintenanceWindowOptionResource.Get");
             scope.Start();
@@ -160,7 +163,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="maintenanceWindowOptionsName"/> is null. </exception>
         public virtual Response<MaintenanceWindowOptionResource> Get(string maintenanceWindowOptionsName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(maintenanceWindowOptionsName, nameof(maintenanceWindowOptionsName));
+            if (maintenanceWindowOptionsName == null)
+            {
+                throw new ArgumentNullException(nameof(maintenanceWindowOptionsName));
+            }
 
             using var scope = _maintenanceWindowOptionClientDiagnostics.CreateScope("MaintenanceWindowOptionResource.Get");
             scope.Start();

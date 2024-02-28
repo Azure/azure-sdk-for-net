@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Key))
+            if (Key != null)
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "String": return StaticStringRoutingEnrichment.DeserializeStaticStringRoutingEnrichment(element);
+                    case "String": return StaticStringRoutingEnrichment.DeserializeStaticStringRoutingEnrichment(element, options);
                 }
             }
-            return UnknownStaticRoutingEnrichment.DeserializeUnknownStaticRoutingEnrichment(element);
+            return UnknownStaticRoutingEnrichment.DeserializeUnknownStaticRoutingEnrichment(element, options);
         }
 
         BinaryData IPersistableModel<StaticRoutingEnrichment>.Write(ModelReaderWriterOptions options)

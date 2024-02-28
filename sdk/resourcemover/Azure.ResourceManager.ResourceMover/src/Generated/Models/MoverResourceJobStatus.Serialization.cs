@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(JobName))
+            if (options.Format != "W" && JobName.HasValue)
             {
                 writer.WritePropertyName("jobName"u8);
                 writer.WriteStringValue(JobName.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(JobProgress))
+            if (options.Format != "W" && JobProgress != null)
             {
                 writer.WritePropertyName("jobProgress"u8);
                 writer.WriteStringValue(JobProgress);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<MoverResourceJobName> jobName = default;
-            Optional<string> jobProgress = default;
+            MoverResourceJobName? jobName = default;
+            string jobProgress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MoverResourceJobStatus(Optional.ToNullable(jobName), jobProgress.Value, serializedAdditionalRawData);
+            return new MoverResourceJobStatus(jobName, jobProgress, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MoverResourceJobStatus>.Write(ModelReaderWriterOptions options)

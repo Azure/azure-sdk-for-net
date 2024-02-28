@@ -22,9 +22,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<MediaJobState> previousState = default;
-            Optional<MediaJobState> state = default;
-            Optional<IReadOnlyDictionary<string, string>> correlationData = default;
+            MediaJobState? previousState = default;
+            MediaJobState? state = default;
+            IReadOnlyDictionary<string, string> correlationData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("previousState"u8))
@@ -60,7 +60,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new MediaJobCancelingEventData(Optional.ToNullable(previousState), Optional.ToNullable(state), Optional.ToDictionary(correlationData));
+            return new MediaJobCancelingEventData(previousState, state, correlationData ?? new ChangeTrackingDictionary<string, string>());
         }
 
         internal partial class MediaJobCancelingEventDataConverter : JsonConverter<MediaJobCancelingEventData>

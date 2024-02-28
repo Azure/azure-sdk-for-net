@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceId))
+            if (ResourceId != null)
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Optional.IsDefined(LabSubnetName))
+            if (LabSubnetName != null)
             {
                 writer.WritePropertyName("labSubnetName"u8);
                 writer.WriteStringValue(LabSubnetName);
             }
-            if (Optional.IsDefined(AllowPublicIP))
+            if (AllowPublicIP.HasValue)
             {
                 writer.WritePropertyName("allowPublicIp"u8);
                 writer.WriteStringValue(AllowPublicIP.Value.ToString());
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<string> labSubnetName = default;
-            Optional<DevTestLabUsagePermissionType> allowPublicIP = default;
+            ResourceIdentifier resourceId = default;
+            string labSubnetName = default;
+            DevTestLabUsagePermissionType? allowPublicIP = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabSubnet(resourceId.Value, labSubnetName.Value, Optional.ToNullable(allowPublicIP), serializedAdditionalRawData);
+            return new DevTestLabSubnet(resourceId, labSubnetName, allowPublicIP, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabSubnet>.Write(ModelReaderWriterOptions options)

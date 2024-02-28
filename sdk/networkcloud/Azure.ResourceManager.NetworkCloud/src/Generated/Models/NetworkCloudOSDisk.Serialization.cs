@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CreateOption))
+            if (CreateOption.HasValue)
             {
                 writer.WritePropertyName("createOption"u8);
                 writer.WriteStringValue(CreateOption.Value.ToString());
             }
-            if (Optional.IsDefined(DeleteOption))
+            if (DeleteOption.HasValue)
             {
                 writer.WritePropertyName("deleteOption"u8);
                 writer.WriteStringValue(DeleteOption.Value.ToString());
@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<OSDiskCreateOption> createOption = default;
-            Optional<OSDiskDeleteOption> deleteOption = default;
+            OSDiskCreateOption? createOption = default;
+            OSDiskDeleteOption? deleteOption = default;
             long diskSizeGB = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudOSDisk(Optional.ToNullable(createOption), Optional.ToNullable(deleteOption), diskSizeGB, serializedAdditionalRawData);
+            return new NetworkCloudOSDisk(createOption, deleteOption, diskSizeGB, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudOSDisk>.Write(ModelReaderWriterOptions options)

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<DiagnosticSettingData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DiagnosticSettingData>> value = default;
+            IReadOnlyList<DiagnosticSettingData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<DiagnosticSettingData> array = new List<DiagnosticSettingData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DiagnosticSettingData.DeserializeDiagnosticSettingData(item));
+                        array.Add(DiagnosticSettingData.DeserializeDiagnosticSettingData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiagnosticSettingsResourceCollection(Optional.ToList(value), serializedAdditionalRawData);
+            return new DiagnosticSettingsResourceCollection(value ?? new ChangeTrackingList<DiagnosticSettingData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiagnosticSettingsResourceCollection>.Write(ModelReaderWriterOptions options)

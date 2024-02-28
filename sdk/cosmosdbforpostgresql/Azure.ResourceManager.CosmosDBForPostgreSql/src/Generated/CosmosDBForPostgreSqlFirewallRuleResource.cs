@@ -281,7 +281,10 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<CosmosDBForPostgreSqlFirewallRuleResource>> UpdateAsync(WaitUntil waitUntil, CosmosDBForPostgreSqlFirewallRuleData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _cosmosDBForPostgreSqlFirewallRuleFirewallRulesClientDiagnostics.CreateScope("CosmosDBForPostgreSqlFirewallRuleResource.Update");
             scope.Start();
@@ -327,7 +330,10 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<CosmosDBForPostgreSqlFirewallRuleResource> Update(WaitUntil waitUntil, CosmosDBForPostgreSqlFirewallRuleData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _cosmosDBForPostgreSqlFirewallRuleFirewallRulesClientDiagnostics.CreateScope("CosmosDBForPostgreSqlFirewallRuleResource.Update");
             scope.Start();

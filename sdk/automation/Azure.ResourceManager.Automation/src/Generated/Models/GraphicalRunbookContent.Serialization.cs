@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RawContent))
+            if (RawContent != null)
             {
                 if (RawContent != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Automation.Models
                     writer.WriteNull("rawContent");
                 }
             }
-            if (Optional.IsDefined(GraphRunbookJson))
+            if (GraphRunbookJson != null)
             {
                 if (GraphRunbookJson != null)
                 {
@@ -88,8 +88,8 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<RawGraphicalRunbookContent> rawContent = default;
-            Optional<string> graphRunbookJson = default;
+            RawGraphicalRunbookContent rawContent = default;
+            string graphRunbookJson = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Automation.Models
                         rawContent = null;
                         continue;
                     }
-                    rawContent = RawGraphicalRunbookContent.DeserializeRawGraphicalRunbookContent(property.Value);
+                    rawContent = RawGraphicalRunbookContent.DeserializeRawGraphicalRunbookContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("graphRunbookJson"u8))
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GraphicalRunbookContent(rawContent.Value, graphRunbookJson.Value, serializedAdditionalRawData);
+            return new GraphicalRunbookContent(rawContent, graphRunbookJson, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GraphicalRunbookContent>.Write(ModelReaderWriterOptions options)

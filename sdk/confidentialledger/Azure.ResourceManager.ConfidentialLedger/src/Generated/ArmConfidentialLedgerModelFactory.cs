@@ -40,7 +40,15 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ConfidentialLedgerData(id, name, resourceType, systemData, tags, location, properties, serializedAdditionalRawData: null);
+            return new ConfidentialLedgerData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConfidentialLedgerProperties"/>. </summary>
@@ -59,7 +67,17 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             aadBasedSecurityPrincipals ??= new List<AadBasedSecurityPrincipal>();
             certBasedSecurityPrincipals ??= new List<CertBasedSecurityPrincipal>();
 
-            return new ConfidentialLedgerProperties(ledgerName, ledgerUri, identityServiceUri, ledgerInternalNamespace, runningState, ledgerType, provisioningState, aadBasedSecurityPrincipals?.ToList(), certBasedSecurityPrincipals?.ToList(), serializedAdditionalRawData: null);
+            return new ConfidentialLedgerProperties(
+                ledgerName,
+                ledgerUri,
+                identityServiceUri,
+                ledgerInternalNamespace,
+                runningState,
+                ledgerType,
+                provisioningState,
+                aadBasedSecurityPrincipals?.ToList(),
+                certBasedSecurityPrincipals?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ConfidentialLedger.ManagedCcfData"/>. </summary>
@@ -75,7 +93,15 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ManagedCcfData(id, name, resourceType, systemData, tags, location, properties, serializedAdditionalRawData: null);
+            return new ManagedCcfData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ManagedCcfProperties"/>. </summary>
@@ -91,7 +117,15 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         {
             memberIdentityCertificates ??= new List<ConfidentialLedgerMemberIdentityCertificate>();
 
-            return new ManagedCcfProperties(appName, appUri, identityServiceUri, memberIdentityCertificates?.ToList(), deploymentType, provisioningState, nodeCount, serializedAdditionalRawData: null);
+            return new ManagedCcfProperties(
+                appName,
+                appUri,
+                identityServiceUri,
+                memberIdentityCertificates?.ToList(),
+                deploymentType,
+                provisioningState,
+                nodeCount,
+                serializedAdditionalRawData: null);
         }
     }
 }

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(UnavailableOccuredOn))
+            if (UnavailableOccuredOn.HasValue)
             {
                 writer.WritePropertyName("unavailableOccuredTime"u8);
                 writer.WriteStringValue(UnavailableOccuredOn.Value, "O");
             }
-            if (Optional.IsDefined(ResolvedOn))
+            if (ResolvedOn.HasValue)
             {
                 writer.WritePropertyName("resolvedTime"u8);
                 writer.WriteStringValue(ResolvedOn.Value, "O");
             }
-            if (Optional.IsDefined(UnavailableSummary))
+            if (UnavailableSummary != null)
             {
                 writer.WritePropertyName("unavailableSummary"u8);
                 writer.WriteStringValue(UnavailableSummary);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> unavailableOccuredTime = default;
-            Optional<DateTimeOffset> resolvedTime = default;
-            Optional<string> unavailableSummary = default;
+            DateTimeOffset? unavailableOccuredTime = default;
+            DateTimeOffset? resolvedTime = default;
+            string unavailableSummary = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceHealthAvailabilityStateRecentlyResolved(Optional.ToNullable(unavailableOccuredTime), Optional.ToNullable(resolvedTime), unavailableSummary.Value, serializedAdditionalRawData);
+            return new ResourceHealthAvailabilityStateRecentlyResolved(unavailableOccuredTime, resolvedTime, unavailableSummary, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceHealthAvailabilityStateRecentlyResolved>.Write(ModelReaderWriterOptions options)

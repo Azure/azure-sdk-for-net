@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SkipShutdown))
+            if (SkipShutdown.HasValue)
             {
                 writer.WritePropertyName("skipShutdown"u8);
                 writer.WriteStringValue(SkipShutdown.Value.ToString());
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<BareMetalMachineSkipShutdown> skipShutdown = default;
+            BareMetalMachineSkipShutdown? skipShutdown = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BareMetalMachinePowerOffContent(Optional.ToNullable(skipShutdown), serializedAdditionalRawData);
+            return new BareMetalMachinePowerOffContent(skipShutdown, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BareMetalMachinePowerOffContent>.Write(ModelReaderWriterOptions options)

@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DevCenterCatalogResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string catalogName, DevCenterCatalogData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (catalogName == null)
+            {
+                throw new ArgumentNullException(nameof(catalogName));
+            }
+            if (catalogName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(catalogName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _devCenterCatalogCatalogsClientDiagnostics.CreateScope("DevCenterCatalogCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DevCenterCatalogResource> CreateOrUpdate(WaitUntil waitUntil, string catalogName, DevCenterCatalogData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (catalogName == null)
+            {
+                throw new ArgumentNullException(nameof(catalogName));
+            }
+            if (catalogName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(catalogName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _devCenterCatalogCatalogsClientDiagnostics.CreateScope("DevCenterCatalogCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> is null. </exception>
         public virtual async Task<Response<DevCenterCatalogResource>> GetAsync(string catalogName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+            if (catalogName == null)
+            {
+                throw new ArgumentNullException(nameof(catalogName));
+            }
+            if (catalogName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(catalogName));
+            }
 
             using var scope = _devCenterCatalogCatalogsClientDiagnostics.CreateScope("DevCenterCatalogCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> is null. </exception>
         public virtual Response<DevCenterCatalogResource> Get(string catalogName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+            if (catalogName == null)
+            {
+                throw new ArgumentNullException(nameof(catalogName));
+            }
+            if (catalogName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(catalogName));
+            }
 
             using var scope = _devCenterCatalogCatalogsClientDiagnostics.CreateScope("DevCenterCatalogCollection.Get");
             scope.Start();
@@ -330,7 +364,14 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string catalogName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+            if (catalogName == null)
+            {
+                throw new ArgumentNullException(nameof(catalogName));
+            }
+            if (catalogName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(catalogName));
+            }
 
             using var scope = _devCenterCatalogCatalogsClientDiagnostics.CreateScope("DevCenterCatalogCollection.Exists");
             scope.Start();
@@ -373,7 +414,14 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> is null. </exception>
         public virtual Response<bool> Exists(string catalogName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+            if (catalogName == null)
+            {
+                throw new ArgumentNullException(nameof(catalogName));
+            }
+            if (catalogName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(catalogName));
+            }
 
             using var scope = _devCenterCatalogCatalogsClientDiagnostics.CreateScope("DevCenterCatalogCollection.Exists");
             scope.Start();
@@ -416,7 +464,14 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> is null. </exception>
         public virtual async Task<NullableResponse<DevCenterCatalogResource>> GetIfExistsAsync(string catalogName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+            if (catalogName == null)
+            {
+                throw new ArgumentNullException(nameof(catalogName));
+            }
+            if (catalogName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(catalogName));
+            }
 
             using var scope = _devCenterCatalogCatalogsClientDiagnostics.CreateScope("DevCenterCatalogCollection.GetIfExists");
             scope.Start();
@@ -461,7 +516,14 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> is null. </exception>
         public virtual NullableResponse<DevCenterCatalogResource> GetIfExists(string catalogName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+            if (catalogName == null)
+            {
+                throw new ArgumentNullException(nameof(catalogName));
+            }
+            if (catalogName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(catalogName));
+            }
 
             using var scope = _devCenterCatalogCatalogsClientDiagnostics.CreateScope("DevCenterCatalogCollection.GetIfExists");
             scope.Start();

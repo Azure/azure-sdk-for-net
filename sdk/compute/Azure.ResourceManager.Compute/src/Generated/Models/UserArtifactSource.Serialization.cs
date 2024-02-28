@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             writer.WritePropertyName("mediaLink"u8);
             writer.WriteStringValue(MediaLink);
-            if (Optional.IsDefined(DefaultConfigurationLink))
+            if (DefaultConfigurationLink != null)
             {
                 writer.WritePropertyName("defaultConfigurationLink"u8);
                 writer.WriteStringValue(DefaultConfigurationLink);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             string mediaLink = default;
-            Optional<string> defaultConfigurationLink = default;
+            string defaultConfigurationLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UserArtifactSource(mediaLink, defaultConfigurationLink.Value, serializedAdditionalRawData);
+            return new UserArtifactSource(mediaLink, defaultConfigurationLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UserArtifactSource>.Write(ModelReaderWriterOptions options)

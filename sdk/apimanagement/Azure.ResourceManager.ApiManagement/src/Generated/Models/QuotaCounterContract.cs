@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -60,8 +59,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <exception cref="ArgumentNullException"> <paramref name="counterKey"/> or <paramref name="periodKey"/> is null. </exception>
         internal QuotaCounterContract(string counterKey, string periodKey, DateTimeOffset periodStartOn, DateTimeOffset periodEndOn)
         {
-            Argument.AssertNotNull(counterKey, nameof(counterKey));
-            Argument.AssertNotNull(periodKey, nameof(periodKey));
+            if (counterKey == null)
+            {
+                throw new ArgumentNullException(nameof(counterKey));
+            }
+            if (periodKey == null)
+            {
+                throw new ArgumentNullException(nameof(periodKey));
+            }
 
             CounterKey = counterKey;
             PeriodKey = periodKey;

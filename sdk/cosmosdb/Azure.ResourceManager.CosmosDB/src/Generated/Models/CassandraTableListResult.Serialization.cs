@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<CassandraTableData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CassandraTableData>> value = default;
+            IReadOnlyList<CassandraTableData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CassandraTableData> array = new List<CassandraTableData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CassandraTableData.DeserializeCassandraTableData(item));
+                        array.Add(CassandraTableData.DeserializeCassandraTableData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CassandraTableListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new CassandraTableListResult(value ?? new ChangeTrackingList<CassandraTableData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CassandraTableListResult>.Write(ModelReaderWriterOptions options)

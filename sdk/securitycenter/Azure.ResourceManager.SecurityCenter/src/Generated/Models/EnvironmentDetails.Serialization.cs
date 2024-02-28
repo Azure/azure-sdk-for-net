@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NativeResourceId))
+            if (NativeResourceId != null)
             {
                 writer.WritePropertyName("nativeResourceId"u8);
                 writer.WriteStringValue(NativeResourceId);
             }
-            if (Optional.IsDefined(EnvironmentHierarchyId))
+            if (EnvironmentHierarchyId != null)
             {
                 writer.WritePropertyName("environmentHierarchyId"u8);
                 writer.WriteStringValue(EnvironmentHierarchyId);
             }
-            if (Optional.IsDefined(OrganizationalHierarchyId))
+            if (OrganizationalHierarchyId != null)
             {
                 writer.WritePropertyName("organizationalHierarchyId"u8);
                 writer.WriteStringValue(OrganizationalHierarchyId);
             }
-            if (Optional.IsDefined(SubscriptionId))
+            if (SubscriptionId != null)
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (Optional.IsDefined(TenantId))
+            if (TenantId.HasValue)
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> nativeResourceId = default;
-            Optional<string> environmentHierarchyId = default;
-            Optional<string> organizationalHierarchyId = default;
-            Optional<string> subscriptionId = default;
-            Optional<Guid> tenantId = default;
+            ResourceIdentifier nativeResourceId = default;
+            string environmentHierarchyId = default;
+            string organizationalHierarchyId = default;
+            string subscriptionId = default;
+            Guid? tenantId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EnvironmentDetails(nativeResourceId.Value, environmentHierarchyId.Value, organizationalHierarchyId.Value, subscriptionId.Value, Optional.ToNullable(tenantId), serializedAdditionalRawData);
+            return new EnvironmentDetails(
+                nativeResourceId,
+                environmentHierarchyId,
+                organizationalHierarchyId,
+                subscriptionId,
+                tenantId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EnvironmentDetails>.Write(ModelReaderWriterOptions options)

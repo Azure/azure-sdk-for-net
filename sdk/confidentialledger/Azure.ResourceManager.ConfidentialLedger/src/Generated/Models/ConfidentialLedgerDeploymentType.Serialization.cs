@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(LanguageRuntime))
+            if (LanguageRuntime.HasValue)
             {
                 writer.WritePropertyName("languageRuntime"u8);
                 writer.WriteStringValue(LanguageRuntime.Value.ToString());
             }
-            if (Optional.IsDefined(AppSourceUri))
+            if (AppSourceUri != null)
             {
                 writer.WritePropertyName("appSourceUri"u8);
                 writer.WriteStringValue(AppSourceUri.AbsoluteUri);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             {
                 return null;
             }
-            Optional<ConfidentialLedgerLanguageRuntime> languageRuntime = default;
-            Optional<Uri> appSourceUri = default;
+            ConfidentialLedgerLanguageRuntime? languageRuntime = default;
+            Uri appSourceUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConfidentialLedgerDeploymentType(Optional.ToNullable(languageRuntime), appSourceUri.Value, serializedAdditionalRawData);
+            return new ConfidentialLedgerDeploymentType(languageRuntime, appSourceUri, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConfidentialLedgerDeploymentType>.Write(ModelReaderWriterOptions options)
