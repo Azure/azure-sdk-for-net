@@ -111,7 +111,12 @@ namespace Azure.Core
         protected override BinaryContent? ContentCore
         {
             get => _content;
-            set => _content = (RequestContent?)value;
+            set => _content = value switch
+            {
+                RequestContent content => content,
+                BinaryContent => new RequestContent.BinaryContentAdapter(value),
+                null => null,
+            };
         }
 
         /// <summary>

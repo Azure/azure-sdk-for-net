@@ -339,7 +339,7 @@ namespace Azure.Core
         /// the Azure.Core RequestContent interface, so that it can be used as
         /// though it were a RequestContent in Azure.Core.
         /// </summary>
-        private sealed class BinaryContentAdapter : RequestContent
+        internal sealed class BinaryContentAdapter : RequestContent
         {
             private readonly BinaryContent _content;
 
