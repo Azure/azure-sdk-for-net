@@ -65,7 +65,7 @@ jobs:
             RunSmokeTests: $(RunSmokeTests)
 
   - ${{ each matrix in parameters.TestMatrix }}:
-    - job: SmokeTest ${{ matrix.Name }}
+    - job: SmokeTest_${{ matrix.Name }}
       displayName: Run Smoke Test ${{ matrix.Name }}
       ${{ if eq(parameters.Daily, false) }}:
         dependsOn: smoke_test_eligibility
