@@ -16,8 +16,9 @@ jobs:
   - ${{ if eq(parameters.Daily, false) }}:
     - job: smoke_test_eligibility
       pool:
-        name: "azsdk-pool-mms-ubuntu-2004-general"
+        name: "azsdk-pool-mms-ubuntu-2004-general-1espt"
         vmImage: "MMSUbuntu20.04"
+        os: linux
       displayName: Check Smoke Test Eligibility
       steps:
         # pipelines only supports template each when it generates the entire script block.
@@ -48,24 +49,29 @@ jobs:
     strategy:
       matrix:
         Ubuntu_Net60:
-          Pool: "azsdk-pool-mms-ubuntu-2004-general"
-          OSVmImage: "MMSUbuntu20.04"
+          Pool: "azsdk-pool-mms-ubuntu-2004-general-1espt"
+          OSVmImage: "azsdk-pool-mms-ubuntu-2004-general-1es-pt"
+          os: linux
           TestTargetFramework: net6.0
         Windows_NetFramework:
-          Pool: "azsdk-pool-mms-win-2022-general"
-          OSVmImage: "windows-2022"
+          Pool: "azsdk-pool-mms-win-2022-general-1espt"
+          OSVmImage: "azsdk-pool-mms-win-2022-general-1es-pt"
+          os: windows
           TestTargetFramework: net462
         Windows_Net60:
-          Pool: "azsdk-pool-mms-win-2022-general"
-          OSVmImage: "windows-2022"
+          Pool: "azsdk-pool-mms-win-2022-general-1espt"
+          OSVmImage: "azsdk-pool-mms-win-2022-general-1es-pt"
+          os: windows
           TestTargetFramework: net6.0
         Windows_Net70:
-          Pool: "azsdk-pool-mms-win-2022-general"
-          OSVmImage: "windows-2022"
+          Pool: "azsdk-pool-mms-win-2022-general-1espt"
+          OSVmImage: "azsdk-pool-mms-win-2022-general-1es-pt"
+          os: windows
           TestTargetFramework: net7.0
     pool:
       name: $(Pool)
       vmImage: $(OSVmImage)
+      os: ${{ parameters.OSName }}
     timeoutInMinutes: ${{ parameters.TimeoutInMinutes }}
 
     steps:
