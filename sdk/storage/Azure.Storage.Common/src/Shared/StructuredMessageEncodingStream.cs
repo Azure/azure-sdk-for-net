@@ -24,9 +24,10 @@ internal class StructuredMessageEncodingStream : Stream
     private readonly StructuredMessage.Flags _flags;
     private bool _disposed;
 
-    private bool UseCrcSegment => _flags.HasFlag(StructuredMessage.Flags.CrcSegment);
-    private readonly StorageCrc64HashAlgorithm _runningCrc;
-    private readonly byte[] _runningCrcCheckpoints;
+    private bool UseCrcSegment => _flags.HasFlag(StructuredMessage.Flags.StorageCrc64);
+    private readonly StorageCrc64HashAlgorithm _totalCrc;
+    private StorageCrc64HashAlgorithm _segmentCrc;
+    private readonly byte[] _segmentCrcs;
     private int _latestSegmentCrcd = 0;
 
     #region Segments
@@ -197,16 +198,21 @@ internal class StructuredMessageEncodingStream : Stream
         _segmentContentLength = segmentContentLength;
 
         _streamHeaderLength = StructuredMessage.V1_0.StreamHeaderLength;
-        _streamFooterLength = 0;
+        _streamFooterLength = UseCrcSegment ? StructuredMessage.Crc64Length : 0;
         _segmentHeaderLength = StructuredMessage.V1_0.SegmentHeaderLength;
         _segmentFooterLength = UseCrcSegment ? StructuredMessage.Crc64Length : 0;
 
         if (UseCrcSegment)
         {
-            _runningCrc = StorageCrc64HashAlgorithm.Create();
-            _runningCrcCheckpoints = ArrayPool<byte>.Shared.Rent(
+            _totalCrc = StorageCrc64HashAlgorithm.Create();
+            _segmentCrc = StorageCrc64HashAlgorithm.Create();
+            _segmentCrcs = ArrayPool<byte>.Shared.Rent(
                 GetTotalSegments(innerStream, segmentContentLength) * StructuredMessage.Crc64Length);
-            innerStream = ChecksumCalculatingStream.GetReadStream(innerStream, span => _runningCrc.Append(span));
+            innerStream = ChecksumCalculatingStream.GetReadStream(innerStream, span =>
+            {
+                _totalCrc.Append(span);
+                _segmentCrc.Append(span);
+            });
         }
 
         _innerStream = innerStream;
@@ -366,9 +372,22 @@ internal class StructuredMessageEncodingStream : Stream
 
     private int ReadFromStreamFooter(Span<byte> buffer)
     {
-        // method left intact for future stream footer content
-        // end of stream, no need to change _currentRegion
-        return 0;
+        int read = Math.Min(buffer.Length, _segmentFooterLength - _currentRegionPosition);
+        if (read <= 0)
+        {
+            return 0;
+        }
+
+        using IDisposable _ = StructuredMessage.V1_0.GetStreamFooterBytes(
+            ArrayPool<byte>.Shared,
+            out Memory<byte> footerBytes,
+            crc64: UseCrcSegment
+                ? _totalCrc.GetCurrentHash() // TODO array pooling
+                : default);
+        footerBytes.Slice(_currentRegionPosition, read).Span.CopyTo(buffer);
+        _currentRegionPosition += read;
+
+        return read;
     }
 
     private int ReadFromSegmentHeader(Span<byte> buffer)
@@ -404,9 +423,9 @@ internal class StructuredMessageEncodingStream : Stream
             out Memory<byte> headerBytes,
             crc64: UseCrcSegment
                 ? new Span<byte>(
-                    _runningCrcCheckpoints,
-                    (CurrentEncodingSegment-1) * _runningCrc.HashLengthInBytes,
-                    _runningCrc.HashLengthInBytes)
+                    _segmentCrcs,
+                    (CurrentEncodingSegment-1) * _totalCrc.HashLengthInBytes,
+                    _totalCrc.HashLengthInBytes)
                 : default);
         headerBytes.Slice(_currentRegionPosition, read).Span.CopyTo(buffer);
         _currentRegionPosition += read;
@@ -433,11 +452,12 @@ internal class StructuredMessageEncodingStream : Stream
             _currentRegionPosition = 0;
             if (UseCrcSegment && CurrentEncodingSegment - 1 == _latestSegmentCrcd)
             {
-                _runningCrc.GetCurrentHash(new Span<byte>(
-                    _runningCrcCheckpoints,
-                    _latestSegmentCrcd * _runningCrc.HashLengthInBytes,
-                    _runningCrc.HashLengthInBytes));
+                _segmentCrc.GetCurrentHash(new Span<byte>(
+                    _segmentCrcs,
+                    _latestSegmentCrcd * _segmentCrc.HashLengthInBytes,
+                    _segmentCrc.HashLengthInBytes));
                 _latestSegmentCrcd++;
+                _segmentCrc = StorageCrc64HashAlgorithm.Create();
             }
         }
     }

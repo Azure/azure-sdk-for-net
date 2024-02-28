@@ -13,12 +13,17 @@ namespace Azure.Storage.Blobs.Tests
 {
     internal class StructuredMessageHelper
     {
-        public static byte[] MakeEncodedData(byte[] data, long segmentContentLength, Flags flags)
+        public static byte[] MakeEncodedData(ReadOnlySpan<byte> data, long segmentContentLength, Flags flags)
         {
             int segmentCount = (int) Math.Ceiling(data.Length / (double)segmentContentLength);
-            int segmentFooterLen = flags.HasFlag(Flags.CrcSegment) ? 8 : 0;
+            int segmentFooterLen = flags.HasFlag(Flags.StorageCrc64) ? 8 : 0;
+            int streamFooterLen = flags.HasFlag(Flags.StorageCrc64) ? 8 : 0;
 
-            byte[] encodedData = new byte[V1_0.StreamHeaderLength + segmentCount*(V1_0.SegmentHeaderLength + segmentFooterLen) + data.Length];
+            byte[] encodedData = new byte[
+                V1_0.StreamHeaderLength +
+                segmentCount*(V1_0.SegmentHeaderLength + segmentFooterLen) +
+                streamFooterLen +
+                data.Length];
             V1_0.WriteStreamHeader(
                 new Span<byte>(encodedData, 0, V1_0.StreamHeaderLength),
                 encodedData.Length,
@@ -33,21 +38,28 @@ namespace Azure.Storage.Blobs.Tests
                 V1_0.WriteSegmentHeader(
                     new Span<byte>(encodedData, i, V1_0.SegmentHeaderLength),
                     seg,
-                   segContentLen);
+                    segContentLen);
                 i += V1_0.SegmentHeaderLength;
 
-                new Span<byte>(data, j, segContentLen)
+                data.Slice(j, segContentLen)
                     .CopyTo(new Span<byte>(encodedData).Slice(i));
                 i += segContentLen;
 
-                if (flags.HasFlag(Flags.CrcSegment))
+                if (flags.HasFlag(Flags.StorageCrc64))
                 {
                     var crc = StorageCrc64HashAlgorithm.Create();
-                    crc.Append(new Span<byte>(data).Slice(j, segContentLen));
+                    crc.Append(data.Slice(j, segContentLen));
                     crc.GetCurrentHash(new Span<byte>(encodedData, i, Crc64Length));
                     i += Crc64Length;
                 }
                 j += segContentLen;
+            }
+
+            if (flags.HasFlag(Flags.StorageCrc64))
+            {
+                var crc = StorageCrc64HashAlgorithm.Create();
+                crc.Append(data);
+                crc.GetCurrentHash(new Span<byte>(encodedData, i, Crc64Length));
             }
 
             return encodedData;

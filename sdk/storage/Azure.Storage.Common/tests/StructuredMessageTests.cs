@@ -12,7 +12,7 @@ namespace Azure.Storage.Tests
     public class StructuredMessageTests
     {
         [TestCase(1024, Flags.None, 2)]
-        [TestCase(2000, Flags.CrcSegment, 4)]
+        [TestCase(2000, Flags.StorageCrc64, 4)]
         public void EncodeStreamHeader(int messageLength, int flags, int numSegments)
         {
             Span<byte> encoding = new(new byte[V1_0.StreamHeaderLength]);
@@ -32,7 +32,7 @@ namespace Azure.Storage.Tests
             Random r = new();
             byte[] encoding = new byte[bufferSize];
 
-            void Action() => V1_0.WriteStreamHeader(encoding, r.Next(2, int.MaxValue), Flags.CrcSegment, r.Next(2, int.MaxValue));
+            void Action() => V1_0.WriteStreamHeader(encoding, r.Next(2, int.MaxValue), Flags.StorageCrc64, r.Next(2, int.MaxValue));
             if (bufferSize < V1_0.StreamHeaderLength)
             {
                 Assert.That(Action, Throws.ArgumentException);
