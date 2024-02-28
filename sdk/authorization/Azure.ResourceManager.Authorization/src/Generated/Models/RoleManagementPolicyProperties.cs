@@ -65,10 +65,13 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> Scope id of the resource. </summary>
+        [WirePath("scope.id")]
         public ResourceIdentifier ScopeId { get; }
         /// <summary> Display name of the resource. </summary>
+        [WirePath("scope.displayName")]
         public string ScopeDisplayName { get; }
         /// <summary> Type of the scope. </summary>
+        [WirePath("scope.type")]
         public RoleManagementScopeType? ScopeType { get; }
     }
 }
