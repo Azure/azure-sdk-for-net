@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<SynapseDesiredState> desiredState = default;
-            Optional<SynapseGrantSqlControlToManagedIdentityState> actualState = default;
+            SynapseDesiredState? desiredState = default;
+            SynapseGrantSqlControlToManagedIdentityState? actualState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseGrantSqlControlToManagedIdentity(Optional.ToNullable(desiredState), Optional.ToNullable(actualState), serializedAdditionalRawData);
+            return new SynapseGrantSqlControlToManagedIdentity(desiredState, actualState, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseGrantSqlControlToManagedIdentity>.Write(ModelReaderWriterOptions options)

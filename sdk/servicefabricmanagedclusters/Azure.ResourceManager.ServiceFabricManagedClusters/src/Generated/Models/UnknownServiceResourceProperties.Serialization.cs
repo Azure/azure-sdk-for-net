@@ -135,17 +135,17 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 return null;
             }
-            Optional<string> provisioningState = default;
+            string provisioningState = default;
             ServiceKind serviceKind = "Unknown";
             string serviceTypeName = default;
             ManagedServicePartitionScheme partitionDescription = default;
-            Optional<ManagedServicePackageActivationMode> servicePackageActivationMode = default;
-            Optional<string> serviceDnsName = default;
-            Optional<string> placementConstraints = default;
+            ManagedServicePackageActivationMode? servicePackageActivationMode = default;
+            string serviceDnsName = default;
+            string placementConstraints = default;
             IList<ManagedServiceCorrelation> correlationScheme = default;
             IList<ManagedServiceLoadMetric> serviceLoadMetrics = default;
             IList<ManagedServicePlacementPolicy> servicePlacementPolicies = default;
-            Optional<ServiceFabricManagedServiceMoveCost> defaultMoveCost = default;
+            ServiceFabricManagedServiceMoveCost? defaultMoveCost = default;
             IList<ManagedServiceScalingPolicy> scalingPolicies = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -262,19 +262,19 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new UnknownServiceResourceProperties(
-                placementConstraints.Value,
+                placementConstraints,
                 correlationScheme ?? new ChangeTrackingList<ManagedServiceCorrelation>(),
                 serviceLoadMetrics ?? new ChangeTrackingList<ManagedServiceLoadMetric>(),
                 servicePlacementPolicies ?? new ChangeTrackingList<ManagedServicePlacementPolicy>(),
-                Optional.ToNullable(defaultMoveCost),
+                defaultMoveCost,
                 scalingPolicies ?? new ChangeTrackingList<ManagedServiceScalingPolicy>(),
                 serializedAdditionalRawData,
-                provisioningState.Value,
+                provisioningState,
                 serviceKind,
                 serviceTypeName,
                 partitionDescription,
-                Optional.ToNullable(servicePackageActivationMode),
-                serviceDnsName.Value);
+                servicePackageActivationMode,
+                serviceDnsName);
         }
 
         BinaryData IPersistableModel<ManagedServiceProperties>.Write(ModelReaderWriterOptions options)

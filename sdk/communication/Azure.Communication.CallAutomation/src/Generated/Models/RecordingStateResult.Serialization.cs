@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -18,9 +17,9 @@ namespace Azure.Communication.CallAutomation
             {
                 return null;
             }
-            Optional<string> recordingId = default;
-            Optional<RecordingState> recordingState = default;
-            Optional<RecordingType> recordingType = default;
+            string recordingId = default;
+            RecordingState? recordingState = default;
+            RecordingType? recordingType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recordingId"u8))
@@ -47,7 +46,7 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new RecordingStateResult(recordingId.Value, Optional.ToNullable(recordingState), Optional.ToNullable(recordingType));
+            return new RecordingStateResult(recordingId, recordingState, recordingType);
         }
     }
 }

@@ -88,10 +88,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string name = default;
-            Optional<string> description = default;
-            Optional<DatasetReference> dataset = default;
-            Optional<DataFactoryLinkedServiceReference> linkedService = default;
-            Optional<DataFlowReference> flowlet = default;
+            string description = default;
+            DatasetReference dataset = default;
+            DataFactoryLinkedServiceReference linkedService = default;
+            DataFlowReference flowlet = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,10 +141,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DataFlowTransformation(
                 name,
-                description.Value,
-                dataset.Value,
+                description,
+                dataset,
                 linkedService,
-                flowlet.Value,
+                flowlet,
                 serializedAdditionalRawData);
         }
 

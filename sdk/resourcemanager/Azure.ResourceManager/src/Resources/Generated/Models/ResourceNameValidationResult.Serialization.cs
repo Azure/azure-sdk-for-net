@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<ResourceNameValidationStatus> status = default;
+            string name = default;
+            ResourceType? type = default;
+            ResourceNameValidationStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceNameValidationResult(name.Value, Optional.ToNullable(type), Optional.ToNullable(status), serializedAdditionalRawData);
+            return new ResourceNameValidationResult(name, type, status, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceNameValidationResult>.Write(ModelReaderWriterOptions options)

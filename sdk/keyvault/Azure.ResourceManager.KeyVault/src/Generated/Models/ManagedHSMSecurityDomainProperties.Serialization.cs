@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 return null;
             }
-            Optional<ManagedHSMSecurityDomainActivationStatus> activationStatus = default;
-            Optional<string> activationStatusMessage = default;
+            ManagedHSMSecurityDomainActivationStatus? activationStatus = default;
+            string activationStatusMessage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedHSMSecurityDomainProperties(Optional.ToNullable(activationStatus), activationStatusMessage.Value, serializedAdditionalRawData);
+            return new ManagedHSMSecurityDomainProperties(activationStatus, activationStatusMessage, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedHSMSecurityDomainProperties>.Write(ModelReaderWriterOptions options)

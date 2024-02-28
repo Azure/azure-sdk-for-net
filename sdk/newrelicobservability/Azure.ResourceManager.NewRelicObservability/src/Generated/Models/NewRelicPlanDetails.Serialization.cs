@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 return null;
             }
-            Optional<NewRelicObservabilityUsageType> usageType = default;
-            Optional<NewRelicObservabilityBillingCycle> billingCycle = default;
-            Optional<string> planDetails = default;
-            Optional<DateTimeOffset> effectiveDate = default;
+            NewRelicObservabilityUsageType? usageType = default;
+            NewRelicObservabilityBillingCycle? billingCycle = default;
+            string planDetails = default;
+            DateTimeOffset? effectiveDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NewRelicPlanDetails(Optional.ToNullable(usageType), Optional.ToNullable(billingCycle), planDetails.Value, Optional.ToNullable(effectiveDate), serializedAdditionalRawData);
+            return new NewRelicPlanDetails(usageType, billingCycle, planDetails, effectiveDate, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NewRelicPlanDetails>.Write(ModelReaderWriterOptions options)

@@ -35,15 +35,15 @@ namespace Azure.DigitalTwins.Core
             {
                 return null;
             }
-            Optional<string> id = default;
+            string id = default;
             Uri inputBlobUri = default;
             Uri outputBlobUri = default;
-            Optional<ImportJobStatus> status = default;
-            Optional<DateTimeOffset> createdDateTime = default;
-            Optional<DateTimeOffset> lastActionDateTime = default;
-            Optional<DateTimeOffset> finishedDateTime = default;
-            Optional<DateTimeOffset> purgeDateTime = default;
-            Optional<ResponseError> error = default;
+            ImportJobStatus? status = default;
+            DateTimeOffset? createdDateTime = default;
+            DateTimeOffset? lastActionDateTime = default;
+            DateTimeOffset? finishedDateTime = default;
+            DateTimeOffset? purgeDateTime = default;
+            ResponseError error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -117,15 +117,15 @@ namespace Azure.DigitalTwins.Core
                 }
             }
             return new ImportJob(
-                id.Value,
+                id,
                 inputBlobUri,
                 outputBlobUri,
-                Optional.ToNullable(status),
-                Optional.ToNullable(createdDateTime),
-                Optional.ToNullable(lastActionDateTime),
-                Optional.ToNullable(finishedDateTime),
-                Optional.ToNullable(purgeDateTime),
-                error.Value);
+                status,
+                createdDateTime,
+                lastActionDateTime,
+                finishedDateTime,
+                purgeDateTime,
+                error);
         }
     }
 }

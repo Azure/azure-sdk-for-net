@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<Guid> workspaceId = default;
-            Optional<string> workspaceSubscriptionId = default;
-            Optional<string> workspaceResourceGroup = default;
-            Optional<Guid> agentId = default;
+            Guid? workspaceId = default;
+            string workspaceSubscriptionId = default;
+            string workspaceResourceGroup = default;
+            Guid? agentId = default;
             ResourceIdentifierType type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -137,10 +137,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new LogAnalyticsIdentifier(
                 type,
                 serializedAdditionalRawData,
-                Optional.ToNullable(workspaceId),
-                workspaceSubscriptionId.Value,
-                workspaceResourceGroup.Value,
-                Optional.ToNullable(agentId));
+                workspaceId,
+                workspaceSubscriptionId,
+                workspaceResourceGroup,
+                agentId);
         }
 
         BinaryData IPersistableModel<LogAnalyticsIdentifier>.Write(ModelReaderWriterOptions options)

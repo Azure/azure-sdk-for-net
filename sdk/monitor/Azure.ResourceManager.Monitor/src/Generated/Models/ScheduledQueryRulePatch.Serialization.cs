@@ -179,24 +179,24 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<string> createdWithApiVersion = default;
-            Optional<bool> isLegacyLogAnalyticsRule = default;
-            Optional<string> description = default;
-            Optional<string> displayName = default;
-            Optional<AlertSeverity> severity = default;
-            Optional<bool> enabled = default;
+            string createdWithApiVersion = default;
+            bool? isLegacyLogAnalyticsRule = default;
+            string description = default;
+            string displayName = default;
+            AlertSeverity? severity = default;
+            bool? enabled = default;
             IList<string> scopes = default;
-            Optional<TimeSpan> evaluationFrequency = default;
-            Optional<TimeSpan> windowSize = default;
-            Optional<TimeSpan> overrideQueryTimeRange = default;
+            TimeSpan? evaluationFrequency = default;
+            TimeSpan? windowSize = default;
+            TimeSpan? overrideQueryTimeRange = default;
             IList<string> targetResourceTypes = default;
-            Optional<ScheduledQueryRuleCriteria> criteria = default;
-            Optional<TimeSpan> muteActionsDuration = default;
-            Optional<ScheduledQueryRuleActions> actions = default;
-            Optional<bool> isWorkspaceAlertsStorageConfigured = default;
-            Optional<bool> checkWorkspaceAlertsStorageConfigured = default;
-            Optional<bool> skipQueryValidation = default;
-            Optional<bool> autoMitigate = default;
+            ScheduledQueryRuleCriteria criteria = default;
+            TimeSpan? muteActionsDuration = default;
+            ScheduledQueryRuleActions actions = default;
+            bool? isWorkspaceAlertsStorageConfigured = default;
+            bool? checkWorkspaceAlertsStorageConfigured = default;
+            bool? skipQueryValidation = default;
+            bool? autoMitigate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -395,24 +395,24 @@ namespace Azure.ResourceManager.Monitor.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ScheduledQueryRulePatch(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                createdWithApiVersion.Value,
-                Optional.ToNullable(isLegacyLogAnalyticsRule),
-                description.Value,
-                displayName.Value,
-                Optional.ToNullable(severity),
-                Optional.ToNullable(enabled),
+                createdWithApiVersion,
+                isLegacyLogAnalyticsRule,
+                description,
+                displayName,
+                severity,
+                enabled,
                 scopes ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(evaluationFrequency),
-                Optional.ToNullable(windowSize),
-                Optional.ToNullable(overrideQueryTimeRange),
+                evaluationFrequency,
+                windowSize,
+                overrideQueryTimeRange,
                 targetResourceTypes ?? new ChangeTrackingList<string>(),
-                criteria.Value,
-                Optional.ToNullable(muteActionsDuration),
-                actions.Value,
-                Optional.ToNullable(isWorkspaceAlertsStorageConfigured),
-                Optional.ToNullable(checkWorkspaceAlertsStorageConfigured),
-                Optional.ToNullable(skipQueryValidation),
-                Optional.ToNullable(autoMitigate),
+                criteria,
+                muteActionsDuration,
+                actions,
+                isWorkspaceAlertsStorageConfigured,
+                checkWorkspaceAlertsStorageConfigured,
+                skipQueryValidation,
+                autoMitigate,
                 serializedAdditionalRawData);
         }
 

@@ -75,8 +75,8 @@ namespace Azure.AI.DocumentIntelligence
             {
                 return null;
             }
-            Optional<Uri> urlSource = default;
-            Optional<BinaryData> base64Source = default;
+            Uri urlSource = default;
+            BinaryData base64Source = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +105,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClassifyDocumentContent(urlSource.Value, base64Source.Value, serializedAdditionalRawData);
+            return new ClassifyDocumentContent(urlSource, base64Source, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClassifyDocumentContent>.Write(ModelReaderWriterOptions options)

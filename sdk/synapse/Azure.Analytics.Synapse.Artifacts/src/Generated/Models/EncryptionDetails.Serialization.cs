@@ -32,8 +32,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<bool> doubleEncryptionEnabled = default;
-            Optional<CustomerManagedKeyDetails> cmk = default;
+            bool? doubleEncryptionEnabled = default;
+            CustomerManagedKeyDetails cmk = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("doubleEncryptionEnabled"u8))
@@ -55,7 +55,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new EncryptionDetails(Optional.ToNullable(doubleEncryptionEnabled), cmk.Value);
+            return new EncryptionDetails(doubleEncryptionEnabled, cmk);
         }
 
         internal partial class EncryptionDetailsConverter : JsonConverter<EncryptionDetails>

@@ -99,9 +99,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> defaultSku = default;
-            Optional<int> defaultStorageSize = default;
+            string name = default;
+            string defaultSku = default;
+            int? defaultStorageSize = default;
             IReadOnlyList<MySqlFlexibleServerStorageEditionCapability> supportedStorageEditions = default;
             IReadOnlyList<SkuCapabilityV2> supportedSkus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -162,9 +162,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ServerEditionCapabilityV2(
-                name.Value,
-                defaultSku.Value,
-                Optional.ToNullable(defaultStorageSize),
+                name,
+                defaultSku,
+                defaultStorageSize,
                 supportedStorageEditions ?? new ChangeTrackingList<MySqlFlexibleServerStorageEditionCapability>(),
                 supportedSkus ?? new ChangeTrackingList<SkuCapabilityV2>(),
                 serializedAdditionalRawData);

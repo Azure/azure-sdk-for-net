@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 return null;
             }
             int sst = default;
-            Optional<string> sd = default;
+            string sd = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new Snssai(sst, sd.Value, serializedAdditionalRawData);
+            return new Snssai(sst, sd, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<Snssai>.Write(ModelReaderWriterOptions options)

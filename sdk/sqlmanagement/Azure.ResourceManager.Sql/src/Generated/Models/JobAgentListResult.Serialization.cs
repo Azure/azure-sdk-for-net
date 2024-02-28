@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Sql.Models
                 return null;
             }
             IReadOnlyList<SqlServerJobAgentData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JobAgentListResult(value ?? new ChangeTrackingList<SqlServerJobAgentData>(), nextLink.Value, serializedAdditionalRawData);
+            return new JobAgentListResult(value ?? new ChangeTrackingList<SqlServerJobAgentData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<JobAgentListResult>.Write(ModelReaderWriterOptions options)

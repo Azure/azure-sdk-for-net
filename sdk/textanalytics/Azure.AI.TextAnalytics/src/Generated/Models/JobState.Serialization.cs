@@ -21,14 +21,14 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 return null;
             }
-            Optional<string> displayName = default;
+            string displayName = default;
             DateTimeOffset createdDateTime = default;
-            Optional<DateTimeOffset> expirationDateTime = default;
+            DateTimeOffset? expirationDateTime = default;
             string jobId = default;
             DateTimeOffset lastUpdatedDateTime = default;
             TextAnalyticsOperationStatus status = default;
             IReadOnlyList<Error> errors = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("displayName"u8))
@@ -86,14 +86,14 @@ namespace Azure.AI.TextAnalytics.Models
                 }
             }
             return new JobState(
-                displayName.Value,
+                displayName,
                 createdDateTime,
-                Optional.ToNullable(expirationDateTime),
+                expirationDateTime,
                 jobId,
                 lastUpdatedDateTime,
                 status,
                 errors ?? new ChangeTrackingList<Error>(),
-                nextLink.Value);
+                nextLink);
         }
     }
 }

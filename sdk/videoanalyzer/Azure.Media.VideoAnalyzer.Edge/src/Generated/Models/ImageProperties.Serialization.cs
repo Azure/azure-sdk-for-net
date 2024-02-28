@@ -34,8 +34,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<ImageScale> scale = default;
-            Optional<ImageFormatProperties> format = default;
+            ImageScale scale = default;
+            ImageFormatProperties format = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scale"u8))
@@ -57,7 +57,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new ImageProperties(scale.Value, format.Value);
+            return new ImageProperties(scale, format);
         }
     }
 }

@@ -167,24 +167,24 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<OperationalInsightsClusterSku> sku = default;
+            ManagedServiceIdentity identity = default;
+            OperationalInsightsClusterSku sku = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> clusterId = default;
-            Optional<OperationalInsightsClusterEntityStatus> provisioningState = default;
-            Optional<bool> isDoubleEncryptionEnabled = default;
-            Optional<bool> isAvailabilityZonesEnabled = default;
-            Optional<OperationalInsightsBillingType> billingType = default;
-            Optional<OperationalInsightsKeyVaultProperties> keyVaultProperties = default;
-            Optional<DateTimeOffset> lastModifiedDate = default;
-            Optional<DateTimeOffset> createdDate = default;
+            SystemData systemData = default;
+            Guid? clusterId = default;
+            OperationalInsightsClusterEntityStatus? provisioningState = default;
+            bool? isDoubleEncryptionEnabled = default;
+            bool? isAvailabilityZonesEnabled = default;
+            OperationalInsightsBillingType? billingType = default;
+            OperationalInsightsKeyVaultProperties keyVaultProperties = default;
+            DateTimeOffset? lastModifiedDate = default;
+            DateTimeOffset? createdDate = default;
             IList<OperationalInsightsClusterAssociatedWorkspace> associatedWorkspaces = default;
-            Optional<OperationalInsightsCapacityReservationProperties> capacityReservationProperties = default;
+            OperationalInsightsCapacityReservationProperties capacityReservationProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -367,21 +367,21 @@ namespace Azure.ResourceManager.OperationalInsights
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 identity,
-                sku.Value,
-                Optional.ToNullable(clusterId),
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(isDoubleEncryptionEnabled),
-                Optional.ToNullable(isAvailabilityZonesEnabled),
-                Optional.ToNullable(billingType),
-                keyVaultProperties.Value,
-                Optional.ToNullable(lastModifiedDate),
-                Optional.ToNullable(createdDate),
+                sku,
+                clusterId,
+                provisioningState,
+                isDoubleEncryptionEnabled,
+                isAvailabilityZonesEnabled,
+                billingType,
+                keyVaultProperties,
+                lastModifiedDate,
+                createdDate,
                 associatedWorkspaces ?? new ChangeTrackingList<OperationalInsightsClusterAssociatedWorkspace>(),
-                capacityReservationProperties.Value,
+                capacityReservationProperties,
                 serializedAdditionalRawData);
         }
 

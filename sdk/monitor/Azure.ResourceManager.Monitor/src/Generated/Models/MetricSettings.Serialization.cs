@@ -81,10 +81,10 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<TimeSpan> timeGrain = default;
-            Optional<string> category = default;
+            TimeSpan? timeGrain = default;
+            string category = default;
             bool enabled = default;
-            Optional<RetentionPolicy> retentionPolicy = default;
+            RetentionPolicy retentionPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MetricSettings(Optional.ToNullable(timeGrain), category.Value, enabled, retentionPolicy.Value, serializedAdditionalRawData);
+            return new MetricSettings(timeGrain, category, enabled, retentionPolicy, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MetricSettings>.Write(ModelReaderWriterOptions options)

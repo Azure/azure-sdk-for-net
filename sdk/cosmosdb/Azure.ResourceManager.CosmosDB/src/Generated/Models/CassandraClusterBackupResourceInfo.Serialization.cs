@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> backupId = default;
-            Optional<CassandraClusterBackupState> backupState = default;
-            Optional<DateTimeOffset> backupStartTimestamp = default;
-            Optional<DateTimeOffset> backupStopTimestamp = default;
-            Optional<DateTimeOffset> backupExpiryTimestamp = default;
+            string backupId = default;
+            CassandraClusterBackupState? backupState = default;
+            DateTimeOffset? backupStartTimestamp = default;
+            DateTimeOffset? backupStopTimestamp = default;
+            DateTimeOffset? backupExpiryTimestamp = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,11 +146,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new CassandraClusterBackupResourceInfo(
-                backupId.Value,
-                Optional.ToNullable(backupState),
-                Optional.ToNullable(backupStartTimestamp),
-                Optional.ToNullable(backupStopTimestamp),
-                Optional.ToNullable(backupExpiryTimestamp),
+                backupId,
+                backupState,
+                backupStartTimestamp,
+                backupStopTimestamp,
+                backupExpiryTimestamp,
                 serializedAdditionalRawData);
         }
 

@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<OperationStatusType> status = default;
-            Optional<ReservationReportSchema> reportUrl = default;
-            Optional<DateTimeOffset> validUntil = default;
+            OperationStatusType? status = default;
+            ReservationReportSchema? reportUrl = default;
+            DateTimeOffset? validUntil = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationStatus(Optional.ToNullable(status), Optional.ToNullable(reportUrl), Optional.ToNullable(validUntil), serializedAdditionalRawData);
+            return new OperationStatus(status, reportUrl, validUntil, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationStatus>.Write(ModelReaderWriterOptions options)

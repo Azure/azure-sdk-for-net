@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
+            ResourceIdentifier id = default;
             IReadOnlyList<ConnectedResourceInfo> inboundConnectedResources = default;
             IReadOnlyList<ConnectedResourceInfo> outboundConnectedResources = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectableResourceInfo(id.Value, inboundConnectedResources ?? new ChangeTrackingList<ConnectedResourceInfo>(), outboundConnectedResources ?? new ChangeTrackingList<ConnectedResourceInfo>(), serializedAdditionalRawData);
+            return new ConnectableResourceInfo(id, inboundConnectedResources ?? new ChangeTrackingList<ConnectedResourceInfo>(), outboundConnectedResources ?? new ChangeTrackingList<ConnectedResourceInfo>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectableResourceInfo>.Write(ModelReaderWriterOptions options)

@@ -104,11 +104,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<AttachedNetworkConfiguration> attachedNetworkConfiguration = default;
-            Optional<BgpServiceLoadBalancerConfiguration> bgpServiceLoadBalancerConfiguration = default;
+            AttachedNetworkConfiguration attachedNetworkConfiguration = default;
+            BgpServiceLoadBalancerConfiguration bgpServiceLoadBalancerConfiguration = default;
             ResourceIdentifier cloudServicesNetworkId = default;
             ResourceIdentifier cniNetworkId = default;
-            Optional<IPAddress> dnsServiceIP = default;
+            IPAddress dnsServiceIP = default;
             IList<string> podCidrs = default;
             IList<string> serviceCidrs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -187,11 +187,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new KubernetesClusterNetworkConfiguration(
-                attachedNetworkConfiguration.Value,
-                bgpServiceLoadBalancerConfiguration.Value,
+                attachedNetworkConfiguration,
+                bgpServiceLoadBalancerConfiguration,
                 cloudServicesNetworkId,
                 cniNetworkId,
-                dnsServiceIP.Value,
+                dnsServiceIP,
                 podCidrs ?? new ChangeTrackingList<string>(),
                 serviceCidrs ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);

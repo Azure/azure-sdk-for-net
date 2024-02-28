@@ -107,14 +107,14 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<ReservationsSkuName> sku = default;
-            Optional<string> displayName = default;
-            Optional<ResourceIdentifier> billingScopeId = default;
-            Optional<SavingsPlanTerm> term = default;
-            Optional<SavingsPlanBillingPlan> billingPlan = default;
-            Optional<AppliedScopeType> appliedScopeType = default;
-            Optional<AppliedScopeProperties> appliedScopeProperties = default;
-            Optional<BenefitsCommitment> commitment = default;
+            ReservationsSkuName sku = default;
+            string displayName = default;
+            ResourceIdentifier billingScopeId = default;
+            SavingsPlanTerm? term = default;
+            SavingsPlanBillingPlan? billingPlan = default;
+            AppliedScopeType? appliedScopeType = default;
+            AppliedScopeProperties appliedScopeProperties = default;
+            BenefitsCommitment commitment = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -206,14 +206,14 @@ namespace Azure.ResourceManager.Reservations.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SavingsPlanPurchase(
-                sku.Value,
-                displayName.Value,
-                billingScopeId.Value,
-                Optional.ToNullable(term),
-                Optional.ToNullable(billingPlan),
-                Optional.ToNullable(appliedScopeType),
-                appliedScopeProperties.Value,
-                commitment.Value,
+                sku,
+                displayName,
+                billingScopeId,
+                term,
+                billingPlan,
+                appliedScopeType,
+                appliedScopeProperties,
+                commitment,
                 serializedAdditionalRawData);
         }
 

@@ -82,8 +82,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 return null;
             }
             IList<Guid> sensitiveInfoTypesIds = default;
-            Optional<float> sensitivityThresholdLabelOrder = default;
-            Optional<Guid> sensitivityThresholdLabelId = default;
+            float? sensitivityThresholdLabelOrder = default;
+            Guid? sensitivityThresholdLabelId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SensitivitySettingCreateOrUpdateContent(sensitiveInfoTypesIds, Optional.ToNullable(sensitivityThresholdLabelOrder), Optional.ToNullable(sensitivityThresholdLabelId), serializedAdditionalRawData);
+            return new SensitivitySettingCreateOrUpdateContent(sensitiveInfoTypesIds, sensitivityThresholdLabelOrder, sensitivityThresholdLabelId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SensitivitySettingCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
@@ -18,8 +17,8 @@ namespace Azure.Containers.ContainerRegistry
             {
                 return null;
             }
-            Optional<JWKHeader> jwk = default;
-            Optional<string> alg = default;
+            JWKHeader jwk = default;
+            string alg = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("jwk"u8))
@@ -37,7 +36,7 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new JWK(jwk.Value, alg.Value);
+            return new JWK(jwk, alg);
         }
     }
 }

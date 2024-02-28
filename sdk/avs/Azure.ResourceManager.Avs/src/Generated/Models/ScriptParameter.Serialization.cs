@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Optional<ScriptParameterType> type = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<ParameterVisibilityStatus> visibility = default;
-            Optional<ParameterOptionalityStatus> optional = default;
+            ScriptParameterType? type = default;
+            string name = default;
+            string description = default;
+            ParameterVisibilityStatus? visibility = default;
+            ParameterOptionalityStatus? optional = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -142,11 +142,11 @@ namespace Azure.ResourceManager.Avs.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ScriptParameter(
-                Core.Optional.ToNullable(type),
-                name.Value,
-                description.Value,
-                Core.Optional.ToNullable(visibility),
-                Core.Optional.ToNullable(optional),
+                type,
+                name,
+                description,
+                visibility,
+                optional,
                 serializedAdditionalRawData);
         }
 

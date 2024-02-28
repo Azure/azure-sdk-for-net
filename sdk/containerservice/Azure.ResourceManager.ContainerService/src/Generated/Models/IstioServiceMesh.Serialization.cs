@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<IstioComponents> components = default;
-            Optional<IstioCertificateAuthority> certificateAuthority = default;
+            IstioComponents components = default;
+            IstioCertificateAuthority certificateAuthority = default;
             IList<string> revisions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IstioServiceMesh(components.Value, certificateAuthority.Value, revisions ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new IstioServiceMesh(components, certificateAuthority, revisions ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IstioServiceMesh>.Write(ModelReaderWriterOptions options)

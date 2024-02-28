@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<string> clientTrackingId = default;
+            string clientTrackingId = default;
             IList<string> clientKeywords = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicWorkflowRunCorrelation(clientTrackingId.Value, clientKeywords ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new LogicWorkflowRunCorrelation(clientTrackingId, clientKeywords ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicWorkflowRunCorrelation>.Write(ModelReaderWriterOptions options)

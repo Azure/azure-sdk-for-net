@@ -96,11 +96,11 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<string> azureSubscriptionId = default;
-            Optional<string> resourceGroupName = default;
-            Optional<string> name = default;
+            string azureSubscriptionId = default;
+            string resourceGroupName = default;
+            string name = default;
             PartnerEndpointType endpointType = "Unknown";
-            Optional<string> endpointServiceContext = default;
+            string endpointServiceContext = default;
             IList<ResourceMoveChangeHistory> resourceMoveChangeHistory = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -152,11 +152,11 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new UnknownPartnerDestinationInfo(
-                azureSubscriptionId.Value,
-                resourceGroupName.Value,
-                name.Value,
+                azureSubscriptionId,
+                resourceGroupName,
+                name,
                 endpointType,
-                endpointServiceContext.Value,
+                endpointServiceContext,
                 resourceMoveChangeHistory ?? new ChangeTrackingList<ResourceMoveChangeHistory>(),
                 serializedAdditionalRawData);
         }

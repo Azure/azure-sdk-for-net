@@ -119,15 +119,15 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<NetworkAccess> access = default;
-            Optional<RouteFilterRuleType> routeFilterRuleType = default;
+            AzureLocation? location = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            NetworkAccess? access = default;
+            RouteFilterRuleType? routeFilterRuleType = default;
             IList<string> communities = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -233,16 +233,16 @@ namespace Azure.ResourceManager.Network
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new RouteFilterRuleData(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
+                id,
+                name,
+                type,
                 serializedAdditionalRawData,
-                Optional.ToNullable(location),
-                Optional.ToNullable(etag),
-                Optional.ToNullable(access),
-                Optional.ToNullable(routeFilterRuleType),
+                location,
+                etag,
+                access,
+                routeFilterRuleType,
                 communities ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(provisioningState));
+                provisioningState);
         }
 
         BinaryData IPersistableModel<RouteFilterRuleData>.Write(ModelReaderWriterOptions options)

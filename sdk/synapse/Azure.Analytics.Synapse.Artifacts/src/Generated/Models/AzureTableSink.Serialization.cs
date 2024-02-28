@@ -80,16 +80,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> azureTableDefaultPartitionKeyValue = default;
-            Optional<object> azureTablePartitionKeyName = default;
-            Optional<object> azureTableRowKeyName = default;
-            Optional<object> azureTableInsertType = default;
+            object azureTableDefaultPartitionKeyValue = default;
+            object azureTablePartitionKeyName = default;
+            object azureTableRowKeyName = default;
+            object azureTableInsertType = default;
             string type = default;
-            Optional<object> writeBatchSize = default;
-            Optional<object> writeBatchTimeout = default;
-            Optional<object> sinkRetryCount = default;
-            Optional<object> sinkRetryWait = default;
-            Optional<object> maxConcurrentConnections = default;
+            object writeBatchSize = default;
+            object writeBatchTimeout = default;
+            object sinkRetryCount = default;
+            object sinkRetryWait = default;
+            object maxConcurrentConnections = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -185,16 +185,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new AzureTableSink(
                 type,
-                writeBatchSize.Value,
-                writeBatchTimeout.Value,
-                sinkRetryCount.Value,
-                sinkRetryWait.Value,
-                maxConcurrentConnections.Value,
+                writeBatchSize,
+                writeBatchTimeout,
+                sinkRetryCount,
+                sinkRetryWait,
+                maxConcurrentConnections,
                 additionalProperties,
-                azureTableDefaultPartitionKeyValue.Value,
-                azureTablePartitionKeyName.Value,
-                azureTableRowKeyName.Value,
-                azureTableInsertType.Value);
+                azureTableDefaultPartitionKeyValue,
+                azureTablePartitionKeyName,
+                azureTableRowKeyName,
+                azureTableInsertType);
         }
 
         internal partial class AzureTableSinkConverter : JsonConverter<AzureTableSink>

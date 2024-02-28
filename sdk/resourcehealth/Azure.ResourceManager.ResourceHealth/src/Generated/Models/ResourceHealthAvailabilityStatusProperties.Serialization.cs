@@ -174,24 +174,24 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 return null;
             }
-            Optional<ResourceHealthAvailabilityStateValue> availabilityState = default;
-            Optional<string> title = default;
-            Optional<string> summary = default;
-            Optional<string> detailedStatus = default;
-            Optional<string> reasonType = default;
-            Optional<string> context = default;
-            Optional<string> category = default;
-            Optional<string> articleId = default;
-            Optional<DateTimeOffset> rootCauseAttributionTime = default;
-            Optional<string> healthEventType = default;
-            Optional<string> healthEventCause = default;
-            Optional<string> healthEventCategory = default;
-            Optional<string> healthEventId = default;
-            Optional<DateTimeOffset> resolutionETA = default;
-            Optional<DateTimeOffset> occuredTime = default;
-            Optional<ReasonChronicityType> reasonChronicity = default;
-            Optional<DateTimeOffset> reportedTime = default;
-            Optional<ResourceHealthAvailabilityStateRecentlyResolved> recentlyResolved = default;
+            ResourceHealthAvailabilityStateValue? availabilityState = default;
+            string title = default;
+            string summary = default;
+            string detailedStatus = default;
+            string reasonType = default;
+            string context = default;
+            string category = default;
+            string articleId = default;
+            DateTimeOffset? rootCauseAttributionTime = default;
+            string healthEventType = default;
+            string healthEventCause = default;
+            string healthEventCategory = default;
+            string healthEventId = default;
+            DateTimeOffset? resolutionETA = default;
+            DateTimeOffset? occuredTime = default;
+            ReasonChronicityType? reasonChronicity = default;
+            DateTimeOffset? reportedTime = default;
+            ResourceHealthAvailabilityStateRecentlyResolved recentlyResolved = default;
             IReadOnlyList<ResourceHealthRecommendedAction> recommendedActions = default;
             IReadOnlyList<ServiceImpactingEvent> serviceImpactingEvents = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -351,24 +351,24 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ResourceHealthAvailabilityStatusProperties(
-                Optional.ToNullable(availabilityState),
-                title.Value,
-                summary.Value,
-                detailedStatus.Value,
-                reasonType.Value,
-                context.Value,
-                category.Value,
-                articleId.Value,
-                Optional.ToNullable(rootCauseAttributionTime),
-                healthEventType.Value,
-                healthEventCause.Value,
-                healthEventCategory.Value,
-                healthEventId.Value,
-                Optional.ToNullable(resolutionETA),
-                Optional.ToNullable(occuredTime),
-                Optional.ToNullable(reasonChronicity),
-                Optional.ToNullable(reportedTime),
-                recentlyResolved.Value,
+                availabilityState,
+                title,
+                summary,
+                detailedStatus,
+                reasonType,
+                context,
+                category,
+                articleId,
+                rootCauseAttributionTime,
+                healthEventType,
+                healthEventCause,
+                healthEventCategory,
+                healthEventId,
+                resolutionETA,
+                occuredTime,
+                reasonChronicity,
+                reportedTime,
+                recentlyResolved,
                 recommendedActions ?? new ChangeTrackingList<ResourceHealthRecommendedAction>(),
                 serviceImpactingEvents ?? new ChangeTrackingList<ServiceImpactingEvent>(),
                 serializedAdditionalRawData);

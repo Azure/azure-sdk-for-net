@@ -105,13 +105,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             string type = default;
-            Optional<string> accountId = default;
-            Optional<string> accountKey = default;
-            Optional<string> database = default;
-            Optional<string> collectionNamePattern = default;
-            Optional<string> partitionKey = default;
-            Optional<string> documentId = default;
-            Optional<StreamAnalyticsAuthenticationMode> authenticationMode = default;
+            string accountId = default;
+            string accountKey = default;
+            string database = default;
+            string collectionNamePattern = default;
+            string partitionKey = default;
+            string documentId = default;
+            StreamAnalyticsAuthenticationMode? authenticationMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -181,13 +181,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             return new DocumentDbOutputDataSource(
                 type,
                 serializedAdditionalRawData,
-                accountId.Value,
-                accountKey.Value,
-                database.Value,
-                collectionNamePattern.Value,
-                partitionKey.Value,
-                documentId.Value,
-                Optional.ToNullable(authenticationMode));
+                accountId,
+                accountKey,
+                database,
+                collectionNamePattern,
+                partitionKey,
+                documentId,
+                authenticationMode);
         }
 
         BinaryData IPersistableModel<DocumentDbOutputDataSource>.Write(ModelReaderWriterOptions options)

@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<SapVirtualInstanceErrorDetail> properties = default;
+            SapVirtualInstanceErrorDetail properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SapVirtualInstanceError(properties.Value, serializedAdditionalRawData);
+            return new SapVirtualInstanceError(properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SapVirtualInstanceError>.Write(ModelReaderWriterOptions options)

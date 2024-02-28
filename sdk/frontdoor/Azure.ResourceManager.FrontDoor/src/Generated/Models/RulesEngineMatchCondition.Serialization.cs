@@ -96,9 +96,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 return null;
             }
             RulesEngineMatchVariable rulesEngineMatchVariable = default;
-            Optional<string> selector = default;
+            string selector = default;
             RulesEngineOperator rulesEngineOperator = default;
-            Optional<bool> negateCondition = default;
+            bool? negateCondition = default;
             IList<string> rulesEngineMatchValue = default;
             IList<RulesEngineMatchTransform> transforms = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -161,9 +161,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new RulesEngineMatchCondition(
                 rulesEngineMatchVariable,
-                selector.Value,
+                selector,
                 rulesEngineOperator,
-                Optional.ToNullable(negateCondition),
+                negateCondition,
                 rulesEngineMatchValue,
                 transforms ?? new ChangeTrackingList<RulesEngineMatchTransform>(),
                 serializedAdditionalRawData);

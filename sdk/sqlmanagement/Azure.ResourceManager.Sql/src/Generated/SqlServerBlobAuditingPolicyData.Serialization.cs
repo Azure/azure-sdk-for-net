@@ -152,18 +152,18 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<bool> isDevopsAuditEnabled = default;
-            Optional<int> retentionDays = default;
+            SystemData systemData = default;
+            bool? isDevopsAuditEnabled = default;
+            int? retentionDays = default;
             IList<string> auditActionsAndGroups = default;
-            Optional<bool> isStorageSecondaryKeyInUse = default;
-            Optional<bool> isAzureMonitorTargetEnabled = default;
-            Optional<int> queueDelayMs = default;
-            Optional<bool> isManagedIdentityInUse = default;
-            Optional<BlobAuditingPolicyState> state = default;
-            Optional<string> storageEndpoint = default;
-            Optional<string> storageAccountAccessKey = default;
-            Optional<Guid> storageAccountSubscriptionId = default;
+            bool? isStorageSecondaryKeyInUse = default;
+            bool? isAzureMonitorTargetEnabled = default;
+            int? queueDelayMs = default;
+            bool? isManagedIdentityInUse = default;
+            BlobAuditingPolicyState? state = default;
+            string storageEndpoint = default;
+            string storageAccountAccessKey = default;
+            Guid? storageAccountSubscriptionId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -310,18 +310,18 @@ namespace Azure.ResourceManager.Sql
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(isDevopsAuditEnabled),
-                Optional.ToNullable(retentionDays),
+                systemData,
+                isDevopsAuditEnabled,
+                retentionDays,
                 auditActionsAndGroups ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(isStorageSecondaryKeyInUse),
-                Optional.ToNullable(isAzureMonitorTargetEnabled),
-                Optional.ToNullable(queueDelayMs),
-                Optional.ToNullable(isManagedIdentityInUse),
-                Optional.ToNullable(state),
-                storageEndpoint.Value,
-                storageAccountAccessKey.Value,
-                Optional.ToNullable(storageAccountSubscriptionId),
+                isStorageSecondaryKeyInUse,
+                isAzureMonitorTargetEnabled,
+                queueDelayMs,
+                isManagedIdentityInUse,
+                state,
+                storageEndpoint,
+                storageAccountAccessKey,
+                storageAccountSubscriptionId,
                 serializedAdditionalRawData);
         }
 

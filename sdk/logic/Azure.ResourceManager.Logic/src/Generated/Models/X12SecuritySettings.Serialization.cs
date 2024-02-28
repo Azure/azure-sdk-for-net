@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Logic.Models
                 return null;
             }
             string authorizationQualifier = default;
-            Optional<string> authorizationValue = default;
+            string authorizationValue = default;
             string securityQualifier = default;
-            Optional<string> passwordValue = default;
+            string passwordValue = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new X12SecuritySettings(authorizationQualifier, authorizationValue.Value, securityQualifier, passwordValue.Value, serializedAdditionalRawData);
+            return new X12SecuritySettings(authorizationQualifier, authorizationValue, securityQualifier, passwordValue, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<X12SecuritySettings>.Write(ModelReaderWriterOptions options)

@@ -146,11 +146,11 @@ namespace Azure.ResourceManager.MobileNetwork
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<MobileNetworkProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            MobileNetworkProvisioningState? provisioningState = default;
             MobileNetworkInterfaceProperties userPlaneDataInterface = default;
             IList<string> dnsAddresses = default;
-            Optional<NaptConfiguration> naptConfiguration = default;
+            NaptConfiguration naptConfiguration = default;
             IList<string> userEquipmentAddressPoolPrefix = default;
             IList<string> userEquipmentStaticAddressPoolPrefix = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -283,13 +283,13 @@ namespace Azure.ResourceManager.MobileNetwork
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                Optional.ToNullable(provisioningState),
+                provisioningState,
                 userPlaneDataInterface,
                 dnsAddresses,
-                naptConfiguration.Value,
+                naptConfiguration,
                 userEquipmentAddressPoolPrefix ?? new ChangeTrackingList<string>(),
                 userEquipmentStaticAddressPoolPrefix ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);

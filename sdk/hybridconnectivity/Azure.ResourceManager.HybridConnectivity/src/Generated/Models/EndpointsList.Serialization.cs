@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IReadOnlyList<EndpointResourceData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EndpointsList(nextLink.Value, value ?? new ChangeTrackingList<EndpointResourceData>(), serializedAdditionalRawData);
+            return new EndpointsList(nextLink, value ?? new ChangeTrackingList<EndpointResourceData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EndpointsList>.Write(ModelReaderWriterOptions options)

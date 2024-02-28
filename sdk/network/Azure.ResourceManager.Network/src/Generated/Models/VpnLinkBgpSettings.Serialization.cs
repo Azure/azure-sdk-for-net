@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<long> asn = default;
-            Optional<string> bgpPeeringAddress = default;
+            long? asn = default;
+            string bgpPeeringAddress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VpnLinkBgpSettings(Optional.ToNullable(asn), bgpPeeringAddress.Value, serializedAdditionalRawData);
+            return new VpnLinkBgpSettings(asn, bgpPeeringAddress, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VpnLinkBgpSettings>.Write(ModelReaderWriterOptions options)

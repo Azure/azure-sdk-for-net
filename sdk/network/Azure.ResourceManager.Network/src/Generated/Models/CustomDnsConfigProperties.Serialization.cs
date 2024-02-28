@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> fqdn = default;
+            string fqdn = default;
             IList<string> ipAddresses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomDnsConfigProperties(fqdn.Value, ipAddresses ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new CustomDnsConfigProperties(fqdn, ipAddresses ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CustomDnsConfigProperties>.Write(ModelReaderWriterOptions options)

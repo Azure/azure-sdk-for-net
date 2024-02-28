@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Optional<string> resourceType = default;
-            Optional<KustoSku> sku = default;
-            Optional<KustoCapacity> capacity = default;
+            string resourceType = default;
+            KustoSku sku = default;
+            KustoCapacity capacity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KustoAvailableSkuDetails(resourceType.Value, sku.Value, capacity.Value, serializedAdditionalRawData);
+            return new KustoAvailableSkuDetails(resourceType, sku, capacity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KustoAvailableSkuDetails>.Write(ModelReaderWriterOptions options)

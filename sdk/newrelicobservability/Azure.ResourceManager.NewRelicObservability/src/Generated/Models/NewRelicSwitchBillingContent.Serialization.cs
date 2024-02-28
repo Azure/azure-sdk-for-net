@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> azureResourceId = default;
-            Optional<string> organizationId = default;
-            Optional<NewRelicPlanDetails> planData = default;
+            ResourceIdentifier azureResourceId = default;
+            string organizationId = default;
+            NewRelicPlanDetails planData = default;
             string userEmail = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NewRelicSwitchBillingContent(azureResourceId.Value, organizationId.Value, planData.Value, userEmail, serializedAdditionalRawData);
+            return new NewRelicSwitchBillingContent(azureResourceId, organizationId, planData, userEmail, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NewRelicSwitchBillingContent>.Write(ModelReaderWriterOptions options)

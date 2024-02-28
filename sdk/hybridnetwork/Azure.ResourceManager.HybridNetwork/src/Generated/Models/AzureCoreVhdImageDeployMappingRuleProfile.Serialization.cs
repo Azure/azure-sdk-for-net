@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<VhdImageMappingRuleProfile> vhdImageMappingRuleProfile = default;
-            Optional<ApplicationEnablement> applicationEnablement = default;
+            VhdImageMappingRuleProfile vhdImageMappingRuleProfile = default;
+            ApplicationEnablement? applicationEnablement = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureCoreVhdImageDeployMappingRuleProfile(Optional.ToNullable(applicationEnablement), serializedAdditionalRawData, vhdImageMappingRuleProfile.Value);
+            return new AzureCoreVhdImageDeployMappingRuleProfile(applicationEnablement, serializedAdditionalRawData, vhdImageMappingRuleProfile);
         }
 
         BinaryData IPersistableModel<AzureCoreVhdImageDeployMappingRuleProfile>.Write(ModelReaderWriterOptions options)

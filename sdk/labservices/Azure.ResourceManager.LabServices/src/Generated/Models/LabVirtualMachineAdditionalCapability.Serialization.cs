@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 return null;
             }
-            Optional<LabServicesEnableState> installGpuDrivers = default;
+            LabServicesEnableState? installGpuDrivers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabVirtualMachineAdditionalCapability(Optional.ToNullable(installGpuDrivers), serializedAdditionalRawData);
+            return new LabVirtualMachineAdditionalCapability(installGpuDrivers, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabVirtualMachineAdditionalCapability>.Write(ModelReaderWriterOptions options)

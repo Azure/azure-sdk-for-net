@@ -85,8 +85,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> targetDatabaseName = default;
+            string name = default;
+            string targetDatabaseName = default;
             IDictionary<string, string> tableMap = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateMySqlAzureDBForMySqlOfflineDatabaseInput(name.Value, targetDatabaseName.Value, tableMap ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new MigrateMySqlAzureDBForMySqlOfflineDatabaseInput(name, targetDatabaseName, tableMap ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MigrateMySqlAzureDBForMySqlOfflineDatabaseInput>.Write(ModelReaderWriterOptions options)

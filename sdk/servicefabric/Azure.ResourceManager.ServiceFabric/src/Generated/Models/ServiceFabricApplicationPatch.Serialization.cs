@@ -163,19 +163,19 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> typeVersion = default;
+            SystemData systemData = default;
+            string typeVersion = default;
             IDictionary<string, string> parameters = default;
-            Optional<ApplicationUpgradePolicy> upgradePolicy = default;
-            Optional<long> minimumNodes = default;
-            Optional<long> maximumNodes = default;
-            Optional<bool> removeApplicationCapacity = default;
+            ApplicationUpgradePolicy upgradePolicy = default;
+            long? minimumNodes = default;
+            long? maximumNodes = default;
+            bool? removeApplicationCapacity = default;
             IList<ApplicationMetricDescription> metrics = default;
             IList<ApplicationUserAssignedIdentity> managedIdentities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -339,18 +339,18 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                typeVersion.Value,
+                typeVersion,
                 parameters ?? new ChangeTrackingDictionary<string, string>(),
-                upgradePolicy.Value,
-                Optional.ToNullable(minimumNodes),
-                Optional.ToNullable(maximumNodes),
-                Optional.ToNullable(removeApplicationCapacity),
+                upgradePolicy,
+                minimumNodes,
+                maximumNodes,
+                removeApplicationCapacity,
                 metrics ?? new ChangeTrackingList<ApplicationMetricDescription>(),
                 managedIdentities ?? new ChangeTrackingList<ApplicationUserAssignedIdentity>(),
-                Optional.ToNullable(etag),
+                etag,
                 serializedAdditionalRawData);
         }
 

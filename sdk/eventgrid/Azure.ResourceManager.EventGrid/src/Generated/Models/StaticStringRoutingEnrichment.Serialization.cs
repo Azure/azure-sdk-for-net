@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<string> value = default;
-            Optional<string> key = default;
+            string value = default;
+            string key = default;
             StaticRoutingEnrichmentType valueType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StaticStringRoutingEnrichment(key.Value, valueType, serializedAdditionalRawData, value.Value);
+            return new StaticStringRoutingEnrichment(key, valueType, serializedAdditionalRawData, value);
         }
 
         BinaryData IPersistableModel<StaticStringRoutingEnrichment>.Write(ModelReaderWriterOptions options)

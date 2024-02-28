@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<WindowsServerSubscription> windowsServerSubscription = default;
-            Optional<HciClusterDiagnosticLevel> diagnosticLevel = default;
+            WindowsServerSubscription? windowsServerSubscription = default;
+            HciClusterDiagnosticLevel? diagnosticLevel = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HciClusterDesiredProperties(Optional.ToNullable(windowsServerSubscription), Optional.ToNullable(diagnosticLevel), serializedAdditionalRawData);
+            return new HciClusterDesiredProperties(windowsServerSubscription, diagnosticLevel, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HciClusterDesiredProperties>.Write(ModelReaderWriterOptions options)

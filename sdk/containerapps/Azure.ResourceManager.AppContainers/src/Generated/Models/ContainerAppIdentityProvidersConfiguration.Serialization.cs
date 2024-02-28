@@ -110,13 +110,13 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<ContainerAppAzureActiveDirectoryConfiguration> azureActiveDirectory = default;
-            Optional<ContainerAppFacebookConfiguration> facebook = default;
-            Optional<ContainerAppGitHubConfiguration> gitHub = default;
-            Optional<ContainerAppGoogleConfiguration> google = default;
-            Optional<ContainerAppTwitterConfiguration> twitter = default;
-            Optional<ContainerAppAppleConfiguration> apple = default;
-            Optional<ContainerAppAzureStaticWebAppsConfiguration> azureStaticWebApps = default;
+            ContainerAppAzureActiveDirectoryConfiguration azureActiveDirectory = default;
+            ContainerAppFacebookConfiguration facebook = default;
+            ContainerAppGitHubConfiguration gitHub = default;
+            ContainerAppGoogleConfiguration google = default;
+            ContainerAppTwitterConfiguration twitter = default;
+            ContainerAppAppleConfiguration apple = default;
+            ContainerAppAzureStaticWebAppsConfiguration azureStaticWebApps = default;
             IDictionary<string, ContainerAppCustomOpenIdConnectProviderConfiguration> customOpenIdConnectProviders = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -206,13 +206,13 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ContainerAppIdentityProvidersConfiguration(
-                azureActiveDirectory.Value,
-                facebook.Value,
-                gitHub.Value,
-                google.Value,
-                twitter.Value,
-                apple.Value,
-                azureStaticWebApps.Value,
+                azureActiveDirectory,
+                facebook,
+                gitHub,
+                google,
+                twitter,
+                apple,
+                azureStaticWebApps,
                 customOpenIdConnectProviders ?? new ChangeTrackingDictionary<string, ContainerAppCustomOpenIdConnectProviderConfiguration>(),
                 serializedAdditionalRawData);
         }

@@ -166,17 +166,17 @@ namespace Azure.ResourceManager.Maintenance
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> @namespace = default;
+            SystemData systemData = default;
+            string @namespace = default;
             IDictionary<string, string> extensionProperties = default;
-            Optional<MaintenanceScope> maintenanceScope = default;
-            Optional<MaintenanceConfigurationVisibility> visibility = default;
-            Optional<MaintenancePatchConfiguration> installPatches = default;
-            Optional<DateTimeOffset> startDateTime = default;
-            Optional<DateTimeOffset> expirationDateTime = default;
-            Optional<TimeSpan> duration = default;
-            Optional<string> timeZone = default;
-            Optional<string> recurEvery = default;
+            MaintenanceScope? maintenanceScope = default;
+            MaintenanceConfigurationVisibility? visibility = default;
+            MaintenancePatchConfiguration installPatches = default;
+            DateTimeOffset? startDateTime = default;
+            DateTimeOffset? expirationDateTime = default;
+            TimeSpan? duration = default;
+            string timeZone = default;
+            string recurEvery = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -341,19 +341,19 @@ namespace Azure.ResourceManager.Maintenance
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                @namespace.Value,
+                @namespace,
                 extensionProperties ?? new ChangeTrackingDictionary<string, string>(),
-                Optional.ToNullable(maintenanceScope),
-                Optional.ToNullable(visibility),
-                installPatches.Value,
-                Optional.ToNullable(startDateTime),
-                Optional.ToNullable(expirationDateTime),
-                Optional.ToNullable(duration),
-                timeZone.Value,
-                recurEvery.Value,
+                maintenanceScope,
+                visibility,
+                installPatches,
+                startDateTime,
+                expirationDateTime,
+                duration,
+                timeZone,
+                recurEvery,
                 serializedAdditionalRawData);
         }
 

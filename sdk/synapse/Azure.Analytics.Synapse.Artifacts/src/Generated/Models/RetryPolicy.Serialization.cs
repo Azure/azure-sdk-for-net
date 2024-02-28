@@ -37,8 +37,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> count = default;
-            Optional<int> intervalInSeconds = default;
+            object count = default;
+            int? intervalInSeconds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("count"u8))
@@ -60,7 +60,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new RetryPolicy(count.Value, Optional.ToNullable(intervalInSeconds));
+            return new RetryPolicy(count, intervalInSeconds);
         }
 
         internal partial class RetryPolicyConverter : JsonConverter<RetryPolicy>

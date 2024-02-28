@@ -77,12 +77,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> description = default;
+            string description = default;
             IDictionary<string, string> configs = default;
             IList<string> annotations = default;
-            Optional<string> notes = default;
-            Optional<string> createdBy = default;
-            Optional<DateTimeOffset> created = default;
+            string notes = default;
+            string createdBy = default;
+            DateTimeOffset? created = default;
             IDictionary<string, string> configMergeRule = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -150,12 +150,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new SparkConfiguration(
-                description.Value,
+                description,
                 configs,
                 annotations ?? new ChangeTrackingList<string>(),
-                notes.Value,
-                createdBy.Value,
-                Optional.ToNullable(created),
+                notes,
+                createdBy,
+                created,
                 configMergeRule ?? new ChangeTrackingDictionary<string, string>());
         }
 

@@ -89,8 +89,8 @@ namespace Azure.ResourceManager.Maps.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<string> provisioningState = default;
-            Optional<int> storageUnits = default;
+            string provisioningState = default;
+            int? storageUnits = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Maps.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MapsCreatorPatch(tags ?? new ChangeTrackingDictionary<string, string>(), provisioningState.Value, Optional.ToNullable(storageUnits), serializedAdditionalRawData);
+            return new MapsCreatorPatch(tags ?? new ChangeTrackingDictionary<string, string>(), provisioningState, storageUnits, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MapsCreatorPatch>.Write(ModelReaderWriterOptions options)

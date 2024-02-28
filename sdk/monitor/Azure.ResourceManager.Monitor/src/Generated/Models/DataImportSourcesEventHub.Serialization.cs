@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> consumerGroup = default;
-            Optional<string> stream = default;
+            string name = default;
+            string consumerGroup = default;
+            string stream = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataImportSourcesEventHub(name.Value, consumerGroup.Value, stream.Value, serializedAdditionalRawData);
+            return new DataImportSourcesEventHub(name, consumerGroup, stream, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataImportSourcesEventHub>.Write(ModelReaderWriterOptions options)

@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.MySql.Models
                 return null;
             }
             string name = default;
-            Optional<ResourceType> type = default;
+            ResourceType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.MySql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlNameAvailabilityContent(name, Optional.ToNullable(type), serializedAdditionalRawData);
+            return new MySqlNameAvailabilityContent(name, type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlNameAvailabilityContent>.Write(ModelReaderWriterOptions options)

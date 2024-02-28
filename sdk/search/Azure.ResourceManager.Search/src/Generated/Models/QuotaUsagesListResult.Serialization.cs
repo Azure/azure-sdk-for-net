@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Search.Models
                 return null;
             }
             IReadOnlyList<QuotaUsageResult> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Search.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QuotaUsagesListResult(value ?? new ChangeTrackingList<QuotaUsageResult>(), nextLink.Value, serializedAdditionalRawData);
+            return new QuotaUsagesListResult(value ?? new ChangeTrackingList<QuotaUsageResult>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QuotaUsagesListResult>.Write(ModelReaderWriterOptions options)

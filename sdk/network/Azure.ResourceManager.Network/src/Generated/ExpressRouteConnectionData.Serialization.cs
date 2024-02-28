@@ -124,17 +124,17 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<WritableSubResource> expressRouteCircuitPeering = default;
-            Optional<string> authorizationKey = default;
-            Optional<int> routingWeight = default;
-            Optional<bool> enableInternetSecurity = default;
-            Optional<bool> expressRouteGatewayBypass = default;
-            Optional<bool> enablePrivateLinkFastPath = default;
-            Optional<RoutingConfiguration> routingConfiguration = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            NetworkProvisioningState? provisioningState = default;
+            WritableSubResource expressRouteCircuitPeering = default;
+            string authorizationKey = default;
+            int? routingWeight = default;
+            bool? enableInternetSecurity = default;
+            bool? expressRouteGatewayBypass = default;
+            bool? enablePrivateLinkFastPath = default;
+            RoutingConfiguration routingConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -249,18 +249,18 @@ namespace Azure.ResourceManager.Network
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ExpressRouteConnectionData(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
+                id,
+                name,
+                type,
                 serializedAdditionalRawData,
-                Optional.ToNullable(provisioningState),
+                provisioningState,
                 expressRouteCircuitPeering,
-                authorizationKey.Value,
-                Optional.ToNullable(routingWeight),
-                Optional.ToNullable(enableInternetSecurity),
-                Optional.ToNullable(expressRouteGatewayBypass),
-                Optional.ToNullable(enablePrivateLinkFastPath),
-                routingConfiguration.Value);
+                authorizationKey,
+                routingWeight,
+                enableInternetSecurity,
+                expressRouteGatewayBypass,
+                enablePrivateLinkFastPath,
+                routingConfiguration);
         }
 
         BinaryData IPersistableModel<ExpressRouteConnectionData>.Write(ModelReaderWriterOptions options)

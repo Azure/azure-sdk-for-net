@@ -129,18 +129,18 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<LinuxProfileProperties> linuxProfile = default;
-            Optional<ProvisionedClusterControlPlaneProfile> controlPlane = default;
-            Optional<string> kubernetesVersion = default;
-            Optional<ProvisionedClusterNetworkProfile> networkProfile = default;
-            Optional<StorageProfile> storageProfile = default;
-            Optional<ClusterVmAccessProfile> clusterVmAccessProfile = default;
+            LinuxProfileProperties linuxProfile = default;
+            ProvisionedClusterControlPlaneProfile controlPlane = default;
+            string kubernetesVersion = default;
+            ProvisionedClusterNetworkProfile networkProfile = default;
+            StorageProfile storageProfile = default;
+            ClusterVmAccessProfile clusterVmAccessProfile = default;
             IList<HybridContainerServiceNamedAgentPoolProfile> agentPoolProfiles = default;
-            Optional<ProvisionedClusterCloudProviderProfile> cloudProviderProfile = default;
-            Optional<HybridContainerServiceResourceProvisioningState> provisioningState = default;
-            Optional<ProvisionedClusterStatus> status = default;
-            Optional<ProvisionedClusterLicenseProfile> licenseProfile = default;
-            Optional<ProvisionedClusterPropertiesAutoScalerProfile> autoScalerProfile = default;
+            ProvisionedClusterCloudProviderProfile cloudProviderProfile = default;
+            HybridContainerServiceResourceProvisioningState? provisioningState = default;
+            ProvisionedClusterStatus status = default;
+            ProvisionedClusterLicenseProfile licenseProfile = default;
+            ProvisionedClusterPropertiesAutoScalerProfile autoScalerProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -261,18 +261,18 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ProvisionedClusterProperties(
-                linuxProfile.Value,
-                controlPlane.Value,
-                kubernetesVersion.Value,
-                networkProfile.Value,
-                storageProfile.Value,
-                clusterVmAccessProfile.Value,
+                linuxProfile,
+                controlPlane,
+                kubernetesVersion,
+                networkProfile,
+                storageProfile,
+                clusterVmAccessProfile,
                 agentPoolProfiles ?? new ChangeTrackingList<HybridContainerServiceNamedAgentPoolProfile>(),
-                cloudProviderProfile.Value,
-                Optional.ToNullable(provisioningState),
-                status.Value,
-                licenseProfile.Value,
-                autoScalerProfile.Value,
+                cloudProviderProfile,
+                provisioningState,
+                status,
+                licenseProfile,
+                autoScalerProfile,
                 serializedAdditionalRawData);
         }
 

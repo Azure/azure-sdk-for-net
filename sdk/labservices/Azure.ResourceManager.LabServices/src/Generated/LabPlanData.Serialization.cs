@@ -152,21 +152,21 @@ namespace Azure.ResourceManager.LabServices
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<LabConnectionProfile> defaultConnectionProfile = default;
-            Optional<LabAutoShutdownProfile> defaultAutoShutdownProfile = default;
-            Optional<LabPlanNetworkProfile> defaultNetworkProfile = default;
+            SystemData systemData = default;
+            LabConnectionProfile defaultConnectionProfile = default;
+            LabAutoShutdownProfile defaultAutoShutdownProfile = default;
+            LabPlanNetworkProfile defaultNetworkProfile = default;
             IList<AzureLocation> allowedRegions = default;
-            Optional<ResourceIdentifier> sharedGalleryId = default;
-            Optional<LabPlanSupportInfo> supportInfo = default;
-            Optional<Uri> linkedLmsInstance = default;
-            Optional<LabServicesProvisioningState> provisioningState = default;
+            ResourceIdentifier sharedGalleryId = default;
+            LabPlanSupportInfo supportInfo = default;
+            Uri linkedLmsInstance = default;
+            LabServicesProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -322,18 +322,18 @@ namespace Azure.ResourceManager.LabServices
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 identity,
-                defaultConnectionProfile.Value,
-                defaultAutoShutdownProfile.Value,
-                defaultNetworkProfile.Value,
+                defaultConnectionProfile,
+                defaultAutoShutdownProfile,
+                defaultNetworkProfile,
                 allowedRegions ?? new ChangeTrackingList<AzureLocation>(),
-                sharedGalleryId.Value,
-                supportInfo.Value,
-                linkedLmsInstance.Value,
-                Optional.ToNullable(provisioningState),
+                sharedGalleryId,
+                supportInfo,
+                linkedLmsInstance,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

@@ -99,11 +99,11 @@ namespace Azure.AI.OpenAI
             {
                 return null;
             }
-            Optional<string> titleField = default;
-            Optional<string> urlField = default;
-            Optional<string> filepathField = default;
+            string titleField = default;
+            string urlField = default;
+            string filepathField = default;
             IList<string> contentFields = default;
-            Optional<string> contentFieldsSeparator = default;
+            string contentFieldsSeparator = default;
             IList<string> vectorFields = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -156,11 +156,11 @@ namespace Azure.AI.OpenAI
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AzureCosmosDBFieldMappingOptions(
-                titleField.Value,
-                urlField.Value,
-                filepathField.Value,
+                titleField,
+                urlField,
+                filepathField,
                 contentFields,
-                contentFieldsSeparator.Value,
+                contentFieldsSeparator,
                 vectorFields,
                 serializedAdditionalRawData);
         }

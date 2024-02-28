@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> agentId = default;
-            Optional<string> machineId = default;
-            Optional<string> biosId = default;
-            Optional<string> fqdn = default;
+            string agentId = default;
+            string machineId = default;
+            string biosId = default;
+            string fqdn = default;
             IReadOnlyList<SiteRecoveryAgentDiskDetails> disks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -144,10 +144,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SiteRecoveryAgentDetails(
-                agentId.Value,
-                machineId.Value,
-                biosId.Value,
-                fqdn.Value,
+                agentId,
+                machineId,
+                biosId,
+                fqdn,
                 disks ?? new ChangeTrackingList<SiteRecoveryAgentDiskDetails>(),
                 serializedAdditionalRawData);
         }

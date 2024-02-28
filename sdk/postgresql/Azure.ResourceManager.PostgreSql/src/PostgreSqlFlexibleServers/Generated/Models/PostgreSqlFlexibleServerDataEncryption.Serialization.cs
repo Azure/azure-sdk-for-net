@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<Uri> primaryKeyUri = default;
-            Optional<ResourceIdentifier> primaryUserAssignedIdentityId = default;
-            Optional<Uri> geoBackupKeyUri = default;
-            Optional<string> geoBackupUserAssignedIdentityId = default;
-            Optional<PostgreSqlFlexibleServerKeyType> type = default;
-            Optional<PostgreSqlKeyStatus> primaryEncryptionKeyStatus = default;
-            Optional<PostgreSqlKeyStatus> geoBackupEncryptionKeyStatus = default;
+            Uri primaryKeyUri = default;
+            ResourceIdentifier primaryUserAssignedIdentityId = default;
+            Uri geoBackupKeyUri = default;
+            string geoBackupUserAssignedIdentityId = default;
+            PostgreSqlFlexibleServerKeyType? type = default;
+            PostgreSqlKeyStatus? primaryEncryptionKeyStatus = default;
+            PostgreSqlKeyStatus? geoBackupEncryptionKeyStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -176,13 +176,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new PostgreSqlFlexibleServerDataEncryption(
-                primaryKeyUri.Value,
-                primaryUserAssignedIdentityId.Value,
-                geoBackupKeyUri.Value,
-                geoBackupUserAssignedIdentityId.Value,
-                Optional.ToNullable(type),
-                Optional.ToNullable(primaryEncryptionKeyStatus),
-                Optional.ToNullable(geoBackupEncryptionKeyStatus),
+                primaryKeyUri,
+                primaryUserAssignedIdentityId,
+                geoBackupKeyUri,
+                geoBackupUserAssignedIdentityId,
+                type,
+                primaryEncryptionKeyStatus,
+                geoBackupEncryptionKeyStatus,
                 serializedAdditionalRawData);
         }
 

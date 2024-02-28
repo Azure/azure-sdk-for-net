@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<string> provisioningState = default;
-            Optional<ErrorDeploymentType> type = default;
-            Optional<string> deploymentName = default;
+            string provisioningState = default;
+            ErrorDeploymentType? type = default;
+            string deploymentName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ErrorDeploymentExtended(provisioningState.Value, Optional.ToNullable(type), deploymentName.Value, serializedAdditionalRawData);
+            return new ErrorDeploymentExtended(provisioningState, type, deploymentName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ErrorDeploymentExtended>.Write(ModelReaderWriterOptions options)

@@ -85,8 +85,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 return null;
             }
             IReadOnlyList<RegionContract> value = default;
-            Optional<long> count = default;
-            Optional<string> nextLink = default;
+            long? count = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RegionListResult(value ?? new ChangeTrackingList<RegionContract>(), Optional.ToNullable(count), nextLink.Value, serializedAdditionalRawData);
+            return new RegionListResult(value ?? new ChangeTrackingList<RegionContract>(), count, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RegionListResult>.Write(ModelReaderWriterOptions options)

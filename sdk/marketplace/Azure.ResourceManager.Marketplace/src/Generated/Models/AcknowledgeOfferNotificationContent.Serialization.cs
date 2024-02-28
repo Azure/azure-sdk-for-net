@@ -102,9 +102,9 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<bool> acknowledge = default;
-            Optional<bool> dismiss = default;
-            Optional<bool> removeOffer = default;
+            bool? acknowledge = default;
+            bool? dismiss = default;
+            bool? removeOffer = default;
             IList<string> addPlans = default;
             IList<string> removePlans = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -185,9 +185,9 @@ namespace Azure.ResourceManager.Marketplace.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AcknowledgeOfferNotificationContent(
-                Optional.ToNullable(acknowledge),
-                Optional.ToNullable(dismiss),
-                Optional.ToNullable(removeOffer),
+                acknowledge,
+                dismiss,
+                removeOffer,
                 addPlans ?? new ChangeTrackingList<string>(),
                 removePlans ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);

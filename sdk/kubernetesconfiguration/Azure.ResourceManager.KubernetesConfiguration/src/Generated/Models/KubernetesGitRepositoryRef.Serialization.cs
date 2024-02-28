@@ -112,10 +112,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 return null;
             }
-            Optional<string> branch = default;
-            Optional<string> tag = default;
-            Optional<string> semver = default;
-            Optional<string> commit = default;
+            string branch = default;
+            string tag = default;
+            string semver = default;
+            string commit = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesGitRepositoryRef(branch.Value, tag.Value, semver.Value, commit.Value, serializedAdditionalRawData);
+            return new KubernetesGitRepositoryRef(branch, tag, semver, commit, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesGitRepositoryRef>.Write(ModelReaderWriterOptions options)

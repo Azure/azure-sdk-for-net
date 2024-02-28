@@ -104,10 +104,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<string> description = default;
-            Optional<string> friendlyName = default;
+            string description = default;
+            string friendlyName = default;
             IList<string> applicationGroupReferences = default;
-            Optional<DesktopVirtualizationPublicNetworkAccess> publicNetworkAccess = default;
+            DesktopVirtualizationPublicNetworkAccess? publicNetworkAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,10 +179,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new VirtualWorkspacePatch(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                description.Value,
-                friendlyName.Value,
+                description,
+                friendlyName,
                 applicationGroupReferences ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(publicNetworkAccess),
+                publicNetworkAccess,
                 serializedAdditionalRawData);
         }
 

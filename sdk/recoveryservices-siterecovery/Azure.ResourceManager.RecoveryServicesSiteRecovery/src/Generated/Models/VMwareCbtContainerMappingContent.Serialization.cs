@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> keyVaultId = default;
-            Optional<Uri> keyVaultUri = default;
+            ResourceIdentifier keyVaultId = default;
+            Uri keyVaultUri = default;
             ResourceIdentifier storageAccountId = default;
-            Optional<string> storageAccountSasSecretName = default;
-            Optional<string> serviceBusConnectionStringSecretName = default;
+            string storageAccountSasSecretName = default;
+            string serviceBusConnectionStringSecretName = default;
             string targetLocation = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -153,11 +153,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new VMwareCbtContainerMappingContent(
                 instanceType,
                 serializedAdditionalRawData,
-                keyVaultId.Value,
-                keyVaultUri.Value,
+                keyVaultId,
+                keyVaultUri,
                 storageAccountId,
-                storageAccountSasSecretName.Value,
-                serviceBusConnectionStringSecretName.Value,
+                storageAccountSasSecretName,
+                serviceBusConnectionStringSecretName,
                 targetLocation);
         }
 

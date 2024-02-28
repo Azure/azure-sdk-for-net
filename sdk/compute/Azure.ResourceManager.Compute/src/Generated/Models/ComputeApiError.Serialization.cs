@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             IReadOnlyList<ComputeApiErrorBase> details = default;
-            Optional<InnerError> innererror = default;
-            Optional<string> code = default;
-            Optional<string> target = default;
-            Optional<string> message = default;
+            InnerError innererror = default;
+            string code = default;
+            string target = default;
+            string message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,10 +149,10 @@ namespace Azure.ResourceManager.Compute.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ComputeApiError(
                 details ?? new ChangeTrackingList<ComputeApiErrorBase>(),
-                innererror.Value,
-                code.Value,
-                target.Value,
-                message.Value,
+                innererror,
+                code,
+                target,
+                message,
                 serializedAdditionalRawData);
         }
 

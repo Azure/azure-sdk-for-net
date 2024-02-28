@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
             {
                 return null;
             }
-            Optional<string> category = default;
+            string category = default;
             IReadOnlyList<LoadTestingEndpointDependency> endpoints = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LoadTestingOutboundEnvironmentEndpoint(category.Value, endpoints ?? new ChangeTrackingList<LoadTestingEndpointDependency>(), serializedAdditionalRawData);
+            return new LoadTestingOutboundEnvironmentEndpoint(category, endpoints ?? new ChangeTrackingList<LoadTestingEndpointDependency>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LoadTestingOutboundEnvironmentEndpoint>.Write(ModelReaderWriterOptions options)

@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            Optional<ContainerGroupNetworkProtocol> protocol = default;
+            ContainerGroupNetworkProtocol? protocol = default;
             int port = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerGroupPort(Optional.ToNullable(protocol), port, serializedAdditionalRawData);
+            return new ContainerGroupPort(protocol, port, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerGroupPort>.Write(ModelReaderWriterOptions options)

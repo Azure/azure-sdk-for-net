@@ -110,11 +110,11 @@ namespace Azure.ResourceManager.HDInsight
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SubResource> privateEndpoint = default;
+            SystemData systemData = default;
+            SubResource privateEndpoint = default;
             HDInsightPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
-            Optional<string> linkIdentifier = default;
-            Optional<HDInsightPrivateEndpointConnectionProvisioningState> provisioningState = default;
+            string linkIdentifier = default;
+            HDInsightPrivateEndpointConnectionProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -193,11 +193,11 @@ namespace Azure.ResourceManager.HDInsight
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 privateEndpoint,
                 privateLinkServiceConnectionState,
-                linkIdentifier.Value,
-                Optional.ToNullable(provisioningState),
+                linkIdentifier,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

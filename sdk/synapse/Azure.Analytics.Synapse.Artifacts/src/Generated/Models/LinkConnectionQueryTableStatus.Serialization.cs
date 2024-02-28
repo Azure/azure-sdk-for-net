@@ -23,7 +23,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             IReadOnlyList<LinkTableStatus> value = default;
-            Optional<object> continuationToken = default;
+            object continuationToken = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -50,7 +50,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new LinkConnectionQueryTableStatus(value ?? new ChangeTrackingList<LinkTableStatus>(), continuationToken.Value);
+            return new LinkConnectionQueryTableStatus(value ?? new ChangeTrackingList<LinkTableStatus>(), continuationToken);
         }
 
         internal partial class LinkConnectionQueryTableStatusConverter : JsonConverter<LinkConnectionQueryTableStatus>

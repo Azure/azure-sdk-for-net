@@ -105,11 +105,11 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             IReadOnlyList<string> zones = default;
             IReadOnlyList<ComputeResourceSkuZoneDetails> zoneDetails = default;
             IReadOnlyList<string> extendedLocations = default;
-            Optional<ExtendedLocationType> type = default;
+            ExtendedLocationType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -177,11 +177,11 @@ namespace Azure.ResourceManager.Compute.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ComputeResourceSkuLocationInfo(
-                Optional.ToNullable(location),
+                location,
                 zones ?? new ChangeTrackingList<string>(),
                 zoneDetails ?? new ChangeTrackingList<ComputeResourceSkuZoneDetails>(),
                 extendedLocations ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(type),
+                type,
                 serializedAdditionalRawData);
         }
 

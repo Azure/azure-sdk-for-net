@@ -85,8 +85,8 @@ namespace Azure.ResourceManager.Reservations.Models
                 return null;
             }
             IReadOnlyList<ReservationCatalog> value = default;
-            Optional<string> nextLink = default;
-            Optional<long> totalItems = default;
+            string nextLink = default;
+            long? totalItems = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CatalogsResult(value ?? new ChangeTrackingList<ReservationCatalog>(), nextLink.Value, Optional.ToNullable(totalItems), serializedAdditionalRawData);
+            return new CatalogsResult(value ?? new ChangeTrackingList<ReservationCatalog>(), nextLink, totalItems, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CatalogsResult>.Write(ModelReaderWriterOptions options)

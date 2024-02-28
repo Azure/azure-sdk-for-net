@@ -92,9 +92,9 @@ namespace Azure.Communication.JobRouter
             }
             ETag etag = default;
             string id = default;
-            Optional<string> name = default;
-            Optional<TimeSpan> offerExpiresAfterSeconds = default;
-            Optional<DistributionMode> mode = default;
+            string name = default;
+            TimeSpan? offerExpiresAfterSeconds = default;
+            DistributionMode mode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,9 +137,9 @@ namespace Azure.Communication.JobRouter
             return new DistributionPolicy(
                 etag,
                 id,
-                name.Value,
-                Optional.ToNullable(offerExpiresAfterSeconds),
-                mode.Value,
+                name,
+                offerExpiresAfterSeconds,
+                mode,
                 serializedAdditionalRawData);
         }
 

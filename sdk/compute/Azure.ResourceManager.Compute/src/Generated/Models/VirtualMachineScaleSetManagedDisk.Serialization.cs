@@ -80,9 +80,9 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<StorageAccountType> storageAccountType = default;
-            Optional<WritableSubResource> diskEncryptionSet = default;
-            Optional<VirtualMachineDiskSecurityProfile> securityProfile = default;
+            StorageAccountType? storageAccountType = default;
+            WritableSubResource diskEncryptionSet = default;
+            VirtualMachineDiskSecurityProfile securityProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineScaleSetManagedDisk(Optional.ToNullable(storageAccountType), diskEncryptionSet, securityProfile.Value, serializedAdditionalRawData);
+            return new VirtualMachineScaleSetManagedDisk(storageAccountType, diskEncryptionSet, securityProfile, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineScaleSetManagedDisk>.Write(ModelReaderWriterOptions options)

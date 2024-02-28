@@ -151,23 +151,23 @@ namespace Azure.ResourceManager.Attestation.Models
             {
                 return null;
             }
-            Optional<string> alg = default;
-            Optional<string> crv = default;
-            Optional<string> d = default;
-            Optional<string> dp = default;
-            Optional<string> dq = default;
-            Optional<string> e = default;
-            Optional<string> k = default;
-            Optional<string> kid = default;
+            string alg = default;
+            string crv = default;
+            string d = default;
+            string dp = default;
+            string dq = default;
+            string e = default;
+            string k = default;
+            string kid = default;
             string kty = default;
-            Optional<string> n = default;
-            Optional<string> p = default;
-            Optional<string> q = default;
-            Optional<string> qi = default;
-            Optional<string> use = default;
-            Optional<string> x = default;
+            string n = default;
+            string p = default;
+            string q = default;
+            string qi = default;
+            string use = default;
+            string x = default;
             IList<string> x5c = default;
-            Optional<string> y = default;
+            string y = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -273,23 +273,23 @@ namespace Azure.ResourceManager.Attestation.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new JsonWebKey(
-                alg.Value,
-                crv.Value,
-                d.Value,
-                dp.Value,
-                dq.Value,
-                e.Value,
-                k.Value,
-                kid.Value,
+                alg,
+                crv,
+                d,
+                dp,
+                dq,
+                e,
+                k,
+                kid,
                 kty,
-                n.Value,
-                p.Value,
-                q.Value,
-                qi.Value,
-                use.Value,
-                x.Value,
+                n,
+                p,
+                q,
+                qi,
+                use,
+                x,
                 x5c ?? new ChangeTrackingList<string>(),
-                y.Value,
+                y,
                 serializedAdditionalRawData);
         }
 

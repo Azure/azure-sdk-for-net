@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> workloadIdentityProviderId = default;
-            Optional<string> serviceAccountEmailAddress = default;
+            string workloadIdentityProviderId = default;
+            string serviceAccountEmailAddress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GcpDefenderForServersInfo(workloadIdentityProviderId.Value, serviceAccountEmailAddress.Value, serializedAdditionalRawData);
+            return new GcpDefenderForServersInfo(workloadIdentityProviderId, serviceAccountEmailAddress, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GcpDefenderForServersInfo>.Write(ModelReaderWriterOptions options)

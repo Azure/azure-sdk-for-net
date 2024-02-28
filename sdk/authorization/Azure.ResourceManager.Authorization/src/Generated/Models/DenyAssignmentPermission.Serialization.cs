@@ -118,8 +118,8 @@ namespace Azure.ResourceManager.Authorization.Models
             IReadOnlyList<string> notActions = default;
             IReadOnlyList<string> dataActions = default;
             IReadOnlyList<string> notDataActions = default;
-            Optional<string> condition = default;
-            Optional<string> conditionVersion = default;
+            string condition = default;
+            string conditionVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -201,8 +201,8 @@ namespace Azure.ResourceManager.Authorization.Models
                 notActions ?? new ChangeTrackingList<string>(),
                 dataActions ?? new ChangeTrackingList<string>(),
                 notDataActions ?? new ChangeTrackingList<string>(),
-                condition.Value,
-                conditionVersion.Value,
+                condition,
+                conditionVersion,
                 serializedAdditionalRawData);
         }
 

@@ -95,12 +95,12 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<BenefitRecommendationProperties> properties = default;
-            Optional<BillingAccountBenefitKind> kind = default;
+            BenefitRecommendationProperties properties = default;
+            BillingAccountBenefitKind? kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,9 +157,9 @@ namespace Azure.ResourceManager.CostManagement.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                properties.Value,
-                Optional.ToNullable(kind),
+                systemData,
+                properties,
+                kind,
                 serializedAdditionalRawData);
         }
 

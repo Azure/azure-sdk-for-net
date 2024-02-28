@@ -115,15 +115,15 @@ namespace Azure.ResourceManager.StreamAnalytics
             {
                 return null;
             }
-            Optional<StreamAnalyticsClusterSku> sku = default;
-            Optional<ETag> etag = default;
-            Optional<StreamAnalyticsClusterProperties> properties = default;
+            StreamAnalyticsClusterSku sku = default;
+            ETag? etag = default;
+            StreamAnalyticsClusterProperties properties = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -208,12 +208,12 @@ namespace Azure.ResourceManager.StreamAnalytics
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                sku.Value,
-                Optional.ToNullable(etag),
-                properties.Value,
+                sku,
+                etag,
+                properties,
                 serializedAdditionalRawData);
         }
 

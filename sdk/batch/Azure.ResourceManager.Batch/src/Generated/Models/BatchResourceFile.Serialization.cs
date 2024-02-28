@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<string> autoStorageContainerName = default;
-            Optional<Uri> storageContainerUrl = default;
-            Optional<Uri> httpUrl = default;
-            Optional<string> blobPrefix = default;
-            Optional<string> filePath = default;
-            Optional<string> fileMode = default;
-            Optional<ComputeNodeIdentityReference> identityReference = default;
+            string autoStorageContainerName = default;
+            Uri storageContainerUrl = default;
+            Uri httpUrl = default;
+            string blobPrefix = default;
+            string filePath = default;
+            string fileMode = default;
+            ComputeNodeIdentityReference identityReference = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,13 +164,13 @@ namespace Azure.ResourceManager.Batch.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new BatchResourceFile(
-                autoStorageContainerName.Value,
-                storageContainerUrl.Value,
-                httpUrl.Value,
-                blobPrefix.Value,
-                filePath.Value,
-                fileMode.Value,
-                identityReference.Value,
+                autoStorageContainerName,
+                storageContainerUrl,
+                httpUrl,
+                blobPrefix,
+                filePath,
+                fileMode,
+                identityReference,
                 serializedAdditionalRawData);
         }
 

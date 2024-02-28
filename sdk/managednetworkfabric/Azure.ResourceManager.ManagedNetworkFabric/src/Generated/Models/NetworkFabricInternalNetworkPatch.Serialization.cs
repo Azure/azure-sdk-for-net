@@ -142,19 +142,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<string> annotation = default;
-            Optional<int> mtu = default;
+            string annotation = default;
+            int? mtu = default;
             IList<ConnectedSubnet> connectedIPv4Subnets = default;
             IList<ConnectedSubnet> connectedIPv6Subnets = default;
-            Optional<ResourceIdentifier> importRoutePolicyId = default;
-            Optional<ResourceIdentifier> exportRoutePolicyId = default;
-            Optional<ImportRoutePolicy> importRoutePolicy = default;
-            Optional<ExportRoutePolicy> exportRoutePolicy = default;
-            Optional<ResourceIdentifier> ingressAclId = default;
-            Optional<ResourceIdentifier> egressAclId = default;
-            Optional<IsMonitoringEnabled> isMonitoringEnabled = default;
-            Optional<BgpConfiguration> bgpConfiguration = default;
-            Optional<StaticRouteConfiguration> staticRouteConfiguration = default;
+            ResourceIdentifier importRoutePolicyId = default;
+            ResourceIdentifier exportRoutePolicyId = default;
+            ImportRoutePolicy importRoutePolicy = default;
+            ExportRoutePolicy exportRoutePolicy = default;
+            ResourceIdentifier ingressAclId = default;
+            ResourceIdentifier egressAclId = default;
+            IsMonitoringEnabled? isMonitoringEnabled = default;
+            BgpConfiguration bgpConfiguration = default;
+            StaticRouteConfiguration staticRouteConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -301,19 +301,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new NetworkFabricInternalNetworkPatch(
-                annotation.Value,
-                Optional.ToNullable(mtu),
+                annotation,
+                mtu,
                 connectedIPv4Subnets ?? new ChangeTrackingList<ConnectedSubnet>(),
                 connectedIPv6Subnets ?? new ChangeTrackingList<ConnectedSubnet>(),
-                importRoutePolicyId.Value,
-                exportRoutePolicyId.Value,
-                importRoutePolicy.Value,
-                exportRoutePolicy.Value,
-                ingressAclId.Value,
-                egressAclId.Value,
-                Optional.ToNullable(isMonitoringEnabled),
-                bgpConfiguration.Value,
-                staticRouteConfiguration.Value,
+                importRoutePolicyId,
+                exportRoutePolicyId,
+                importRoutePolicy,
+                exportRoutePolicy,
+                ingressAclId,
+                egressAclId,
+                isMonitoringEnabled,
+                bgpConfiguration,
+                staticRouteConfiguration,
                 serializedAdditionalRawData);
         }
 

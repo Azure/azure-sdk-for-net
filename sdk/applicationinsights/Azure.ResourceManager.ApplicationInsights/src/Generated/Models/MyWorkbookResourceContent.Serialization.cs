@@ -111,11 +111,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<MyWorkbookManagedIdentity> identity = default;
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<AzureLocation> location = default;
+            MyWorkbookManagedIdentity identity = default;
+            string id = default;
+            string name = default;
+            string type = default;
+            AzureLocation? location = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, string> etag = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -190,11 +190,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MyWorkbookResourceContent(
-                identity.Value,
-                id.Value,
-                name.Value,
-                type.Value,
-                Optional.ToNullable(location),
+                identity,
+                id,
+                name,
+                type,
+                location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 etag ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);

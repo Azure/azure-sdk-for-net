@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Network.Models
             string remotePort = default;
             string localIPAddress = default;
             string remoteIPAddress = default;
-            Optional<ResourceIdentifier> targetNicResourceId = default;
+            ResourceIdentifier targetNicResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Network.Models
                 remotePort,
                 localIPAddress,
                 remoteIPAddress,
-                targetNicResourceId.Value,
+                targetNicResourceId,
                 serializedAdditionalRawData);
         }
 

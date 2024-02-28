@@ -159,22 +159,22 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ETag> panETag = default;
-            Optional<AzureLocation> panLocation = default;
-            Optional<RulestackScopeType> scope = default;
+            SystemData systemData = default;
+            ETag? panETag = default;
+            AzureLocation? panLocation = default;
+            RulestackScopeType? scope = default;
             IList<string> associatedSubscriptions = default;
-            Optional<string> description = default;
-            Optional<RuleCreationDefaultMode> defaultMode = default;
-            Optional<string> minAppIdVersion = default;
-            Optional<FirewallProvisioningState> provisioningState = default;
-            Optional<RulestackSecurityServices> securityServices = default;
+            string description = default;
+            RuleCreationDefaultMode? defaultMode = default;
+            string minAppIdVersion = default;
+            FirewallProvisioningState? provisioningState = default;
+            RulestackSecurityServices securityServices = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -332,19 +332,19 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 identity,
-                Optional.ToNullable(panETag),
-                Optional.ToNullable(panLocation),
-                Optional.ToNullable(scope),
+                panETag,
+                panLocation,
+                scope,
                 associatedSubscriptions ?? new ChangeTrackingList<string>(),
-                description.Value,
-                Optional.ToNullable(defaultMode),
-                minAppIdVersion.Value,
-                Optional.ToNullable(provisioningState),
-                securityServices.Value,
+                description,
+                defaultMode,
+                minAppIdVersion,
+                provisioningState,
+                securityServices,
                 serializedAdditionalRawData);
         }
 

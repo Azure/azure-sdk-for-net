@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<bool> enabled = default;
-            Optional<string> displayName = default;
+            string name = default;
+            bool? enabled = default;
+            string displayName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationalInsightsIntelligencePack(name.Value, Optional.ToNullable(enabled), displayName.Value, serializedAdditionalRawData);
+            return new OperationalInsightsIntelligencePack(name, enabled, displayName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationalInsightsIntelligencePack>.Write(ModelReaderWriterOptions options)

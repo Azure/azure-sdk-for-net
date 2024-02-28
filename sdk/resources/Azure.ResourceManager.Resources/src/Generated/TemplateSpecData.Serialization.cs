@@ -140,10 +140,10 @@ namespace Azure.ResourceManager.Resources
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<string> displayName = default;
-            Optional<BinaryData> metadata = default;
+            SystemData systemData = default;
+            string description = default;
+            string displayName = default;
+            BinaryData metadata = default;
             IReadOnlyDictionary<string, TemplateSpecVersionInfo> versions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -247,12 +247,12 @@ namespace Azure.ResourceManager.Resources
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                description.Value,
-                displayName.Value,
-                metadata.Value,
+                description,
+                displayName,
+                metadata,
                 versions ?? new ChangeTrackingDictionary<string, TemplateSpecVersionInfo>(),
                 serializedAdditionalRawData);
         }

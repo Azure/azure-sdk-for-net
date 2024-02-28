@@ -104,12 +104,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<int> order = default;
-            Optional<Guid> recommendedLabelId = default;
-            Optional<bool> enabled = default;
-            Optional<bool> custom = default;
+            string displayName = default;
+            string description = default;
+            int? order = default;
+            Guid? recommendedLabelId = default;
+            bool? enabled = default;
+            bool? custom = default;
             IList<InformationProtectionKeyword> keywords = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -182,12 +182,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SecurityInformationTypeInfo(
-                displayName.Value,
-                description.Value,
-                Optional.ToNullable(order),
-                Optional.ToNullable(recommendedLabelId),
-                Optional.ToNullable(enabled),
-                Optional.ToNullable(custom),
+                displayName,
+                description,
+                order,
+                recommendedLabelId,
+                enabled,
+                custom,
                 keywords ?? new ChangeTrackingList<InformationProtectionKeyword>(),
                 serializedAdditionalRawData);
         }

@@ -140,20 +140,20 @@ namespace Azure.ResourceManager.CostManagement
             {
                 return null;
             }
-            Optional<ETag> eTag = default;
-            Optional<ScheduledActionKind> kind = default;
+            ETag? eTag = default;
+            ScheduledActionKind? kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<FileDestination> fileDestination = default;
-            Optional<NotificationProperties> notification = default;
-            Optional<string> notificationEmail = default;
-            Optional<ScheduleProperties> schedule = default;
-            Optional<ResourceIdentifier> scope = default;
-            Optional<ScheduledActionStatus> status = default;
-            Optional<ResourceIdentifier> viewId = default;
+            SystemData systemData = default;
+            string displayName = default;
+            FileDestination fileDestination = default;
+            NotificationProperties notification = default;
+            string notificationEmail = default;
+            ScheduleProperties schedule = default;
+            ResourceIdentifier scope = default;
+            ScheduledActionStatus? status = default;
+            ResourceIdentifier viewId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -286,17 +286,17 @@ namespace Azure.ResourceManager.CostManagement
                 id,
                 name,
                 type,
-                systemData.Value,
-                displayName.Value,
-                fileDestination.Value,
-                notification.Value,
-                notificationEmail.Value,
-                schedule.Value,
-                scope.Value,
-                Optional.ToNullable(status),
-                viewId.Value,
-                Optional.ToNullable(eTag),
-                Optional.ToNullable(kind),
+                systemData,
+                displayName,
+                fileDestination,
+                notification,
+                notificationEmail,
+                schedule,
+                scope,
+                status,
+                viewId,
+                eTag,
+                kind,
                 serializedAdditionalRawData);
         }
 

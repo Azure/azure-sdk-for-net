@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<SearchSortEnum> order = default;
+            string name = default;
+            SearchSortEnum? order = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SearchSort(name.Value, Optional.ToNullable(order), serializedAdditionalRawData);
+            return new SearchSort(name, order, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SearchSort>.Write(ModelReaderWriterOptions options)

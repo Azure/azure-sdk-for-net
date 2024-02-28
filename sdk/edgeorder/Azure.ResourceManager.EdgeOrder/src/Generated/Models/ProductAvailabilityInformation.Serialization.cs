@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Optional<ProductAvailabilityStage> availabilityStage = default;
-            Optional<ProductDisabledReason> disabledReason = default;
-            Optional<string> disabledReasonMessage = default;
+            ProductAvailabilityStage? availabilityStage = default;
+            ProductDisabledReason? disabledReason = default;
+            string disabledReasonMessage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProductAvailabilityInformation(Optional.ToNullable(availabilityStage), Optional.ToNullable(disabledReason), disabledReasonMessage.Value, serializedAdditionalRawData);
+            return new ProductAvailabilityInformation(availabilityStage, disabledReason, disabledReasonMessage, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProductAvailabilityInformation>.Write(ModelReaderWriterOptions options)

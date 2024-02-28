@@ -142,17 +142,17 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> targetDatabase = default;
-            Optional<string> sourceEndpoint = default;
-            Optional<string> primaryAvailabilityGroupName = default;
-            Optional<string> secondaryAvailabilityGroupName = default;
-            Optional<DistributedAvailabilityGroupReplicationMode> replicationMode = default;
-            Optional<Guid> distributedAvailabilityGroupId = default;
-            Optional<Guid> sourceReplicaId = default;
-            Optional<Guid> targetReplicaId = default;
-            Optional<string> linkState = default;
-            Optional<string> lastHardenedLsn = default;
+            SystemData systemData = default;
+            string targetDatabase = default;
+            string sourceEndpoint = default;
+            string primaryAvailabilityGroupName = default;
+            string secondaryAvailabilityGroupName = default;
+            DistributedAvailabilityGroupReplicationMode? replicationMode = default;
+            Guid? distributedAvailabilityGroupId = default;
+            Guid? sourceReplicaId = default;
+            Guid? targetReplicaId = default;
+            string linkState = default;
+            string lastHardenedLsn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -269,17 +269,17 @@ namespace Azure.ResourceManager.Sql
                 id,
                 name,
                 type,
-                systemData.Value,
-                targetDatabase.Value,
-                sourceEndpoint.Value,
-                primaryAvailabilityGroupName.Value,
-                secondaryAvailabilityGroupName.Value,
-                Optional.ToNullable(replicationMode),
-                Optional.ToNullable(distributedAvailabilityGroupId),
-                Optional.ToNullable(sourceReplicaId),
-                Optional.ToNullable(targetReplicaId),
-                linkState.Value,
-                lastHardenedLsn.Value,
+                systemData,
+                targetDatabase,
+                sourceEndpoint,
+                primaryAvailabilityGroupName,
+                secondaryAvailabilityGroupName,
+                replicationMode,
+                distributedAvailabilityGroupId,
+                sourceReplicaId,
+                targetReplicaId,
+                linkState,
+                lastHardenedLsn,
                 serializedAdditionalRawData);
         }
 

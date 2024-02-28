@@ -33,7 +33,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<ExhaustiveKnnParameters> exhaustiveKnnParameters = default;
+            ExhaustiveKnnParameters exhaustiveKnnParameters = default;
             string name = default;
             VectorSearchAlgorithmKind kind = default;
             foreach (var property in element.EnumerateObject())
@@ -58,7 +58,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new ExhaustiveKnnAlgorithmConfiguration(name, kind, exhaustiveKnnParameters.Value);
+            return new ExhaustiveKnnAlgorithmConfiguration(name, kind, exhaustiveKnnParameters);
         }
     }
 }

@@ -51,9 +51,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<MotionDetectionSensitivity> sensitivity = default;
-            Optional<bool> outputMotionRegion = default;
-            Optional<string> eventAggregationWindow = default;
+            MotionDetectionSensitivity? sensitivity = default;
+            bool? outputMotionRegion = default;
+            string eventAggregationWindow = default;
             string type = default;
             string name = default;
             IList<NodeInput> inputs = default;
@@ -107,9 +107,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 type,
                 name,
                 inputs,
-                Optional.ToNullable(sensitivity),
-                Optional.ToNullable(outputMotionRegion),
-                eventAggregationWindow.Value);
+                sensitivity,
+                outputMotionRegion,
+                eventAggregationWindow);
         }
     }
 }

@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<string> annotationName = default;
-            Optional<string> category = default;
-            Optional<DateTimeOffset> eventTime = default;
-            Optional<string> id = default;
-            Optional<string> properties = default;
-            Optional<string> relatedAnnotation = default;
+            string annotationName = default;
+            string category = default;
+            DateTimeOffset? eventTime = default;
+            string id = default;
+            string properties = default;
+            string relatedAnnotation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -145,12 +145,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new Annotation(
-                annotationName.Value,
-                category.Value,
-                Optional.ToNullable(eventTime),
-                id.Value,
-                properties.Value,
-                relatedAnnotation.Value,
+                annotationName,
+                category,
+                eventTime,
+                id,
+                properties,
+                relatedAnnotation,
                 serializedAdditionalRawData);
         }
 

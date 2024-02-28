@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<FieldRestrictionResult> result = default;
-            Optional<string> defaultValue = default;
+            FieldRestrictionResult? result = default;
+            string defaultValue = default;
             IReadOnlyList<string> values = default;
-            Optional<PolicyReference> policy = default;
+            PolicyReference policy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FieldRestriction(Optional.ToNullable(result), defaultValue.Value, values ?? new ChangeTrackingList<string>(), policy.Value, serializedAdditionalRawData);
+            return new FieldRestriction(result, defaultValue, values ?? new ChangeTrackingList<string>(), policy, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FieldRestriction>.Write(ModelReaderWriterOptions options)

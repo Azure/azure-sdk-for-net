@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> subscriptionId = default;
-            Optional<string> workspace = default;
-            Optional<string> primaryKey = default;
-            Optional<string> secondaryKey = default;
+            ResourceIdentifier id = default;
+            string subscriptionId = default;
+            string workspace = default;
+            string primaryKey = default;
+            string secondaryKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,11 +134,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MonitorLogConfiguration(
-                id.Value,
-                subscriptionId.Value,
-                workspace.Value,
-                primaryKey.Value,
-                secondaryKey.Value,
+                id,
+                subscriptionId,
+                workspace,
+                primaryKey,
+                secondaryKey,
                 serializedAdditionalRawData);
         }
 

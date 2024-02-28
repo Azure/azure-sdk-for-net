@@ -114,14 +114,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<int> vCores = default;
-            Optional<int> supportedIops = default;
-            Optional<long> supportedMemoryPerVcoreMb = default;
+            string name = default;
+            int? vCores = default;
+            int? supportedIops = default;
+            long? supportedMemoryPerVcoreMb = default;
             IReadOnlyList<string> supportedZones = default;
             IReadOnlyList<PostgreSqlFlexibleServerHAMode> supportedHaMode = default;
-            Optional<PostgreSqlFlexbileServerCapabilityStatus> status = default;
-            Optional<string> reason = default;
+            PostgreSqlFlexbileServerCapabilityStatus? status = default;
+            string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -207,13 +207,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new PostgreSqlFlexibleServerSkuCapability(
-                Optional.ToNullable(status),
-                reason.Value,
+                status,
+                reason,
                 serializedAdditionalRawData,
-                name.Value,
-                Optional.ToNullable(vCores),
-                Optional.ToNullable(supportedIops),
-                Optional.ToNullable(supportedMemoryPerVcoreMb),
+                name,
+                vCores,
+                supportedIops,
+                supportedMemoryPerVcoreMb,
                 supportedZones ?? new ChangeTrackingList<string>(),
                 supportedHaMode ?? new ChangeTrackingList<PostgreSqlFlexibleServerHAMode>());
         }

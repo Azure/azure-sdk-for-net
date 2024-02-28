@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<string> status = default;
-            Optional<Guid> sessionId = default;
+            string status = default;
+            Guid? sessionId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataFactoryDataFlowCreateDebugSessionResult(status.Value, Optional.ToNullable(sessionId), serializedAdditionalRawData);
+            return new DataFactoryDataFlowCreateDebugSessionResult(status, sessionId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataFactoryDataFlowCreateDebugSessionResult>.Write(ModelReaderWriterOptions options)

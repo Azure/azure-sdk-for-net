@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<Guid> id = default;
-            Optional<string> addr = default;
-            Optional<string> host = default;
-            Optional<string> method = default;
-            Optional<string> userAgent = default;
+            Guid? id = default;
+            string addr = default;
+            string host = default;
+            string method = default;
+            string userAgent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,11 +134,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ContainerRegistryWebhookEventRequestContent(
-                Optional.ToNullable(id),
-                addr.Value,
-                host.Value,
-                method.Value,
-                userAgent.Value,
+                id,
+                addr,
+                host,
+                method,
+                userAgent,
                 serializedAdditionalRawData);
         }
 

@@ -86,9 +86,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<string> email = default;
-            Optional<string> name = default;
-            Optional<Guid?> objectId = default;
+            string email = default;
+            string name = default;
+            Guid? objectId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsUserInfo(email.Value, name.Value, Optional.ToNullable(objectId), serializedAdditionalRawData);
+            return new SecurityInsightsUserInfo(email, name, objectId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityInsightsUserInfo>.Write(ModelReaderWriterOptions options)

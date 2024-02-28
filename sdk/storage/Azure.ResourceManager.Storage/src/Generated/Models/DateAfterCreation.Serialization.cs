@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Storage.Models
                 return null;
             }
             float daysAfterCreationGreaterThan = default;
-            Optional<float> daysAfterLastTierChangeGreaterThan = default;
+            float? daysAfterLastTierChangeGreaterThan = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DateAfterCreation(daysAfterCreationGreaterThan, Optional.ToNullable(daysAfterLastTierChangeGreaterThan), serializedAdditionalRawData);
+            return new DateAfterCreation(daysAfterCreationGreaterThan, daysAfterLastTierChangeGreaterThan, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DateAfterCreation>.Write(ModelReaderWriterOptions options)

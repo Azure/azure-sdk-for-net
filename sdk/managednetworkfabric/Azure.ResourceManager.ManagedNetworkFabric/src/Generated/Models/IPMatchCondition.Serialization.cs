@@ -94,8 +94,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<SourceDestinationType> type = default;
-            Optional<IPMatchConditionPrefixType> prefixType = default;
+            SourceDestinationType? type = default;
+            IPMatchConditionPrefixType? prefixType = default;
             IList<string> ipPrefixValues = default;
             IList<string> ipGroupNames = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IPMatchCondition(Optional.ToNullable(type), Optional.ToNullable(prefixType), ipPrefixValues ?? new ChangeTrackingList<string>(), ipGroupNames ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new IPMatchCondition(type, prefixType, ipPrefixValues ?? new ChangeTrackingList<string>(), ipGroupNames ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IPMatchCondition>.Write(ModelReaderWriterOptions options)

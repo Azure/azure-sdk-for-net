@@ -27,13 +27,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> path = default;
-            Optional<string> containerName = default;
-            Optional<string> uploadedTimestamp = default;
-            Optional<string> type = default;
-            Optional<string> provisioningStatus = default;
-            Optional<string> creatorId = default;
+            string name = default;
+            string path = default;
+            string containerName = default;
+            string uploadedTimestamp = default;
+            string type = default;
+            string provisioningStatus = default;
+            string creatorId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -73,13 +73,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new LibraryResourceProperties(
-                name.Value,
-                path.Value,
-                containerName.Value,
-                uploadedTimestamp.Value,
-                type.Value,
-                provisioningStatus.Value,
-                creatorId.Value);
+                name,
+                path,
+                containerName,
+                uploadedTimestamp,
+                type,
+                provisioningStatus,
+                creatorId);
         }
 
         internal partial class LibraryResourcePropertiesConverter : JsonConverter<LibraryResourceProperties>

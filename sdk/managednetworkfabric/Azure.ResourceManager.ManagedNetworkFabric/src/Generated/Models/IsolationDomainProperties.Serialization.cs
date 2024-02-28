@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IsolationDomainEncapsulationType> encapsulation = default;
+            IsolationDomainEncapsulationType? encapsulation = default;
             IList<ResourceIdentifier> neighborGroupIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IsolationDomainProperties(Optional.ToNullable(encapsulation), neighborGroupIds ?? new ChangeTrackingList<ResourceIdentifier>(), serializedAdditionalRawData);
+            return new IsolationDomainProperties(encapsulation, neighborGroupIds ?? new ChangeTrackingList<ResourceIdentifier>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IsolationDomainProperties>.Write(ModelReaderWriterOptions options)

@@ -170,19 +170,19 @@ namespace Azure.Search.Documents.Indexes.Models
             string name = default;
             IList<SearchField> fields = default;
             IList<ScoringProfile> scoringProfiles = default;
-            Optional<string> defaultScoringProfile = default;
-            Optional<CorsOptions> corsOptions = default;
+            string defaultScoringProfile = default;
+            CorsOptions corsOptions = default;
             IList<SearchSuggester> suggesters = default;
             IList<LexicalAnalyzer> analyzers = default;
             IList<LexicalTokenizer> tokenizers = default;
             IList<TokenFilter> tokenFilters = default;
             IList<CharFilter> charFilters = default;
             IList<LexicalNormalizer> normalizers = default;
-            Optional<SearchResourceEncryptionKey> encryptionKey = default;
-            Optional<SimilarityAlgorithm> similarity = default;
-            Optional<SemanticSearch> semantic = default;
-            Optional<VectorSearch> vectorSearch = default;
-            Optional<string> odataEtag = default;
+            SearchResourceEncryptionKey encryptionKey = default;
+            SimilarityAlgorithm similarity = default;
+            SemanticSearch semantic = default;
+            VectorSearch vectorSearch = default;
+            string odataEtag = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -362,19 +362,19 @@ namespace Azure.Search.Documents.Indexes.Models
                 name,
                 fields,
                 scoringProfiles ?? new ChangeTrackingList<ScoringProfile>(),
-                defaultScoringProfile.Value,
-                corsOptions.Value,
+                defaultScoringProfile,
+                corsOptions,
                 suggesters ?? new ChangeTrackingList<SearchSuggester>(),
                 analyzers ?? new ChangeTrackingList<LexicalAnalyzer>(),
                 tokenizers ?? new ChangeTrackingList<LexicalTokenizer>(),
                 tokenFilters ?? new ChangeTrackingList<TokenFilter>(),
                 charFilters ?? new ChangeTrackingList<CharFilter>(),
                 normalizers ?? new ChangeTrackingList<LexicalNormalizer>(),
-                encryptionKey.Value,
-                similarity.Value,
-                semantic.Value,
-                vectorSearch.Value,
-                odataEtag.Value);
+                encryptionKey,
+                similarity,
+                semantic,
+                vectorSearch,
+                odataEtag);
         }
     }
 }

@@ -121,13 +121,13 @@ namespace Azure.ResourceManager.DataShare.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             string containerName = default;
             Guid dataSetId = default;
-            Optional<DataSetMappingStatus> dataSetMappingStatus = default;
+            DataSetMappingStatus? dataSetMappingStatus = default;
             string filePath = default;
-            Optional<DataShareOutputType> outputType = default;
-            Optional<DataShareProvisioningState> provisioningState = default;
+            DataShareOutputType? outputType = default;
+            DataShareProvisioningState? provisioningState = default;
             string resourceGroup = default;
             string storageAccountName = default;
             string subscriptionId = default;
@@ -243,15 +243,15 @@ namespace Azure.ResourceManager.DataShare.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 kind,
                 serializedAdditionalRawData,
                 containerName,
                 dataSetId,
-                Optional.ToNullable(dataSetMappingStatus),
+                dataSetMappingStatus,
                 filePath,
-                Optional.ToNullable(outputType),
-                Optional.ToNullable(provisioningState),
+                outputType,
+                provisioningState,
                 resourceGroup,
                 storageAccountName,
                 subscriptionId);

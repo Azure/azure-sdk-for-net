@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Elastic.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> value = default;
-            Optional<TagAction> action = default;
+            string name = default;
+            string value = default;
+            TagAction? action = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Elastic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FilteringTag(name.Value, value.Value, Optional.ToNullable(action), serializedAdditionalRawData);
+            return new FilteringTag(name, value, action, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FilteringTag>.Write(ModelReaderWriterOptions options)

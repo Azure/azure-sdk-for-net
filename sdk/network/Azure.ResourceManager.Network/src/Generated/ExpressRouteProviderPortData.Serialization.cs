@@ -147,21 +147,21 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> portPairDescriptor = default;
-            Optional<string> primaryAzurePort = default;
-            Optional<string> secondaryAzurePort = default;
-            Optional<string> peeringLocation = default;
-            Optional<int> overprovisionFactor = default;
-            Optional<int> portBandwidthInMbps = default;
-            Optional<int> usedBandwidthInMbps = default;
-            Optional<int> remainingBandwidthInMbps = default;
+            SystemData systemData = default;
+            string portPairDescriptor = default;
+            string primaryAzurePort = default;
+            string secondaryAzurePort = default;
+            string peeringLocation = default;
+            int? overprovisionFactor = default;
+            int? portBandwidthInMbps = default;
+            int? usedBandwidthInMbps = default;
+            int? remainingBandwidthInMbps = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -296,18 +296,18 @@ namespace Azure.ResourceManager.Network
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                Optional.ToNullable(etag),
-                portPairDescriptor.Value,
-                primaryAzurePort.Value,
-                secondaryAzurePort.Value,
-                peeringLocation.Value,
-                Optional.ToNullable(overprovisionFactor),
-                Optional.ToNullable(portBandwidthInMbps),
-                Optional.ToNullable(usedBandwidthInMbps),
-                Optional.ToNullable(remainingBandwidthInMbps),
+                etag,
+                portPairDescriptor,
+                primaryAzurePort,
+                secondaryAzurePort,
+                peeringLocation,
+                overprovisionFactor,
+                portBandwidthInMbps,
+                usedBandwidthInMbps,
+                remainingBandwidthInMbps,
                 serializedAdditionalRawData);
         }
 

@@ -115,9 +115,9 @@ namespace Azure.ResourceManager.ElasticSan
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ElasticSanProvisioningState> provisioningState = default;
-            Optional<SubResource> privateEndpoint = default;
+            SystemData systemData = default;
+            ElasticSanProvisioningState? provisioningState = default;
+            SubResource privateEndpoint = default;
             ElasticSanPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
             IList<string> groupIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -207,8 +207,8 @@ namespace Azure.ResourceManager.ElasticSan
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(provisioningState),
+                systemData,
+                provisioningState,
                 privateEndpoint,
                 privateLinkServiceConnectionState,
                 groupIds ?? new ChangeTrackingList<string>(),

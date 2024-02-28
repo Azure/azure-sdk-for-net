@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Optional<string> clientId = default;
-            Optional<string> settingId = default;
-            Optional<string> clientSecret = default;
-            Optional<string> scopes = default;
-            Optional<string> serviceProviderId = default;
-            Optional<string> serviceProviderDisplayName = default;
+            string clientId = default;
+            string settingId = default;
+            string clientSecret = default;
+            string scopes = default;
+            string serviceProviderId = default;
+            string serviceProviderDisplayName = default;
             IList<BotConnectionSettingParameter> parameters = default;
-            Optional<string> provisioningState = default;
+            string provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -177,14 +177,14 @@ namespace Azure.ResourceManager.BotService.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new BotConnectionSettingProperties(
-                clientId.Value,
-                settingId.Value,
-                clientSecret.Value,
-                scopes.Value,
-                serviceProviderId.Value,
-                serviceProviderDisplayName.Value,
+                clientId,
+                settingId,
+                clientSecret,
+                scopes,
+                serviceProviderId,
+                serviceProviderDisplayName,
                 parameters ?? new ChangeTrackingList<BotConnectionSettingParameter>(),
-                provisioningState.Value,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

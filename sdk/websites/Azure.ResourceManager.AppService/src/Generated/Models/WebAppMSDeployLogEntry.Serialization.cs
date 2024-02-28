@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> time = default;
-            Optional<WebAppMSDeployLogEntryType> type = default;
-            Optional<string> message = default;
+            DateTimeOffset? time = default;
+            WebAppMSDeployLogEntryType? type = default;
+            string message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebAppMSDeployLogEntry(Optional.ToNullable(time), Optional.ToNullable(type), message.Value, serializedAdditionalRawData);
+            return new WebAppMSDeployLogEntry(time, type, message, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebAppMSDeployLogEntry>.Write(ModelReaderWriterOptions options)
