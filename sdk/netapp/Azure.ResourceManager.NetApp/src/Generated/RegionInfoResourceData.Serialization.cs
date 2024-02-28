@@ -107,8 +107,8 @@ namespace Azure.ResourceManager.NetApp
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<RegionStorageToNetworkProximity> storageToNetworkProximity = default;
+            SystemData systemData = default;
+            RegionStorageToNetworkProximity? storageToNetworkProximity = default;
             IList<AvailabilityZoneMapping> availabilityZoneMappings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -183,8 +183,8 @@ namespace Azure.ResourceManager.NetApp
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(storageToNetworkProximity),
+                systemData,
+                storageToNetworkProximity,
                 availabilityZoneMappings ?? new ChangeTrackingList<AvailabilityZoneMapping>(),
                 serializedAdditionalRawData);
         }
