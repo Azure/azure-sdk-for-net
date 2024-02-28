@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 return null;
             }
             IList<WebPubSubEventHandler> eventHandlers = default;
-            Optional<string> anonymousConnectPolicy = default;
+            string anonymousConnectPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebPubSubHubProperties(eventHandlers ?? new ChangeTrackingList<WebPubSubEventHandler>(), anonymousConnectPolicy.Value, serializedAdditionalRawData);
+            return new WebPubSubHubProperties(eventHandlers ?? new ChangeTrackingList<WebPubSubEventHandler>(), anonymousConnectPolicy, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebPubSubHubProperties>.Write(ModelReaderWriterOptions options)

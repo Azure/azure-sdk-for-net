@@ -39,9 +39,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<ImageScaleMode> mode = default;
-            Optional<string> width = default;
-            Optional<string> height = default;
+            ImageScaleMode? mode = default;
+            string width = default;
+            string height = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mode"u8))
@@ -64,7 +64,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new ImageScale(Optional.ToNullable(mode), width.Value, height.Value);
+            return new ImageScale(mode, width, height);
         }
     }
 }

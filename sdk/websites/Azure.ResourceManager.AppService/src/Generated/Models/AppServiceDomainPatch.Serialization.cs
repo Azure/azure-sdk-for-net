@@ -208,31 +208,31 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<RegistrationContactInfo> contactAdmin = default;
-            Optional<RegistrationContactInfo> contactBilling = default;
-            Optional<RegistrationContactInfo> contactRegistrant = default;
-            Optional<RegistrationContactInfo> contactTech = default;
-            Optional<AppServiceDomainStatus> registrationStatus = default;
-            Optional<ProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            RegistrationContactInfo contactAdmin = default;
+            RegistrationContactInfo contactBilling = default;
+            RegistrationContactInfo contactRegistrant = default;
+            RegistrationContactInfo contactTech = default;
+            AppServiceDomainStatus? registrationStatus = default;
+            ProvisioningState? provisioningState = default;
             IReadOnlyList<string> nameServers = default;
-            Optional<bool> privacy = default;
-            Optional<DateTimeOffset> createdTime = default;
-            Optional<DateTimeOffset> expirationTime = default;
-            Optional<DateTimeOffset> lastRenewedTime = default;
-            Optional<bool> autoRenew = default;
-            Optional<bool> readyForDnsRecordManagement = default;
+            bool? privacy = default;
+            DateTimeOffset? createdTime = default;
+            DateTimeOffset? expirationTime = default;
+            DateTimeOffset? lastRenewedTime = default;
+            bool? autoRenew = default;
+            bool? readyForDnsRecordManagement = default;
             IReadOnlyList<AppServiceHostName> managedHostNames = default;
-            Optional<DomainPurchaseConsent> consent = default;
+            DomainPurchaseConsent consent = default;
             IReadOnlyList<DomainNotRenewableReason> domainNotRenewableReasons = default;
-            Optional<AppServiceDnsType> dnsType = default;
-            Optional<string> dnsZoneId = default;
-            Optional<AppServiceDnsType> targetDnsType = default;
-            Optional<string> authCode = default;
+            AppServiceDnsType? dnsType = default;
+            string dnsZoneId = default;
+            AppServiceDnsType? targetDnsType = default;
+            string authCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -475,28 +475,28 @@ namespace Azure.ResourceManager.AppService.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                contactAdmin.Value,
-                contactBilling.Value,
-                contactRegistrant.Value,
-                contactTech.Value,
-                Optional.ToNullable(registrationStatus),
-                Optional.ToNullable(provisioningState),
+                systemData,
+                contactAdmin,
+                contactBilling,
+                contactRegistrant,
+                contactTech,
+                registrationStatus,
+                provisioningState,
                 nameServers ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(privacy),
-                Optional.ToNullable(createdTime),
-                Optional.ToNullable(expirationTime),
-                Optional.ToNullable(lastRenewedTime),
-                Optional.ToNullable(autoRenew),
-                Optional.ToNullable(readyForDnsRecordManagement),
+                privacy,
+                createdTime,
+                expirationTime,
+                lastRenewedTime,
+                autoRenew,
+                readyForDnsRecordManagement,
                 managedHostNames ?? new ChangeTrackingList<AppServiceHostName>(),
-                consent.Value,
+                consent,
                 domainNotRenewableReasons ?? new ChangeTrackingList<DomainNotRenewableReason>(),
-                Optional.ToNullable(dnsType),
-                dnsZoneId.Value,
-                Optional.ToNullable(targetDnsType),
-                authCode.Value,
-                kind.Value,
+                dnsType,
+                dnsZoneId,
+                targetDnsType,
+                authCode,
+                kind,
                 serializedAdditionalRawData);
         }
 

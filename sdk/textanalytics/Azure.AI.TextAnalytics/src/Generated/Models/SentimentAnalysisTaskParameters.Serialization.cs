@@ -44,10 +44,10 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 return null;
             }
-            Optional<bool> opinionMining = default;
-            Optional<StringIndexType> stringIndexType = default;
-            Optional<string> modelVersion = default;
-            Optional<bool> loggingOptOut = default;
+            bool? opinionMining = default;
+            StringIndexType? stringIndexType = default;
+            string modelVersion = default;
+            bool? loggingOptOut = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("opinionMining"u8))
@@ -83,7 +83,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new SentimentAnalysisTaskParameters(Optional.ToNullable(loggingOptOut), modelVersion.Value, Optional.ToNullable(opinionMining), Optional.ToNullable(stringIndexType));
+            return new SentimentAnalysisTaskParameters(loggingOptOut, modelVersion, opinionMining, stringIndexType);
         }
     }
 }

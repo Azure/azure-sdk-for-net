@@ -164,24 +164,24 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> recommendationName = default;
-            Optional<string> displayName = default;
-            Optional<string> message = default;
-            Optional<Guid> recommendationId = default;
-            Optional<string> description = default;
-            Optional<string> actionName = default;
-            Optional<NotificationLevel> level = default;
-            Optional<RecommendationChannel> channels = default;
+            SystemData systemData = default;
+            string recommendationName = default;
+            string displayName = default;
+            string message = default;
+            Guid? recommendationId = default;
+            string description = default;
+            string actionName = default;
+            NotificationLevel? level = default;
+            RecommendationChannel? channels = default;
             IReadOnlyList<string> categoryTags = default;
-            Optional<bool> isDynamic = default;
-            Optional<string> extensionName = default;
-            Optional<string> bladeName = default;
-            Optional<string> forwardLink = default;
+            bool? isDynamic = default;
+            string extensionName = default;
+            string bladeName = default;
+            string forwardLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -327,21 +327,21 @@ namespace Azure.ResourceManager.AppService
                 id,
                 name,
                 type,
-                systemData.Value,
-                recommendationName.Value,
-                displayName.Value,
-                message.Value,
-                Optional.ToNullable(recommendationId),
-                description.Value,
-                actionName.Value,
-                Optional.ToNullable(level),
-                Optional.ToNullable(channels),
+                systemData,
+                recommendationName,
+                displayName,
+                message,
+                recommendationId,
+                description,
+                actionName,
+                level,
+                channels,
                 categoryTags ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(isDynamic),
-                extensionName.Value,
-                bladeName.Value,
-                forwardLink.Value,
-                kind.Value,
+                isDynamic,
+                extensionName,
+                bladeName,
+                forwardLink,
+                kind,
                 serializedAdditionalRawData);
         }
 

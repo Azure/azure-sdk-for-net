@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 return null;
             }
             IReadOnlyList<AvailabilityGroupListenerData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailabilityGroupListenerListResult(value ?? new ChangeTrackingList<AvailabilityGroupListenerData>(), nextLink.Value, serializedAdditionalRawData);
+            return new AvailabilityGroupListenerListResult(value ?? new ChangeTrackingList<AvailabilityGroupListenerData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailabilityGroupListenerListResult>.Write(ModelReaderWriterOptions options)

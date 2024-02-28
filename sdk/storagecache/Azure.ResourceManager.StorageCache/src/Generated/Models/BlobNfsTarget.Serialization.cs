@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> target = default;
-            Optional<string> usageModel = default;
-            Optional<int> verificationTimer = default;
-            Optional<int> writeBackTimer = default;
+            ResourceIdentifier target = default;
+            string usageModel = default;
+            int? verificationTimer = default;
+            int? writeBackTimer = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BlobNfsTarget(target.Value, usageModel.Value, Optional.ToNullable(verificationTimer), Optional.ToNullable(writeBackTimer), serializedAdditionalRawData);
+            return new BlobNfsTarget(target, usageModel, verificationTimer, writeBackTimer, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BlobNfsTarget>.Write(ModelReaderWriterOptions options)

@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Optional<AmlFileSystemHealthStateType> state = default;
-            Optional<string> statusCode = default;
-            Optional<string> statusDescription = default;
+            AmlFileSystemHealthStateType? state = default;
+            string statusCode = default;
+            string statusDescription = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AmlFileSystemHealth(Optional.ToNullable(state), statusCode.Value, statusDescription.Value, serializedAdditionalRawData);
+            return new AmlFileSystemHealth(state, statusCode, statusDescription, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AmlFileSystemHealth>.Write(ModelReaderWriterOptions options)

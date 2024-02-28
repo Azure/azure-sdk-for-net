@@ -198,26 +198,26 @@ namespace Azure.ResourceManager.Synapse.Models
                 return null;
             }
             IntegrationRuntimeType type = default;
-            Optional<string> dataFactoryName = default;
-            Optional<SynapseIntegrationRuntimeState> state = default;
-            Optional<DateTimeOffset> createTime = default;
-            Optional<string> taskQueueId = default;
-            Optional<string> nodeCommunicationChannelEncryptionMode = default;
-            Optional<SynapseIntegrationRuntimeInternalChannelEncryptionMode> internalChannelEncryption = default;
-            Optional<string> version = default;
+            string dataFactoryName = default;
+            SynapseIntegrationRuntimeState? state = default;
+            DateTimeOffset? createTime = default;
+            string taskQueueId = default;
+            string nodeCommunicationChannelEncryptionMode = default;
+            SynapseIntegrationRuntimeInternalChannelEncryptionMode? internalChannelEncryption = default;
+            string version = default;
             IReadOnlyList<SynapseSelfHostedIntegrationRuntimeNode> nodes = default;
-            Optional<DateTimeOffset> scheduledUpdateDate = default;
-            Optional<string> updateDelayOffset = default;
-            Optional<string> localTimeZoneOffset = default;
+            DateTimeOffset? scheduledUpdateDate = default;
+            string updateDelayOffset = default;
+            string localTimeZoneOffset = default;
             IReadOnlyDictionary<string, string> capabilities = default;
             IReadOnlyList<string> serviceUrls = default;
-            Optional<SynapseIntegrationRuntimeAutoUpdate> autoUpdate = default;
-            Optional<string> versionStatus = default;
+            SynapseIntegrationRuntimeAutoUpdate? autoUpdate = default;
+            string versionStatus = default;
             IReadOnlyList<SynapseLinkedIntegrationRuntime> links = default;
-            Optional<string> pushedVersion = default;
-            Optional<string> latestVersion = default;
-            Optional<DateTimeOffset> autoUpdateEta = default;
-            Optional<string> serviceRegion = default;
+            string pushedVersion = default;
+            string latestVersion = default;
+            DateTimeOffset? autoUpdateEta = default;
+            string serviceRegion = default;
             IReadOnlyList<string> newerVersions = default;
             IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -419,27 +419,27 @@ namespace Azure.ResourceManager.Synapse.Models
             additionalProperties = additionalPropertiesDictionary;
             return new SynapseSelfHostedIntegrationRuntimeStatus(
                 type,
-                dataFactoryName.Value,
-                Optional.ToNullable(state),
+                dataFactoryName,
+                state,
                 additionalProperties,
-                Optional.ToNullable(createTime),
-                taskQueueId.Value,
-                nodeCommunicationChannelEncryptionMode.Value,
-                Optional.ToNullable(internalChannelEncryption),
-                version.Value,
+                createTime,
+                taskQueueId,
+                nodeCommunicationChannelEncryptionMode,
+                internalChannelEncryption,
+                version,
                 nodes ?? new ChangeTrackingList<SynapseSelfHostedIntegrationRuntimeNode>(),
-                Optional.ToNullable(scheduledUpdateDate),
-                updateDelayOffset.Value,
-                localTimeZoneOffset.Value,
+                scheduledUpdateDate,
+                updateDelayOffset,
+                localTimeZoneOffset,
                 capabilities ?? new ChangeTrackingDictionary<string, string>(),
                 serviceUrls ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(autoUpdate),
-                versionStatus.Value,
+                autoUpdate,
+                versionStatus,
                 links ?? new ChangeTrackingList<SynapseLinkedIntegrationRuntime>(),
-                pushedVersion.Value,
-                latestVersion.Value,
-                Optional.ToNullable(autoUpdateEta),
-                serviceRegion.Value,
+                pushedVersion,
+                latestVersion,
+                autoUpdateEta,
+                serviceRegion,
                 newerVersions ?? new ChangeTrackingList<string>());
         }
 

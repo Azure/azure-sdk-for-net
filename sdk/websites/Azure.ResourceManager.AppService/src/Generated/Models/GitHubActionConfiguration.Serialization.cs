@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<GitHubActionCodeConfiguration> codeConfiguration = default;
-            Optional<GitHubActionContainerConfiguration> containerConfiguration = default;
-            Optional<bool> isLinux = default;
-            Optional<bool> generateWorkflowFile = default;
+            GitHubActionCodeConfiguration codeConfiguration = default;
+            GitHubActionContainerConfiguration containerConfiguration = default;
+            bool? isLinux = default;
+            bool? generateWorkflowFile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GitHubActionConfiguration(codeConfiguration.Value, containerConfiguration.Value, Optional.ToNullable(isLinux), Optional.ToNullable(generateWorkflowFile), serializedAdditionalRawData);
+            return new GitHubActionConfiguration(codeConfiguration, containerConfiguration, isLinux, generateWorkflowFile, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GitHubActionConfiguration>.Write(ModelReaderWriterOptions options)

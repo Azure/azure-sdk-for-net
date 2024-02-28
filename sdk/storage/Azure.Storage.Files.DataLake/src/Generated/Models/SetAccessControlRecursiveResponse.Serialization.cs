@@ -19,9 +19,9 @@ namespace Azure.Storage.Files.DataLake.Models
             {
                 return null;
             }
-            Optional<int> directoriesSuccessful = default;
-            Optional<int> filesSuccessful = default;
-            Optional<int> failureCount = default;
+            int? directoriesSuccessful = default;
+            int? filesSuccessful = default;
+            int? failureCount = default;
             IReadOnlyList<AclFailedEntry> failedEntries = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -67,7 +67,7 @@ namespace Azure.Storage.Files.DataLake.Models
                     continue;
                 }
             }
-            return new SetAccessControlRecursiveResponse(Optional.ToNullable(directoriesSuccessful), Optional.ToNullable(filesSuccessful), Optional.ToNullable(failureCount), failedEntries ?? new ChangeTrackingList<AclFailedEntry>());
+            return new SetAccessControlRecursiveResponse(directoriesSuccessful, filesSuccessful, failureCount, failedEntries ?? new ChangeTrackingList<AclFailedEntry>());
         }
     }
 }

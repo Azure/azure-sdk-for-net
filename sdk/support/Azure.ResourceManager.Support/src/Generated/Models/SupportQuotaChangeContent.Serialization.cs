@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Support.Models
             {
                 return null;
             }
-            Optional<string> region = default;
-            Optional<string> payload = default;
+            string region = default;
+            string payload = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Support.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SupportQuotaChangeContent(region.Value, payload.Value, serializedAdditionalRawData);
+            return new SupportQuotaChangeContent(region, payload, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SupportQuotaChangeContent>.Write(ModelReaderWriterOptions options)

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 return null;
             }
             IReadOnlyList<WebPubSubSku> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SkuList(value ?? new ChangeTrackingList<WebPubSubSku>(), nextLink.Value, serializedAdditionalRawData);
+            return new SkuList(value ?? new ChangeTrackingList<WebPubSubSku>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SkuList>.Write(ModelReaderWriterOptions options)

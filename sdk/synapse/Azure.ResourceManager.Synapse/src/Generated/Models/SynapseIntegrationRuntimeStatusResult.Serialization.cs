@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<string> name = default;
+            string name = default;
             SynapseIntegrationRuntimeStatus properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseIntegrationRuntimeStatusResult(name.Value, properties, serializedAdditionalRawData);
+            return new SynapseIntegrationRuntimeStatusResult(name, properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseIntegrationRuntimeStatusResult>.Write(ModelReaderWriterOptions options)

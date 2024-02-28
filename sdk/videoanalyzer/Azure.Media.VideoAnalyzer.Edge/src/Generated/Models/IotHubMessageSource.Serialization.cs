@@ -33,7 +33,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<string> hubInputName = default;
+            string hubInputName = default;
             string type = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -54,7 +54,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new IotHubMessageSource(type, name, hubInputName.Value);
+            return new IotHubMessageSource(type, name, hubInputName);
         }
     }
 }

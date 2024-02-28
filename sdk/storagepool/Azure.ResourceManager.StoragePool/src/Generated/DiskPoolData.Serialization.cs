@@ -159,15 +159,15 @@ namespace Azure.ResourceManager.StoragePool
             {
                 return null;
             }
-            Optional<StoragePoolSku> sku = default;
-            Optional<string> managedBy = default;
+            StoragePoolSku sku = default;
+            string managedBy = default;
             IReadOnlyList<string> managedByExtended = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             DiskPoolIscsiTargetProvisioningState provisioningState = default;
             IList<string> availabilityZones = default;
             StoragePoolOperationalStatus status = default;
@@ -324,11 +324,11 @@ namespace Azure.ResourceManager.StoragePool
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                sku.Value,
-                managedBy.Value,
+                sku,
+                managedBy,
                 managedByExtended ?? new ChangeTrackingList<string>(),
                 provisioningState,
                 availabilityZones,

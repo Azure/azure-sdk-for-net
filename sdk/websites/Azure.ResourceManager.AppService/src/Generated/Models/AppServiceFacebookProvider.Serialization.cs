@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<AppRegistration> registration = default;
-            Optional<string> graphApiVersion = default;
-            Optional<LoginScopes> login = default;
+            bool? enabled = default;
+            AppRegistration registration = default;
+            string graphApiVersion = default;
+            LoginScopes login = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceFacebookProvider(Optional.ToNullable(enabled), registration.Value, graphApiVersion.Value, login.Value, serializedAdditionalRawData);
+            return new AppServiceFacebookProvider(enabled, registration, graphApiVersion, login, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceFacebookProvider>.Write(ModelReaderWriterOptions options)

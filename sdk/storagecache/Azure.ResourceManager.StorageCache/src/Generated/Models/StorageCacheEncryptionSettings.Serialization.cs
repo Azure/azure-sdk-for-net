@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Optional<StorageCacheEncryptionKeyVaultKeyReference> keyEncryptionKey = default;
-            Optional<bool> rotationToLatestKeyVersionEnabled = default;
+            StorageCacheEncryptionKeyVaultKeyReference keyEncryptionKey = default;
+            bool? rotationToLatestKeyVersionEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageCacheEncryptionSettings(keyEncryptionKey.Value, Optional.ToNullable(rotationToLatestKeyVersionEnabled), serializedAdditionalRawData);
+            return new StorageCacheEncryptionSettings(keyEncryptionKey, rotationToLatestKeyVersionEnabled, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageCacheEncryptionSettings>.Write(ModelReaderWriterOptions options)

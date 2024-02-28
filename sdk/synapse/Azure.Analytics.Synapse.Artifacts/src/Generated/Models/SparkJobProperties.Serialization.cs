@@ -100,10 +100,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> name = default;
+            string name = default;
             string file = default;
-            Optional<string> className = default;
-            Optional<object> conf = default;
+            string className = default;
+            object conf = default;
             IList<string> args = default;
             IList<string> jars = default;
             IList<string> files = default;
@@ -226,10 +226,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new SparkJobProperties(
-                name.Value,
+                name,
                 file,
-                className.Value,
-                conf.Value,
+                className,
+                conf,
                 args ?? new ChangeTrackingList<string>(),
                 jars ?? new ChangeTrackingList<string>(),
                 files ?? new ChangeTrackingList<string>(),

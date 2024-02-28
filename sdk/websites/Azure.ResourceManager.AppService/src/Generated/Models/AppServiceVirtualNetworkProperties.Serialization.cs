@@ -104,13 +104,13 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> vnetResourceId = default;
-            Optional<string> certThumbprint = default;
-            Optional<string> certBlob = default;
+            ResourceIdentifier vnetResourceId = default;
+            string certThumbprint = default;
+            string certBlob = default;
             IReadOnlyList<AppServiceVirtualNetworkRoute> routes = default;
-            Optional<bool> resyncRequired = default;
-            Optional<string> dnsServers = default;
-            Optional<bool> isSwift = default;
+            bool? resyncRequired = default;
+            string dnsServers = default;
+            bool? isSwift = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -178,13 +178,13 @@ namespace Azure.ResourceManager.AppService.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AppServiceVirtualNetworkProperties(
-                vnetResourceId.Value,
-                certThumbprint.Value,
-                certBlob.Value,
+                vnetResourceId,
+                certThumbprint,
+                certBlob,
                 routes ?? new ChangeTrackingList<AppServiceVirtualNetworkRoute>(),
-                Optional.ToNullable(resyncRequired),
-                dnsServers.Value,
-                Optional.ToNullable(isSwift),
+                resyncRequired,
+                dnsServers,
+                isSwift,
                 serializedAdditionalRawData);
         }
 

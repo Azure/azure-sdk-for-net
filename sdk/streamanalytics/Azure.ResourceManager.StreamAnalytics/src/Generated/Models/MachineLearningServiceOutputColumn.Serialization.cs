@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> dataType = default;
-            Optional<int> mapTo = default;
+            string name = default;
+            string dataType = default;
+            int? mapTo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningServiceOutputColumn(name.Value, dataType.Value, Optional.ToNullable(mapTo), serializedAdditionalRawData);
+            return new MachineLearningServiceOutputColumn(name, dataType, mapTo, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningServiceOutputColumn>.Write(ModelReaderWriterOptions options)
