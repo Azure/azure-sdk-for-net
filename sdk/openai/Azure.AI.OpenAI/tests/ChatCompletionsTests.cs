@@ -84,6 +84,31 @@ namespace Azure.AI.OpenAI.Tests
         [RecordedTest]
         [TestCase(Service.Azure)]
         [TestCase(Service.NonAzure)]
+        public async Task ChatCompletionsLogprobs(Service serviceTarget)
+        {
+            OpenAIClient client = GetTestClient(serviceTarget);
+            // logprobs seems to only currently be live on gpt-35-turbo for azure openai
+            string deploymentOrModelName = GetDeploymentOrModelName(serviceTarget, Scenario.Completions);
+            ChatCompletionsOptions requestOptions = new()
+            {
+                DeploymentName = deploymentOrModelName,
+                Messages =
+                {
+                    new ChatRequestUserMessage("Say this is a test!"),
+                },
+                EnableLogProbabilities = true
+            };
+            Response<ChatCompletions> response = await client.GetChatCompletionsAsync(requestOptions);
+
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.Value, Is.Not.Null);
+            Assert.That(response.Value.Choices, Is.Not.Null.Or.Empty);
+            Assert.That(response.Value.Choices[0].LogProbabilityInfo?.TokenLogProbabilityResults, Is.Not.Null.Or.Empty);
+        }
+
+        [RecordedTest]
+        [TestCase(Service.Azure)]
+        [TestCase(Service.NonAzure)]
         public async Task StreamingChatCompletions(Service serviceTarget)
         {
             OpenAIClient client = GetTestClient(serviceTarget);
