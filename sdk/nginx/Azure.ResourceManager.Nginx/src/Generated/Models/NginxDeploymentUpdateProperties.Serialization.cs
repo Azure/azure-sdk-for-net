@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Nginx.Models
             {
                 return null;
             }
-            Optional<bool> enableDiagnosticsSupport = default;
-            Optional<NginxLogging> logging = default;
-            Optional<NginxDeploymentScalingProperties> scalingProperties = default;
-            Optional<NginxDeploymentUserProfile> userProfile = default;
+            bool? enableDiagnosticsSupport = default;
+            NginxLogging logging = default;
+            NginxDeploymentScalingProperties scalingProperties = default;
+            NginxDeploymentUserProfile userProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NginxDeploymentUpdateProperties(Optional.ToNullable(enableDiagnosticsSupport), logging.Value, scalingProperties.Value, userProfile.Value, serializedAdditionalRawData);
+            return new NginxDeploymentUpdateProperties(enableDiagnosticsSupport, logging, scalingProperties, userProfile, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NginxDeploymentUpdateProperties>.Write(ModelReaderWriterOptions options)

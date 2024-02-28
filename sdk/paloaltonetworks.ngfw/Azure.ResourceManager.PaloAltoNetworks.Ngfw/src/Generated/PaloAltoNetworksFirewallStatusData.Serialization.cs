@@ -117,12 +117,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<FirewallBooleanType> isPanoramaManaged = default;
-            Optional<FirewallHealthStatus> healthStatus = default;
-            Optional<string> healthReason = default;
-            Optional<FirewallPanoramaStatus> panoramaStatus = default;
-            Optional<FirewallProvisioningStateType> provisioningState = default;
+            SystemData systemData = default;
+            FirewallBooleanType? isPanoramaManaged = default;
+            FirewallHealthStatus? healthStatus = default;
+            string healthReason = default;
+            FirewallPanoramaStatus panoramaStatus = default;
+            FirewallProvisioningStateType? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -214,12 +214,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(isPanoramaManaged),
-                Optional.ToNullable(healthStatus),
-                healthReason.Value,
-                panoramaStatus.Value,
-                Optional.ToNullable(provisioningState),
+                systemData,
+                isPanoramaManaged,
+                healthStatus,
+                healthReason,
+                panoramaStatus,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

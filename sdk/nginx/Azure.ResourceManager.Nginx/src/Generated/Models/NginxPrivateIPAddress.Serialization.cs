@@ -80,9 +80,9 @@ namespace Azure.ResourceManager.Nginx.Models
             {
                 return null;
             }
-            Optional<IPAddress> privateIPAddress = default;
-            Optional<NginxPrivateIPAllocationMethod> privateIPAllocationMethod = default;
-            Optional<ResourceIdentifier> subnetId = default;
+            IPAddress privateIPAddress = default;
+            NginxPrivateIPAllocationMethod? privateIPAllocationMethod = default;
+            ResourceIdentifier subnetId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NginxPrivateIPAddress(privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod), subnetId.Value, serializedAdditionalRawData);
+            return new NginxPrivateIPAddress(privateIPAddress, privateIPAllocationMethod, subnetId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NginxPrivateIPAddress>.Write(ModelReaderWriterOptions options)

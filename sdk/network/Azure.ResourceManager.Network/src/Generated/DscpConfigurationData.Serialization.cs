@@ -195,23 +195,23 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
             IDictionary<string, string> tags = default;
             IList<int> markings = default;
             IList<QosIPRange> sourceIPRanges = default;
             IList<QosIPRange> destinationIPRanges = default;
             IList<QosPortRange> sourcePortRanges = default;
             IList<QosPortRange> destinationPortRanges = default;
-            Optional<ProtocolType> protocol = default;
+            ProtocolType? protocol = default;
             IList<DscpQosDefinition> qosDefinitionCollection = default;
-            Optional<string> qosCollectionId = default;
+            string qosCollectionId = default;
             IReadOnlyList<NetworkInterfaceData> associatedNetworkInterfaces = default;
-            Optional<Guid> resourceGuid = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            Guid? resourceGuid = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -420,24 +420,24 @@ namespace Azure.ResourceManager.Network
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DscpConfigurationData(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
-                Optional.ToNullable(location),
+                id,
+                name,
+                type,
+                location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
-                Optional.ToNullable(etag),
+                etag,
                 markings ?? new ChangeTrackingList<int>(),
                 sourceIPRanges ?? new ChangeTrackingList<QosIPRange>(),
                 destinationIPRanges ?? new ChangeTrackingList<QosIPRange>(),
                 sourcePortRanges ?? new ChangeTrackingList<QosPortRange>(),
                 destinationPortRanges ?? new ChangeTrackingList<QosPortRange>(),
-                Optional.ToNullable(protocol),
+                protocol,
                 qosDefinitionCollection ?? new ChangeTrackingList<DscpQosDefinition>(),
-                qosCollectionId.Value,
+                qosCollectionId,
                 associatedNetworkInterfaces ?? new ChangeTrackingList<NetworkInterfaceData>(),
-                Optional.ToNullable(resourceGuid),
-                Optional.ToNullable(provisioningState));
+                resourceGuid,
+                provisioningState);
         }
 
         BinaryData IPersistableModel<DscpConfigurationData>.Write(ModelReaderWriterOptions options)

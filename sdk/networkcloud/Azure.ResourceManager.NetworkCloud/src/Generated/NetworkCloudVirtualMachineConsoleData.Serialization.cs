@@ -144,15 +144,15 @@ namespace Azure.ResourceManager.NetworkCloud
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ConsoleDetailedStatus> detailedStatus = default;
-            Optional<string> detailedStatusMessage = default;
+            SystemData systemData = default;
+            ConsoleDetailedStatus? detailedStatus = default;
+            string detailedStatusMessage = default;
             ConsoleEnabled enabled = default;
-            Optional<DateTimeOffset> expiration = default;
-            Optional<ResourceIdentifier> privateLinkServiceId = default;
-            Optional<ConsoleProvisioningState> provisioningState = default;
+            DateTimeOffset? expiration = default;
+            ResourceIdentifier privateLinkServiceId = default;
+            ConsoleProvisioningState? provisioningState = default;
             NetworkCloudSshPublicKey sshPublicKey = default;
-            Optional<Guid> virtualMachineAccessId = default;
+            Guid? virtualMachineAccessId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -287,18 +287,18 @@ namespace Azure.ResourceManager.NetworkCloud
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 extendedLocation,
-                Optional.ToNullable(detailedStatus),
-                detailedStatusMessage.Value,
+                detailedStatus,
+                detailedStatusMessage,
                 enabled,
-                Optional.ToNullable(expiration),
-                privateLinkServiceId.Value,
-                Optional.ToNullable(provisioningState),
+                expiration,
+                privateLinkServiceId,
+                provisioningState,
                 sshPublicKey,
-                Optional.ToNullable(virtualMachineAccessId),
+                virtualMachineAccessId,
                 serializedAdditionalRawData);
         }
 

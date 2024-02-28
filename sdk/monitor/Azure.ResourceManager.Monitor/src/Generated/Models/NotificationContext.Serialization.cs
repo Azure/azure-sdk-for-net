@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<string> notificationSource = default;
-            Optional<string> contextType = default;
+            string notificationSource = default;
+            string contextType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NotificationContext(notificationSource.Value, contextType.Value, serializedAdditionalRawData);
+            return new NotificationContext(notificationSource, contextType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NotificationContext>.Write(ModelReaderWriterOptions options)

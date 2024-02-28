@@ -160,23 +160,23 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Optional<string> requestId = default;
-            Optional<string> resultType = default;
-            Optional<long> total = default;
-            Optional<long> top = default;
-            Optional<string> id = default;
+            string requestId = default;
+            string resultType = default;
+            long? total = default;
+            long? top = default;
+            string id = default;
             IReadOnlyList<OperationalInsightsSearchCoreSummary> coreSummaries = default;
-            Optional<string> status = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> lastUpdated = default;
-            Optional<ETag> eTag = default;
+            string status = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? lastUpdated = default;
+            ETag? eTag = default;
             IReadOnlyList<SearchSort> sort = default;
-            Optional<long> requestTime = default;
-            Optional<string> aggregatedValueField = default;
-            Optional<string> aggregatedGroupingFields = default;
-            Optional<long> sum = default;
-            Optional<long> max = default;
-            Optional<SearchMetadataSchema> schema = default;
+            long? requestTime = default;
+            string aggregatedValueField = default;
+            string aggregatedGroupingFields = default;
+            long? sum = default;
+            long? max = default;
+            SearchMetadataSchema schema = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -327,23 +327,23 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SearchMetadata(
-                requestId.Value,
-                resultType.Value,
-                Optional.ToNullable(total),
-                Optional.ToNullable(top),
-                id.Value,
+                requestId,
+                resultType,
+                total,
+                top,
+                id,
                 coreSummaries ?? new ChangeTrackingList<OperationalInsightsSearchCoreSummary>(),
-                status.Value,
-                Optional.ToNullable(startTime),
-                Optional.ToNullable(lastUpdated),
-                Optional.ToNullable(eTag),
+                status,
+                startTime,
+                lastUpdated,
+                eTag,
                 sort ?? new ChangeTrackingList<SearchSort>(),
-                Optional.ToNullable(requestTime),
-                aggregatedValueField.Value,
-                aggregatedGroupingFields.Value,
-                Optional.ToNullable(sum),
-                Optional.ToNullable(max),
-                schema.Value,
+                requestTime,
+                aggregatedValueField,
+                aggregatedGroupingFields,
+                sum,
+                max,
+                schema,
                 serializedAdditionalRawData);
         }
 

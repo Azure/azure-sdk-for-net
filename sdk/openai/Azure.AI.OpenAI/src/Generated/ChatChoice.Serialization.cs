@@ -101,13 +101,13 @@ namespace Azure.AI.OpenAI
             {
                 return null;
             }
-            Optional<ChatResponseMessage> message = default;
+            ChatResponseMessage message = default;
             int index = default;
             CompletionsFinishReason? finishReason = default;
-            Optional<ChatFinishDetails> finishDetails = default;
-            Optional<ChatResponseMessage> delta = default;
-            Optional<ContentFilterResultsForChoice> contentFilterResults = default;
-            Optional<AzureChatEnhancements> enhancements = default;
+            ChatFinishDetails finishDetails = default;
+            ChatResponseMessage delta = default;
+            ContentFilterResultsForChoice contentFilterResults = default;
+            AzureChatEnhancements enhancements = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,13 +179,13 @@ namespace Azure.AI.OpenAI
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ChatChoice(
-                message.Value,
+                message,
                 index,
                 finishReason,
-                finishDetails.Value,
-                delta.Value,
-                contentFilterResults.Value,
-                enhancements.Value,
+                finishDetails,
+                delta,
+                contentFilterResults,
+                enhancements,
                 serializedAdditionalRawData);
         }
 

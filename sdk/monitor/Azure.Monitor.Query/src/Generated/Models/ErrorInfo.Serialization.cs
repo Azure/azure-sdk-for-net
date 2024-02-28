@@ -22,8 +22,8 @@ namespace Azure.Monitor.Query.Models
             string code = default;
             string message = default;
             IReadOnlyList<ErrorDetail> details = default;
-            Optional<ErrorInfo> innererror = default;
-            Optional<object> additionalProperties = default;
+            ErrorInfo innererror = default;
+            object additionalProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -69,7 +69,7 @@ namespace Azure.Monitor.Query.Models
                     continue;
                 }
             }
-            return new ErrorInfo(code, message, details ?? new ChangeTrackingList<ErrorDetail>(), innererror.Value, additionalProperties.Value);
+            return new ErrorInfo(code, message, details ?? new ChangeTrackingList<ErrorDetail>(), innererror, additionalProperties);
         }
     }
 }

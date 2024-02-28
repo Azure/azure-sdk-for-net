@@ -151,14 +151,14 @@ namespace Azure.ResourceManager.NetApp.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> backupPolicyId = default;
-            Optional<string> provisioningState = default;
-            Optional<int> dailyBackupsToKeep = default;
-            Optional<int> weeklyBackupsToKeep = default;
-            Optional<int> monthlyBackupsToKeep = default;
-            Optional<int> volumesAssigned = default;
-            Optional<bool> enabled = default;
+            SystemData systemData = default;
+            ResourceIdentifier backupPolicyId = default;
+            string provisioningState = default;
+            int? dailyBackupsToKeep = default;
+            int? weeklyBackupsToKeep = default;
+            int? monthlyBackupsToKeep = default;
+            int? volumesAssigned = default;
+            bool? enabled = default;
             IReadOnlyList<NetAppVolumeBackupDetail> volumeBackups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -302,16 +302,16 @@ namespace Azure.ResourceManager.NetApp.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                backupPolicyId.Value,
-                provisioningState.Value,
-                Optional.ToNullable(dailyBackupsToKeep),
-                Optional.ToNullable(weeklyBackupsToKeep),
-                Optional.ToNullable(monthlyBackupsToKeep),
-                Optional.ToNullable(volumesAssigned),
-                Optional.ToNullable(enabled),
+                backupPolicyId,
+                provisioningState,
+                dailyBackupsToKeep,
+                weeklyBackupsToKeep,
+                monthlyBackupsToKeep,
+                volumesAssigned,
+                enabled,
                 volumeBackups ?? new ChangeTrackingList<NetAppVolumeBackupDetail>(),
                 serializedAdditionalRawData);
         }

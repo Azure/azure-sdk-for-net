@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 return null;
             }
-            Optional<Uri> keyUrl = default;
+            Uri keyUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KeyVaultKey(keyUrl.Value, serializedAdditionalRawData);
+            return new KeyVaultKey(keyUrl, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KeyVaultKey>.Write(ModelReaderWriterOptions options)

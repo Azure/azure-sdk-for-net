@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> dataCollectionRuleResourceId = default;
-            Optional<ResourceIdentifier> dataCollectionEndpointResourceId = default;
+            ResourceIdentifier dataCollectionRuleResourceId = default;
+            ResourceIdentifier dataCollectionEndpointResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorWorkspaceIngestionSettings(dataCollectionRuleResourceId.Value, dataCollectionEndpointResourceId.Value, serializedAdditionalRawData);
+            return new MonitorWorkspaceIngestionSettings(dataCollectionRuleResourceId, dataCollectionEndpointResourceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorWorkspaceIngestionSettings>.Write(ModelReaderWriterOptions options)

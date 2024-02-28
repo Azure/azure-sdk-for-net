@@ -93,8 +93,8 @@ namespace Azure.ResourceManager.Monitor.Models
             IList<string> streams = default;
             IList<string> filePatterns = default;
             LogFilesDataSourceFormat format = default;
-            Optional<LogFilesDataSourceSettings> settings = default;
-            Optional<string> name = default;
+            LogFilesDataSourceSettings settings = default;
+            string name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -148,8 +148,8 @@ namespace Azure.ResourceManager.Monitor.Models
                 streams,
                 filePatterns,
                 format,
-                settings.Value,
-                name.Value,
+                settings,
+                name,
                 serializedAdditionalRawData);
         }
 

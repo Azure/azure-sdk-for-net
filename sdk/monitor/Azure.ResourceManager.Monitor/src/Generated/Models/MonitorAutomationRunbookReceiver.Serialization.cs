@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.Monitor.Models
             string runbookName = default;
             ResourceIdentifier webhookResourceId = default;
             bool isGlobalRunbook = default;
-            Optional<string> name = default;
-            Optional<Uri> serviceUri = default;
-            Optional<bool> useCommonAlertSchema = default;
+            string name = default;
+            Uri serviceUri = default;
+            bool? useCommonAlertSchema = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -152,9 +152,9 @@ namespace Azure.ResourceManager.Monitor.Models
                 runbookName,
                 webhookResourceId,
                 isGlobalRunbook,
-                name.Value,
-                serviceUri.Value,
-                Optional.ToNullable(useCommonAlertSchema),
+                name,
+                serviceUri,
+                useCommonAlertSchema,
                 serializedAdditionalRawData);
         }
 

@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<double> currentValue = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<double> limit = default;
-            Optional<VirtualNetworkUsageName> name = default;
-            Optional<string> unit = default;
+            double? currentValue = default;
+            ResourceIdentifier id = default;
+            double? limit = default;
+            VirtualNetworkUsageName name = default;
+            string unit = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,11 +146,11 @@ namespace Azure.ResourceManager.Network.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new VirtualNetworkUsage(
-                Optional.ToNullable(currentValue),
-                id.Value,
-                Optional.ToNullable(limit),
-                name.Value,
-                unit.Value,
+                currentValue,
+                id,
+                limit,
+                name,
+                unit,
                 serializedAdditionalRawData);
         }
 

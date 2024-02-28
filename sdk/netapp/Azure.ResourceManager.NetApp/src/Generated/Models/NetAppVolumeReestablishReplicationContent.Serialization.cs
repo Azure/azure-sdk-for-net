@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> sourceVolumeId = default;
+            ResourceIdentifier sourceVolumeId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppVolumeReestablishReplicationContent(sourceVolumeId.Value, serializedAdditionalRawData);
+            return new NetAppVolumeReestablishReplicationContent(sourceVolumeId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppVolumeReestablishReplicationContent>.Write(ModelReaderWriterOptions options)
