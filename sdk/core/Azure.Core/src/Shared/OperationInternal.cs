@@ -51,16 +51,16 @@ namespace Azure.Core
         /// Initializes a new instance of the <see cref="OperationInternal"/> class in a final successful state.
         /// </summary>
         /// <param name="rawResponse">The final value of <see cref="OperationInternalBase.RawResponse"/>.</param>
-        /// <param name="rehydrationToken">The rehydration token.</param>
-        public static OperationInternal Succeeded(Response rawResponse, RehydrationToken? rehydrationToken = null) => new(OperationState.Success(rawResponse), rehydrationToken);
+        /// <param name="requestMethod">The Http request method</param>
+        public static OperationInternal Succeeded(Response rawResponse, RequestMethod? requestMethod = null) => new(OperationState.Success(rawResponse), requestMethod);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OperationInternal"/> class in a final failed state.
         /// </summary>
         /// <param name="rawResponse">The final value of <see cref="OperationInternalBase.RawResponse"/>.</param>
         /// <param name="operationFailedException">The exception that will be thrown by <c>UpdateStatusAsync</c>.</param>
-        /// <param name="rehydrationToken">rehydration token</param>
-        public static OperationInternal Failed(Response rawResponse, RequestFailedException operationFailedException, RehydrationToken? rehydrationToken = null) => new(OperationState.Failure(rawResponse, operationFailedException), rehydrationToken);
+        /// <param name="requestMethod">The Http request method</param>
+        public static OperationInternal Failed(Response rawResponse, RequestFailedException operationFailedException, RequestMethod? requestMethod = null) => new(OperationState.Failure(rawResponse, operationFailedException), requestMethod);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OperationInternal"/> class.
@@ -85,25 +85,25 @@ namespace Azure.Core
         /// </param>
         /// <param name="scopeAttributes">The attributes to use during diagnostic scope creation.</param>
         /// <param name="fallbackStrategy"> The delay strategy to use. Default is <see cref="FixedDelayWithNoJitterStrategy"/>.</param>
-        /// <param name="rehydrationToken">The rehydration token.</param>
+        /// <param name="requestMethod">The Http request method</param>
         public OperationInternal(IOperation operation,
             ClientDiagnostics clientDiagnostics,
             Response? rawResponse,
             string? operationTypeName = null,
             IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null,
             DelayStrategy? fallbackStrategy = null,
-            RehydrationToken? rehydrationToken = null)
-            : base(clientDiagnostics, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy, rehydrationToken)
+            RequestMethod? requestMethod = null)
+            : base(clientDiagnostics, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy, requestMethod)
         {
-            _internalOperation = new OperationInternal<VoidValue>(new OperationToOperationOfTProxy(operation), clientDiagnostics, rawResponse, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy, rehydrationToken);
+            _internalOperation = new OperationInternal<VoidValue>(new OperationToOperationOfTProxy(operation), clientDiagnostics, rawResponse, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy, requestMethod);
         }
 
-        private OperationInternal(OperationState finalState, RehydrationToken? rehydrationToken)
-            : base(finalState.RawResponse, rehydrationToken)
+        private OperationInternal(OperationState finalState, RequestMethod? requestMethod)
+            : base(finalState.RawResponse, requestMethod)
         {
             _internalOperation = finalState.HasSucceeded
-                ? OperationInternal<VoidValue>.Succeeded(finalState.RawResponse, default, rehydrationToken)
-                : OperationInternal<VoidValue>.Failed(finalState.RawResponse, finalState.OperationFailedException!, rehydrationToken);
+                ? OperationInternal<VoidValue>.Succeeded(finalState.RawResponse, default, requestMethod)
+                : OperationInternal<VoidValue>.Failed(finalState.RawResponse, finalState.OperationFailedException!, requestMethod);
         }
 
         public override Response RawResponse => _internalOperation.RawResponse;

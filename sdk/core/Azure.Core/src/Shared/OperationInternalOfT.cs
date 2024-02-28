@@ -63,16 +63,16 @@ namespace Azure.Core
         /// </summary>
         /// <param name="rawResponse">The final value of <see cref="OperationInternalBase.RawResponse"/>.</param>
         /// <param name="value">The final result of the long-running operation.</param>
-        /// <param name="rehydrationToken">rehydration token</param>
-        public static OperationInternal<T> Succeeded(Response rawResponse, T value, RehydrationToken? rehydrationToken = null) => new(OperationState<T>.Success(rawResponse, value), rehydrationToken);
+        /// <param name="requestMethod">rehydration token</param>
+        public static OperationInternal<T> Succeeded(Response rawResponse, T value, RequestMethod? requestMethod = null) => new(OperationState<T>.Success(rawResponse, value), requestMethod);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OperationInternal"/> class in a final failed state.
         /// </summary>
         /// <param name="rawResponse">The final value of <see cref="OperationInternalBase.RawResponse"/>.</param>
         /// <param name="operationFailedException">The exception that will be thrown by <c>UpdateStatusAsync</c>.</param>
-        /// <param name="rehydrationToken">rehydration token</param>
-        public static OperationInternal<T> Failed(Response rawResponse, RequestFailedException operationFailedException, RehydrationToken? rehydrationToken = null) => new(OperationState<T>.Failure(rawResponse, operationFailedException), rehydrationToken);
+        /// <param name="requestMethod">rehydration token</param>
+        public static OperationInternal<T> Failed(Response rawResponse, RequestFailedException operationFailedException, RequestMethod? requestMethod = null) => new(OperationState<T>.Failure(rawResponse, operationFailedException), requestMethod);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OperationInternal{T}"/> class.
@@ -98,23 +98,23 @@ namespace Azure.Core
         /// <param name="scopeAttributes">The attributes to use during diagnostic scope creation.</param>
         /// <param name="fallbackStrategy">The delay strategy when Retry-After header is not present.  When it is present, the longer of the two delays will be used.
         ///     Default is <see cref="FixedDelayWithNoJitterStrategy"/>.</param>
-        /// <param name="rehydrationToken">The rehydration token.</param>
+        /// <param name="requetMethod">The rehydration token.</param>
         public OperationInternal(IOperation<T> operation,
             ClientDiagnostics clientDiagnostics,
             Response? rawResponse,
             string? operationTypeName = null,
             IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null,
             DelayStrategy? fallbackStrategy = null,
-            RehydrationToken? rehydrationToken = null)
-            : base(clientDiagnostics, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy, rehydrationToken)
+            RequestMethod? requetMethod = null)
+            : base(clientDiagnostics, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy, requetMethod)
         {
             _operation = operation;
             _rawResponse = rawResponse;
             _stateLock = new AsyncLockWithValue<OperationState<T>>();
         }
 
-        private OperationInternal(OperationState<T> finalState, RehydrationToken? rehydrationToken)
-            : base(finalState.RawResponse, rehydrationToken)
+        private OperationInternal(OperationState<T> finalState, RequestMethod? requestMethod)
+            : base(finalState.RawResponse, requestMethod)
         {
             // FinalOperation represents operation that is in final state and can't be updated.
             // It implements IOperation<T> and throws exception when UpdateStateAsync is called.
@@ -272,23 +272,13 @@ namespace Azure.Core
                 }
 
                 asyncLock.SetValue(state);
-                return GetResponseFromState(state, GetRequestMethod(_rehydrationToken));
+                return GetResponseFromState(state, _requestMethod);
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        private RequestMethod? GetRequestMethod(RehydrationToken? rehydrationToken)
-        {
-            if (rehydrationToken is null)
-            {
-                return null;
-            }
-            var lroDetails = ModelReaderWriter.Write(rehydrationToken, new ModelReaderWriterOptions("J")).ToObjectFromJson<Dictionary<string, string>>();
-            return new RequestMethod(lroDetails["requestMethod"]);
         }
 
         private static Response GetResponseFromState(OperationState<T> state, RequestMethod? requestmethod = null)
