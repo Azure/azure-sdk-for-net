@@ -21,7 +21,7 @@ namespace Azure.DigitalTwins.Core
             writer.WriteStringValue(InputBlobUri.AbsoluteUri);
             writer.WritePropertyName("outputBlobUri"u8);
             writer.WriteStringValue(OutputBlobUri.AbsoluteUri);
-            if (Optional.IsDefined(Error))
+            if (Error != null)
             {
                 writer.WritePropertyName("error"u8);
                 SerializeErrorValue(writer);
@@ -116,7 +116,16 @@ namespace Azure.DigitalTwins.Core
                     continue;
                 }
             }
-            return new ImportJob(id.Value, inputBlobUri, outputBlobUri, Optional.ToNullable(status), Optional.ToNullable(createdDateTime), Optional.ToNullable(lastActionDateTime), Optional.ToNullable(finishedDateTime), Optional.ToNullable(purgeDateTime), error.Value);
+            return new ImportJob(
+                id.Value,
+                inputBlobUri,
+                outputBlobUri,
+                Optional.ToNullable(status),
+                Optional.ToNullable(createdDateTime),
+                Optional.ToNullable(lastActionDateTime),
+                Optional.ToNullable(finishedDateTime),
+                Optional.ToNullable(purgeDateTime),
+                error.Value);
         }
     }
 }

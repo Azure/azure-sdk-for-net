@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ConditionProperties))
+            if (ConditionProperties != null)
             {
                 writer.WritePropertyName("conditionProperties"u8);
                 writer.WriteObjectValue(ConditionProperties);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    conditionProperties = AutomationRulePropertyValuesCondition.DeserializeAutomationRulePropertyValuesCondition(property.Value);
+                    conditionProperties = AutomationRulePropertyValuesCondition.DeserializeAutomationRulePropertyValuesCondition(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("conditionType"u8))

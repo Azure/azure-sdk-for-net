@@ -114,7 +114,13 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorItsmReceiver(name, workspaceId, connectionId, ticketConfiguration, region, serializedAdditionalRawData);
+            return new MonitorItsmReceiver(
+                name,
+                workspaceId,
+                connectionId,
+                ticketConfiguration,
+                region,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorItsmReceiver>.Write(ModelReaderWriterOptions options)

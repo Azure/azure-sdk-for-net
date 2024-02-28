@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(SubscriptionId))
+            if (options.Format != "W" && SubscriptionId != null)
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (options.Format != "W" && Optional.IsDefined(DataFactoryName))
+            if (options.Format != "W" && DataFactoryName != null)
             {
                 writer.WritePropertyName("dataFactoryName"u8);
                 writer.WriteStringValue(DataFactoryName);
             }
-            if (options.Format != "W" && Optional.IsDefined(DataFactoryLocation))
+            if (options.Format != "W" && DataFactoryLocation.HasValue)
             {
                 writer.WritePropertyName("dataFactoryLocation"u8);
                 writer.WriteStringValue(DataFactoryLocation.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("createTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LinkedIntegrationRuntime(name.Value, subscriptionId.Value, dataFactoryName.Value, Optional.ToNullable(dataFactoryLocation), Optional.ToNullable(createTime), serializedAdditionalRawData);
+            return new LinkedIntegrationRuntime(
+                name.Value,
+                subscriptionId.Value,
+                dataFactoryName.Value,
+                Optional.ToNullable(dataFactoryLocation),
+                Optional.ToNullable(createTime),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LinkedIntegrationRuntime>.Write(ModelReaderWriterOptions options)

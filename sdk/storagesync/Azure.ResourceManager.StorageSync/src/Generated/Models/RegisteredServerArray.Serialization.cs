@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<StorageSyncRegisteredServerData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<StorageSyncRegisteredServerData>> value = default;
+            IReadOnlyList<StorageSyncRegisteredServerData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     List<StorageSyncRegisteredServerData> array = new List<StorageSyncRegisteredServerData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageSyncRegisteredServerData.DeserializeStorageSyncRegisteredServerData(item));
+                        array.Add(StorageSyncRegisteredServerData.DeserializeStorageSyncRegisteredServerData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RegisteredServerArray(Optional.ToList(value), serializedAdditionalRawData);
+            return new RegisteredServerArray(value ?? new ChangeTrackingList<StorageSyncRegisteredServerData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RegisteredServerArray>.Write(ModelReaderWriterOptions options)

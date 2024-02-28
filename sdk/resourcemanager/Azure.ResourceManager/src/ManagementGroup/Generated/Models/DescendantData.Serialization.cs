@@ -42,14 +42,14 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 if (DisplayName != null)
                 {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     writer.WriteNull("displayName");
                 }
             }
-            if (Optional.IsDefined(Parent))
+            if (Parent != null)
             {
                 if (Parent != null)
                 {
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                                 parent = null;
                                 continue;
                             }
-                            parent = DescendantParentGroupInfo.DeserializeDescendantParentGroupInfo(property0.Value);
+                            parent = DescendantParentGroupInfo.DeserializeDescendantParentGroupInfo(property0.Value, options);
                             continue;
                         }
                     }
@@ -184,7 +184,14 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DescendantData(id, name, type, systemData.Value, displayName.Value, parent.Value, serializedAdditionalRawData);
+            return new DescendantData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                displayName.Value,
+                parent.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DescendantData>.Write(ModelReaderWriterOptions options)

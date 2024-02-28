@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(UserAssignedIdentity))
+            if (UserAssignedIdentity != null)
             {
                 writer.WritePropertyName("userAssignedIdentity"u8);
                 writer.WriteStringValue(UserAssignedIdentity);
             }
-            if (Optional.IsDefined(UseSystemAssignedIdentity))
+            if (UseSystemAssignedIdentity.HasValue)
             {
                 writer.WritePropertyName("useSystemAssignedIdentity"u8);
                 writer.WriteBooleanValue(UseSystemAssignedIdentity.Value);
             }
-            if (Optional.IsDefined(EncryptionAtRestType))
+            if (EncryptionAtRestType.HasValue)
             {
                 writer.WritePropertyName("encryptionAtRestType"u8);
                 writer.WriteStringValue(EncryptionAtRestType.Value.ToString());
             }
-            if (Optional.IsDefined(KeyUri))
+            if (KeyUri != null)
             {
                 writer.WritePropertyName("keyUri"u8);
                 writer.WriteStringValue(KeyUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(SubscriptionId))
+            if (SubscriptionId != null)
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (Optional.IsDefined(LastUpdateStatus))
+            if (LastUpdateStatus.HasValue)
             {
                 writer.WritePropertyName("lastUpdateStatus"u8);
                 writer.WriteStringValue(LastUpdateStatus.Value.ToString());
             }
-            if (Optional.IsDefined(InfrastructureEncryptionState))
+            if (InfrastructureEncryptionState.HasValue)
             {
                 writer.WritePropertyName("infrastructureEncryptionState"u8);
                 writer.WriteStringValue(InfrastructureEncryptionState.Value.ToString());
@@ -175,7 +175,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupResourceEncryptionConfigExtendedProperties(Optional.ToNullable(encryptionAtRestType), keyUri.Value, subscriptionId.Value, Optional.ToNullable(lastUpdateStatus), Optional.ToNullable(infrastructureEncryptionState), serializedAdditionalRawData, userAssignedIdentity.Value, Optional.ToNullable(useSystemAssignedIdentity));
+            return new BackupResourceEncryptionConfigExtendedProperties(
+                Optional.ToNullable(encryptionAtRestType),
+                keyUri.Value,
+                subscriptionId.Value,
+                Optional.ToNullable(lastUpdateStatus),
+                Optional.ToNullable(infrastructureEncryptionState),
+                serializedAdditionalRawData,
+                userAssignedIdentity.Value,
+                Optional.ToNullable(useSystemAssignedIdentity));
         }
 
         BinaryData IPersistableModel<BackupResourceEncryptionConfigExtendedProperties>.Write(ModelReaderWriterOptions options)

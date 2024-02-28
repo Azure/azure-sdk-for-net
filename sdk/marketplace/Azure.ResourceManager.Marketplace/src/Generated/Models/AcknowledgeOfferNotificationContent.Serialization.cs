@@ -28,22 +28,22 @@ namespace Azure.ResourceManager.Marketplace.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsAcknowledgeActionFlagEnabled))
+            if (IsAcknowledgeActionFlagEnabled.HasValue)
             {
                 writer.WritePropertyName("acknowledge"u8);
                 writer.WriteBooleanValue(IsAcknowledgeActionFlagEnabled.Value);
             }
-            if (Optional.IsDefined(IsDismissActionFlagEnabled))
+            if (IsDismissActionFlagEnabled.HasValue)
             {
                 writer.WritePropertyName("dismiss"u8);
                 writer.WriteBooleanValue(IsDismissActionFlagEnabled.Value);
             }
-            if (Optional.IsDefined(IsRemoveOfferActionFlagEnabled))
+            if (IsRemoveOfferActionFlagEnabled.HasValue)
             {
                 writer.WritePropertyName("removeOffer"u8);
                 writer.WriteBooleanValue(IsRemoveOfferActionFlagEnabled.Value);
             }
-            if (Optional.IsCollectionDefined(AddPlans))
+            if (!(AddPlans is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("addPlans"u8);
                 writer.WriteStartArray();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RemovePlans))
+            if (!(RemovePlans is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("removePlans"u8);
                 writer.WriteStartArray();
@@ -105,8 +105,8 @@ namespace Azure.ResourceManager.Marketplace.Models
             Optional<bool> acknowledge = default;
             Optional<bool> dismiss = default;
             Optional<bool> removeOffer = default;
-            Optional<IList<string>> addPlans = default;
-            Optional<IList<string>> removePlans = default;
+            IList<string> addPlans = default;
+            IList<string> removePlans = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -184,7 +184,13 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AcknowledgeOfferNotificationContent(Optional.ToNullable(acknowledge), Optional.ToNullable(dismiss), Optional.ToNullable(removeOffer), Optional.ToList(addPlans), Optional.ToList(removePlans), serializedAdditionalRawData);
+            return new AcknowledgeOfferNotificationContent(
+                Optional.ToNullable(acknowledge),
+                Optional.ToNullable(dismiss),
+                Optional.ToNullable(removeOffer),
+                addPlans ?? new ChangeTrackingList<string>(),
+                removePlans ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AcknowledgeOfferNotificationContent>.Write(ModelReaderWriterOptions options)

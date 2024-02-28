@@ -32,12 +32,12 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStringValue(EventHubNameSpace);
             writer.WritePropertyName("eventHubName"u8);
             writer.WriteStringValue(EventHubName);
-            if (Optional.IsDefined(UseCommonAlertSchema))
+            if (UseCommonAlertSchema.HasValue)
             {
                 writer.WritePropertyName("useCommonAlertSchema"u8);
                 writer.WriteBooleanValue(UseCommonAlertSchema.Value);
             }
-            if (Optional.IsDefined(TenantId))
+            if (TenantId.HasValue)
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
@@ -136,7 +136,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorEventHubReceiver(name, eventHubNameSpace, eventHubName, Optional.ToNullable(useCommonAlertSchema), Optional.ToNullable(tenantId), subscriptionId, serializedAdditionalRawData);
+            return new MonitorEventHubReceiver(
+                name,
+                eventHubNameSpace,
+                eventHubName,
+                Optional.ToNullable(useCommonAlertSchema),
+                Optional.ToNullable(tenantId),
+                subscriptionId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorEventHubReceiver>.Write(ModelReaderWriterOptions options)

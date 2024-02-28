@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataShare.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataShare.Models
             writer.WriteStartObject();
             writer.WritePropertyName("accountName"u8);
             writer.WriteStringValue(AccountName);
-            if (options.Format != "W" && Optional.IsDefined(DataSetId))
+            if (options.Format != "W" && DataSetId.HasValue)
             {
                 writer.WritePropertyName("dataSetId"u8);
                 writer.WriteStringValue(DataSetId.Value);
@@ -193,7 +193,18 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AdlsGen1FolderDataSet(id, name, type, systemData.Value, kind, serializedAdditionalRawData, accountName, Optional.ToNullable(dataSetId), folderPath, resourceGroup, subscriptionId);
+            return new AdlsGen1FolderDataSet(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData,
+                accountName,
+                Optional.ToNullable(dataSetId),
+                folderPath,
+                resourceGroup,
+                subscriptionId);
         }
 
         BinaryData IPersistableModel<AdlsGen1FolderDataSet>.Write(ModelReaderWriterOptions options)

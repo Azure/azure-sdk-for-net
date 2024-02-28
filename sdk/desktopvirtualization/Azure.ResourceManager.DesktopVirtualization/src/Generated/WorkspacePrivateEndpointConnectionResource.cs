@@ -282,7 +282,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="connection"/> is null. </exception>
         public virtual async Task<ArmOperation<WorkspacePrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, DesktopVirtualizationPrivateEndpointConnection connection, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(connection, nameof(connection));
+            if (connection == null)
+            {
+                throw new ArgumentNullException(nameof(connection));
+            }
 
             using var scope = _workspacePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("WorkspacePrivateEndpointConnectionResource.Update");
             scope.Start();
@@ -328,7 +331,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="connection"/> is null. </exception>
         public virtual ArmOperation<WorkspacePrivateEndpointConnectionResource> Update(WaitUntil waitUntil, DesktopVirtualizationPrivateEndpointConnection connection, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(connection, nameof(connection));
+            if (connection == null)
+            {
+                throw new ArgumentNullException(nameof(connection));
+            }
 
             using var scope = _workspacePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("WorkspacePrivateEndpointConnectionResource.Update");
             scope.Start();

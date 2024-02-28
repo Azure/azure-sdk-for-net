@@ -27,39 +27,39 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Script))
+            if (Script != null)
             {
                 writer.WritePropertyName("script"u8);
                 writer.WriteStringValue(Script);
             }
-            if (Optional.IsDefined(SchemaLinkedService))
+            if (SchemaLinkedService != null)
             {
                 writer.WritePropertyName("schemaLinkedService"u8);
                 JsonSerializer.Serialize(writer, SchemaLinkedService);
             }
-            if (Optional.IsDefined(RejectedDataLinkedService))
+            if (RejectedDataLinkedService != null)
             {
                 writer.WritePropertyName("rejectedDataLinkedService"u8);
                 JsonSerializer.Serialize(writer, RejectedDataLinkedService);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Dataset))
+            if (Dataset != null)
             {
                 writer.WritePropertyName("dataset"u8);
                 writer.WriteObjectValue(Dataset);
             }
-            if (Optional.IsDefined(LinkedService))
+            if (LinkedService != null)
             {
                 writer.WritePropertyName("linkedService"u8);
                 JsonSerializer.Serialize(writer, LinkedService);
             }
-            if (Optional.IsDefined(Flowlet))
+            if (Flowlet != null)
             {
                 writer.WritePropertyName("flowlet"u8);
                 writer.WriteObjectValue(Flowlet);
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    dataset = DatasetReference.DeserializeDatasetReference(property.Value);
+                    dataset = DatasetReference.DeserializeDatasetReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("linkedService"u8))
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    flowlet = DataFlowReference.DeserializeDataFlowReference(property.Value);
+                    flowlet = DataFlowReference.DeserializeDataFlowReference(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -180,7 +180,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PowerQuerySink(name, description.Value, dataset.Value, linkedService, flowlet.Value, serializedAdditionalRawData, schemaLinkedService, rejectedDataLinkedService, script.Value);
+            return new PowerQuerySink(
+                name,
+                description.Value,
+                dataset.Value,
+                linkedService,
+                flowlet.Value,
+                serializedAdditionalRawData,
+                schemaLinkedService,
+                rejectedDataLinkedService,
+                script.Value);
         }
 
         BinaryData IPersistableModel<PowerQuerySink>.Write(ModelReaderWriterOptions options)

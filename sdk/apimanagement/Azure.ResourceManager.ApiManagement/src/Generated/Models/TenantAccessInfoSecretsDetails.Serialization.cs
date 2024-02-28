@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AccessInfoType))
+            if (AccessInfoType != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(AccessInfoType);
             }
-            if (Optional.IsDefined(PrincipalId))
+            if (PrincipalId != null)
             {
                 writer.WritePropertyName("principalId"u8);
                 writer.WriteStringValue(PrincipalId);
             }
-            if (Optional.IsDefined(PrimaryKey))
+            if (PrimaryKey != null)
             {
                 writer.WritePropertyName("primaryKey"u8);
                 writer.WriteStringValue(PrimaryKey);
             }
-            if (Optional.IsDefined(SecondaryKey))
+            if (SecondaryKey != null)
             {
                 writer.WritePropertyName("secondaryKey"u8);
                 writer.WriteStringValue(SecondaryKey);
             }
-            if (Optional.IsDefined(IsDirectAccessEnabled))
+            if (IsDirectAccessEnabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsDirectAccessEnabled.Value);
@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TenantAccessInfoSecretsDetails(id.Value, principalId.Value, primaryKey.Value, secondaryKey.Value, Optional.ToNullable(enabled), serializedAdditionalRawData);
+            return new TenantAccessInfoSecretsDetails(
+                id.Value,
+                principalId.Value,
+                primaryKey.Value,
+                secondaryKey.Value,
+                Optional.ToNullable(enabled),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TenantAccessInfoSecretsDetails>.Write(ModelReaderWriterOptions options)

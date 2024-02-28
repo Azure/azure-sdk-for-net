@@ -26,24 +26,24 @@ namespace Azure.ResourceManager.Avs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ServerAddress))
+            if (ServerAddress != null)
             {
                 writer.WritePropertyName("serverAddress"u8);
                 writer.WriteStringValue(ServerAddress);
             }
-            if (Optional.IsDefined(LeaseTime))
+            if (LeaseTime.HasValue)
             {
                 writer.WritePropertyName("leaseTime"u8);
                 writer.WriteNumberValue(LeaseTime.Value);
             }
             writer.WritePropertyName("dhcpType"u8);
             writer.WriteStringValue(DhcpType.ToString());
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Segments))
+            if (options.Format != "W" && !(Segments is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("segments"u8);
                 writer.WriteStartArray();
@@ -53,12 +53,12 @@ namespace Azure.ResourceManager.Avs.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(Revision))
+            if (Revision.HasValue)
             {
                 writer.WritePropertyName("revision"u8);
                 writer.WriteNumberValue(Revision.Value);
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Avs.Models
             Optional<long> leaseTime = default;
             DhcpTypeEnum dhcpType = default;
             Optional<string> displayName = default;
-            Optional<IReadOnlyList<string>> segments = default;
+            IReadOnlyList<string> segments = default;
             Optional<WorkloadNetworkDhcpProvisioningState> provisioningState = default;
             Optional<long> revision = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -174,7 +174,15 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadNetworkDhcpServer(dhcpType, displayName.Value, Optional.ToList(segments), Optional.ToNullable(provisioningState), Optional.ToNullable(revision), serializedAdditionalRawData, serverAddress.Value, Optional.ToNullable(leaseTime));
+            return new WorkloadNetworkDhcpServer(
+                dhcpType,
+                displayName.Value,
+                segments ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(revision),
+                serializedAdditionalRawData,
+                serverAddress.Value,
+                Optional.ToNullable(leaseTime));
         }
 
         BinaryData IPersistableModel<WorkloadNetworkDhcpServer>.Write(ModelReaderWriterOptions options)

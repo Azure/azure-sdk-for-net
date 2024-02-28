@@ -28,52 +28,52 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DatasourceSizeInBytes))
+            if (DatasourceSizeInBytes.HasValue)
             {
                 writer.WritePropertyName("datasourceSizeInBytes"u8);
                 writer.WriteNumberValue(DatasourceSizeInBytes.Value);
             }
-            if (Optional.IsDefined(DataTransferredInBytes))
+            if (DataTransferredInBytes.HasValue)
             {
                 writer.WritePropertyName("dataTransferredInBytes"u8);
                 writer.WriteNumberValue(DataTransferredInBytes.Value);
             }
-            if (Optional.IsDefined(BackupName))
+            if (BackupName != null)
             {
                 writer.WritePropertyName("backupName"u8);
                 writer.WriteStringValue(BackupName);
             }
-            if (Optional.IsDefined(BackupMetadata))
+            if (BackupMetadata != null)
             {
                 writer.WritePropertyName("backupMetadata"u8);
                 writer.WriteStringValue(BackupMetadata);
             }
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(StartOn))
+            if (StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (EndOn.HasValue)
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Optional.IsDefined(PercentComplete))
+            if (PercentComplete.HasValue)
             {
                 writer.WritePropertyName("percentComplete"u8);
                 writer.WriteNumberValue(PercentComplete.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ErrorCode))
+            if (options.Format != "W" && ErrorCode != null)
             {
                 writer.WritePropertyName("errorCode"u8);
                 writer.WriteStringValue(ErrorCode);
             }
-            if (options.Format != "W" && Optional.IsDefined(ErrorMessage))
+            if (options.Format != "W" && ErrorMessage != null)
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
@@ -223,7 +223,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlFlexibleServerLtrBackupResult(Optional.ToNullable(datasourceSizeInBytes), Optional.ToNullable(dataTransferredInBytes), backupName.Value, backupMetadata.Value, Optional.ToNullable(status), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(percentComplete), errorCode.Value, errorMessage.Value, serializedAdditionalRawData);
+            return new PostgreSqlFlexibleServerLtrBackupResult(
+                Optional.ToNullable(datasourceSizeInBytes),
+                Optional.ToNullable(dataTransferredInBytes),
+                backupName.Value,
+                backupMetadata.Value,
+                Optional.ToNullable(status),
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                Optional.ToNullable(percentComplete),
+                errorCode.Value,
+                errorMessage.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlFlexibleServerLtrBackupResult>.Write(ModelReaderWriterOptions options)

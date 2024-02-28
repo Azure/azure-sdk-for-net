@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ETag))
+            if (ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -48,19 +48,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(LogicAppResourceId))
+            if (LogicAppResourceId != null)
             {
                 writer.WritePropertyName("logicAppResourceId"u8);
                 writer.WriteStringValue(LogicAppResourceId);
             }
-            if (Optional.IsDefined(TriggerUri))
+            if (TriggerUri != null)
             {
                 writer.WritePropertyName("triggerUri"u8);
                 writer.WriteStringValue(TriggerUri.AbsoluteUri);
@@ -184,7 +184,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsAlertRuleActionCreateOrUpdateContent(id, name, type, systemData.Value, logicAppResourceId.Value, triggerUri.Value, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new SecurityInsightsAlertRuleActionCreateOrUpdateContent(
+                id,
+                name,
+                type,
+                systemData.Value,
+                logicAppResourceId.Value,
+                triggerUri.Value,
+                Optional.ToNullable(etag),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityInsightsAlertRuleActionCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

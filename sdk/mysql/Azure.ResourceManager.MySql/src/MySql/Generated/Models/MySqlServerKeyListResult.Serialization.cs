@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.MySql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<MySqlServerKeyData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MySql.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MySql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MySqlServerKeyData>> value = default;
+            IReadOnlyList<MySqlServerKeyData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MySql.Models
                     List<MySqlServerKeyData> array = new List<MySqlServerKeyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MySqlServerKeyData.DeserializeMySqlServerKeyData(item));
+                        array.Add(MySqlServerKeyData.DeserializeMySqlServerKeyData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MySql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlServerKeyListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new MySqlServerKeyListResult(value ?? new ChangeTrackingList<MySqlServerKeyData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlServerKeyListResult>.Write(ModelReaderWriterOptions options)

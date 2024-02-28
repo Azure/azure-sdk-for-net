@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
@@ -23,8 +22,14 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="function"/> is null. </exception>
         public ChatCompletionsFunctionToolCall(string id, FunctionCall function) : base(id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(function, nameof(function));
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (function == null)
+            {
+                throw new ArgumentNullException(nameof(function));
+            }
 
             Type = "function";
             Function = function;

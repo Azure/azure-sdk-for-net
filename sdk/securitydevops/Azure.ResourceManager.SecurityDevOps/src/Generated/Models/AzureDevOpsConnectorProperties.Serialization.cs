@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProvisioningState))
+            if (ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(Authorization))
+            if (Authorization != null)
             {
                 writer.WritePropertyName("authorization"u8);
                 writer.WriteObjectValue(Authorization);
             }
-            if (Optional.IsCollectionDefined(Orgs))
+            if (!(Orgs is ChangeTrackingList<AzureDevOpsOrgMetadata> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("orgs"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             }
             Optional<ProvisioningState> provisioningState = default;
             Optional<AuthorizationInfo> authorization = default;
-            Optional<IList<AzureDevOpsOrgMetadata>> orgs = default;
+            IList<AzureDevOpsOrgMetadata> orgs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                     {
                         continue;
                     }
-                    authorization = AuthorizationInfo.DeserializeAuthorizationInfo(property.Value);
+                    authorization = AuthorizationInfo.DeserializeAuthorizationInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("orgs"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                     List<AzureDevOpsOrgMetadata> array = new List<AzureDevOpsOrgMetadata>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AzureDevOpsOrgMetadata.DeserializeAzureDevOpsOrgMetadata(item));
+                        array.Add(AzureDevOpsOrgMetadata.DeserializeAzureDevOpsOrgMetadata(item, options));
                     }
                     orgs = array;
                     continue;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureDevOpsConnectorProperties(Optional.ToNullable(provisioningState), authorization.Value, Optional.ToList(orgs), serializedAdditionalRawData);
+            return new AzureDevOpsConnectorProperties(Optional.ToNullable(provisioningState), authorization.Value, orgs ?? new ChangeTrackingList<AzureDevOpsOrgMetadata>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureDevOpsConnectorProperties>.Write(ModelReaderWriterOptions options)

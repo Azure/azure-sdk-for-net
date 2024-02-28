@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ManagementPartner.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Display))
+            if (Display != null)
             {
                 writer.WritePropertyName("display"u8);
                 writer.WriteObjectValue(Display);
             }
-            if (Optional.IsDefined(Origin))
+            if (Origin != null)
             {
                 writer.WritePropertyName("origin"u8);
                 writer.WriteStringValue(Origin);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ManagementPartner.Models
                     {
                         continue;
                     }
-                    display = OperationDisplay.DeserializeOperationDisplay(property.Value);
+                    display = OperationDisplay.DeserializeOperationDisplay(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("origin"u8))

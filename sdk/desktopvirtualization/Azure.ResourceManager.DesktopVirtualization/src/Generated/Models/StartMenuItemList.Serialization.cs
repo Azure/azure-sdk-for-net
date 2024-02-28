@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<DesktopVirtualizationStartMenuItem> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DesktopVirtualizationStartMenuItem>> value = default;
+            IReadOnlyList<DesktopVirtualizationStartMenuItem> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     List<DesktopVirtualizationStartMenuItem> array = new List<DesktopVirtualizationStartMenuItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DesktopVirtualizationStartMenuItem.DeserializeDesktopVirtualizationStartMenuItem(item));
+                        array.Add(DesktopVirtualizationStartMenuItem.DeserializeDesktopVirtualizationStartMenuItem(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StartMenuItemList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new StartMenuItemList(value ?? new ChangeTrackingList<DesktopVirtualizationStartMenuItem>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StartMenuItemList>.Write(ModelReaderWriterOptions options)

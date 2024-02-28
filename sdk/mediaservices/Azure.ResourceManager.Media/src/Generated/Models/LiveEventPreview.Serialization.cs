@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Endpoints))
+            if (!(Endpoints is ChangeTrackingList<LiveEventEndpoint> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AccessControl))
+            if (AccessControl != null)
             {
                 if (AccessControl != null)
                 {
@@ -48,17 +48,17 @@ namespace Azure.ResourceManager.Media.Models
                     writer.WriteNull("accessControl");
                 }
             }
-            if (Optional.IsDefined(PreviewLocator))
+            if (PreviewLocator != null)
             {
                 writer.WritePropertyName("previewLocator"u8);
                 writer.WriteStringValue(PreviewLocator);
             }
-            if (Optional.IsDefined(StreamingPolicyName))
+            if (StreamingPolicyName != null)
             {
                 writer.WritePropertyName("streamingPolicyName"u8);
                 writer.WriteStringValue(StreamingPolicyName);
             }
-            if (Optional.IsDefined(AlternativeMediaId))
+            if (AlternativeMediaId != null)
             {
                 writer.WritePropertyName("alternativeMediaId"u8);
                 writer.WriteStringValue(AlternativeMediaId);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<IList<LiveEventEndpoint>> endpoints = default;
+            IList<LiveEventEndpoint> endpoints = default;
             Optional<LiveEventPreviewAccessControl> accessControl = default;
             Optional<string> previewLocator = default;
             Optional<string> streamingPolicyName = default;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<LiveEventEndpoint> array = new List<LiveEventEndpoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LiveEventEndpoint.DeserializeLiveEventEndpoint(item));
+                        array.Add(LiveEventEndpoint.DeserializeLiveEventEndpoint(item, options));
                     }
                     endpoints = array;
                     continue;
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Media.Models
                         accessControl = null;
                         continue;
                     }
-                    accessControl = LiveEventPreviewAccessControl.DeserializeLiveEventPreviewAccessControl(property.Value);
+                    accessControl = LiveEventPreviewAccessControl.DeserializeLiveEventPreviewAccessControl(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("previewLocator"u8))
@@ -155,7 +155,13 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LiveEventPreview(Optional.ToList(endpoints), accessControl.Value, previewLocator.Value, streamingPolicyName.Value, alternativeMediaId.Value, serializedAdditionalRawData);
+            return new LiveEventPreview(
+                endpoints ?? new ChangeTrackingList<LiveEventEndpoint>(),
+                accessControl.Value,
+                previewLocator.Value,
+                streamingPolicyName.Value,
+                alternativeMediaId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LiveEventPreview>.Write(ModelReaderWriterOptions options)

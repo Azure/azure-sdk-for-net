@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DiskEncryptionKeyInfo))
+            if (DiskEncryptionKeyInfo != null)
             {
                 writer.WritePropertyName("diskEncryptionKeyInfo"u8);
                 writer.WriteObjectValue(DiskEncryptionKeyInfo);
             }
-            if (Optional.IsDefined(KeyEncryptionKeyInfo))
+            if (KeyEncryptionKeyInfo != null)
             {
                 writer.WritePropertyName("keyEncryptionKeyInfo"u8);
                 writer.WriteObjectValue(KeyEncryptionKeyInfo);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    diskEncryptionKeyInfo = SiteRecoveryDiskEncryptionKeyInfo.DeserializeSiteRecoveryDiskEncryptionKeyInfo(property.Value);
+                    diskEncryptionKeyInfo = SiteRecoveryDiskEncryptionKeyInfo.DeserializeSiteRecoveryDiskEncryptionKeyInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("keyEncryptionKeyInfo"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    keyEncryptionKeyInfo = SiteRecoveryKeyEncryptionKeyInfo.DeserializeSiteRecoveryKeyEncryptionKeyInfo(property.Value);
+                    keyEncryptionKeyInfo = SiteRecoveryKeyEncryptionKeyInfo.DeserializeSiteRecoveryKeyEncryptionKeyInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

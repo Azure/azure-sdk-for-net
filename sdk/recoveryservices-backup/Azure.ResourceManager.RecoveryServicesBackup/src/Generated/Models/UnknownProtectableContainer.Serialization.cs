@@ -26,24 +26,24 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FriendlyName))
+            if (FriendlyName != null)
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Optional.IsDefined(BackupManagementType))
+            if (BackupManagementType.HasValue)
             {
                 writer.WritePropertyName("backupManagementType"u8);
                 writer.WriteStringValue(BackupManagementType.Value.ToString());
             }
             writer.WritePropertyName("protectableContainerType"u8);
             writer.WriteStringValue(ProtectableContainerType.ToSerialString());
-            if (Optional.IsDefined(HealthStatus))
+            if (HealthStatus != null)
             {
                 writer.WritePropertyName("healthStatus"u8);
                 writer.WriteStringValue(HealthStatus);
             }
-            if (Optional.IsDefined(ContainerId))
+            if (ContainerId != null)
             {
                 writer.WritePropertyName("containerId"u8);
                 writer.WriteStringValue(ContainerId);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownProtectableContainer(document.RootElement, options);
+            return DeserializeProtectableContainer(document.RootElement, options);
         }
 
         internal static UnknownProtectableContainer DeserializeUnknownProtectableContainer(JsonElement element, ModelReaderWriterOptions options = null)
@@ -130,7 +130,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownProtectableContainer(friendlyName.Value, Optional.ToNullable(backupManagementType), protectableContainerType, healthStatus.Value, containerId.Value, serializedAdditionalRawData);
+            return new UnknownProtectableContainer(
+                friendlyName.Value,
+                Optional.ToNullable(backupManagementType),
+                protectableContainerType,
+                healthStatus.Value,
+                containerId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProtectableContainer>.Write(ModelReaderWriterOptions options)
@@ -155,7 +161,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownProtectableContainer(document.RootElement, options);
+                        return DeserializeProtectableContainer(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(ProtectableContainer)} does not support '{options.Format}' format.");

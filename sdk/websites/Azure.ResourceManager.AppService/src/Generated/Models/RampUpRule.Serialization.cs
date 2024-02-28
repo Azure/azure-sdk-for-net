@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ActionHostName))
+            if (ActionHostName != null)
             {
                 writer.WritePropertyName("actionHostName"u8);
                 writer.WriteStringValue(ActionHostName);
             }
-            if (Optional.IsDefined(ReroutePercentage))
+            if (ReroutePercentage.HasValue)
             {
                 writer.WritePropertyName("reroutePercentage"u8);
                 writer.WriteNumberValue(ReroutePercentage.Value);
             }
-            if (Optional.IsDefined(ChangeStep))
+            if (ChangeStep.HasValue)
             {
                 writer.WritePropertyName("changeStep"u8);
                 writer.WriteNumberValue(ChangeStep.Value);
             }
-            if (Optional.IsDefined(ChangeIntervalInMinutes))
+            if (ChangeIntervalInMinutes.HasValue)
             {
                 writer.WritePropertyName("changeIntervalInMinutes"u8);
                 writer.WriteNumberValue(ChangeIntervalInMinutes.Value);
             }
-            if (Optional.IsDefined(MinReroutePercentage))
+            if (MinReroutePercentage.HasValue)
             {
                 writer.WritePropertyName("minReroutePercentage"u8);
                 writer.WriteNumberValue(MinReroutePercentage.Value);
             }
-            if (Optional.IsDefined(MaxReroutePercentage))
+            if (MaxReroutePercentage.HasValue)
             {
                 writer.WritePropertyName("maxReroutePercentage"u8);
                 writer.WriteNumberValue(MaxReroutePercentage.Value);
             }
-            if (Optional.IsDefined(ChangeDecisionCallbackUri))
+            if (ChangeDecisionCallbackUri != null)
             {
                 writer.WritePropertyName("changeDecisionCallbackUrl"u8);
                 writer.WriteStringValue(ChangeDecisionCallbackUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -186,7 +186,16 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RampUpRule(actionHostName.Value, Optional.ToNullable(reroutePercentage), Optional.ToNullable(changeStep), Optional.ToNullable(changeIntervalInMinutes), Optional.ToNullable(minReroutePercentage), Optional.ToNullable(maxReroutePercentage), changeDecisionCallbackUrl.Value, name.Value, serializedAdditionalRawData);
+            return new RampUpRule(
+                actionHostName.Value,
+                Optional.ToNullable(reroutePercentage),
+                Optional.ToNullable(changeStep),
+                Optional.ToNullable(changeIntervalInMinutes),
+                Optional.ToNullable(minReroutePercentage),
+                Optional.ToNullable(maxReroutePercentage),
+                changeDecisionCallbackUrl.Value,
+                name.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RampUpRule>.Write(ModelReaderWriterOptions options)

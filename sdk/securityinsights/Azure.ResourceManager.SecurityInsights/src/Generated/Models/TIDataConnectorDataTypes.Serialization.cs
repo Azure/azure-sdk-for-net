@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Indicators))
+            if (Indicators != null)
             {
                 writer.WritePropertyName("indicators"u8);
                 writer.WriteObjectValue(Indicators);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    indicators = TIDataConnectorDataTypesIndicators.DeserializeTIDataConnectorDataTypesIndicators(property.Value);
+                    indicators = TIDataConnectorDataTypesIndicators.DeserializeTIDataConnectorDataTypesIndicators(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

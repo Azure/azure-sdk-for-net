@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,34 +47,34 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(PackageUri))
+            if (PackageUri != null)
             {
                 writer.WritePropertyName("packageUri"u8);
                 writer.WriteStringValue(PackageUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ConnectionString))
+            if (ConnectionString != null)
             {
                 writer.WritePropertyName("connectionString"u8);
                 writer.WriteStringValue(ConnectionString);
             }
-            if (Optional.IsDefined(DBType))
+            if (DBType != null)
             {
                 writer.WritePropertyName("dbType"u8);
                 writer.WriteStringValue(DBType);
             }
-            if (Optional.IsDefined(SetParametersXmlFileUri))
+            if (SetParametersXmlFileUri != null)
             {
                 writer.WritePropertyName("setParametersXmlFileUri"u8);
                 writer.WriteStringValue(SetParametersXmlFileUri.AbsoluteUri);
             }
-            if (Optional.IsCollectionDefined(SetParameters))
+            if (!(SetParameters is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("setParameters"u8);
                 writer.WriteStartObject();
@@ -85,12 +85,12 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(SkipAppData))
+            if (SkipAppData.HasValue)
             {
                 writer.WritePropertyName("skipAppData"u8);
                 writer.WriteBooleanValue(SkipAppData.Value);
             }
-            if (Optional.IsDefined(IsAppOffline))
+            if (IsAppOffline.HasValue)
             {
                 writer.WritePropertyName("appOffline"u8);
                 writer.WriteBooleanValue(IsAppOffline.Value);
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> connectionString = default;
             Optional<string> dbType = default;
             Optional<Uri> setParametersXmlFileUri = default;
-            Optional<IDictionary<string, string>> setParameters = default;
+            IDictionary<string, string> setParameters = default;
             Optional<bool> skipAppData = default;
             Optional<bool> appOffline = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -257,7 +257,20 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebAppMSDeploy(id, name, type, systemData.Value, packageUri.Value, connectionString.Value, dbType.Value, setParametersXmlFileUri.Value, Optional.ToDictionary(setParameters), Optional.ToNullable(skipAppData), Optional.ToNullable(appOffline), kind.Value, serializedAdditionalRawData);
+            return new WebAppMSDeploy(
+                id,
+                name,
+                type,
+                systemData.Value,
+                packageUri.Value,
+                connectionString.Value,
+                dbType.Value,
+                setParametersXmlFileUri.Value,
+                setParameters ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(skipAppData),
+                Optional.ToNullable(appOffline),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebAppMSDeploy>.Write(ModelReaderWriterOptions options)

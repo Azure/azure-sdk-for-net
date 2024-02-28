@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Confidence))
+            if (options.Format != "W" && Confidence.HasValue)
             {
                 writer.WritePropertyName("confidence"u8);
                 writer.WriteNumberValue(Confidence.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProviderName))
+            if (options.Format != "W" && ProviderName != null)
             {
                 writer.WritePropertyName("providerName"u8);
                 writer.WriteStringValue(ProviderName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ReportLink))
+            if (options.Format != "W" && ReportLink != null)
             {
                 writer.WritePropertyName("reportLink"u8);
                 writer.WriteStringValue(ReportLink);
             }
-            if (options.Format != "W" && Optional.IsDefined(ThreatDescription))
+            if (options.Format != "W" && ThreatDescription != null)
             {
                 writer.WritePropertyName("threatDescription"u8);
                 writer.WriteStringValue(ThreatDescription);
             }
-            if (options.Format != "W" && Optional.IsDefined(ThreatName))
+            if (options.Format != "W" && ThreatName != null)
             {
                 writer.WritePropertyName("threatName"u8);
                 writer.WriteStringValue(ThreatName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ThreatType))
+            if (options.Format != "W" && ThreatType != null)
             {
                 writer.WritePropertyName("threatType"u8);
                 writer.WriteStringValue(ThreatType);
@@ -144,7 +144,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsThreatIntelligence(Optional.ToNullable(confidence), providerName.Value, reportLink.Value, threatDescription.Value, threatName.Value, threatType.Value, serializedAdditionalRawData);
+            return new SecurityInsightsThreatIntelligence(
+                Optional.ToNullable(confidence),
+                providerName.Value,
+                reportLink.Value,
+                threatDescription.Value,
+                threatName.Value,
+                threatType.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityInsightsThreatIntelligence>.Write(ModelReaderWriterOptions options)

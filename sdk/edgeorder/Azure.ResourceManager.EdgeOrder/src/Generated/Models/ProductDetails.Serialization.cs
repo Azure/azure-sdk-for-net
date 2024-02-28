@@ -26,24 +26,24 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisplayInfo))
+            if (DisplayInfo != null)
             {
                 writer.WritePropertyName("displayInfo"u8);
                 writer.WriteObjectValue(DisplayInfo);
             }
             writer.WritePropertyName("hierarchyInformation"u8);
             writer.WriteObjectValue(HierarchyInformation);
-            if (options.Format != "W" && Optional.IsDefined(Count))
+            if (options.Format != "W" && Count.HasValue)
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProductDoubleEncryptionStatus))
+            if (options.Format != "W" && ProductDoubleEncryptionStatus.HasValue)
             {
                 writer.WritePropertyName("productDoubleEncryptionStatus"u8);
                 writer.WriteStringValue(ProductDoubleEncryptionStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DeviceDetails))
+            if (options.Format != "W" && !(DeviceDetails is ChangeTrackingList<EdgeOrderProductDeviceDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("deviceDetails"u8);
                 writer.WriteStartArray();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             HierarchyInformation hierarchyInformation = default;
             Optional<int> count = default;
             Optional<DoubleEncryptionStatus> productDoubleEncryptionStatus = default;
-            Optional<IReadOnlyList<EdgeOrderProductDeviceDetails>> deviceDetails = default;
+            IReadOnlyList<EdgeOrderProductDeviceDetails> deviceDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -106,12 +106,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    displayInfo = ProductDisplayInfo.DeserializeProductDisplayInfo(property.Value);
+                    displayInfo = ProductDisplayInfo.DeserializeProductDisplayInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("hierarchyInformation"u8))
                 {
-                    hierarchyInformation = HierarchyInformation.DeserializeHierarchyInformation(property.Value);
+                    hierarchyInformation = HierarchyInformation.DeserializeHierarchyInformation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("count"u8))
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     List<EdgeOrderProductDeviceDetails> array = new List<EdgeOrderProductDeviceDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EdgeOrderProductDeviceDetails.DeserializeEdgeOrderProductDeviceDetails(item));
+                        array.Add(EdgeOrderProductDeviceDetails.DeserializeEdgeOrderProductDeviceDetails(item, options));
                     }
                     deviceDetails = array;
                     continue;
@@ -152,7 +152,13 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProductDetails(displayInfo.Value, hierarchyInformation, Optional.ToNullable(count), Optional.ToNullable(productDoubleEncryptionStatus), Optional.ToList(deviceDetails), serializedAdditionalRawData);
+            return new ProductDetails(
+                displayInfo.Value,
+                hierarchyInformation,
+                Optional.ToNullable(count),
+                Optional.ToNullable(productDoubleEncryptionStatus),
+                deviceDetails ?? new ChangeTrackingList<EdgeOrderProductDeviceDetails>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProductDetails>.Write(ModelReaderWriterOptions options)

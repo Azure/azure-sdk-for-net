@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PlatformType))
+            if (PlatformType.HasValue)
             {
                 writer.WritePropertyName("platformType"u8);
                 writer.WriteStringValue(PlatformType.Value.ToString());
             }
-            if (Optional.IsDefined(VersionState))
+            if (VersionState.HasValue)
             {
                 writer.WritePropertyName("versionState"u8);
                 writer.WriteStringValue(VersionState.Value.ToString());
             }
-            if (Optional.IsDefined(MinimumPlatformSoftwareVersion))
+            if (MinimumPlatformSoftwareVersion != null)
             {
                 writer.WritePropertyName("minimumPlatformSoftwareVersion"u8);
                 writer.WriteStringValue(MinimumPlatformSoftwareVersion);
             }
-            if (Optional.IsDefined(MaximumPlatformSoftwareVersion))
+            if (MaximumPlatformSoftwareVersion != null)
             {
                 writer.WritePropertyName("maximumPlatformSoftwareVersion"u8);
                 writer.WriteStringValue(MaximumPlatformSoftwareVersion);
             }
-            if (Optional.IsDefined(RecommendedVersion))
+            if (RecommendedVersion.HasValue)
             {
                 writer.WritePropertyName("recommendedVersion"u8);
                 writer.WriteStringValue(RecommendedVersion.Value.ToString());
             }
-            if (Optional.IsDefined(ObsoleteVersion))
+            if (ObsoleteVersion.HasValue)
             {
                 writer.WritePropertyName("obsoleteVersion"u8);
                 writer.WriteStringValue(ObsoleteVersion.Value.ToString());
@@ -156,7 +156,14 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MobileNetworkPlatform(Optional.ToNullable(platformType), Optional.ToNullable(versionState), minimumPlatformSoftwareVersion.Value, maximumPlatformSoftwareVersion.Value, Optional.ToNullable(recommendedVersion), Optional.ToNullable(obsoleteVersion), serializedAdditionalRawData);
+            return new MobileNetworkPlatform(
+                Optional.ToNullable(platformType),
+                Optional.ToNullable(versionState),
+                minimumPlatformSoftwareVersion.Value,
+                maximumPlatformSoftwareVersion.Value,
+                Optional.ToNullable(recommendedVersion),
+                Optional.ToNullable(obsoleteVersion),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MobileNetworkPlatform>.Write(ModelReaderWriterOptions options)

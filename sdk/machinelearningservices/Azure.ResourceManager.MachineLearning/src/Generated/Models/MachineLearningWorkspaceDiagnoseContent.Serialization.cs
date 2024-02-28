@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Value))
+            if (Value != null)
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteObjectValue(Value);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    value = MachineLearningWorkspaceDiagnoseProperties.DeserializeMachineLearningWorkspaceDiagnoseProperties(property.Value);
+                    value = MachineLearningWorkspaceDiagnoseProperties.DeserializeMachineLearningWorkspaceDiagnoseProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 if (Id != null)
                 {
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("id");
                 }
             }
-            if (Optional.IsDefined(ProvisioningStatus))
+            if (ProvisioningStatus.HasValue)
             {
                 writer.WritePropertyName("provisioningStatus"u8);
                 writer.WriteStringValue(ProvisioningStatus.Value.ToString());
             }
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 if (NextLink != null)
                 {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     writer.WriteNull("nextLink");
                 }
             }
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<LinkerResourceData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 return null;
             }
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<LinkerResourceData>> value = default;
+            IReadOnlyList<LinkerResourceData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     List<LinkerResourceData> array = new List<LinkerResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LinkerResourceData.DeserializeLinkerResourceData(item));
+                        array.Add(LinkerResourceData.DeserializeLinkerResourceData(item, options));
                     }
                     value = array;
                     continue;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LinkerList(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new LinkerList(nextLink.Value, value ?? new ChangeTrackingList<LinkerResourceData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LinkerList>.Write(ModelReaderWriterOptions options)

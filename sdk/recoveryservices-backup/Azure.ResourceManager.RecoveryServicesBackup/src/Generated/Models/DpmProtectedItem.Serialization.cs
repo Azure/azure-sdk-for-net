@@ -26,94 +26,94 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FriendlyName))
+            if (FriendlyName != null)
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Optional.IsDefined(BackupEngineName))
+            if (BackupEngineName != null)
             {
                 writer.WritePropertyName("backupEngineName"u8);
                 writer.WriteStringValue(BackupEngineName);
             }
-            if (Optional.IsDefined(ProtectionState))
+            if (ProtectionState.HasValue)
             {
                 writer.WritePropertyName("protectionState"u8);
                 writer.WriteStringValue(ProtectionState.Value.ToString());
             }
-            if (Optional.IsDefined(ExtendedInfo))
+            if (ExtendedInfo != null)
             {
                 writer.WritePropertyName("extendedInfo"u8);
                 writer.WriteObjectValue(ExtendedInfo);
             }
             writer.WritePropertyName("protectedItemType"u8);
             writer.WriteStringValue(ProtectedItemType);
-            if (options.Format != "W" && Optional.IsDefined(BackupManagementType))
+            if (options.Format != "W" && BackupManagementType.HasValue)
             {
                 writer.WritePropertyName("backupManagementType"u8);
                 writer.WriteStringValue(BackupManagementType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(WorkloadType))
+            if (options.Format != "W" && WorkloadType.HasValue)
             {
                 writer.WritePropertyName("workloadType"u8);
                 writer.WriteStringValue(WorkloadType.Value.ToString());
             }
-            if (Optional.IsDefined(ContainerName))
+            if (ContainerName != null)
             {
                 writer.WritePropertyName("containerName"u8);
                 writer.WriteStringValue(ContainerName);
             }
-            if (Optional.IsDefined(SourceResourceId))
+            if (SourceResourceId != null)
             {
                 writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);
             }
-            if (Optional.IsDefined(PolicyId))
+            if (PolicyId != null)
             {
                 writer.WritePropertyName("policyId"u8);
                 writer.WriteStringValue(PolicyId);
             }
-            if (Optional.IsDefined(LastRecoverOn))
+            if (LastRecoverOn.HasValue)
             {
                 writer.WritePropertyName("lastRecoveryPoint"u8);
                 writer.WriteStringValue(LastRecoverOn.Value, "O");
             }
-            if (Optional.IsDefined(BackupSetName))
+            if (BackupSetName != null)
             {
                 writer.WritePropertyName("backupSetName"u8);
                 writer.WriteStringValue(BackupSetName);
             }
-            if (Optional.IsDefined(CreateMode))
+            if (CreateMode.HasValue)
             {
                 writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToString());
             }
-            if (Optional.IsDefined(DeferredDeletedOn))
+            if (DeferredDeletedOn.HasValue)
             {
                 writer.WritePropertyName("deferredDeleteTimeInUTC"u8);
                 writer.WriteStringValue(DeferredDeletedOn.Value, "O");
             }
-            if (Optional.IsDefined(IsScheduledForDeferredDelete))
+            if (IsScheduledForDeferredDelete.HasValue)
             {
                 writer.WritePropertyName("isScheduledForDeferredDelete"u8);
                 writer.WriteBooleanValue(IsScheduledForDeferredDelete.Value);
             }
-            if (Optional.IsDefined(DeferredDeleteTimeRemaining))
+            if (DeferredDeleteTimeRemaining != null)
             {
                 writer.WritePropertyName("deferredDeleteTimeRemaining"u8);
                 writer.WriteStringValue(DeferredDeleteTimeRemaining);
             }
-            if (Optional.IsDefined(IsDeferredDeleteScheduleUpcoming))
+            if (IsDeferredDeleteScheduleUpcoming.HasValue)
             {
                 writer.WritePropertyName("isDeferredDeleteScheduleUpcoming"u8);
                 writer.WriteBooleanValue(IsDeferredDeleteScheduleUpcoming.Value);
             }
-            if (Optional.IsDefined(IsRehydrate))
+            if (IsRehydrate.HasValue)
             {
                 writer.WritePropertyName("isRehydrate"u8);
                 writer.WriteBooleanValue(IsRehydrate.Value);
             }
-            if (Optional.IsCollectionDefined(ResourceGuardOperationRequests))
+            if (!(ResourceGuardOperationRequests is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("resourceGuardOperationRequests"u8);
                 writer.WriteStartArray();
@@ -123,22 +123,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsArchiveEnabled))
+            if (IsArchiveEnabled.HasValue)
             {
                 writer.WritePropertyName("isArchiveEnabled"u8);
                 writer.WriteBooleanValue(IsArchiveEnabled.Value);
             }
-            if (Optional.IsDefined(PolicyName))
+            if (PolicyName != null)
             {
                 writer.WritePropertyName("policyName"u8);
                 writer.WriteStringValue(PolicyName);
             }
-            if (Optional.IsDefined(SoftDeleteRetentionPeriodInDays))
+            if (SoftDeleteRetentionPeriodInDays.HasValue)
             {
                 writer.WritePropertyName("softDeleteRetentionPeriodInDays"u8);
                 writer.WriteNumberValue(SoftDeleteRetentionPeriodInDays.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(VaultId))
+            if (options.Format != "W" && VaultId != null)
             {
                 writer.WritePropertyName("vaultId"u8);
                 writer.WriteStringValue(VaultId);
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<string> deferredDeleteTimeRemaining = default;
             Optional<bool> isDeferredDeleteScheduleUpcoming = default;
             Optional<bool> isRehydrate = default;
-            Optional<IList<string>> resourceGuardOperationRequests = default;
+            IList<string> resourceGuardOperationRequests = default;
             Optional<bool> isArchiveEnabled = default;
             Optional<string> policyName = default;
             Optional<int> softDeleteRetentionPeriodInDays = default;
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    extendedInfo = DpmProtectedItemExtendedInfo.DeserializeDpmProtectedItemExtendedInfo(property.Value);
+                    extendedInfo = DpmProtectedItemExtendedInfo.DeserializeDpmProtectedItemExtendedInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("protectedItemType"u8))
@@ -394,7 +394,31 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DpmProtectedItem(protectedItemType, Optional.ToNullable(backupManagementType), Optional.ToNullable(workloadType), containerName.Value, sourceResourceId.Value, policyId.Value, Optional.ToNullable(lastRecoveryPoint), backupSetName.Value, Optional.ToNullable(createMode), Optional.ToNullable(deferredDeleteTimeInUTC), Optional.ToNullable(isScheduledForDeferredDelete), deferredDeleteTimeRemaining.Value, Optional.ToNullable(isDeferredDeleteScheduleUpcoming), Optional.ToNullable(isRehydrate), Optional.ToList(resourceGuardOperationRequests), Optional.ToNullable(isArchiveEnabled), policyName.Value, Optional.ToNullable(softDeleteRetentionPeriodInDays), vaultId.Value, serializedAdditionalRawData, friendlyName.Value, backupEngineName.Value, Optional.ToNullable(protectionState), extendedInfo.Value);
+            return new DpmProtectedItem(
+                protectedItemType,
+                Optional.ToNullable(backupManagementType),
+                Optional.ToNullable(workloadType),
+                containerName.Value,
+                sourceResourceId.Value,
+                policyId.Value,
+                Optional.ToNullable(lastRecoveryPoint),
+                backupSetName.Value,
+                Optional.ToNullable(createMode),
+                Optional.ToNullable(deferredDeleteTimeInUTC),
+                Optional.ToNullable(isScheduledForDeferredDelete),
+                deferredDeleteTimeRemaining.Value,
+                Optional.ToNullable(isDeferredDeleteScheduleUpcoming),
+                Optional.ToNullable(isRehydrate),
+                resourceGuardOperationRequests ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(isArchiveEnabled),
+                policyName.Value,
+                Optional.ToNullable(softDeleteRetentionPeriodInDays),
+                vaultId.Value,
+                serializedAdditionalRawData,
+                friendlyName.Value,
+                backupEngineName.Value,
+                Optional.ToNullable(protectionState),
+                extendedInfo.Value);
         }
 
         BinaryData IPersistableModel<DpmProtectedItem>.Write(ModelReaderWriterOptions options)

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Action))
+            if (Action != null)
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action);
             }
-            if (Optional.IsDefined(Role))
+            if (Role != null)
             {
                 writer.WritePropertyName("role"u8);
                 writer.WriteStringValue(Role);
             }
-            if (Optional.IsDefined(Scope))
+            if (Scope != null)
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);

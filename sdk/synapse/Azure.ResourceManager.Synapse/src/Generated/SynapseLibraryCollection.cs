@@ -85,7 +85,14 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="libraryName"/> is null. </exception>
         public virtual async Task<Response<SynapseLibraryResource>> GetAsync(string libraryName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(libraryName, nameof(libraryName));
+            if (libraryName == null)
+            {
+                throw new ArgumentNullException(nameof(libraryName));
+            }
+            if (libraryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(libraryName));
+            }
 
             using var scope = _synapseLibraryLibraryClientDiagnostics.CreateScope("SynapseLibraryCollection.Get");
             scope.Start();
@@ -130,7 +137,14 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="libraryName"/> is null. </exception>
         public virtual Response<SynapseLibraryResource> Get(string libraryName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(libraryName, nameof(libraryName));
+            if (libraryName == null)
+            {
+                throw new ArgumentNullException(nameof(libraryName));
+            }
+            if (libraryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(libraryName));
+            }
 
             using var scope = _synapseLibraryLibraryClientDiagnostics.CreateScope("SynapseLibraryCollection.Get");
             scope.Start();
@@ -235,7 +249,14 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="libraryName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string libraryName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(libraryName, nameof(libraryName));
+            if (libraryName == null)
+            {
+                throw new ArgumentNullException(nameof(libraryName));
+            }
+            if (libraryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(libraryName));
+            }
 
             using var scope = _synapseLibraryLibraryClientDiagnostics.CreateScope("SynapseLibraryCollection.Exists");
             scope.Start();
@@ -278,7 +299,14 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="libraryName"/> is null. </exception>
         public virtual Response<bool> Exists(string libraryName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(libraryName, nameof(libraryName));
+            if (libraryName == null)
+            {
+                throw new ArgumentNullException(nameof(libraryName));
+            }
+            if (libraryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(libraryName));
+            }
 
             using var scope = _synapseLibraryLibraryClientDiagnostics.CreateScope("SynapseLibraryCollection.Exists");
             scope.Start();
@@ -321,7 +349,14 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="libraryName"/> is null. </exception>
         public virtual async Task<NullableResponse<SynapseLibraryResource>> GetIfExistsAsync(string libraryName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(libraryName, nameof(libraryName));
+            if (libraryName == null)
+            {
+                throw new ArgumentNullException(nameof(libraryName));
+            }
+            if (libraryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(libraryName));
+            }
 
             using var scope = _synapseLibraryLibraryClientDiagnostics.CreateScope("SynapseLibraryCollection.GetIfExists");
             scope.Start();
@@ -366,7 +401,14 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="libraryName"/> is null. </exception>
         public virtual NullableResponse<SynapseLibraryResource> GetIfExists(string libraryName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(libraryName, nameof(libraryName));
+            if (libraryName == null)
+            {
+                throw new ArgumentNullException(nameof(libraryName));
+            }
+            if (libraryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(libraryName));
+            }
 
             using var scope = _synapseLibraryLibraryClientDiagnostics.CreateScope("SynapseLibraryCollection.GetIfExists");
             scope.Start();

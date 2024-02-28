@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MobileNetworkServiceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string serviceName, MobileNetworkServiceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (serviceName == null)
+            {
+                throw new ArgumentNullException(nameof(serviceName));
+            }
+            if (serviceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _mobileNetworkServiceServicesClientDiagnostics.CreateScope("MobileNetworkServiceCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MobileNetworkServiceResource> CreateOrUpdate(WaitUntil waitUntil, string serviceName, MobileNetworkServiceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (serviceName == null)
+            {
+                throw new ArgumentNullException(nameof(serviceName));
+            }
+            if (serviceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _mobileNetworkServiceServicesClientDiagnostics.CreateScope("MobileNetworkServiceCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         public virtual async Task<Response<MobileNetworkServiceResource>> GetAsync(string serviceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+            if (serviceName == null)
+            {
+                throw new ArgumentNullException(nameof(serviceName));
+            }
+            if (serviceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
+            }
 
             using var scope = _mobileNetworkServiceServicesClientDiagnostics.CreateScope("MobileNetworkServiceCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         public virtual Response<MobileNetworkServiceResource> Get(string serviceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+            if (serviceName == null)
+            {
+                throw new ArgumentNullException(nameof(serviceName));
+            }
+            if (serviceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
+            }
 
             using var scope = _mobileNetworkServiceServicesClientDiagnostics.CreateScope("MobileNetworkServiceCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string serviceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+            if (serviceName == null)
+            {
+                throw new ArgumentNullException(nameof(serviceName));
+            }
+            if (serviceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
+            }
 
             using var scope = _mobileNetworkServiceServicesClientDiagnostics.CreateScope("MobileNetworkServiceCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         public virtual Response<bool> Exists(string serviceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+            if (serviceName == null)
+            {
+                throw new ArgumentNullException(nameof(serviceName));
+            }
+            if (serviceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
+            }
 
             using var scope = _mobileNetworkServiceServicesClientDiagnostics.CreateScope("MobileNetworkServiceCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         public virtual async Task<NullableResponse<MobileNetworkServiceResource>> GetIfExistsAsync(string serviceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+            if (serviceName == null)
+            {
+                throw new ArgumentNullException(nameof(serviceName));
+            }
+            if (serviceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
+            }
 
             using var scope = _mobileNetworkServiceServicesClientDiagnostics.CreateScope("MobileNetworkServiceCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         public virtual NullableResponse<MobileNetworkServiceResource> GetIfExists(string serviceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+            if (serviceName == null)
+            {
+                throw new ArgumentNullException(nameof(serviceName));
+            }
+            if (serviceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
+            }
 
             using var scope = _mobileNetworkServiceServicesClientDiagnostics.CreateScope("MobileNetworkServiceCollection.GetIfExists");
             scope.Start();

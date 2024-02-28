@@ -15,34 +15,34 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id.HasValue)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteNumberValue(Id.Value);
             }
-            if (Optional.IsDefined(OuterId))
+            if (OuterId.HasValue)
             {
                 writer.WritePropertyName("outerId"u8);
                 writer.WriteNumberValue(OuterId.Value);
             }
-            if (Optional.IsDefined(TypeName))
+            if (TypeName != null)
             {
                 writer.WritePropertyName("typeName"u8);
                 writer.WriteStringValue(TypeName);
             }
             writer.WritePropertyName("message"u8);
             writer.WriteStringValue(Message);
-            if (Optional.IsDefined(HasFullStack))
+            if (HasFullStack.HasValue)
             {
                 writer.WritePropertyName("hasFullStack"u8);
                 writer.WriteBooleanValue(HasFullStack.Value);
             }
-            if (Optional.IsDefined(Stack))
+            if (Stack != null)
             {
                 writer.WritePropertyName("stack"u8);
                 writer.WriteStringValue(Stack);
             }
-            if (Optional.IsCollectionDefined(ParsedStack))
+            if (!(ParsedStack is ChangeTrackingList<StackFrame> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parsedStack"u8);
                 writer.WriteStartArray();

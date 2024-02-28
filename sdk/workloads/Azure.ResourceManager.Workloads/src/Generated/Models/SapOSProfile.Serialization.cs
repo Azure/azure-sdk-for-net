@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AdminUsername))
+            if (AdminUsername != null)
             {
                 writer.WritePropertyName("adminUsername"u8);
                 writer.WriteStringValue(AdminUsername);
             }
-            if (Optional.IsDefined(AdminPassword))
+            if (AdminPassword != null)
             {
                 writer.WritePropertyName("adminPassword"u8);
                 writer.WriteStringValue(AdminPassword);
             }
-            if (Optional.IsDefined(OSConfiguration))
+            if (OSConfiguration != null)
             {
                 writer.WritePropertyName("osConfiguration"u8);
                 writer.WriteObjectValue(OSConfiguration);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    osConfiguration = SapOSConfiguration.DeserializeSapOSConfiguration(property.Value);
+                    osConfiguration = SapOSConfiguration.DeserializeSapOSConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

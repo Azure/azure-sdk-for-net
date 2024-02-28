@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CurrentValue))
+            if (CurrentValue.HasValue)
             {
                 writer.WritePropertyName("currentValue"u8);
                 writer.WriteNumberValue(CurrentValue.Value);
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Limit))
+            if (Limit.HasValue)
             {
                 writer.WritePropertyName("limit"u8);
                 writer.WriteNumberValue(Limit.Value);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteObjectValue(Name);
             }
-            if (Optional.IsDefined(Unit))
+            if (Unit != null)
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    name = QuotaName.DeserializeQuotaName(property.Value);
+                    name = QuotaName.DeserializeQuotaName(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("unit"u8))
@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new Quota(Optional.ToNullable(currentValue), id.Value, Optional.ToNullable(limit), name.Value, unit.Value, serializedAdditionalRawData);
+            return new Quota(
+                Optional.ToNullable(currentValue),
+                id.Value,
+                Optional.ToNullable(limit),
+                name.Value,
+                unit.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<Quota>.Write(ModelReaderWriterOptions options)

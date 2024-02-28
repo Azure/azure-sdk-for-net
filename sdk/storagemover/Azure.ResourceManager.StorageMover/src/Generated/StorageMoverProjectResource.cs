@@ -350,7 +350,10 @@ namespace Azure.ResourceManager.StorageMover
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<StorageMoverProjectResource>> UpdateAsync(StorageMoverProjectPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _storageMoverProjectProjectsClientDiagnostics.CreateScope("StorageMoverProjectResource.Update");
             scope.Start();
@@ -392,7 +395,10 @@ namespace Azure.ResourceManager.StorageMover
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<StorageMoverProjectResource> Update(StorageMoverProjectPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _storageMoverProjectProjectsClientDiagnostics.CreateScope("StorageMoverProjectResource.Update");
             scope.Start();

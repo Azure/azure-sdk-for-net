@@ -27,44 +27,44 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NestingSeparator))
+            if (NestingSeparator != null)
             {
                 writer.WritePropertyName("nestingSeparator"u8);
                 JsonSerializer.Serialize(writer, NestingSeparator);
             }
-            if (Optional.IsDefined(WriteBehavior))
+            if (WriteBehavior != null)
             {
                 writer.WritePropertyName("writeBehavior"u8);
                 JsonSerializer.Serialize(writer, WriteBehavior);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CopySinkType);
-            if (Optional.IsDefined(WriteBatchSize))
+            if (WriteBatchSize != null)
             {
                 writer.WritePropertyName("writeBatchSize"u8);
                 JsonSerializer.Serialize(writer, WriteBatchSize);
             }
-            if (Optional.IsDefined(WriteBatchTimeout))
+            if (WriteBatchTimeout != null)
             {
                 writer.WritePropertyName("writeBatchTimeout"u8);
                 JsonSerializer.Serialize(writer, WriteBatchTimeout);
             }
-            if (Optional.IsDefined(SinkRetryCount))
+            if (SinkRetryCount != null)
             {
                 writer.WritePropertyName("sinkRetryCount"u8);
                 JsonSerializer.Serialize(writer, SinkRetryCount);
             }
-            if (Optional.IsDefined(SinkRetryWait))
+            if (SinkRetryWait != null)
             {
                 writer.WritePropertyName("sinkRetryWait"u8);
                 JsonSerializer.Serialize(writer, SinkRetryWait);
             }
-            if (Optional.IsDefined(MaxConcurrentConnections))
+            if (MaxConcurrentConnections != null)
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 JsonSerializer.Serialize(writer, MaxConcurrentConnections);
             }
-            if (Optional.IsDefined(DisableMetricsCollection))
+            if (DisableMetricsCollection != null)
             {
                 writer.WritePropertyName("disableMetricsCollection"u8);
                 JsonSerializer.Serialize(writer, DisableMetricsCollection);
@@ -197,7 +197,17 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DocumentDBCollectionSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, nestingSeparator.Value, writeBehavior.Value);
+            return new DocumentDBCollectionSink(
+                type,
+                writeBatchSize.Value,
+                writeBatchTimeout.Value,
+                sinkRetryCount.Value,
+                sinkRetryWait.Value,
+                maxConcurrentConnections.Value,
+                disableMetricsCollection.Value,
+                additionalProperties,
+                nestingSeparator.Value,
+                writeBehavior.Value);
         }
 
         BinaryData IPersistableModel<DocumentDBCollectionSink>.Write(ModelReaderWriterOptions options)

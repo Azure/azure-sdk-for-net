@@ -26,47 +26,47 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Source))
+            if (Source != null)
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
-            if (Optional.IsDefined(SourceType))
+            if (SourceType.HasValue)
             {
                 writer.WritePropertyName("sourceType"u8);
                 writer.WriteStringValue(SourceType.Value.ToString());
             }
-            if (Optional.IsDefined(MountName))
+            if (MountName != null)
             {
                 writer.WritePropertyName("mountName"u8);
                 writer.WriteStringValue(MountName);
             }
-            if (Optional.IsDefined(MountAction))
+            if (MountAction.HasValue)
             {
                 writer.WritePropertyName("mountAction"u8);
                 writer.WriteStringValue(MountAction.Value.ToString());
             }
-            if (Optional.IsDefined(CreatedBy))
+            if (CreatedBy != null)
             {
                 writer.WritePropertyName("createdBy"u8);
                 writer.WriteStringValue(CreatedBy);
             }
-            if (Optional.IsDefined(MountPath))
+            if (MountPath != null)
             {
                 writer.WritePropertyName("mountPath"u8);
                 writer.WriteStringValue(MountPath);
             }
-            if (Optional.IsDefined(MountState))
+            if (MountState.HasValue)
             {
                 writer.WritePropertyName("mountState"u8);
                 writer.WriteStringValue(MountState.Value.ToString());
             }
-            if (Optional.IsDefined(MountedOn))
+            if (MountedOn.HasValue)
             {
                 writer.WritePropertyName("mountedOn"u8);
                 writer.WriteStringValue(MountedOn.Value, "O");
             }
-            if (Optional.IsDefined(Error))
+            if (Error != null)
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteStringValue(Error);
@@ -189,7 +189,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningComputeInstanceDataMount(source.Value, Optional.ToNullable(sourceType), mountName.Value, Optional.ToNullable(mountAction), createdBy.Value, mountPath.Value, Optional.ToNullable(mountState), Optional.ToNullable(mountedOn), error.Value, serializedAdditionalRawData);
+            return new MachineLearningComputeInstanceDataMount(
+                source.Value,
+                Optional.ToNullable(sourceType),
+                mountName.Value,
+                Optional.ToNullable(mountAction),
+                createdBy.Value,
+                mountPath.Value,
+                Optional.ToNullable(mountState),
+                Optional.ToNullable(mountedOn),
+                error.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningComputeInstanceDataMount>.Write(ModelReaderWriterOptions options)

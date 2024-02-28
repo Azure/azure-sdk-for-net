@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(StorageCapacityTiB))
+            if (StorageCapacityTiB.HasValue)
             {
                 writer.WritePropertyName("storageCapacityTiB"u8);
                 writer.WriteNumberValue(StorageCapacityTiB.Value);
             }
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     {
                         continue;
                     }
-                    sku = StorageCacheSkuName.DeserializeStorageCacheSkuName(property.Value);
+                    sku = StorageCacheSkuName.DeserializeStorageCacheSkuName(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

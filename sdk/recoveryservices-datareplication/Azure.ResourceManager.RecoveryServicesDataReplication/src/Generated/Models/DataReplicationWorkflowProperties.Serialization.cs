@@ -26,67 +26,67 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(DisplayName))
+            if (options.Format != "W" && DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W" && State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EndOn))
+            if (options.Format != "W" && EndOn.HasValue)
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ObjectId))
+            if (options.Format != "W" && ObjectId != null)
             {
                 writer.WritePropertyName("objectId"u8);
                 writer.WriteStringValue(ObjectId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ObjectName))
+            if (options.Format != "W" && ObjectName != null)
             {
                 writer.WritePropertyName("objectName"u8);
                 writer.WriteStringValue(ObjectName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ObjectInternalId))
+            if (options.Format != "W" && ObjectInternalId != null)
             {
                 writer.WritePropertyName("objectInternalId"u8);
                 writer.WriteStringValue(ObjectInternalId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ObjectInternalName))
+            if (options.Format != "W" && ObjectInternalName != null)
             {
                 writer.WritePropertyName("objectInternalName"u8);
                 writer.WriteStringValue(ObjectInternalName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ObjectType))
+            if (options.Format != "W" && ObjectType.HasValue)
             {
                 writer.WritePropertyName("objectType"u8);
                 writer.WriteStringValue(ObjectType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ReplicationProviderId))
+            if (options.Format != "W" && ReplicationProviderId != null)
             {
                 writer.WritePropertyName("replicationProviderId"u8);
                 writer.WriteStringValue(ReplicationProviderId);
             }
-            if (options.Format != "W" && Optional.IsDefined(SourceFabricProviderId))
+            if (options.Format != "W" && SourceFabricProviderId != null)
             {
                 writer.WritePropertyName("sourceFabricProviderId"u8);
                 writer.WriteStringValue(SourceFabricProviderId);
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetFabricProviderId))
+            if (options.Format != "W" && TargetFabricProviderId != null)
             {
                 writer.WritePropertyName("targetFabricProviderId"u8);
                 writer.WriteStringValue(TargetFabricProviderId);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AllowedActions))
+            if (options.Format != "W" && !(AllowedActions is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("allowedActions"u8);
                 writer.WriteStartArray();
@@ -96,12 +96,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ActivityId))
+            if (options.Format != "W" && ActivityId != null)
             {
                 writer.WritePropertyName("activityId"u8);
                 writer.WriteStringValue(ActivityId);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Tasks))
+            if (options.Format != "W" && !(Tasks is ChangeTrackingList<DataReplicationTask> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("tasks"u8);
                 writer.WriteStartArray();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Errors))
+            if (options.Format != "W" && !(Errors is ChangeTrackingList<DataReplicationErrorInfo> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
@@ -173,10 +173,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             Optional<string> replicationProviderId = default;
             Optional<string> sourceFabricProviderId = default;
             Optional<string> targetFabricProviderId = default;
-            Optional<IReadOnlyList<string>> allowedActions = default;
+            IReadOnlyList<string> allowedActions = default;
             Optional<string> activityId = default;
-            Optional<IReadOnlyList<DataReplicationTask>> tasks = default;
-            Optional<IReadOnlyList<DataReplicationErrorInfo>> errors = default;
+            IReadOnlyList<DataReplicationTask> tasks = default;
+            IReadOnlyList<DataReplicationErrorInfo> errors = default;
             WorkflowModelCustomProperties customProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     List<DataReplicationTask> array = new List<DataReplicationTask>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataReplicationTask.DeserializeDataReplicationTask(item));
+                        array.Add(DataReplicationTask.DeserializeDataReplicationTask(item, options));
                     }
                     tasks = array;
                     continue;
@@ -300,14 +300,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     List<DataReplicationErrorInfo> array = new List<DataReplicationErrorInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataReplicationErrorInfo.DeserializeDataReplicationErrorInfo(item));
+                        array.Add(DataReplicationErrorInfo.DeserializeDataReplicationErrorInfo(item, options));
                     }
                     errors = array;
                     continue;
                 }
                 if (property.NameEquals("customProperties"u8))
                 {
-                    customProperties = WorkflowModelCustomProperties.DeserializeWorkflowModelCustomProperties(property.Value);
+                    customProperties = WorkflowModelCustomProperties.DeserializeWorkflowModelCustomProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -316,7 +316,25 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataReplicationWorkflowProperties(displayName.Value, Optional.ToNullable(state), Optional.ToNullable(startTime), Optional.ToNullable(endTime), objectId.Value, objectName.Value, objectInternalId.Value, objectInternalName.Value, Optional.ToNullable(objectType), replicationProviderId.Value, sourceFabricProviderId.Value, targetFabricProviderId.Value, Optional.ToList(allowedActions), activityId.Value, Optional.ToList(tasks), Optional.ToList(errors), customProperties, serializedAdditionalRawData);
+            return new DataReplicationWorkflowProperties(
+                displayName.Value,
+                Optional.ToNullable(state),
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                objectId.Value,
+                objectName.Value,
+                objectInternalId.Value,
+                objectInternalName.Value,
+                Optional.ToNullable(objectType),
+                replicationProviderId.Value,
+                sourceFabricProviderId.Value,
+                targetFabricProviderId.Value,
+                allowedActions ?? new ChangeTrackingList<string>(),
+                activityId.Value,
+                tasks ?? new ChangeTrackingList<DataReplicationTask>(),
+                errors ?? new ChangeTrackingList<DataReplicationErrorInfo>(),
+                customProperties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataReplicationWorkflowProperties>.Write(ModelReaderWriterOptions options)

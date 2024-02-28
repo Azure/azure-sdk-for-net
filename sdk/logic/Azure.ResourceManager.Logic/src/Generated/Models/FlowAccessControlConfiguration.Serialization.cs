@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Triggers))
+            if (Triggers != null)
             {
                 writer.WritePropertyName("triggers"u8);
                 writer.WriteObjectValue(Triggers);
             }
-            if (Optional.IsDefined(Contents))
+            if (Contents != null)
             {
                 writer.WritePropertyName("contents"u8);
                 writer.WriteObjectValue(Contents);
             }
-            if (Optional.IsDefined(Actions))
+            if (Actions != null)
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteObjectValue(Actions);
             }
-            if (Optional.IsDefined(WorkflowManagement))
+            if (WorkflowManagement != null)
             {
                 writer.WritePropertyName("workflowManagement"u8);
                 writer.WriteObjectValue(WorkflowManagement);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    triggers = FlowAccessControlConfigurationPolicy.DeserializeFlowAccessControlConfigurationPolicy(property.Value);
+                    triggers = FlowAccessControlConfigurationPolicy.DeserializeFlowAccessControlConfigurationPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("contents"u8))
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    contents = FlowAccessControlConfigurationPolicy.DeserializeFlowAccessControlConfigurationPolicy(property.Value);
+                    contents = FlowAccessControlConfigurationPolicy.DeserializeFlowAccessControlConfigurationPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("actions"u8))
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    actions = FlowAccessControlConfigurationPolicy.DeserializeFlowAccessControlConfigurationPolicy(property.Value);
+                    actions = FlowAccessControlConfigurationPolicy.DeserializeFlowAccessControlConfigurationPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("workflowManagement"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    workflowManagement = FlowAccessControlConfigurationPolicy.DeserializeFlowAccessControlConfigurationPolicy(property.Value);
+                    workflowManagement = FlowAccessControlConfigurationPolicy.DeserializeFlowAccessControlConfigurationPolicy(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

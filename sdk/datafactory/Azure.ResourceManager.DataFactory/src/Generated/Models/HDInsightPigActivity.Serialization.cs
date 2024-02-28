@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(LinkedServiceName))
+            if (LinkedServiceName != null)
             {
                 writer.WritePropertyName("linkedServiceName"u8);
                 JsonSerializer.Serialize(writer, LinkedServiceName);
             }
-            if (Optional.IsDefined(Policy))
+            if (Policy != null)
             {
                 writer.WritePropertyName("policy"u8);
                 writer.WriteObjectValue(Policy);
@@ -41,22 +41,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ActivityType);
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(State))
+            if (State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(OnInactiveMarkAs))
+            if (OnInactiveMarkAs.HasValue)
             {
                 writer.WritePropertyName("onInactiveMarkAs"u8);
                 writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(DependsOn))
+            if (!(DependsOn is ChangeTrackingList<PipelineActivityDependency> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(UserProperties))
+            if (!(UserProperties is ChangeTrackingList<PipelineActivityUserProperty> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("userProperties"u8);
                 writer.WriteStartArray();
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(StorageLinkedServices))
+            if (!(StorageLinkedServices is ChangeTrackingList<DataFactoryLinkedServiceReference> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("storageLinkedServices"u8);
                 writer.WriteStartArray();
@@ -88,27 +88,27 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Arguments))
+            if (Arguments != null)
             {
                 writer.WritePropertyName("arguments"u8);
                 JsonSerializer.Serialize(writer, Arguments);
             }
-            if (Optional.IsDefined(GetDebugInfo))
+            if (GetDebugInfo.HasValue)
             {
                 writer.WritePropertyName("getDebugInfo"u8);
                 writer.WriteStringValue(GetDebugInfo.Value.ToString());
             }
-            if (Optional.IsDefined(ScriptPath))
+            if (ScriptPath != null)
             {
                 writer.WritePropertyName("scriptPath"u8);
                 JsonSerializer.Serialize(writer, ScriptPath);
             }
-            if (Optional.IsDefined(ScriptLinkedService))
+            if (ScriptLinkedService != null)
             {
                 writer.WritePropertyName("scriptLinkedService"u8);
                 JsonSerializer.Serialize(writer, ScriptLinkedService);
             }
-            if (Optional.IsCollectionDefined(Defines))
+            if (!(Defines is ChangeTrackingDictionary<string, BinaryData> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("defines"u8);
                 writer.WriteStartObject();
@@ -174,14 +174,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> description = default;
             Optional<PipelineActivityState> state = default;
             Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
-            Optional<IList<PipelineActivityDependency>> dependsOn = default;
-            Optional<IList<PipelineActivityUserProperty>> userProperties = default;
-            Optional<IList<DataFactoryLinkedServiceReference>> storageLinkedServices = default;
+            IList<PipelineActivityDependency> dependsOn = default;
+            IList<PipelineActivityUserProperty> userProperties = default;
+            IList<DataFactoryLinkedServiceReference> storageLinkedServices = default;
             Optional<DataFactoryElement<IList<string>>> arguments = default;
             Optional<HDInsightActivityDebugInfoOptionSetting> getDebugInfo = default;
             Optional<DataFactoryElement<string>> scriptPath = default;
             Optional<DataFactoryLinkedServiceReference> scriptLinkedService = default;
-            Optional<IDictionary<string, BinaryData>> defines = default;
+            IDictionary<string, BinaryData> defines = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    policy = PipelineActivityPolicy.DeserializePipelineActivityPolicy(property.Value);
+                    policy = PipelineActivityPolicy.DeserializePipelineActivityPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<PipelineActivityDependency> array = new List<PipelineActivityDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PipelineActivityDependency.DeserializePipelineActivityDependency(item));
+                        array.Add(PipelineActivityDependency.DeserializePipelineActivityDependency(item, options));
                     }
                     dependsOn = array;
                     continue;
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<PipelineActivityUserProperty> array = new List<PipelineActivityUserProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PipelineActivityUserProperty.DeserializePipelineActivityUserProperty(item));
+                        array.Add(PipelineActivityUserProperty.DeserializePipelineActivityUserProperty(item, options));
                     }
                     userProperties = array;
                     continue;
@@ -351,7 +351,23 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new HDInsightPigActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName, policy.Value, Optional.ToList(storageLinkedServices), arguments.Value, Optional.ToNullable(getDebugInfo), scriptPath.Value, scriptLinkedService, Optional.ToDictionary(defines));
+            return new HDInsightPigActivity(
+                name,
+                type,
+                description.Value,
+                Optional.ToNullable(state),
+                Optional.ToNullable(onInactiveMarkAs),
+                dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(),
+                additionalProperties,
+                linkedServiceName,
+                policy.Value,
+                storageLinkedServices ?? new ChangeTrackingList<DataFactoryLinkedServiceReference>(),
+                arguments.Value,
+                Optional.ToNullable(getDebugInfo),
+                scriptPath.Value,
+                scriptLinkedService,
+                defines ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
         BinaryData IPersistableModel<HDInsightPigActivity>.Write(ModelReaderWriterOptions options)

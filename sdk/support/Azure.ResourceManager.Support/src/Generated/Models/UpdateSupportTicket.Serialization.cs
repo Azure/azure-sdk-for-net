@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Support.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Severity))
+            if (Severity.HasValue)
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(ContactDetails))
+            if (ContactDetails != null)
             {
                 writer.WritePropertyName("contactDetails"u8);
                 writer.WriteObjectValue(ContactDetails);
             }
-            if (Optional.IsDefined(AdvancedDiagnosticConsent))
+            if (AdvancedDiagnosticConsent.HasValue)
             {
                 writer.WritePropertyName("advancedDiagnosticConsent"u8);
                 writer.WriteStringValue(AdvancedDiagnosticConsent.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(SecondaryConsent))
+            if (!(SecondaryConsent is ChangeTrackingList<SecondaryConsent> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("secondaryConsent"u8);
                 writer.WriteStartArray();
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Support.Models
             Optional<SupportTicketStatus> status = default;
             Optional<SupportContactProfileContent> contactDetails = default;
             Optional<AdvancedDiagnosticConsent> advancedDiagnosticConsent = default;
-            Optional<IList<SecondaryConsent>> secondaryConsent = default;
+            IList<SecondaryConsent> secondaryConsent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Support.Models
                     {
                         continue;
                     }
-                    contactDetails = SupportContactProfileContent.DeserializeSupportContactProfileContent(property.Value);
+                    contactDetails = SupportContactProfileContent.DeserializeSupportContactProfileContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("advancedDiagnosticConsent"u8))
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Support.Models
                     List<SecondaryConsent> array = new List<SecondaryConsent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.SecondaryConsent.DeserializeSecondaryConsent(item));
+                        array.Add(Models.SecondaryConsent.DeserializeSecondaryConsent(item, options));
                     }
                     secondaryConsent = array;
                     continue;
@@ -159,7 +159,13 @@ namespace Azure.ResourceManager.Support.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UpdateSupportTicket(Optional.ToNullable(severity), Optional.ToNullable(status), contactDetails.Value, Optional.ToNullable(advancedDiagnosticConsent), Optional.ToList(secondaryConsent), serializedAdditionalRawData);
+            return new UpdateSupportTicket(
+                Optional.ToNullable(severity),
+                Optional.ToNullable(status),
+                contactDetails.Value,
+                Optional.ToNullable(advancedDiagnosticConsent),
+                secondaryConsent ?? new ChangeTrackingList<SecondaryConsent>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UpdateSupportTicket>.Write(ModelReaderWriterOptions options)

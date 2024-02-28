@@ -77,7 +77,7 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 if (property.NameEquals("message_creation"u8))
                 {
-                    messageCreation = RunStepMessageCreationReference.DeserializeRunStepMessageCreationReference(property.Value);
+                    messageCreation = RunStepMessageCreationReference.DeserializeRunStepMessageCreationReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

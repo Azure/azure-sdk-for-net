@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Requests))
+            if (Requests != null)
             {
                 writer.WritePropertyName("requests"u8);
                 writer.WriteObjectValue(Requests);
             }
-            if (Optional.IsDefined(PrivateBytesInKB))
+            if (PrivateBytesInKB.HasValue)
             {
                 writer.WritePropertyName("privateBytesInKB"u8);
                 writer.WriteNumberValue(PrivateBytesInKB.Value);
             }
-            if (Optional.IsCollectionDefined(StatusCodes))
+            if (!(StatusCodes is ChangeTrackingList<StatusCodesBasedTrigger> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("statusCodes"u8);
                 writer.WriteStartArray();
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SlowRequests))
+            if (SlowRequests != null)
             {
                 writer.WritePropertyName("slowRequests"u8);
                 writer.WriteObjectValue(SlowRequests);
             }
-            if (Optional.IsCollectionDefined(SlowRequestsWithPath))
+            if (!(SlowRequestsWithPath is ChangeTrackingList<SlowRequestsBasedTrigger> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("slowRequestsWithPath"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(StatusCodesRange))
+            if (!(StatusCodesRange is ChangeTrackingList<StatusCodesRangeBasedTrigger> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("statusCodesRange"u8);
                 writer.WriteStartArray();
@@ -111,10 +111,10 @@ namespace Azure.ResourceManager.AppService.Models
             }
             Optional<RequestsBasedTrigger> requests = default;
             Optional<int> privateBytesInKB = default;
-            Optional<IList<StatusCodesBasedTrigger>> statusCodes = default;
+            IList<StatusCodesBasedTrigger> statusCodes = default;
             Optional<SlowRequestsBasedTrigger> slowRequests = default;
-            Optional<IList<SlowRequestsBasedTrigger>> slowRequestsWithPath = default;
-            Optional<IList<StatusCodesRangeBasedTrigger>> statusCodesRange = default;
+            IList<SlowRequestsBasedTrigger> slowRequestsWithPath = default;
+            IList<StatusCodesRangeBasedTrigger> statusCodesRange = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    requests = RequestsBasedTrigger.DeserializeRequestsBasedTrigger(property.Value);
+                    requests = RequestsBasedTrigger.DeserializeRequestsBasedTrigger(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("privateBytesInKB"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<StatusCodesBasedTrigger> array = new List<StatusCodesBasedTrigger>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StatusCodesBasedTrigger.DeserializeStatusCodesBasedTrigger(item));
+                        array.Add(StatusCodesBasedTrigger.DeserializeStatusCodesBasedTrigger(item, options));
                     }
                     statusCodes = array;
                     continue;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    slowRequests = SlowRequestsBasedTrigger.DeserializeSlowRequestsBasedTrigger(property.Value);
+                    slowRequests = SlowRequestsBasedTrigger.DeserializeSlowRequestsBasedTrigger(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("slowRequestsWithPath"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<SlowRequestsBasedTrigger> array = new List<SlowRequestsBasedTrigger>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SlowRequestsBasedTrigger.DeserializeSlowRequestsBasedTrigger(item));
+                        array.Add(SlowRequestsBasedTrigger.DeserializeSlowRequestsBasedTrigger(item, options));
                     }
                     slowRequestsWithPath = array;
                     continue;
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<StatusCodesRangeBasedTrigger> array = new List<StatusCodesRangeBasedTrigger>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StatusCodesRangeBasedTrigger.DeserializeStatusCodesRangeBasedTrigger(item));
+                        array.Add(StatusCodesRangeBasedTrigger.DeserializeStatusCodesRangeBasedTrigger(item, options));
                     }
                     statusCodesRange = array;
                     continue;
@@ -194,7 +194,14 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutoHealTriggers(requests.Value, Optional.ToNullable(privateBytesInKB), Optional.ToList(statusCodes), slowRequests.Value, Optional.ToList(slowRequestsWithPath), Optional.ToList(statusCodesRange), serializedAdditionalRawData);
+            return new AutoHealTriggers(
+                requests.Value,
+                Optional.ToNullable(privateBytesInKB),
+                statusCodes ?? new ChangeTrackingList<StatusCodesBasedTrigger>(),
+                slowRequests.Value,
+                slowRequestsWithPath ?? new ChangeTrackingList<SlowRequestsBasedTrigger>(),
+                statusCodesRange ?? new ChangeTrackingList<StatusCodesRangeBasedTrigger>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutoHealTriggers>.Write(ModelReaderWriterOptions options)

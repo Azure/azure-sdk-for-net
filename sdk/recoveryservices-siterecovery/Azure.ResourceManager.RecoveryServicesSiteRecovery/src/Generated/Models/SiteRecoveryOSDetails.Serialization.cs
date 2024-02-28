@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(OSType))
+            if (OSType != null)
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType);
             }
-            if (Optional.IsDefined(ProductType))
+            if (ProductType != null)
             {
                 writer.WritePropertyName("productType"u8);
                 writer.WriteStringValue(ProductType);
             }
-            if (Optional.IsDefined(OSEdition))
+            if (OSEdition != null)
             {
                 writer.WritePropertyName("osEdition"u8);
                 writer.WriteStringValue(OSEdition);
             }
-            if (Optional.IsDefined(OSVersion))
+            if (OSVersion != null)
             {
                 writer.WritePropertyName("oSVersion"u8);
                 writer.WriteStringValue(OSVersion);
             }
-            if (Optional.IsDefined(OSMajorVersion))
+            if (OSMajorVersion != null)
             {
                 writer.WritePropertyName("oSMajorVersion"u8);
                 writer.WriteStringValue(OSMajorVersion);
             }
-            if (Optional.IsDefined(OSMinorVersion))
+            if (OSMinorVersion != null)
             {
                 writer.WritePropertyName("oSMinorVersion"u8);
                 writer.WriteStringValue(OSMinorVersion);
@@ -140,7 +140,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryOSDetails(osType.Value, productType.Value, osEdition.Value, osVersion.Value, osMajorVersion.Value, osMinorVersion.Value, serializedAdditionalRawData);
+            return new SiteRecoveryOSDetails(
+                osType.Value,
+                productType.Value,
+                osEdition.Value,
+                osVersion.Value,
+                osMajorVersion.Value,
+                osMinorVersion.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryOSDetails>.Write(ModelReaderWriterOptions options)

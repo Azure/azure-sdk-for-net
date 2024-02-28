@@ -28,24 +28,24 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteStartObject();
             writer.WritePropertyName("taskId"u8);
             writer.WriteStringValue(TaskId);
-            if (Optional.IsDefined(OverrideTaskStepProperties))
+            if (OverrideTaskStepProperties != null)
             {
                 writer.WritePropertyName("overrideTaskStepProperties"u8);
                 writer.WriteObjectValue(OverrideTaskStepProperties);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(RunRequestType);
-            if (Optional.IsDefined(IsArchiveEnabled))
+            if (IsArchiveEnabled.HasValue)
             {
                 writer.WritePropertyName("isArchiveEnabled"u8);
                 writer.WriteBooleanValue(IsArchiveEnabled.Value);
             }
-            if (Optional.IsDefined(AgentPoolName))
+            if (AgentPoolName != null)
             {
                 writer.WritePropertyName("agentPoolName"u8);
                 writer.WriteStringValue(AgentPoolName);
             }
-            if (Optional.IsDefined(LogTemplate))
+            if (LogTemplate != null)
             {
                 writer.WritePropertyName("logTemplate"u8);
                 writer.WriteStringValue(LogTemplate);
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    overrideTaskStepProperties = ContainerRegistryOverrideTaskStepProperties.DeserializeContainerRegistryOverrideTaskStepProperties(property.Value);
+                    overrideTaskStepProperties = ContainerRegistryOverrideTaskStepProperties.DeserializeContainerRegistryOverrideTaskStepProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -142,7 +142,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryTaskRunContent(type, Optional.ToNullable(isArchiveEnabled), agentPoolName.Value, logTemplate.Value, serializedAdditionalRawData, taskId, overrideTaskStepProperties.Value);
+            return new ContainerRegistryTaskRunContent(
+                type,
+                Optional.ToNullable(isArchiveEnabled),
+                agentPoolName.Value,
+                logTemplate.Value,
+                serializedAdditionalRawData,
+                taskId,
+                overrideTaskStepProperties.Value);
         }
 
         BinaryData IPersistableModel<ContainerRegistryTaskRunContent>.Write(ModelReaderWriterOptions options)

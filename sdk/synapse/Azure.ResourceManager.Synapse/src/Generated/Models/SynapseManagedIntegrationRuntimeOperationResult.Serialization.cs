@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ManagedIntegrationRuntimeOperationResultType))
+            if (options.Format != "W" && ManagedIntegrationRuntimeOperationResultType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ManagedIntegrationRuntimeOperationResultType);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(Result))
+            if (options.Format != "W" && Result != null)
             {
                 writer.WritePropertyName("result"u8);
                 writer.WriteStringValue(Result);
             }
-            if (options.Format != "W" && Optional.IsDefined(ErrorCode))
+            if (options.Format != "W" && ErrorCode != null)
             {
                 writer.WritePropertyName("errorCode"u8);
                 writer.WriteStringValue(ErrorCode);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Parameters))
+            if (options.Format != "W" && !(Parameters is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ActivityId))
+            if (options.Format != "W" && ActivityId != null)
             {
                 writer.WritePropertyName("activityId"u8);
                 writer.WriteStringValue(ActivityId);
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Synapse.Models
             Optional<DateTimeOffset> startTime = default;
             Optional<string> result = default;
             Optional<string> errorCode = default;
-            Optional<IReadOnlyList<string>> parameters = default;
+            IReadOnlyList<string> parameters = default;
             Optional<string> activityId = default;
             IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -152,7 +152,14 @@ namespace Azure.ResourceManager.Synapse.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SynapseManagedIntegrationRuntimeOperationResult(type.Value, Optional.ToNullable(startTime), result.Value, errorCode.Value, Optional.ToList(parameters), activityId.Value, additionalProperties);
+            return new SynapseManagedIntegrationRuntimeOperationResult(
+                type.Value,
+                Optional.ToNullable(startTime),
+                result.Value,
+                errorCode.Value,
+                parameters ?? new ChangeTrackingList<string>(),
+                activityId.Value,
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<SynapseManagedIntegrationRuntimeOperationResult>.Write(ModelReaderWriterOptions options)

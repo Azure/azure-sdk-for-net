@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Zones))
+            if (!(Zones is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -50,12 +50,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(PlatformFaultDomainCount))
+            if (PlatformFaultDomainCount.HasValue)
             {
                 writer.WritePropertyName("platformFaultDomainCount"u8);
                 writer.WriteNumberValue(PlatformFaultDomainCount.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Hosts))
+            if (options.Format != "W" && !(Hosts is ChangeTrackingList<SubResource> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("hosts"u8);
                 writer.WriteStartArray();
@@ -65,17 +65,17 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(InstanceView))
+            if (options.Format != "W" && InstanceView != null)
             {
                 writer.WritePropertyName("instanceView"u8);
                 writer.WriteObjectValue(InstanceView);
             }
-            if (Optional.IsDefined(SupportAutomaticPlacement))
+            if (SupportAutomaticPlacement.HasValue)
             {
                 writer.WritePropertyName("supportAutomaticPlacement"u8);
                 writer.WriteBooleanValue(SupportAutomaticPlacement.Value);
             }
-            if (Optional.IsDefined(AdditionalCapabilities))
+            if (AdditionalCapabilities != null)
             {
                 writer.WritePropertyName("additionalCapabilities"u8);
                 writer.WriteObjectValue(AdditionalCapabilities);
@@ -119,10 +119,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IList<string>> zones = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IList<string> zones = default;
+            IDictionary<string, string> tags = default;
             Optional<int> platformFaultDomainCount = default;
-            Optional<IReadOnlyList<SubResource>> hosts = default;
+            IReadOnlyList<SubResource> hosts = default;
             Optional<DedicatedHostGroupInstanceView> instanceView = default;
             Optional<bool> supportAutomaticPlacement = default;
             Optional<DedicatedHostGroupPropertiesAdditionalCapabilities> additionalCapabilities = default;
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            instanceView = DedicatedHostGroupInstanceView.DeserializeDedicatedHostGroupInstanceView(property0.Value);
+                            instanceView = DedicatedHostGroupInstanceView.DeserializeDedicatedHostGroupInstanceView(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("supportAutomaticPlacement"u8))
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            additionalCapabilities = DedicatedHostGroupPropertiesAdditionalCapabilities.DeserializeDedicatedHostGroupPropertiesAdditionalCapabilities(property0.Value);
+                            additionalCapabilities = DedicatedHostGroupPropertiesAdditionalCapabilities.DeserializeDedicatedHostGroupPropertiesAdditionalCapabilities(property0.Value, options);
                             continue;
                         }
                     }
@@ -226,7 +226,15 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DedicatedHostGroupPatch(Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToList(zones), Optional.ToNullable(platformFaultDomainCount), Optional.ToList(hosts), instanceView.Value, Optional.ToNullable(supportAutomaticPlacement), additionalCapabilities.Value);
+            return new DedicatedHostGroupPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                zones ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(platformFaultDomainCount),
+                hosts ?? new ChangeTrackingList<SubResource>(),
+                instanceView.Value,
+                Optional.ToNullable(supportAutomaticPlacement),
+                additionalCapabilities.Value);
         }
 
         BinaryData IPersistableModel<DedicatedHostGroupPatch>.Write(ModelReaderWriterOptions options)

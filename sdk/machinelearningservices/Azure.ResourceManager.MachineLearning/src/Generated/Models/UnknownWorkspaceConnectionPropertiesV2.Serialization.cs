@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             writer.WritePropertyName("authType"u8);
             writer.WriteStringValue(AuthType.ToString());
-            if (Optional.IsDefined(Category))
+            if (Category.HasValue)
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category.Value.ToString());
             }
-            if (Optional.IsDefined(ExpiryOn))
+            if (ExpiryOn.HasValue)
             {
                 writer.WritePropertyName("expiryTime"u8);
                 writer.WriteStringValue(ExpiryOn.Value, "O");
             }
-            if (Optional.IsDefined(Metadata))
+            if (Metadata != null)
             {
                 writer.WritePropertyName("metadata"u8);
 #if NET6_0_OR_GREATER
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
 #endif
             }
-            if (Optional.IsDefined(Target))
+            if (Target != null)
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target);
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownWorkspaceConnectionPropertiesV2(document.RootElement, options);
+            return DeserializeMachineLearningWorkspaceConnectionProperties(document.RootElement, options);
         }
 
         internal static UnknownWorkspaceConnectionPropertiesV2 DeserializeUnknownWorkspaceConnectionPropertiesV2(JsonElement element, ModelReaderWriterOptions options = null)
@@ -145,7 +145,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownWorkspaceConnectionPropertiesV2(authType, Optional.ToNullable(category), Optional.ToNullable(expiryTime), metadata.Value, target.Value, serializedAdditionalRawData);
+            return new UnknownWorkspaceConnectionPropertiesV2(
+                authType,
+                Optional.ToNullable(category),
+                Optional.ToNullable(expiryTime),
+                metadata.Value,
+                target.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningWorkspaceConnectionProperties>.Write(ModelReaderWriterOptions options)
@@ -170,7 +176,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownWorkspaceConnectionPropertiesV2(document.RootElement, options);
+                        return DeserializeMachineLearningWorkspaceConnectionProperties(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningWorkspaceConnectionProperties)} does not support '{options.Format}' format.");

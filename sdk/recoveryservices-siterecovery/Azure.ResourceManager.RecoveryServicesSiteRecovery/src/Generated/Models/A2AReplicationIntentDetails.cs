@@ -19,7 +19,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryAvailabilityType"/> is null. </exception>
         internal A2AReplicationIntentDetails(string recoveryAvailabilityType)
         {
-            Argument.AssertNotNull(recoveryAvailabilityType, nameof(recoveryAvailabilityType));
+            if (recoveryAvailabilityType == null)
+            {
+                throw new ArgumentNullException(nameof(recoveryAvailabilityType));
+            }
 
             VmDisks = new ChangeTrackingList<A2AProtectionIntentDiskDetails>();
             VmManagedDisks = new ChangeTrackingList<A2AProtectionIntentManagedDiskDetails>();

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MaxRetries))
+            if (MaxRetries.HasValue)
             {
                 writer.WritePropertyName("maxRetries"u8);
                 writer.WriteNumberValue(MaxRetries.Value);
             }
-            if (Optional.IsDefined(Timeout))
+            if (Timeout.HasValue)
             {
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteStringValue(Timeout.Value, "P");

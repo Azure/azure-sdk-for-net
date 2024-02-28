@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AuthorizationEndpoint))
+            if (AuthorizationEndpoint != null)
             {
                 writer.WritePropertyName("authorizationEndpoint"u8);
                 writer.WriteStringValue(AuthorizationEndpoint);
             }
-            if (Optional.IsDefined(TokenEndpoint))
+            if (TokenEndpoint != null)
             {
                 writer.WritePropertyName("tokenEndpoint"u8);
                 writer.WriteStringValue(TokenEndpoint);
             }
-            if (Optional.IsDefined(Issuer))
+            if (Issuer != null)
             {
                 writer.WritePropertyName("issuer"u8);
                 writer.WriteStringValue(Issuer);
             }
-            if (Optional.IsDefined(CertificationUri))
+            if (CertificationUri != null)
             {
                 writer.WritePropertyName("certificationUri"u8);
                 writer.WriteStringValue(CertificationUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(WellKnownOpenIdConfiguration))
+            if (WellKnownOpenIdConfiguration != null)
             {
                 writer.WritePropertyName("wellKnownOpenIdConfiguration"u8);
                 writer.WriteStringValue(WellKnownOpenIdConfiguration);
@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OpenIdConnectConfig(authorizationEndpoint.Value, tokenEndpoint.Value, issuer.Value, certificationUri.Value, wellKnownOpenIdConfiguration.Value, serializedAdditionalRawData);
+            return new OpenIdConnectConfig(
+                authorizationEndpoint.Value,
+                tokenEndpoint.Value,
+                issuer.Value,
+                certificationUri.Value,
+                wellKnownOpenIdConfiguration.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OpenIdConnectConfig>.Write(ModelReaderWriterOptions options)

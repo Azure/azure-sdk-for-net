@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ChangeNumber))
+            if (options.Format != "W" && ChangeNumber != null)
             {
                 writer.WritePropertyName("changeNumber"u8);
                 writer.WriteStringValue(ChangeNumber);
             }
-            if (options.Format != "W" && Optional.IsDefined(Region))
+            if (options.Format != "W" && Region != null)
             {
                 writer.WritePropertyName("region"u8);
                 writer.WriteStringValue(Region);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemService))
+            if (options.Format != "W" && SystemService != null)
             {
                 writer.WritePropertyName("systemService"u8);
                 writer.WriteStringValue(SystemService);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AddressPrefixes))
+            if (options.Format != "W" && !(AddressPrefixes is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("addressPrefixes"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W" && State != null)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> changeNumber = default;
             Optional<string> region = default;
             Optional<string> systemService = default;
-            Optional<IReadOnlyList<string>> addressPrefixes = default;
+            IReadOnlyList<string> addressPrefixes = default;
             Optional<string> state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -143,7 +143,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceTagInformationPropertiesFormat(changeNumber.Value, region.Value, systemService.Value, Optional.ToList(addressPrefixes), state.Value, serializedAdditionalRawData);
+            return new ServiceTagInformationPropertiesFormat(
+                changeNumber.Value,
+                region.Value,
+                systemService.Value,
+                addressPrefixes ?? new ChangeTrackingList<string>(),
+                state.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceTagInformationPropertiesFormat>.Write(ModelReaderWriterOptions options)

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Nginx.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AccountName))
+            if (AccountName != null)
             {
                 writer.WritePropertyName("accountName"u8);
                 writer.WriteStringValue(AccountName);
             }
-            if (Optional.IsDefined(ContainerName))
+            if (ContainerName != null)
             {
                 writer.WritePropertyName("containerName"u8);
                 writer.WriteStringValue(ContainerName);

@@ -28,32 +28,32 @@ namespace Azure.ResourceManager.Subscription.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Workload))
+            if (Workload.HasValue)
             {
                 writer.WritePropertyName("workload"u8);
                 writer.WriteStringValue(Workload.Value.ToString());
             }
-            if (Optional.IsDefined(BillingScope))
+            if (BillingScope != null)
             {
                 writer.WritePropertyName("billingScope"u8);
                 writer.WriteStringValue(BillingScope);
             }
-            if (Optional.IsDefined(SubscriptionId))
+            if (SubscriptionId != null)
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (Optional.IsDefined(ResellerId))
+            if (ResellerId != null)
             {
                 writer.WritePropertyName("resellerId"u8);
                 writer.WriteStringValue(ResellerId);
             }
-            if (Optional.IsDefined(AdditionalProperties))
+            if (AdditionalProperties != null)
             {
                 writer.WritePropertyName("additionalProperties"u8);
                 writer.WriteObjectValue(AdditionalProperties);
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Subscription.Models
                             {
                                 continue;
                             }
-                            additionalProperties = SubscriptionAliasAdditionalProperties.DeserializeSubscriptionAliasAdditionalProperties(property0.Value);
+                            additionalProperties = SubscriptionAliasAdditionalProperties.DeserializeSubscriptionAliasAdditionalProperties(property0.Value, options);
                             continue;
                         }
                     }
@@ -163,7 +163,14 @@ namespace Azure.ResourceManager.Subscription.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubscriptionAliasCreateOrUpdateContent(displayName.Value, Optional.ToNullable(workload), billingScope.Value, subscriptionId.Value, resellerId.Value, additionalProperties.Value, serializedAdditionalRawData);
+            return new SubscriptionAliasCreateOrUpdateContent(
+                displayName.Value,
+                Optional.ToNullable(workload),
+                billingScope.Value,
+                subscriptionId.Value,
+                resellerId.Value,
+                additionalProperties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubscriptionAliasCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

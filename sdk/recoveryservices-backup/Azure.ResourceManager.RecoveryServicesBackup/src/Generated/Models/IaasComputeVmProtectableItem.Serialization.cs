@@ -26,39 +26,39 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(VirtualMachineId))
+            if (VirtualMachineId != null)
             {
                 writer.WritePropertyName("virtualMachineId"u8);
                 writer.WriteStringValue(VirtualMachineId);
             }
-            if (Optional.IsDefined(VirtualMachineVersion))
+            if (VirtualMachineVersion != null)
             {
                 writer.WritePropertyName("virtualMachineVersion"u8);
                 writer.WriteStringValue(VirtualMachineVersion);
             }
-            if (Optional.IsDefined(ResourceGroup))
+            if (ResourceGroup != null)
             {
                 writer.WritePropertyName("resourceGroup"u8);
                 writer.WriteStringValue(ResourceGroup);
             }
-            if (Optional.IsDefined(BackupManagementType))
+            if (BackupManagementType != null)
             {
                 writer.WritePropertyName("backupManagementType"u8);
                 writer.WriteStringValue(BackupManagementType);
             }
-            if (Optional.IsDefined(WorkloadType))
+            if (WorkloadType != null)
             {
                 writer.WritePropertyName("workloadType"u8);
                 writer.WriteStringValue(WorkloadType);
             }
             writer.WritePropertyName("protectableItemType"u8);
             writer.WriteStringValue(ProtectableItemType);
-            if (Optional.IsDefined(FriendlyName))
+            if (FriendlyName != null)
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Optional.IsDefined(ProtectionState))
+            if (ProtectionState.HasValue)
             {
                 writer.WritePropertyName("protectionState"u8);
                 writer.WriteStringValue(ProtectionState.Value.ToString());
@@ -167,7 +167,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IaasComputeVmProtectableItem(backupManagementType.Value, workloadType.Value, protectableItemType, friendlyName.Value, Optional.ToNullable(protectionState), serializedAdditionalRawData, virtualMachineId.Value, virtualMachineVersion.Value, resourceGroup.Value);
+            return new IaasComputeVmProtectableItem(
+                backupManagementType.Value,
+                workloadType.Value,
+                protectableItemType,
+                friendlyName.Value,
+                Optional.ToNullable(protectionState),
+                serializedAdditionalRawData,
+                virtualMachineId.Value,
+                virtualMachineVersion.Value,
+                resourceGroup.Value);
         }
 
         BinaryData IPersistableModel<IaasComputeVmProtectableItem>.Write(ModelReaderWriterOptions options)

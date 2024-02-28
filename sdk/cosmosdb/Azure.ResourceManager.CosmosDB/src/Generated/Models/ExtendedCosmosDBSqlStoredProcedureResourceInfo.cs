@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure;
-using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -20,7 +19,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <exception cref="ArgumentNullException"> <paramref name="storedProcedureName"/> is null. </exception>
         public ExtendedCosmosDBSqlStoredProcedureResourceInfo(string storedProcedureName) : base(storedProcedureName)
         {
-            Argument.AssertNotNull(storedProcedureName, nameof(storedProcedureName));
+            if (storedProcedureName == null)
+            {
+                throw new ArgumentNullException(nameof(storedProcedureName));
+            }
         }
 
         /// <summary> Initializes a new instance of <see cref="ExtendedCosmosDBSqlStoredProcedureResourceInfo"/>. </summary>

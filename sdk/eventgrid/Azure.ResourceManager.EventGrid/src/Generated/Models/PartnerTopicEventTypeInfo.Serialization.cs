@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind.HasValue)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(InlineEventTypes))
+            if (!(InlineEventTypes is ChangeTrackingDictionary<string, InlineEventProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("inlineEventTypes"u8);
                 writer.WriteStartObject();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 return null;
             }
             Optional<EventDefinitionKind> kind = default;
-            Optional<IDictionary<string, InlineEventProperties>> inlineEventTypes = default;
+            IDictionary<string, InlineEventProperties> inlineEventTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     Dictionary<string, InlineEventProperties> dictionary = new Dictionary<string, InlineEventProperties>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, InlineEventProperties.DeserializeInlineEventProperties(property0.Value));
+                        dictionary.Add(property0.Name, InlineEventProperties.DeserializeInlineEventProperties(property0.Value, options));
                     }
                     inlineEventTypes = dictionary;
                     continue;
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PartnerTopicEventTypeInfo(Optional.ToNullable(kind), Optional.ToDictionary(inlineEventTypes), serializedAdditionalRawData);
+            return new PartnerTopicEventTypeInfo(Optional.ToNullable(kind), inlineEventTypes ?? new ChangeTrackingDictionary<string, InlineEventProperties>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PartnerTopicEventTypeInfo>.Write(ModelReaderWriterOptions options)

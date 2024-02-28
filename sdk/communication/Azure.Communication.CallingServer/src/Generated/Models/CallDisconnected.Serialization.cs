@@ -73,7 +73,15 @@ namespace Azure.Communication.CallingServer
                     continue;
                 }
             }
-            return new CallDisconnected(eventSource.Value, version.Value, operationContext.Value, resultInformation.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value, publicEventType.Value);
+            return new CallDisconnected(
+                eventSource.Value,
+                version.Value,
+                operationContext.Value,
+                resultInformation.Value,
+                callConnectionId.Value,
+                serverCallId.Value,
+                correlationId.Value,
+                publicEventType.Value);
         }
     }
 }

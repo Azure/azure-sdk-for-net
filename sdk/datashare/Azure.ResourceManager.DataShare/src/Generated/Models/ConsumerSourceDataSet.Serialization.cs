@@ -42,34 +42,34 @@ namespace Azure.ResourceManager.DataShare.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(DataSetId))
+            if (options.Format != "W" && DataSetId.HasValue)
             {
                 writer.WritePropertyName("dataSetId"u8);
                 writer.WriteStringValue(DataSetId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(DataSetLocation))
+            if (options.Format != "W" && DataSetLocation.HasValue)
             {
                 writer.WritePropertyName("dataSetLocation"u8);
                 writer.WriteStringValue(DataSetLocation.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(DataSetName))
+            if (options.Format != "W" && DataSetName != null)
             {
                 writer.WritePropertyName("dataSetName"u8);
                 writer.WriteStringValue(DataSetName);
             }
-            if (options.Format != "W" && Optional.IsDefined(DataSetPath))
+            if (options.Format != "W" && DataSetPath != null)
             {
                 writer.WritePropertyName("dataSetPath"u8);
                 writer.WriteStringValue(DataSetPath);
             }
-            if (options.Format != "W" && Optional.IsDefined(DataSetType))
+            if (options.Format != "W" && DataSetType.HasValue)
             {
                 writer.WritePropertyName("dataSetType"u8);
                 writer.WriteStringValue(DataSetType.Value.ToString());
@@ -205,7 +205,17 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumerSourceDataSet(id, name, type, systemData.Value, Optional.ToNullable(dataSetId), Optional.ToNullable(dataSetLocation), dataSetName.Value, dataSetPath.Value, Optional.ToNullable(dataSetType), serializedAdditionalRawData);
+            return new ConsumerSourceDataSet(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(dataSetId),
+                Optional.ToNullable(dataSetLocation),
+                dataSetName.Value,
+                dataSetPath.Value,
+                Optional.ToNullable(dataSetType),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumerSourceDataSet>.Write(ModelReaderWriterOptions options)

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TokenId))
+            if (TokenId != null)
             {
                 writer.WritePropertyName("tokenId"u8);
                 writer.WriteStringValue(TokenId);
             }
-            if (Optional.IsDefined(ExpireOn))
+            if (ExpireOn.HasValue)
             {
                 writer.WritePropertyName("expiry"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (Optional.IsDefined(Name))
+            if (Name.HasValue)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name.Value.ToString());

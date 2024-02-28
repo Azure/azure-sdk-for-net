@@ -58,7 +58,13 @@ namespace Azure.AI.TextAnalytics.Legacy
                     continue;
                 }
             }
-            return new HealthcareEntityProperties(text, category, subcategory.Value, offset, length, confidenceScore);
+            return new HealthcareEntityProperties(
+                text,
+                category,
+                subcategory.Value,
+                offset,
+                length,
+                confidenceScore);
         }
     }
 }

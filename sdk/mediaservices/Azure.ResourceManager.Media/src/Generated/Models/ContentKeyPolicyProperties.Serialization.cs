@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(PolicyId))
+            if (options.Format != "W" && PolicyId.HasValue)
             {
                 writer.WritePropertyName("policyId"u8);
                 writer.WriteStringValue(PolicyId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
+            if (options.Format != "W" && LastModifiedOn.HasValue)
             {
                 writer.WritePropertyName("lastModified"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<ContentKeyPolicyOption> array = new List<ContentKeyPolicyOption>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContentKeyPolicyOption.DeserializeContentKeyPolicyOption(item));
+                        array.Add(ContentKeyPolicyOption.DeserializeContentKeyPolicyOption(item, options));
                     }
                     options0 = array;
                     continue;
@@ -148,7 +148,13 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContentKeyPolicyProperties(Optional.ToNullable(policyId), Optional.ToNullable(created), Optional.ToNullable(lastModified), description.Value, options0, serializedAdditionalRawData);
+            return new ContentKeyPolicyProperties(
+                Optional.ToNullable(policyId),
+                Optional.ToNullable(created),
+                Optional.ToNullable(lastModified),
+                description.Value,
+                options0,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContentKeyPolicyProperties>.Write(ModelReaderWriterOptions options)

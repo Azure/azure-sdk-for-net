@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(BillingAccountId))
+            if (BillingAccountId != null)
             {
                 writer.WritePropertyName("billingAccountId"u8);
                 writer.WriteStringValue(BillingAccountId);
             }
-            if (Optional.IsDefined(BillingProfileId))
+            if (BillingProfileId != null)
             {
                 writer.WritePropertyName("billingProfileId"u8);
                 writer.WriteStringValue(BillingProfileId);
             }
-            if (Optional.IsDefined(BenefitOrderId))
+            if (BenefitOrderId != null)
             {
                 writer.WritePropertyName("benefitOrderId"u8);
                 writer.WriteStringValue(BenefitOrderId);
             }
-            if (Optional.IsDefined(BenefitId))
+            if (BenefitId != null)
             {
                 writer.WritePropertyName("benefitId"u8);
                 writer.WriteStringValue(BenefitId);
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             writer.WriteStringValue(StartOn, "O");
             writer.WritePropertyName("endDate"u8);
             writer.WriteStringValue(EndOn, "O");
-            if (Optional.IsDefined(Kind))
+            if (Kind.HasValue)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
@@ -157,7 +157,16 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BenefitUtilizationSummariesContent(billingAccountId.Value, billingProfileId.Value, benefitOrderId.Value, benefitId.Value, grain, startDate, endDate, Optional.ToNullable(kind), serializedAdditionalRawData);
+            return new BenefitUtilizationSummariesContent(
+                billingAccountId.Value,
+                billingProfileId.Value,
+                benefitOrderId.Value,
+                benefitId.Value,
+                grain,
+                startDate,
+                endDate,
+                Optional.ToNullable(kind),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BenefitUtilizationSummariesContent>.Write(ModelReaderWriterOptions options)

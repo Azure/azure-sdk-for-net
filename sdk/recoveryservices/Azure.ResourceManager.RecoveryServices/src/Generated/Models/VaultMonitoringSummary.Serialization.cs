@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(UnHealthyVmCount))
+            if (UnHealthyVmCount.HasValue)
             {
                 writer.WritePropertyName("unHealthyVmCount"u8);
                 writer.WriteNumberValue(UnHealthyVmCount.Value);
             }
-            if (Optional.IsDefined(UnHealthyProviderCount))
+            if (UnHealthyProviderCount.HasValue)
             {
                 writer.WritePropertyName("unHealthyProviderCount"u8);
                 writer.WriteNumberValue(UnHealthyProviderCount.Value);
             }
-            if (Optional.IsDefined(EventsCount))
+            if (EventsCount.HasValue)
             {
                 writer.WritePropertyName("eventsCount"u8);
                 writer.WriteNumberValue(EventsCount.Value);
             }
-            if (Optional.IsDefined(DeprecatedProviderCount))
+            if (DeprecatedProviderCount.HasValue)
             {
                 writer.WritePropertyName("deprecatedProviderCount"u8);
                 writer.WriteNumberValue(DeprecatedProviderCount.Value);
             }
-            if (Optional.IsDefined(SupportedProviderCount))
+            if (SupportedProviderCount.HasValue)
             {
                 writer.WritePropertyName("supportedProviderCount"u8);
                 writer.WriteNumberValue(SupportedProviderCount.Value);
             }
-            if (Optional.IsDefined(UnsupportedProviderCount))
+            if (UnsupportedProviderCount.HasValue)
             {
                 writer.WritePropertyName("unsupportedProviderCount"u8);
                 writer.WriteNumberValue(UnsupportedProviderCount.Value);
@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VaultMonitoringSummary(Optional.ToNullable(unHealthyVmCount), Optional.ToNullable(unHealthyProviderCount), Optional.ToNullable(eventsCount), Optional.ToNullable(deprecatedProviderCount), Optional.ToNullable(supportedProviderCount), Optional.ToNullable(unsupportedProviderCount), serializedAdditionalRawData);
+            return new VaultMonitoringSummary(
+                Optional.ToNullable(unHealthyVmCount),
+                Optional.ToNullable(unHealthyProviderCount),
+                Optional.ToNullable(eventsCount),
+                Optional.ToNullable(deprecatedProviderCount),
+                Optional.ToNullable(supportedProviderCount),
+                Optional.ToNullable(unsupportedProviderCount),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VaultMonitoringSummary>.Write(ModelReaderWriterOptions options)

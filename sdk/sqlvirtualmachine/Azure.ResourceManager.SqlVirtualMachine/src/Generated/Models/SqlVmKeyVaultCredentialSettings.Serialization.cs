@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsEnabled))
+            if (IsEnabled.HasValue)
             {
                 writer.WritePropertyName("enable"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(CredentialName))
+            if (CredentialName != null)
             {
                 writer.WritePropertyName("credentialName"u8);
                 writer.WriteStringValue(CredentialName);
             }
-            if (Optional.IsDefined(AzureKeyVaultUri))
+            if (AzureKeyVaultUri != null)
             {
                 writer.WritePropertyName("azureKeyVaultUrl"u8);
                 writer.WriteStringValue(AzureKeyVaultUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ServicePrincipalName))
+            if (ServicePrincipalName != null)
             {
                 writer.WritePropertyName("servicePrincipalName"u8);
                 writer.WriteStringValue(ServicePrincipalName);
             }
-            if (Optional.IsDefined(ServicePrincipalSecret))
+            if (ServicePrincipalSecret != null)
             {
                 writer.WritePropertyName("servicePrincipalSecret"u8);
                 writer.WriteStringValue(ServicePrincipalSecret);
@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlVmKeyVaultCredentialSettings(Optional.ToNullable(enable), credentialName.Value, azureKeyVaultUrl.Value, servicePrincipalName.Value, servicePrincipalSecret.Value, serializedAdditionalRawData);
+            return new SqlVmKeyVaultCredentialSettings(
+                Optional.ToNullable(enable),
+                credentialName.Value,
+                azureKeyVaultUrl.Value,
+                servicePrincipalName.Value,
+                servicePrincipalSecret.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlVmKeyVaultCredentialSettings>.Write(ModelReaderWriterOptions options)

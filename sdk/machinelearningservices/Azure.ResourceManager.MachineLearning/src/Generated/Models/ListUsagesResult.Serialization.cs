@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<MachineLearningUsage> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MachineLearningUsage>> value = default;
+            IReadOnlyList<MachineLearningUsage> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningUsage> array = new List<MachineLearningUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningUsage.DeserializeMachineLearningUsage(item));
+                        array.Add(MachineLearningUsage.DeserializeMachineLearningUsage(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ListUsagesResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ListUsagesResult(value ?? new ChangeTrackingList<MachineLearningUsage>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ListUsagesResult>.Write(ModelReaderWriterOptions options)

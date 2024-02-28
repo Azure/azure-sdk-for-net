@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.Peering.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Prefix))
+            if (options.Format != "W" && Prefix != null)
             {
                 writer.WritePropertyName("prefix"u8);
                 writer.WriteStringValue(Prefix);
             }
-            if (options.Format != "W" && Optional.IsDefined(NextHop))
+            if (options.Format != "W" && NextHop != null)
             {
                 writer.WritePropertyName("nextHop"u8);
                 writer.WriteStringValue(NextHop);
             }
-            if (options.Format != "W" && Optional.IsDefined(AsPath))
+            if (options.Format != "W" && AsPath != null)
             {
                 writer.WritePropertyName("asPath"u8);
                 writer.WriteStringValue(AsPath);
             }
-            if (options.Format != "W" && Optional.IsDefined(OriginAsValidationState))
+            if (options.Format != "W" && OriginAsValidationState != null)
             {
                 writer.WritePropertyName("originAsValidationState"u8);
                 writer.WriteStringValue(OriginAsValidationState);
             }
-            if (options.Format != "W" && Optional.IsDefined(RpkiValidationState))
+            if (options.Format != "W" && RpkiValidationState != null)
             {
                 writer.WritePropertyName("rpkiValidationState"u8);
                 writer.WriteStringValue(RpkiValidationState);
             }
-            if (options.Format != "W" && Optional.IsDefined(TrustAnchor))
+            if (options.Format != "W" && TrustAnchor != null)
             {
                 writer.WritePropertyName("trustAnchor"u8);
                 writer.WriteStringValue(TrustAnchor);
             }
-            if (options.Format != "W" && Optional.IsDefined(ReceivedTimestamp))
+            if (options.Format != "W" && ReceivedTimestamp != null)
             {
                 writer.WritePropertyName("receivedTimestamp"u8);
                 writer.WriteStringValue(ReceivedTimestamp);
@@ -151,7 +151,15 @@ namespace Azure.ResourceManager.Peering.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PeeringReceivedRoute(prefix.Value, nextHop.Value, asPath.Value, originAsValidationState.Value, rpkiValidationState.Value, trustAnchor.Value, receivedTimestamp.Value, serializedAdditionalRawData);
+            return new PeeringReceivedRoute(
+                prefix.Value,
+                nextHop.Value,
+                asPath.Value,
+                originAsValidationState.Value,
+                rpkiValidationState.Value,
+                trustAnchor.Value,
+                receivedTimestamp.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PeeringReceivedRoute>.Write(ModelReaderWriterOptions options)

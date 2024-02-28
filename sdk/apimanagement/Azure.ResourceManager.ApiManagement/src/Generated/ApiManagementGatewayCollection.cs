@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayId"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ApiManagementGatewayResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string gatewayId, ApiManagementGatewayData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(gatewayId, nameof(gatewayId));
-            Argument.AssertNotNull(data, nameof(data));
+            if (gatewayId == null)
+            {
+                throw new ArgumentNullException(nameof(gatewayId));
+            }
+            if (gatewayId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(gatewayId));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _apiManagementGatewayGatewayClientDiagnostics.CreateScope("ApiManagementGatewayCollection.CreateOrUpdate");
             scope.Start();
@@ -133,8 +143,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayId"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ApiManagementGatewayResource> CreateOrUpdate(WaitUntil waitUntil, string gatewayId, ApiManagementGatewayData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(gatewayId, nameof(gatewayId));
-            Argument.AssertNotNull(data, nameof(data));
+            if (gatewayId == null)
+            {
+                throw new ArgumentNullException(nameof(gatewayId));
+            }
+            if (gatewayId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(gatewayId));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _apiManagementGatewayGatewayClientDiagnostics.CreateScope("ApiManagementGatewayCollection.CreateOrUpdate");
             scope.Start();
@@ -180,7 +200,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayId"/> is null. </exception>
         public virtual async Task<Response<ApiManagementGatewayResource>> GetAsync(string gatewayId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(gatewayId, nameof(gatewayId));
+            if (gatewayId == null)
+            {
+                throw new ArgumentNullException(nameof(gatewayId));
+            }
+            if (gatewayId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(gatewayId));
+            }
 
             using var scope = _apiManagementGatewayGatewayClientDiagnostics.CreateScope("ApiManagementGatewayCollection.Get");
             scope.Start();
@@ -225,7 +252,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayId"/> is null. </exception>
         public virtual Response<ApiManagementGatewayResource> Get(string gatewayId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(gatewayId, nameof(gatewayId));
+            if (gatewayId == null)
+            {
+                throw new ArgumentNullException(nameof(gatewayId));
+            }
+            if (gatewayId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(gatewayId));
+            }
 
             using var scope = _apiManagementGatewayGatewayClientDiagnostics.CreateScope("ApiManagementGatewayCollection.Get");
             scope.Start();
@@ -336,7 +370,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string gatewayId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(gatewayId, nameof(gatewayId));
+            if (gatewayId == null)
+            {
+                throw new ArgumentNullException(nameof(gatewayId));
+            }
+            if (gatewayId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(gatewayId));
+            }
 
             using var scope = _apiManagementGatewayGatewayClientDiagnostics.CreateScope("ApiManagementGatewayCollection.Exists");
             scope.Start();
@@ -379,7 +420,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayId"/> is null. </exception>
         public virtual Response<bool> Exists(string gatewayId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(gatewayId, nameof(gatewayId));
+            if (gatewayId == null)
+            {
+                throw new ArgumentNullException(nameof(gatewayId));
+            }
+            if (gatewayId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(gatewayId));
+            }
 
             using var scope = _apiManagementGatewayGatewayClientDiagnostics.CreateScope("ApiManagementGatewayCollection.Exists");
             scope.Start();
@@ -422,7 +470,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayId"/> is null. </exception>
         public virtual async Task<NullableResponse<ApiManagementGatewayResource>> GetIfExistsAsync(string gatewayId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(gatewayId, nameof(gatewayId));
+            if (gatewayId == null)
+            {
+                throw new ArgumentNullException(nameof(gatewayId));
+            }
+            if (gatewayId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(gatewayId));
+            }
 
             using var scope = _apiManagementGatewayGatewayClientDiagnostics.CreateScope("ApiManagementGatewayCollection.GetIfExists");
             scope.Start();
@@ -467,7 +522,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayId"/> is null. </exception>
         public virtual NullableResponse<ApiManagementGatewayResource> GetIfExists(string gatewayId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(gatewayId, nameof(gatewayId));
+            if (gatewayId == null)
+            {
+                throw new ArgumentNullException(nameof(gatewayId));
+            }
+            if (gatewayId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(gatewayId));
+            }
 
             using var scope = _apiManagementGatewayGatewayClientDiagnostics.CreateScope("ApiManagementGatewayCollection.GetIfExists");
             scope.Start();

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(SourceKind))
+            if (SourceKind.HasValue)
             {
                 if (SourceKind != null)
                 {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("sourceKind");
                 }
             }
-            if (Optional.IsDefined(Suspend))
+            if (Suspend.HasValue)
             {
                 if (Suspend != null)
                 {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("suspend");
                 }
             }
-            if (Optional.IsDefined(GitRepository))
+            if (GitRepository != null)
             {
                 if (GitRepository != null)
                 {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("gitRepository");
                 }
             }
-            if (Optional.IsDefined(Bucket))
+            if (Bucket != null)
             {
                 if (Bucket != null)
                 {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("bucket");
                 }
             }
-            if (Optional.IsDefined(AzureBlob))
+            if (AzureBlob != null)
             {
                 if (AzureBlob != null)
                 {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("azureBlob");
                 }
             }
-            if (Optional.IsCollectionDefined(Kustomizations))
+            if (!(Kustomizations is ChangeTrackingDictionary<string, KustomizationUpdateContent> collection && collection.IsUndefined))
             {
                 if (Kustomizations != null)
                 {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("kustomizations");
                 }
             }
-            if (Optional.IsCollectionDefined(ConfigurationProtectedSettings))
+            if (!(ConfigurationProtectedSettings is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 if (ConfigurationProtectedSettings != null)
                 {
@@ -168,8 +168,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             Optional<KubernetesGitRepositoryUpdateContent> gitRepository = default;
             Optional<KubernetesBucketUpdateContent> bucket = default;
             Optional<KubernetesAzureBlobUpdateContent> azureBlob = default;
-            Optional<IDictionary<string, KustomizationUpdateContent>> kustomizations = default;
-            Optional<IDictionary<string, string>> configurationProtectedSettings = default;
+            IDictionary<string, KustomizationUpdateContent> kustomizations = default;
+            IDictionary<string, string> configurationProtectedSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                                 gitRepository = null;
                                 continue;
                             }
-                            gitRepository = KubernetesGitRepositoryUpdateContent.DeserializeKubernetesGitRepositoryUpdateContent(property0.Value);
+                            gitRepository = KubernetesGitRepositoryUpdateContent.DeserializeKubernetesGitRepositoryUpdateContent(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("bucket"u8))
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                                 bucket = null;
                                 continue;
                             }
-                            bucket = KubernetesBucketUpdateContent.DeserializeKubernetesBucketUpdateContent(property0.Value);
+                            bucket = KubernetesBucketUpdateContent.DeserializeKubernetesBucketUpdateContent(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("azureBlob"u8))
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                                 azureBlob = null;
                                 continue;
                             }
-                            azureBlob = KubernetesAzureBlobUpdateContent.DeserializeKubernetesAzureBlobUpdateContent(property0.Value);
+                            azureBlob = KubernetesAzureBlobUpdateContent.DeserializeKubernetesAzureBlobUpdateContent(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("kustomizations"u8))
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                             Dictionary<string, KustomizationUpdateContent> dictionary = new Dictionary<string, KustomizationUpdateContent>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, KustomizationUpdateContent.DeserializeKustomizationUpdateContent(property1.Value));
+                                dictionary.Add(property1.Name, KustomizationUpdateContent.DeserializeKustomizationUpdateContent(property1.Value, options));
                             }
                             kustomizations = dictionary;
                             continue;
@@ -272,7 +272,15 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesFluxConfigurationPatch(Optional.ToNullable(sourceKind), Optional.ToNullable(suspend), gitRepository.Value, bucket.Value, azureBlob.Value, Optional.ToDictionary(kustomizations), Optional.ToDictionary(configurationProtectedSettings), serializedAdditionalRawData);
+            return new KubernetesFluxConfigurationPatch(
+                Optional.ToNullable(sourceKind),
+                Optional.ToNullable(suspend),
+                gitRepository.Value,
+                bucket.Value,
+                azureBlob.Value,
+                kustomizations ?? new ChangeTrackingDictionary<string, KustomizationUpdateContent>(),
+                configurationProtectedSettings ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesFluxConfigurationPatch>.Write(ModelReaderWriterOptions options)

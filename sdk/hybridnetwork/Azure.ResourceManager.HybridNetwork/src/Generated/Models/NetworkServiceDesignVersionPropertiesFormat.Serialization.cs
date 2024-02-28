@@ -27,22 +27,22 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(VersionState))
+            if (options.Format != "W" && VersionState.HasValue)
             {
                 writer.WritePropertyName("versionState"u8);
                 writer.WriteStringValue(VersionState.Value.ToString());
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(ConfigurationGroupSchemaReferences))
+            if (!(ConfigurationGroupSchemaReferences is ChangeTrackingDictionary<string, WritableSubResource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("configurationGroupSchemaReferences"u8);
                 writer.WriteStartObject();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(NfvisFromSite))
+            if (!(NfvisFromSite is ChangeTrackingDictionary<string, NfviDetails> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("nfvisFromSite"u8);
                 writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(ResourceElementTemplates))
+            if (!(ResourceElementTemplates is ChangeTrackingList<ResourceElementTemplate> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("resourceElementTemplates"u8);
                 writer.WriteStartArray();
@@ -115,9 +115,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             Optional<ProvisioningState> provisioningState = default;
             Optional<VersionState> versionState = default;
             Optional<string> description = default;
-            Optional<IDictionary<string, WritableSubResource>> configurationGroupSchemaReferences = default;
-            Optional<IDictionary<string, NfviDetails>> nfvisFromSite = default;
-            Optional<IList<ResourceElementTemplate>> resourceElementTemplates = default;
+            IDictionary<string, WritableSubResource> configurationGroupSchemaReferences = default;
+            IDictionary<string, NfviDetails> nfvisFromSite = default;
+            IList<ResourceElementTemplate> resourceElementTemplates = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     Dictionary<string, NfviDetails> dictionary = new Dictionary<string, NfviDetails>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, NfviDetails.DeserializeNfviDetails(property0.Value));
+                        dictionary.Add(property0.Name, NfviDetails.DeserializeNfviDetails(property0.Value, options));
                     }
                     nfvisFromSite = dictionary;
                     continue;
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     List<ResourceElementTemplate> array = new List<ResourceElementTemplate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceElementTemplate.DeserializeResourceElementTemplate(item));
+                        array.Add(ResourceElementTemplate.DeserializeResourceElementTemplate(item, options));
                     }
                     resourceElementTemplates = array;
                     continue;
@@ -193,7 +193,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkServiceDesignVersionPropertiesFormat(Optional.ToNullable(provisioningState), Optional.ToNullable(versionState), description.Value, Optional.ToDictionary(configurationGroupSchemaReferences), Optional.ToDictionary(nfvisFromSite), Optional.ToList(resourceElementTemplates), serializedAdditionalRawData);
+            return new NetworkServiceDesignVersionPropertiesFormat(
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(versionState),
+                description.Value,
+                configurationGroupSchemaReferences ?? new ChangeTrackingDictionary<string, WritableSubResource>(),
+                nfvisFromSite ?? new ChangeTrackingDictionary<string, NfviDetails>(),
+                resourceElementTemplates ?? new ChangeTrackingList<ResourceElementTemplate>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkServiceDesignVersionPropertiesFormat>.Write(ModelReaderWriterOptions options)

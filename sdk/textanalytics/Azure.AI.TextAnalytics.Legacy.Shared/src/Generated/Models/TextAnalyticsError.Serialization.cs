@@ -24,7 +24,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             string message = default;
             Optional<string> target = default;
             Optional<InnerError> innererror = default;
-            Optional<IReadOnlyList<TextAnalyticsError>> details = default;
+            IReadOnlyList<TextAnalyticsError> details = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -66,7 +66,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                     continue;
                 }
             }
-            return new TextAnalyticsError(code, message, target.Value, innererror.Value, Optional.ToList(details));
+            return new TextAnalyticsError(code, message, target.Value, innererror.Value, details ?? new ChangeTrackingList<TextAnalyticsError>());
         }
     }
 }

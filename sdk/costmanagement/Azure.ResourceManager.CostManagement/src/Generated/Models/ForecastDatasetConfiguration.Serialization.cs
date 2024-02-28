@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Columns))
+            if (!(Columns is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("columns"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<IList<string>> columns = default;
+            IList<string> columns = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ForecastDatasetConfiguration(Optional.ToList(columns), serializedAdditionalRawData);
+            return new ForecastDatasetConfiguration(columns ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ForecastDatasetConfiguration>.Write(ModelReaderWriterOptions options)

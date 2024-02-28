@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningStatusMessage))
+            if (options.Format != "W" && ProvisioningStatusMessage != null)
             {
                 writer.WritePropertyName("provisioningStatusMessage"u8);
                 writer.WriteStringValue(ProvisioningStatusMessage);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningStatusUpdateTimeUtc))
+            if (options.Format != "W" && ProvisioningStatusUpdateTimeUtc.HasValue)
             {
                 writer.WritePropertyName("provisioningStatusUpdateTimeUtc"u8);
                 writer.WriteStringValue(ProvisioningStatusUpdateTimeUtc.Value, "O");
             }
-            if (Optional.IsDefined(ProvisioningState))
+            if (ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(FullyQualifiedName))
+            if (options.Format != "W" && FullyQualifiedName != null)
             {
                 writer.WritePropertyName("fullyQualifiedName"u8);
                 writer.WriteStringValue(FullyQualifiedName);
             }
-            if (options.Format != "W" && Optional.IsDefined(FullyQualifiedFriendlyName))
+            if (options.Format != "W" && FullyQualifiedFriendlyName != null)
             {
                 writer.WritePropertyName("fullyQualifiedFriendlyName"u8);
                 writer.WriteStringValue(FullyQualifiedFriendlyName);
             }
-            if (options.Format != "W" && Optional.IsDefined(FullyQualifiedParentGroupName))
+            if (options.Format != "W" && FullyQualifiedParentGroupName != null)
             {
                 writer.WritePropertyName("fullyQualifiedParentGroupName"u8);
                 writer.WriteStringValue(FullyQualifiedParentGroupName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Uri))
+            if (options.Format != "W" && Uri != null)
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (Optional.IsDefined(OnboardingState))
+            if (OnboardingState.HasValue)
             {
                 writer.WritePropertyName("onboardingState"u8);
                 writer.WriteStringValue(OnboardingState.Value.ToString());
@@ -178,7 +178,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityConnectorGitLabProjectProperties(provisioningStatusMessage.Value, Optional.ToNullable(provisioningStatusUpdateTimeUtc), Optional.ToNullable(provisioningState), fullyQualifiedName.Value, fullyQualifiedFriendlyName.Value, fullyQualifiedParentGroupName.Value, url.Value, Optional.ToNullable(onboardingState), serializedAdditionalRawData);
+            return new SecurityConnectorGitLabProjectProperties(
+                provisioningStatusMessage.Value,
+                Optional.ToNullable(provisioningStatusUpdateTimeUtc),
+                Optional.ToNullable(provisioningState),
+                fullyQualifiedName.Value,
+                fullyQualifiedFriendlyName.Value,
+                fullyQualifiedParentGroupName.Value,
+                url.Value,
+                Optional.ToNullable(onboardingState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityConnectorGitLabProjectProperties>.Write(ModelReaderWriterOptions options)

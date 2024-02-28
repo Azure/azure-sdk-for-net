@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(FeatureDataTypeOverride))
+            if (!(FeatureDataTypeOverride is ChangeTrackingDictionary<string, MonitoringFeatureDataType> collection && collection.IsUndefined))
             {
                 if (FeatureDataTypeOverride != null)
                 {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("featureDataTypeOverride");
                 }
             }
-            if (Optional.IsDefined(Features))
+            if (Features != null)
             {
                 if (Features != null)
                 {
@@ -67,12 +67,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteObjectValue(ProductionData);
             writer.WritePropertyName("referenceData"u8);
             writer.WriteObjectValue(ReferenceData);
-            if (Optional.IsDefined(Mode))
+            if (Mode.HasValue)
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Properties))
+            if (!(Properties is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 if (Properties != null)
                 {
@@ -130,13 +130,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, MonitoringFeatureDataType>> featureDataTypeOverride = default;
+            IDictionary<string, MonitoringFeatureDataType> featureDataTypeOverride = default;
             Optional<MonitoringFeatureFilterBase> features = default;
             IList<DataQualityMetricThresholdBase> metricThresholds = default;
             MonitoringInputDataBase productionData = default;
             MonitoringInputDataBase referenceData = default;
             Optional<MonitoringNotificationMode> mode = default;
-            Optional<IDictionary<string, string>> properties = default;
+            IDictionary<string, string> properties = default;
             MonitoringSignalType signalType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         features = null;
                         continue;
                     }
-                    features = MonitoringFeatureFilterBase.DeserializeMonitoringFeatureFilterBase(property.Value);
+                    features = MonitoringFeatureFilterBase.DeserializeMonitoringFeatureFilterBase(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("metricThresholds"u8))
@@ -172,19 +172,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<DataQualityMetricThresholdBase> array = new List<DataQualityMetricThresholdBase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataQualityMetricThresholdBase.DeserializeDataQualityMetricThresholdBase(item));
+                        array.Add(DataQualityMetricThresholdBase.DeserializeDataQualityMetricThresholdBase(item, options));
                     }
                     metricThresholds = array;
                     continue;
                 }
                 if (property.NameEquals("productionData"u8))
                 {
-                    productionData = MonitoringInputDataBase.DeserializeMonitoringInputDataBase(property.Value);
+                    productionData = MonitoringInputDataBase.DeserializeMonitoringInputDataBase(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("referenceData"u8))
                 {
-                    referenceData = MonitoringInputDataBase.DeserializeMonitoringInputDataBase(property.Value);
+                    referenceData = MonitoringInputDataBase.DeserializeMonitoringInputDataBase(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("mode"u8))
@@ -222,7 +222,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataQualityMonitoringSignal(Optional.ToNullable(mode), Optional.ToDictionary(properties), signalType, serializedAdditionalRawData, Optional.ToDictionary(featureDataTypeOverride), features.Value, metricThresholds, productionData, referenceData);
+            return new DataQualityMonitoringSignal(
+                Optional.ToNullable(mode),
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                signalType,
+                serializedAdditionalRawData,
+                featureDataTypeOverride ?? new ChangeTrackingDictionary<string, MonitoringFeatureDataType>(),
+                features.Value,
+                metricThresholds,
+                productionData,
+                referenceData);
         }
 
         BinaryData IPersistableModel<DataQualityMonitoringSignal>.Write(ModelReaderWriterOptions options)

@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ControlImpact))
+            if (options.Format != "W" && ControlImpact.HasValue)
             {
                 writer.WritePropertyName("controlImpact"u8);
                 writer.WriteStringValue(ControlImpact.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ExpectedDuration))
+            if (options.Format != "W" && ExpectedDuration != null)
             {
                 writer.WritePropertyName("expectedDuration"u8);
                 writer.WriteStringValue(ExpectedDuration);
             }
-            if (options.Format != "W" && Optional.IsDefined(ImpactDescription))
+            if (options.Format != "W" && ImpactDescription != null)
             {
                 writer.WritePropertyName("impactDescription"u8);
                 writer.WriteStringValue(ImpactDescription);
             }
-            if (options.Format != "W" && Optional.IsDefined(SupportExpireOn))
+            if (options.Format != "W" && SupportExpireOn.HasValue)
             {
                 writer.WritePropertyName("supportExpiryDate"u8);
                 writer.WriteStringValue(SupportExpireOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetClusterVersion))
+            if (options.Format != "W" && TargetClusterVersion != null)
             {
                 writer.WritePropertyName("targetClusterVersion"u8);
                 writer.WriteStringValue(TargetClusterVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(WorkloadImpact))
+            if (options.Format != "W" && WorkloadImpact.HasValue)
             {
                 writer.WritePropertyName("workloadImpact"u8);
                 writer.WriteStringValue(WorkloadImpact.Value.ToString());
@@ -152,7 +152,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterAvailableUpgradeVersion(Optional.ToNullable(controlImpact), expectedDuration.Value, impactDescription.Value, Optional.ToNullable(supportExpiryDate), targetClusterVersion.Value, Optional.ToNullable(workloadImpact), serializedAdditionalRawData);
+            return new ClusterAvailableUpgradeVersion(
+                Optional.ToNullable(controlImpact),
+                expectedDuration.Value,
+                impactDescription.Value,
+                Optional.ToNullable(supportExpiryDate),
+                targetClusterVersion.Value,
+                Optional.ToNullable(workloadImpact),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterAvailableUpgradeVersion>.Write(ModelReaderWriterOptions options)

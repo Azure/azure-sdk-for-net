@@ -26,62 +26,62 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(DownloadHealth))
+            if (options.Format != "W" && DownloadHealth.HasValue)
             {
                 writer.WritePropertyName("downloadHealth"u8);
                 writer.WriteStringValue(DownloadHealth.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(UploadHealth))
+            if (options.Format != "W" && UploadHealth.HasValue)
             {
                 writer.WritePropertyName("uploadHealth"u8);
                 writer.WriteStringValue(UploadHealth.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CombinedHealth))
+            if (options.Format != "W" && CombinedHealth.HasValue)
             {
                 writer.WritePropertyName("combinedHealth"u8);
                 writer.WriteStringValue(CombinedHealth.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(SyncActivity))
+            if (options.Format != "W" && SyncActivity.HasValue)
             {
                 writer.WritePropertyName("syncActivity"u8);
                 writer.WriteStringValue(SyncActivity.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(TotalPersistentFilesNotSyncingCount))
+            if (options.Format != "W" && TotalPersistentFilesNotSyncingCount.HasValue)
             {
                 writer.WritePropertyName("totalPersistentFilesNotSyncingCount"u8);
                 writer.WriteNumberValue(TotalPersistentFilesNotSyncingCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
+            if (options.Format != "W" && LastUpdatedOn.HasValue)
             {
                 writer.WritePropertyName("lastUpdatedTimestamp"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(UploadStatus))
+            if (options.Format != "W" && UploadStatus != null)
             {
                 writer.WritePropertyName("uploadStatus"u8);
                 writer.WriteObjectValue(UploadStatus);
             }
-            if (options.Format != "W" && Optional.IsDefined(DownloadStatus))
+            if (options.Format != "W" && DownloadStatus != null)
             {
                 writer.WritePropertyName("downloadStatus"u8);
                 writer.WriteObjectValue(DownloadStatus);
             }
-            if (options.Format != "W" && Optional.IsDefined(UploadActivity))
+            if (options.Format != "W" && UploadActivity != null)
             {
                 writer.WritePropertyName("uploadActivity"u8);
                 writer.WriteObjectValue(UploadActivity);
             }
-            if (options.Format != "W" && Optional.IsDefined(DownloadActivity))
+            if (options.Format != "W" && DownloadActivity != null)
             {
                 writer.WritePropertyName("downloadActivity"u8);
                 writer.WriteObjectValue(DownloadActivity);
             }
-            if (options.Format != "W" && Optional.IsDefined(OfflineDataTransferStatus))
+            if (options.Format != "W" && OfflineDataTransferStatus.HasValue)
             {
                 writer.WritePropertyName("offlineDataTransferStatus"u8);
                 writer.WriteStringValue(OfflineDataTransferStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(BackgroundDataDownloadActivity))
+            if (options.Format != "W" && BackgroundDataDownloadActivity != null)
             {
                 writer.WritePropertyName("backgroundDataDownloadActivity"u8);
                 writer.WriteObjectValue(BackgroundDataDownloadActivity);
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     {
                         continue;
                     }
-                    uploadStatus = ServerEndpointSyncSessionStatus.DeserializeServerEndpointSyncSessionStatus(property.Value);
+                    uploadStatus = ServerEndpointSyncSessionStatus.DeserializeServerEndpointSyncSessionStatus(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("downloadStatus"u8))
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     {
                         continue;
                     }
-                    downloadStatus = ServerEndpointSyncSessionStatus.DeserializeServerEndpointSyncSessionStatus(property.Value);
+                    downloadStatus = ServerEndpointSyncSessionStatus.DeserializeServerEndpointSyncSessionStatus(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("uploadActivity"u8))
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     {
                         continue;
                     }
-                    uploadActivity = ServerEndpointSyncActivityStatus.DeserializeServerEndpointSyncActivityStatus(property.Value);
+                    uploadActivity = ServerEndpointSyncActivityStatus.DeserializeServerEndpointSyncActivityStatus(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("downloadActivity"u8))
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     {
                         continue;
                     }
-                    downloadActivity = ServerEndpointSyncActivityStatus.DeserializeServerEndpointSyncActivityStatus(property.Value);
+                    downloadActivity = ServerEndpointSyncActivityStatus.DeserializeServerEndpointSyncActivityStatus(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("offlineDataTransferStatus"u8))
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     {
                         continue;
                     }
-                    backgroundDataDownloadActivity = ServerEndpointBackgroundDataDownloadActivity.DeserializeServerEndpointBackgroundDataDownloadActivity(property.Value);
+                    backgroundDataDownloadActivity = ServerEndpointBackgroundDataDownloadActivity.DeserializeServerEndpointBackgroundDataDownloadActivity(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -254,7 +254,20 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServerEndpointSyncStatus(Optional.ToNullable(downloadHealth), Optional.ToNullable(uploadHealth), Optional.ToNullable(combinedHealth), Optional.ToNullable(syncActivity), Optional.ToNullable(totalPersistentFilesNotSyncingCount), Optional.ToNullable(lastUpdatedTimestamp), uploadStatus.Value, downloadStatus.Value, uploadActivity.Value, downloadActivity.Value, Optional.ToNullable(offlineDataTransferStatus), backgroundDataDownloadActivity.Value, serializedAdditionalRawData);
+            return new ServerEndpointSyncStatus(
+                Optional.ToNullable(downloadHealth),
+                Optional.ToNullable(uploadHealth),
+                Optional.ToNullable(combinedHealth),
+                Optional.ToNullable(syncActivity),
+                Optional.ToNullable(totalPersistentFilesNotSyncingCount),
+                Optional.ToNullable(lastUpdatedTimestamp),
+                uploadStatus.Value,
+                downloadStatus.Value,
+                uploadActivity.Value,
+                downloadActivity.Value,
+                Optional.ToNullable(offlineDataTransferStatus),
+                backgroundDataDownloadActivity.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServerEndpointSyncStatus>.Write(ModelReaderWriterOptions options)

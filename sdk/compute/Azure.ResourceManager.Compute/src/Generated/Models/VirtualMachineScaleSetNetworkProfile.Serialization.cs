@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(HealthProbe))
+            if (HealthProbe != null)
             {
                 writer.WritePropertyName("healthProbe"u8);
                 JsonSerializer.Serialize(writer, HealthProbe);
             }
-            if (Optional.IsCollectionDefined(NetworkInterfaceConfigurations))
+            if (!(NetworkInterfaceConfigurations is ChangeTrackingList<VirtualMachineScaleSetNetworkConfiguration> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("networkInterfaceConfigurations"u8);
                 writer.WriteStartArray();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NetworkApiVersion))
+            if (NetworkApiVersion.HasValue)
             {
                 writer.WritePropertyName("networkApiVersion"u8);
                 writer.WriteStringValue(NetworkApiVersion.Value.ToString());
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             Optional<WritableSubResource> healthProbe = default;
-            Optional<IList<VirtualMachineScaleSetNetworkConfiguration>> networkInterfaceConfigurations = default;
+            IList<VirtualMachineScaleSetNetworkConfiguration> networkInterfaceConfigurations = default;
             Optional<NetworkApiVersion> networkApiVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<VirtualMachineScaleSetNetworkConfiguration> array = new List<VirtualMachineScaleSetNetworkConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualMachineScaleSetNetworkConfiguration.DeserializeVirtualMachineScaleSetNetworkConfiguration(item));
+                        array.Add(VirtualMachineScaleSetNetworkConfiguration.DeserializeVirtualMachineScaleSetNetworkConfiguration(item, options));
                     }
                     networkInterfaceConfigurations = array;
                     continue;
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineScaleSetNetworkProfile(healthProbe, Optional.ToList(networkInterfaceConfigurations), Optional.ToNullable(networkApiVersion), serializedAdditionalRawData);
+            return new VirtualMachineScaleSetNetworkProfile(healthProbe, networkInterfaceConfigurations ?? new ChangeTrackingList<VirtualMachineScaleSetNetworkConfiguration>(), Optional.ToNullable(networkApiVersion), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineScaleSetNetworkProfile>.Write(ModelReaderWriterOptions options)

@@ -56,7 +56,7 @@ namespace Azure.Communication.JobRouter
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownWorkerSelectorAttachment(document.RootElement, options);
+            return DeserializeWorkerSelectorAttachment(document.RootElement, options);
         }
 
         internal static UnknownWorkerSelectorAttachment DeserializeUnknownWorkerSelectorAttachment(JsonElement element, ModelReaderWriterOptions options = null)
@@ -108,7 +108,7 @@ namespace Azure.Communication.JobRouter
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownWorkerSelectorAttachment(document.RootElement, options);
+                        return DeserializeWorkerSelectorAttachment(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(WorkerSelectorAttachment)} does not support '{options.Format}' format.");

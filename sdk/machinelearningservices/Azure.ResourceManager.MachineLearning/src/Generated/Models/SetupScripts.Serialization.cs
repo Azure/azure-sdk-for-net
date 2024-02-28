@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Scripts))
+            if (Scripts != null)
             {
                 writer.WritePropertyName("scripts"u8);
                 writer.WriteObjectValue(Scripts);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    scripts = MachineLearningScriptsToExecute.DeserializeMachineLearningScriptsToExecute(property.Value);
+                    scripts = MachineLearningScriptsToExecute.DeserializeMachineLearningScriptsToExecute(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

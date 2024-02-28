@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 if (property.NameEquals("customProperties"u8))
                 {
-                    customProperties = ReplicationExtensionModelCustomProperties.DeserializeReplicationExtensionModelCustomProperties(property.Value);
+                    customProperties = ReplicationExtensionModelCustomProperties.DeserializeReplicationExtensionModelCustomProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

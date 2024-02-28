@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(UploadUri))
+            if (UploadUri != null)
             {
                 writer.WritePropertyName("uploadUrl"u8);
                 writer.WriteStringValue(UploadUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(RelativePath))
+            if (RelativePath != null)
             {
                 writer.WritePropertyName("relativePath"u8);
                 writer.WriteStringValue(RelativePath);

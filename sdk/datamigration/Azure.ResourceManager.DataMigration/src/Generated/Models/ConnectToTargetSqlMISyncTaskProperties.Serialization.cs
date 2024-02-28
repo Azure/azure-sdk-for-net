@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Input))
+            if (Input != null)
             {
                 writer.WritePropertyName("input"u8);
                 writer.WriteObjectValue(Input);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Output))
+            if (options.Format != "W" && !(Output is ChangeTrackingList<ConnectToTargetSqlMISyncTaskOutput> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("output"u8);
                 writer.WriteStartArray();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             writer.WritePropertyName("taskType"u8);
             writer.WriteStringValue(TaskType.ToString());
-            if (options.Format != "W" && Optional.IsCollectionDefined(Errors))
+            if (options.Format != "W" && !(Errors is ChangeTrackingList<ODataError> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
@@ -53,12 +53,12 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W" && State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Commands))
+            if (options.Format != "W" && !(Commands is ChangeTrackingList<CommandProperties> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("commands"u8);
                 writer.WriteStartArray();
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ClientData))
+            if (!(ClientData is ChangeTrackingDictionary<string, string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("clientData"u8);
                 writer.WriteStartObject();
@@ -118,12 +118,12 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             Optional<ConnectToTargetSqlMISyncTaskInput> input = default;
-            Optional<IReadOnlyList<ConnectToTargetSqlMISyncTaskOutput>> output = default;
+            IReadOnlyList<ConnectToTargetSqlMISyncTaskOutput> output = default;
             TaskType taskType = default;
-            Optional<IReadOnlyList<ODataError>> errors = default;
+            IReadOnlyList<ODataError> errors = default;
             Optional<TaskState> state = default;
-            Optional<IReadOnlyList<CommandProperties>> commands = default;
-            Optional<IDictionary<string, string>> clientData = default;
+            IReadOnlyList<CommandProperties> commands = default;
+            IDictionary<string, string> clientData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    input = ConnectToTargetSqlMISyncTaskInput.DeserializeConnectToTargetSqlMISyncTaskInput(property.Value);
+                    input = ConnectToTargetSqlMISyncTaskInput.DeserializeConnectToTargetSqlMISyncTaskInput(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("output"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ConnectToTargetSqlMISyncTaskOutput> array = new List<ConnectToTargetSqlMISyncTaskOutput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectToTargetSqlMISyncTaskOutput.DeserializeConnectToTargetSqlMISyncTaskOutput(item));
+                        array.Add(ConnectToTargetSqlMISyncTaskOutput.DeserializeConnectToTargetSqlMISyncTaskOutput(item, options));
                     }
                     output = array;
                     continue;
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ODataError> array = new List<ODataError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ODataError.DeserializeODataError(item));
+                        array.Add(ODataError.DeserializeODataError(item, options));
                     }
                     errors = array;
                     continue;
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<CommandProperties> array = new List<CommandProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CommandProperties.DeserializeCommandProperties(item));
+                        array.Add(CommandProperties.DeserializeCommandProperties(item, options));
                     }
                     commands = array;
                     continue;
@@ -213,7 +213,15 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectToTargetSqlMISyncTaskProperties(taskType, Optional.ToList(errors), Optional.ToNullable(state), Optional.ToList(commands), Optional.ToDictionary(clientData), serializedAdditionalRawData, input.Value, Optional.ToList(output));
+            return new ConnectToTargetSqlMISyncTaskProperties(
+                taskType,
+                errors ?? new ChangeTrackingList<ODataError>(),
+                Optional.ToNullable(state),
+                commands ?? new ChangeTrackingList<CommandProperties>(),
+                clientData ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                input.Value,
+                output ?? new ChangeTrackingList<ConnectToTargetSqlMISyncTaskOutput>());
         }
 
         BinaryData IPersistableModel<ConnectToTargetSqlMISyncTaskProperties>.Write(ModelReaderWriterOptions options)

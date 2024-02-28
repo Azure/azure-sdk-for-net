@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(FixedDate))
+            if (FixedDate != null)
             {
                 writer.WritePropertyName("fixedDate"u8);
                 writer.WriteObjectValue(FixedDate);
             }
-            if (Optional.IsDefined(Recurrence))
+            if (Recurrence != null)
             {
                 writer.WritePropertyName("recurrence"u8);
                 writer.WriteObjectValue(Recurrence);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (property.NameEquals("capacity"u8))
                 {
-                    capacity = MonitorScaleCapacity.DeserializeMonitorScaleCapacity(property.Value);
+                    capacity = MonitorScaleCapacity.DeserializeMonitorScaleCapacity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("rules"u8))
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<AutoscaleRule> array = new List<AutoscaleRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutoscaleRule.DeserializeAutoscaleRule(item));
+                        array.Add(AutoscaleRule.DeserializeAutoscaleRule(item, options));
                     }
                     rules = array;
                     continue;
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    fixedDate = MonitorTimeWindow.DeserializeMonitorTimeWindow(property.Value);
+                    fixedDate = MonitorTimeWindow.DeserializeMonitorTimeWindow(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("recurrence"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    recurrence = MonitorRecurrence.DeserializeMonitorRecurrence(property.Value);
+                    recurrence = MonitorRecurrence.DeserializeMonitorRecurrence(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -138,7 +138,13 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutoscaleProfile(name, capacity, rules, fixedDate.Value, recurrence.Value, serializedAdditionalRawData);
+            return new AutoscaleProfile(
+                name,
+                capacity,
+                rules,
+                fixedDate.Value,
+                recurrence.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutoscaleProfile>.Write(ModelReaderWriterOptions options)

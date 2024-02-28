@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SapSid))
+            if (SapSid != null)
             {
                 writer.WritePropertyName("sapSid"u8);
                 writer.WriteStringValue(SapSid);
             }
-            if (Optional.IsDefined(SapHostname))
+            if (SapHostname != null)
             {
                 writer.WritePropertyName("sapHostname"u8);
                 writer.WriteStringValue(SapHostname);
             }
-            if (Optional.IsDefined(SapInstanceNr))
+            if (SapInstanceNr != null)
             {
                 writer.WritePropertyName("sapInstanceNr"u8);
                 writer.WriteStringValue(SapInstanceNr);
             }
-            if (Optional.IsCollectionDefined(SapHostFileEntries))
+            if (!(SapHostFileEntries is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("sapHostFileEntries"u8);
                 writer.WriteStartArray();
@@ -51,37 +51,37 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SapUsername))
+            if (SapUsername != null)
             {
                 writer.WritePropertyName("sapUsername"u8);
                 writer.WriteStringValue(SapUsername);
             }
-            if (Optional.IsDefined(SapPassword))
+            if (SapPassword != null)
             {
                 writer.WritePropertyName("sapPassword"u8);
                 writer.WriteStringValue(SapPassword);
             }
-            if (Optional.IsDefined(SapPasswordUri))
+            if (SapPasswordUri != null)
             {
                 writer.WritePropertyName("sapPasswordUri"u8);
                 writer.WriteStringValue(SapPasswordUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(SapClientId))
+            if (SapClientId != null)
             {
                 writer.WritePropertyName("sapClientId"u8);
                 writer.WriteStringValue(SapClientId);
             }
-            if (Optional.IsDefined(SapPortNumber))
+            if (SapPortNumber != null)
             {
                 writer.WritePropertyName("sapPortNumber"u8);
                 writer.WriteStringValue(SapPortNumber);
             }
-            if (Optional.IsDefined(SslCertificateUri))
+            if (SslCertificateUri != null)
             {
                 writer.WritePropertyName("sslCertificateUri"u8);
                 writer.WriteStringValue(SslCertificateUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(SslPreference))
+            if (SslPreference.HasValue)
             {
                 writer.WritePropertyName("sslPreference"u8);
                 writer.WriteStringValue(SslPreference.Value.ToString());
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Workloads.Models
             Optional<string> sapSid = default;
             Optional<string> sapHostname = default;
             Optional<string> sapInstanceNr = default;
-            Optional<IList<string>> sapHostFileEntries = default;
+            IList<string> sapHostFileEntries = default;
             Optional<string> sapUsername = default;
             Optional<string> sapPassword = default;
             Optional<Uri> sapPasswordUri = default;
@@ -229,7 +229,20 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SapNetWeaverProviderInstanceProperties(providerType, serializedAdditionalRawData, sapSid.Value, sapHostname.Value, sapInstanceNr.Value, Optional.ToList(sapHostFileEntries), sapUsername.Value, sapPassword.Value, sapPasswordUri.Value, sapClientId.Value, sapPortNumber.Value, sslCertificateUri.Value, Optional.ToNullable(sslPreference));
+            return new SapNetWeaverProviderInstanceProperties(
+                providerType,
+                serializedAdditionalRawData,
+                sapSid.Value,
+                sapHostname.Value,
+                sapInstanceNr.Value,
+                sapHostFileEntries ?? new ChangeTrackingList<string>(),
+                sapUsername.Value,
+                sapPassword.Value,
+                sapPasswordUri.Value,
+                sapClientId.Value,
+                sapPortNumber.Value,
+                sslCertificateUri.Value,
+                Optional.ToNullable(sslPreference));
         }
 
         BinaryData IPersistableModel<SapNetWeaverProviderInstanceProperties>.Write(ModelReaderWriterOptions options)

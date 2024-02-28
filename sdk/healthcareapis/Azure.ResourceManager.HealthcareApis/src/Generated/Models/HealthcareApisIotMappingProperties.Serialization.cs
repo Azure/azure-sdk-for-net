@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Content))
+            if (Content != null)
             {
                 writer.WritePropertyName("content"u8);
 #if NET6_0_OR_GREATER

@@ -42,39 +42,39 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(CompressedQuery))
+            if (CompressedQuery != null)
             {
                 writer.WritePropertyName("compressedQuery"u8);
                 writer.WriteStringValue(CompressedQuery);
             }
-            if (Optional.IsDefined(SupportedCloud))
+            if (SupportedCloud.HasValue)
             {
                 writer.WritePropertyName("supportedCloud"u8);
                 writer.WriteStringValue(SupportedCloud.Value.ToString());
             }
-            if (Optional.IsDefined(Severity))
+            if (Severity.HasValue)
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(RemediationDescription))
+            if (RemediationDescription != null)
             {
                 writer.WritePropertyName("remediationDescription"u8);
                 writer.WriteStringValue(RemediationDescription);
@@ -212,7 +212,18 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomAssessmentAutomationCreateOrUpdateContent(id, name, type, systemData.Value, compressedQuery.Value, Optional.ToNullable(supportedCloud), Optional.ToNullable(severity), displayName.Value, description.Value, remediationDescription.Value, serializedAdditionalRawData);
+            return new CustomAssessmentAutomationCreateOrUpdateContent(
+                id,
+                name,
+                type,
+                systemData.Value,
+                compressedQuery.Value,
+                Optional.ToNullable(supportedCloud),
+                Optional.ToNullable(severity),
+                displayName.Value,
+                description.Value,
+                remediationDescription.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CustomAssessmentAutomationCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

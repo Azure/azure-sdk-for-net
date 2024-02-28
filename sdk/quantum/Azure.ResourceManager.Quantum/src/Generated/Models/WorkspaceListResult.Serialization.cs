@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Quantum.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<QuantumWorkspaceData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Quantum.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Quantum.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<QuantumWorkspaceData>> value = default;
+            IReadOnlyList<QuantumWorkspaceData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Quantum.Models
                     List<QuantumWorkspaceData> array = new List<QuantumWorkspaceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QuantumWorkspaceData.DeserializeQuantumWorkspaceData(item));
+                        array.Add(QuantumWorkspaceData.DeserializeQuantumWorkspaceData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Quantum.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkspaceListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new WorkspaceListResult(value ?? new ChangeTrackingList<QuantumWorkspaceData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkspaceListResult>.Write(ModelReaderWriterOptions options)

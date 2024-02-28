@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisableProtectionReason))
+            if (DisableProtectionReason.HasValue)
             {
                 writer.WritePropertyName("disableProtectionReason"u8);
                 writer.WriteStringValue(DisableProtectionReason.Value.ToString());
             }
-            if (Optional.IsDefined(ReplicationProviderContent))
+            if (ReplicationProviderContent != null)
             {
                 writer.WritePropertyName("replicationProviderInput"u8);
                 writer.WriteObjectValue(ReplicationProviderContent);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    replicationProviderContent = DisableProtectionProviderSpecificContent.DeserializeDisableProtectionProviderSpecificContent(property.Value);
+                    replicationProviderContent = DisableProtectionProviderSpecificContent.DeserializeDisableProtectionProviderSpecificContent(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DeployerVmPackages))
+            if (DeployerVmPackages != null)
             {
                 writer.WritePropertyName("deployerVmPackages"u8);
                 writer.WriteObjectValue(DeployerVmPackages);
             }
-            if (Optional.IsDefined(SapFqdn))
+            if (SapFqdn != null)
             {
                 writer.WritePropertyName("sapFqdn"u8);
                 writer.WriteStringValue(SapFqdn);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    deployerVmPackages = DeployerVmPackages.DeserializeDeployerVmPackages(property.Value);
+                    deployerVmPackages = DeployerVmPackages.DeserializeDeployerVmPackages(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sapFqdn"u8))

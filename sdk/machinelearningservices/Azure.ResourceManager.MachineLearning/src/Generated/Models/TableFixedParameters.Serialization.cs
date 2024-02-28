@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Booster))
+            if (Booster != null)
             {
                 if (Booster != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("booster");
                 }
             }
-            if (Optional.IsDefined(BoostingType))
+            if (BoostingType != null)
             {
                 if (BoostingType != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("boostingType");
                 }
             }
-            if (Optional.IsDefined(GrowPolicy))
+            if (GrowPolicy != null)
             {
                 if (GrowPolicy != null)
                 {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("growPolicy");
                 }
             }
-            if (Optional.IsDefined(LearningRate))
+            if (LearningRate.HasValue)
             {
                 if (LearningRate != null)
                 {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("learningRate");
                 }
             }
-            if (Optional.IsDefined(MaxBin))
+            if (MaxBin.HasValue)
             {
                 if (MaxBin != null)
                 {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("maxBin");
                 }
             }
-            if (Optional.IsDefined(MaxDepth))
+            if (MaxDepth.HasValue)
             {
                 if (MaxDepth != null)
                 {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("maxDepth");
                 }
             }
-            if (Optional.IsDefined(MaxLeaves))
+            if (MaxLeaves.HasValue)
             {
                 if (MaxLeaves != null)
                 {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("maxLeaves");
                 }
             }
-            if (Optional.IsDefined(MinDataInLeaf))
+            if (MinDataInLeaf.HasValue)
             {
                 if (MinDataInLeaf != null)
                 {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("minDataInLeaf");
                 }
             }
-            if (Optional.IsDefined(MinSplitGain))
+            if (MinSplitGain.HasValue)
             {
                 if (MinSplitGain != null)
                 {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("minSplitGain");
                 }
             }
-            if (Optional.IsDefined(ModelName))
+            if (ModelName != null)
             {
                 if (ModelName != null)
                 {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("modelName");
                 }
             }
-            if (Optional.IsDefined(NEstimators))
+            if (NEstimators.HasValue)
             {
                 if (NEstimators != null)
                 {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("nEstimators");
                 }
             }
-            if (Optional.IsDefined(NumLeaves))
+            if (NumLeaves.HasValue)
             {
                 if (NumLeaves != null)
                 {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("numLeaves");
                 }
             }
-            if (Optional.IsDefined(PreprocessorName))
+            if (PreprocessorName != null)
             {
                 if (PreprocessorName != null)
                 {
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("preprocessorName");
                 }
             }
-            if (Optional.IsDefined(RegAlpha))
+            if (RegAlpha.HasValue)
             {
                 if (RegAlpha != null)
                 {
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("regAlpha");
                 }
             }
-            if (Optional.IsDefined(RegLambda))
+            if (RegLambda.HasValue)
             {
                 if (RegLambda != null)
                 {
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("regLambda");
                 }
             }
-            if (Optional.IsDefined(Subsample))
+            if (Subsample.HasValue)
             {
                 if (Subsample != null)
                 {
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("subsample");
                 }
             }
-            if (Optional.IsDefined(SubsampleFreq))
+            if (SubsampleFreq.HasValue)
             {
                 if (SubsampleFreq != null)
                 {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("subsampleFreq");
                 }
             }
-            if (Optional.IsDefined(TreeMethod))
+            if (TreeMethod != null)
             {
                 if (TreeMethod != null)
                 {
@@ -242,12 +242,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("treeMethod");
                 }
             }
-            if (Optional.IsDefined(WithMean))
+            if (WithMean.HasValue)
             {
                 writer.WritePropertyName("withMean"u8);
                 writer.WriteBooleanValue(WithMean.Value);
             }
-            if (Optional.IsDefined(WithStd))
+            if (WithStd.HasValue)
             {
                 writer.WritePropertyName("withStd"u8);
                 writer.WriteBooleanValue(WithStd.Value);
@@ -518,7 +518,28 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TableFixedParameters(booster.Value, boostingType.Value, growPolicy.Value, Optional.ToNullable(learningRate), Optional.ToNullable(maxBin), Optional.ToNullable(maxDepth), Optional.ToNullable(maxLeaves), Optional.ToNullable(minDataInLeaf), Optional.ToNullable(minSplitGain), modelName.Value, Optional.ToNullable(nEstimators), Optional.ToNullable(numLeaves), preprocessorName.Value, Optional.ToNullable(regAlpha), Optional.ToNullable(regLambda), Optional.ToNullable(subsample), Optional.ToNullable(subsampleFreq), treeMethod.Value, Optional.ToNullable(withMean), Optional.ToNullable(withStd), serializedAdditionalRawData);
+            return new TableFixedParameters(
+                booster.Value,
+                boostingType.Value,
+                growPolicy.Value,
+                Optional.ToNullable(learningRate),
+                Optional.ToNullable(maxBin),
+                Optional.ToNullable(maxDepth),
+                Optional.ToNullable(maxLeaves),
+                Optional.ToNullable(minDataInLeaf),
+                Optional.ToNullable(minSplitGain),
+                modelName.Value,
+                Optional.ToNullable(nEstimators),
+                Optional.ToNullable(numLeaves),
+                preprocessorName.Value,
+                Optional.ToNullable(regAlpha),
+                Optional.ToNullable(regLambda),
+                Optional.ToNullable(subsample),
+                Optional.ToNullable(subsampleFreq),
+                treeMethod.Value,
+                Optional.ToNullable(withMean),
+                Optional.ToNullable(withStd),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TableFixedParameters>.Write(ModelReaderWriterOptions options)

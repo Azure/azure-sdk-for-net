@@ -68,9 +68,30 @@ namespace Azure.ResourceManager.Search
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="searchServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PrivateLinkResourcesResult>> ListSupportedAsync(string subscriptionId, string resourceGroupName, string searchServiceName, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(searchServiceName, nameof(searchServiceName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (searchServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(searchServiceName));
+            }
+            if (searchServiceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(searchServiceName));
+            }
 
             using var message = CreateListSupportedRequest(subscriptionId, resourceGroupName, searchServiceName, searchManagementRequestOptions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -98,9 +119,30 @@ namespace Azure.ResourceManager.Search
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="searchServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PrivateLinkResourcesResult> ListSupported(string subscriptionId, string resourceGroupName, string searchServiceName, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(searchServiceName, nameof(searchServiceName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (searchServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(searchServiceName));
+            }
+            if (searchServiceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(searchServiceName));
+            }
 
             using var message = CreateListSupportedRequest(subscriptionId, resourceGroupName, searchServiceName, searchManagementRequestOptions);
             _pipeline.Send(message, cancellationToken);

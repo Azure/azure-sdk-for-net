@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(StorageModelType))
+            if (StorageModelType.HasValue)
             {
                 writer.WritePropertyName("storageModelType"u8);
                 writer.WriteStringValue(StorageModelType.Value.ToString());
             }
-            if (Optional.IsDefined(StorageType))
+            if (StorageType.HasValue)
             {
                 writer.WritePropertyName("storageType"u8);
                 writer.WriteStringValue(StorageType.Value.ToString());
             }
-            if (Optional.IsDefined(StorageTypeState))
+            if (StorageTypeState.HasValue)
             {
                 writer.WritePropertyName("storageTypeState"u8);
                 writer.WriteStringValue(StorageTypeState.Value.ToString());
             }
-            if (Optional.IsDefined(EnhancedSecurityState))
+            if (EnhancedSecurityState.HasValue)
             {
                 writer.WritePropertyName("enhancedSecurityState"u8);
                 writer.WriteStringValue(EnhancedSecurityState.Value.ToString());
             }
-            if (Optional.IsDefined(SoftDeleteFeatureState))
+            if (SoftDeleteFeatureState.HasValue)
             {
                 writer.WritePropertyName("softDeleteFeatureState"u8);
                 writer.WriteStringValue(SoftDeleteFeatureState.Value.ToString());
             }
-            if (Optional.IsDefined(SoftDeleteRetentionPeriodInDays))
+            if (SoftDeleteRetentionPeriodInDays.HasValue)
             {
                 writer.WritePropertyName("softDeleteRetentionPeriodInDays"u8);
                 writer.WriteNumberValue(SoftDeleteRetentionPeriodInDays.Value);
             }
-            if (Optional.IsCollectionDefined(ResourceGuardOperationRequests))
+            if (!(ResourceGuardOperationRequests is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("resourceGuardOperationRequests"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsSoftDeleteFeatureStateEditable))
+            if (IsSoftDeleteFeatureStateEditable.HasValue)
             {
                 writer.WritePropertyName("isSoftDeleteFeatureStateEditable"u8);
                 writer.WriteBooleanValue(IsSoftDeleteFeatureStateEditable.Value);
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<EnhancedSecurityState> enhancedSecurityState = default;
             Optional<SoftDeleteFeatureState> softDeleteFeatureState = default;
             Optional<int> softDeleteRetentionPeriodInDays = default;
-            Optional<IList<string>> resourceGuardOperationRequests = default;
+            IList<string> resourceGuardOperationRequests = default;
             Optional<bool> isSoftDeleteFeatureStateEditable = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -204,7 +204,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupResourceVaultConfigProperties(Optional.ToNullable(storageModelType), Optional.ToNullable(storageType), Optional.ToNullable(storageTypeState), Optional.ToNullable(enhancedSecurityState), Optional.ToNullable(softDeleteFeatureState), Optional.ToNullable(softDeleteRetentionPeriodInDays), Optional.ToList(resourceGuardOperationRequests), Optional.ToNullable(isSoftDeleteFeatureStateEditable), serializedAdditionalRawData);
+            return new BackupResourceVaultConfigProperties(
+                Optional.ToNullable(storageModelType),
+                Optional.ToNullable(storageType),
+                Optional.ToNullable(storageTypeState),
+                Optional.ToNullable(enhancedSecurityState),
+                Optional.ToNullable(softDeleteFeatureState),
+                Optional.ToNullable(softDeleteRetentionPeriodInDays),
+                resourceGuardOperationRequests ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(isSoftDeleteFeatureStateEditable),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupResourceVaultConfigProperties>.Write(ModelReaderWriterOptions options)

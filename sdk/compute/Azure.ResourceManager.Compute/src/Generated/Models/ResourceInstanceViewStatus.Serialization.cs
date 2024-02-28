@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Code))
+            if (options.Format != "W" && Code != null)
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (options.Format != "W" && Optional.IsDefined(DisplayStatus))
+            if (options.Format != "W" && DisplayStatus != null)
             {
                 writer.WritePropertyName("displayStatus"u8);
                 writer.WriteStringValue(DisplayStatus);
             }
-            if (options.Format != "W" && Optional.IsDefined(Message))
+            if (options.Format != "W" && Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (options.Format != "W" && Optional.IsDefined(Time))
+            if (options.Format != "W" && Time.HasValue)
             {
                 writer.WritePropertyName("time"u8);
                 writer.WriteStringValue(Time.Value, "O");
             }
-            if (Optional.IsDefined(Level))
+            if (Level.HasValue)
             {
                 writer.WritePropertyName("level"u8);
                 writer.WriteStringValue(Level.Value.ToSerialString());
@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceInstanceViewStatus(code.Value, displayStatus.Value, message.Value, Optional.ToNullable(time), Optional.ToNullable(level), serializedAdditionalRawData);
+            return new ResourceInstanceViewStatus(
+                code.Value,
+                displayStatus.Value,
+                message.Value,
+                Optional.ToNullable(time),
+                Optional.ToNullable(level),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceInstanceViewStatus>.Write(ModelReaderWriterOptions options)

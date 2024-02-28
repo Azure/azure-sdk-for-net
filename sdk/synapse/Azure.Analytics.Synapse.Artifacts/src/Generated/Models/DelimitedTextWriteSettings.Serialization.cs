@@ -19,19 +19,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(QuoteAllText))
+            if (QuoteAllText != null)
             {
                 writer.WritePropertyName("quoteAllText"u8);
                 writer.WriteObjectValue(QuoteAllText);
             }
             writer.WritePropertyName("fileExtension"u8);
             writer.WriteObjectValue(FileExtension);
-            if (Optional.IsDefined(MaxRowsPerFile))
+            if (MaxRowsPerFile != null)
             {
                 writer.WritePropertyName("maxRowsPerFile"u8);
                 writer.WriteObjectValue(MaxRowsPerFile);
             }
-            if (Optional.IsDefined(FileNamePrefix))
+            if (FileNamePrefix != null)
             {
                 writer.WritePropertyName("fileNamePrefix"u8);
                 writer.WriteObjectValue(FileNamePrefix);
@@ -101,7 +101,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DelimitedTextWriteSettings(type, additionalProperties, quoteAllText.Value, fileExtension, maxRowsPerFile.Value, fileNamePrefix.Value);
+            return new DelimitedTextWriteSettings(
+                type,
+                additionalProperties,
+                quoteAllText.Value,
+                fileExtension,
+                maxRowsPerFile.Value,
+                fileNamePrefix.Value);
         }
 
         internal partial class DelimitedTextWriteSettingsConverter : JsonConverter<DelimitedTextWriteSettings>

@@ -57,7 +57,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="publicLandMobileNetworkIdentifier"/> is null. </exception>
         public MobileNetworkData(AzureLocation location, MobileNetworkPlmnId publicLandMobileNetworkIdentifier) : base(location)
         {
-            Argument.AssertNotNull(publicLandMobileNetworkIdentifier, nameof(publicLandMobileNetworkIdentifier));
+            if (publicLandMobileNetworkIdentifier == null)
+            {
+                throw new ArgumentNullException(nameof(publicLandMobileNetworkIdentifier));
+            }
 
             PublicLandMobileNetworkIdentifier = publicLandMobileNetworkIdentifier;
         }

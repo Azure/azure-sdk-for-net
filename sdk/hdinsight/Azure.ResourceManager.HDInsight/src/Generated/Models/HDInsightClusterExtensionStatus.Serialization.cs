@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsClusterMonitoringEnabled))
+            if (IsClusterMonitoringEnabled.HasValue)
             {
                 writer.WritePropertyName("clusterMonitoringEnabled"u8);
                 writer.WriteBooleanValue(IsClusterMonitoringEnabled.Value);
             }
-            if (Optional.IsDefined(WorkspaceId))
+            if (WorkspaceId != null)
             {
                 writer.WritePropertyName("workspaceId"u8);
                 writer.WriteStringValue(WorkspaceId);

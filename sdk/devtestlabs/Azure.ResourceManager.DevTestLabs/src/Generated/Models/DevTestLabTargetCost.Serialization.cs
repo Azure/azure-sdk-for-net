@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(Target))
+            if (Target.HasValue)
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteNumberValue(Target.Value);
             }
-            if (Optional.IsCollectionDefined(CostThresholds))
+            if (!(CostThresholds is ChangeTrackingList<DevTestLabCostThreshold> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("costThresholds"u8);
                 writer.WriteStartArray();
@@ -46,17 +46,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(CycleStartOn))
+            if (CycleStartOn.HasValue)
             {
                 writer.WritePropertyName("cycleStartDateTime"u8);
                 writer.WriteStringValue(CycleStartOn.Value, "O");
             }
-            if (Optional.IsDefined(CycleEndOn))
+            if (CycleEndOn.HasValue)
             {
                 writer.WritePropertyName("cycleEndDateTime"u8);
                 writer.WriteStringValue(CycleEndOn.Value, "O");
             }
-            if (Optional.IsDefined(CycleType))
+            if (CycleType.HasValue)
             {
                 writer.WritePropertyName("cycleType"u8);
                 writer.WriteStringValue(CycleType.Value.ToString());
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
             Optional<DevTestLabTargetCostStatus> status = default;
             Optional<int> target = default;
-            Optional<IList<DevTestLabCostThreshold>> costThresholds = default;
+            IList<DevTestLabCostThreshold> costThresholds = default;
             Optional<DateTimeOffset> cycleStartDateTime = default;
             Optional<DateTimeOffset> cycleEndDateTime = default;
             Optional<DevTestLabReportingCycleType> cycleType = default;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     List<DevTestLabCostThreshold> array = new List<DevTestLabCostThreshold>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DevTestLabCostThreshold.DeserializeDevTestLabCostThreshold(item));
+                        array.Add(DevTestLabCostThreshold.DeserializeDevTestLabCostThreshold(item, options));
                     }
                     costThresholds = array;
                     continue;
@@ -174,7 +174,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabTargetCost(Optional.ToNullable(status), Optional.ToNullable(target), Optional.ToList(costThresholds), Optional.ToNullable(cycleStartDateTime), Optional.ToNullable(cycleEndDateTime), Optional.ToNullable(cycleType), serializedAdditionalRawData);
+            return new DevTestLabTargetCost(
+                Optional.ToNullable(status),
+                Optional.ToNullable(target),
+                costThresholds ?? new ChangeTrackingList<DevTestLabCostThreshold>(),
+                Optional.ToNullable(cycleStartDateTime),
+                Optional.ToNullable(cycleEndDateTime),
+                Optional.ToNullable(cycleType),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabTargetCost>.Write(ModelReaderWriterOptions options)

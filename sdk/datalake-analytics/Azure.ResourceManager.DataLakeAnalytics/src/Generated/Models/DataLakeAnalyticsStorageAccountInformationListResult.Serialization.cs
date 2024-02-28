@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<DataLakeAnalyticsStorageAccountInformationData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DataLakeAnalyticsStorageAccountInformationData>> value = default;
+            IReadOnlyList<DataLakeAnalyticsStorageAccountInformationData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                     List<DataLakeAnalyticsStorageAccountInformationData> array = new List<DataLakeAnalyticsStorageAccountInformationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataLakeAnalyticsStorageAccountInformationData.DeserializeDataLakeAnalyticsStorageAccountInformationData(item));
+                        array.Add(DataLakeAnalyticsStorageAccountInformationData.DeserializeDataLakeAnalyticsStorageAccountInformationData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataLakeAnalyticsStorageAccountInformationListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new DataLakeAnalyticsStorageAccountInformationListResult(value ?? new ChangeTrackingList<DataLakeAnalyticsStorageAccountInformationData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataLakeAnalyticsStorageAccountInformationListResult>.Write(ModelReaderWriterOptions options)

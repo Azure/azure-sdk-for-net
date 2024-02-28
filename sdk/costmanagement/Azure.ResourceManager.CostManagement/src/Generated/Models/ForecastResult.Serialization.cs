@@ -28,22 +28,22 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Location))
+            if (options.Format != "W" && Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Sku))
+            if (options.Format != "W" && Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteStringValue(Sku);
             }
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Tags))
+            if (options.Format != "W" && !(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -69,19 +69,19 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (Optional.IsCollectionDefined(Columns))
+            if (!(Columns is ChangeTrackingList<ForecastColumn> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("columns"u8);
                 writer.WriteStartArray();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Rows))
+            if (!(Rows is ChangeTrackingList<IList<BinaryData>> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("rows"u8);
                 writer.WriteStartArray();
@@ -165,14 +165,14 @@ namespace Azure.ResourceManager.CostManagement.Models
             Optional<AzureLocation> location = default;
             Optional<string> sku = default;
             Optional<ETag> eTag = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            IReadOnlyDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<ForecastColumn>> columns = default;
-            Optional<IReadOnlyList<IList<BinaryData>>> rows = default;
+            IReadOnlyList<ForecastColumn> columns = default;
+            IReadOnlyList<IList<BinaryData>> rows = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                             List<ForecastColumn> array = new List<ForecastColumn>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ForecastColumn.DeserializeForecastColumn(item));
+                                array.Add(ForecastColumn.DeserializeForecastColumn(item, options));
                             }
                             columns = array;
                             continue;
@@ -308,7 +308,19 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ForecastResult(id, name, type, systemData.Value, nextLink.Value, Optional.ToList(columns), Optional.ToList(rows), Optional.ToNullable(location), sku.Value, Optional.ToNullable(eTag), Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new ForecastResult(
+                id,
+                name,
+                type,
+                systemData.Value,
+                nextLink.Value,
+                columns ?? new ChangeTrackingList<ForecastColumn>(),
+                rows ?? new ChangeTrackingList<IList<BinaryData>>(),
+                Optional.ToNullable(location),
+                sku.Value,
+                Optional.ToNullable(eTag),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ForecastResult>.Write(ModelReaderWriterOptions options)

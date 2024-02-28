@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(InteractionName))
+            if (options.Format != "W" && InteractionName != null)
             {
                 writer.WritePropertyName("interactionName"u8);
                 writer.WriteStringValue(InteractionName);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SuggestedRelationships))
+            if (options.Format != "W" && !(SuggestedRelationships is ChangeTrackingList<RelationshipsLookup> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("suggestedRelationships"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 return null;
             }
             Optional<string> interactionName = default;
-            Optional<IReadOnlyList<RelationshipsLookup>> suggestedRelationships = default;
+            IReadOnlyList<RelationshipsLookup> suggestedRelationships = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<RelationshipsLookup> array = new List<RelationshipsLookup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RelationshipsLookup.DeserializeRelationshipsLookup(item));
+                        array.Add(RelationshipsLookup.DeserializeRelationshipsLookup(item, options));
                     }
                     suggestedRelationships = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SuggestRelationshipLinksResponse(interactionName.Value, Optional.ToList(suggestedRelationships), serializedAdditionalRawData);
+            return new SuggestRelationshipLinksResponse(interactionName.Value, suggestedRelationships ?? new ChangeTrackingList<RelationshipsLookup>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SuggestRelationshipLinksResponse>.Write(ModelReaderWriterOptions options)

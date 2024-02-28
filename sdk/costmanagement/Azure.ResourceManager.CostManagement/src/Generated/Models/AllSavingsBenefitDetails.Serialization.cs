@@ -26,47 +26,47 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(OverageCost))
+            if (options.Format != "W" && OverageCost.HasValue)
             {
                 writer.WritePropertyName("overageCost"u8);
                 writer.WriteNumberValue(OverageCost.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(BenefitCost))
+            if (options.Format != "W" && BenefitCost.HasValue)
             {
                 writer.WritePropertyName("benefitCost"u8);
                 writer.WriteNumberValue(BenefitCost.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(TotalCost))
+            if (options.Format != "W" && TotalCost.HasValue)
             {
                 writer.WritePropertyName("totalCost"u8);
                 writer.WriteNumberValue(TotalCost.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(SavingsAmount))
+            if (options.Format != "W" && SavingsAmount.HasValue)
             {
                 writer.WritePropertyName("savingsAmount"u8);
                 writer.WriteNumberValue(SavingsAmount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(SavingsPercentage))
+            if (options.Format != "W" && SavingsPercentage.HasValue)
             {
                 writer.WritePropertyName("savingsPercentage"u8);
                 writer.WriteNumberValue(SavingsPercentage.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CoveragePercentage))
+            if (options.Format != "W" && CoveragePercentage.HasValue)
             {
                 writer.WritePropertyName("coveragePercentage"u8);
                 writer.WriteNumberValue(CoveragePercentage.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CommitmentAmount))
+            if (options.Format != "W" && CommitmentAmount.HasValue)
             {
                 writer.WritePropertyName("commitmentAmount"u8);
                 writer.WriteNumberValue(CommitmentAmount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(AverageUtilizationPercentage))
+            if (options.Format != "W" && AverageUtilizationPercentage.HasValue)
             {
                 writer.WritePropertyName("averageUtilizationPercentage"u8);
                 writer.WriteNumberValue(AverageUtilizationPercentage.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(WastageCost))
+            if (options.Format != "W" && WastageCost.HasValue)
             {
                 writer.WritePropertyName("wastageCost"u8);
                 writer.WriteNumberValue(WastageCost.Value);
@@ -209,7 +209,17 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AllSavingsBenefitDetails(Optional.ToNullable(overageCost), Optional.ToNullable(benefitCost), Optional.ToNullable(totalCost), Optional.ToNullable(savingsAmount), Optional.ToNullable(savingsPercentage), Optional.ToNullable(coveragePercentage), Optional.ToNullable(commitmentAmount), Optional.ToNullable(averageUtilizationPercentage), Optional.ToNullable(wastageCost), serializedAdditionalRawData);
+            return new AllSavingsBenefitDetails(
+                Optional.ToNullable(overageCost),
+                Optional.ToNullable(benefitCost),
+                Optional.ToNullable(totalCost),
+                Optional.ToNullable(savingsAmount),
+                Optional.ToNullable(savingsPercentage),
+                Optional.ToNullable(coveragePercentage),
+                Optional.ToNullable(commitmentAmount),
+                Optional.ToNullable(averageUtilizationPercentage),
+                Optional.ToNullable(wastageCost),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AllSavingsBenefitDetails>.Write(ModelReaderWriterOptions options)

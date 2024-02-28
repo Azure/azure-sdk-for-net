@@ -80,7 +80,14 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="sqlPoolName"/> is null. </exception>
         public virtual async Task<Response<SynapseRecoverableSqlPoolResource>> GetAsync(string sqlPoolName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sqlPoolName, nameof(sqlPoolName));
+            if (sqlPoolName == null)
+            {
+                throw new ArgumentNullException(nameof(sqlPoolName));
+            }
+            if (sqlPoolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sqlPoolName));
+            }
 
             using var scope = _synapseRecoverableSqlPoolWorkspaceManagedSqlServerRecoverableSqlPoolsClientDiagnostics.CreateScope("SynapseRecoverableSqlPoolCollection.Get");
             scope.Start();
@@ -125,7 +132,14 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="sqlPoolName"/> is null. </exception>
         public virtual Response<SynapseRecoverableSqlPoolResource> Get(string sqlPoolName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sqlPoolName, nameof(sqlPoolName));
+            if (sqlPoolName == null)
+            {
+                throw new ArgumentNullException(nameof(sqlPoolName));
+            }
+            if (sqlPoolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sqlPoolName));
+            }
 
             using var scope = _synapseRecoverableSqlPoolWorkspaceManagedSqlServerRecoverableSqlPoolsClientDiagnostics.CreateScope("SynapseRecoverableSqlPoolCollection.Get");
             scope.Start();
@@ -230,7 +244,14 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="sqlPoolName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string sqlPoolName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sqlPoolName, nameof(sqlPoolName));
+            if (sqlPoolName == null)
+            {
+                throw new ArgumentNullException(nameof(sqlPoolName));
+            }
+            if (sqlPoolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sqlPoolName));
+            }
 
             using var scope = _synapseRecoverableSqlPoolWorkspaceManagedSqlServerRecoverableSqlPoolsClientDiagnostics.CreateScope("SynapseRecoverableSqlPoolCollection.Exists");
             scope.Start();
@@ -273,7 +294,14 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="sqlPoolName"/> is null. </exception>
         public virtual Response<bool> Exists(string sqlPoolName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sqlPoolName, nameof(sqlPoolName));
+            if (sqlPoolName == null)
+            {
+                throw new ArgumentNullException(nameof(sqlPoolName));
+            }
+            if (sqlPoolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sqlPoolName));
+            }
 
             using var scope = _synapseRecoverableSqlPoolWorkspaceManagedSqlServerRecoverableSqlPoolsClientDiagnostics.CreateScope("SynapseRecoverableSqlPoolCollection.Exists");
             scope.Start();
@@ -316,7 +344,14 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="sqlPoolName"/> is null. </exception>
         public virtual async Task<NullableResponse<SynapseRecoverableSqlPoolResource>> GetIfExistsAsync(string sqlPoolName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sqlPoolName, nameof(sqlPoolName));
+            if (sqlPoolName == null)
+            {
+                throw new ArgumentNullException(nameof(sqlPoolName));
+            }
+            if (sqlPoolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sqlPoolName));
+            }
 
             using var scope = _synapseRecoverableSqlPoolWorkspaceManagedSqlServerRecoverableSqlPoolsClientDiagnostics.CreateScope("SynapseRecoverableSqlPoolCollection.GetIfExists");
             scope.Start();
@@ -361,7 +396,14 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="sqlPoolName"/> is null. </exception>
         public virtual NullableResponse<SynapseRecoverableSqlPoolResource> GetIfExists(string sqlPoolName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sqlPoolName, nameof(sqlPoolName));
+            if (sqlPoolName == null)
+            {
+                throw new ArgumentNullException(nameof(sqlPoolName));
+            }
+            if (sqlPoolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sqlPoolName));
+            }
 
             using var scope = _synapseRecoverableSqlPoolWorkspaceManagedSqlServerRecoverableSqlPoolsClientDiagnostics.CreateScope("SynapseRecoverableSqlPoolCollection.GetIfExists");
             scope.Start();

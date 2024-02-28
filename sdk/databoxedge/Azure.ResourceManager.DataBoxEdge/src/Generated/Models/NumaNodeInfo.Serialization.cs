@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NumaNodeIndex))
+            if (NumaNodeIndex.HasValue)
             {
                 writer.WritePropertyName("numaNodeIndex"u8);
                 writer.WriteNumberValue(NumaNodeIndex.Value);
             }
-            if (Optional.IsDefined(TotalMemoryInMB))
+            if (TotalMemoryInMB.HasValue)
             {
                 writer.WritePropertyName("totalMemoryInMb"u8);
                 writer.WriteNumberValue(TotalMemoryInMB.Value);
             }
-            if (Optional.IsDefined(LogicalCoreCountPerCore))
+            if (LogicalCoreCountPerCore.HasValue)
             {
                 writer.WritePropertyName("logicalCoreCountPerCore"u8);
                 writer.WriteNumberValue(LogicalCoreCountPerCore.Value);
             }
-            if (Optional.IsDefined(EffectiveAvailableMemoryInMB))
+            if (EffectiveAvailableMemoryInMB.HasValue)
             {
                 writer.WritePropertyName("effectiveAvailableMemoryInMb"u8);
                 writer.WriteNumberValue(EffectiveAvailableMemoryInMB.Value);
             }
-            if (Optional.IsCollectionDefined(FreeVCpuIndexesForHpn))
+            if (!(FreeVCpuIndexesForHpn is ChangeTrackingList<int> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("freeVCpuIndexesForHpn"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(VCpuIndexesForHpn))
+            if (!(VCpuIndexesForHpn is ChangeTrackingList<int> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("vCpuIndexesForHpn"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(VCpuIndexesForRoot))
+            if (!(VCpuIndexesForRoot is ChangeTrackingList<int> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("vCpuIndexesForRoot"u8);
                 writer.WriteStartArray();
@@ -118,9 +118,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<long> totalMemoryInMb = default;
             Optional<int> logicalCoreCountPerCore = default;
             Optional<long> effectiveAvailableMemoryInMb = default;
-            Optional<IList<int>> freeVCpuIndexesForHpn = default;
-            Optional<IList<int>> vCpuIndexesForHpn = default;
-            Optional<IList<int>> vCpuIndexesForRoot = default;
+            IList<int> freeVCpuIndexesForHpn = default;
+            IList<int> vCpuIndexesForHpn = default;
+            IList<int> vCpuIndexesForRoot = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -209,7 +209,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NumaNodeInfo(Optional.ToNullable(numaNodeIndex), Optional.ToNullable(totalMemoryInMb), Optional.ToNullable(logicalCoreCountPerCore), Optional.ToNullable(effectiveAvailableMemoryInMb), Optional.ToList(freeVCpuIndexesForHpn), Optional.ToList(vCpuIndexesForHpn), Optional.ToList(vCpuIndexesForRoot), serializedAdditionalRawData);
+            return new NumaNodeInfo(
+                Optional.ToNullable(numaNodeIndex),
+                Optional.ToNullable(totalMemoryInMb),
+                Optional.ToNullable(logicalCoreCountPerCore),
+                Optional.ToNullable(effectiveAvailableMemoryInMb),
+                freeVCpuIndexesForHpn ?? new ChangeTrackingList<int>(),
+                vCpuIndexesForHpn ?? new ChangeTrackingList<int>(),
+                vCpuIndexesForRoot ?? new ChangeTrackingList<int>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NumaNodeInfo>.Write(ModelReaderWriterOptions options)

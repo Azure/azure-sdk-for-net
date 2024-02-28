@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TotalPositives))
+            if (TotalPositives.HasValue)
             {
                 writer.WritePropertyName("totalPositives"u8);
                 writer.WriteNumberValue(TotalPositives.Value);
             }
-            if (Optional.IsDefined(TotalNegatives))
+            if (TotalNegatives.HasValue)
             {
                 writer.WritePropertyName("totalNegatives"u8);
                 writer.WriteNumberValue(TotalNegatives.Value);
             }
-            if (Optional.IsCollectionDefined(Distributions))
+            if (!(Distributions is ChangeTrackingList<PredictionDistributionDefinitionDistributionsItem> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("distributions"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
             Optional<long> totalPositives = default;
             Optional<long> totalNegatives = default;
-            Optional<IReadOnlyList<PredictionDistributionDefinitionDistributionsItem>> distributions = default;
+            IReadOnlyList<PredictionDistributionDefinitionDistributionsItem> distributions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<PredictionDistributionDefinitionDistributionsItem> array = new List<PredictionDistributionDefinitionDistributionsItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PredictionDistributionDefinitionDistributionsItem.DeserializePredictionDistributionDefinitionDistributionsItem(item));
+                        array.Add(PredictionDistributionDefinitionDistributionsItem.DeserializePredictionDistributionDefinitionDistributionsItem(item, options));
                     }
                     distributions = array;
                     continue;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PredictionDistributionDefinition(Optional.ToNullable(totalPositives), Optional.ToNullable(totalNegatives), Optional.ToList(distributions), serializedAdditionalRawData);
+            return new PredictionDistributionDefinition(Optional.ToNullable(totalPositives), Optional.ToNullable(totalNegatives), distributions ?? new ChangeTrackingList<PredictionDistributionDefinitionDistributionsItem>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PredictionDistributionDefinition>.Write(ModelReaderWriterOptions options)

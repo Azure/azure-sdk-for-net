@@ -68,8 +68,18 @@ namespace Azure.ResourceManager.Quota
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<CurrentQuotaLimitBaseData>> GetAsync(string scope, string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
 
             using var message = CreateGetRequest(scope, resourceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -102,8 +112,18 @@ namespace Azure.ResourceManager.Quota
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<CurrentQuotaLimitBaseData> Get(string scope, string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
 
             using var message = CreateGetRequest(scope, resourceName);
             _pipeline.Send(message, cancellationToken);
@@ -163,9 +183,22 @@ namespace Azure.ResourceManager.Quota
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string scope, string resourceName, CurrentQuotaLimitBaseData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(scope, resourceName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -197,9 +230,22 @@ namespace Azure.ResourceManager.Quota
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string scope, string resourceName, CurrentQuotaLimitBaseData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(scope, resourceName, data);
             _pipeline.Send(message, cancellationToken);
@@ -253,9 +299,22 @@ namespace Azure.ResourceManager.Quota
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateAsync(string scope, string resourceName, CurrentQuotaLimitBaseData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateUpdateRequest(scope, resourceName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -287,9 +346,22 @@ namespace Azure.ResourceManager.Quota
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Update(string scope, string resourceName, CurrentQuotaLimitBaseData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateUpdateRequest(scope, resourceName, data);
             _pipeline.Send(message, cancellationToken);
@@ -326,7 +398,10 @@ namespace Azure.ResourceManager.Quota
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public async Task<Response<QuotaLimits>> ListAsync(string scope, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
 
             using var message = CreateListRequest(scope);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -350,7 +425,10 @@ namespace Azure.ResourceManager.Quota
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public Response<QuotaLimits> List(string scope, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
 
             using var message = CreateListRequest(scope);
             _pipeline.Send(message, cancellationToken);
@@ -389,8 +467,14 @@ namespace Azure.ResourceManager.Quota
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
         public async Task<Response<QuotaLimits>> ListNextPageAsync(string nextLink, string scope, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNull(scope, nameof(scope));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, scope);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -415,8 +499,14 @@ namespace Azure.ResourceManager.Quota
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
         public Response<QuotaLimits> ListNextPage(string nextLink, string scope, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNull(scope, nameof(scope));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, scope);
             _pipeline.Send(message, cancellationToken);

@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceId))
+            if (options.Format != "W" && ResourceId != null)
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(Error))
+            if (Error != null)
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);
             }
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    error = HybridContainerServiceCredentialListError.DeserializeHybridContainerServiceCredentialListError(property.Value);
+                    error = HybridContainerServiceCredentialListError.DeserializeHybridContainerServiceCredentialListError(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    properties = ListCredentialResponseProperties.DeserializeListCredentialResponseProperties(property.Value);
+                    properties = ListCredentialResponseProperties.DeserializeListCredentialResponseProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -156,7 +156,14 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridContainerServiceCredentialListResult(id.Value, name.Value, resourceId.Value, Optional.ToNullable(status), error.Value, properties.Value, serializedAdditionalRawData);
+            return new HybridContainerServiceCredentialListResult(
+                id.Value,
+                name.Value,
+                resourceId.Value,
+                Optional.ToNullable(status),
+                error.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridContainerServiceCredentialListResult>.Write(ModelReaderWriterOptions options)

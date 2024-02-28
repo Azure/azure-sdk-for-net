@@ -28,24 +28,24 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStartObject();
             writer.WritePropertyName("keyName"u8);
             writer.WriteStringValue(KeyName);
-            if (Optional.IsDefined(KeyVersion))
+            if (KeyVersion != null)
             {
                 writer.WritePropertyName("keyVersion"u8);
                 writer.WriteStringValue(KeyVersion);
             }
             writer.WritePropertyName("keyVault"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceId))
+            if (ResourceId != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceName))
+            if (options.Format != "W" && ResourceName != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(ResourceName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationAccountKeyVaultKeyReference(keyName, keyVersion.Value, id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData);
+            return new IntegrationAccountKeyVaultKeyReference(
+                keyName,
+                keyVersion.Value,
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationAccountKeyVaultKeyReference>.Write(ModelReaderWriterOptions options)

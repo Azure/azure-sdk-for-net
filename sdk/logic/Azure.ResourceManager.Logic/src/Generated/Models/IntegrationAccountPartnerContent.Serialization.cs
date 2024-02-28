@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(B2B))
+            if (B2B != null)
             {
                 writer.WritePropertyName("b2b"u8);
                 writer.WriteObjectValue(B2B);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    b2b = B2BPartnerContent.DeserializeB2BPartnerContent(property.Value);
+                    b2b = B2BPartnerContent.DeserializeB2BPartnerContent(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

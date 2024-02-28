@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(LoginServer))
+            if (LoginServer != null)
             {
                 writer.WritePropertyName("loginServer"u8);
                 writer.WriteStringValue(LoginServer);
             }
-            if (Optional.IsDefined(ImageName))
+            if (ImageName != null)
             {
                 writer.WritePropertyName("imageName"u8);
                 writer.WriteStringValue(ImageName);
             }
-            if (Optional.IsDefined(Digest))
+            if (Digest != null)
             {
                 writer.WritePropertyName("digest"u8);
                 writer.WriteStringValue(Digest);

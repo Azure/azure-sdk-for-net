@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,39 +47,39 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(MeterId))
+            if (MeterId.HasValue)
             {
                 writer.WritePropertyName("meterId"u8);
                 writer.WriteStringValue(MeterId.Value);
             }
-            if (Optional.IsDefined(BillingLocation))
+            if (BillingLocation.HasValue)
             {
                 writer.WritePropertyName("billingLocation"u8);
                 writer.WriteStringValue(BillingLocation.Value);
             }
-            if (Optional.IsDefined(ShortName))
+            if (ShortName != null)
             {
                 writer.WritePropertyName("shortName"u8);
                 writer.WriteStringValue(ShortName);
             }
-            if (Optional.IsDefined(FriendlyName))
+            if (FriendlyName != null)
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Optional.IsDefined(OSType))
+            if (OSType != null)
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType);
             }
-            if (Optional.IsDefined(Multiplier))
+            if (Multiplier.HasValue)
             {
                 writer.WritePropertyName("multiplier"u8);
                 writer.WriteNumberValue(Multiplier.Value);
@@ -227,7 +227,19 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceBillingMeter(id, name, type, systemData.Value, Optional.ToNullable(meterId), Optional.ToNullable(billingLocation), shortName.Value, friendlyName.Value, osType.Value, Optional.ToNullable(multiplier), kind.Value, serializedAdditionalRawData);
+            return new AppServiceBillingMeter(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(meterId),
+                Optional.ToNullable(billingLocation),
+                shortName.Value,
+                friendlyName.Value,
+                osType.Value,
+                Optional.ToNullable(multiplier),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceBillingMeter>.Write(ModelReaderWriterOptions options)

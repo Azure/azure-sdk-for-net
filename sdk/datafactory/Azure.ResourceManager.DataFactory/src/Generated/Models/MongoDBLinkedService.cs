@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -21,8 +20,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="server"/> or <paramref name="databaseName"/> is null. </exception>
         public MongoDBLinkedService(DataFactoryElement<string> server, DataFactoryElement<string> databaseName)
         {
-            Argument.AssertNotNull(server, nameof(server));
-            Argument.AssertNotNull(databaseName, nameof(databaseName));
+            if (server == null)
+            {
+                throw new ArgumentNullException(nameof(server));
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
 
             Server = server;
             DatabaseName = databaseName;

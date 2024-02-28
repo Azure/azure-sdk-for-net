@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Duration))
+            if (Duration.HasValue)
             {
                 writer.WritePropertyName("duration"u8);
                 writer.WriteStringValue(Duration.Value, "P");
             }
-            if (Optional.IsCollectionDefined(ActionsInfo))
+            if (!(ActionsInfo is ChangeTrackingList<JobSupportedAction> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("actionsInfo"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ErrorDetails))
+            if (!(ErrorDetails is ChangeTrackingList<StorageErrorInfo> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("errorDetails"u8);
                 writer.WriteStartArray();
@@ -51,57 +51,57 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(StorageAccountName))
+            if (StorageAccountName != null)
             {
                 writer.WritePropertyName("storageAccountName"u8);
                 writer.WriteStringValue(StorageAccountName);
             }
-            if (Optional.IsDefined(StorageAccountVersion))
+            if (StorageAccountVersion != null)
             {
                 writer.WritePropertyName("storageAccountVersion"u8);
                 writer.WriteStringValue(StorageAccountVersion);
             }
-            if (Optional.IsDefined(ExtendedInfo))
+            if (ExtendedInfo != null)
             {
                 writer.WritePropertyName("extendedInfo"u8);
                 writer.WriteObjectValue(ExtendedInfo);
             }
-            if (Optional.IsDefined(IsUserTriggered))
+            if (IsUserTriggered.HasValue)
             {
                 writer.WritePropertyName("isUserTriggered"u8);
                 writer.WriteBooleanValue(IsUserTriggered.Value);
             }
-            if (Optional.IsDefined(EntityFriendlyName))
+            if (EntityFriendlyName != null)
             {
                 writer.WritePropertyName("entityFriendlyName"u8);
                 writer.WriteStringValue(EntityFriendlyName);
             }
-            if (Optional.IsDefined(BackupManagementType))
+            if (BackupManagementType.HasValue)
             {
                 writer.WritePropertyName("backupManagementType"u8);
                 writer.WriteStringValue(BackupManagementType.Value.ToString());
             }
-            if (Optional.IsDefined(Operation))
+            if (Operation != null)
             {
                 writer.WritePropertyName("operation"u8);
                 writer.WriteStringValue(Operation);
             }
-            if (Optional.IsDefined(Status))
+            if (Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Optional.IsDefined(StartOn))
+            if (StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (EndOn.HasValue)
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Optional.IsDefined(ActivityId))
+            if (ActivityId != null)
             {
                 writer.WritePropertyName("activityId"u8);
                 writer.WriteStringValue(ActivityId);
@@ -147,8 +147,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 return null;
             }
             Optional<TimeSpan> duration = default;
-            Optional<IList<JobSupportedAction>> actionsInfo = default;
-            Optional<IList<StorageErrorInfo>> errorDetails = default;
+            IList<JobSupportedAction> actionsInfo = default;
+            IList<StorageErrorInfo> errorDetails = default;
             Optional<string> storageAccountName = default;
             Optional<string> storageAccountVersion = default;
             Optional<StorageBackupJobExtendedInfo> extendedInfo = default;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<StorageErrorInfo> array = new List<StorageErrorInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageErrorInfo.DeserializeStorageErrorInfo(item));
+                        array.Add(StorageErrorInfo.DeserializeStorageErrorInfo(item, options));
                     }
                     errorDetails = array;
                     continue;
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    extendedInfo = StorageBackupJobExtendedInfo.DeserializeStorageBackupJobExtendedInfo(property.Value);
+                    extendedInfo = StorageBackupJobExtendedInfo.DeserializeStorageBackupJobExtendedInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("isUserTriggered"u8))
@@ -288,7 +288,23 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageBackupJob(entityFriendlyName.Value, Optional.ToNullable(backupManagementType), operation.Value, status.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), activityId.Value, jobType, serializedAdditionalRawData, Optional.ToNullable(duration), Optional.ToList(actionsInfo), Optional.ToList(errorDetails), storageAccountName.Value, storageAccountVersion.Value, extendedInfo.Value, Optional.ToNullable(isUserTriggered));
+            return new StorageBackupJob(
+                entityFriendlyName.Value,
+                Optional.ToNullable(backupManagementType),
+                operation.Value,
+                status.Value,
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                activityId.Value,
+                jobType,
+                serializedAdditionalRawData,
+                Optional.ToNullable(duration),
+                actionsInfo ?? new ChangeTrackingList<JobSupportedAction>(),
+                errorDetails ?? new ChangeTrackingList<StorageErrorInfo>(),
+                storageAccountName.Value,
+                storageAccountVersion.Value,
+                extendedInfo.Value,
+                Optional.ToNullable(isUserTriggered));
         }
 
         BinaryData IPersistableModel<StorageBackupJob>.Write(ModelReaderWriterOptions options)

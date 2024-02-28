@@ -27,27 +27,27 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RelativePath))
+            if (RelativePath != null)
             {
                 writer.WritePropertyName("relativePath"u8);
                 writer.WriteStringValue(RelativePath);
             }
-            if (Optional.IsDefined(Builder))
+            if (Builder != null)
             {
                 writer.WritePropertyName("builder"u8);
                 writer.WriteStringValue(Builder);
             }
-            if (Optional.IsDefined(AgentPool))
+            if (AgentPool != null)
             {
                 writer.WritePropertyName("agentPool"u8);
                 writer.WriteStringValue(AgentPool);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Env))
+            if (!(Env is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("env"u8);
                 writer.WriteStartObject();
@@ -58,12 +58,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsDefined(TriggeredBuildResult))
+            if (options.Format != "W" && TriggeredBuildResult != null)
             {
                 writer.WritePropertyName("triggeredBuildResult"u8);
                 JsonSerializer.Serialize(writer, TriggeredBuildResult);
             }
-            if (Optional.IsDefined(ResourceRequests))
+            if (ResourceRequests != null)
             {
                 writer.WritePropertyName("resourceRequests"u8);
                 writer.WriteObjectValue(ResourceRequests);
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<string> builder = default;
             Optional<string> agentPool = default;
             Optional<AppPlatformBuildProvisioningState> provisioningState = default;
-            Optional<IDictionary<string, string>> env = default;
+            IDictionary<string, string> env = default;
             Optional<SubResource> triggeredBuildResult = default;
             Optional<AppPlatformBuildResourceRequirements> resourceRequests = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    resourceRequests = AppPlatformBuildResourceRequirements.DeserializeAppPlatformBuildResourceRequirements(property.Value);
+                    resourceRequests = AppPlatformBuildResourceRequirements.DeserializeAppPlatformBuildResourceRequirements(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -179,7 +179,15 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformBuildProperties(relativePath.Value, builder.Value, agentPool.Value, Optional.ToNullable(provisioningState), Optional.ToDictionary(env), triggeredBuildResult, resourceRequests.Value, serializedAdditionalRawData);
+            return new AppPlatformBuildProperties(
+                relativePath.Value,
+                builder.Value,
+                agentPool.Value,
+                Optional.ToNullable(provisioningState),
+                env ?? new ChangeTrackingDictionary<string, string>(),
+                triggeredBuildResult,
+                resourceRequests.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformBuildProperties>.Write(ModelReaderWriterOptions options)

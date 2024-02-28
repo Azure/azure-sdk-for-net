@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.BotService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Hostname))
+            if (Hostname != null)
             {
                 writer.WritePropertyName("hostname"u8);
                 writer.WriteStringValue(Hostname);
             }
-            if (Optional.IsDefined(Authkey))
+            if (Authkey != null)
             {
                 writer.WritePropertyName("authkey"u8);
                 writer.WriteStringValue(Authkey);

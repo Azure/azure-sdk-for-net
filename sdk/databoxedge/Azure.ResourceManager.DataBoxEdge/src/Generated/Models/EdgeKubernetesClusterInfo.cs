@@ -51,7 +51,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         public EdgeKubernetesClusterInfo(string version)
         {
-            Argument.AssertNotNull(version, nameof(version));
+            if (version == null)
+            {
+                throw new ArgumentNullException(nameof(version));
+            }
 
             Nodes = new ChangeTrackingList<EdgeKubernetesNodeInfo>();
             Version = version;

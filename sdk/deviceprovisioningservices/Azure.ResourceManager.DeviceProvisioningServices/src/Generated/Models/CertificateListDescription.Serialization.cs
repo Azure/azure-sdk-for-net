@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<DeviceProvisioningServicesCertificateData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DeviceProvisioningServicesCertificateData>> value = default;
+            IReadOnlyList<DeviceProvisioningServicesCertificateData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                     List<DeviceProvisioningServicesCertificateData> array = new List<DeviceProvisioningServicesCertificateData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeviceProvisioningServicesCertificateData.DeserializeDeviceProvisioningServicesCertificateData(item));
+                        array.Add(DeviceProvisioningServicesCertificateData.DeserializeDeviceProvisioningServicesCertificateData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CertificateListDescription(Optional.ToList(value), serializedAdditionalRawData);
+            return new CertificateListDescription(value ?? new ChangeTrackingList<DeviceProvisioningServicesCertificateData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CertificateListDescription>.Write(ModelReaderWriterOptions options)

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Avs.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<ExpressRouteAuthorizationData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ExpressRouteAuthorizationData>> value = default;
+            IReadOnlyList<ExpressRouteAuthorizationData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Avs.Models
                     List<ExpressRouteAuthorizationData> array = new List<ExpressRouteAuthorizationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExpressRouteAuthorizationData.DeserializeExpressRouteAuthorizationData(item));
+                        array.Add(ExpressRouteAuthorizationData.DeserializeExpressRouteAuthorizationData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExpressRouteAuthorizationList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ExpressRouteAuthorizationList(value ?? new ChangeTrackingList<ExpressRouteAuthorizationData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExpressRouteAuthorizationList>.Write(ModelReaderWriterOptions options)

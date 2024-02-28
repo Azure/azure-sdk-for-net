@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RecoveryPointRehydrationInfo))
+            if (RecoveryPointRehydrationInfo != null)
             {
                 writer.WritePropertyName("recoveryPointRehydrationInfo"u8);
                 writer.WriteObjectValue(RecoveryPointRehydrationInfo);
             }
-            if (Optional.IsDefined(RecoveryType))
+            if (RecoveryType.HasValue)
             {
                 writer.WritePropertyName("recoveryType"u8);
                 writer.WriteStringValue(RecoveryType.Value.ToString());
             }
-            if (Optional.IsDefined(SourceResourceId))
+            if (SourceResourceId != null)
             {
                 writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);
             }
-            if (Optional.IsCollectionDefined(PropertyBag))
+            if (!(PropertyBag is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("propertyBag"u8);
                 writer.WriteStartObject();
@@ -52,32 +52,32 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(TargetInfo))
+            if (TargetInfo != null)
             {
                 writer.WritePropertyName("targetInfo"u8);
                 writer.WriteObjectValue(TargetInfo);
             }
-            if (Optional.IsDefined(RecoveryMode))
+            if (RecoveryMode.HasValue)
             {
                 writer.WritePropertyName("recoveryMode"u8);
                 writer.WriteStringValue(RecoveryMode.Value.ToString());
             }
-            if (Optional.IsDefined(TargetResourceGroupName))
+            if (TargetResourceGroupName != null)
             {
                 writer.WritePropertyName("targetResourceGroupName"u8);
                 writer.WriteStringValue(TargetResourceGroupName);
             }
-            if (Optional.IsDefined(UserAssignedManagedIdentityDetails))
+            if (UserAssignedManagedIdentityDetails != null)
             {
                 writer.WritePropertyName("userAssignedManagedIdentityDetails"u8);
                 writer.WriteObjectValue(UserAssignedManagedIdentityDetails);
             }
-            if (Optional.IsDefined(SnapshotRestoreParameters))
+            if (SnapshotRestoreParameters != null)
             {
                 writer.WritePropertyName("snapshotRestoreParameters"u8);
                 writer.WriteObjectValue(SnapshotRestoreParameters);
             }
-            if (Optional.IsDefined(TargetVirtualMachineId))
+            if (TargetVirtualMachineId != null)
             {
                 writer.WritePropertyName("targetVirtualMachineId"u8);
                 writer.WriteStringValue(TargetVirtualMachineId);
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<RecoveryPointRehydrationInfo> recoveryPointRehydrationInfo = default;
             Optional<FileShareRecoveryType> recoveryType = default;
             Optional<ResourceIdentifier> sourceResourceId = default;
-            Optional<IDictionary<string, string>> propertyBag = default;
+            IDictionary<string, string> propertyBag = default;
             Optional<TargetRestoreInfo> targetInfo = default;
             Optional<RecoveryMode> recoveryMode = default;
             Optional<string> targetResourceGroupName = default;
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    recoveryPointRehydrationInfo = RecoveryPointRehydrationInfo.DeserializeRecoveryPointRehydrationInfo(property.Value);
+                    recoveryPointRehydrationInfo = RecoveryPointRehydrationInfo.DeserializeRecoveryPointRehydrationInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("recoveryType"u8))
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    targetInfo = TargetRestoreInfo.DeserializeTargetRestoreInfo(property.Value);
+                    targetInfo = TargetRestoreInfo.DeserializeTargetRestoreInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("recoveryMode"u8))
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    userAssignedManagedIdentityDetails = UserAssignedManagedIdentityDetails.DeserializeUserAssignedManagedIdentityDetails(property.Value);
+                    userAssignedManagedIdentityDetails = UserAssignedManagedIdentityDetails.DeserializeUserAssignedManagedIdentityDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("snapshotRestoreParameters"u8))
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    snapshotRestoreParameters = SnapshotRestoreContent.DeserializeSnapshotRestoreContent(property.Value);
+                    snapshotRestoreParameters = SnapshotRestoreContent.DeserializeSnapshotRestoreContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetVirtualMachineId"u8))
@@ -239,7 +239,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadSapHanaRestoreWithRehydrateContent(objectType, serializedAdditionalRawData, Optional.ToNullable(recoveryType), sourceResourceId.Value, Optional.ToDictionary(propertyBag), targetInfo.Value, Optional.ToNullable(recoveryMode), targetResourceGroupName.Value, userAssignedManagedIdentityDetails.Value, snapshotRestoreParameters.Value, targetVirtualMachineId.Value, recoveryPointRehydrationInfo.Value);
+            return new WorkloadSapHanaRestoreWithRehydrateContent(
+                objectType,
+                serializedAdditionalRawData,
+                Optional.ToNullable(recoveryType),
+                sourceResourceId.Value,
+                propertyBag ?? new ChangeTrackingDictionary<string, string>(),
+                targetInfo.Value,
+                Optional.ToNullable(recoveryMode),
+                targetResourceGroupName.Value,
+                userAssignedManagedIdentityDetails.Value,
+                snapshotRestoreParameters.Value,
+                targetVirtualMachineId.Value,
+                recoveryPointRehydrationInfo.Value);
         }
 
         BinaryData IPersistableModel<WorkloadSapHanaRestoreWithRehydrateContent>.Write(ModelReaderWriterOptions options)

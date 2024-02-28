@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<NotificationHubData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<NotificationHubData>> value = default;
+            IReadOnlyList<NotificationHubData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                     List<NotificationHubData> array = new List<NotificationHubData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NotificationHubData.DeserializeNotificationHubData(item));
+                        array.Add(NotificationHubData.DeserializeNotificationHubData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NotificationHubListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new NotificationHubListResult(value ?? new ChangeTrackingList<NotificationHubData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NotificationHubListResult>.Write(ModelReaderWriterOptions options)

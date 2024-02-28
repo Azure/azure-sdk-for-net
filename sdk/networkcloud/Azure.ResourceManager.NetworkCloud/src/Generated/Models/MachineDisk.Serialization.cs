@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(CapacityGB))
+            if (options.Format != "W" && CapacityGB.HasValue)
             {
                 writer.WritePropertyName("capacityGB"u8);
                 writer.WriteNumberValue(CapacityGB.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Connection))
+            if (options.Format != "W" && Connection.HasValue)
             {
                 writer.WritePropertyName("connection"u8);
                 writer.WriteStringValue(Connection.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DiskType))
+            if (options.Format != "W" && DiskType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(DiskType.Value.ToString());

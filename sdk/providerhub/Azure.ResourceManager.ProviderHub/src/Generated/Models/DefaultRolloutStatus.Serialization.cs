@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NextTrafficRegion))
+            if (NextTrafficRegion.HasValue)
             {
                 writer.WritePropertyName("nextTrafficRegion"u8);
                 writer.WriteStringValue(NextTrafficRegion.Value.ToString());
             }
-            if (Optional.IsDefined(NextTrafficRegionScheduledOn))
+            if (NextTrafficRegionScheduledOn.HasValue)
             {
                 writer.WritePropertyName("nextTrafficRegionScheduledTime"u8);
                 writer.WriteStringValue(NextTrafficRegionScheduledOn.Value, "O");
             }
-            if (Optional.IsDefined(SubscriptionReregistrationResult))
+            if (SubscriptionReregistrationResult.HasValue)
             {
                 writer.WritePropertyName("subscriptionReregistrationResult"u8);
                 writer.WriteStringValue(SubscriptionReregistrationResult.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(CompletedRegions))
+            if (!(CompletedRegions is ChangeTrackingList<AzureLocation> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("completedRegions"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(FailedOrSkippedRegions))
+            if (!(FailedOrSkippedRegions is ChangeTrackingDictionary<string, ExtendedErrorInfo> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("failedOrSkippedRegions"u8);
                 writer.WriteStartObject();
@@ -103,8 +103,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Optional<TrafficRegionCategory> nextTrafficRegion = default;
             Optional<DateTimeOffset> nextTrafficRegionScheduledTime = default;
             Optional<SubscriptionReregistrationResult> subscriptionReregistrationResult = default;
-            Optional<IList<AzureLocation>> completedRegions = default;
-            Optional<IDictionary<string, ExtendedErrorInfo>> failedOrSkippedRegions = default;
+            IList<AzureLocation> completedRegions = default;
+            IDictionary<string, ExtendedErrorInfo> failedOrSkippedRegions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     Dictionary<string, ExtendedErrorInfo> dictionary = new Dictionary<string, ExtendedErrorInfo>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, ExtendedErrorInfo.DeserializeExtendedErrorInfo(property0.Value));
+                        dictionary.Add(property0.Name, ExtendedErrorInfo.DeserializeExtendedErrorInfo(property0.Value, options));
                     }
                     failedOrSkippedRegions = dictionary;
                     continue;
@@ -170,7 +170,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DefaultRolloutStatus(Optional.ToList(completedRegions), Optional.ToDictionary(failedOrSkippedRegions), serializedAdditionalRawData, Optional.ToNullable(nextTrafficRegion), Optional.ToNullable(nextTrafficRegionScheduledTime), Optional.ToNullable(subscriptionReregistrationResult));
+            return new DefaultRolloutStatus(
+                completedRegions ?? new ChangeTrackingList<AzureLocation>(),
+                failedOrSkippedRegions ?? new ChangeTrackingDictionary<string, ExtendedErrorInfo>(),
+                serializedAdditionalRawData,
+                Optional.ToNullable(nextTrafficRegion),
+                Optional.ToNullable(nextTrafficRegionScheduledTime),
+                Optional.ToNullable(subscriptionReregistrationResult));
         }
 
         BinaryData IPersistableModel<DefaultRolloutStatus>.Write(ModelReaderWriterOptions options)

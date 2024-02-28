@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Markings))
+            if (!(Markings is ChangeTrackingList<int> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("markings"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SourceIPRanges))
+            if (!(SourceIPRanges is ChangeTrackingList<QosIPRange> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("sourceIpRanges"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DestinationIPRanges))
+            if (!(DestinationIPRanges is ChangeTrackingList<QosIPRange> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("destinationIpRanges"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SourcePortRanges))
+            if (!(SourcePortRanges is ChangeTrackingList<QosPortRange> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("sourcePortRanges"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DestinationPortRanges))
+            if (!(DestinationPortRanges is ChangeTrackingList<QosPortRange> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("destinationPortRanges"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Protocol))
+            if (Protocol.HasValue)
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
@@ -119,11 +119,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IList<int>> markings = default;
-            Optional<IList<QosIPRange>> sourceIPRanges = default;
-            Optional<IList<QosIPRange>> destinationIPRanges = default;
-            Optional<IList<QosPortRange>> sourcePortRanges = default;
-            Optional<IList<QosPortRange>> destinationPortRanges = default;
+            IList<int> markings = default;
+            IList<QosIPRange> sourceIPRanges = default;
+            IList<QosIPRange> destinationIPRanges = default;
+            IList<QosPortRange> sourcePortRanges = default;
+            IList<QosPortRange> destinationPortRanges = default;
             Optional<ProtocolType> protocol = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<QosIPRange> array = new List<QosIPRange>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QosIPRange.DeserializeQosIPRange(item));
+                        array.Add(QosIPRange.DeserializeQosIPRange(item, options));
                     }
                     sourceIPRanges = array;
                     continue;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<QosIPRange> array = new List<QosIPRange>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QosIPRange.DeserializeQosIPRange(item));
+                        array.Add(QosIPRange.DeserializeQosIPRange(item, options));
                     }
                     destinationIPRanges = array;
                     continue;
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<QosPortRange> array = new List<QosPortRange>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QosPortRange.DeserializeQosPortRange(item));
+                        array.Add(QosPortRange.DeserializeQosPortRange(item, options));
                     }
                     sourcePortRanges = array;
                     continue;
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<QosPortRange> array = new List<QosPortRange>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QosPortRange.DeserializeQosPortRange(item));
+                        array.Add(QosPortRange.DeserializeQosPortRange(item, options));
                     }
                     destinationPortRanges = array;
                     continue;
@@ -214,7 +214,14 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DscpQosDefinition(Optional.ToList(markings), Optional.ToList(sourceIPRanges), Optional.ToList(destinationIPRanges), Optional.ToList(sourcePortRanges), Optional.ToList(destinationPortRanges), Optional.ToNullable(protocol), serializedAdditionalRawData);
+            return new DscpQosDefinition(
+                markings ?? new ChangeTrackingList<int>(),
+                sourceIPRanges ?? new ChangeTrackingList<QosIPRange>(),
+                destinationIPRanges ?? new ChangeTrackingList<QosIPRange>(),
+                sourcePortRanges ?? new ChangeTrackingList<QosPortRange>(),
+                destinationPortRanges ?? new ChangeTrackingList<QosPortRange>(),
+                Optional.ToNullable(protocol),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DscpQosDefinition>.Write(ModelReaderWriterOptions options)

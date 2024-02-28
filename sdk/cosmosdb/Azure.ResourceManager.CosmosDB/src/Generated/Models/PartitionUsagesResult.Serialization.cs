@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<PartitionUsage> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PartitionUsage>> value = default;
+            IReadOnlyList<PartitionUsage> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<PartitionUsage> array = new List<PartitionUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PartitionUsage.DeserializePartitionUsage(item));
+                        array.Add(PartitionUsage.DeserializePartitionUsage(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PartitionUsagesResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new PartitionUsagesResult(value ?? new ChangeTrackingList<PartitionUsage>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PartitionUsagesResult>.Write(ModelReaderWriterOptions options)

@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProvisioningState))
+            if (ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(RepoId))
+            if (RepoId != null)
             {
                 writer.WritePropertyName("repoId"u8);
                 writer.WriteStringValue(RepoId);
             }
-            if (Optional.IsDefined(RepoUri))
+            if (RepoUri != null)
             {
                 writer.WritePropertyName("repoUrl"u8);
                 writer.WriteStringValue(RepoUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(OrgName))
+            if (OrgName != null)
             {
                 writer.WritePropertyName("orgName"u8);
                 writer.WriteStringValue(OrgName);
             }
-            if (Optional.IsDefined(ProjectName))
+            if (ProjectName != null)
             {
                 writer.WritePropertyName("projectName"u8);
                 writer.WriteStringValue(ProjectName);
             }
-            if (Optional.IsDefined(Visibility))
+            if (Visibility != null)
             {
                 writer.WritePropertyName("visibility"u8);
                 writer.WriteStringValue(Visibility);
             }
-            if (Optional.IsDefined(ActionableRemediation))
+            if (ActionableRemediation != null)
             {
                 writer.WritePropertyName("actionableRemediation"u8);
                 writer.WriteObjectValue(ActionableRemediation);
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                     {
                         continue;
                     }
-                    actionableRemediation = ActionableRemediation.DeserializeActionableRemediation(property.Value);
+                    actionableRemediation = ActionableRemediation.DeserializeActionableRemediation(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -163,7 +163,15 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureDevOpsRepoProperties(Optional.ToNullable(provisioningState), repoId.Value, repoUrl.Value, orgName.Value, projectName.Value, visibility.Value, actionableRemediation.Value, serializedAdditionalRawData);
+            return new AzureDevOpsRepoProperties(
+                Optional.ToNullable(provisioningState),
+                repoId.Value,
+                repoUrl.Value,
+                orgName.Value,
+                projectName.Value,
+                visibility.Value,
+                actionableRemediation.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureDevOpsRepoProperties>.Write(ModelReaderWriterOptions options)

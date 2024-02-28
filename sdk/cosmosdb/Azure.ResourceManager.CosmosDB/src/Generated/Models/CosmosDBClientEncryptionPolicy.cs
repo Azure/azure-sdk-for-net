@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -53,7 +52,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <exception cref="ArgumentNullException"> <paramref name="includedPaths"/> is null. </exception>
         public CosmosDBClientEncryptionPolicy(IEnumerable<CosmosDBClientEncryptionIncludedPath> includedPaths, int policyFormatVersion)
         {
-            Argument.AssertNotNull(includedPaths, nameof(includedPaths));
+            if (includedPaths == null)
+            {
+                throw new ArgumentNullException(nameof(includedPaths));
+            }
 
             IncludedPaths = includedPaths.ToList();
             PolicyFormatVersion = policyFormatVersion;

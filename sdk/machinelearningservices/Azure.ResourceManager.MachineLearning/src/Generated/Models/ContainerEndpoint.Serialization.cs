@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Protocol))
+            if (Protocol.HasValue)
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Target))
+            if (Target.HasValue)
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteNumberValue(Target.Value);
             }
-            if (Optional.IsDefined(Published))
+            if (Published.HasValue)
             {
                 if (Published != null)
                 {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("published");
                 }
             }
-            if (Optional.IsDefined(HostIP))
+            if (HostIP != null)
             {
                 if (HostIP != null)
                 {
@@ -161,7 +161,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerEndpoint(Optional.ToNullable(protocol), name.Value, Optional.ToNullable(target), Optional.ToNullable(published), hostIP.Value, serializedAdditionalRawData);
+            return new ContainerEndpoint(
+                Optional.ToNullable(protocol),
+                name.Value,
+                Optional.ToNullable(target),
+                Optional.ToNullable(published),
+                hostIP.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerEndpoint>.Write(ModelReaderWriterOptions options)

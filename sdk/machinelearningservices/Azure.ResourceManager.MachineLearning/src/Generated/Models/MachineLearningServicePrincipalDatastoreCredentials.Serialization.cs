@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AuthorityUri))
+            if (AuthorityUri != null)
             {
                 if (AuthorityUri != null)
                 {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("clientId"u8);
             writer.WriteStringValue(ClientId);
-            if (Optional.IsDefined(ResourceUri))
+            if (ResourceUri != null)
             {
                 if (ResourceUri != null)
                 {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("secrets"u8))
                 {
-                    secrets = MachineLearningServicePrincipalDatastoreSecrets.DeserializeMachineLearningServicePrincipalDatastoreSecrets(property.Value);
+                    secrets = MachineLearningServicePrincipalDatastoreSecrets.DeserializeMachineLearningServicePrincipalDatastoreSecrets(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tenantId"u8))
@@ -152,7 +152,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningServicePrincipalDatastoreCredentials(credentialsType, serializedAdditionalRawData, authorityUrl.Value, clientId, resourceUrl.Value, secrets, tenantId);
+            return new MachineLearningServicePrincipalDatastoreCredentials(
+                credentialsType,
+                serializedAdditionalRawData,
+                authorityUrl.Value,
+                clientId,
+                resourceUrl.Value,
+                secrets,
+                tenantId);
         }
 
         BinaryData IPersistableModel<MachineLearningServicePrincipalDatastoreCredentials>.Write(ModelReaderWriterOptions options)

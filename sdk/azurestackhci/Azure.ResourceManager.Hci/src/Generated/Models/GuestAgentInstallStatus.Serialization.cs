@@ -27,27 +27,27 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(VmUuid))
+            if (options.Format != "W" && VmUuid != null)
             {
                 writer.WritePropertyName("vmUuid"u8);
                 writer.WriteStringValue(VmUuid);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(LastStatusChange))
+            if (options.Format != "W" && LastStatusChange.HasValue)
             {
                 writer.WritePropertyName("lastStatusChange"u8);
                 writer.WriteStringValue(LastStatusChange.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(AgentVersion))
+            if (options.Format != "W" && AgentVersion != null)
             {
                 writer.WritePropertyName("agentVersion"u8);
                 writer.WriteStringValue(AgentVersion);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ErrorDetails))
+            if (options.Format != "W" && !(ErrorDetails is ChangeTrackingList<ResponseError> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("errorDetails"u8);
                 writer.WriteStartArray();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Hci.Models
             Optional<StatusType> status = default;
             Optional<DateTimeOffset> lastStatusChange = default;
             Optional<string> agentVersion = default;
-            Optional<IReadOnlyList<ResponseError>> errorDetails = default;
+            IReadOnlyList<ResponseError> errorDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -152,7 +152,13 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GuestAgentInstallStatus(vmUuid.Value, Optional.ToNullable(status), Optional.ToNullable(lastStatusChange), agentVersion.Value, Optional.ToList(errorDetails), serializedAdditionalRawData);
+            return new GuestAgentInstallStatus(
+                vmUuid.Value,
+                Optional.ToNullable(status),
+                Optional.ToNullable(lastStatusChange),
+                agentVersion.Value,
+                errorDetails ?? new ChangeTrackingList<ResponseError>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GuestAgentInstallStatus>.Write(ModelReaderWriterOptions options)

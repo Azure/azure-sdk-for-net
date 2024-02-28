@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.Redis.Models
             writer.WriteStringValue(LinkedRedisCacheLocation);
             writer.WritePropertyName("serverRole"u8);
             writer.WriteStringValue(ServerRole.ToSerialString());
-            if (options.Format != "W" && Optional.IsDefined(GeoReplicatedPrimaryHostName))
+            if (options.Format != "W" && GeoReplicatedPrimaryHostName != null)
             {
                 writer.WritePropertyName("geoReplicatedPrimaryHostName"u8);
                 writer.WriteStringValue(GeoReplicatedPrimaryHostName);
             }
-            if (options.Format != "W" && Optional.IsDefined(PrimaryHostName))
+            if (options.Format != "W" && PrimaryHostName != null)
             {
                 writer.WritePropertyName("primaryHostName"u8);
                 writer.WriteStringValue(PrimaryHostName);
@@ -135,7 +135,13 @@ namespace Azure.ResourceManager.Redis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RedisLinkedServerWithPropertyCreateOrUpdateContent(linkedRedisCacheId, linkedRedisCacheLocation, serverRole, geoReplicatedPrimaryHostName.Value, primaryHostName.Value, serializedAdditionalRawData);
+            return new RedisLinkedServerWithPropertyCreateOrUpdateContent(
+                linkedRedisCacheId,
+                linkedRedisCacheLocation,
+                serverRole,
+                geoReplicatedPrimaryHostName.Value,
+                primaryHostName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RedisLinkedServerWithPropertyCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

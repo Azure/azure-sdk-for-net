@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(VulnerabilityProfile))
+            if (VulnerabilityProfile != null)
             {
                 writer.WritePropertyName("vulnerabilityProfile"u8);
                 writer.WriteStringValue(VulnerabilityProfile);
             }
-            if (Optional.IsDefined(AntiSpywareProfile))
+            if (AntiSpywareProfile != null)
             {
                 writer.WritePropertyName("antiSpywareProfile"u8);
                 writer.WriteStringValue(AntiSpywareProfile);
             }
-            if (Optional.IsDefined(AntiVirusProfile))
+            if (AntiVirusProfile != null)
             {
                 writer.WritePropertyName("antiVirusProfile"u8);
                 writer.WriteStringValue(AntiVirusProfile);
             }
-            if (Optional.IsDefined(UrlFilteringProfile))
+            if (UrlFilteringProfile != null)
             {
                 writer.WritePropertyName("urlFilteringProfile"u8);
                 writer.WriteStringValue(UrlFilteringProfile);
             }
-            if (Optional.IsDefined(FileBlockingProfile))
+            if (FileBlockingProfile != null)
             {
                 writer.WritePropertyName("fileBlockingProfile"u8);
                 writer.WriteStringValue(FileBlockingProfile);
             }
-            if (Optional.IsDefined(DnsSubscription))
+            if (DnsSubscription != null)
             {
                 writer.WritePropertyName("dnsSubscription"u8);
                 writer.WriteStringValue(DnsSubscription);
             }
-            if (Optional.IsDefined(OutboundUnTrustCertificate))
+            if (OutboundUnTrustCertificate != null)
             {
                 writer.WritePropertyName("outboundUnTrustCertificate"u8);
                 writer.WriteStringValue(OutboundUnTrustCertificate);
             }
-            if (Optional.IsDefined(OutboundTrustCertificate))
+            if (OutboundTrustCertificate != null)
             {
                 writer.WritePropertyName("outboundTrustCertificate"u8);
                 writer.WriteStringValue(OutboundTrustCertificate);
@@ -162,7 +162,16 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RulestackSecurityServices(vulnerabilityProfile.Value, antiSpywareProfile.Value, antiVirusProfile.Value, urlFilteringProfile.Value, fileBlockingProfile.Value, dnsSubscription.Value, outboundUnTrustCertificate.Value, outboundTrustCertificate.Value, serializedAdditionalRawData);
+            return new RulestackSecurityServices(
+                vulnerabilityProfile.Value,
+                antiSpywareProfile.Value,
+                antiVirusProfile.Value,
+                urlFilteringProfile.Value,
+                fileBlockingProfile.Value,
+                dnsSubscription.Value,
+                outboundUnTrustCertificate.Value,
+                outboundTrustCertificate.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RulestackSecurityServices>.Write(ModelReaderWriterOptions options)

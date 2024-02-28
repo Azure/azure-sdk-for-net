@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ETag))
+            if (ETag.HasValue)
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -48,54 +48,54 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ExecutionType))
+            if (ExecutionType.HasValue)
             {
                 writer.WritePropertyName("executionType"u8);
                 writer.WriteStringValue(ExecutionType.Value.ToString());
             }
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(SubmittedBy))
+            if (SubmittedBy != null)
             {
                 writer.WritePropertyName("submittedBy"u8);
                 writer.WriteStringValue(SubmittedBy);
             }
-            if (Optional.IsDefined(SubmittedOn))
+            if (SubmittedOn.HasValue)
             {
                 writer.WritePropertyName("submittedTime"u8);
                 writer.WriteStringValue(SubmittedOn.Value, "O");
             }
-            if (Optional.IsDefined(ProcessingStartOn))
+            if (ProcessingStartOn.HasValue)
             {
                 writer.WritePropertyName("processingStartTime"u8);
                 writer.WriteStringValue(ProcessingStartOn.Value, "O");
             }
-            if (Optional.IsDefined(ProcessingEndOn))
+            if (ProcessingEndOn.HasValue)
             {
                 writer.WritePropertyName("processingEndTime"u8);
                 writer.WriteStringValue(ProcessingEndOn.Value, "O");
             }
-            if (Optional.IsDefined(FileName))
+            if (FileName != null)
             {
                 writer.WritePropertyName("fileName"u8);
                 writer.WriteStringValue(FileName);
             }
-            if (Optional.IsDefined(RunSettings))
+            if (RunSettings != null)
             {
                 writer.WritePropertyName("runSettings"u8);
                 writer.WriteObjectValue(RunSettings);
             }
-            if (Optional.IsDefined(Error))
+            if (Error != null)
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                             {
                                 continue;
                             }
-                            runSettings = CommonExportProperties.DeserializeCommonExportProperties(property0.Value);
+                            runSettings = CommonExportProperties.DeserializeCommonExportProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("error"u8))
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                             {
                                 continue;
                             }
-                            error = ExportRunErrorDetails.DeserializeExportRunErrorDetails(property0.Value);
+                            error = ExportRunErrorDetails.DeserializeExportRunErrorDetails(property0.Value, options);
                             continue;
                         }
                     }
@@ -281,7 +281,22 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExportRun(id, name, type, systemData.Value, Optional.ToNullable(executionType), Optional.ToNullable(status), submittedBy.Value, Optional.ToNullable(submittedTime), Optional.ToNullable(processingStartTime), Optional.ToNullable(processingEndTime), fileName.Value, runSettings.Value, error.Value, Optional.ToNullable(eTag), serializedAdditionalRawData);
+            return new ExportRun(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(executionType),
+                Optional.ToNullable(status),
+                submittedBy.Value,
+                Optional.ToNullable(submittedTime),
+                Optional.ToNullable(processingStartTime),
+                Optional.ToNullable(processingEndTime),
+                fileName.Value,
+                runSettings.Value,
+                error.Value,
+                Optional.ToNullable(eTag),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExportRun>.Write(ModelReaderWriterOptions options)

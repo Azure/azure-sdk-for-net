@@ -42,24 +42,24 @@ namespace Azure.ResourceManager.Authorization.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("policy"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(PolicyId))
+            if (PolicyId != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(PolicyId);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastModifiedBy))
+            if (options.Format != "W" && LastModifiedBy != null)
             {
                 writer.WritePropertyName("lastModifiedBy"u8);
                 writer.WriteObjectValue(LastModifiedBy);
             }
-            if (Optional.IsDefined(LastModifiedOn))
+            if (LastModifiedOn.HasValue)
             {
                 writer.WritePropertyName("lastModifiedDateTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
@@ -67,17 +67,17 @@ namespace Azure.ResourceManager.Authorization.Models
             writer.WriteEndObject();
             writer.WritePropertyName("roleDefinition"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(RoleDefinitionId))
+            if (RoleDefinitionId != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(RoleDefinitionId);
             }
-            if (Optional.IsDefined(RoleDefinitionDisplayName))
+            if (RoleDefinitionDisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(RoleDefinitionDisplayName);
             }
-            if (Optional.IsDefined(RoleType))
+            if (RoleType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(RoleType.Value.ToString());
@@ -85,17 +85,17 @@ namespace Azure.ResourceManager.Authorization.Models
             writer.WriteEndObject();
             writer.WritePropertyName("scope"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ScopeId))
+            if (ScopeId != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(ScopeId);
             }
-            if (Optional.IsDefined(ScopeDisplayName))
+            if (ScopeDisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(ScopeDisplayName);
             }
-            if (Optional.IsDefined(ScopeType))
+            if (ScopeType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ScopeType.Value.ToString());
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Authorization.Models
                             {
                                 continue;
                             }
-                            lastModifiedBy = RoleManagementPrincipal.DeserializeRoleManagementPrincipal(property0.Value);
+                            lastModifiedBy = RoleManagementPrincipal.DeserializeRoleManagementPrincipal(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("lastModifiedDateTime"u8))
@@ -295,7 +295,21 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicyAssignmentProperties(id, name, type, systemData.Value, id0.Value, lastModifiedBy.Value, Optional.ToNullable(lastModifiedDateTime), id1.Value, displayName.Value, Optional.ToNullable(type0), id2.Value, displayName0.Value, Optional.ToNullable(type1), serializedAdditionalRawData);
+            return new PolicyAssignmentProperties(
+                id,
+                name,
+                type,
+                systemData.Value,
+                id0.Value,
+                lastModifiedBy.Value,
+                Optional.ToNullable(lastModifiedDateTime),
+                id1.Value,
+                displayName.Value,
+                Optional.ToNullable(type0),
+                id2.Value,
+                displayName0.Value,
+                Optional.ToNullable(type1),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicyAssignmentProperties>.Write(ModelReaderWriterOptions options)

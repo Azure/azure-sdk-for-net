@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownIdentityConfiguration(document.RootElement, options);
+            return DeserializeMachineLearningIdentityConfiguration(document.RootElement, options);
         }
 
         internal static UnknownIdentityConfiguration DeserializeUnknownIdentityConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownIdentityConfiguration(document.RootElement, options);
+                        return DeserializeMachineLearningIdentityConfiguration(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningIdentityConfiguration)} does not support '{options.Format}' format.");

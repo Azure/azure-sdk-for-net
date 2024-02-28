@@ -23,7 +23,7 @@ namespace Azure.Communication.CallingServer
             Optional<string> callConnectionId = default;
             Optional<string> serverCallId = default;
             Optional<CallSourceInternal> source = default;
-            Optional<IReadOnlyList<CommunicationIdentifierModel>> targets = default;
+            IReadOnlyList<CommunicationIdentifierModel> targets = default;
             Optional<CallConnectionState> callConnectionState = default;
             Optional<string> subject = default;
             Optional<string> callbackUri = default;
@@ -88,7 +88,15 @@ namespace Azure.Communication.CallingServer
                     continue;
                 }
             }
-            return new CallConnectionPropertiesInternal(callConnectionId.Value, serverCallId.Value, source.Value, Optional.ToList(targets), Optional.ToNullable(callConnectionState), subject.Value, callbackUri.Value, mediaSubscriptionId.Value);
+            return new CallConnectionPropertiesInternal(
+                callConnectionId.Value,
+                serverCallId.Value,
+                source.Value,
+                targets ?? new ChangeTrackingList<CommunicationIdentifierModel>(),
+                Optional.ToNullable(callConnectionState),
+                subject.Value,
+                callbackUri.Value,
+                mediaSubscriptionId.Value);
         }
     }
 }

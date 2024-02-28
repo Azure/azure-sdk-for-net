@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Nginx.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -43,17 +43,17 @@ namespace Azure.ResourceManager.Nginx.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 return null;
             }
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<NginxResourceSku> sku = default;
             Optional<AzureLocation> location = default;
             Optional<NginxDeploymentUpdateProperties> properties = default;
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     {
                         continue;
                     }
-                    sku = NginxResourceSku.DeserializeNginxResourceSku(property.Value);
+                    sku = NginxResourceSku.DeserializeNginxResourceSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("location"u8))
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     {
                         continue;
                     }
-                    properties = NginxDeploymentUpdateProperties.DeserializeNginxDeploymentUpdateProperties(property.Value);
+                    properties = NginxDeploymentUpdateProperties.DeserializeNginxDeploymentUpdateProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -161,7 +161,13 @@ namespace Azure.ResourceManager.Nginx.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NginxDeploymentPatch(identity, Optional.ToDictionary(tags), sku.Value, Optional.ToNullable(location), properties.Value, serializedAdditionalRawData);
+            return new NginxDeploymentPatch(
+                identity,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                sku.Value,
+                Optional.ToNullable(location),
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NginxDeploymentPatch>.Write(ModelReaderWriterOptions options)

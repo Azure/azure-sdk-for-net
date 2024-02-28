@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ResourceGuardOperationRequests))
+            if (!(ResourceGuardOperationRequests is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("resourceGuardOperationRequests"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ResourceToBeDeleted))
+            if (ResourceToBeDeleted != null)
             {
                 writer.WritePropertyName("resourceToBeDeleted"u8);
                 writer.WriteStringValue(ResourceToBeDeleted);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<IList<string>> resourceGuardOperationRequests = default;
+            IList<string> resourceGuardOperationRequests = default;
             Optional<string> resourceToBeDeleted = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataProtectionUnlockDeleteContent(Optional.ToList(resourceGuardOperationRequests), resourceToBeDeleted.Value, serializedAdditionalRawData);
+            return new DataProtectionUnlockDeleteContent(resourceGuardOperationRequests ?? new ChangeTrackingList<string>(), resourceToBeDeleted.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataProtectionUnlockDeleteContent>.Write(ModelReaderWriterOptions options)

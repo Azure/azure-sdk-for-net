@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ContainerName))
+            if (options.Format != "W" && ContainerName != null)
             {
                 if (ContainerName != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("containerName");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(SnapshotPath))
+            if (options.Format != "W" && SnapshotPath != null)
             {
                 if (SnapshotPath != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("snapshotPath");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(EndOn))
+            if (options.Format != "W" && EndOn.HasValue)
             {
                 if (EndOn != null)
                 {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("endDateTime");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(ExportedRowCount))
+            if (options.Format != "W" && ExportedRowCount.HasValue)
             {
                 if (ExportedRowCount != null)
                 {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("format"u8);
             writer.WriteStringValue(Format.ToString());
-            if (options.Format != "W" && Optional.IsDefined(LabelingJobId))
+            if (options.Format != "W" && LabelingJobId != null)
             {
                 if (LabelingJobId != null)
                 {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("labelingJobId");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && StartOn.HasValue)
             {
                 if (StartOn != null)
                 {
@@ -220,7 +220,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CocoExportSummary(Optional.ToNullable(endDateTime), Optional.ToNullable(exportedRowCount), format, labelingJobId.Value, Optional.ToNullable(startDateTime), serializedAdditionalRawData, containerName.Value, snapshotPath.Value);
+            return new CocoExportSummary(
+                Optional.ToNullable(endDateTime),
+                Optional.ToNullable(exportedRowCount),
+                format,
+                labelingJobId.Value,
+                Optional.ToNullable(startDateTime),
+                serializedAdditionalRawData,
+                containerName.Value,
+                snapshotPath.Value);
         }
 
         BinaryData IPersistableModel<CocoExportSummary>.Write(ModelReaderWriterOptions options)

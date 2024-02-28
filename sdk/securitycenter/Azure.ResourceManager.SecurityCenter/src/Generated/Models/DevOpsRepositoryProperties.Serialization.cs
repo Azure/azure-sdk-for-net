@@ -26,52 +26,52 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningStatusMessage))
+            if (options.Format != "W" && ProvisioningStatusMessage != null)
             {
                 writer.WritePropertyName("provisioningStatusMessage"u8);
                 writer.WriteStringValue(ProvisioningStatusMessage);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningStatusUpdatedOn))
+            if (options.Format != "W" && ProvisioningStatusUpdatedOn.HasValue)
             {
                 writer.WritePropertyName("provisioningStatusUpdateTimeUtc"u8);
                 writer.WriteStringValue(ProvisioningStatusUpdatedOn.Value, "O");
             }
-            if (Optional.IsDefined(ProvisioningState))
+            if (ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(ParentOrgName))
+            if (ParentOrgName != null)
             {
                 writer.WritePropertyName("parentOrgName"u8);
                 writer.WriteStringValue(ParentOrgName);
             }
-            if (Optional.IsDefined(ParentProjectName))
+            if (ParentProjectName != null)
             {
                 writer.WritePropertyName("parentProjectName"u8);
                 writer.WriteStringValue(ParentProjectName);
             }
-            if (options.Format != "W" && Optional.IsDefined(RepoId))
+            if (options.Format != "W" && RepoId != null)
             {
                 writer.WritePropertyName("repoId"u8);
                 writer.WriteStringValue(RepoId);
             }
-            if (options.Format != "W" && Optional.IsDefined(RepoUri))
+            if (options.Format != "W" && RepoUri != null)
             {
                 writer.WritePropertyName("repoUrl"u8);
                 writer.WriteStringValue(RepoUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(Visibility))
+            if (options.Format != "W" && Visibility != null)
             {
                 writer.WritePropertyName("visibility"u8);
                 writer.WriteStringValue(Visibility);
             }
-            if (Optional.IsDefined(OnboardingState))
+            if (OnboardingState.HasValue)
             {
                 writer.WritePropertyName("onboardingState"u8);
                 writer.WriteStringValue(OnboardingState.Value.ToString());
             }
-            if (Optional.IsDefined(ActionableRemediation))
+            if (ActionableRemediation != null)
             {
                 writer.WritePropertyName("actionableRemediation"u8);
                 writer.WriteObjectValue(ActionableRemediation);
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    actionableRemediation = ActionableRemediation.DeserializeActionableRemediation(property.Value);
+                    actionableRemediation = ActionableRemediation.DeserializeActionableRemediation(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -204,7 +204,18 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevOpsRepositoryProperties(provisioningStatusMessage.Value, Optional.ToNullable(provisioningStatusUpdateTimeUtc), Optional.ToNullable(provisioningState), parentOrgName.Value, parentProjectName.Value, repoId.Value, repoUrl.Value, visibility.Value, Optional.ToNullable(onboardingState), actionableRemediation.Value, serializedAdditionalRawData);
+            return new DevOpsRepositoryProperties(
+                provisioningStatusMessage.Value,
+                Optional.ToNullable(provisioningStatusUpdateTimeUtc),
+                Optional.ToNullable(provisioningState),
+                parentOrgName.Value,
+                parentProjectName.Value,
+                repoId.Value,
+                repoUrl.Value,
+                visibility.Value,
+                Optional.ToNullable(onboardingState),
+                actionableRemediation.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevOpsRepositoryProperties>.Write(ModelReaderWriterOptions options)

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -55,7 +54,10 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <exception cref="ArgumentNullException"> <paramref name="accountDetails"/> is null. </exception>
         public DataImportDetails(DataAccountDetails accountDetails)
         {
-            Argument.AssertNotNull(accountDetails, nameof(accountDetails));
+            if (accountDetails == null)
+            {
+                throw new ArgumentNullException(nameof(accountDetails));
+            }
 
             AccountDetails = accountDetails;
         }

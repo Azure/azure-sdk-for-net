@@ -44,14 +44,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(AdditionalData))
+            if (options.Format != "W" && !(AdditionalData is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("additionalData"u8);
                 writer.WriteStartObject();
@@ -74,87 +74,87 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsDefined(FriendlyName))
+            if (options.Format != "W" && FriendlyName != null)
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (options.Format != "W" && Optional.IsDefined(DeviceId))
+            if (options.Format != "W" && DeviceId != null)
             {
                 writer.WritePropertyName("deviceId"u8);
                 writer.WriteStringValue(DeviceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(DeviceName))
+            if (options.Format != "W" && DeviceName != null)
             {
                 writer.WritePropertyName("deviceName"u8);
                 writer.WriteStringValue(DeviceName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Source))
+            if (options.Format != "W" && Source != null)
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
-            if (options.Format != "W" && Optional.IsDefined(IotSecurityAgentId))
+            if (options.Format != "W" && IotSecurityAgentId.HasValue)
             {
                 writer.WritePropertyName("iotSecurityAgentId"u8);
                 writer.WriteStringValue(IotSecurityAgentId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(DeviceType))
+            if (options.Format != "W" && DeviceType != null)
             {
                 writer.WritePropertyName("deviceType"u8);
                 writer.WriteStringValue(DeviceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(Vendor))
+            if (options.Format != "W" && Vendor != null)
             {
                 writer.WritePropertyName("vendor"u8);
                 writer.WriteStringValue(Vendor);
             }
-            if (options.Format != "W" && Optional.IsDefined(EdgeId))
+            if (options.Format != "W" && EdgeId != null)
             {
                 writer.WritePropertyName("edgeId"u8);
                 writer.WriteStringValue(EdgeId);
             }
-            if (options.Format != "W" && Optional.IsDefined(MacAddress))
+            if (options.Format != "W" && MacAddress != null)
             {
                 writer.WritePropertyName("macAddress"u8);
                 writer.WriteStringValue(MacAddress);
             }
-            if (options.Format != "W" && Optional.IsDefined(Model))
+            if (options.Format != "W" && Model != null)
             {
                 writer.WritePropertyName("model"u8);
                 writer.WriteStringValue(Model);
             }
-            if (options.Format != "W" && Optional.IsDefined(SerialNumber))
+            if (options.Format != "W" && SerialNumber != null)
             {
                 writer.WritePropertyName("serialNumber"u8);
                 writer.WriteStringValue(SerialNumber);
             }
-            if (options.Format != "W" && Optional.IsDefined(FirmwareVersion))
+            if (options.Format != "W" && FirmwareVersion != null)
             {
                 writer.WritePropertyName("firmwareVersion"u8);
                 writer.WriteStringValue(FirmwareVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(OperatingSystem))
+            if (options.Format != "W" && OperatingSystem != null)
             {
                 writer.WritePropertyName("operatingSystem"u8);
                 writer.WriteStringValue(OperatingSystem);
             }
-            if (options.Format != "W" && Optional.IsDefined(IotHubEntityId))
+            if (options.Format != "W" && IotHubEntityId != null)
             {
                 writer.WritePropertyName("iotHubEntityId"u8);
                 writer.WriteStringValue(IotHubEntityId);
             }
-            if (options.Format != "W" && Optional.IsDefined(HostEntityId))
+            if (options.Format != "W" && HostEntityId != null)
             {
                 writer.WritePropertyName("hostEntityId"u8);
                 writer.WriteStringValue(HostEntityId);
             }
-            if (options.Format != "W" && Optional.IsDefined(IPAddressEntityId))
+            if (options.Format != "W" && IPAddressEntityId != null)
             {
                 writer.WritePropertyName("ipAddressEntityId"u8);
                 writer.WriteStringValue(IPAddressEntityId);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ThreatIntelligence))
+            if (options.Format != "W" && !(ThreatIntelligence is ChangeTrackingList<SecurityInsightsThreatIntelligence> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("threatIntelligence"u8);
                 writer.WriteStartArray();
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Protocols))
+            if (options.Format != "W" && !(Protocols is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("protocols"u8);
                 writer.WriteStartArray();
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IReadOnlyDictionary<string, BinaryData>> additionalData = default;
+            IReadOnlyDictionary<string, BinaryData> additionalData = default;
             Optional<string> friendlyName = default;
             Optional<string> deviceId = default;
             Optional<string> deviceName = default;
@@ -235,8 +235,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<string> iotHubEntityId = default;
             Optional<string> hostEntityId = default;
             Optional<string> ipAddressEntityId = default;
-            Optional<IReadOnlyList<SecurityInsightsThreatIntelligence>> threatIntelligence = default;
-            Optional<IReadOnlyList<string>> protocols = default;
+            IReadOnlyList<SecurityInsightsThreatIntelligence> threatIntelligence = default;
+            IReadOnlyList<string> protocols = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             List<SecurityInsightsThreatIntelligence> array = new List<SecurityInsightsThreatIntelligence>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SecurityInsightsThreatIntelligence.DeserializeSecurityInsightsThreatIntelligence(item));
+                                array.Add(SecurityInsightsThreatIntelligence.DeserializeSecurityInsightsThreatIntelligence(item, options));
                             }
                             threatIntelligence = array;
                             continue;
@@ -421,7 +421,32 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsIotDeviceEntity(id, name, type, systemData.Value, kind, serializedAdditionalRawData, Optional.ToDictionary(additionalData), friendlyName.Value, deviceId.Value, deviceName.Value, source.Value, Optional.ToNullable(iotSecurityAgentId), deviceType.Value, vendor.Value, edgeId.Value, macAddress.Value, model.Value, serialNumber.Value, firmwareVersion.Value, operatingSystem.Value, iotHubEntityId.Value, hostEntityId.Value, ipAddressEntityId.Value, Optional.ToList(threatIntelligence), Optional.ToList(protocols));
+            return new SecurityInsightsIotDeviceEntity(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData,
+                additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                friendlyName.Value,
+                deviceId.Value,
+                deviceName.Value,
+                source.Value,
+                Optional.ToNullable(iotSecurityAgentId),
+                deviceType.Value,
+                vendor.Value,
+                edgeId.Value,
+                macAddress.Value,
+                model.Value,
+                serialNumber.Value,
+                firmwareVersion.Value,
+                operatingSystem.Value,
+                iotHubEntityId.Value,
+                hostEntityId.Value,
+                ipAddressEntityId.Value,
+                threatIntelligence ?? new ChangeTrackingList<SecurityInsightsThreatIntelligence>(),
+                protocols ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<SecurityInsightsIotDeviceEntity>.Write(ModelReaderWriterOptions options)

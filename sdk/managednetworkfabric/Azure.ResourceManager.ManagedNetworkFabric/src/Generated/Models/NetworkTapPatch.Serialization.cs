@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,17 +39,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Annotation))
+            if (Annotation != null)
             {
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);
             }
-            if (Optional.IsDefined(PollingType))
+            if (PollingType.HasValue)
             {
                 writer.WritePropertyName("pollingType"u8);
                 writer.WriteStringValue(PollingType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Destinations))
+            if (!(Destinations is ChangeTrackingList<NetworkTapPatchableParametersDestinationsItem> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("destinations"u8);
                 writer.WriteStartArray();
@@ -98,10 +98,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<string> annotation = default;
             Optional<NetworkTapPollingType> pollingType = default;
-            Optional<IList<NetworkTapPatchableParametersDestinationsItem>> destinations = default;
+            IList<NetworkTapPatchableParametersDestinationsItem> destinations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             List<NetworkTapPatchableParametersDestinationsItem> array = new List<NetworkTapPatchableParametersDestinationsItem>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkTapPatchableParametersDestinationsItem.DeserializeNetworkTapPatchableParametersDestinationsItem(item));
+                                array.Add(NetworkTapPatchableParametersDestinationsItem.DeserializeNetworkTapPatchableParametersDestinationsItem(item, options));
                             }
                             destinations = array;
                             continue;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkTapPatch(Optional.ToDictionary(tags), serializedAdditionalRawData, annotation.Value, Optional.ToNullable(pollingType), Optional.ToList(destinations));
+            return new NetworkTapPatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, annotation.Value, Optional.ToNullable(pollingType), destinations ?? new ChangeTrackingList<NetworkTapPatchableParametersDestinationsItem>());
         }
 
         BinaryData IPersistableModel<NetworkTapPatch>.Write(ModelReaderWriterOptions options)

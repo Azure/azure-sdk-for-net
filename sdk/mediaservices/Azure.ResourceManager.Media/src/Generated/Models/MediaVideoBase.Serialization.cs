@@ -26,24 +26,24 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(KeyFrameInterval))
+            if (KeyFrameInterval.HasValue)
             {
                 writer.WritePropertyName("keyFrameInterval"u8);
                 writer.WriteStringValue(KeyFrameInterval.Value, "P");
             }
-            if (Optional.IsDefined(StretchMode))
+            if (StretchMode.HasValue)
             {
                 writer.WritePropertyName("stretchMode"u8);
                 writer.WriteStringValue(StretchMode.Value.ToString());
             }
-            if (Optional.IsDefined(SyncMode))
+            if (SyncMode.HasValue)
             {
                 writer.WritePropertyName("syncMode"u8);
                 writer.WriteStringValue(SyncMode.Value.ToString());
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
-            if (Optional.IsDefined(Label))
+            if (Label != null)
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.Media.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "#Microsoft.Media.H264Video": return H264Video.DeserializeH264Video(element);
-                    case "#Microsoft.Media.H265Video": return H265Video.DeserializeH265Video(element);
-                    case "#Microsoft.Media.Image": return MediaImageBase.DeserializeMediaImageBase(element);
-                    case "#Microsoft.Media.JpgImage": return JpgImage.DeserializeJpgImage(element);
-                    case "#Microsoft.Media.PngImage": return PngImage.DeserializePngImage(element);
+                    case "#Microsoft.Media.H264Video": return H264Video.DeserializeH264Video(element, options);
+                    case "#Microsoft.Media.H265Video": return H265Video.DeserializeH265Video(element, options);
+                    case "#Microsoft.Media.Image": return MediaImageBase.DeserializeMediaImageBase(element, options);
+                    case "#Microsoft.Media.JpgImage": return JpgImage.DeserializeJpgImage(element, options);
+                    case "#Microsoft.Media.PngImage": return PngImage.DeserializePngImage(element, options);
                 }
             }
             Optional<TimeSpan> keyFrameInterval = default;
@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MediaVideoBase(odataType, label.Value, serializedAdditionalRawData, Optional.ToNullable(keyFrameInterval), Optional.ToNullable(stretchMode), Optional.ToNullable(syncMode));
+            return new MediaVideoBase(
+                odataType,
+                label.Value,
+                serializedAdditionalRawData,
+                Optional.ToNullable(keyFrameInterval),
+                Optional.ToNullable(stretchMode),
+                Optional.ToNullable(syncMode));
         }
 
         BinaryData IPersistableModel<MediaVideoBase>.Write(ModelReaderWriterOptions options)

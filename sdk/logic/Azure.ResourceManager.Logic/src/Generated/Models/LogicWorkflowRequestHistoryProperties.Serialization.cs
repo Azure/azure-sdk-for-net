@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(StartOn))
+            if (StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (EndOn.HasValue)
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Optional.IsDefined(Request))
+            if (Request != null)
             {
                 writer.WritePropertyName("request"u8);
                 writer.WriteObjectValue(Request);
             }
-            if (Optional.IsDefined(Response))
+            if (Response != null)
             {
                 writer.WritePropertyName("response"u8);
                 writer.WriteObjectValue(Response);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    request = LogicWorkflowRequest.DeserializeLogicWorkflowRequest(property.Value);
+                    request = LogicWorkflowRequest.DeserializeLogicWorkflowRequest(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("response"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    response = LogicWorkflowResponse.DeserializeLogicWorkflowResponse(property.Value);
+                    response = LogicWorkflowResponse.DeserializeLogicWorkflowResponse(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

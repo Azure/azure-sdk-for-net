@@ -285,7 +285,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<KubernetesSourceControlConfigurationResource>> UpdateAsync(WaitUntil waitUntil, KubernetesSourceControlConfigurationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _kubernetesSourceControlConfigurationSourceControlConfigurationsClientDiagnostics.CreateScope("KubernetesSourceControlConfigurationResource.Update");
             scope.Start();
@@ -331,7 +334,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<KubernetesSourceControlConfigurationResource> Update(WaitUntil waitUntil, KubernetesSourceControlConfigurationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _kubernetesSourceControlConfigurationSourceControlConfigurationsClientDiagnostics.CreateScope("KubernetesSourceControlConfigurationResource.Update");
             scope.Start();

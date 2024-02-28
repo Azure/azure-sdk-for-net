@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ConnectivityType.ToString());
-            if (Optional.IsDefined(Hub))
+            if (Hub != null)
             {
                 writer.WritePropertyName("hub"u8);
                 JsonSerializer.Serialize(writer, Hub);
             }
-            if (Optional.IsCollectionDefined(Spokes))
+            if (!(Spokes is ChangeTrackingList<WritableSubResource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("spokes"u8);
                 writer.WriteStartArray();
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Mesh))
+            if (!(Mesh is ChangeTrackingList<WritableSubResource> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("mesh"u8);
                 writer.WriteStartArray();
@@ -55,12 +55,12 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -105,8 +105,8 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
             }
             ConnectivityType type = default;
             Optional<WritableSubResource> hub = default;
-            Optional<IList<WritableSubResource>> spokes = default;
-            Optional<IList<WritableSubResource>> mesh = default;
+            IList<WritableSubResource> spokes = default;
+            IList<WritableSubResource> mesh = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<ETag> etag = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -179,7 +179,14 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedNetworkPeeringPolicyProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(etag), serializedAdditionalRawData, type, hub, Optional.ToList(spokes), Optional.ToList(mesh));
+            return new ManagedNetworkPeeringPolicyProperties(
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(etag),
+                serializedAdditionalRawData,
+                type,
+                hub,
+                spokes ?? new ChangeTrackingList<WritableSubResource>(),
+                mesh ?? new ChangeTrackingList<WritableSubResource>());
         }
 
         BinaryData IPersistableModel<ManagedNetworkPeeringPolicyProperties>.Write(ModelReaderWriterOptions options)

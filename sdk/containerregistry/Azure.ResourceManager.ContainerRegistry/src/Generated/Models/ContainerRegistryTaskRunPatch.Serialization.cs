@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -50,12 +50,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(RunRequest))
+            if (RunRequest != null)
             {
                 writer.WritePropertyName("runRequest"u8);
                 writer.WriteObjectValue(RunRequest);
             }
-            if (Optional.IsDefined(ForceUpdateTag))
+            if (ForceUpdateTag != null)
             {
                 writer.WritePropertyName("forceUpdateTag"u8);
                 writer.WriteStringValue(ForceUpdateTag);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<ContainerRegistryRunContent> runRequest = default;
             Optional<string> forceUpdateTag = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                             {
                                 continue;
                             }
-                            runRequest = ContainerRegistryRunContent.DeserializeContainerRegistryRunContent(property0.Value);
+                            runRequest = ContainerRegistryRunContent.DeserializeContainerRegistryRunContent(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("forceUpdateTag"u8))
@@ -172,7 +172,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryTaskRunPatch(identity, Optional.ToNullable(location), Optional.ToDictionary(tags), runRequest.Value, forceUpdateTag.Value, serializedAdditionalRawData);
+            return new ContainerRegistryTaskRunPatch(
+                identity,
+                Optional.ToNullable(location),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                runRequest.Value,
+                forceUpdateTag.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryTaskRunPatch>.Write(ModelReaderWriterOptions options)

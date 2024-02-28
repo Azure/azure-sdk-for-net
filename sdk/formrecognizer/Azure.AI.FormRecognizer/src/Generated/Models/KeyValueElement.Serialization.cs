@@ -21,8 +21,8 @@ namespace Azure.AI.FormRecognizer.Models
             }
             Optional<KeyValueType> type = default;
             string text = default;
-            Optional<IReadOnlyList<float>> boundingBox = default;
-            Optional<IReadOnlyList<string>> elements = default;
+            IReadOnlyList<float> boundingBox = default;
+            IReadOnlyList<string> elements = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -70,7 +70,7 @@ namespace Azure.AI.FormRecognizer.Models
                     continue;
                 }
             }
-            return new KeyValueElement(Optional.ToNullable(type), text, Optional.ToList(boundingBox), Optional.ToList(elements));
+            return new KeyValueElement(Optional.ToNullable(type), text, boundingBox ?? new ChangeTrackingList<float>(), elements ?? new ChangeTrackingList<string>());
         }
     }
 }

@@ -26,24 +26,24 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(BackupManagementType))
+            if (BackupManagementType != null)
             {
                 writer.WritePropertyName("backupManagementType"u8);
                 writer.WriteStringValue(BackupManagementType);
             }
-            if (Optional.IsDefined(WorkloadType))
+            if (WorkloadType != null)
             {
                 writer.WritePropertyName("workloadType"u8);
                 writer.WriteStringValue(WorkloadType);
             }
             writer.WritePropertyName("workloadItemType"u8);
             writer.WriteStringValue(WorkloadItemType);
-            if (Optional.IsDefined(FriendlyName))
+            if (FriendlyName != null)
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Optional.IsDefined(ProtectionState))
+            if (ProtectionState.HasValue)
             {
                 writer.WritePropertyName("protectionState"u8);
                 writer.WriteStringValue(ProtectionState.Value.ToString());
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownWorkloadItem(document.RootElement, options);
+            return DeserializeWorkloadItem(document.RootElement, options);
         }
 
         internal static UnknownWorkloadItem DeserializeUnknownWorkloadItem(JsonElement element, ModelReaderWriterOptions options = null)
@@ -130,7 +130,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownWorkloadItem(backupManagementType.Value, workloadType.Value, workloadItemType, friendlyName.Value, Optional.ToNullable(protectionState), serializedAdditionalRawData);
+            return new UnknownWorkloadItem(
+                backupManagementType.Value,
+                workloadType.Value,
+                workloadItemType,
+                friendlyName.Value,
+                Optional.ToNullable(protectionState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkloadItem>.Write(ModelReaderWriterOptions options)
@@ -155,7 +161,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownWorkloadItem(document.RootElement, options);
+                        return DeserializeWorkloadItem(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(WorkloadItem)} does not support '{options.Format}' format.");

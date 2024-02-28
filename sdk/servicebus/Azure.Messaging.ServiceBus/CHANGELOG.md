@@ -1,5 +1,17 @@
 # Release History
 
+## 7.18.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+- Updated the `Microsoft.Azure.Amqp` dependency to 2.6.5, which includes several bug fixes.  One notable fix addresses an obscure race condition when a cancellation token is signaled while service operations are being invoked concurrently which caused those operations to hang.  Another notable fix is for an obscure race condition that occurred when attempting to complete a message which caused the operation to hang.
+
 ## 7.17.3 (2024-02-14)
 
 ### Bugs Fixed

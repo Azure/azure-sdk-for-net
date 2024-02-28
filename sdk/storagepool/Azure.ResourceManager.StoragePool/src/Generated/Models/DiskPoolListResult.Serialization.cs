@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                     List<DiskPoolData> array = new List<DiskPoolData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DiskPoolData.DeserializeDiskPoolData(item));
+                        array.Add(DiskPoolData.DeserializeDiskPoolData(item, options));
                     }
                     value = array;
                     continue;

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(BusinessIdentities))
+            if (!(BusinessIdentities is ChangeTrackingList<IntegrationAccountBusinessIdentity> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("businessIdentities"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<IList<IntegrationAccountBusinessIdentity>> businessIdentities = default;
+            IList<IntegrationAccountBusinessIdentity> businessIdentities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Logic.Models
                     List<IntegrationAccountBusinessIdentity> array = new List<IntegrationAccountBusinessIdentity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IntegrationAccountBusinessIdentity.DeserializeIntegrationAccountBusinessIdentity(item));
+                        array.Add(IntegrationAccountBusinessIdentity.DeserializeIntegrationAccountBusinessIdentity(item, options));
                     }
                     businessIdentities = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new B2BPartnerContent(Optional.ToList(businessIdentities), serializedAdditionalRawData);
+            return new B2BPartnerContent(businessIdentities ?? new ChangeTrackingList<IntegrationAccountBusinessIdentity>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<B2BPartnerContent>.Write(ModelReaderWriterOptions options)

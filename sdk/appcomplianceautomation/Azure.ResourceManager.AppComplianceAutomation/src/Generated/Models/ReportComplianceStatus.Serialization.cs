@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(M365))
+            if (M365 != null)
             {
                 writer.WritePropertyName("m365"u8);
                 writer.WriteObjectValue(M365);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     {
                         continue;
                     }
-                    m365 = OverviewStatus.DeserializeOverviewStatus(property.Value);
+                    m365 = OverviewStatus.DeserializeOverviewStatus(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

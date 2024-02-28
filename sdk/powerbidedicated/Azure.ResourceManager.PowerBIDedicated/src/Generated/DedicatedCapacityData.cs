@@ -24,7 +24,10 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public DedicatedCapacityData(AzureLocation location, CapacitySku sku) : base(location)
         {
-            Argument.AssertNotNull(sku, nameof(sku));
+            if (sku == null)
+            {
+                throw new ArgumentNullException(nameof(sku));
+            }
 
             Sku = sku;
         }

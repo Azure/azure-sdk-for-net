@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RetentionScheduleFormatType))
+            if (RetentionScheduleFormatType.HasValue)
             {
                 writer.WritePropertyName("retentionScheduleFormatType"u8);
                 writer.WriteStringValue(RetentionScheduleFormatType.Value.ToString());
             }
-            if (Optional.IsDefined(RetentionScheduleDaily))
+            if (RetentionScheduleDaily != null)
             {
                 writer.WritePropertyName("retentionScheduleDaily"u8);
                 writer.WriteObjectValue(RetentionScheduleDaily);
             }
-            if (Optional.IsDefined(RetentionScheduleWeekly))
+            if (RetentionScheduleWeekly != null)
             {
                 writer.WritePropertyName("retentionScheduleWeekly"u8);
                 writer.WriteObjectValue(RetentionScheduleWeekly);
             }
-            if (Optional.IsCollectionDefined(RetentionTimes))
+            if (!(RetentionTimes is ChangeTrackingList<DateTimeOffset> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("retentionTimes"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(RetentionDuration))
+            if (RetentionDuration != null)
             {
                 writer.WritePropertyName("retentionDuration"u8);
                 writer.WriteObjectValue(RetentionDuration);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<RetentionScheduleFormat> retentionScheduleFormatType = default;
             Optional<DailyRetentionFormat> retentionScheduleDaily = default;
             Optional<WeeklyRetentionFormat> retentionScheduleWeekly = default;
-            Optional<IList<DateTimeOffset>> retentionTimes = default;
+            IList<DateTimeOffset> retentionTimes = default;
             Optional<RetentionDuration> retentionDuration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    retentionScheduleDaily = DailyRetentionFormat.DeserializeDailyRetentionFormat(property.Value);
+                    retentionScheduleDaily = DailyRetentionFormat.DeserializeDailyRetentionFormat(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("retentionScheduleWeekly"u8))
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    retentionScheduleWeekly = WeeklyRetentionFormat.DeserializeWeeklyRetentionFormat(property.Value);
+                    retentionScheduleWeekly = WeeklyRetentionFormat.DeserializeWeeklyRetentionFormat(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("retentionTimes"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    retentionDuration = RetentionDuration.DeserializeRetentionDuration(property.Value);
+                    retentionDuration = RetentionDuration.DeserializeRetentionDuration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -159,7 +159,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonthlyRetentionSchedule(Optional.ToNullable(retentionScheduleFormatType), retentionScheduleDaily.Value, retentionScheduleWeekly.Value, Optional.ToList(retentionTimes), retentionDuration.Value, serializedAdditionalRawData);
+            return new MonthlyRetentionSchedule(
+                Optional.ToNullable(retentionScheduleFormatType),
+                retentionScheduleDaily.Value,
+                retentionScheduleWeekly.Value,
+                retentionTimes ?? new ChangeTrackingList<DateTimeOffset>(),
+                retentionDuration.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonthlyRetentionSchedule>.Write(ModelReaderWriterOptions options)

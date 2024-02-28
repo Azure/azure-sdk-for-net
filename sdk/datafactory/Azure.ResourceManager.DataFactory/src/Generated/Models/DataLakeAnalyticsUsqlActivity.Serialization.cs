@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(LinkedServiceName))
+            if (LinkedServiceName != null)
             {
                 writer.WritePropertyName("linkedServiceName"u8);
                 JsonSerializer.Serialize(writer, LinkedServiceName);
             }
-            if (Optional.IsDefined(Policy))
+            if (Policy != null)
             {
                 writer.WritePropertyName("policy"u8);
                 writer.WriteObjectValue(Policy);
@@ -41,22 +41,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ActivityType);
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(State))
+            if (State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(OnInactiveMarkAs))
+            if (OnInactiveMarkAs.HasValue)
             {
                 writer.WritePropertyName("onInactiveMarkAs"u8);
                 writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(DependsOn))
+            if (!(DependsOn is ChangeTrackingList<PipelineActivityDependency> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(UserProperties))
+            if (!(UserProperties is ChangeTrackingList<PipelineActivityUserProperty> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("userProperties"u8);
                 writer.WriteStartArray();
@@ -82,17 +82,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             JsonSerializer.Serialize(writer, ScriptPath);
             writer.WritePropertyName("scriptLinkedService"u8);
             JsonSerializer.Serialize(writer, ScriptLinkedService);
-            if (Optional.IsDefined(DegreeOfParallelism))
+            if (DegreeOfParallelism != null)
             {
                 writer.WritePropertyName("degreeOfParallelism"u8);
                 JsonSerializer.Serialize(writer, DegreeOfParallelism);
             }
-            if (Optional.IsDefined(Priority))
+            if (Priority != null)
             {
                 writer.WritePropertyName("priority"u8);
                 JsonSerializer.Serialize(writer, Priority);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingDictionary<string, BinaryData> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -115,12 +115,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(RuntimeVersion))
+            if (RuntimeVersion != null)
             {
                 writer.WritePropertyName("runtimeVersion"u8);
                 JsonSerializer.Serialize(writer, RuntimeVersion);
             }
-            if (Optional.IsDefined(CompilationMode))
+            if (CompilationMode != null)
             {
                 writer.WritePropertyName("compilationMode"u8);
                 JsonSerializer.Serialize(writer, CompilationMode);
@@ -168,13 +168,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> description = default;
             Optional<PipelineActivityState> state = default;
             Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
-            Optional<IList<PipelineActivityDependency>> dependsOn = default;
-            Optional<IList<PipelineActivityUserProperty>> userProperties = default;
+            IList<PipelineActivityDependency> dependsOn = default;
+            IList<PipelineActivityUserProperty> userProperties = default;
             DataFactoryElement<string> scriptPath = default;
             DataFactoryLinkedServiceReference scriptLinkedService = default;
             Optional<DataFactoryElement<int>> degreeOfParallelism = default;
             Optional<DataFactoryElement<int>> priority = default;
-            Optional<IDictionary<string, BinaryData>> parameters = default;
+            IDictionary<string, BinaryData> parameters = default;
             Optional<DataFactoryElement<string>> runtimeVersion = default;
             Optional<DataFactoryElement<string>> compilationMode = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    policy = PipelineActivityPolicy.DeserializePipelineActivityPolicy(property.Value);
+                    policy = PipelineActivityPolicy.DeserializePipelineActivityPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<PipelineActivityDependency> array = new List<PipelineActivityDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PipelineActivityDependency.DeserializePipelineActivityDependency(item));
+                        array.Add(PipelineActivityDependency.DeserializePipelineActivityDependency(item, options));
                     }
                     dependsOn = array;
                     continue;
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<PipelineActivityUserProperty> array = new List<PipelineActivityUserProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PipelineActivityUserProperty.DeserializePipelineActivityUserProperty(item));
+                        array.Add(PipelineActivityUserProperty.DeserializePipelineActivityUserProperty(item, options));
                     }
                     userProperties = array;
                     continue;
@@ -342,7 +342,24 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataLakeAnalyticsUsqlActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName, policy.Value, scriptPath, scriptLinkedService, degreeOfParallelism.Value, priority.Value, Optional.ToDictionary(parameters), runtimeVersion.Value, compilationMode.Value);
+            return new DataLakeAnalyticsUsqlActivity(
+                name,
+                type,
+                description.Value,
+                Optional.ToNullable(state),
+                Optional.ToNullable(onInactiveMarkAs),
+                dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(),
+                additionalProperties,
+                linkedServiceName,
+                policy.Value,
+                scriptPath,
+                scriptLinkedService,
+                degreeOfParallelism.Value,
+                priority.Value,
+                parameters ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                runtimeVersion.Value,
+                compilationMode.Value);
         }
 
         BinaryData IPersistableModel<DataLakeAnalyticsUsqlActivity>.Write(ModelReaderWriterOptions options)

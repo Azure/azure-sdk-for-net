@@ -28,22 +28,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             writer.WritePropertyName("allowedOrigins"u8);
             writer.WriteStringValue(AllowedOrigins);
-            if (Optional.IsDefined(AllowedMethods))
+            if (AllowedMethods != null)
             {
                 writer.WritePropertyName("allowedMethods"u8);
                 writer.WriteStringValue(AllowedMethods);
             }
-            if (Optional.IsDefined(AllowedHeaders))
+            if (AllowedHeaders != null)
             {
                 writer.WritePropertyName("allowedHeaders"u8);
                 writer.WriteStringValue(AllowedHeaders);
             }
-            if (Optional.IsDefined(ExposedHeaders))
+            if (ExposedHeaders != null)
             {
                 writer.WritePropertyName("exposedHeaders"u8);
                 writer.WriteStringValue(ExposedHeaders);
             }
-            if (Optional.IsDefined(MaxAgeInSeconds))
+            if (MaxAgeInSeconds.HasValue)
             {
                 writer.WritePropertyName("maxAgeInSeconds"u8);
                 writer.WriteNumberValue(MaxAgeInSeconds.Value);
@@ -130,7 +130,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBAccountCorsPolicy(allowedOrigins, allowedMethods.Value, allowedHeaders.Value, exposedHeaders.Value, Optional.ToNullable(maxAgeInSeconds), serializedAdditionalRawData);
+            return new CosmosDBAccountCorsPolicy(
+                allowedOrigins,
+                allowedMethods.Value,
+                allowedHeaders.Value,
+                exposedHeaders.Value,
+                Optional.ToNullable(maxAgeInSeconds),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBAccountCorsPolicy>.Write(ModelReaderWriterOptions options)

@@ -31,17 +31,17 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(PublicIPAddress))
+            if (PublicIPAddress != null)
             {
                 writer.WritePropertyName("publicIPAddress"u8);
                 JsonSerializer.Serialize(writer, PublicIPAddress);
             }
-            if (Optional.IsDefined(Subnet))
+            if (Subnet != null)
             {
                 writer.WritePropertyName("subnet"u8);
                 JsonSerializer.Serialize(writer, Subnet);
             }
-            if (Optional.IsDefined(PrivateIPAddress))
+            if (PrivateIPAddress != null)
             {
                 writer.WritePropertyName("privateIPAddress"u8);
                 writer.WriteStringValue(PrivateIPAddress);

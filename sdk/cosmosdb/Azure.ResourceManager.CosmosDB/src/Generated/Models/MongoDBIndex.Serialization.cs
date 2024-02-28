@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Key))
+            if (Key != null)
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteObjectValue(Key);
             }
-            if (Optional.IsDefined(Options))
+            if (Options != null)
             {
                 writer.WritePropertyName("options"u8);
                 writer.WriteObjectValue(Options);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    key = MongoIndexKeys.DeserializeMongoIndexKeys(property.Value);
+                    key = MongoIndexKeys.DeserializeMongoIndexKeys(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("options"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    options0 = MongoDBIndexConfig.DeserializeMongoDBIndexConfig(property.Value);
+                    options0 = MongoDBIndexConfig.DeserializeMongoDBIndexConfig(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

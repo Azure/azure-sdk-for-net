@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
 {
@@ -52,7 +51,10 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
         internal RunStepError(RunStepErrorCode code, string message)
         {
-            Argument.AssertNotNull(message, nameof(message));
+            if (message == null)
+            {
+                throw new ArgumentNullException(nameof(message));
+            }
 
             Code = code;
             Message = message;

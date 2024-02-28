@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,34 +47,34 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(StorageAccountUri))
+            if (StorageAccountUri != null)
             {
                 writer.WritePropertyName("storageAccountUrl"u8);
                 writer.WriteStringValue(StorageAccountUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(BlobName))
+            if (BlobName != null)
             {
                 writer.WritePropertyName("blobName"u8);
                 writer.WriteStringValue(BlobName);
             }
-            if (Optional.IsDefined(CanOverwrite))
+            if (CanOverwrite.HasValue)
             {
                 writer.WritePropertyName("overwrite"u8);
                 writer.WriteBooleanValue(CanOverwrite.Value);
             }
-            if (Optional.IsDefined(SiteName))
+            if (SiteName != null)
             {
                 writer.WritePropertyName("siteName"u8);
                 writer.WriteStringValue(SiteName);
             }
-            if (Optional.IsCollectionDefined(Databases))
+            if (!(Databases is ChangeTrackingList<AppServiceDatabaseBackupSetting> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("databases"u8);
                 writer.WriteStartArray();
@@ -84,32 +84,32 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IgnoreConflictingHostNames))
+            if (IgnoreConflictingHostNames.HasValue)
             {
                 writer.WritePropertyName("ignoreConflictingHostNames"u8);
                 writer.WriteBooleanValue(IgnoreConflictingHostNames.Value);
             }
-            if (Optional.IsDefined(IgnoreDatabases))
+            if (IgnoreDatabases.HasValue)
             {
                 writer.WritePropertyName("ignoreDatabases"u8);
                 writer.WriteBooleanValue(IgnoreDatabases.Value);
             }
-            if (Optional.IsDefined(AppServicePlan))
+            if (AppServicePlan != null)
             {
                 writer.WritePropertyName("appServicePlan"u8);
                 writer.WriteStringValue(AppServicePlan);
             }
-            if (Optional.IsDefined(OperationType))
+            if (OperationType.HasValue)
             {
                 writer.WritePropertyName("operationType"u8);
                 writer.WriteStringValue(OperationType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(AdjustConnectionStrings))
+            if (AdjustConnectionStrings.HasValue)
             {
                 writer.WritePropertyName("adjustConnectionStrings"u8);
                 writer.WriteBooleanValue(AdjustConnectionStrings.Value);
             }
-            if (Optional.IsDefined(HostingEnvironment))
+            if (HostingEnvironment != null)
             {
                 writer.WritePropertyName("hostingEnvironment"u8);
                 writer.WriteStringValue(HostingEnvironment);
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> blobName = default;
             Optional<bool> overwrite = default;
             Optional<string> siteName = default;
-            Optional<IList<AppServiceDatabaseBackupSetting>> databases = default;
+            IList<AppServiceDatabaseBackupSetting> databases = default;
             Optional<bool> ignoreConflictingHostNames = default;
             Optional<bool> ignoreDatabases = default;
             Optional<string> appServicePlan = default;
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.AppService.Models
                             List<AppServiceDatabaseBackupSetting> array = new List<AppServiceDatabaseBackupSetting>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AppServiceDatabaseBackupSetting.DeserializeAppServiceDatabaseBackupSetting(item));
+                                array.Add(AppServiceDatabaseBackupSetting.DeserializeAppServiceDatabaseBackupSetting(item, options));
                             }
                             databases = array;
                             continue;
@@ -308,7 +308,24 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RestoreRequestInfo(id, name, type, systemData.Value, storageAccountUrl.Value, blobName.Value, Optional.ToNullable(overwrite), siteName.Value, Optional.ToList(databases), Optional.ToNullable(ignoreConflictingHostNames), Optional.ToNullable(ignoreDatabases), appServicePlan.Value, Optional.ToNullable(operationType), Optional.ToNullable(adjustConnectionStrings), hostingEnvironment.Value, kind.Value, serializedAdditionalRawData);
+            return new RestoreRequestInfo(
+                id,
+                name,
+                type,
+                systemData.Value,
+                storageAccountUrl.Value,
+                blobName.Value,
+                Optional.ToNullable(overwrite),
+                siteName.Value,
+                databases ?? new ChangeTrackingList<AppServiceDatabaseBackupSetting>(),
+                Optional.ToNullable(ignoreConflictingHostNames),
+                Optional.ToNullable(ignoreDatabases),
+                appServicePlan.Value,
+                Optional.ToNullable(operationType),
+                Optional.ToNullable(adjustConnectionStrings),
+                hostingEnvironment.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RestoreRequestInfo>.Write(ModelReaderWriterOptions options)

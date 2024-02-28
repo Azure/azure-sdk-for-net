@@ -44,34 +44,34 @@ namespace Azure.ResourceManager.DataShare.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(DataSetId))
+            if (options.Format != "W" && DataSetId.HasValue)
             {
                 writer.WritePropertyName("dataSetId"u8);
                 writer.WriteStringValue(DataSetId.Value);
             }
-            if (Optional.IsDefined(DataWarehouseName))
+            if (DataWarehouseName != null)
             {
                 writer.WritePropertyName("dataWarehouseName"u8);
                 writer.WriteStringValue(DataWarehouseName);
             }
-            if (Optional.IsDefined(SchemaName))
+            if (SchemaName != null)
             {
                 writer.WritePropertyName("schemaName"u8);
                 writer.WriteStringValue(SchemaName);
             }
-            if (Optional.IsDefined(SqlServerResourceId))
+            if (SqlServerResourceId != null)
             {
                 writer.WritePropertyName("sqlServerResourceId"u8);
                 writer.WriteStringValue(SqlServerResourceId);
             }
-            if (Optional.IsDefined(TableName))
+            if (TableName != null)
             {
                 writer.WritePropertyName("tableName"u8);
                 writer.WriteStringValue(TableName);
@@ -209,7 +209,18 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlDWTableDataSet(id, name, type, systemData.Value, kind, serializedAdditionalRawData, Optional.ToNullable(dataSetId), dataWarehouseName.Value, schemaName.Value, sqlServerResourceId.Value, tableName.Value);
+            return new SqlDWTableDataSet(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData,
+                Optional.ToNullable(dataSetId),
+                dataWarehouseName.Value,
+                schemaName.Value,
+                sqlServerResourceId.Value,
+                tableName.Value);
         }
 
         BinaryData IPersistableModel<SqlDWTableDataSet>.Write(ModelReaderWriterOptions options)

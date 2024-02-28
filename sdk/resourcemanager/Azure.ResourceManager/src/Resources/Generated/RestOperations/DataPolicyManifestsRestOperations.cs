@@ -60,7 +60,14 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentException"> <paramref name="policyMode"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DataPolicyManifestData>> GetByPolicyModeAsync(string policyMode, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(policyMode, nameof(policyMode));
+            if (policyMode == null)
+            {
+                throw new ArgumentNullException(nameof(policyMode));
+            }
+            if (policyMode.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(policyMode));
+            }
 
             using var message = CreateGetByPolicyModeRequest(policyMode);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -87,7 +94,14 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentException"> <paramref name="policyMode"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DataPolicyManifestData> GetByPolicyMode(string policyMode, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(policyMode, nameof(policyMode));
+            if (policyMode == null)
+            {
+                throw new ArgumentNullException(nameof(policyMode));
+            }
+            if (policyMode.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(policyMode));
+            }
 
             using var message = CreateGetByPolicyModeRequest(policyMode);
             _pipeline.Send(message, cancellationToken);
@@ -189,7 +203,10 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<DataPolicyManifestListResult>> ListNextPageAsync(string nextLink, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -214,7 +231,10 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<DataPolicyManifestListResult> ListNextPage(string nextLink, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, filter);
             _pipeline.Send(message, cancellationToken);

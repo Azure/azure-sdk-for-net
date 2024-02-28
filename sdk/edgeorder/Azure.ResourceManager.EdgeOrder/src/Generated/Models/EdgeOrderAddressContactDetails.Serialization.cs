@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             writer.WriteStringValue(ContactName);
             writer.WritePropertyName("phone"u8);
             writer.WriteStringValue(Phone);
-            if (Optional.IsDefined(PhoneExtension))
+            if (PhoneExtension != null)
             {
                 writer.WritePropertyName("phoneExtension"u8);
                 writer.WriteStringValue(PhoneExtension);
             }
-            if (Optional.IsDefined(Mobile))
+            if (Mobile != null)
             {
                 writer.WritePropertyName("mobile"u8);
                 writer.WriteStringValue(Mobile);
@@ -130,7 +130,13 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeOrderAddressContactDetails(contactName, phone, phoneExtension.Value, mobile.Value, emailList, serializedAdditionalRawData);
+            return new EdgeOrderAddressContactDetails(
+                contactName,
+                phone,
+                phoneExtension.Value,
+                mobile.Value,
+                emailList,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeOrderAddressContactDetails>.Write(ModelReaderWriterOptions options)

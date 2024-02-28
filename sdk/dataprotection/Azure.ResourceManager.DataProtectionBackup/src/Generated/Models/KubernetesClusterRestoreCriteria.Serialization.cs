@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteStartObject();
             writer.WritePropertyName("includeClusterScopeResources"u8);
             writer.WriteBooleanValue(IsClusterScopeResourcesIncluded);
-            if (Optional.IsCollectionDefined(IncludedNamespaces))
+            if (!(IncludedNamespaces is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("includedNamespaces"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ExcludedNamespaces))
+            if (!(ExcludedNamespaces is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("excludedNamespaces"u8);
                 writer.WriteStartArray();
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IncludedResourceTypes))
+            if (!(IncludedResourceTypes is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("includedResourceTypes"u8);
                 writer.WriteStartArray();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ExcludedResourceTypes))
+            if (!(ExcludedResourceTypes is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("excludedResourceTypes"u8);
                 writer.WriteStartArray();
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(LabelSelectors))
+            if (!(LabelSelectors is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("labelSelectors"u8);
                 writer.WriteStartArray();
@@ -78,17 +78,17 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PersistentVolumeRestoreMode))
+            if (PersistentVolumeRestoreMode.HasValue)
             {
                 writer.WritePropertyName("persistentVolumeRestoreMode"u8);
                 writer.WriteStringValue(PersistentVolumeRestoreMode.Value.ToString());
             }
-            if (Optional.IsDefined(ConflictPolicy))
+            if (ConflictPolicy.HasValue)
             {
                 writer.WritePropertyName("conflictPolicy"u8);
                 writer.WriteStringValue(ConflictPolicy.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(NamespaceMappings))
+            if (!(NamespaceMappings is ChangeTrackingDictionary<string, string> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("namespaceMappings"u8);
                 writer.WriteStartObject();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(RestoreHookReferences))
+            if (!(RestoreHookReferences is ChangeTrackingList<NamespacedName> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("restoreHookReferences"u8);
                 writer.WriteStartArray();
@@ -150,15 +150,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 return null;
             }
             bool includeClusterScopeResources = default;
-            Optional<IList<string>> includedNamespaces = default;
-            Optional<IList<string>> excludedNamespaces = default;
-            Optional<IList<string>> includedResourceTypes = default;
-            Optional<IList<string>> excludedResourceTypes = default;
-            Optional<IList<string>> labelSelectors = default;
+            IList<string> includedNamespaces = default;
+            IList<string> excludedNamespaces = default;
+            IList<string> includedResourceTypes = default;
+            IList<string> excludedResourceTypes = default;
+            IList<string> labelSelectors = default;
             Optional<PersistentVolumeRestoreMode> persistentVolumeRestoreMode = default;
             Optional<KubernetesClusterRestoreExistingResourcePolicy> conflictPolicy = default;
-            Optional<IDictionary<string, string>> namespaceMappings = default;
-            Optional<IList<NamespacedName>> restoreHookReferences = default;
+            IDictionary<string, string> namespaceMappings = default;
+            IList<NamespacedName> restoreHookReferences = default;
             string objectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     List<NamespacedName> array = new List<NamespacedName>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NamespacedName.DeserializeNamespacedName(item));
+                        array.Add(NamespacedName.DeserializeNamespacedName(item, options));
                     }
                     restoreHookReferences = array;
                     continue;
@@ -296,7 +296,19 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesClusterRestoreCriteria(objectType, serializedAdditionalRawData, includeClusterScopeResources, Optional.ToList(includedNamespaces), Optional.ToList(excludedNamespaces), Optional.ToList(includedResourceTypes), Optional.ToList(excludedResourceTypes), Optional.ToList(labelSelectors), Optional.ToNullable(persistentVolumeRestoreMode), Optional.ToNullable(conflictPolicy), Optional.ToDictionary(namespaceMappings), Optional.ToList(restoreHookReferences));
+            return new KubernetesClusterRestoreCriteria(
+                objectType,
+                serializedAdditionalRawData,
+                includeClusterScopeResources,
+                includedNamespaces ?? new ChangeTrackingList<string>(),
+                excludedNamespaces ?? new ChangeTrackingList<string>(),
+                includedResourceTypes ?? new ChangeTrackingList<string>(),
+                excludedResourceTypes ?? new ChangeTrackingList<string>(),
+                labelSelectors ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(persistentVolumeRestoreMode),
+                Optional.ToNullable(conflictPolicy),
+                namespaceMappings ?? new ChangeTrackingDictionary<string, string>(),
+                restoreHookReferences ?? new ChangeTrackingList<NamespacedName>());
         }
 
         BinaryData IPersistableModel<KubernetesClusterRestoreCriteria>.Write(ModelReaderWriterOptions options)

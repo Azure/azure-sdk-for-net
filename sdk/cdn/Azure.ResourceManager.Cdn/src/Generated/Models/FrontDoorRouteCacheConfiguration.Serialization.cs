@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(QueryStringCachingBehavior))
+            if (QueryStringCachingBehavior.HasValue)
             {
                 writer.WritePropertyName("queryStringCachingBehavior"u8);
                 writer.WriteStringValue(QueryStringCachingBehavior.Value.ToString());
             }
-            if (Optional.IsDefined(QueryParameters))
+            if (QueryParameters != null)
             {
                 writer.WritePropertyName("queryParameters"u8);
                 writer.WriteStringValue(QueryParameters);
             }
-            if (Optional.IsDefined(CompressionSettings))
+            if (CompressionSettings != null)
             {
                 writer.WritePropertyName("compressionSettings"u8);
                 writer.WriteObjectValue(CompressionSettings);
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    compressionSettings = RouteCacheCompressionSettings.DeserializeRouteCacheCompressionSettings(property.Value);
+                    compressionSettings = RouteCacheCompressionSettings.DeserializeRouteCacheCompressionSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

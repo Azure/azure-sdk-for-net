@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -20,8 +19,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="tableName"/> is null. </exception>
         public Office365Dataset(LinkedServiceReference linkedServiceName, object tableName) : base(linkedServiceName)
         {
-            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
-            Argument.AssertNotNull(tableName, nameof(tableName));
+            if (linkedServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(linkedServiceName));
+            }
+            if (tableName == null)
+            {
+                throw new ArgumentNullException(nameof(tableName));
+            }
 
             TableName = tableName;
             Type = "Office365Table";

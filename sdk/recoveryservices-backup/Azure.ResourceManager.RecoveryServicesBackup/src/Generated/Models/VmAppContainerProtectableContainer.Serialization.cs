@@ -26,24 +26,24 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FriendlyName))
+            if (FriendlyName != null)
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Optional.IsDefined(BackupManagementType))
+            if (BackupManagementType.HasValue)
             {
                 writer.WritePropertyName("backupManagementType"u8);
                 writer.WriteStringValue(BackupManagementType.Value.ToString());
             }
             writer.WritePropertyName("protectableContainerType"u8);
             writer.WriteStringValue(ProtectableContainerType.ToSerialString());
-            if (Optional.IsDefined(HealthStatus))
+            if (HealthStatus != null)
             {
                 writer.WritePropertyName("healthStatus"u8);
                 writer.WriteStringValue(HealthStatus);
             }
-            if (Optional.IsDefined(ContainerId))
+            if (ContainerId != null)
             {
                 writer.WritePropertyName("containerId"u8);
                 writer.WriteStringValue(ContainerId);
@@ -130,7 +130,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VmAppContainerProtectableContainer(friendlyName.Value, Optional.ToNullable(backupManagementType), protectableContainerType, healthStatus.Value, containerId.Value, serializedAdditionalRawData);
+            return new VmAppContainerProtectableContainer(
+                friendlyName.Value,
+                Optional.ToNullable(backupManagementType),
+                protectableContainerType,
+                healthStatus.Value,
+                containerId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VmAppContainerProtectableContainer>.Write(ModelReaderWriterOptions options)

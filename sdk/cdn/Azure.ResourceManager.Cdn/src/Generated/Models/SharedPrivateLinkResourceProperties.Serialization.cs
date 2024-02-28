@@ -27,27 +27,27 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrivateLink))
+            if (PrivateLink != null)
             {
                 writer.WritePropertyName("privateLink"u8);
                 JsonSerializer.Serialize(writer, PrivateLink);
             }
-            if (Optional.IsDefined(PrivateLinkLocation))
+            if (PrivateLinkLocation != null)
             {
                 writer.WritePropertyName("privateLinkLocation"u8);
                 writer.WriteStringValue(PrivateLinkLocation);
             }
-            if (Optional.IsDefined(GroupId))
+            if (GroupId != null)
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
             }
-            if (Optional.IsDefined(RequestMessage))
+            if (RequestMessage != null)
             {
                 writer.WritePropertyName("requestMessage"u8);
                 writer.WriteStringValue(RequestMessage);
             }
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
@@ -138,7 +138,13 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SharedPrivateLinkResourceProperties(privateLink, privateLinkLocation.Value, groupId.Value, requestMessage.Value, Optional.ToNullable(status), serializedAdditionalRawData);
+            return new SharedPrivateLinkResourceProperties(
+                privateLink,
+                privateLinkLocation.Value,
+                groupId.Value,
+                requestMessage.Value,
+                Optional.ToNullable(status),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SharedPrivateLinkResourceProperties>.Write(ModelReaderWriterOptions options)

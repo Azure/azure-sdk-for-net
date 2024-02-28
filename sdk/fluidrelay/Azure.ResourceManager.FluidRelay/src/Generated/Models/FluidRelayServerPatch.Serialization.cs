@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -38,19 +38,19 @@ namespace Azure.ResourceManager.FluidRelay.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Encryption))
+            if (Encryption != null)
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<AzureLocation> location = default;
             Optional<EncryptionProperties> encryption = default;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
                             {
                                 continue;
                             }
-                            encryption = EncryptionProperties.DeserializeEncryptionProperties(property0.Value);
+                            encryption = EncryptionProperties.DeserializeEncryptionProperties(property0.Value, options);
                             continue;
                         }
                     }
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FluidRelayServerPatch(Optional.ToDictionary(tags), identity, Optional.ToNullable(location), encryption.Value, serializedAdditionalRawData);
+            return new FluidRelayServerPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, Optional.ToNullable(location), encryption.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FluidRelayServerPatch>.Write(ModelReaderWriterOptions options)

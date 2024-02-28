@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(IsHealthy))
+            if (options.Format != "W" && IsHealthy.HasValue)
             {
                 writer.WritePropertyName("healthy"u8);
                 writer.WriteBooleanValue(IsHealthy.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(RelationshipStatus))
+            if (options.Format != "W" && RelationshipStatus.HasValue)
             {
                 writer.WritePropertyName("relationshipStatus"u8);
                 writer.WriteStringValue(RelationshipStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(MirrorState))
+            if (options.Format != "W" && MirrorState.HasValue)
             {
                 writer.WritePropertyName("mirrorState"u8);
                 writer.WriteStringValue(MirrorState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(UnhealthyReason))
+            if (options.Format != "W" && UnhealthyReason != null)
             {
                 writer.WritePropertyName("unhealthyReason"u8);
                 writer.WriteStringValue(UnhealthyReason);
             }
-            if (options.Format != "W" && Optional.IsDefined(ErrorMessage))
+            if (options.Format != "W" && ErrorMessage != null)
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
             }
-            if (options.Format != "W" && Optional.IsDefined(TotalTransferBytes))
+            if (options.Format != "W" && TotalTransferBytes.HasValue)
             {
                 writer.WritePropertyName("totalTransferBytes"u8);
                 writer.WriteNumberValue(TotalTransferBytes.Value);
@@ -156,7 +156,14 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppRestoreStatus(Optional.ToNullable(healthy), Optional.ToNullable(relationshipStatus), Optional.ToNullable(mirrorState), unhealthyReason.Value, errorMessage.Value, Optional.ToNullable(totalTransferBytes), serializedAdditionalRawData);
+            return new NetAppRestoreStatus(
+                Optional.ToNullable(healthy),
+                Optional.ToNullable(relationshipStatus),
+                Optional.ToNullable(mirrorState),
+                unhealthyReason.Value,
+                errorMessage.Value,
+                Optional.ToNullable(totalTransferBytes),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppRestoreStatus>.Write(ModelReaderWriterOptions options)

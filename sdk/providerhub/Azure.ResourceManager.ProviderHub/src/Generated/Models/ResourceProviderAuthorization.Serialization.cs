@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ApplicationId))
+            if (ApplicationId != null)
             {
                 writer.WritePropertyName("applicationId"u8);
                 writer.WriteStringValue(ApplicationId);
             }
-            if (Optional.IsDefined(RoleDefinitionId))
+            if (RoleDefinitionId != null)
             {
                 writer.WritePropertyName("roleDefinitionId"u8);
                 writer.WriteStringValue(RoleDefinitionId);
             }
-            if (Optional.IsDefined(ManagedByRoleDefinitionId))
+            if (ManagedByRoleDefinitionId != null)
             {
                 writer.WritePropertyName("managedByRoleDefinitionId"u8);
                 writer.WriteStringValue(ManagedByRoleDefinitionId);

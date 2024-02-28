@@ -72,9 +72,30 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="devCenterName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DevCenterCatalogListResult>> ListByDevCenterAsync(string subscriptionId, string resourceGroupName, string devCenterName, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(devCenterName, nameof(devCenterName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (devCenterName == null)
+            {
+                throw new ArgumentNullException(nameof(devCenterName));
+            }
+            if (devCenterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(devCenterName));
+            }
 
             using var message = CreateListByDevCenterRequest(subscriptionId, resourceGroupName, devCenterName, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -102,9 +123,30 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="devCenterName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DevCenterCatalogListResult> ListByDevCenter(string subscriptionId, string resourceGroupName, string devCenterName, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(devCenterName, nameof(devCenterName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (devCenterName == null)
+            {
+                throw new ArgumentNullException(nameof(devCenterName));
+            }
+            if (devCenterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(devCenterName));
+            }
 
             using var message = CreateListByDevCenterRequest(subscriptionId, resourceGroupName, devCenterName, top);
             _pipeline.Send(message, cancellationToken);
@@ -154,10 +196,38 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="devCenterName"/> or <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DevCenterCatalogData>> GetAsync(string subscriptionId, string resourceGroupName, string devCenterName, string catalogName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(devCenterName, nameof(devCenterName));
-            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (devCenterName == null)
+            {
+                throw new ArgumentNullException(nameof(devCenterName));
+            }
+            if (devCenterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(devCenterName));
+            }
+            if (catalogName == null)
+            {
+                throw new ArgumentNullException(nameof(catalogName));
+            }
+            if (catalogName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(catalogName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, devCenterName, catalogName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -187,10 +257,38 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="devCenterName"/> or <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DevCenterCatalogData> Get(string subscriptionId, string resourceGroupName, string devCenterName, string catalogName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(devCenterName, nameof(devCenterName));
-            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (devCenterName == null)
+            {
+                throw new ArgumentNullException(nameof(devCenterName));
+            }
+            if (devCenterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(devCenterName));
+            }
+            if (catalogName == null)
+            {
+                throw new ArgumentNullException(nameof(catalogName));
+            }
+            if (catalogName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(catalogName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, devCenterName, catalogName);
             _pipeline.Send(message, cancellationToken);
@@ -247,11 +345,42 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="devCenterName"/> or <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string devCenterName, string catalogName, DevCenterCatalogData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(devCenterName, nameof(devCenterName));
-            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (devCenterName == null)
+            {
+                throw new ArgumentNullException(nameof(devCenterName));
+            }
+            if (devCenterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(devCenterName));
+            }
+            if (catalogName == null)
+            {
+                throw new ArgumentNullException(nameof(catalogName));
+            }
+            if (catalogName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(catalogName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, devCenterName, catalogName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -275,11 +404,42 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="devCenterName"/> or <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string devCenterName, string catalogName, DevCenterCatalogData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(devCenterName, nameof(devCenterName));
-            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (devCenterName == null)
+            {
+                throw new ArgumentNullException(nameof(devCenterName));
+            }
+            if (devCenterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(devCenterName));
+            }
+            if (catalogName == null)
+            {
+                throw new ArgumentNullException(nameof(catalogName));
+            }
+            if (catalogName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(catalogName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, devCenterName, catalogName, data);
             _pipeline.Send(message, cancellationToken);
@@ -329,11 +489,42 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="devCenterName"/> or <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string devCenterName, string catalogName, DevCenterCatalogPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(devCenterName, nameof(devCenterName));
-            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (devCenterName == null)
+            {
+                throw new ArgumentNullException(nameof(devCenterName));
+            }
+            if (devCenterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(devCenterName));
+            }
+            if (catalogName == null)
+            {
+                throw new ArgumentNullException(nameof(catalogName));
+            }
+            if (catalogName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(catalogName));
+            }
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, devCenterName, catalogName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -358,11 +549,42 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="devCenterName"/> or <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Update(string subscriptionId, string resourceGroupName, string devCenterName, string catalogName, DevCenterCatalogPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(devCenterName, nameof(devCenterName));
-            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (devCenterName == null)
+            {
+                throw new ArgumentNullException(nameof(devCenterName));
+            }
+            if (devCenterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(devCenterName));
+            }
+            if (catalogName == null)
+            {
+                throw new ArgumentNullException(nameof(catalogName));
+            }
+            if (catalogName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(catalogName));
+            }
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, devCenterName, catalogName, patch);
             _pipeline.Send(message, cancellationToken);
@@ -408,10 +630,38 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="devCenterName"/> or <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string devCenterName, string catalogName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(devCenterName, nameof(devCenterName));
-            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (devCenterName == null)
+            {
+                throw new ArgumentNullException(nameof(devCenterName));
+            }
+            if (devCenterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(devCenterName));
+            }
+            if (catalogName == null)
+            {
+                throw new ArgumentNullException(nameof(catalogName));
+            }
+            if (catalogName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(catalogName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, devCenterName, catalogName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -436,10 +686,38 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="devCenterName"/> or <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string devCenterName, string catalogName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(devCenterName, nameof(devCenterName));
-            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (devCenterName == null)
+            {
+                throw new ArgumentNullException(nameof(devCenterName));
+            }
+            if (devCenterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(devCenterName));
+            }
+            if (catalogName == null)
+            {
+                throw new ArgumentNullException(nameof(catalogName));
+            }
+            if (catalogName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(catalogName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, devCenterName, catalogName);
             _pipeline.Send(message, cancellationToken);
@@ -487,10 +765,38 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="devCenterName"/> or <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> SyncAsync(string subscriptionId, string resourceGroupName, string devCenterName, string catalogName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(devCenterName, nameof(devCenterName));
-            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (devCenterName == null)
+            {
+                throw new ArgumentNullException(nameof(devCenterName));
+            }
+            if (devCenterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(devCenterName));
+            }
+            if (catalogName == null)
+            {
+                throw new ArgumentNullException(nameof(catalogName));
+            }
+            if (catalogName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(catalogName));
+            }
 
             using var message = CreateSyncRequest(subscriptionId, resourceGroupName, devCenterName, catalogName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -513,10 +819,38 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="devCenterName"/> or <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Sync(string subscriptionId, string resourceGroupName, string devCenterName, string catalogName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(devCenterName, nameof(devCenterName));
-            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (devCenterName == null)
+            {
+                throw new ArgumentNullException(nameof(devCenterName));
+            }
+            if (devCenterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(devCenterName));
+            }
+            if (catalogName == null)
+            {
+                throw new ArgumentNullException(nameof(catalogName));
+            }
+            if (catalogName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(catalogName));
+            }
 
             using var message = CreateSyncRequest(subscriptionId, resourceGroupName, devCenterName, catalogName);
             _pipeline.Send(message, cancellationToken);
@@ -554,10 +888,34 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="devCenterName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DevCenterCatalogListResult>> ListByDevCenterNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string devCenterName, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(devCenterName, nameof(devCenterName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (devCenterName == null)
+            {
+                throw new ArgumentNullException(nameof(devCenterName));
+            }
+            if (devCenterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(devCenterName));
+            }
 
             using var message = CreateListByDevCenterNextPageRequest(nextLink, subscriptionId, resourceGroupName, devCenterName, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -586,10 +944,34 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="devCenterName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DevCenterCatalogListResult> ListByDevCenterNextPage(string nextLink, string subscriptionId, string resourceGroupName, string devCenterName, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(devCenterName, nameof(devCenterName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (devCenterName == null)
+            {
+                throw new ArgumentNullException(nameof(devCenterName));
+            }
+            if (devCenterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(devCenterName));
+            }
 
             using var message = CreateListByDevCenterNextPageRequest(nextLink, subscriptionId, resourceGroupName, devCenterName, top);
             _pipeline.Send(message, cancellationToken);

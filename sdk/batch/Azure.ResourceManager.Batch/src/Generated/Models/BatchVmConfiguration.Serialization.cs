@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteObjectValue(ImageReference);
             writer.WritePropertyName("nodeAgentSkuId"u8);
             writer.WriteStringValue(NodeAgentSkuId);
-            if (Optional.IsDefined(WindowsConfiguration))
+            if (WindowsConfiguration != null)
             {
                 writer.WritePropertyName("windowsConfiguration"u8);
                 writer.WriteObjectValue(WindowsConfiguration);
             }
-            if (Optional.IsCollectionDefined(DataDisks))
+            if (!(DataDisks is ChangeTrackingList<BatchVmDataDisk> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dataDisks"u8);
                 writer.WriteStartArray();
@@ -46,27 +46,27 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(LicenseType))
+            if (LicenseType != null)
             {
                 writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType);
             }
-            if (Optional.IsDefined(ContainerConfiguration))
+            if (ContainerConfiguration != null)
             {
                 writer.WritePropertyName("containerConfiguration"u8);
                 writer.WriteObjectValue(ContainerConfiguration);
             }
-            if (Optional.IsDefined(DiskEncryptionConfiguration))
+            if (DiskEncryptionConfiguration != null)
             {
                 writer.WritePropertyName("diskEncryptionConfiguration"u8);
                 writer.WriteObjectValue(DiskEncryptionConfiguration);
             }
-            if (Optional.IsDefined(NodePlacementConfiguration))
+            if (NodePlacementConfiguration != null)
             {
                 writer.WritePropertyName("nodePlacementConfiguration"u8);
                 writer.WriteObjectValue(NodePlacementConfiguration);
             }
-            if (Optional.IsCollectionDefined(Extensions))
+            if (!(Extensions is ChangeTrackingList<BatchVmExtension> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("extensions"u8);
                 writer.WriteStartArray();
@@ -76,17 +76,17 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(OSDisk))
+            if (OSDisk != null)
             {
                 writer.WritePropertyName("osDisk"u8);
                 writer.WriteObjectValue(OSDisk);
             }
-            if (Optional.IsDefined(SecurityProfile))
+            if (SecurityProfile != null)
             {
                 writer.WritePropertyName("securityProfile"u8);
                 writer.WriteObjectValue(SecurityProfile);
             }
-            if (Optional.IsDefined(ServiceArtifactReference))
+            if (ServiceArtifactReference != null)
             {
                 writer.WritePropertyName("serviceArtifactReference"u8);
                 JsonSerializer.Serialize(writer, ServiceArtifactReference);
@@ -132,12 +132,12 @@ namespace Azure.ResourceManager.Batch.Models
             BatchImageReference imageReference = default;
             string nodeAgentSkuId = default;
             Optional<WindowsConfiguration> windowsConfiguration = default;
-            Optional<IList<BatchVmDataDisk>> dataDisks = default;
+            IList<BatchVmDataDisk> dataDisks = default;
             Optional<string> licenseType = default;
             Optional<BatchVmContainerConfiguration> containerConfiguration = default;
             Optional<DiskEncryptionConfiguration> diskEncryptionConfiguration = default;
             Optional<NodePlacementConfiguration> nodePlacementConfiguration = default;
-            Optional<IList<BatchVmExtension>> extensions = default;
+            IList<BatchVmExtension> extensions = default;
             Optional<BatchOSDisk> osDisk = default;
             Optional<BatchSecurityProfile> securityProfile = default;
             Optional<WritableSubResource> serviceArtifactReference = default;
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 if (property.NameEquals("imageReference"u8))
                 {
-                    imageReference = BatchImageReference.DeserializeBatchImageReference(property.Value);
+                    imageReference = BatchImageReference.DeserializeBatchImageReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("nodeAgentSkuId"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    windowsConfiguration = WindowsConfiguration.DeserializeWindowsConfiguration(property.Value);
+                    windowsConfiguration = WindowsConfiguration.DeserializeWindowsConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dataDisks"u8))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Batch.Models
                     List<BatchVmDataDisk> array = new List<BatchVmDataDisk>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BatchVmDataDisk.DeserializeBatchVmDataDisk(item));
+                        array.Add(BatchVmDataDisk.DeserializeBatchVmDataDisk(item, options));
                     }
                     dataDisks = array;
                     continue;
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    containerConfiguration = BatchVmContainerConfiguration.DeserializeBatchVmContainerConfiguration(property.Value);
+                    containerConfiguration = BatchVmContainerConfiguration.DeserializeBatchVmContainerConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("diskEncryptionConfiguration"u8))
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    diskEncryptionConfiguration = DiskEncryptionConfiguration.DeserializeDiskEncryptionConfiguration(property.Value);
+                    diskEncryptionConfiguration = DiskEncryptionConfiguration.DeserializeDiskEncryptionConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("nodePlacementConfiguration"u8))
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    nodePlacementConfiguration = NodePlacementConfiguration.DeserializeNodePlacementConfiguration(property.Value);
+                    nodePlacementConfiguration = NodePlacementConfiguration.DeserializeNodePlacementConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("extensions"u8))
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Batch.Models
                     List<BatchVmExtension> array = new List<BatchVmExtension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BatchVmExtension.DeserializeBatchVmExtension(item));
+                        array.Add(BatchVmExtension.DeserializeBatchVmExtension(item, options));
                     }
                     extensions = array;
                     continue;
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    osDisk = BatchOSDisk.DeserializeBatchOSDisk(property.Value);
+                    osDisk = BatchOSDisk.DeserializeBatchOSDisk(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("securityProfile"u8))
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    securityProfile = BatchSecurityProfile.DeserializeBatchSecurityProfile(property.Value);
+                    securityProfile = BatchSecurityProfile.DeserializeBatchSecurityProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("serviceArtifactReference"u8))
@@ -257,7 +257,20 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchVmConfiguration(imageReference, nodeAgentSkuId, windowsConfiguration.Value, Optional.ToList(dataDisks), licenseType.Value, containerConfiguration.Value, diskEncryptionConfiguration.Value, nodePlacementConfiguration.Value, Optional.ToList(extensions), osDisk.Value, securityProfile.Value, serviceArtifactReference, serializedAdditionalRawData);
+            return new BatchVmConfiguration(
+                imageReference,
+                nodeAgentSkuId,
+                windowsConfiguration.Value,
+                dataDisks ?? new ChangeTrackingList<BatchVmDataDisk>(),
+                licenseType.Value,
+                containerConfiguration.Value,
+                diskEncryptionConfiguration.Value,
+                nodePlacementConfiguration.Value,
+                extensions ?? new ChangeTrackingList<BatchVmExtension>(),
+                osDisk.Value,
+                securityProfile.Value,
+                serviceArtifactReference,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchVmConfiguration>.Write(ModelReaderWriterOptions options)

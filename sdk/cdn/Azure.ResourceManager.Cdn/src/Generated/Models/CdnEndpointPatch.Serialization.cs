@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(OriginPath))
+            if (OriginPath != null)
             {
                 writer.WritePropertyName("originPath"u8);
                 writer.WriteStringValue(OriginPath);
             }
-            if (Optional.IsCollectionDefined(ContentTypesToCompress))
+            if (!(ContentTypesToCompress is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("contentTypesToCompress"u8);
                 writer.WriteStartArray();
@@ -54,32 +54,32 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(OriginHostHeader))
+            if (OriginHostHeader != null)
             {
                 writer.WritePropertyName("originHostHeader"u8);
                 writer.WriteStringValue(OriginHostHeader);
             }
-            if (Optional.IsDefined(IsCompressionEnabled))
+            if (IsCompressionEnabled.HasValue)
             {
                 writer.WritePropertyName("isCompressionEnabled"u8);
                 writer.WriteBooleanValue(IsCompressionEnabled.Value);
             }
-            if (Optional.IsDefined(IsHttpAllowed))
+            if (IsHttpAllowed.HasValue)
             {
                 writer.WritePropertyName("isHttpAllowed"u8);
                 writer.WriteBooleanValue(IsHttpAllowed.Value);
             }
-            if (Optional.IsDefined(IsHttpsAllowed))
+            if (IsHttpsAllowed.HasValue)
             {
                 writer.WritePropertyName("isHttpsAllowed"u8);
                 writer.WriteBooleanValue(IsHttpsAllowed.Value);
             }
-            if (Optional.IsDefined(QueryStringCachingBehavior))
+            if (QueryStringCachingBehavior.HasValue)
             {
                 writer.WritePropertyName("queryStringCachingBehavior"u8);
                 writer.WriteStringValue(QueryStringCachingBehavior.Value.ToSerialString());
             }
-            if (Optional.IsDefined(OptimizationType))
+            if (OptimizationType.HasValue)
             {
                 if (OptimizationType != null)
                 {
@@ -91,12 +91,12 @@ namespace Azure.ResourceManager.Cdn.Models
                     writer.WriteNull("optimizationType");
                 }
             }
-            if (Optional.IsDefined(ProbePath))
+            if (ProbePath != null)
             {
                 writer.WritePropertyName("probePath"u8);
                 writer.WriteStringValue(ProbePath);
             }
-            if (Optional.IsCollectionDefined(GeoFilters))
+            if (!(GeoFilters is ChangeTrackingList<GeoFilter> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("geoFilters"u8);
                 writer.WriteStartArray();
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DefaultOriginGroup))
+            if (DefaultOriginGroup != null)
             {
                 if (DefaultOriginGroup != null)
                 {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     writer.WriteNull("defaultOriginGroup");
                 }
             }
-            if (Optional.IsCollectionDefined(UriSigningKeys))
+            if (!(UriSigningKeys is ChangeTrackingList<UriSigningKey> collection2 && collection2.IsUndefined))
             {
                 if (UriSigningKeys != null)
                 {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     writer.WriteNull("urlSigningKeys");
                 }
             }
-            if (Optional.IsDefined(DeliveryPolicy))
+            if (DeliveryPolicy != null)
             {
                 if (DeliveryPolicy != null)
                 {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     writer.WriteNull("deliveryPolicy");
                 }
             }
-            if (Optional.IsDefined(WebApplicationFirewallPolicyLink))
+            if (WebApplicationFirewallPolicyLink != null)
             {
                 if (WebApplicationFirewallPolicyLink != null)
                 {
@@ -198,9 +198,9 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<string> originPath = default;
-            Optional<IList<string>> contentTypesToCompress = default;
+            IList<string> contentTypesToCompress = default;
             Optional<string> originHostHeader = default;
             Optional<bool> isCompressionEnabled = default;
             Optional<bool> isHttpAllowed = default;
@@ -208,9 +208,9 @@ namespace Azure.ResourceManager.Cdn.Models
             Optional<QueryStringCachingBehavior> queryStringCachingBehavior = default;
             Optional<OptimizationType?> optimizationType = default;
             Optional<string> probePath = default;
-            Optional<IList<GeoFilter>> geoFilters = default;
+            IList<GeoFilter> geoFilters = default;
             Optional<EndpointPropertiesUpdateParametersDefaultOriginGroup> defaultOriginGroup = default;
-            Optional<IList<UriSigningKey>> uriSigningKeys = default;
+            IList<UriSigningKey> uriSigningKeys = default;
             Optional<EndpointDeliveryPolicy> deliveryPolicy = default;
             Optional<EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink> webApplicationFirewallPolicyLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Cdn.Models
                             List<GeoFilter> array = new List<GeoFilter>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(GeoFilter.DeserializeGeoFilter(item));
+                                array.Add(GeoFilter.DeserializeGeoFilter(item, options));
                             }
                             geoFilters = array;
                             continue;
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.Cdn.Models
                                 defaultOriginGroup = null;
                                 continue;
                             }
-                            defaultOriginGroup = EndpointPropertiesUpdateParametersDefaultOriginGroup.DeserializeEndpointPropertiesUpdateParametersDefaultOriginGroup(property0.Value);
+                            defaultOriginGroup = EndpointPropertiesUpdateParametersDefaultOriginGroup.DeserializeEndpointPropertiesUpdateParametersDefaultOriginGroup(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("urlSigningKeys"u8))
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.Cdn.Models
                             List<UriSigningKey> array = new List<UriSigningKey>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(UriSigningKey.DeserializeUriSigningKey(item));
+                                array.Add(UriSigningKey.DeserializeUriSigningKey(item, options));
                             }
                             uriSigningKeys = array;
                             continue;
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.Cdn.Models
                                 deliveryPolicy = null;
                                 continue;
                             }
-                            deliveryPolicy = EndpointDeliveryPolicy.DeserializeEndpointDeliveryPolicy(property0.Value);
+                            deliveryPolicy = EndpointDeliveryPolicy.DeserializeEndpointDeliveryPolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("webApplicationFirewallPolicyLink"u8))
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.Cdn.Models
                                 webApplicationFirewallPolicyLink = null;
                                 continue;
                             }
-                            webApplicationFirewallPolicyLink = EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink.DeserializeEndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink(property0.Value);
+                            webApplicationFirewallPolicyLink = EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink.DeserializeEndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink(property0.Value, options);
                             continue;
                         }
                     }
@@ -383,7 +383,23 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CdnEndpointPatch(Optional.ToDictionary(tags), originPath.Value, Optional.ToList(contentTypesToCompress), originHostHeader.Value, Optional.ToNullable(isCompressionEnabled), Optional.ToNullable(isHttpAllowed), Optional.ToNullable(isHttpsAllowed), Optional.ToNullable(queryStringCachingBehavior), Optional.ToNullable(optimizationType), probePath.Value, Optional.ToList(geoFilters), defaultOriginGroup.Value, Optional.ToList(uriSigningKeys), deliveryPolicy.Value, webApplicationFirewallPolicyLink.Value, serializedAdditionalRawData);
+            return new CdnEndpointPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                originPath.Value,
+                contentTypesToCompress ?? new ChangeTrackingList<string>(),
+                originHostHeader.Value,
+                Optional.ToNullable(isCompressionEnabled),
+                Optional.ToNullable(isHttpAllowed),
+                Optional.ToNullable(isHttpsAllowed),
+                Optional.ToNullable(queryStringCachingBehavior),
+                Optional.ToNullable(optimizationType),
+                probePath.Value,
+                geoFilters ?? new ChangeTrackingList<GeoFilter>(),
+                defaultOriginGroup.Value,
+                uriSigningKeys ?? new ChangeTrackingList<UriSigningKey>(),
+                deliveryPolicy.Value,
+                webApplicationFirewallPolicyLink.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CdnEndpointPatch>.Write(ModelReaderWriterOptions options)

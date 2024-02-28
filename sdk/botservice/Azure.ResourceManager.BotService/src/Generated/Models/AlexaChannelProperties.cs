@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
@@ -52,7 +51,10 @@ namespace Azure.ResourceManager.BotService.Models
         /// <exception cref="ArgumentNullException"> <paramref name="alexaSkillId"/> is null. </exception>
         public AlexaChannelProperties(string alexaSkillId, bool isEnabled)
         {
-            Argument.AssertNotNull(alexaSkillId, nameof(alexaSkillId));
+            if (alexaSkillId == null)
+            {
+                throw new ArgumentNullException(nameof(alexaSkillId));
+            }
 
             AlexaSkillId = alexaSkillId;
             IsEnabled = isEnabled;

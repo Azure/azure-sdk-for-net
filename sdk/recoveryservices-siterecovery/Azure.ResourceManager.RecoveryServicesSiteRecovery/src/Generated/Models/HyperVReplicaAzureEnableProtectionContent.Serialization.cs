@@ -26,57 +26,57 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(HyperVHostVmId))
+            if (HyperVHostVmId != null)
             {
                 writer.WritePropertyName("hvHostVmId"u8);
                 writer.WriteStringValue(HyperVHostVmId);
             }
-            if (Optional.IsDefined(VmName))
+            if (VmName != null)
             {
                 writer.WritePropertyName("vmName"u8);
                 writer.WriteStringValue(VmName);
             }
-            if (Optional.IsDefined(OSType))
+            if (OSType != null)
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType);
             }
-            if (Optional.IsDefined(VhdId))
+            if (VhdId != null)
             {
                 writer.WritePropertyName("vhdId"u8);
                 writer.WriteStringValue(VhdId);
             }
-            if (Optional.IsDefined(TargetStorageAccountId))
+            if (TargetStorageAccountId != null)
             {
                 writer.WritePropertyName("targetStorageAccountId"u8);
                 writer.WriteStringValue(TargetStorageAccountId);
             }
-            if (Optional.IsDefined(TargetAzureNetworkId))
+            if (TargetAzureNetworkId != null)
             {
                 writer.WritePropertyName("targetAzureNetworkId"u8);
                 writer.WriteStringValue(TargetAzureNetworkId);
             }
-            if (Optional.IsDefined(TargetAzureSubnetId))
+            if (TargetAzureSubnetId != null)
             {
                 writer.WritePropertyName("targetAzureSubnetId"u8);
                 writer.WriteStringValue(TargetAzureSubnetId);
             }
-            if (Optional.IsDefined(EnableRdpOnTargetOption))
+            if (EnableRdpOnTargetOption != null)
             {
                 writer.WritePropertyName("enableRdpOnTargetOption"u8);
                 writer.WriteStringValue(EnableRdpOnTargetOption);
             }
-            if (Optional.IsDefined(TargetAzureVmName))
+            if (TargetAzureVmName != null)
             {
                 writer.WritePropertyName("targetAzureVmName"u8);
                 writer.WriteStringValue(TargetAzureVmName);
             }
-            if (Optional.IsDefined(LogStorageAccountId))
+            if (LogStorageAccountId != null)
             {
                 writer.WritePropertyName("logStorageAccountId"u8);
                 writer.WriteStringValue(LogStorageAccountId);
             }
-            if (Optional.IsCollectionDefined(DisksToInclude))
+            if (!(DisksToInclude is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("disksToInclude"u8);
                 writer.WriteStartArray();
@@ -86,62 +86,62 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(TargetAzureV1ResourceGroupId))
+            if (TargetAzureV1ResourceGroupId != null)
             {
                 writer.WritePropertyName("targetAzureV1ResourceGroupId"u8);
                 writer.WriteStringValue(TargetAzureV1ResourceGroupId);
             }
-            if (Optional.IsDefined(TargetAzureV2ResourceGroupId))
+            if (TargetAzureV2ResourceGroupId != null)
             {
                 writer.WritePropertyName("targetAzureV2ResourceGroupId"u8);
                 writer.WriteStringValue(TargetAzureV2ResourceGroupId);
             }
-            if (Optional.IsDefined(UseManagedDisks))
+            if (UseManagedDisks != null)
             {
                 writer.WritePropertyName("useManagedDisks"u8);
                 writer.WriteStringValue(UseManagedDisks);
             }
-            if (Optional.IsDefined(TargetAvailabilitySetId))
+            if (TargetAvailabilitySetId != null)
             {
                 writer.WritePropertyName("targetAvailabilitySetId"u8);
                 writer.WriteStringValue(TargetAvailabilitySetId);
             }
-            if (Optional.IsDefined(TargetAvailabilityZone))
+            if (TargetAvailabilityZone != null)
             {
                 writer.WritePropertyName("targetAvailabilityZone"u8);
                 writer.WriteStringValue(TargetAvailabilityZone);
             }
-            if (Optional.IsDefined(LicenseType))
+            if (LicenseType.HasValue)
             {
                 writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType.Value.ToString());
             }
-            if (Optional.IsDefined(SqlServerLicenseType))
+            if (SqlServerLicenseType.HasValue)
             {
                 writer.WritePropertyName("sqlServerLicenseType"u8);
                 writer.WriteStringValue(SqlServerLicenseType.Value.ToString());
             }
-            if (Optional.IsDefined(TargetVmSize))
+            if (TargetVmSize != null)
             {
                 writer.WritePropertyName("targetVmSize"u8);
                 writer.WriteStringValue(TargetVmSize);
             }
-            if (Optional.IsDefined(TargetProximityPlacementGroupId))
+            if (TargetProximityPlacementGroupId != null)
             {
                 writer.WritePropertyName("targetProximityPlacementGroupId"u8);
                 writer.WriteStringValue(TargetProximityPlacementGroupId);
             }
-            if (Optional.IsDefined(UseManagedDisksForReplication))
+            if (UseManagedDisksForReplication != null)
             {
                 writer.WritePropertyName("useManagedDisksForReplication"u8);
                 writer.WriteStringValue(UseManagedDisksForReplication);
             }
-            if (Optional.IsDefined(DiskType))
+            if (DiskType.HasValue)
             {
                 writer.WritePropertyName("diskType"u8);
                 writer.WriteStringValue(DiskType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(DisksToIncludeForManagedDisks))
+            if (!(DisksToIncludeForManagedDisks is ChangeTrackingList<HyperVReplicaAzureDiskDetails> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("disksToIncludeForManagedDisks"u8);
                 writer.WriteStartArray();
@@ -151,12 +151,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DiskEncryptionSetId))
+            if (DiskEncryptionSetId != null)
             {
                 writer.WritePropertyName("diskEncryptionSetId"u8);
                 writer.WriteStringValue(DiskEncryptionSetId);
             }
-            if (Optional.IsCollectionDefined(TargetVmTags))
+            if (!(TargetVmTags is ChangeTrackingDictionary<string, string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("targetVmTags"u8);
                 writer.WriteStartObject();
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(SeedManagedDiskTags))
+            if (!(SeedManagedDiskTags is ChangeTrackingDictionary<string, string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("seedManagedDiskTags"u8);
                 writer.WriteStartObject();
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(TargetManagedDiskTags))
+            if (!(TargetManagedDiskTags is ChangeTrackingDictionary<string, string> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("targetManagedDiskTags"u8);
                 writer.WriteStartObject();
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(TargetNicTags))
+            if (!(TargetNicTags is ChangeTrackingDictionary<string, string> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("targetNicTags"u8);
                 writer.WriteStartObject();
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> enableRdpOnTargetOption = default;
             Optional<string> targetAzureVmName = default;
             Optional<ResourceIdentifier> logStorageAccountId = default;
-            Optional<IList<string>> disksToInclude = default;
+            IList<string> disksToInclude = default;
             Optional<ResourceIdentifier> targetAzureV1ResourceGroupId = default;
             Optional<ResourceIdentifier> targetAzureV2ResourceGroupId = default;
             Optional<string> useManagedDisks = default;
@@ -262,12 +262,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<ResourceIdentifier> targetProximityPlacementGroupId = default;
             Optional<string> useManagedDisksForReplication = default;
             Optional<SiteRecoveryDiskAccountType> diskType = default;
-            Optional<IList<HyperVReplicaAzureDiskDetails>> disksToIncludeForManagedDisks = default;
+            IList<HyperVReplicaAzureDiskDetails> disksToIncludeForManagedDisks = default;
             Optional<ResourceIdentifier> diskEncryptionSetId = default;
-            Optional<IDictionary<string, string>> targetVmTags = default;
-            Optional<IDictionary<string, string>> seedManagedDiskTags = default;
-            Optional<IDictionary<string, string>> targetManagedDiskTags = default;
-            Optional<IDictionary<string, string>> targetNicTags = default;
+            IDictionary<string, string> targetVmTags = default;
+            IDictionary<string, string> seedManagedDiskTags = default;
+            IDictionary<string, string> targetManagedDiskTags = default;
+            IDictionary<string, string> targetNicTags = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<HyperVReplicaAzureDiskDetails> array = new List<HyperVReplicaAzureDiskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HyperVReplicaAzureDiskDetails.DeserializeHyperVReplicaAzureDiskDetails(item));
+                        array.Add(HyperVReplicaAzureDiskDetails.DeserializeHyperVReplicaAzureDiskDetails(item, options));
                     }
                     disksToIncludeForManagedDisks = array;
                     continue;
@@ -526,7 +526,37 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HyperVReplicaAzureEnableProtectionContent(instanceType, serializedAdditionalRawData, hvHostVmId.Value, vmName.Value, osType.Value, vhdId.Value, targetStorageAccountId.Value, targetAzureNetworkId.Value, targetAzureSubnetId.Value, enableRdpOnTargetOption.Value, targetAzureVmName.Value, logStorageAccountId.Value, Optional.ToList(disksToInclude), targetAzureV1ResourceGroupId.Value, targetAzureV2ResourceGroupId.Value, useManagedDisks.Value, targetAvailabilitySetId.Value, targetAvailabilityZone.Value, Optional.ToNullable(licenseType), Optional.ToNullable(sqlServerLicenseType), targetVmSize.Value, targetProximityPlacementGroupId.Value, useManagedDisksForReplication.Value, Optional.ToNullable(diskType), Optional.ToList(disksToIncludeForManagedDisks), diskEncryptionSetId.Value, Optional.ToDictionary(targetVmTags), Optional.ToDictionary(seedManagedDiskTags), Optional.ToDictionary(targetManagedDiskTags), Optional.ToDictionary(targetNicTags));
+            return new HyperVReplicaAzureEnableProtectionContent(
+                instanceType,
+                serializedAdditionalRawData,
+                hvHostVmId.Value,
+                vmName.Value,
+                osType.Value,
+                vhdId.Value,
+                targetStorageAccountId.Value,
+                targetAzureNetworkId.Value,
+                targetAzureSubnetId.Value,
+                enableRdpOnTargetOption.Value,
+                targetAzureVmName.Value,
+                logStorageAccountId.Value,
+                disksToInclude ?? new ChangeTrackingList<string>(),
+                targetAzureV1ResourceGroupId.Value,
+                targetAzureV2ResourceGroupId.Value,
+                useManagedDisks.Value,
+                targetAvailabilitySetId.Value,
+                targetAvailabilityZone.Value,
+                Optional.ToNullable(licenseType),
+                Optional.ToNullable(sqlServerLicenseType),
+                targetVmSize.Value,
+                targetProximityPlacementGroupId.Value,
+                useManagedDisksForReplication.Value,
+                Optional.ToNullable(diskType),
+                disksToIncludeForManagedDisks ?? new ChangeTrackingList<HyperVReplicaAzureDiskDetails>(),
+                diskEncryptionSetId.Value,
+                targetVmTags ?? new ChangeTrackingDictionary<string, string>(),
+                seedManagedDiskTags ?? new ChangeTrackingDictionary<string, string>(),
+                targetManagedDiskTags ?? new ChangeTrackingDictionary<string, string>(),
+                targetNicTags ?? new ChangeTrackingDictionary<string, string>());
         }
 
         BinaryData IPersistableModel<HyperVReplicaAzureEnableProtectionContent>.Write(ModelReaderWriterOptions options)

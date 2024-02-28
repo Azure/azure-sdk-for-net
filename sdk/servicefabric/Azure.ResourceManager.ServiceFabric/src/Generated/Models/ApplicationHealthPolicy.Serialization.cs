@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DefaultServiceTypeHealthPolicy))
+            if (DefaultServiceTypeHealthPolicy != null)
             {
                 writer.WritePropertyName("defaultServiceTypeHealthPolicy"u8);
                 writer.WriteObjectValue(DefaultServiceTypeHealthPolicy);
             }
-            if (Optional.IsCollectionDefined(ServiceTypeHealthPolicies))
+            if (!(ServiceTypeHealthPolicies is ChangeTrackingDictionary<string, ServiceTypeHealthPolicy> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("serviceTypeHealthPolicies"u8);
                 writer.WriteStartObject();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 return null;
             }
             Optional<ServiceTypeHealthPolicy> defaultServiceTypeHealthPolicy = default;
-            Optional<IDictionary<string, ServiceTypeHealthPolicy>> serviceTypeHealthPolicies = default;
+            IDictionary<string, ServiceTypeHealthPolicy> serviceTypeHealthPolicies = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     {
                         continue;
                     }
-                    defaultServiceTypeHealthPolicy = ServiceTypeHealthPolicy.DeserializeServiceTypeHealthPolicy(property.Value);
+                    defaultServiceTypeHealthPolicy = ServiceTypeHealthPolicy.DeserializeServiceTypeHealthPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("serviceTypeHealthPolicies"u8))
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     Dictionary<string, ServiceTypeHealthPolicy> dictionary = new Dictionary<string, ServiceTypeHealthPolicy>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, ServiceTypeHealthPolicy.DeserializeServiceTypeHealthPolicy(property0.Value));
+                        dictionary.Add(property0.Name, ServiceTypeHealthPolicy.DeserializeServiceTypeHealthPolicy(property0.Value, options));
                     }
                     serviceTypeHealthPolicies = dictionary;
                     continue;
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationHealthPolicy(defaultServiceTypeHealthPolicy.Value, Optional.ToDictionary(serviceTypeHealthPolicies), serializedAdditionalRawData);
+            return new ApplicationHealthPolicy(defaultServiceTypeHealthPolicy.Value, serviceTypeHealthPolicies ?? new ChangeTrackingDictionary<string, ServiceTypeHealthPolicy>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationHealthPolicy>.Write(ModelReaderWriterOptions options)

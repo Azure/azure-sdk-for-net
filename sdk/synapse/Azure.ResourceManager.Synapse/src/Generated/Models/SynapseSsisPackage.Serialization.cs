@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FolderId))
+            if (FolderId.HasValue)
             {
                 writer.WritePropertyName("folderId"u8);
                 writer.WriteNumberValue(FolderId.Value);
             }
-            if (Optional.IsDefined(ProjectVersion))
+            if (ProjectVersion.HasValue)
             {
                 writer.WritePropertyName("projectVersion"u8);
                 writer.WriteNumberValue(ProjectVersion.Value);
             }
-            if (Optional.IsDefined(ProjectId))
+            if (ProjectId.HasValue)
             {
                 writer.WritePropertyName("projectId"u8);
                 writer.WriteNumberValue(ProjectId.Value);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingList<SynapseSsisParameter> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
@@ -53,17 +53,17 @@ namespace Azure.ResourceManager.Synapse.Models
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(MetadataType.ToString());
-            if (Optional.IsDefined(Id))
+            if (Id.HasValue)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteNumberValue(Id.Value);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Synapse.Models
             Optional<long> folderId = default;
             Optional<long> projectVersion = default;
             Optional<long> projectId = default;
-            Optional<IReadOnlyList<SynapseSsisParameter>> parameters = default;
+            IReadOnlyList<SynapseSsisParameter> parameters = default;
             SynapseSsisObjectMetadataType type = default;
             Optional<long> id = default;
             Optional<string> name = default;
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseSsisParameter> array = new List<SynapseSsisParameter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseSsisParameter.DeserializeSynapseSsisParameter(item));
+                        array.Add(SynapseSsisParameter.DeserializeSynapseSsisParameter(item, options));
                     }
                     parameters = array;
                     continue;
@@ -189,7 +189,16 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseSsisPackage(type, Optional.ToNullable(id), name.Value, description.Value, serializedAdditionalRawData, Optional.ToNullable(folderId), Optional.ToNullable(projectVersion), Optional.ToNullable(projectId), Optional.ToList(parameters));
+            return new SynapseSsisPackage(
+                type,
+                Optional.ToNullable(id),
+                name.Value,
+                description.Value,
+                serializedAdditionalRawData,
+                Optional.ToNullable(folderId),
+                Optional.ToNullable(projectVersion),
+                Optional.ToNullable(projectId),
+                parameters ?? new ChangeTrackingList<SynapseSsisParameter>());
         }
 
         BinaryData IPersistableModel<SynapseSsisPackage>.Write(ModelReaderWriterOptions options)

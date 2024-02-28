@@ -42,34 +42,34 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(CreatedOn))
+            if (CreatedOn.HasValue)
             {
                 writer.WritePropertyName("createdTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(LastModifiedOn))
+            if (LastModifiedOn.HasValue)
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (Optional.IsDefined(SizeInKb))
+            if (SizeInKb.HasValue)
             {
                 writer.WritePropertyName("sizeInKb"u8);
                 writer.WriteNumberValue(SizeInKb.Value);
             }
-            if (Optional.IsDefined(TypePropertiesType))
+            if (TypePropertiesType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(TypePropertiesType);
             }
-            if (Optional.IsDefined(Uri))
+            if (Uri != null)
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
@@ -209,7 +209,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlFlexibleServerLogFile(id, name, type, systemData.Value, Optional.ToNullable(createdTime), Optional.ToNullable(lastModifiedTime), Optional.ToNullable(sizeInKb), type0.Value, url.Value, serializedAdditionalRawData);
+            return new PostgreSqlFlexibleServerLogFile(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(createdTime),
+                Optional.ToNullable(lastModifiedTime),
+                Optional.ToNullable(sizeInKb),
+                type0.Value,
+                url.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlFlexibleServerLogFile>.Write(ModelReaderWriterOptions options)

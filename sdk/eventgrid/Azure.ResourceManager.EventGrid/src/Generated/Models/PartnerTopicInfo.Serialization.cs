@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AzureSubscriptionId))
+            if (AzureSubscriptionId.HasValue)
             {
                 writer.WritePropertyName("azureSubscriptionId"u8);
                 writer.WriteStringValue(AzureSubscriptionId.Value);
             }
-            if (Optional.IsDefined(ResourceGroupName))
+            if (ResourceGroupName != null)
             {
                 writer.WritePropertyName("resourceGroupName"u8);
                 writer.WriteStringValue(ResourceGroupName);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(EventTypeInfo))
+            if (EventTypeInfo != null)
             {
                 writer.WritePropertyName("eventTypeInfo"u8);
                 writer.WriteObjectValue(EventTypeInfo);
             }
-            if (Optional.IsDefined(Source))
+            if (Source != null)
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         continue;
                     }
-                    eventTypeInfo = PartnerTopicEventTypeInfo.DeserializePartnerTopicEventTypeInfo(property.Value);
+                    eventTypeInfo = PartnerTopicEventTypeInfo.DeserializePartnerTopicEventTypeInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("source"u8))
@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PartnerTopicInfo(Optional.ToNullable(azureSubscriptionId), resourceGroupName.Value, name.Value, eventTypeInfo.Value, source.Value, serializedAdditionalRawData);
+            return new PartnerTopicInfo(
+                Optional.ToNullable(azureSubscriptionId),
+                resourceGroupName.Value,
+                name.Value,
+                eventTypeInfo.Value,
+                source.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PartnerTopicInfo>.Write(ModelReaderWriterOptions options)

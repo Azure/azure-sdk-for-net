@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(GradientAccumulationSteps))
+            if (GradientAccumulationSteps != null)
             {
                 if (GradientAccumulationSteps != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("gradientAccumulationSteps");
                 }
             }
-            if (Optional.IsDefined(LearningRate))
+            if (LearningRate != null)
             {
                 if (LearningRate != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("learningRate");
                 }
             }
-            if (Optional.IsDefined(LearningRateScheduler))
+            if (LearningRateScheduler != null)
             {
                 if (LearningRateScheduler != null)
                 {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("learningRateScheduler");
                 }
             }
-            if (Optional.IsDefined(ModelName))
+            if (ModelName != null)
             {
                 if (ModelName != null)
                 {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("modelName");
                 }
             }
-            if (Optional.IsDefined(NumberOfEpochs))
+            if (NumberOfEpochs != null)
             {
                 if (NumberOfEpochs != null)
                 {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("numberOfEpochs");
                 }
             }
-            if (Optional.IsDefined(TrainingBatchSize))
+            if (TrainingBatchSize != null)
             {
                 if (TrainingBatchSize != null)
                 {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("trainingBatchSize");
                 }
             }
-            if (Optional.IsDefined(ValidationBatchSize))
+            if (ValidationBatchSize != null)
             {
                 if (ValidationBatchSize != null)
                 {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("validationBatchSize");
                 }
             }
-            if (Optional.IsDefined(WarmupRatio))
+            if (WarmupRatio != null)
             {
                 if (WarmupRatio != null)
                 {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("warmupRatio");
                 }
             }
-            if (Optional.IsDefined(WeightDecay))
+            if (WeightDecay != null)
             {
                 if (WeightDecay != null)
                 {
@@ -281,7 +281,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NlpParameterSubspace(gradientAccumulationSteps.Value, learningRate.Value, learningRateScheduler.Value, modelName.Value, numberOfEpochs.Value, trainingBatchSize.Value, validationBatchSize.Value, warmupRatio.Value, weightDecay.Value, serializedAdditionalRawData);
+            return new NlpParameterSubspace(
+                gradientAccumulationSteps.Value,
+                learningRate.Value,
+                learningRateScheduler.Value,
+                modelName.Value,
+                numberOfEpochs.Value,
+                trainingBatchSize.Value,
+                validationBatchSize.Value,
+                warmupRatio.Value,
+                weightDecay.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NlpParameterSubspace>.Write(ModelReaderWriterOptions options)

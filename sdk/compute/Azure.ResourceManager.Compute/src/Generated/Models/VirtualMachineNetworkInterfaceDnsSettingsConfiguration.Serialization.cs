@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(DnsServers))
+            if (!(DnsServers is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dnsServers"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IList<string>> dnsServers = default;
+            IList<string> dnsServers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineNetworkInterfaceDnsSettingsConfiguration(Optional.ToList(dnsServers), serializedAdditionalRawData);
+            return new VirtualMachineNetworkInterfaceDnsSettingsConfiguration(dnsServers ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineNetworkInterfaceDnsSettingsConfiguration>.Write(ModelReaderWriterOptions options)

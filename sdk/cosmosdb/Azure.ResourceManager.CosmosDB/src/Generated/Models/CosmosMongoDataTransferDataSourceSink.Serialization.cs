@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStringValue(DatabaseName);
             writer.WritePropertyName("collectionName"u8);
             writer.WriteStringValue(CollectionName);
-            if (Optional.IsDefined(RemoteAccountName))
+            if (RemoteAccountName != null)
             {
                 writer.WritePropertyName("remoteAccountName"u8);
                 writer.WriteStringValue(RemoteAccountName);

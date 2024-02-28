@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             writer.WritePropertyName("jobLimitsType"u8);
             writer.WriteStringValue(JobLimitsType.ToString());
-            if (Optional.IsDefined(Timeout))
+            if (Timeout.HasValue)
             {
                 if (Timeout != null)
                 {

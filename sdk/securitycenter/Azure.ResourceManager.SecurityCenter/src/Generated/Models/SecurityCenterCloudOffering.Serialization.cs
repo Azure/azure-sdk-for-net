@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartObject();
             writer.WritePropertyName("offeringType"u8);
             writer.WriteStringValue(OfferingType.ToString());
-            if (options.Format != "W" && Optional.IsDefined(Description))
+            if (options.Format != "W" && Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -75,26 +75,26 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "CspmMonitorAws": return CspmMonitorAwsOffering.DeserializeCspmMonitorAwsOffering(element);
-                    case "CspmMonitorAzureDevOps": return CspmMonitorAzureDevOpsOffering.DeserializeCspmMonitorAzureDevOpsOffering(element);
-                    case "CspmMonitorGcp": return CspmMonitorGcpOffering.DeserializeCspmMonitorGcpOffering(element);
-                    case "CspmMonitorGitLab": return CspmMonitorGitLabOffering.DeserializeCspmMonitorGitLabOffering(element);
-                    case "CspmMonitorGithub": return CspmMonitorGithubOffering.DeserializeCspmMonitorGithubOffering(element);
-                    case "DefenderCspmAws": return DefenderCspmAwsOffering.DeserializeDefenderCspmAwsOffering(element);
-                    case "DefenderCspmGcp": return DefenderCspmGcpOffering.DeserializeDefenderCspmGcpOffering(element);
-                    case "DefenderForContainersAws": return DefenderForContainersAwsOffering.DeserializeDefenderForContainersAwsOffering(element);
-                    case "DefenderForContainersGcp": return DefenderForContainersGcpOffering.DeserializeDefenderForContainersGcpOffering(element);
-                    case "DefenderForDatabasesAws": return DefenderForDatabasesAwsOffering.DeserializeDefenderForDatabasesAwsOffering(element);
-                    case "DefenderForDatabasesGcp": return DefenderForDatabasesGcpOffering.DeserializeDefenderForDatabasesGcpOffering(element);
-                    case "DefenderForDevOpsAzureDevOps": return DefenderForDevOpsAzureDevOpsOffering.DeserializeDefenderForDevOpsAzureDevOpsOffering(element);
-                    case "DefenderForDevOpsGitLab": return DefenderForDevOpsGitLabOffering.DeserializeDefenderForDevOpsGitLabOffering(element);
-                    case "DefenderForDevOpsGithub": return DefenderForDevOpsGithubOffering.DeserializeDefenderForDevOpsGithubOffering(element);
-                    case "DefenderForServersAws": return DefenderForServersAwsOffering.DeserializeDefenderForServersAwsOffering(element);
-                    case "DefenderForServersGcp": return DefenderForServersGcpOffering.DeserializeDefenderForServersGcpOffering(element);
-                    case "InformationProtectionAws": return InformationProtectionAwsOffering.DeserializeInformationProtectionAwsOffering(element);
+                    case "CspmMonitorAws": return CspmMonitorAwsOffering.DeserializeCspmMonitorAwsOffering(element, options);
+                    case "CspmMonitorAzureDevOps": return CspmMonitorAzureDevOpsOffering.DeserializeCspmMonitorAzureDevOpsOffering(element, options);
+                    case "CspmMonitorGcp": return CspmMonitorGcpOffering.DeserializeCspmMonitorGcpOffering(element, options);
+                    case "CspmMonitorGitLab": return CspmMonitorGitLabOffering.DeserializeCspmMonitorGitLabOffering(element, options);
+                    case "CspmMonitorGithub": return CspmMonitorGithubOffering.DeserializeCspmMonitorGithubOffering(element, options);
+                    case "DefenderCspmAws": return DefenderCspmAwsOffering.DeserializeDefenderCspmAwsOffering(element, options);
+                    case "DefenderCspmGcp": return DefenderCspmGcpOffering.DeserializeDefenderCspmGcpOffering(element, options);
+                    case "DefenderForContainersAws": return DefenderForContainersAwsOffering.DeserializeDefenderForContainersAwsOffering(element, options);
+                    case "DefenderForContainersGcp": return DefenderForContainersGcpOffering.DeserializeDefenderForContainersGcpOffering(element, options);
+                    case "DefenderForDatabasesAws": return DefenderForDatabasesAwsOffering.DeserializeDefenderForDatabasesAwsOffering(element, options);
+                    case "DefenderForDatabasesGcp": return DefenderForDatabasesGcpOffering.DeserializeDefenderForDatabasesGcpOffering(element, options);
+                    case "DefenderForDevOpsAzureDevOps": return DefenderForDevOpsAzureDevOpsOffering.DeserializeDefenderForDevOpsAzureDevOpsOffering(element, options);
+                    case "DefenderForDevOpsGitLab": return DefenderForDevOpsGitLabOffering.DeserializeDefenderForDevOpsGitLabOffering(element, options);
+                    case "DefenderForDevOpsGithub": return DefenderForDevOpsGithubOffering.DeserializeDefenderForDevOpsGithubOffering(element, options);
+                    case "DefenderForServersAws": return DefenderForServersAwsOffering.DeserializeDefenderForServersAwsOffering(element, options);
+                    case "DefenderForServersGcp": return DefenderForServersGcpOffering.DeserializeDefenderForServersGcpOffering(element, options);
+                    case "InformationProtectionAws": return InformationProtectionAwsOffering.DeserializeInformationProtectionAwsOffering(element, options);
                 }
             }
-            return UnknownCloudOffering.DeserializeUnknownCloudOffering(element);
+            return UnknownCloudOffering.DeserializeUnknownCloudOffering(element, options);
         }
 
         BinaryData IPersistableModel<SecurityCenterCloudOffering>.Write(ModelReaderWriterOptions options)

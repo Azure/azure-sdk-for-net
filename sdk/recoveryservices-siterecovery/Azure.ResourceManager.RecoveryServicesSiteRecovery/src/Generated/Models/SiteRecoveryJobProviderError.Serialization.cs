@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ErrorCode))
+            if (ErrorCode.HasValue)
             {
                 writer.WritePropertyName("errorCode"u8);
                 writer.WriteNumberValue(ErrorCode.Value);
             }
-            if (Optional.IsDefined(ErrorMessage))
+            if (ErrorMessage != null)
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
             }
-            if (Optional.IsDefined(ErrorId))
+            if (ErrorId != null)
             {
                 writer.WritePropertyName("errorId"u8);
                 writer.WriteStringValue(ErrorId);
             }
-            if (Optional.IsDefined(PossibleCauses))
+            if (PossibleCauses != null)
             {
                 writer.WritePropertyName("possibleCauses"u8);
                 writer.WriteStringValue(PossibleCauses);
             }
-            if (Optional.IsDefined(RecommendedAction))
+            if (RecommendedAction != null)
             {
                 writer.WritePropertyName("recommendedAction"u8);
                 writer.WriteStringValue(RecommendedAction);
@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryJobProviderError(Optional.ToNullable(errorCode), errorMessage.Value, errorId.Value, possibleCauses.Value, recommendedAction.Value, serializedAdditionalRawData);
+            return new SiteRecoveryJobProviderError(
+                Optional.ToNullable(errorCode),
+                errorMessage.Value,
+                errorId.Value,
+                possibleCauses.Value,
+                recommendedAction.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryJobProviderError>.Write(ModelReaderWriterOptions options)

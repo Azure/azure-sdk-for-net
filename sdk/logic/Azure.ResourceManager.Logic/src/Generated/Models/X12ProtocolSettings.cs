@@ -59,14 +59,38 @@ namespace Azure.ResourceManager.Logic.Models
         /// <exception cref="ArgumentNullException"> <paramref name="validationSettings"/>, <paramref name="framingSettings"/>, <paramref name="envelopeSettings"/>, <paramref name="acknowledgementSettings"/>, <paramref name="messageFilter"/>, <paramref name="securitySettings"/>, <paramref name="processingSettings"/> or <paramref name="schemaReferences"/> is null. </exception>
         public X12ProtocolSettings(X12ValidationSettings validationSettings, X12FramingSettings framingSettings, X12EnvelopeSettings envelopeSettings, X12AcknowledgementSettings acknowledgementSettings, X12MessageFilter messageFilter, X12SecuritySettings securitySettings, X12ProcessingSettings processingSettings, IEnumerable<X12SchemaReference> schemaReferences)
         {
-            Argument.AssertNotNull(validationSettings, nameof(validationSettings));
-            Argument.AssertNotNull(framingSettings, nameof(framingSettings));
-            Argument.AssertNotNull(envelopeSettings, nameof(envelopeSettings));
-            Argument.AssertNotNull(acknowledgementSettings, nameof(acknowledgementSettings));
-            Argument.AssertNotNull(messageFilter, nameof(messageFilter));
-            Argument.AssertNotNull(securitySettings, nameof(securitySettings));
-            Argument.AssertNotNull(processingSettings, nameof(processingSettings));
-            Argument.AssertNotNull(schemaReferences, nameof(schemaReferences));
+            if (validationSettings == null)
+            {
+                throw new ArgumentNullException(nameof(validationSettings));
+            }
+            if (framingSettings == null)
+            {
+                throw new ArgumentNullException(nameof(framingSettings));
+            }
+            if (envelopeSettings == null)
+            {
+                throw new ArgumentNullException(nameof(envelopeSettings));
+            }
+            if (acknowledgementSettings == null)
+            {
+                throw new ArgumentNullException(nameof(acknowledgementSettings));
+            }
+            if (messageFilter == null)
+            {
+                throw new ArgumentNullException(nameof(messageFilter));
+            }
+            if (securitySettings == null)
+            {
+                throw new ArgumentNullException(nameof(securitySettings));
+            }
+            if (processingSettings == null)
+            {
+                throw new ArgumentNullException(nameof(processingSettings));
+            }
+            if (schemaReferences == null)
+            {
+                throw new ArgumentNullException(nameof(schemaReferences));
+            }
 
             ValidationSettings = validationSettings;
             FramingSettings = framingSettings;

@@ -20,8 +20,8 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                 return null;
             }
             Optional<string> etag = default;
-            Optional<IReadOnlyList<DerivedMetricInfo>> metrics = default;
-            Optional<IReadOnlyList<DocumentStreamInfo>> documentStreams = default;
+            IReadOnlyList<DerivedMetricInfo> metrics = default;
+            IReadOnlyList<DocumentStreamInfo> documentStreams = default;
             Optional<QuotaConfigurationInfo> quotaInfo = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -68,7 +68,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                     continue;
                 }
             }
-            return new CollectionConfigurationInfo(etag.Value, Optional.ToList(metrics), Optional.ToList(documentStreams), quotaInfo.Value);
+            return new CollectionConfigurationInfo(etag.Value, metrics ?? new ChangeTrackingList<DerivedMetricInfo>(), documentStreams ?? new ChangeTrackingList<DocumentStreamInfo>(), quotaInfo.Value);
         }
     }
 }

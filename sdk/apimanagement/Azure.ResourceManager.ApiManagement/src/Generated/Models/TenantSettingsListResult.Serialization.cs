@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<ApiManagementTenantSettingData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ApiManagementTenantSettingData>> value = default;
+            IReadOnlyList<ApiManagementTenantSettingData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ApiManagementTenantSettingData> array = new List<ApiManagementTenantSettingData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiManagementTenantSettingData.DeserializeApiManagementTenantSettingData(item));
+                        array.Add(ApiManagementTenantSettingData.DeserializeApiManagementTenantSettingData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TenantSettingsListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new TenantSettingsListResult(value ?? new ChangeTrackingList<ApiManagementTenantSettingData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TenantSettingsListResult>.Write(ModelReaderWriterOptions options)

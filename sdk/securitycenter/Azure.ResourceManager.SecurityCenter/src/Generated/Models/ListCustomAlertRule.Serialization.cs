@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ValueType))
+            if (options.Format != "W" && ValueType.HasValue)
             {
                 writer.WritePropertyName("valueType"u8);
                 writer.WriteStringValue(ValueType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DisplayName))
+            if (options.Format != "W" && DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Description))
+            if (options.Format != "W" && Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -87,12 +87,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AllowlistCustomAlertRule": return AllowlistCustomAlertRule.DeserializeAllowlistCustomAlertRule(element);
-                    case "ConnectionFromIpNotAllowed": return ConnectionFromIPNotAllowed.DeserializeConnectionFromIPNotAllowed(element);
-                    case "ConnectionToIpNotAllowed": return ConnectionToIPNotAllowed.DeserializeConnectionToIPNotAllowed(element);
-                    case "DenylistCustomAlertRule": return DenylistCustomAlertRule.DeserializeDenylistCustomAlertRule(element);
-                    case "LocalUserNotAllowed": return LocalUserNotAllowed.DeserializeLocalUserNotAllowed(element);
-                    case "ProcessNotAllowed": return ProcessNotAllowed.DeserializeProcessNotAllowed(element);
+                    case "AllowlistCustomAlertRule": return AllowlistCustomAlertRule.DeserializeAllowlistCustomAlertRule(element, options);
+                    case "ConnectionFromIpNotAllowed": return ConnectionFromIPNotAllowed.DeserializeConnectionFromIPNotAllowed(element, options);
+                    case "ConnectionToIpNotAllowed": return ConnectionToIPNotAllowed.DeserializeConnectionToIPNotAllowed(element, options);
+                    case "DenylistCustomAlertRule": return DenylistCustomAlertRule.DeserializeDenylistCustomAlertRule(element, options);
+                    case "LocalUserNotAllowed": return LocalUserNotAllowed.DeserializeLocalUserNotAllowed(element, options);
+                    case "ProcessNotAllowed": return ProcessNotAllowed.DeserializeProcessNotAllowed(element, options);
                 }
             }
             Optional<SecurityValueType> valueType = default;
@@ -139,7 +139,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ListCustomAlertRule(displayName.Value, description.Value, isEnabled, ruleType, serializedAdditionalRawData, Optional.ToNullable(valueType));
+            return new ListCustomAlertRule(
+                displayName.Value,
+                description.Value,
+                isEnabled,
+                ruleType,
+                serializedAdditionalRawData,
+                Optional.ToNullable(valueType));
         }
 
         BinaryData IPersistableModel<ListCustomAlertRule>.Write(ModelReaderWriterOptions options)

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -49,197 +49,197 @@ namespace Azure.ResourceManager.Sql.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(CreateMode))
+            if (CreateMode.HasValue)
             {
                 writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToString());
             }
-            if (Optional.IsDefined(Collation))
+            if (Collation != null)
             {
                 writer.WritePropertyName("collation"u8);
                 writer.WriteStringValue(Collation);
             }
-            if (Optional.IsDefined(MaxSizeBytes))
+            if (MaxSizeBytes.HasValue)
             {
                 writer.WritePropertyName("maxSizeBytes"u8);
                 writer.WriteNumberValue(MaxSizeBytes.Value);
             }
-            if (Optional.IsDefined(SampleName))
+            if (SampleName.HasValue)
             {
                 writer.WritePropertyName("sampleName"u8);
                 writer.WriteStringValue(SampleName.Value.ToString());
             }
-            if (Optional.IsDefined(ElasticPoolId))
+            if (ElasticPoolId != null)
             {
                 writer.WritePropertyName("elasticPoolId"u8);
                 writer.WriteStringValue(ElasticPoolId);
             }
-            if (Optional.IsDefined(SourceDatabaseId))
+            if (SourceDatabaseId != null)
             {
                 writer.WritePropertyName("sourceDatabaseId"u8);
                 writer.WriteStringValue(SourceDatabaseId);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DatabaseId))
+            if (options.Format != "W" && DatabaseId.HasValue)
             {
                 writer.WritePropertyName("databaseId"u8);
                 writer.WriteStringValue(DatabaseId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("creationDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(CurrentServiceObjectiveName))
+            if (options.Format != "W" && CurrentServiceObjectiveName != null)
             {
                 writer.WritePropertyName("currentServiceObjectiveName"u8);
                 writer.WriteStringValue(CurrentServiceObjectiveName);
             }
-            if (options.Format != "W" && Optional.IsDefined(RequestedServiceObjectiveName))
+            if (options.Format != "W" && RequestedServiceObjectiveName != null)
             {
                 writer.WritePropertyName("requestedServiceObjectiveName"u8);
                 writer.WriteStringValue(RequestedServiceObjectiveName);
             }
-            if (options.Format != "W" && Optional.IsDefined(DefaultSecondaryLocation))
+            if (options.Format != "W" && DefaultSecondaryLocation.HasValue)
             {
                 writer.WritePropertyName("defaultSecondaryLocation"u8);
                 writer.WriteStringValue(DefaultSecondaryLocation.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(FailoverGroupId))
+            if (options.Format != "W" && FailoverGroupId != null)
             {
                 writer.WritePropertyName("failoverGroupId"u8);
                 writer.WriteStringValue(FailoverGroupId);
             }
-            if (Optional.IsDefined(RestorePointInTime))
+            if (RestorePointInTime.HasValue)
             {
                 writer.WritePropertyName("restorePointInTime"u8);
                 writer.WriteStringValue(RestorePointInTime.Value, "O");
             }
-            if (Optional.IsDefined(SourceDatabaseDeletedOn))
+            if (SourceDatabaseDeletedOn.HasValue)
             {
                 writer.WritePropertyName("sourceDatabaseDeletionDate"u8);
                 writer.WriteStringValue(SourceDatabaseDeletedOn.Value, "O");
             }
-            if (Optional.IsDefined(RecoveryServicesRecoveryPointId))
+            if (RecoveryServicesRecoveryPointId != null)
             {
                 writer.WritePropertyName("recoveryServicesRecoveryPointId"u8);
                 writer.WriteStringValue(RecoveryServicesRecoveryPointId);
             }
-            if (Optional.IsDefined(LongTermRetentionBackupResourceId))
+            if (LongTermRetentionBackupResourceId != null)
             {
                 writer.WritePropertyName("longTermRetentionBackupResourceId"u8);
                 writer.WriteStringValue(LongTermRetentionBackupResourceId);
             }
-            if (Optional.IsDefined(RecoverableDatabaseId))
+            if (RecoverableDatabaseId != null)
             {
                 writer.WritePropertyName("recoverableDatabaseId"u8);
                 writer.WriteStringValue(RecoverableDatabaseId);
             }
-            if (Optional.IsDefined(RestorableDroppedDatabaseId))
+            if (RestorableDroppedDatabaseId != null)
             {
                 writer.WritePropertyName("restorableDroppedDatabaseId"u8);
                 writer.WriteStringValue(RestorableDroppedDatabaseId);
             }
-            if (Optional.IsDefined(CatalogCollation))
+            if (CatalogCollation.HasValue)
             {
                 writer.WritePropertyName("catalogCollation"u8);
                 writer.WriteStringValue(CatalogCollation.Value.ToString());
             }
-            if (Optional.IsDefined(IsZoneRedundant))
+            if (IsZoneRedundant.HasValue)
             {
                 writer.WritePropertyName("zoneRedundant"u8);
                 writer.WriteBooleanValue(IsZoneRedundant.Value);
             }
-            if (Optional.IsDefined(LicenseType))
+            if (LicenseType.HasValue)
             {
                 writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(MaxLogSizeBytes))
+            if (options.Format != "W" && MaxLogSizeBytes.HasValue)
             {
                 writer.WritePropertyName("maxLogSizeBytes"u8);
                 writer.WriteNumberValue(MaxLogSizeBytes.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(EarliestRestoreOn))
+            if (options.Format != "W" && EarliestRestoreOn.HasValue)
             {
                 writer.WritePropertyName("earliestRestoreDate"u8);
                 writer.WriteStringValue(EarliestRestoreOn.Value, "O");
             }
-            if (Optional.IsDefined(ReadScale))
+            if (ReadScale.HasValue)
             {
                 writer.WritePropertyName("readScale"u8);
                 writer.WriteStringValue(ReadScale.Value.ToString());
             }
-            if (Optional.IsDefined(HighAvailabilityReplicaCount))
+            if (HighAvailabilityReplicaCount.HasValue)
             {
                 writer.WritePropertyName("highAvailabilityReplicaCount"u8);
                 writer.WriteNumberValue(HighAvailabilityReplicaCount.Value);
             }
-            if (Optional.IsDefined(SecondaryType))
+            if (SecondaryType.HasValue)
             {
                 writer.WritePropertyName("secondaryType"u8);
                 writer.WriteStringValue(SecondaryType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CurrentSku))
+            if (options.Format != "W" && CurrentSku != null)
             {
                 writer.WritePropertyName("currentSku"u8);
                 writer.WriteObjectValue(CurrentSku);
             }
-            if (Optional.IsDefined(AutoPauseDelay))
+            if (AutoPauseDelay.HasValue)
             {
                 writer.WritePropertyName("autoPauseDelay"u8);
                 writer.WriteNumberValue(AutoPauseDelay.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CurrentBackupStorageRedundancy))
+            if (options.Format != "W" && CurrentBackupStorageRedundancy.HasValue)
             {
                 writer.WritePropertyName("currentBackupStorageRedundancy"u8);
                 writer.WriteStringValue(CurrentBackupStorageRedundancy.Value.ToString());
             }
-            if (Optional.IsDefined(RequestedBackupStorageRedundancy))
+            if (RequestedBackupStorageRedundancy.HasValue)
             {
                 writer.WritePropertyName("requestedBackupStorageRedundancy"u8);
                 writer.WriteStringValue(RequestedBackupStorageRedundancy.Value.ToString());
             }
-            if (Optional.IsDefined(MinCapacity))
+            if (MinCapacity.HasValue)
             {
                 writer.WritePropertyName("minCapacity"u8);
                 writer.WriteNumberValue(MinCapacity.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(PausedOn))
+            if (options.Format != "W" && PausedOn.HasValue)
             {
                 writer.WritePropertyName("pausedDate"u8);
                 writer.WriteStringValue(PausedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ResumedOn))
+            if (options.Format != "W" && ResumedOn.HasValue)
             {
                 writer.WritePropertyName("resumedDate"u8);
                 writer.WriteStringValue(ResumedOn.Value, "O");
             }
-            if (Optional.IsDefined(MaintenanceConfigurationId))
+            if (MaintenanceConfigurationId != null)
             {
                 writer.WritePropertyName("maintenanceConfigurationId"u8);
                 writer.WriteStringValue(MaintenanceConfigurationId);
             }
-            if (Optional.IsDefined(IsLedgerOn))
+            if (IsLedgerOn.HasValue)
             {
                 writer.WritePropertyName("isLedgerOn"u8);
                 writer.WriteBooleanValue(IsLedgerOn.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsInfraEncryptionEnabled))
+            if (options.Format != "W" && IsInfraEncryptionEnabled.HasValue)
             {
                 writer.WritePropertyName("isInfraEncryptionEnabled"u8);
                 writer.WriteBooleanValue(IsInfraEncryptionEnabled.Value);
             }
-            if (Optional.IsDefined(FederatedClientId))
+            if (FederatedClientId.HasValue)
             {
                 writer.WritePropertyName("federatedClientId"u8);
                 writer.WriteStringValue(FederatedClientId.Value);
             }
-            if (Optional.IsCollectionDefined(Keys))
+            if (!(Keys is ChangeTrackingDictionary<string, SqlDatabaseKey> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("keys"u8);
                 writer.WriteStartObject();
@@ -250,37 +250,37 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(EncryptionProtector))
+            if (EncryptionProtector != null)
             {
                 writer.WritePropertyName("encryptionProtector"u8);
                 writer.WriteStringValue(EncryptionProtector);
             }
-            if (Optional.IsDefined(PreferredEnclaveType))
+            if (PreferredEnclaveType.HasValue)
             {
                 writer.WritePropertyName("preferredEnclaveType"u8);
                 writer.WriteStringValue(PreferredEnclaveType.Value.ToString());
             }
-            if (Optional.IsDefined(UseFreeLimit))
+            if (UseFreeLimit.HasValue)
             {
                 writer.WritePropertyName("useFreeLimit"u8);
                 writer.WriteBooleanValue(UseFreeLimit.Value);
             }
-            if (Optional.IsDefined(FreeLimitExhaustionBehavior))
+            if (FreeLimitExhaustionBehavior.HasValue)
             {
                 writer.WritePropertyName("freeLimitExhaustionBehavior"u8);
                 writer.WriteStringValue(FreeLimitExhaustionBehavior.Value.ToString());
             }
-            if (Optional.IsDefined(ManualCutover))
+            if (ManualCutover.HasValue)
             {
                 writer.WritePropertyName("manualCutover"u8);
                 writer.WriteBooleanValue(ManualCutover.Value);
             }
-            if (Optional.IsDefined(PerformCutover))
+            if (PerformCutover.HasValue)
             {
                 writer.WritePropertyName("performCutover"u8);
                 writer.WriteBooleanValue(PerformCutover.Value);
             }
-            if (Optional.IsDefined(EncryptionProtectorAutoRotation))
+            if (EncryptionProtectorAutoRotation.HasValue)
             {
                 writer.WritePropertyName("encryptionProtectorAutoRotation"u8);
                 writer.WriteBooleanValue(EncryptionProtectorAutoRotation.Value);
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Sql.Models
             }
             Optional<SqlSku> sku = default;
             Optional<DatabaseIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<SqlDatabaseCreateMode> createMode = default;
             Optional<string> collation = default;
             Optional<long> maxSizeBytes = default;
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<bool> isLedgerOn = default;
             Optional<bool> isInfraEncryptionEnabled = default;
             Optional<Guid> federatedClientId = default;
-            Optional<IDictionary<string, SqlDatabaseKey>> keys = default;
+            IDictionary<string, SqlDatabaseKey> keys = default;
             Optional<string> encryptionProtector = default;
             Optional<SqlAlwaysEncryptedEnclaveType> preferredEnclaveType = default;
             Optional<bool> useFreeLimit = default;
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    sku = SqlSku.DeserializeSqlSku(property.Value);
+                    sku = SqlSku.DeserializeSqlSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    identity = DatabaseIdentity.DeserializeDatabaseIdentity(property.Value);
+                    identity = DatabaseIdentity.DeserializeDatabaseIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -655,7 +655,7 @@ namespace Azure.ResourceManager.Sql.Models
                             {
                                 continue;
                             }
-                            currentSku = SqlSku.DeserializeSqlSku(property0.Value);
+                            currentSku = SqlSku.DeserializeSqlSku(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("autoPauseDelay"u8))
@@ -757,7 +757,7 @@ namespace Azure.ResourceManager.Sql.Models
                             Dictionary<string, SqlDatabaseKey> dictionary = new Dictionary<string, SqlDatabaseKey>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, SqlDatabaseKey.DeserializeSqlDatabaseKey(property1.Value));
+                                dictionary.Add(property1.Name, SqlDatabaseKey.DeserializeSqlDatabaseKey(property1.Value, options));
                             }
                             keys = dictionary;
                             continue;
@@ -830,7 +830,57 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlDatabasePatch(sku.Value, identity.Value, Optional.ToDictionary(tags), Optional.ToNullable(createMode), collation.Value, Optional.ToNullable(maxSizeBytes), Optional.ToNullable(sampleName), elasticPoolId.Value, sourceDatabaseId.Value, Optional.ToNullable(status), Optional.ToNullable(databaseId), Optional.ToNullable(creationDate), currentServiceObjectiveName.Value, requestedServiceObjectiveName.Value, Optional.ToNullable(defaultSecondaryLocation), failoverGroupId.Value, Optional.ToNullable(restorePointInTime), Optional.ToNullable(sourceDatabaseDeletionDate), recoveryServicesRecoveryPointId.Value, longTermRetentionBackupResourceId.Value, recoverableDatabaseId.Value, restorableDroppedDatabaseId.Value, Optional.ToNullable(catalogCollation), Optional.ToNullable(zoneRedundant), Optional.ToNullable(licenseType), Optional.ToNullable(maxLogSizeBytes), Optional.ToNullable(earliestRestoreDate), Optional.ToNullable(readScale), Optional.ToNullable(highAvailabilityReplicaCount), Optional.ToNullable(secondaryType), currentSku.Value, Optional.ToNullable(autoPauseDelay), Optional.ToNullable(currentBackupStorageRedundancy), Optional.ToNullable(requestedBackupStorageRedundancy), Optional.ToNullable(minCapacity), Optional.ToNullable(pausedDate), Optional.ToNullable(resumedDate), maintenanceConfigurationId.Value, Optional.ToNullable(isLedgerOn), Optional.ToNullable(isInfraEncryptionEnabled), Optional.ToNullable(federatedClientId), Optional.ToDictionary(keys), encryptionProtector.Value, Optional.ToNullable(preferredEnclaveType), Optional.ToNullable(useFreeLimit), Optional.ToNullable(freeLimitExhaustionBehavior), Optional.ToNullable(manualCutover), Optional.ToNullable(performCutover), Optional.ToNullable(encryptionProtectorAutoRotation), serializedAdditionalRawData);
+            return new SqlDatabasePatch(
+                sku.Value,
+                identity.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(createMode),
+                collation.Value,
+                Optional.ToNullable(maxSizeBytes),
+                Optional.ToNullable(sampleName),
+                elasticPoolId.Value,
+                sourceDatabaseId.Value,
+                Optional.ToNullable(status),
+                Optional.ToNullable(databaseId),
+                Optional.ToNullable(creationDate),
+                currentServiceObjectiveName.Value,
+                requestedServiceObjectiveName.Value,
+                Optional.ToNullable(defaultSecondaryLocation),
+                failoverGroupId.Value,
+                Optional.ToNullable(restorePointInTime),
+                Optional.ToNullable(sourceDatabaseDeletionDate),
+                recoveryServicesRecoveryPointId.Value,
+                longTermRetentionBackupResourceId.Value,
+                recoverableDatabaseId.Value,
+                restorableDroppedDatabaseId.Value,
+                Optional.ToNullable(catalogCollation),
+                Optional.ToNullable(zoneRedundant),
+                Optional.ToNullable(licenseType),
+                Optional.ToNullable(maxLogSizeBytes),
+                Optional.ToNullable(earliestRestoreDate),
+                Optional.ToNullable(readScale),
+                Optional.ToNullable(highAvailabilityReplicaCount),
+                Optional.ToNullable(secondaryType),
+                currentSku.Value,
+                Optional.ToNullable(autoPauseDelay),
+                Optional.ToNullable(currentBackupStorageRedundancy),
+                Optional.ToNullable(requestedBackupStorageRedundancy),
+                Optional.ToNullable(minCapacity),
+                Optional.ToNullable(pausedDate),
+                Optional.ToNullable(resumedDate),
+                maintenanceConfigurationId.Value,
+                Optional.ToNullable(isLedgerOn),
+                Optional.ToNullable(isInfraEncryptionEnabled),
+                Optional.ToNullable(federatedClientId),
+                keys ?? new ChangeTrackingDictionary<string, SqlDatabaseKey>(),
+                encryptionProtector.Value,
+                Optional.ToNullable(preferredEnclaveType),
+                Optional.ToNullable(useFreeLimit),
+                Optional.ToNullable(freeLimitExhaustionBehavior),
+                Optional.ToNullable(manualCutover),
+                Optional.ToNullable(performCutover),
+                Optional.ToNullable(encryptionProtectorAutoRotation),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlDatabasePatch>.Write(ModelReaderWriterOptions options)

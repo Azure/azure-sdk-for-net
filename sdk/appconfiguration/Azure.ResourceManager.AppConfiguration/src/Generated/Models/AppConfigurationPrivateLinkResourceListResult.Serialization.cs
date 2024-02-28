@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<AppConfigurationPrivateLinkResourceData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AppConfigurationPrivateLinkResourceData>> value = default;
+            IReadOnlyList<AppConfigurationPrivateLinkResourceData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     List<AppConfigurationPrivateLinkResourceData> array = new List<AppConfigurationPrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppConfigurationPrivateLinkResourceData.DeserializeAppConfigurationPrivateLinkResourceData(item));
+                        array.Add(AppConfigurationPrivateLinkResourceData.DeserializeAppConfigurationPrivateLinkResourceData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppConfigurationPrivateLinkResourceListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new AppConfigurationPrivateLinkResourceListResult(value ?? new ChangeTrackingList<AppConfigurationPrivateLinkResourceData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppConfigurationPrivateLinkResourceListResult>.Write(ModelReaderWriterOptions options)

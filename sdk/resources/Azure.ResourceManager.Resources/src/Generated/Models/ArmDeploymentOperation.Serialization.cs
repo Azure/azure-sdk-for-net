@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(OperationId))
+            if (options.Format != "W" && OperationId != null)
             {
                 writer.WritePropertyName("operationId"u8);
                 writer.WriteStringValue(OperationId);
             }
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    properties = ArmDeploymentOperationProperties.DeserializeArmDeploymentOperationProperties(property.Value);
+                    properties = ArmDeploymentOperationProperties.DeserializeArmDeploymentOperationProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

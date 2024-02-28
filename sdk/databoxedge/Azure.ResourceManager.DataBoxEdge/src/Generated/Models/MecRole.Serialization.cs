@@ -44,29 +44,29 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ConnectionString))
+            if (ConnectionString != null)
             {
                 writer.WritePropertyName("connectionString"u8);
                 writer.WriteObjectValue(ConnectionString);
             }
-            if (Optional.IsDefined(ControllerEndpoint))
+            if (ControllerEndpoint != null)
             {
                 writer.WritePropertyName("controllerEndpoint"u8);
                 writer.WriteStringValue(ControllerEndpoint);
             }
-            if (Optional.IsDefined(ResourceUniqueId))
+            if (ResourceUniqueId != null)
             {
                 writer.WritePropertyName("resourceUniqueId"u8);
                 writer.WriteStringValue(ResourceUniqueId);
             }
-            if (Optional.IsDefined(RoleStatus))
+            if (RoleStatus.HasValue)
             {
                 writer.WritePropertyName("roleStatus"u8);
                 writer.WriteStringValue(RoleStatus.Value.ToString());
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                             {
                                 continue;
                             }
-                            connectionString = AsymmetricEncryptedSecret.DeserializeAsymmetricEncryptedSecret(property0.Value);
+                            connectionString = AsymmetricEncryptedSecret.DeserializeAsymmetricEncryptedSecret(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("controllerEndpoint"u8))
@@ -198,7 +198,17 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MecRole(id, name, type, systemData.Value, kind, serializedAdditionalRawData, connectionString.Value, controllerEndpoint.Value, resourceUniqueId.Value, Optional.ToNullable(roleStatus));
+            return new MecRole(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData,
+                connectionString.Value,
+                controllerEndpoint.Value,
+                resourceUniqueId.Value,
+                Optional.ToNullable(roleStatus));
         }
 
         BinaryData IPersistableModel<MecRole>.Write(ModelReaderWriterOptions options)

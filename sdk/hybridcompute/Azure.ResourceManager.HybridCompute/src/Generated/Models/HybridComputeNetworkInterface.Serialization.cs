@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(IPAddresses))
+            if (!(IPAddresses is ChangeTrackingList<HybridComputeIPAddress> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ipAddresses"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<HybridComputeIPAddress>> ipAddresses = default;
+            IReadOnlyList<HybridComputeIPAddress> ipAddresses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     List<HybridComputeIPAddress> array = new List<HybridComputeIPAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HybridComputeIPAddress.DeserializeHybridComputeIPAddress(item));
+                        array.Add(HybridComputeIPAddress.DeserializeHybridComputeIPAddress(item, options));
                     }
                     ipAddresses = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridComputeNetworkInterface(Optional.ToList(ipAddresses), serializedAdditionalRawData);
+            return new HybridComputeNetworkInterface(ipAddresses ?? new ChangeTrackingList<HybridComputeIPAddress>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridComputeNetworkInterface>.Write(ModelReaderWriterOptions options)

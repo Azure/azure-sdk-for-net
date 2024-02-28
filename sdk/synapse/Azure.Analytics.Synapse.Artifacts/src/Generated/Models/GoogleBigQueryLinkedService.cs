@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -20,7 +19,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="project"/> is null. </exception>
         public GoogleBigQueryLinkedService(object project, GoogleBigQueryAuthenticationType authenticationType)
         {
-            Argument.AssertNotNull(project, nameof(project));
+            if (project == null)
+            {
+                throw new ArgumentNullException(nameof(project));
+            }
 
             Project = project;
             AuthenticationType = authenticationType;

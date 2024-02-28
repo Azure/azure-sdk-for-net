@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Template))
+            if (Template != null)
             {
                 writer.WritePropertyName("template"u8);
 #if NET6_0_OR_GREATER
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.Resources.Models
                 }
 #endif
             }
-            if (Optional.IsDefined(TemplateLink))
+            if (TemplateLink != null)
             {
                 writer.WritePropertyName("templateLink"u8);
                 writer.WriteObjectValue(TemplateLink);
             }
-            if (Optional.IsDefined(Parameters))
+            if (Parameters != null)
             {
                 writer.WritePropertyName("parameters"u8);
 #if NET6_0_OR_GREATER
@@ -55,24 +55,24 @@ namespace Azure.ResourceManager.Resources.Models
                 }
 #endif
             }
-            if (Optional.IsDefined(ParametersLink))
+            if (ParametersLink != null)
             {
                 writer.WritePropertyName("parametersLink"u8);
                 writer.WriteObjectValue(ParametersLink);
             }
             writer.WritePropertyName("mode"u8);
             writer.WriteStringValue(Mode.ToSerialString());
-            if (Optional.IsDefined(DebugSetting))
+            if (DebugSetting != null)
             {
                 writer.WritePropertyName("debugSetting"u8);
                 writer.WriteObjectValue(DebugSetting);
             }
-            if (Optional.IsDefined(ErrorDeployment))
+            if (ErrorDeployment != null)
             {
                 writer.WritePropertyName("onErrorDeployment"u8);
                 writer.WriteObjectValue(ErrorDeployment);
             }
-            if (Optional.IsDefined(ExpressionEvaluation))
+            if (ExpressionEvaluation != null)
             {
                 writer.WritePropertyName("expressionEvaluationOptions"u8);
                 writer.WriteObjectValue(ExpressionEvaluation);
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    templateLink = ArmDeploymentTemplateLink.DeserializeArmDeploymentTemplateLink(property.Value);
+                    templateLink = ArmDeploymentTemplateLink.DeserializeArmDeploymentTemplateLink(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("parameters"u8))
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    parametersLink = ArmDeploymentParametersLink.DeserializeArmDeploymentParametersLink(property.Value);
+                    parametersLink = ArmDeploymentParametersLink.DeserializeArmDeploymentParametersLink(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("mode"u8))
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    debugSetting = DebugSetting.DeserializeDebugSetting(property.Value);
+                    debugSetting = DebugSetting.DeserializeDebugSetting(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("onErrorDeployment"u8))
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    onErrorDeployment = ErrorDeployment.DeserializeErrorDeployment(property.Value);
+                    onErrorDeployment = ErrorDeployment.DeserializeErrorDeployment(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("expressionEvaluationOptions"u8))
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    expressionEvaluationOptions = ExpressionEvaluationOptions.DeserializeExpressionEvaluationOptions(property.Value);
+                    expressionEvaluationOptions = ExpressionEvaluationOptions.DeserializeExpressionEvaluationOptions(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -201,7 +201,16 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmDeploymentProperties(template.Value, templateLink.Value, parameters.Value, parametersLink.Value, mode, debugSetting.Value, onErrorDeployment.Value, expressionEvaluationOptions.Value, serializedAdditionalRawData);
+            return new ArmDeploymentProperties(
+                template.Value,
+                templateLink.Value,
+                parameters.Value,
+                parametersLink.Value,
+                mode,
+                debugSetting.Value,
+                onErrorDeployment.Value,
+                expressionEvaluationOptions.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArmDeploymentProperties>.Write(ModelReaderWriterOptions options)

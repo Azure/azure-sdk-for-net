@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Redis.Models
 {
@@ -52,8 +51,14 @@ namespace Azure.ResourceManager.Redis.Models
         /// <exception cref="ArgumentNullException"> <paramref name="prefix"/> or <paramref name="container"/> is null. </exception>
         public ExportRdbContent(string prefix, string container)
         {
-            Argument.AssertNotNull(prefix, nameof(prefix));
-            Argument.AssertNotNull(container, nameof(container));
+            if (prefix == null)
+            {
+                throw new ArgumentNullException(nameof(prefix));
+            }
+            if (container == null)
+            {
+                throw new ArgumentNullException(nameof(container));
+            }
 
             Prefix = prefix;
             Container = container;

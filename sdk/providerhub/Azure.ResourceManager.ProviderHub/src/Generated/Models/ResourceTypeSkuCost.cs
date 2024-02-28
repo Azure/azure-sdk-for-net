@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <exception cref="ArgumentNullException"> <paramref name="meterId"/> is null. </exception>
         public ResourceTypeSkuCost(string meterId)
         {
-            Argument.AssertNotNull(meterId, nameof(meterId));
+            if (meterId == null)
+            {
+                throw new ArgumentNullException(nameof(meterId));
+            }
 
             MeterId = meterId;
         }

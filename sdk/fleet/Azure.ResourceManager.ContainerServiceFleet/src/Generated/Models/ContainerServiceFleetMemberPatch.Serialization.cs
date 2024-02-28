@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Group))
+            if (Group != null)
             {
                 writer.WritePropertyName("group"u8);
                 writer.WriteStringValue(Group);

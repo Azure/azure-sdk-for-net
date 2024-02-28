@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Code))
+            if (Code.HasValue)
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteNumberValue(Code.Value);
             }
-            if (Optional.IsDefined(Title))
+            if (Title != null)
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Optional.IsDefined(Message))
+            if (Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Optional.IsCollectionDefined(Recommendations))
+            if (!(Recommendations is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("recommendations"u8);
                 writer.WriteStartArray();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<int> code = default;
             Optional<string> title = default;
             Optional<string> message = default;
-            Optional<IList<string>> recommendations = default;
+            IList<string> recommendations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MabContainerHealthDetails(Optional.ToNullable(code), title.Value, message.Value, Optional.ToList(recommendations), serializedAdditionalRawData);
+            return new MabContainerHealthDetails(Optional.ToNullable(code), title.Value, message.Value, recommendations ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MabContainerHealthDetails>.Write(ModelReaderWriterOptions options)

@@ -27,22 +27,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(MacAddress))
+            if (options.Format != "W" && MacAddress != null)
             {
                 writer.WritePropertyName("macAddress"u8);
                 writer.WriteStringValue(MacAddress);
             }
-            if (options.Format != "W" && Optional.IsDefined(NetworkName))
+            if (options.Format != "W" && NetworkName != null)
             {
                 writer.WritePropertyName("networkName"u8);
                 writer.WriteStringValue(NetworkName);
             }
-            if (options.Format != "W" && Optional.IsDefined(AdapterType))
+            if (options.Format != "W" && AdapterType != null)
             {
                 writer.WritePropertyName("adapterType"u8);
                 writer.WriteStringValue(AdapterType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SourceIPAddress))
+            if (options.Format != "W" && SourceIPAddress != null)
             {
                 writer.WritePropertyName("sourceIpAddress"u8);
                 writer.WriteStringValue(SourceIPAddress.ToString());

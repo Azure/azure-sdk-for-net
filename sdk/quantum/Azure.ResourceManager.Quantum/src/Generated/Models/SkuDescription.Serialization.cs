@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.Quantum.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Version))
+            if (Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(RestrictedAccessUri))
+            if (RestrictedAccessUri != null)
             {
                 writer.WritePropertyName("restrictedAccessUri"u8);
                 writer.WriteStringValue(RestrictedAccessUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(AutoAdd))
+            if (AutoAdd.HasValue)
             {
                 writer.WritePropertyName("autoAdd"u8);
                 writer.WriteBooleanValue(AutoAdd.Value);
             }
-            if (Optional.IsCollectionDefined(Targets))
+            if (!(Targets is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("targets"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Quantum.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(QuotaDimensions))
+            if (!(QuotaDimensions is ChangeTrackingList<QuotaDimension> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("quotaDimensions"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Quantum.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(PricingDetails))
+            if (!(PricingDetails is ChangeTrackingList<PricingDetail> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("pricingDetails"u8);
                 writer.WriteStartArray();
@@ -130,9 +130,9 @@ namespace Azure.ResourceManager.Quantum.Models
             Optional<string> description = default;
             Optional<Uri> restrictedAccessUri = default;
             Optional<bool> autoAdd = default;
-            Optional<IReadOnlyList<string>> targets = default;
-            Optional<IReadOnlyList<QuotaDimension>> quotaDimensions = default;
-            Optional<IReadOnlyList<PricingDetail>> pricingDetails = default;
+            IReadOnlyList<string> targets = default;
+            IReadOnlyList<QuotaDimension> quotaDimensions = default;
+            IReadOnlyList<PricingDetail> pricingDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Quantum.Models
                     List<QuotaDimension> array = new List<QuotaDimension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QuotaDimension.DeserializeQuotaDimension(item));
+                        array.Add(QuotaDimension.DeserializeQuotaDimension(item, options));
                     }
                     quotaDimensions = array;
                     continue;
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Quantum.Models
                     List<PricingDetail> array = new List<PricingDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PricingDetail.DeserializePricingDetail(item));
+                        array.Add(PricingDetail.DeserializePricingDetail(item, options));
                     }
                     pricingDetails = array;
                     continue;
@@ -223,7 +223,17 @@ namespace Azure.ResourceManager.Quantum.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SkuDescription(id.Value, name.Value, version.Value, description.Value, restrictedAccessUri.Value, Optional.ToNullable(autoAdd), Optional.ToList(targets), Optional.ToList(quotaDimensions), Optional.ToList(pricingDetails), serializedAdditionalRawData);
+            return new SkuDescription(
+                id.Value,
+                name.Value,
+                version.Value,
+                description.Value,
+                restrictedAccessUri.Value,
+                Optional.ToNullable(autoAdd),
+                targets ?? new ChangeTrackingList<string>(),
+                quotaDimensions ?? new ChangeTrackingList<QuotaDimension>(),
+                pricingDetails ?? new ChangeTrackingList<PricingDetail>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SkuDescription>.Write(ModelReaderWriterOptions options)

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStartObject();
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            if (Optional.IsCollectionDefined(Zones))
+            if (!(Zones is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ZoneDetails))
+            if (!(ZoneDetails is ChangeTrackingList<ResourceTypeSkuZoneDetail> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("zoneDetails"u8);
                 writer.WriteStartArray();
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ExtendedLocations))
+            if (!(ExtendedLocations is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("extendedLocations"u8);
                 writer.WriteStartArray();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ExtendedLocationType))
+            if (ExtendedLocationType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ExtendedLocationType.Value.ToSerialString());
@@ -102,9 +102,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 return null;
             }
             AzureLocation location = default;
-            Optional<IList<string>> zones = default;
-            Optional<IList<ResourceTypeSkuZoneDetail>> zoneDetails = default;
-            Optional<IList<string>> extendedLocations = default;
+            IList<string> zones = default;
+            IList<ResourceTypeSkuZoneDetail> zoneDetails = default;
+            IList<string> extendedLocations = default;
             Optional<ProviderHubExtendedLocationType> type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<ResourceTypeSkuZoneDetail> array = new List<ResourceTypeSkuZoneDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceTypeSkuZoneDetail.DeserializeResourceTypeSkuZoneDetail(item));
+                        array.Add(ResourceTypeSkuZoneDetail.DeserializeResourceTypeSkuZoneDetail(item, options));
                     }
                     zoneDetails = array;
                     continue;
@@ -172,7 +172,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceTypeSkuLocationInfo(location, Optional.ToList(zones), Optional.ToList(zoneDetails), Optional.ToList(extendedLocations), Optional.ToNullable(type), serializedAdditionalRawData);
+            return new ResourceTypeSkuLocationInfo(
+                location,
+                zones ?? new ChangeTrackingList<string>(),
+                zoneDetails ?? new ChangeTrackingList<ResourceTypeSkuZoneDetail>(),
+                extendedLocations ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(type),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceTypeSkuLocationInfo>.Write(ModelReaderWriterOptions options)

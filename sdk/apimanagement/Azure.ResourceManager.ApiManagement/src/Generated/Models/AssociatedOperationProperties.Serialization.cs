@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(ApiName))
+            if (options.Format != "W" && ApiName != null)
             {
                 writer.WritePropertyName("apiName"u8);
                 writer.WriteStringValue(ApiName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ApiRevision))
+            if (options.Format != "W" && ApiRevision != null)
             {
                 writer.WritePropertyName("apiRevision"u8);
                 writer.WriteStringValue(ApiRevision);
             }
-            if (options.Format != "W" && Optional.IsDefined(ApiVersion))
+            if (options.Format != "W" && ApiVersion != null)
             {
                 writer.WritePropertyName("apiVersion"u8);
                 writer.WriteStringValue(ApiVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(Description))
+            if (options.Format != "W" && Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsDefined(Method))
+            if (options.Format != "W" && Method != null)
             {
                 writer.WritePropertyName("method"u8);
                 writer.WriteStringValue(Method);
             }
-            if (options.Format != "W" && Optional.IsDefined(UriTemplate))
+            if (options.Format != "W" && UriTemplate != null)
             {
                 writer.WritePropertyName("urlTemplate"u8);
                 writer.WriteStringValue(UriTemplate);
@@ -162,7 +162,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AssociatedOperationProperties(id.Value, name.Value, apiName.Value, apiRevision.Value, apiVersion.Value, description.Value, method.Value, uriTemplate.Value, serializedAdditionalRawData);
+            return new AssociatedOperationProperties(
+                id.Value,
+                name.Value,
+                apiName.Value,
+                apiRevision.Value,
+                apiVersion.Value,
+                description.Value,
+                method.Value,
+                uriTemplate.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AssociatedOperationProperties>.Write(ModelReaderWriterOptions options)

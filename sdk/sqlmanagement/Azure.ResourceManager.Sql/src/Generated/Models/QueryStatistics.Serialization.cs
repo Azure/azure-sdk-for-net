@@ -42,34 +42,34 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(DatabaseName))
+            if (options.Format != "W" && DatabaseName != null)
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (options.Format != "W" && Optional.IsDefined(QueryId))
+            if (options.Format != "W" && QueryId != null)
             {
                 writer.WritePropertyName("queryId"u8);
                 writer.WriteStringValue(QueryId);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartTime))
+            if (options.Format != "W" && StartTime != null)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartTime);
             }
-            if (options.Format != "W" && Optional.IsDefined(EndTime))
+            if (options.Format != "W" && EndTime != null)
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndTime);
             }
-            if (Optional.IsCollectionDefined(Intervals))
+            if (!(Intervals is ChangeTrackingList<QueryMetricInterval> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("intervals"u8);
                 writer.WriteStartArray();
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<string> queryId = default;
             Optional<string> startTime = default;
             Optional<string> endTime = default;
-            Optional<IList<QueryMetricInterval>> intervals = default;
+            IList<QueryMetricInterval> intervals = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Sql.Models
                             List<QueryMetricInterval> array = new List<QueryMetricInterval>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(QueryMetricInterval.DeserializeQueryMetricInterval(item));
+                                array.Add(QueryMetricInterval.DeserializeQueryMetricInterval(item, options));
                             }
                             intervals = array;
                             continue;
@@ -207,7 +207,17 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QueryStatistics(id, name, type, systemData.Value, databaseName.Value, queryId.Value, startTime.Value, endTime.Value, Optional.ToList(intervals), serializedAdditionalRawData);
+            return new QueryStatistics(
+                id,
+                name,
+                type,
+                systemData.Value,
+                databaseName.Value,
+                queryId.Value,
+                startTime.Value,
+                endTime.Value,
+                intervals ?? new ChangeTrackingList<QueryMetricInterval>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QueryStatistics>.Write(ModelReaderWriterOptions options)

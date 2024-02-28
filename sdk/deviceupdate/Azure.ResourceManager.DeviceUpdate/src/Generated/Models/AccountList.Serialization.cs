@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<DeviceUpdateAccountData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 return null;
             }
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<DeviceUpdateAccountData>> value = default;
+            IReadOnlyList<DeviceUpdateAccountData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                     List<DeviceUpdateAccountData> array = new List<DeviceUpdateAccountData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeviceUpdateAccountData.DeserializeDeviceUpdateAccountData(item));
+                        array.Add(DeviceUpdateAccountData.DeserializeDeviceUpdateAccountData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AccountList(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new AccountList(nextLink.Value, value ?? new ChangeTrackingList<DeviceUpdateAccountData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AccountList>.Write(ModelReaderWriterOptions options)

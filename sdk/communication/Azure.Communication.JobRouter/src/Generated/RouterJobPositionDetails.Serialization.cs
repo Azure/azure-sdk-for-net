@@ -115,7 +115,13 @@ namespace Azure.Communication.JobRouter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RouterJobPositionDetails(jobId, position, queueId, queueLength, estimatedWaitTimeMinutes, serializedAdditionalRawData);
+            return new RouterJobPositionDetails(
+                jobId,
+                position,
+                queueId,
+                queueLength,
+                estimatedWaitTimeMinutes,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RouterJobPositionDetails>.Write(ModelReaderWriterOptions options)

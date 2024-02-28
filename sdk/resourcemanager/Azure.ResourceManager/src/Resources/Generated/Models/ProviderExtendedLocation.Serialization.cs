@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsDefined(ProviderExtendedLocationType))
+            if (ProviderExtendedLocationType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ProviderExtendedLocationType);
             }
-            if (Optional.IsCollectionDefined(ExtendedLocations))
+            if (!(ExtendedLocations is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("extendedLocations"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
             Optional<AzureLocation> location = default;
             Optional<string> type = default;
-            Optional<IReadOnlyList<string>> extendedLocations = default;
+            IReadOnlyList<string> extendedLocations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProviderExtendedLocation(Optional.ToNullable(location), type.Value, Optional.ToList(extendedLocations), serializedAdditionalRawData);
+            return new ProviderExtendedLocation(Optional.ToNullable(location), type.Value, extendedLocations ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProviderExtendedLocation>.Write(ModelReaderWriterOptions options)

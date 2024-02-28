@@ -17,7 +17,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStartObject();
             writer.WritePropertyName("clientId"u8);
             writer.WriteStringValue(ClientId);
-            if (Optional.IsDefined(ClientSecret))
+            if (ClientSecret != null)
             {
                 writer.WritePropertyName("clientSecret"u8);
                 writer.WriteStringValue(ClientSecret);

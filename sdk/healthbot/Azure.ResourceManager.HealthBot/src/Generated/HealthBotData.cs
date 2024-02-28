@@ -57,7 +57,10 @@ namespace Azure.ResourceManager.HealthBot
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public HealthBotData(AzureLocation location, HealthBotSku sku) : base(location)
         {
-            Argument.AssertNotNull(sku, nameof(sku));
+            if (sku == null)
+            {
+                throw new ArgumentNullException(nameof(sku));
+            }
 
             Sku = sku;
         }

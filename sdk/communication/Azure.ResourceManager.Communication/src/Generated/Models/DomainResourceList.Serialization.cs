@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Communication.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<CommunicationDomainResourceData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Communication.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Communication.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CommunicationDomainResourceData>> value = default;
+            IReadOnlyList<CommunicationDomainResourceData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Communication.Models
                     List<CommunicationDomainResourceData> array = new List<CommunicationDomainResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CommunicationDomainResourceData.DeserializeCommunicationDomainResourceData(item));
+                        array.Add(CommunicationDomainResourceData.DeserializeCommunicationDomainResourceData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Communication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DomainResourceList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new DomainResourceList(value ?? new ChangeTrackingList<CommunicationDomainResourceData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DomainResourceList>.Write(ModelReaderWriterOptions options)

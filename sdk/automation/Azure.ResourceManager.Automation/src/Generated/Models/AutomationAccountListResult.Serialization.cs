@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<AutomationAccountData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AutomationAccountData>> value = default;
+            IReadOnlyList<AutomationAccountData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<AutomationAccountData> array = new List<AutomationAccountData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutomationAccountData.DeserializeAutomationAccountData(item));
+                        array.Add(AutomationAccountData.DeserializeAutomationAccountData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationAccountListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new AutomationAccountListResult(value ?? new ChangeTrackingList<AutomationAccountData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationAccountListResult>.Write(ModelReaderWriterOptions options)

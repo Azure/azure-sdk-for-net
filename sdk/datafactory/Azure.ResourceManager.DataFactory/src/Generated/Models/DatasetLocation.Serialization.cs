@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DatasetLocationType);
-            if (Optional.IsDefined(FolderPath))
+            if (FolderPath != null)
             {
                 writer.WritePropertyName("folderPath"u8);
                 JsonSerializer.Serialize(writer, FolderPath);
             }
-            if (Optional.IsDefined(FileName))
+            if (FileName != null)
             {
                 writer.WritePropertyName("fileName"u8);
                 JsonSerializer.Serialize(writer, FileName);
@@ -77,23 +77,23 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AmazonS3CompatibleLocation": return AmazonS3CompatibleLocation.DeserializeAmazonS3CompatibleLocation(element);
-                    case "AmazonS3Location": return AmazonS3Location.DeserializeAmazonS3Location(element);
-                    case "AzureBlobFSLocation": return AzureBlobFSLocation.DeserializeAzureBlobFSLocation(element);
-                    case "AzureBlobStorageLocation": return AzureBlobStorageLocation.DeserializeAzureBlobStorageLocation(element);
-                    case "AzureDataLakeStoreLocation": return AzureDataLakeStoreLocation.DeserializeAzureDataLakeStoreLocation(element);
-                    case "AzureFileStorageLocation": return AzureFileStorageLocation.DeserializeAzureFileStorageLocation(element);
-                    case "FileServerLocation": return FileServerLocation.DeserializeFileServerLocation(element);
-                    case "FtpServerLocation": return FtpServerLocation.DeserializeFtpServerLocation(element);
-                    case "GoogleCloudStorageLocation": return GoogleCloudStorageLocation.DeserializeGoogleCloudStorageLocation(element);
-                    case "HdfsLocation": return HdfsLocation.DeserializeHdfsLocation(element);
-                    case "HttpServerLocation": return HttpServerLocation.DeserializeHttpServerLocation(element);
-                    case "LakeHouseLocation": return LakeHouseLocation.DeserializeLakeHouseLocation(element);
-                    case "OracleCloudStorageLocation": return OracleCloudStorageLocation.DeserializeOracleCloudStorageLocation(element);
-                    case "SftpLocation": return SftpLocation.DeserializeSftpLocation(element);
+                    case "AmazonS3CompatibleLocation": return AmazonS3CompatibleLocation.DeserializeAmazonS3CompatibleLocation(element, options);
+                    case "AmazonS3Location": return AmazonS3Location.DeserializeAmazonS3Location(element, options);
+                    case "AzureBlobFSLocation": return AzureBlobFSLocation.DeserializeAzureBlobFSLocation(element, options);
+                    case "AzureBlobStorageLocation": return AzureBlobStorageLocation.DeserializeAzureBlobStorageLocation(element, options);
+                    case "AzureDataLakeStoreLocation": return AzureDataLakeStoreLocation.DeserializeAzureDataLakeStoreLocation(element, options);
+                    case "AzureFileStorageLocation": return AzureFileStorageLocation.DeserializeAzureFileStorageLocation(element, options);
+                    case "FileServerLocation": return FileServerLocation.DeserializeFileServerLocation(element, options);
+                    case "FtpServerLocation": return FtpServerLocation.DeserializeFtpServerLocation(element, options);
+                    case "GoogleCloudStorageLocation": return GoogleCloudStorageLocation.DeserializeGoogleCloudStorageLocation(element, options);
+                    case "HdfsLocation": return HdfsLocation.DeserializeHdfsLocation(element, options);
+                    case "HttpServerLocation": return HttpServerLocation.DeserializeHttpServerLocation(element, options);
+                    case "LakeHouseLocation": return LakeHouseLocation.DeserializeLakeHouseLocation(element, options);
+                    case "OracleCloudStorageLocation": return OracleCloudStorageLocation.DeserializeOracleCloudStorageLocation(element, options);
+                    case "SftpLocation": return SftpLocation.DeserializeSftpLocation(element, options);
                 }
             }
-            return UnknownDatasetLocation.DeserializeUnknownDatasetLocation(element);
+            return UnknownDatasetLocation.DeserializeUnknownDatasetLocation(element, options);
         }
 
         BinaryData IPersistableModel<DatasetLocation>.Write(ModelReaderWriterOptions options)

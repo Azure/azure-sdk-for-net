@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ShareName))
+            if (options.Format != "W" && ShareName != null)
             {
                 writer.WritePropertyName("shareName"u8);
                 writer.WriteStringValue(ShareName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ShareType))
+            if (options.Format != "W" && ShareType.HasValue)
             {
                 writer.WritePropertyName("shareType"u8);
                 writer.WriteStringValue(ShareType.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(UserName))
+            if (options.Format != "W" && UserName != null)
             {
                 writer.WritePropertyName("userName"u8);
                 writer.WriteStringValue(UserName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Password))
+            if (options.Format != "W" && Password != null)
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedAccessProtocols))
+            if (options.Format != "W" && !(SupportedAccessProtocols is ChangeTrackingList<DataBoxAccessProtocol> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportedAccessProtocols"u8);
                 writer.WriteStartArray();
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<ShareDestinationFormatType> shareType = default;
             Optional<string> userName = default;
             Optional<string> password = default;
-            Optional<IReadOnlyList<DataBoxAccessProtocol>> supportedAccessProtocols = default;
+            IReadOnlyList<DataBoxAccessProtocol> supportedAccessProtocols = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -147,7 +147,13 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ShareCredentialDetails(shareName.Value, Optional.ToNullable(shareType), userName.Value, password.Value, Optional.ToList(supportedAccessProtocols), serializedAdditionalRawData);
+            return new ShareCredentialDetails(
+                shareName.Value,
+                Optional.ToNullable(shareType),
+                userName.Value,
+                password.Value,
+                supportedAccessProtocols ?? new ChangeTrackingList<DataBoxAccessProtocol>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ShareCredentialDetails>.Write(ModelReaderWriterOptions options)

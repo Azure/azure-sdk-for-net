@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<UnencryptedCredentials> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<UnencryptedCredentials>> value = default;
+            IReadOnlyList<UnencryptedCredentials> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     List<UnencryptedCredentials> array = new List<UnencryptedCredentials>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UnencryptedCredentials.DeserializeUnencryptedCredentials(item));
+                        array.Add(UnencryptedCredentials.DeserializeUnencryptedCredentials(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnencryptedCredentialsList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new UnencryptedCredentialsList(value ?? new ChangeTrackingList<UnencryptedCredentials>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UnencryptedCredentialsList>.Write(ModelReaderWriterOptions options)

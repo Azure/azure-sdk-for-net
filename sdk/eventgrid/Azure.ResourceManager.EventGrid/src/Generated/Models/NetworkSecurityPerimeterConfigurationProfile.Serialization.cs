@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(AccessRulesVersion))
+            if (AccessRulesVersion != null)
             {
                 writer.WritePropertyName("accessRulesVersion"u8);
                 writer.WriteStringValue(AccessRulesVersion);
             }
-            if (Optional.IsCollectionDefined(AccessRules))
+            if (!(AccessRules is ChangeTrackingList<NetworkSecurityPerimeterProfileAccessRule> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("accessRules"u8);
                 writer.WriteStartArray();
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DiagnosticSettingsVersion))
+            if (DiagnosticSettingsVersion != null)
             {
                 writer.WritePropertyName("diagnosticSettingsVersion"u8);
                 writer.WriteStringValue(DiagnosticSettingsVersion);
             }
-            if (Optional.IsCollectionDefined(EnabledLogCategories))
+            if (!(EnabledLogCategories is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("enabledLogCategories"u8);
                 writer.WriteStartArray();
@@ -101,9 +101,9 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
             Optional<string> name = default;
             Optional<string> accessRulesVersion = default;
-            Optional<IList<NetworkSecurityPerimeterProfileAccessRule>> accessRules = default;
+            IList<NetworkSecurityPerimeterProfileAccessRule> accessRules = default;
             Optional<string> diagnosticSettingsVersion = default;
-            Optional<IList<string>> enabledLogCategories = default;
+            IList<string> enabledLogCategories = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     List<NetworkSecurityPerimeterProfileAccessRule> array = new List<NetworkSecurityPerimeterProfileAccessRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkSecurityPerimeterProfileAccessRule.DeserializeNetworkSecurityPerimeterProfileAccessRule(item));
+                        array.Add(NetworkSecurityPerimeterProfileAccessRule.DeserializeNetworkSecurityPerimeterProfileAccessRule(item, options));
                     }
                     accessRules = array;
                     continue;
@@ -157,7 +157,13 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkSecurityPerimeterConfigurationProfile(name.Value, accessRulesVersion.Value, Optional.ToList(accessRules), diagnosticSettingsVersion.Value, Optional.ToList(enabledLogCategories), serializedAdditionalRawData);
+            return new NetworkSecurityPerimeterConfigurationProfile(
+                name.Value,
+                accessRulesVersion.Value,
+                accessRules ?? new ChangeTrackingList<NetworkSecurityPerimeterProfileAccessRule>(),
+                diagnosticSettingsVersion.Value,
+                enabledLogCategories ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkSecurityPerimeterConfigurationProfile>.Write(ModelReaderWriterOptions options)

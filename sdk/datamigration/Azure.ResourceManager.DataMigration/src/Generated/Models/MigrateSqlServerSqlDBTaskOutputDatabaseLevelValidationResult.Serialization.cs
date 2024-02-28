@@ -26,52 +26,52 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(MigrationId))
+            if (options.Format != "W" && MigrationId != null)
             {
                 writer.WritePropertyName("migrationId"u8);
                 writer.WriteStringValue(MigrationId);
             }
-            if (options.Format != "W" && Optional.IsDefined(SourceDatabaseName))
+            if (options.Format != "W" && SourceDatabaseName != null)
             {
                 writer.WritePropertyName("sourceDatabaseName"u8);
                 writer.WriteStringValue(SourceDatabaseName);
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetDatabaseName))
+            if (options.Format != "W" && TargetDatabaseName != null)
             {
                 writer.WritePropertyName("targetDatabaseName"u8);
                 writer.WriteStringValue(TargetDatabaseName);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartedOn))
+            if (options.Format != "W" && StartedOn.HasValue)
             {
                 writer.WritePropertyName("startedOn"u8);
                 writer.WriteStringValue(StartedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EndedOn))
+            if (options.Format != "W" && EndedOn.HasValue)
             {
                 writer.WritePropertyName("endedOn"u8);
                 writer.WriteStringValue(EndedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(DataIntegrityValidationResult))
+            if (options.Format != "W" && DataIntegrityValidationResult != null)
             {
                 writer.WritePropertyName("dataIntegrityValidationResult"u8);
                 writer.WriteObjectValue(DataIntegrityValidationResult);
             }
-            if (options.Format != "W" && Optional.IsDefined(SchemaValidationResult))
+            if (options.Format != "W" && SchemaValidationResult != null)
             {
                 writer.WritePropertyName("schemaValidationResult"u8);
                 writer.WriteObjectValue(SchemaValidationResult);
             }
-            if (options.Format != "W" && Optional.IsDefined(QueryAnalysisValidationResult))
+            if (options.Format != "W" && QueryAnalysisValidationResult != null)
             {
                 writer.WritePropertyName("queryAnalysisValidationResult"u8);
                 writer.WriteObjectValue(QueryAnalysisValidationResult);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    dataIntegrityValidationResult = DataIntegrityValidationResult.DeserializeDataIntegrityValidationResult(property.Value);
+                    dataIntegrityValidationResult = DataIntegrityValidationResult.DeserializeDataIntegrityValidationResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("schemaValidationResult"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    schemaValidationResult = SchemaComparisonValidationResult.DeserializeSchemaComparisonValidationResult(property.Value);
+                    schemaValidationResult = SchemaComparisonValidationResult.DeserializeSchemaComparisonValidationResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("queryAnalysisValidationResult"u8))
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    queryAnalysisValidationResult = QueryAnalysisValidationResult.DeserializeQueryAnalysisValidationResult(property.Value);
+                    queryAnalysisValidationResult = QueryAnalysisValidationResult.DeserializeQueryAnalysisValidationResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -216,7 +216,19 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult(id.Value, resultType, serializedAdditionalRawData, migrationId.Value, sourceDatabaseName.Value, targetDatabaseName.Value, Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), dataIntegrityValidationResult.Value, schemaValidationResult.Value, queryAnalysisValidationResult.Value, Optional.ToNullable(status));
+            return new MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult(
+                id.Value,
+                resultType,
+                serializedAdditionalRawData,
+                migrationId.Value,
+                sourceDatabaseName.Value,
+                targetDatabaseName.Value,
+                Optional.ToNullable(startedOn),
+                Optional.ToNullable(endedOn),
+                dataIntegrityValidationResult.Value,
+                schemaValidationResult.Value,
+                queryAnalysisValidationResult.Value,
+                Optional.ToNullable(status));
         }
 
         BinaryData IPersistableModel<MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult>.Write(ModelReaderWriterOptions options)

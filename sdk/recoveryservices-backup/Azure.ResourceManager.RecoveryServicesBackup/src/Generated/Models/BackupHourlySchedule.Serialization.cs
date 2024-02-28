@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Interval))
+            if (Interval.HasValue)
             {
                 writer.WritePropertyName("interval"u8);
                 writer.WriteNumberValue(Interval.Value);
             }
-            if (Optional.IsDefined(ScheduleWindowStartOn))
+            if (ScheduleWindowStartOn.HasValue)
             {
                 writer.WritePropertyName("scheduleWindowStartTime"u8);
                 writer.WriteStringValue(ScheduleWindowStartOn.Value, "O");
             }
-            if (Optional.IsDefined(ScheduleWindowDuration))
+            if (ScheduleWindowDuration.HasValue)
             {
                 writer.WritePropertyName("scheduleWindowDuration"u8);
                 writer.WriteNumberValue(ScheduleWindowDuration.Value);

@@ -26,52 +26,52 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Title))
+            if (Title != null)
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(TrackingId))
+            if (TrackingId != null)
             {
                 writer.WritePropertyName("trackingId"u8);
                 writer.WriteStringValue(TrackingId);
             }
-            if (Optional.IsDefined(StartOn))
+            if (StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(Cloud))
+            if (Cloud != null)
             {
                 writer.WritePropertyName("cloud"u8);
                 writer.WriteStringValue(Cloud);
             }
-            if (Optional.IsDefined(Severity))
+            if (Severity.HasValue)
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
-            if (Optional.IsDefined(Stage))
+            if (Stage.HasValue)
             {
                 writer.WritePropertyName("stage"u8);
                 writer.WriteStringValue(Stage.Value.ToString());
             }
-            if (Optional.IsDefined(IsPublished))
+            if (IsPublished.HasValue)
             {
                 writer.WritePropertyName("published"u8);
                 writer.WriteBooleanValue(IsPublished.Value);
             }
-            if (Optional.IsDefined(LastModifiedOn))
+            if (LastModifiedOn.HasValue)
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(Impacts))
+            if (!(Impacts is ChangeTrackingList<EmergingIssueImpact> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("impacts"u8);
                 writer.WriteStartArray();
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             Optional<ResourceHealthEventStageValue> stage = default;
             Optional<bool> published = default;
             Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<IReadOnlyList<EmergingIssueImpact>> impacts = default;
+            IReadOnlyList<EmergingIssueImpact> impacts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     List<EmergingIssueImpact> array = new List<EmergingIssueImpact>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EmergingIssueImpact.DeserializeEmergingIssueImpact(item));
+                        array.Add(EmergingIssueImpact.DeserializeEmergingIssueImpact(item, options));
                     }
                     impacts = array;
                     continue;
@@ -218,7 +218,18 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EmergingIssueActiveEventType(title.Value, description.Value, trackingId.Value, Optional.ToNullable(startTime), cloud.Value, Optional.ToNullable(severity), Optional.ToNullable(stage), Optional.ToNullable(published), Optional.ToNullable(lastModifiedTime), Optional.ToList(impacts), serializedAdditionalRawData);
+            return new EmergingIssueActiveEventType(
+                title.Value,
+                description.Value,
+                trackingId.Value,
+                Optional.ToNullable(startTime),
+                cloud.Value,
+                Optional.ToNullable(severity),
+                Optional.ToNullable(stage),
+                Optional.ToNullable(published),
+                Optional.ToNullable(lastModifiedTime),
+                impacts ?? new ChangeTrackingList<EmergingIssueImpact>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EmergingIssueActiveEventType>.Write(ModelReaderWriterOptions options)

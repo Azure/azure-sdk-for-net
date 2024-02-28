@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Code))
+            if (Code != null)
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (Optional.IsDefined(Target))
+            if (Target != null)
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target);
             }
-            if (Optional.IsDefined(Message))
+            if (Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Optional.IsCollectionDefined(Details))
+            if (!(Details is ChangeTrackingList<ExtendedErrorInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AdditionalInfo))
+            if (!(AdditionalInfo is ChangeTrackingList<TypedErrorInfo> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("additionalInfo"u8);
                 writer.WriteStartArray();
@@ -102,8 +102,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Optional<string> code = default;
             Optional<string> target = default;
             Optional<string> message = default;
-            Optional<IList<ExtendedErrorInfo>> details = default;
-            Optional<IList<TypedErrorInfo>> additionalInfo = default;
+            IList<ExtendedErrorInfo> details = default;
+            IList<TypedErrorInfo> additionalInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<ExtendedErrorInfo> array = new List<ExtendedErrorInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeExtendedErrorInfo(item));
+                        array.Add(DeserializeExtendedErrorInfo(item, options));
                     }
                     details = array;
                     continue;
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<TypedErrorInfo> array = new List<TypedErrorInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TypedErrorInfo.DeserializeTypedErrorInfo(item));
+                        array.Add(TypedErrorInfo.DeserializeTypedErrorInfo(item, options));
                     }
                     additionalInfo = array;
                     continue;
@@ -157,7 +157,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExtendedErrorInfo(code.Value, target.Value, message.Value, Optional.ToList(details), Optional.ToList(additionalInfo), serializedAdditionalRawData);
+            return new ExtendedErrorInfo(
+                code.Value,
+                target.Value,
+                message.Value,
+                details ?? new ChangeTrackingList<ExtendedErrorInfo>(),
+                additionalInfo ?? new ChangeTrackingList<TypedErrorInfo>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExtendedErrorInfo>.Write(ModelReaderWriterOptions options)

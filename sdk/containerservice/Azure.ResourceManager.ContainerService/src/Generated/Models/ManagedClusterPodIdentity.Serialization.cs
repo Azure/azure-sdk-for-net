@@ -30,19 +30,19 @@ namespace Azure.ResourceManager.ContainerService.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("namespace"u8);
             writer.WriteStringValue(Namespace);
-            if (Optional.IsDefined(BindingSelector))
+            if (BindingSelector != null)
             {
                 writer.WritePropertyName("bindingSelector"u8);
                 writer.WriteStringValue(BindingSelector);
             }
             writer.WritePropertyName("identity"u8);
             writer.WriteObjectValue(Identity);
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningInfo))
+            if (options.Format != "W" && ProvisioningInfo != null)
             {
                 writer.WritePropertyName("provisioningInfo"u8);
                 writer.WriteObjectValue(ProvisioningInfo);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 if (property.NameEquals("identity"u8))
                 {
-                    identity = ContainerServiceUserAssignedIdentity.DeserializeContainerServiceUserAssignedIdentity(property.Value);
+                    identity = ContainerServiceUserAssignedIdentity.DeserializeContainerServiceUserAssignedIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    provisioningInfo = ManagedClusterPodIdentityProvisioningInfo.DeserializeManagedClusterPodIdentityProvisioningInfo(property.Value);
+                    provisioningInfo = ManagedClusterPodIdentityProvisioningInfo.DeserializeManagedClusterPodIdentityProvisioningInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +139,14 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterPodIdentity(name, @namespace, bindingSelector.Value, identity, Optional.ToNullable(provisioningState), provisioningInfo.Value, serializedAdditionalRawData);
+            return new ManagedClusterPodIdentity(
+                name,
+                @namespace,
+                bindingSelector.Value,
+                identity,
+                Optional.ToNullable(provisioningState),
+                provisioningInfo.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterPodIdentity>.Write(ModelReaderWriterOptions options)

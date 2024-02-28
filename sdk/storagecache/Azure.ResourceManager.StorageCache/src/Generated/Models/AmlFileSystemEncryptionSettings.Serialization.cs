@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(KeyEncryptionKey))
+            if (KeyEncryptionKey != null)
             {
                 writer.WritePropertyName("keyEncryptionKey"u8);
                 writer.WriteObjectValue(KeyEncryptionKey);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     {
                         continue;
                     }
-                    keyEncryptionKey = StorageCacheEncryptionKeyVaultKeyReference.DeserializeStorageCacheEncryptionKeyVaultKeyReference(property.Value);
+                    keyEncryptionKey = StorageCacheEncryptionKeyVaultKeyReference.DeserializeStorageCacheEncryptionKeyVaultKeyReference(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

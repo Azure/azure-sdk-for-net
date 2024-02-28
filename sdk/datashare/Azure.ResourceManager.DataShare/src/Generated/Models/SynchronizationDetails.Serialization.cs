@@ -26,77 +26,77 @@ namespace Azure.ResourceManager.DataShare.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(DataSetId))
+            if (options.Format != "W" && DataSetId.HasValue)
             {
                 writer.WritePropertyName("dataSetId"u8);
                 writer.WriteStringValue(DataSetId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(DataSetType))
+            if (options.Format != "W" && DataSetType.HasValue)
             {
                 writer.WritePropertyName("dataSetType"u8);
                 writer.WriteStringValue(DataSetType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DurationInMilliSeconds))
+            if (options.Format != "W" && DurationInMilliSeconds.HasValue)
             {
                 writer.WritePropertyName("durationMs"u8);
                 writer.WriteNumberValue(DurationInMilliSeconds.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(EndOn))
+            if (options.Format != "W" && EndOn.HasValue)
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(FilesRead))
+            if (options.Format != "W" && FilesRead.HasValue)
             {
                 writer.WritePropertyName("filesRead"u8);
                 writer.WriteNumberValue(FilesRead.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(FilesWritten))
+            if (options.Format != "W" && FilesWritten.HasValue)
             {
                 writer.WritePropertyName("filesWritten"u8);
                 writer.WriteNumberValue(FilesWritten.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Message))
+            if (options.Format != "W" && Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(RowsCopied))
+            if (options.Format != "W" && RowsCopied.HasValue)
             {
                 writer.WritePropertyName("rowsCopied"u8);
                 writer.WriteNumberValue(RowsCopied.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(RowsRead))
+            if (options.Format != "W" && RowsRead.HasValue)
             {
                 writer.WritePropertyName("rowsRead"u8);
                 writer.WriteNumberValue(RowsRead.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(SizeRead))
+            if (options.Format != "W" && SizeRead.HasValue)
             {
                 writer.WritePropertyName("sizeRead"u8);
                 writer.WriteNumberValue(SizeRead.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(SizeWritten))
+            if (options.Format != "W" && SizeWritten.HasValue)
             {
                 writer.WritePropertyName("sizeWritten"u8);
                 writer.WriteNumberValue(SizeWritten.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && Optional.IsDefined(VCore))
+            if (options.Format != "W" && VCore.HasValue)
             {
                 writer.WritePropertyName("vCore"u8);
                 writer.WriteNumberValue(VCore.Value);
@@ -287,7 +287,23 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynchronizationDetails(Optional.ToNullable(dataSetId), Optional.ToNullable(dataSetType), Optional.ToNullable(durationMs), Optional.ToNullable(endTime), Optional.ToNullable(filesRead), Optional.ToNullable(filesWritten), message.Value, name.Value, Optional.ToNullable(rowsCopied), Optional.ToNullable(rowsRead), Optional.ToNullable(sizeRead), Optional.ToNullable(sizeWritten), Optional.ToNullable(startTime), status.Value, Optional.ToNullable(vCore), serializedAdditionalRawData);
+            return new SynchronizationDetails(
+                Optional.ToNullable(dataSetId),
+                Optional.ToNullable(dataSetType),
+                Optional.ToNullable(durationMs),
+                Optional.ToNullable(endTime),
+                Optional.ToNullable(filesRead),
+                Optional.ToNullable(filesWritten),
+                message.Value,
+                name.Value,
+                Optional.ToNullable(rowsCopied),
+                Optional.ToNullable(rowsRead),
+                Optional.ToNullable(sizeRead),
+                Optional.ToNullable(sizeWritten),
+                Optional.ToNullable(startTime),
+                status.Value,
+                Optional.ToNullable(vCore),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynchronizationDetails>.Write(ModelReaderWriterOptions options)

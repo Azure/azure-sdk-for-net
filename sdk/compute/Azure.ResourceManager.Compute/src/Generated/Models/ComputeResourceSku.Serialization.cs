@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType != null)
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(Tier))
+            if (options.Format != "W" && Tier != null)
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier);
             }
-            if (options.Format != "W" && Optional.IsDefined(Size))
+            if (options.Format != "W" && Size != null)
             {
                 writer.WritePropertyName("size"u8);
                 writer.WriteStringValue(Size);
             }
-            if (options.Format != "W" && Optional.IsDefined(Family))
+            if (options.Format != "W" && Family != null)
             {
                 writer.WritePropertyName("family"u8);
                 writer.WriteStringValue(Family);
             }
-            if (options.Format != "W" && Optional.IsDefined(Kind))
+            if (options.Format != "W" && Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (options.Format != "W" && Optional.IsDefined(Capacity))
+            if (options.Format != "W" && Capacity != null)
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteObjectValue(Capacity);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Locations))
+            if (options.Format != "W" && !(Locations is ChangeTrackingList<AzureLocation> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(LocationInfo))
+            if (options.Format != "W" && !(LocationInfo is ChangeTrackingList<ComputeResourceSkuLocationInfo> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("locationInfo"u8);
                 writer.WriteStartArray();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ApiVersions))
+            if (options.Format != "W" && !(ApiVersions is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("apiVersions"u8);
                 writer.WriteStartArray();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Costs))
+            if (options.Format != "W" && !(Costs is ChangeTrackingList<ResourceSkuCosts> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("costs"u8);
                 writer.WriteStartArray();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Capabilities))
+            if (options.Format != "W" && !(Capabilities is ChangeTrackingList<ComputeResourceSkuCapabilities> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartArray();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Restrictions))
+            if (options.Format != "W" && !(Restrictions is ChangeTrackingList<ComputeResourceSkuRestrictions> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("restrictions"u8);
                 writer.WriteStartArray();
@@ -166,12 +166,12 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<string> family = default;
             Optional<string> kind = default;
             Optional<ComputeResourceSkuCapacity> capacity = default;
-            Optional<IReadOnlyList<AzureLocation>> locations = default;
-            Optional<IReadOnlyList<ComputeResourceSkuLocationInfo>> locationInfo = default;
-            Optional<IReadOnlyList<string>> apiVersions = default;
-            Optional<IReadOnlyList<ResourceSkuCosts>> costs = default;
-            Optional<IReadOnlyList<ComputeResourceSkuCapabilities>> capabilities = default;
-            Optional<IReadOnlyList<ComputeResourceSkuRestrictions>> restrictions = default;
+            IReadOnlyList<AzureLocation> locations = default;
+            IReadOnlyList<ComputeResourceSkuLocationInfo> locationInfo = default;
+            IReadOnlyList<string> apiVersions = default;
+            IReadOnlyList<ResourceSkuCosts> costs = default;
+            IReadOnlyList<ComputeResourceSkuCapabilities> capabilities = default;
+            IReadOnlyList<ComputeResourceSkuRestrictions> restrictions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    capacity = ComputeResourceSkuCapacity.DeserializeComputeResourceSkuCapacity(property.Value);
+                    capacity = ComputeResourceSkuCapacity.DeserializeComputeResourceSkuCapacity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("locations"u8))
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<ComputeResourceSkuLocationInfo> array = new List<ComputeResourceSkuLocationInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ComputeResourceSkuLocationInfo.DeserializeComputeResourceSkuLocationInfo(item));
+                        array.Add(ComputeResourceSkuLocationInfo.DeserializeComputeResourceSkuLocationInfo(item, options));
                     }
                     locationInfo = array;
                     continue;
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<ResourceSkuCosts> array = new List<ResourceSkuCosts>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceSkuCosts.DeserializeResourceSkuCosts(item));
+                        array.Add(ResourceSkuCosts.DeserializeResourceSkuCosts(item, options));
                     }
                     costs = array;
                     continue;
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<ComputeResourceSkuCapabilities> array = new List<ComputeResourceSkuCapabilities>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ComputeResourceSkuCapabilities.DeserializeComputeResourceSkuCapabilities(item));
+                        array.Add(ComputeResourceSkuCapabilities.DeserializeComputeResourceSkuCapabilities(item, options));
                     }
                     capabilities = array;
                     continue;
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<ComputeResourceSkuRestrictions> array = new List<ComputeResourceSkuRestrictions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ComputeResourceSkuRestrictions.DeserializeComputeResourceSkuRestrictions(item));
+                        array.Add(ComputeResourceSkuRestrictions.DeserializeComputeResourceSkuRestrictions(item, options));
                     }
                     restrictions = array;
                     continue;
@@ -305,7 +305,21 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComputeResourceSku(resourceType.Value, name.Value, tier.Value, size.Value, family.Value, kind.Value, capacity.Value, Optional.ToList(locations), Optional.ToList(locationInfo), Optional.ToList(apiVersions), Optional.ToList(costs), Optional.ToList(capabilities), Optional.ToList(restrictions), serializedAdditionalRawData);
+            return new ComputeResourceSku(
+                resourceType.Value,
+                name.Value,
+                tier.Value,
+                size.Value,
+                family.Value,
+                kind.Value,
+                capacity.Value,
+                locations ?? new ChangeTrackingList<AzureLocation>(),
+                locationInfo ?? new ChangeTrackingList<ComputeResourceSkuLocationInfo>(),
+                apiVersions ?? new ChangeTrackingList<string>(),
+                costs ?? new ChangeTrackingList<ResourceSkuCosts>(),
+                capabilities ?? new ChangeTrackingList<ComputeResourceSkuCapabilities>(),
+                restrictions ?? new ChangeTrackingList<ComputeResourceSkuRestrictions>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComputeResourceSku>.Write(ModelReaderWriterOptions options)

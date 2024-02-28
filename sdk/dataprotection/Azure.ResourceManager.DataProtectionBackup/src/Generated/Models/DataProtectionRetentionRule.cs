@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -21,8 +20,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="lifecycles"/> is null. </exception>
         public DataProtectionRetentionRule(string name, IEnumerable<SourceLifeCycle> lifecycles) : base(name)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(lifecycles, nameof(lifecycles));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (lifecycles == null)
+            {
+                throw new ArgumentNullException(nameof(lifecycles));
+            }
 
             Lifecycles = lifecycles.ToList();
             ObjectType = "AzureRetentionRule";

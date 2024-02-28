@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DBVmSku))
+            if (DBVmSku != null)
             {
                 writer.WritePropertyName("dbVmSku"u8);
                 writer.WriteStringValue(DBVmSku);
             }
-            if (Optional.IsDefined(DatabaseInstanceCount))
+            if (DatabaseInstanceCount.HasValue)
             {
                 writer.WritePropertyName("databaseInstanceCount"u8);
                 writer.WriteNumberValue(DatabaseInstanceCount.Value);
             }
-            if (Optional.IsDefined(CentralServerVmSku))
+            if (CentralServerVmSku != null)
             {
                 writer.WritePropertyName("centralServerVmSku"u8);
                 writer.WriteStringValue(CentralServerVmSku);
             }
-            if (Optional.IsDefined(CentralServerInstanceCount))
+            if (CentralServerInstanceCount.HasValue)
             {
                 writer.WritePropertyName("centralServerInstanceCount"u8);
                 writer.WriteNumberValue(CentralServerInstanceCount.Value);
             }
-            if (Optional.IsDefined(ApplicationServerVmSku))
+            if (ApplicationServerVmSku != null)
             {
                 writer.WritePropertyName("applicationServerVmSku"u8);
                 writer.WriteStringValue(ApplicationServerVmSku);
             }
-            if (Optional.IsDefined(ApplicationServerInstanceCount))
+            if (ApplicationServerInstanceCount.HasValue)
             {
                 writer.WritePropertyName("applicationServerInstanceCount"u8);
                 writer.WriteNumberValue(ApplicationServerInstanceCount.Value);
@@ -160,7 +160,15 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ThreeTierRecommendationResult(deploymentType, serializedAdditionalRawData, dbVmSku.Value, Optional.ToNullable(databaseInstanceCount), centralServerVmSku.Value, Optional.ToNullable(centralServerInstanceCount), applicationServerVmSku.Value, Optional.ToNullable(applicationServerInstanceCount));
+            return new ThreeTierRecommendationResult(
+                deploymentType,
+                serializedAdditionalRawData,
+                dbVmSku.Value,
+                Optional.ToNullable(databaseInstanceCount),
+                centralServerVmSku.Value,
+                Optional.ToNullable(centralServerInstanceCount),
+                applicationServerVmSku.Value,
+                Optional.ToNullable(applicationServerInstanceCount));
         }
 
         BinaryData IPersistableModel<ThreeTierRecommendationResult>.Write(ModelReaderWriterOptions options)

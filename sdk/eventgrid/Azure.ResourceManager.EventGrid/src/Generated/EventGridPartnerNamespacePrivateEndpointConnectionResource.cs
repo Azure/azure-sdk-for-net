@@ -282,7 +282,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<EventGridPartnerNamespacePrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, EventGridPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _eventGridPartnerNamespacePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("EventGridPartnerNamespacePrivateEndpointConnectionResource.Update");
             scope.Start();
@@ -328,7 +331,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<EventGridPartnerNamespacePrivateEndpointConnectionResource> Update(WaitUntil waitUntil, EventGridPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _eventGridPartnerNamespacePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("EventGridPartnerNamespacePrivateEndpointConnectionResource.Update");
             scope.Start();

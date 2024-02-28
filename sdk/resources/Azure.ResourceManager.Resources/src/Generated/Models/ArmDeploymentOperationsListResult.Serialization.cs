@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<ArmDeploymentOperation> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ArmDeploymentOperation>> value = default;
+            IReadOnlyList<ArmDeploymentOperation> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<ArmDeploymentOperation> array = new List<ArmDeploymentOperation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ArmDeploymentOperation.DeserializeArmDeploymentOperation(item));
+                        array.Add(ArmDeploymentOperation.DeserializeArmDeploymentOperation(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmDeploymentOperationsListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ArmDeploymentOperationsListResult(value ?? new ChangeTrackingList<ArmDeploymentOperation>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArmDeploymentOperationsListResult>.Write(ModelReaderWriterOptions options)

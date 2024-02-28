@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Port))
+            if (Port.HasValue)
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
             writer.WritePropertyName("server"u8);
             writer.WriteStringValue(Server);
-            if (Optional.IsCollectionDefined(FqdnAndIPAddressList))
+            if (!(FqdnAndIPAddressList is ChangeTrackingList<IPAddress> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("fqdnAndIpAddressList"u8);
                 writer.WriteStartArray();
@@ -49,22 +49,22 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(MachineArmId))
+            if (MachineArmId != null)
             {
                 writer.WritePropertyName("machineArmId"u8);
                 writer.WriteStringValue(MachineArmId);
             }
-            if (Optional.IsDefined(TotalApps))
+            if (TotalApps.HasValue)
             {
                 writer.WritePropertyName("totalApps"u8);
                 writer.WriteNumberValue(TotalApps.Value);
             }
-            if (Optional.IsDefined(SpringBootApps))
+            if (SpringBootApps.HasValue)
             {
                 writer.WritePropertyName("springBootApps"u8);
                 writer.WriteNumberValue(SpringBootApps.Value);
             }
-            if (Optional.IsCollectionDefined(Errors))
+            if (!(Errors is ChangeTrackingList<SpringBootSiteError> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ProvisioningState))
+            if (ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -119,11 +119,11 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             }
             Optional<int> port = default;
             string server = default;
-            Optional<IList<IPAddress>> fqdnAndIPAddressList = default;
+            IList<IPAddress> fqdnAndIPAddressList = default;
             Optional<ResourceIdentifier> machineArmId = default;
             Optional<int> totalApps = default;
             Optional<int> springBootApps = default;
-            Optional<IList<SpringBootSiteError>> errors = default;
+            IList<SpringBootSiteError> errors = default;
             Optional<SpringAppDiscoveryProvisioningState> provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                     List<SpringBootSiteError> array = new List<SpringBootSiteError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SpringBootSiteError.DeserializeSpringBootSiteError(item));
+                        array.Add(SpringBootSiteError.DeserializeSpringBootSiteError(item, options));
                     }
                     errors = array;
                     continue;
@@ -220,7 +220,16 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SpringBootServerProperties(Optional.ToNullable(port), server, Optional.ToList(fqdnAndIPAddressList), machineArmId.Value, Optional.ToNullable(totalApps), Optional.ToNullable(springBootApps), Optional.ToList(errors), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new SpringBootServerProperties(
+                Optional.ToNullable(port),
+                server,
+                fqdnAndIPAddressList ?? new ChangeTrackingList<IPAddress>(),
+                machineArmId.Value,
+                Optional.ToNullable(totalApps),
+                Optional.ToNullable(springBootApps),
+                errors ?? new ChangeTrackingList<SpringBootSiteError>(),
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SpringBootServerProperties>.Write(ModelReaderWriterOptions options)

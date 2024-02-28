@@ -30,22 +30,22 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStringValue(FunctionBindingType);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Endpoint))
+            if (Endpoint != null)
             {
                 writer.WritePropertyName("endpoint"u8);
                 writer.WriteStringValue(Endpoint);
             }
-            if (Optional.IsDefined(ApiKey))
+            if (ApiKey != null)
             {
                 writer.WritePropertyName("apiKey"u8);
                 writer.WriteStringValue(ApiKey);
             }
-            if (Optional.IsDefined(Inputs))
+            if (Inputs != null)
             {
                 writer.WritePropertyName("inputs"u8);
                 writer.WriteObjectValue(Inputs);
             }
-            if (Optional.IsCollectionDefined(Outputs))
+            if (!(Outputs is ChangeTrackingList<MachineLearningStudioOutputColumn> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("outputs"u8);
                 writer.WriteStartArray();
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(BatchSize))
+            if (BatchSize.HasValue)
             {
                 writer.WritePropertyName("batchSize"u8);
                 writer.WriteNumberValue(BatchSize.Value);
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Optional<string> endpoint = default;
             Optional<string> apiKey = default;
             Optional<MachineLearningStudioInputs> inputs = default;
-            Optional<IList<MachineLearningStudioOutputColumn>> outputs = default;
+            IList<MachineLearningStudioOutputColumn> outputs = default;
             Optional<int> batchSize = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                             {
                                 continue;
                             }
-                            inputs = MachineLearningStudioInputs.DeserializeMachineLearningStudioInputs(property0.Value);
+                            inputs = MachineLearningStudioInputs.DeserializeMachineLearningStudioInputs(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("outputs"u8))
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                             List<MachineLearningStudioOutputColumn> array = new List<MachineLearningStudioOutputColumn>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MachineLearningStudioOutputColumn.DeserializeMachineLearningStudioOutputColumn(item));
+                                array.Add(MachineLearningStudioOutputColumn.DeserializeMachineLearningStudioOutputColumn(item, options));
                             }
                             outputs = array;
                             continue;
@@ -174,7 +174,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EMachineLearningStudioFunctionBinding(type, serializedAdditionalRawData, endpoint.Value, apiKey.Value, inputs.Value, Optional.ToList(outputs), Optional.ToNullable(batchSize));
+            return new EMachineLearningStudioFunctionBinding(
+                type,
+                serializedAdditionalRawData,
+                endpoint.Value,
+                apiKey.Value,
+                inputs.Value,
+                outputs ?? new ChangeTrackingList<MachineLearningStudioOutputColumn>(),
+                Optional.ToNullable(batchSize));
         }
 
         BinaryData IPersistableModel<EMachineLearningStudioFunctionBinding>.Write(ModelReaderWriterOptions options)

@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteEndArray();
             writer.WritePropertyName("format"u8);
             writer.WriteStringValue(Format.ToString());
-            if (Optional.IsDefined(Settings))
+            if (Settings != null)
             {
                 writer.WritePropertyName("settings"u8);
                 writer.WriteObjectValue(Settings);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    settings = LogFilesDataSourceSettings.DeserializeLogFilesDataSourceSettings(property.Value);
+                    settings = LogFilesDataSourceSettings.DeserializeLogFilesDataSourceSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -144,7 +144,13 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogFilesDataSource(streams, filePatterns, format, settings.Value, name.Value, serializedAdditionalRawData);
+            return new LogFilesDataSource(
+                streams,
+                filePatterns,
+                format,
+                settings.Value,
+                name.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogFilesDataSource>.Write(ModelReaderWriterOptions options)

@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrometheusUri))
+            if (PrometheusUri != null)
             {
                 writer.WritePropertyName("prometheusUrl"u8);
                 writer.WriteStringValue(PrometheusUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(Hostname))
+            if (Hostname != null)
             {
                 writer.WritePropertyName("hostname"u8);
                 writer.WriteStringValue(Hostname);
             }
-            if (Optional.IsDefined(Sid))
+            if (Sid != null)
             {
                 writer.WritePropertyName("sid"u8);
                 writer.WriteStringValue(Sid);
             }
-            if (Optional.IsDefined(ClusterName))
+            if (ClusterName != null)
             {
                 writer.WritePropertyName("clusterName"u8);
                 writer.WriteStringValue(ClusterName);
             }
-            if (Optional.IsDefined(SslPreference))
+            if (SslPreference.HasValue)
             {
                 writer.WritePropertyName("sslPreference"u8);
                 writer.WriteStringValue(SslPreference.Value.ToString());
             }
-            if (Optional.IsDefined(SslCertificateUri))
+            if (SslCertificateUri != null)
             {
                 writer.WritePropertyName("sslCertificateUri"u8);
                 writer.WriteStringValue(SslCertificateUri.AbsoluteUri);
@@ -160,7 +160,15 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrometheusHAClusterProviderInstanceProperties(providerType, serializedAdditionalRawData, prometheusUrl.Value, hostname.Value, sid.Value, clusterName.Value, Optional.ToNullable(sslPreference), sslCertificateUri.Value);
+            return new PrometheusHAClusterProviderInstanceProperties(
+                providerType,
+                serializedAdditionalRawData,
+                prometheusUrl.Value,
+                hostname.Value,
+                sid.Value,
+                clusterName.Value,
+                Optional.ToNullable(sslPreference),
+                sslCertificateUri.Value);
         }
 
         BinaryData IPersistableModel<PrometheusHAClusterProviderInstanceProperties>.Write(ModelReaderWriterOptions options)

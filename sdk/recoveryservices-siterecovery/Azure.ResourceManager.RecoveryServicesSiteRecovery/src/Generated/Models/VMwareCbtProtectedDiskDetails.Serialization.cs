@@ -26,77 +26,77 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(DiskId))
+            if (options.Format != "W" && DiskId != null)
             {
                 writer.WritePropertyName("diskId"u8);
                 writer.WriteStringValue(DiskId);
             }
-            if (options.Format != "W" && Optional.IsDefined(DiskName))
+            if (options.Format != "W" && DiskName != null)
             {
                 writer.WritePropertyName("diskName"u8);
                 writer.WriteStringValue(DiskName);
             }
-            if (Optional.IsDefined(DiskType))
+            if (DiskType.HasValue)
             {
                 writer.WritePropertyName("diskType"u8);
                 writer.WriteStringValue(DiskType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DiskPath))
+            if (options.Format != "W" && DiskPath != null)
             {
                 writer.WritePropertyName("diskPath"u8);
                 writer.WriteStringValue(DiskPath);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsOSDisk))
+            if (options.Format != "W" && IsOSDisk != null)
             {
                 writer.WritePropertyName("isOSDisk"u8);
                 writer.WriteStringValue(IsOSDisk);
             }
-            if (options.Format != "W" && Optional.IsDefined(CapacityInBytes))
+            if (options.Format != "W" && CapacityInBytes.HasValue)
             {
                 writer.WritePropertyName("capacityInBytes"u8);
                 writer.WriteNumberValue(CapacityInBytes.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(LogStorageAccountId))
+            if (options.Format != "W" && LogStorageAccountId != null)
             {
                 writer.WritePropertyName("logStorageAccountId"u8);
                 writer.WriteStringValue(LogStorageAccountId);
             }
-            if (options.Format != "W" && Optional.IsDefined(LogStorageAccountSasSecretName))
+            if (options.Format != "W" && LogStorageAccountSasSecretName != null)
             {
                 writer.WritePropertyName("logStorageAccountSasSecretName"u8);
                 writer.WriteStringValue(LogStorageAccountSasSecretName);
             }
-            if (options.Format != "W" && Optional.IsDefined(DiskEncryptionSetId))
+            if (options.Format != "W" && DiskEncryptionSetId != null)
             {
                 writer.WritePropertyName("diskEncryptionSetId"u8);
                 writer.WriteStringValue(DiskEncryptionSetId);
             }
-            if (options.Format != "W" && Optional.IsDefined(SeedManagedDiskId))
+            if (options.Format != "W" && SeedManagedDiskId != null)
             {
                 writer.WritePropertyName("seedManagedDiskId"u8);
                 writer.WriteStringValue(SeedManagedDiskId);
             }
-            if (options.Format != "W" && Optional.IsDefined(SeedBlobUri))
+            if (options.Format != "W" && SeedBlobUri != null)
             {
                 writer.WritePropertyName("seedBlobUri"u8);
                 writer.WriteStringValue(SeedBlobUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetManagedDiskId))
+            if (options.Format != "W" && TargetManagedDiskId != null)
             {
                 writer.WritePropertyName("targetManagedDiskId"u8);
                 writer.WriteStringValue(TargetManagedDiskId);
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetBlobUri))
+            if (options.Format != "W" && TargetBlobUri != null)
             {
                 writer.WritePropertyName("targetBlobUri"u8);
                 writer.WriteStringValue(TargetBlobUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(TargetDiskName))
+            if (TargetDiskName != null)
             {
                 writer.WritePropertyName("targetDiskName"u8);
                 writer.WriteStringValue(TargetDiskName);
             }
-            if (options.Format != "W" && Optional.IsDefined(GatewayOperationDetails))
+            if (options.Format != "W" && GatewayOperationDetails != null)
             {
                 writer.WritePropertyName("gatewayOperationDetails"u8);
                 writer.WriteObjectValue(GatewayOperationDetails);
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    gatewayOperationDetails = GatewayOperationDetails.DeserializeGatewayOperationDetails(property.Value);
+                    gatewayOperationDetails = GatewayOperationDetails.DeserializeGatewayOperationDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -267,7 +267,23 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareCbtProtectedDiskDetails(diskId.Value, diskName.Value, Optional.ToNullable(diskType), diskPath.Value, isOSDisk.Value, Optional.ToNullable(capacityInBytes), logStorageAccountId.Value, logStorageAccountSasSecretName.Value, diskEncryptionSetId.Value, seedManagedDiskId.Value, seedBlobUri.Value, targetManagedDiskId.Value, targetBlobUri.Value, targetDiskName.Value, gatewayOperationDetails.Value, serializedAdditionalRawData);
+            return new VMwareCbtProtectedDiskDetails(
+                diskId.Value,
+                diskName.Value,
+                Optional.ToNullable(diskType),
+                diskPath.Value,
+                isOSDisk.Value,
+                Optional.ToNullable(capacityInBytes),
+                logStorageAccountId.Value,
+                logStorageAccountSasSecretName.Value,
+                diskEncryptionSetId.Value,
+                seedManagedDiskId.Value,
+                seedBlobUri.Value,
+                targetManagedDiskId.Value,
+                targetBlobUri.Value,
+                targetDiskName.Value,
+                gatewayOperationDetails.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VMwareCbtProtectedDiskDetails>.Write(ModelReaderWriterOptions options)

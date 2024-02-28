@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TapRuleActionType))
+            if (TapRuleActionType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(TapRuleActionType.Value.ToString());
             }
-            if (Optional.IsDefined(Truncate))
+            if (Truncate != null)
             {
                 writer.WritePropertyName("truncate"u8);
                 writer.WriteStringValue(Truncate);
             }
-            if (Optional.IsDefined(IsTimestampEnabled))
+            if (IsTimestampEnabled.HasValue)
             {
                 writer.WritePropertyName("isTimestampEnabled"u8);
                 writer.WriteStringValue(IsTimestampEnabled.Value.ToString());
             }
-            if (Optional.IsDefined(DestinationId))
+            if (DestinationId != null)
             {
                 writer.WritePropertyName("destinationId"u8);
                 writer.WriteStringValue(DestinationId);
             }
-            if (Optional.IsDefined(MatchConfigurationName))
+            if (MatchConfigurationName != null)
             {
                 writer.WritePropertyName("matchConfigurationName"u8);
                 writer.WriteStringValue(MatchConfigurationName);
@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkTapRuleAction(Optional.ToNullable(type), truncate.Value, Optional.ToNullable(isTimestampEnabled), destinationId.Value, matchConfigurationName.Value, serializedAdditionalRawData);
+            return new NetworkTapRuleAction(
+                Optional.ToNullable(type),
+                truncate.Value,
+                Optional.ToNullable(isTimestampEnabled),
+                destinationId.Value,
+                matchConfigurationName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkTapRuleAction>.Write(ModelReaderWriterOptions options)

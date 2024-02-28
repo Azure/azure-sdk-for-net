@@ -580,7 +580,10 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ResourceTypeRegistrationResource>> UpdateAsync(WaitUntil waitUntil, ResourceTypeRegistrationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _resourceTypeRegistrationClientDiagnostics.CreateScope("ResourceTypeRegistrationResource.Update");
             scope.Start();
@@ -626,7 +629,10 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ResourceTypeRegistrationResource> Update(WaitUntil waitUntil, ResourceTypeRegistrationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _resourceTypeRegistrationClientDiagnostics.CreateScope("ResourceTypeRegistrationResource.Update");
             scope.Start();

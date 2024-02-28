@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(FailureReason))
+            if (options.Format != "W" && FailureReason != null)
             {
                 writer.WritePropertyName("failureReason"u8);
                 writer.WriteStringValue(FailureReason);
             }
-            if (options.Format != "W" && Optional.IsDefined(RestoreId))
+            if (options.Format != "W" && RestoreId != null)
             {
                 writer.WritePropertyName("restoreId"u8);
                 writer.WriteStringValue(RestoreId);
             }
-            if (options.Format != "W" && Optional.IsDefined(Parameters))
+            if (options.Format != "W" && Parameters != null)
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteObjectValue(Parameters);
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    parameters = BlobRestoreContent.DeserializeBlobRestoreContent(property.Value);
+                    parameters = BlobRestoreContent.DeserializeBlobRestoreContent(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

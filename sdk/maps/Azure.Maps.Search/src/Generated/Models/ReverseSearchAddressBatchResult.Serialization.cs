@@ -19,7 +19,7 @@ namespace Azure.Maps.Search.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ReverseSearchAddressBatchItem>> batchItems = default;
+            IReadOnlyList<ReverseSearchAddressBatchItem> batchItems = default;
             Optional<BatchResultSummary> summary = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -47,7 +47,7 @@ namespace Azure.Maps.Search.Models
                     continue;
                 }
             }
-            return new ReverseSearchAddressBatchResult(summary.Value, Optional.ToList(batchItems));
+            return new ReverseSearchAddressBatchResult(summary.Value, batchItems ?? new ChangeTrackingList<ReverseSearchAddressBatchItem>());
         }
     }
 }

@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(VirtualIP))
+            if (VirtualIP != null)
             {
                 writer.WritePropertyName("virtualIP"u8);
                 writer.WriteStringValue(VirtualIP);
             }
-            if (Optional.IsDefined(InternalHttpPort))
+            if (InternalHttpPort.HasValue)
             {
                 writer.WritePropertyName("internalHttpPort"u8);
                 writer.WriteNumberValue(InternalHttpPort.Value);
             }
-            if (Optional.IsDefined(InternalHttpsPort))
+            if (InternalHttpsPort.HasValue)
             {
                 writer.WritePropertyName("internalHttpsPort"u8);
                 writer.WriteNumberValue(InternalHttpsPort.Value);
             }
-            if (Optional.IsDefined(IsInUse))
+            if (IsInUse.HasValue)
             {
                 writer.WritePropertyName("inUse"u8);
                 writer.WriteBooleanValue(IsInUse.Value);
             }
-            if (Optional.IsDefined(ServiceName))
+            if (ServiceName != null)
             {
                 writer.WritePropertyName("serviceName"u8);
                 writer.WriteStringValue(ServiceName);
@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualIPMapping(virtualIP.Value, Optional.ToNullable(internalHttpPort), Optional.ToNullable(internalHttpsPort), Optional.ToNullable(inUse), serviceName.Value, serializedAdditionalRawData);
+            return new VirtualIPMapping(
+                virtualIP.Value,
+                Optional.ToNullable(internalHttpPort),
+                Optional.ToNullable(internalHttpsPort),
+                Optional.ToNullable(inUse),
+                serviceName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualIPMapping>.Write(ModelReaderWriterOptions options)

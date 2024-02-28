@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<AllowedEnvironmentTypeData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AllowedEnvironmentTypeData>> value = default;
+            IReadOnlyList<AllowedEnvironmentTypeData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     List<AllowedEnvironmentTypeData> array = new List<AllowedEnvironmentTypeData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AllowedEnvironmentTypeData.DeserializeAllowedEnvironmentTypeData(item));
+                        array.Add(AllowedEnvironmentTypeData.DeserializeAllowedEnvironmentTypeData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AllowedEnvironmentTypeListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new AllowedEnvironmentTypeListResult(value ?? new ChangeTrackingList<AllowedEnvironmentTypeData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AllowedEnvironmentTypeListResult>.Write(ModelReaderWriterOptions options)

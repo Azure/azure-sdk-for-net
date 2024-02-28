@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsDefined(ImmutableSubscriptionId))
+            if (ImmutableSubscriptionId != null)
             {
                 writer.WritePropertyName("immutableSubscriptionId"u8);
                 writer.WriteStringValue(ImmutableSubscriptionId);
             }
-            if (Optional.IsDefined(ImmutableResourceId))
+            if (ImmutableResourceId != null)
             {
                 writer.WritePropertyName("immutableResourceId"u8);
                 writer.WriteStringValue(ImmutableResourceId);
             }
-            if (Optional.IsDefined(VnetTrafficTag))
+            if (VnetTrafficTag != null)
             {
                 writer.WritePropertyName("vnetTrafficTag"u8);
                 writer.WriteStringValue(VnetTrafficTag);
@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeviceUpdatePrivateEndpointUpdate(id.Value, Optional.ToNullable(location), immutableSubscriptionId.Value, immutableResourceId.Value, vnetTrafficTag.Value, serializedAdditionalRawData);
+            return new DeviceUpdatePrivateEndpointUpdate(
+                id.Value,
+                Optional.ToNullable(location),
+                immutableSubscriptionId.Value,
+                immutableResourceId.Value,
+                vnetTrafficTag.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeviceUpdatePrivateEndpointUpdate>.Write(ModelReaderWriterOptions options)

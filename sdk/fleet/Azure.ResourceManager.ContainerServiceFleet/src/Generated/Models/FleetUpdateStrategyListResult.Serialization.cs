@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink.AbsoluteUri);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     List<FleetUpdateStrategyData> array = new List<FleetUpdateStrategyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FleetUpdateStrategyData.DeserializeFleetUpdateStrategyData(item));
+                        array.Add(FleetUpdateStrategyData.DeserializeFleetUpdateStrategyData(item, options));
                     }
                     value = array;
                     continue;

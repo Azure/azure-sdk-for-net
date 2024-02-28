@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.Search.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrivateLinkResourceId))
+            if (PrivateLinkResourceId != null)
             {
                 writer.WritePropertyName("privateLinkResourceId"u8);
                 writer.WriteStringValue(PrivateLinkResourceId);
             }
-            if (Optional.IsDefined(GroupId))
+            if (GroupId != null)
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
             }
-            if (Optional.IsDefined(RequestMessage))
+            if (RequestMessage != null)
             {
                 writer.WritePropertyName("requestMessage"u8);
                 writer.WriteStringValue(RequestMessage);
             }
-            if (Optional.IsDefined(ResourceRegion))
+            if (ResourceRegion.HasValue)
             {
                 writer.WritePropertyName("resourceRegion"u8);
                 writer.WriteStringValue(ResourceRegion.Value);
             }
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (Optional.IsDefined(ProvisioningState))
+            if (ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
@@ -156,7 +156,14 @@ namespace Azure.ResourceManager.Search.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SharedSearchServicePrivateLinkResourceProperties(privateLinkResourceId.Value, groupId.Value, requestMessage.Value, Optional.ToNullable(resourceRegion), Optional.ToNullable(status), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new SharedSearchServicePrivateLinkResourceProperties(
+                privateLinkResourceId.Value,
+                groupId.Value,
+                requestMessage.Value,
+                Optional.ToNullable(resourceRegion),
+                Optional.ToNullable(status),
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SharedSearchServicePrivateLinkResourceProperties>.Write(ModelReaderWriterOptions options)

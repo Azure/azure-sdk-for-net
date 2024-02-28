@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.AI.Vision.ImageAnalysis
 {
@@ -52,7 +51,10 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <exception cref="ArgumentNullException"> <paramref name="lines"/> is null. </exception>
         internal DetectedTextBlock(IEnumerable<DetectedTextLine> lines)
         {
-            Argument.AssertNotNull(lines, nameof(lines));
+            if (lines == null)
+            {
+                throw new ArgumentNullException(nameof(lines));
+            }
 
             Lines = lines.ToList();
         }

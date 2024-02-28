@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Values))
+            if (!(Values is ChangeTrackingList<KubernetesVersionProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 return null;
             }
             Optional<HybridContainerServiceResourceProvisioningState> provisioningState = default;
-            Optional<IReadOnlyList<KubernetesVersionProperties>> values = default;
+            IReadOnlyList<KubernetesVersionProperties> values = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     List<KubernetesVersionProperties> array = new List<KubernetesVersionProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KubernetesVersionProperties.DeserializeKubernetesVersionProperties(item));
+                        array.Add(KubernetesVersionProperties.DeserializeKubernetesVersionProperties(item, options));
                     }
                     values = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesVersionProfileProperties(Optional.ToNullable(provisioningState), Optional.ToList(values), serializedAdditionalRawData);
+            return new KubernetesVersionProfileProperties(Optional.ToNullable(provisioningState), values ?? new ChangeTrackingList<KubernetesVersionProperties>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesVersionProfileProperties>.Write(ModelReaderWriterOptions options)

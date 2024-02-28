@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.Elastic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProvisioningState))
+            if (ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(MonitoringStatus))
+            if (MonitoringStatus.HasValue)
             {
                 writer.WritePropertyName("monitoringStatus"u8);
                 writer.WriteStringValue(MonitoringStatus.Value.ToString());
             }
-            if (Optional.IsDefined(ElasticProperties))
+            if (ElasticProperties != null)
             {
                 writer.WritePropertyName("elasticProperties"u8);
                 writer.WriteObjectValue(ElasticProperties);
             }
-            if (Optional.IsDefined(UserInfo))
+            if (UserInfo != null)
             {
                 writer.WritePropertyName("userInfo"u8);
                 writer.WriteObjectValue(UserInfo);
             }
-            if (options.Format != "W" && Optional.IsDefined(LiftrResourceCategory))
+            if (options.Format != "W" && LiftrResourceCategory.HasValue)
             {
                 writer.WritePropertyName("liftrResourceCategory"u8);
                 writer.WriteStringValue(LiftrResourceCategory.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(LiftrResourcePreference))
+            if (options.Format != "W" && LiftrResourcePreference.HasValue)
             {
                 writer.WritePropertyName("liftrResourcePreference"u8);
                 writer.WriteNumberValue(LiftrResourcePreference.Value);
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Elastic.Models
                     {
                         continue;
                     }
-                    elasticProperties = ElasticProperties.DeserializeElasticProperties(property.Value);
+                    elasticProperties = ElasticProperties.DeserializeElasticProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("userInfo"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Elastic.Models
                     {
                         continue;
                     }
-                    userInfo = UserInfo.DeserializeUserInfo(property.Value);
+                    userInfo = UserInfo.DeserializeUserInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("liftrResourceCategory"u8))
@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.Elastic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(monitoringStatus), elasticProperties.Value, userInfo.Value, Optional.ToNullable(liftrResourceCategory), Optional.ToNullable(liftrResourcePreference), serializedAdditionalRawData);
+            return new MonitorProperties(
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(monitoringStatus),
+                elasticProperties.Value,
+                userInfo.Value,
+                Optional.ToNullable(liftrResourceCategory),
+                Optional.ToNullable(liftrResourcePreference),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorProperties>.Write(ModelReaderWriterOptions options)

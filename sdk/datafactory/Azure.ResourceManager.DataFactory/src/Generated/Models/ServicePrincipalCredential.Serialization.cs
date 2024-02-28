@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CredentialType);
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(Annotations))
+            if (!(Annotations is ChangeTrackingList<BinaryData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -58,17 +58,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ServicePrincipalId))
+            if (ServicePrincipalId != null)
             {
                 writer.WritePropertyName("servicePrincipalId"u8);
                 JsonSerializer.Serialize(writer, ServicePrincipalId);
             }
-            if (Optional.IsDefined(ServicePrincipalKey))
+            if (ServicePrincipalKey != null)
             {
                 writer.WritePropertyName("servicePrincipalKey"u8);
                 JsonSerializer.Serialize(writer, ServicePrincipalKey);
             }
-            if (Optional.IsDefined(Tenant))
+            if (Tenant != null)
             {
                 writer.WritePropertyName("tenant"u8);
                 JsonSerializer.Serialize(writer, Tenant);
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             string type = default;
             Optional<string> description = default;
-            Optional<IList<BinaryData>> annotations = default;
+            IList<BinaryData> annotations = default;
             Optional<DataFactoryElement<string>> servicePrincipalId = default;
             Optional<DataFactoryKeyVaultSecretReference> servicePrincipalKey = default;
             Optional<DataFactoryElement<string>> tenant = default;
@@ -192,7 +192,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ServicePrincipalCredential(type, description.Value, Optional.ToList(annotations), additionalProperties, servicePrincipalId.Value, servicePrincipalKey, tenant.Value);
+            return new ServicePrincipalCredential(
+                type,
+                description.Value,
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                servicePrincipalId.Value,
+                servicePrincipalKey,
+                tenant.Value);
         }
 
         BinaryData IPersistableModel<ServicePrincipalCredential>.Write(ModelReaderWriterOptions options)

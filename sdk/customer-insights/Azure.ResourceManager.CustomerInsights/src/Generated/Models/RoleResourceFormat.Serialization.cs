@@ -42,19 +42,19 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(RoleName))
+            if (RoleName != null)
             {
                 writer.WritePropertyName("roleName"u8);
                 writer.WriteStringValue(RoleName);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoleResourceFormat(id, name, type, systemData.Value, roleName.Value, description.Value, serializedAdditionalRawData);
+            return new RoleResourceFormat(
+                id,
+                name,
+                type,
+                systemData.Value,
+                roleName.Value,
+                description.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoleResourceFormat>.Write(ModelReaderWriterOptions options)

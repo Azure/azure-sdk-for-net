@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Consumption.Models
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (Optional.IsDefined(ETag))
+            if (ETag.HasValue)
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -50,64 +50,64 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(BillingPeriodId))
+            if (options.Format != "W" && BillingPeriodId != null)
             {
                 writer.WritePropertyName("billingPeriodId"u8);
                 writer.WriteStringValue(BillingPeriodId);
             }
-            if (options.Format != "W" && Optional.IsDefined(UsageStart))
+            if (options.Format != "W" && UsageStart != null)
             {
                 writer.WritePropertyName("usageStart"u8);
                 writer.WriteStringValue(UsageStart);
             }
-            if (options.Format != "W" && Optional.IsDefined(UsageEnd))
+            if (options.Format != "W" && UsageEnd != null)
             {
                 writer.WritePropertyName("usageEnd"u8);
                 writer.WriteStringValue(UsageEnd);
             }
-            if (options.Format != "W" && Optional.IsDefined(AzureCharges))
+            if (options.Format != "W" && AzureCharges != null)
             {
                 writer.WritePropertyName("azureCharges"u8);
                 writer.WriteObjectValue(AzureCharges);
             }
-            if (options.Format != "W" && Optional.IsDefined(ChargesBilledSeparately))
+            if (options.Format != "W" && ChargesBilledSeparately != null)
             {
                 writer.WritePropertyName("chargesBilledSeparately"u8);
                 writer.WriteObjectValue(ChargesBilledSeparately);
             }
-            if (options.Format != "W" && Optional.IsDefined(MarketplaceCharges))
+            if (options.Format != "W" && MarketplaceCharges != null)
             {
                 writer.WritePropertyName("marketplaceCharges"u8);
                 writer.WriteObjectValue(MarketplaceCharges);
             }
-            if (options.Format != "W" && Optional.IsDefined(BillingAccountId))
+            if (options.Format != "W" && BillingAccountId != null)
             {
                 writer.WritePropertyName("billingAccountId"u8);
                 writer.WriteStringValue(BillingAccountId);
             }
-            if (options.Format != "W" && Optional.IsDefined(BillingProfileId))
+            if (options.Format != "W" && BillingProfileId != null)
             {
                 writer.WritePropertyName("billingProfileId"u8);
                 writer.WriteStringValue(BillingProfileId);
             }
-            if (options.Format != "W" && Optional.IsDefined(InvoiceSectionId))
+            if (options.Format != "W" && InvoiceSectionId != null)
             {
                 writer.WritePropertyName("invoiceSectionId"u8);
                 writer.WriteStringValue(InvoiceSectionId);
             }
-            if (options.Format != "W" && Optional.IsDefined(CustomerId))
+            if (options.Format != "W" && CustomerId != null)
             {
                 writer.WritePropertyName("customerId"u8);
                 writer.WriteStringValue(CustomerId);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsInvoiced))
+            if (options.Format != "W" && IsInvoiced.HasValue)
             {
                 writer.WritePropertyName("isInvoiced"u8);
                 writer.WriteBooleanValue(IsInvoiced.Value);
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            azureCharges = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value);
+                            azureCharges = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("chargesBilledSeparately"u8))
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            chargesBilledSeparately = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value);
+                            chargesBilledSeparately = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("marketplaceCharges"u8))
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            marketplaceCharges = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value);
+                            marketplaceCharges = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("billingAccountId"u8))
@@ -299,7 +299,25 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionModernChargeSummary(id, name, type, systemData.Value, kind, Optional.ToNullable(eTag), serializedAdditionalRawData, billingPeriodId.Value, usageStart.Value, usageEnd.Value, azureCharges.Value, chargesBilledSeparately.Value, marketplaceCharges.Value, billingAccountId.Value, billingProfileId.Value, invoiceSectionId.Value, customerId.Value, Optional.ToNullable(isInvoiced));
+            return new ConsumptionModernChargeSummary(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                Optional.ToNullable(eTag),
+                serializedAdditionalRawData,
+                billingPeriodId.Value,
+                usageStart.Value,
+                usageEnd.Value,
+                azureCharges.Value,
+                chargesBilledSeparately.Value,
+                marketplaceCharges.Value,
+                billingAccountId.Value,
+                billingProfileId.Value,
+                invoiceSectionId.Value,
+                customerId.Value,
+                Optional.ToNullable(isInvoiced));
         }
 
         BinaryData IPersistableModel<ConsumptionModernChargeSummary>.Write(ModelReaderWriterOptions options)

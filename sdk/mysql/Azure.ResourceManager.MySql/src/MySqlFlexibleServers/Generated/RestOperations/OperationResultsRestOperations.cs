@@ -66,8 +66,22 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<OperationStatusExtendedResult>> GetAsync(string subscriptionId, AzureLocation locationName, string operationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (operationId == null)
+            {
+                throw new ArgumentNullException(nameof(operationId));
+            }
+            if (operationId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(operationId));
+            }
 
             using var message = CreateGetRequest(subscriptionId, locationName, operationId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -94,8 +108,22 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<OperationStatusExtendedResult> Get(string subscriptionId, AzureLocation locationName, string operationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (operationId == null)
+            {
+                throw new ArgumentNullException(nameof(operationId));
+            }
+            if (operationId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(operationId));
+            }
 
             using var message = CreateGetRequest(subscriptionId, locationName, operationId);
             _pipeline.Send(message, cancellationToken);

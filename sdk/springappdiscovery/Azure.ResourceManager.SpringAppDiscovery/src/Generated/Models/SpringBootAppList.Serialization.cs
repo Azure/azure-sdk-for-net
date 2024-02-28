@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<SpringBootAppData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SpringBootAppData>> value = default;
+            IReadOnlyList<SpringBootAppData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                     List<SpringBootAppData> array = new List<SpringBootAppData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SpringBootAppData.DeserializeSpringBootAppData(item));
+                        array.Add(SpringBootAppData.DeserializeSpringBootAppData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SpringBootAppList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SpringBootAppList(value ?? new ChangeTrackingList<SpringBootAppData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SpringBootAppList>.Write(ModelReaderWriterOptions options)

@@ -426,7 +426,10 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DataMigrationServiceResource>> UpdateAsync(WaitUntil waitUntil, DataMigrationServiceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _dataMigrationServiceServicesClientDiagnostics.CreateScope("DataMigrationServiceResource.Update");
             scope.Start();
@@ -472,7 +475,10 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DataMigrationServiceResource> Update(WaitUntil waitUntil, DataMigrationServiceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _dataMigrationServiceServicesClientDiagnostics.CreateScope("DataMigrationServiceResource.Update");
             scope.Start();
@@ -821,7 +827,10 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="nameAvailabilityRequest"/> is null. </exception>
         public virtual async Task<Response<NameAvailabilityResponse>> CheckChildrenNameAvailabilityAsync(NameAvailabilityRequest nameAvailabilityRequest, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nameAvailabilityRequest, nameof(nameAvailabilityRequest));
+            if (nameAvailabilityRequest == null)
+            {
+                throw new ArgumentNullException(nameof(nameAvailabilityRequest));
+            }
 
             using var scope = _dataMigrationServiceServicesClientDiagnostics.CreateScope("DataMigrationServiceResource.CheckChildrenNameAvailability");
             scope.Start();
@@ -863,7 +872,10 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="nameAvailabilityRequest"/> is null. </exception>
         public virtual Response<NameAvailabilityResponse> CheckChildrenNameAvailability(NameAvailabilityRequest nameAvailabilityRequest, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nameAvailabilityRequest, nameof(nameAvailabilityRequest));
+            if (nameAvailabilityRequest == null)
+            {
+                throw new ArgumentNullException(nameof(nameAvailabilityRequest));
+            }
 
             using var scope = _dataMigrationServiceServicesClientDiagnostics.CreateScope("DataMigrationServiceResource.CheckChildrenNameAvailability");
             scope.Start();
@@ -906,8 +918,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<DataMigrationServiceResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _dataMigrationServiceServicesClientDiagnostics.CreateScope("DataMigrationServiceResource.AddTag");
             scope.Start();
@@ -968,8 +986,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<DataMigrationServiceResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _dataMigrationServiceServicesClientDiagnostics.CreateScope("DataMigrationServiceResource.AddTag");
             scope.Start();
@@ -1029,7 +1053,10 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<DataMigrationServiceResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _dataMigrationServiceServicesClientDiagnostics.CreateScope("DataMigrationServiceResource.SetTags");
             scope.Start();
@@ -1086,7 +1113,10 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<DataMigrationServiceResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _dataMigrationServiceServicesClientDiagnostics.CreateScope("DataMigrationServiceResource.SetTags");
             scope.Start();
@@ -1143,7 +1173,10 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<DataMigrationServiceResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _dataMigrationServiceServicesClientDiagnostics.CreateScope("DataMigrationServiceResource.RemoveTag");
             scope.Start();
@@ -1203,7 +1236,10 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<DataMigrationServiceResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _dataMigrationServiceServicesClientDiagnostics.CreateScope("DataMigrationServiceResource.RemoveTag");
             scope.Start();

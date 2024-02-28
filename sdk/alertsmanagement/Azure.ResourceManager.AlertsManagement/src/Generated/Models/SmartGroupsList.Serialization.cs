@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<SmartGroupData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 return null;
             }
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<SmartGroupData>> value = default;
+            IReadOnlyList<SmartGroupData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     List<SmartGroupData> array = new List<SmartGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SmartGroupData.DeserializeSmartGroupData(item));
+                        array.Add(SmartGroupData.DeserializeSmartGroupData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SmartGroupsList(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new SmartGroupsList(nextLink.Value, value ?? new ChangeTrackingList<SmartGroupData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SmartGroupsList>.Write(ModelReaderWriterOptions options)

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SolutionId))
+            if (SolutionId != null)
             {
                 writer.WritePropertyName("solutionId"u8);
                 writer.WriteStringValue(SolutionId);
             }
-            if (Optional.IsCollectionDefined(AdditionalParameters))
+            if (!(AdditionalParameters is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("additionalParameters"u8);
                 writer.WriteStartObject();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 return null;
             }
             Optional<string> solutionId = default;
-            Optional<IDictionary<string, string>> additionalParameters = default;
+            IDictionary<string, string> additionalParameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SelfHelpDiagnosticInvocation(solutionId.Value, Optional.ToDictionary(additionalParameters), serializedAdditionalRawData);
+            return new SelfHelpDiagnosticInvocation(solutionId.Value, additionalParameters ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SelfHelpDiagnosticInvocation>.Write(ModelReaderWriterOptions options)

@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CreatedOn))
+            if (CreatedOn.HasValue)
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(Status))
+            if (Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Optional.IsDefined(StatusDetails))
+            if (StatusDetails != null)
             {
                 writer.WritePropertyName("statusDetails"u8);
                 writer.WriteStringValue(StatusDetails);
             }
-            if (Optional.IsDefined(RunOn))
+            if (RunOn != null)
             {
                 writer.WritePropertyName("runOn"u8);
                 writer.WriteStringValue(RunOn);
             }
-            if (Optional.IsDefined(StartOn))
+            if (StartOn.HasValue)
             {
                 if (StartOn != null)
                 {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Automation.Models
                     writer.WriteNull("startTime");
                 }
             }
-            if (Optional.IsDefined(EndOn))
+            if (EndOn.HasValue)
             {
                 if (EndOn != null)
                 {
@@ -70,17 +70,17 @@ namespace Azure.ResourceManager.Automation.Models
                     writer.WriteNull("endTime");
                 }
             }
-            if (Optional.IsDefined(Exception))
+            if (Exception != null)
             {
                 writer.WritePropertyName("exception"u8);
                 writer.WriteStringValue(Exception);
             }
-            if (Optional.IsDefined(LastModifiedOn))
+            if (LastModifiedOn.HasValue)
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (Optional.IsDefined(LastStatusModifiedOn))
+            if (LastStatusModifiedOn.HasValue)
             {
                 if (LastStatusModifiedOn != null)
                 {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Automation.Models
                     writer.WriteNull("lastStatusModifiedTime");
                 }
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(LogActivityTrace))
+            if (LogActivityTrace.HasValue)
             {
                 writer.WritePropertyName("logActivityTrace"u8);
                 writer.WriteNumberValue(LogActivityTrace.Value);
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Automation.Models
             Optional<string> exception = default;
             Optional<DateTimeOffset> lastModifiedTime = default;
             Optional<DateTimeOffset?> lastStatusModifiedTime = default;
-            Optional<IReadOnlyDictionary<string, string>> parameters = default;
+            IReadOnlyDictionary<string, string> parameters = default;
             Optional<int> logActivityTrace = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -258,7 +258,19 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RunbookTestJob(Optional.ToNullable(creationTime), status.Value, statusDetails.Value, runOn.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), exception.Value, Optional.ToNullable(lastModifiedTime), Optional.ToNullable(lastStatusModifiedTime), Optional.ToDictionary(parameters), Optional.ToNullable(logActivityTrace), serializedAdditionalRawData);
+            return new RunbookTestJob(
+                Optional.ToNullable(creationTime),
+                status.Value,
+                statusDetails.Value,
+                runOn.Value,
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                exception.Value,
+                Optional.ToNullable(lastModifiedTime),
+                Optional.ToNullable(lastStatusModifiedTime),
+                parameters ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(logActivityTrace),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RunbookTestJob>.Write(ModelReaderWriterOptions options)

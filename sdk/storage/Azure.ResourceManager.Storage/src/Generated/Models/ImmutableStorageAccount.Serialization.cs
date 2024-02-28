@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsEnabled))
+            if (IsEnabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(ImmutabilityPolicy))
+            if (ImmutabilityPolicy != null)
             {
                 writer.WritePropertyName("immutabilityPolicy"u8);
                 writer.WriteObjectValue(ImmutabilityPolicy);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    immutabilityPolicy = AccountImmutabilityPolicy.DeserializeAccountImmutabilityPolicy(property.Value);
+                    immutabilityPolicy = AccountImmutabilityPolicy.DeserializeAccountImmutabilityPolicy(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

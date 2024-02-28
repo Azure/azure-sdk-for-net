@@ -27,59 +27,59 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Rid))
+            if (options.Format != "W" && Rid != null)
             {
                 writer.WritePropertyName("_rid"u8);
                 writer.WriteStringValue(Rid);
             }
-            if (options.Format != "W" && Optional.IsDefined(Timestamp))
+            if (options.Format != "W" && Timestamp.HasValue)
             {
                 writer.WritePropertyName("_ts"u8);
                 writer.WriteNumberValue(Timestamp.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("_etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(GraphName);
-            if (Optional.IsDefined(IndexingPolicy))
+            if (IndexingPolicy != null)
             {
                 writer.WritePropertyName("indexingPolicy"u8);
                 writer.WriteObjectValue(IndexingPolicy);
             }
-            if (Optional.IsDefined(PartitionKey))
+            if (PartitionKey != null)
             {
                 writer.WritePropertyName("partitionKey"u8);
                 writer.WriteObjectValue(PartitionKey);
             }
-            if (Optional.IsDefined(DefaultTtl))
+            if (DefaultTtl.HasValue)
             {
                 writer.WritePropertyName("defaultTtl"u8);
                 writer.WriteNumberValue(DefaultTtl.Value);
             }
-            if (Optional.IsDefined(UniqueKeyPolicy))
+            if (UniqueKeyPolicy != null)
             {
                 writer.WritePropertyName("uniqueKeyPolicy"u8);
                 writer.WriteObjectValue(UniqueKeyPolicy);
             }
-            if (Optional.IsDefined(ConflictResolutionPolicy))
+            if (ConflictResolutionPolicy != null)
             {
                 writer.WritePropertyName("conflictResolutionPolicy"u8);
                 writer.WriteObjectValue(ConflictResolutionPolicy);
             }
-            if (Optional.IsDefined(AnalyticalStorageTtl))
+            if (AnalyticalStorageTtl.HasValue)
             {
                 writer.WritePropertyName("analyticalStorageTtl"u8);
                 writer.WriteNumberValue(AnalyticalStorageTtl.Value);
             }
-            if (Optional.IsDefined(RestoreParameters))
+            if (RestoreParameters != null)
             {
                 writer.WritePropertyName("restoreParameters"u8);
                 writer.WriteObjectValue(RestoreParameters);
             }
-            if (Optional.IsDefined(CreateMode))
+            if (CreateMode.HasValue)
             {
                 writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToString());
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    indexingPolicy = CosmosDBIndexingPolicy.DeserializeCosmosDBIndexingPolicy(property.Value);
+                    indexingPolicy = CosmosDBIndexingPolicy.DeserializeCosmosDBIndexingPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("partitionKey"u8))
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    partitionKey = CosmosDBContainerPartitionKey.DeserializeCosmosDBContainerPartitionKey(property.Value);
+                    partitionKey = CosmosDBContainerPartitionKey.DeserializeCosmosDBContainerPartitionKey(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("defaultTtl"u8))
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    uniqueKeyPolicy = CosmosDBUniqueKeyPolicy.DeserializeCosmosDBUniqueKeyPolicy(property.Value);
+                    uniqueKeyPolicy = CosmosDBUniqueKeyPolicy.DeserializeCosmosDBUniqueKeyPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("conflictResolutionPolicy"u8))
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    conflictResolutionPolicy = ConflictResolutionPolicy.DeserializeConflictResolutionPolicy(property.Value);
+                    conflictResolutionPolicy = ConflictResolutionPolicy.DeserializeConflictResolutionPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("analyticalStorageTtl"u8))
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    restoreParameters = ResourceRestoreParameters.DeserializeResourceRestoreParameters(property.Value);
+                    restoreParameters = ResourceRestoreParameters.DeserializeResourceRestoreParameters(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("createMode"u8))
@@ -244,7 +244,20 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExtendedGremlinGraphResourceInfo(id, indexingPolicy.Value, partitionKey.Value, Optional.ToNullable(defaultTtl), uniqueKeyPolicy.Value, conflictResolutionPolicy.Value, Optional.ToNullable(analyticalStorageTtl), restoreParameters.Value, Optional.ToNullable(createMode), serializedAdditionalRawData, rid.Value, Optional.ToNullable(ts), Optional.ToNullable(etag));
+            return new ExtendedGremlinGraphResourceInfo(
+                id,
+                indexingPolicy.Value,
+                partitionKey.Value,
+                Optional.ToNullable(defaultTtl),
+                uniqueKeyPolicy.Value,
+                conflictResolutionPolicy.Value,
+                Optional.ToNullable(analyticalStorageTtl),
+                restoreParameters.Value,
+                Optional.ToNullable(createMode),
+                serializedAdditionalRawData,
+                rid.Value,
+                Optional.ToNullable(ts),
+                Optional.ToNullable(etag));
         }
 
         BinaryData IPersistableModel<ExtendedGremlinGraphResourceInfo>.Write(ModelReaderWriterOptions options)

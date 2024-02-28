@@ -21,34 +21,34 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("query"u8);
             writer.WriteObjectValue(Query);
-            if (Optional.IsDefined(NoTruncation))
+            if (NoTruncation != null)
             {
                 writer.WritePropertyName("noTruncation"u8);
                 writer.WriteObjectValue(NoTruncation);
             }
-            if (Optional.IsDefined(QueryTimeout))
+            if (QueryTimeout != null)
             {
                 writer.WritePropertyName("queryTimeout"u8);
                 writer.WriteObjectValue(QueryTimeout);
             }
-            if (Optional.IsDefined(AdditionalColumns))
+            if (AdditionalColumns != null)
             {
                 writer.WritePropertyName("additionalColumns"u8);
                 writer.WriteObjectValue(AdditionalColumns);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Optional.IsDefined(SourceRetryCount))
+            if (SourceRetryCount != null)
             {
                 writer.WritePropertyName("sourceRetryCount"u8);
                 writer.WriteObjectValue(SourceRetryCount);
             }
-            if (Optional.IsDefined(SourceRetryWait))
+            if (SourceRetryWait != null)
             {
                 writer.WritePropertyName("sourceRetryWait"u8);
                 writer.WriteObjectValue(SourceRetryWait);
             }
-            if (Optional.IsDefined(MaxConcurrentConnections))
+            if (MaxConcurrentConnections != null)
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 writer.WriteObjectValue(MaxConcurrentConnections);
@@ -146,7 +146,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureDataExplorerSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, query, noTruncation.Value, queryTimeout.Value, additionalColumns.Value);
+            return new AzureDataExplorerSource(
+                type,
+                sourceRetryCount.Value,
+                sourceRetryWait.Value,
+                maxConcurrentConnections.Value,
+                additionalProperties,
+                query,
+                noTruncation.Value,
+                queryTimeout.Value,
+                additionalColumns.Value);
         }
 
         internal partial class AzureDataExplorerSourceConverter : JsonConverter<AzureDataExplorerSource>

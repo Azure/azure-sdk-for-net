@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AzureResourceId))
+            if (AzureResourceId != null)
             {
                 writer.WritePropertyName("azureResourceId"u8);
                 writer.WriteStringValue(AzureResourceId);
             }
-            if (Optional.IsDefined(AgentVersion))
+            if (AgentVersion != null)
             {
                 writer.WritePropertyName("agentVersion"u8);
                 writer.WriteStringValue(AgentVersion);
             }
-            if (Optional.IsDefined(AgentStatus))
+            if (AgentStatus != null)
             {
                 writer.WritePropertyName("agentStatus"u8);
                 writer.WriteStringValue(AgentStatus);

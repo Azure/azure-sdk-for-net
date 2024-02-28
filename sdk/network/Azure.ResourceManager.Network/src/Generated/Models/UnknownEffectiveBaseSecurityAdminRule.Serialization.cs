@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceId))
+            if (ResourceId != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Optional.IsDefined(ConfigurationDescription))
+            if (ConfigurationDescription != null)
             {
                 writer.WritePropertyName("configurationDescription"u8);
                 writer.WriteStringValue(ConfigurationDescription);
             }
-            if (Optional.IsDefined(RuleCollectionDescription))
+            if (RuleCollectionDescription != null)
             {
                 writer.WritePropertyName("ruleCollectionDescription"u8);
                 writer.WriteStringValue(RuleCollectionDescription);
             }
-            if (Optional.IsCollectionDefined(RuleCollectionAppliesToGroups))
+            if (!(RuleCollectionAppliesToGroups is ChangeTrackingList<NetworkManagerSecurityGroupItem> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ruleCollectionAppliesToGroups"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RuleGroups))
+            if (!(RuleGroups is ChangeTrackingList<NetworkConfigurationGroup> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("ruleGroups"u8);
                 writer.WriteStartArray();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownEffectiveBaseSecurityAdminRule(document.RootElement, options);
+            return DeserializeEffectiveBaseSecurityAdminRule(document.RootElement, options);
         }
 
         internal static UnknownEffectiveBaseSecurityAdminRule DeserializeUnknownEffectiveBaseSecurityAdminRule(JsonElement element, ModelReaderWriterOptions options = null)
@@ -104,8 +104,8 @@ namespace Azure.ResourceManager.Network.Models
             Optional<ResourceIdentifier> id = default;
             Optional<string> configurationDescription = default;
             Optional<string> ruleCollectionDescription = default;
-            Optional<IReadOnlyList<NetworkManagerSecurityGroupItem>> ruleCollectionAppliesToGroups = default;
-            Optional<IReadOnlyList<NetworkConfigurationGroup>> ruleGroups = default;
+            IReadOnlyList<NetworkManagerSecurityGroupItem> ruleCollectionAppliesToGroups = default;
+            IReadOnlyList<NetworkConfigurationGroup> ruleGroups = default;
             EffectiveAdminRuleKind kind = "Unknown";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<NetworkManagerSecurityGroupItem> array = new List<NetworkManagerSecurityGroupItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkManagerSecurityGroupItem.DeserializeNetworkManagerSecurityGroupItem(item));
+                        array.Add(NetworkManagerSecurityGroupItem.DeserializeNetworkManagerSecurityGroupItem(item, options));
                     }
                     ruleCollectionAppliesToGroups = array;
                     continue;
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<NetworkConfigurationGroup> array = new List<NetworkConfigurationGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkConfigurationGroup.DeserializeNetworkConfigurationGroup(item));
+                        array.Add(NetworkConfigurationGroup.DeserializeNetworkConfigurationGroup(item, options));
                     }
                     ruleGroups = array;
                     continue;
@@ -169,7 +169,14 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownEffectiveBaseSecurityAdminRule(id.Value, configurationDescription.Value, ruleCollectionDescription.Value, Optional.ToList(ruleCollectionAppliesToGroups), Optional.ToList(ruleGroups), kind, serializedAdditionalRawData);
+            return new UnknownEffectiveBaseSecurityAdminRule(
+                id.Value,
+                configurationDescription.Value,
+                ruleCollectionDescription.Value,
+                ruleCollectionAppliesToGroups ?? new ChangeTrackingList<NetworkManagerSecurityGroupItem>(),
+                ruleGroups ?? new ChangeTrackingList<NetworkConfigurationGroup>(),
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EffectiveBaseSecurityAdminRule>.Write(ModelReaderWriterOptions options)
@@ -194,7 +201,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownEffectiveBaseSecurityAdminRule(document.RootElement, options);
+                        return DeserializeEffectiveBaseSecurityAdminRule(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(EffectiveBaseSecurityAdminRule)} does not support '{options.Format}' format.");

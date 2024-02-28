@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (Optional.IsCollectionDefined(ActiveDirectories))
+            if (!(ActiveDirectories is ChangeTrackingList<NetAppAccountActiveDirectory> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("activeDirectories"u8);
                 writer.WriteStartArray();
@@ -83,12 +83,12 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Encryption))
+            if (Encryption != null)
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
-            if (options.Format != "W" && Optional.IsDefined(DisableShowmount))
+            if (options.Format != "W" && DisableShowmount.HasValue)
             {
                 if (DisableShowmount != null)
                 {
@@ -98,6 +98,30 @@ namespace Azure.ResourceManager.NetApp.Models
                 else
                 {
                     writer.WriteNull("disableShowmount");
+                }
+            }
+            if (NfsV4IdDomain != null)
+            {
+                if (NfsV4IdDomain != null)
+                {
+                    writer.WritePropertyName("nfsV4IDDomain"u8);
+                    writer.WriteStringValue(NfsV4IdDomain);
+                }
+                else
+                {
+                    writer.WriteNull("nfsV4IDDomain");
+                }
+            }
+            if (options.Format != "W" && IsMultiAdEnabled.HasValue)
+            {
+                if (IsMultiAdEnabled != null)
+                {
+                    writer.WritePropertyName("isMultiAdEnabled"u8);
+                    writer.WriteBooleanValue(IsMultiAdEnabled.Value);
+                }
+                else
+                {
+                    writer.WriteNull("isMultiAdEnabled");
                 }
             }
             writer.WriteEndObject();
@@ -140,16 +164,18 @@ namespace Azure.ResourceManager.NetApp.Models
                 return null;
             }
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> provisioningState = default;
-            Optional<IList<NetAppAccountActiveDirectory>> activeDirectories = default;
+            IList<NetAppAccountActiveDirectory> activeDirectories = default;
             Optional<NetAppAccountEncryption> encryption = default;
             Optional<bool?> disableShowmount = default;
+            Optional<string> nfsV4IdDomain = default;
+            Optional<bool?> isMultiAdEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -230,7 +256,7 @@ namespace Azure.ResourceManager.NetApp.Models
                             List<NetAppAccountActiveDirectory> array = new List<NetAppAccountActiveDirectory>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetAppAccountActiveDirectory.DeserializeNetAppAccountActiveDirectory(item));
+                                array.Add(NetAppAccountActiveDirectory.DeserializeNetAppAccountActiveDirectory(item, options));
                             }
                             activeDirectories = array;
                             continue;
@@ -241,7 +267,7 @@ namespace Azure.ResourceManager.NetApp.Models
                             {
                                 continue;
                             }
-                            encryption = NetAppAccountEncryption.DeserializeNetAppAccountEncryption(property0.Value);
+                            encryption = NetAppAccountEncryption.DeserializeNetAppAccountEncryption(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("disableShowmount"u8))
@@ -254,6 +280,26 @@ namespace Azure.ResourceManager.NetApp.Models
                             disableShowmount = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("nfsV4IDDomain"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                nfsV4IdDomain = null;
+                                continue;
+                            }
+                            nfsV4IdDomain = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("isMultiAdEnabled"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                isMultiAdEnabled = null;
+                                continue;
+                            }
+                            isMultiAdEnabled = property0.Value.GetBoolean();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -263,7 +309,21 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppAccountPatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, provisioningState.Value, Optional.ToList(activeDirectories), encryption.Value, Optional.ToNullable(disableShowmount), serializedAdditionalRawData);
+            return new NetAppAccountPatch(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                provisioningState.Value,
+                activeDirectories ?? new ChangeTrackingList<NetAppAccountActiveDirectory>(),
+                encryption.Value,
+                Optional.ToNullable(disableShowmount),
+                nfsV4IdDomain.Value,
+                Optional.ToNullable(isMultiAdEnabled),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppAccountPatch>.Write(ModelReaderWriterOptions options)

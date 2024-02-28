@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(OSDisk))
+            if (OSDisk != null)
             {
                 writer.WritePropertyName("osDisk"u8);
                 writer.WriteObjectValue(OSDisk);
             }
-            if (Optional.IsCollectionDefined(DataDisks))
+            if (!(DataDisks is ChangeTrackingList<ImageDataDisk> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dataDisks"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ZoneResilient))
+            if (ZoneResilient.HasValue)
             {
                 writer.WritePropertyName("zoneResilient"u8);
                 writer.WriteBooleanValue(ZoneResilient.Value);
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             Optional<ImageOSDisk> osDisk = default;
-            Optional<IList<ImageDataDisk>> dataDisks = default;
+            IList<ImageDataDisk> dataDisks = default;
             Optional<bool> zoneResilient = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    osDisk = ImageOSDisk.DeserializeImageOSDisk(property.Value);
+                    osDisk = ImageOSDisk.DeserializeImageOSDisk(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dataDisks"u8))
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<ImageDataDisk> array = new List<ImageDataDisk>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ImageDataDisk.DeserializeImageDataDisk(item));
+                        array.Add(ImageDataDisk.DeserializeImageDataDisk(item, options));
                     }
                     dataDisks = array;
                     continue;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ImageStorageProfile(osDisk.Value, Optional.ToList(dataDisks), Optional.ToNullable(zoneResilient), serializedAdditionalRawData);
+            return new ImageStorageProfile(osDisk.Value, dataDisks ?? new ChangeTrackingList<ImageDataDisk>(), Optional.ToNullable(zoneResilient), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ImageStorageProfile>.Write(ModelReaderWriterOptions options)

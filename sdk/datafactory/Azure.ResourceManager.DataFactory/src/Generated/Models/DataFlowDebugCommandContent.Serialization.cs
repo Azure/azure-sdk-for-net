@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SessionId))
+            if (SessionId.HasValue)
             {
                 writer.WritePropertyName("sessionId"u8);
                 writer.WriteStringValue(SessionId.Value);
             }
-            if (Optional.IsDefined(Command))
+            if (Command.HasValue)
             {
                 writer.WritePropertyName("command"u8);
                 writer.WriteStringValue(Command.Value.ToString());
             }
-            if (Optional.IsDefined(CommandPayload))
+            if (CommandPayload != null)
             {
                 writer.WritePropertyName("commandPayload"u8);
                 writer.WriteObjectValue(CommandPayload);
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    commandPayload = DataFlowDebugCommandPayload.DeserializeDataFlowDebugCommandPayload(property.Value);
+                    commandPayload = DataFlowDebugCommandPayload.DeserializeDataFlowDebugCommandPayload(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

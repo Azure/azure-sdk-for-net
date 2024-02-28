@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AnnotationName))
+            if (AnnotationName != null)
             {
                 writer.WritePropertyName("AnnotationName"u8);
                 writer.WriteStringValue(AnnotationName);
             }
-            if (Optional.IsDefined(Category))
+            if (Category != null)
             {
                 writer.WritePropertyName("Category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (Optional.IsDefined(EventOn))
+            if (EventOn.HasValue)
             {
                 writer.WritePropertyName("EventTime"u8);
                 writer.WriteStringValue(EventOn.Value, "O");
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("Id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("Properties"u8);
                 writer.WriteStringValue(Properties);
             }
-            if (Optional.IsDefined(RelatedAnnotation))
+            if (RelatedAnnotation != null)
             {
                 writer.WritePropertyName("RelatedAnnotation"u8);
                 writer.WriteStringValue(RelatedAnnotation);
@@ -144,7 +144,14 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new Annotation(annotationName.Value, category.Value, Optional.ToNullable(eventTime), id.Value, properties.Value, relatedAnnotation.Value, serializedAdditionalRawData);
+            return new Annotation(
+                annotationName.Value,
+                category.Value,
+                Optional.ToNullable(eventTime),
+                id.Value,
+                properties.Value,
+                relatedAnnotation.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<Annotation>.Write(ModelReaderWriterOptions options)

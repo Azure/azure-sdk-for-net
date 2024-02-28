@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     List<SecurityInsightsThreatIntelligenceIndicatorBaseData> array = new List<SecurityInsightsThreatIntelligenceIndicatorBaseData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityInsightsThreatIntelligenceIndicatorBaseData.DeserializeSecurityInsightsThreatIntelligenceIndicatorBaseData(item));
+                        array.Add(SecurityInsightsThreatIntelligenceIndicatorBaseData.DeserializeSecurityInsightsThreatIntelligenceIndicatorBaseData(item, options));
                     }
                     value = array;
                     continue;

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Tables))
+            if (options.Format != "W" && !(Tables is ChangeTrackingList<SyncFullSchemaTable> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tables"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(LastUpdateOn))
+            if (options.Format != "W" && LastUpdateOn.HasValue)
             {
                 writer.WritePropertyName("lastUpdateTime"u8);
                 writer.WriteStringValue(LastUpdateOn.Value, "O");
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SyncFullSchemaTable>> tables = default;
+            IReadOnlyList<SyncFullSchemaTable> tables = default;
             Optional<DateTimeOffset> lastUpdateTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SyncFullSchemaTable> array = new List<SyncFullSchemaTable>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SyncFullSchemaTable.DeserializeSyncFullSchemaTable(item));
+                        array.Add(SyncFullSchemaTable.DeserializeSyncFullSchemaTable(item, options));
                     }
                     tables = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SyncFullSchemaProperties(Optional.ToList(tables), Optional.ToNullable(lastUpdateTime), serializedAdditionalRawData);
+            return new SyncFullSchemaProperties(tables ?? new ChangeTrackingList<SyncFullSchemaTable>(), Optional.ToNullable(lastUpdateTime), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SyncFullSchemaProperties>.Write(ModelReaderWriterOptions options)

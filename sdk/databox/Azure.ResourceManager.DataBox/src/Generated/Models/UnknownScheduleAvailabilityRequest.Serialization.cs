@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStringValue(StorageLocation);
             writer.WritePropertyName("skuName"u8);
             writer.WriteStringValue(SkuName.ToSerialString());
-            if (Optional.IsDefined(Country))
+            if (Country != null)
             {
                 writer.WritePropertyName("country"u8);
                 writer.WriteStringValue(Country);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownScheduleAvailabilityRequest(document.RootElement, options);
+            return DeserializeScheduleAvailabilityContent(document.RootElement, options);
         }
 
         internal static UnknownScheduleAvailabilityRequest DeserializeUnknownScheduleAvailabilityRequest(JsonElement element, ModelReaderWriterOptions options = null)
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownScheduleAvailabilityRequest(document.RootElement, options);
+                        return DeserializeScheduleAvailabilityContent(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(ScheduleAvailabilityContent)} does not support '{options.Format}' format.");

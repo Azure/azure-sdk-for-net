@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Source))
+            if (Source != null)
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
-            if (Optional.IsDefined(BrandColor))
+            if (BrandColor != null)
             {
                 writer.WritePropertyName("brandColor"u8);
                 writer.WriteStringValue(BrandColor);
             }
-            if (Optional.IsDefined(HideKey))
+            if (HideKey != null)
             {
                 writer.WritePropertyName("hideKey"u8);
                 writer.WriteStringValue(HideKey);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -52,32 +52,32 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(ApiType))
+            if (ApiType.HasValue)
             {
                 writer.WritePropertyName("ApiType"u8);
                 writer.WriteStringValue(ApiType.Value.ToString());
             }
-            if (Optional.IsDefined(WsdlService))
+            if (WsdlService != null)
             {
                 writer.WritePropertyName("wsdlService"u8);
                 writer.WriteObjectValue(WsdlService);
             }
-            if (Optional.IsDefined(WsdlImportMethod))
+            if (WsdlImportMethod.HasValue)
             {
                 writer.WritePropertyName("wsdlImportMethod"u8);
                 writer.WriteStringValue(WsdlImportMethod.Value.ToString());
             }
-            if (Optional.IsDefined(ConnectionType))
+            if (ConnectionType != null)
             {
                 writer.WritePropertyName("connectionType"u8);
                 writer.WriteStringValue(ConnectionType);
             }
-            if (Optional.IsDefined(ProvisioningState))
+            if (ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(DeploymentParameters))
+            if (DeploymentParameters != null)
             {
                 writer.WritePropertyName("deploymentParameters"u8);
                 writer.WriteObjectValue(DeploymentParameters);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<string> source = default;
             Optional<string> brandColor = default;
             Optional<string> hideKey = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            IReadOnlyDictionary<string, string> tags = default;
             Optional<LogicApiType> apiType = default;
             Optional<LogicWsdlService> wsdlService = default;
             Optional<LogicWsdlImportMethod> wsdlImportMethod = default;
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    wsdlService = LogicWsdlService.DeserializeLogicWsdlService(property.Value);
+                    wsdlService = LogicWsdlService.DeserializeLogicWsdlService(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("wsdlImportMethod"u8))
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    deploymentParameters = LogicApiDeploymentParameterMetadataSet.DeserializeLogicApiDeploymentParameterMetadataSet(property.Value);
+                    deploymentParameters = LogicApiDeploymentParameterMetadataSet.DeserializeLogicApiDeploymentParameterMetadataSet(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -219,7 +219,18 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicApiResourceMetadata(source.Value, brandColor.Value, hideKey.Value, Optional.ToDictionary(tags), Optional.ToNullable(apiType), wsdlService.Value, Optional.ToNullable(wsdlImportMethod), connectionType.Value, Optional.ToNullable(provisioningState), deploymentParameters.Value, serializedAdditionalRawData);
+            return new LogicApiResourceMetadata(
+                source.Value,
+                brandColor.Value,
+                hideKey.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(apiType),
+                wsdlService.Value,
+                Optional.ToNullable(wsdlImportMethod),
+                connectionType.Value,
+                Optional.ToNullable(provisioningState),
+                deploymentParameters.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicApiResourceMetadata>.Write(ModelReaderWriterOptions options)

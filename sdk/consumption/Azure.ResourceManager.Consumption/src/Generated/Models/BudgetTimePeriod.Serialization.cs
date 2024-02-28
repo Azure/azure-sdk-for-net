@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Consumption.Models
             writer.WriteStartObject();
             writer.WritePropertyName("startDate"u8);
             writer.WriteStringValue(StartOn, "O");
-            if (Optional.IsDefined(EndOn))
+            if (EndOn.HasValue)
             {
                 writer.WritePropertyName("endDate"u8);
                 writer.WriteStringValue(EndOn.Value, "O");

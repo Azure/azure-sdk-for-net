@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TaskId))
+            if (TaskId != null)
             {
                 writer.WritePropertyName("taskId"u8);
                 writer.WriteStringValue(TaskId);
             }
-            if (Optional.IsDefined(StartOn))
+            if (StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (EndOn.HasValue)
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Optional.IsDefined(InstanceId))
+            if (InstanceId != null)
             {
                 writer.WritePropertyName("instanceId"u8);
                 writer.WriteStringValue(InstanceId);
             }
-            if (Optional.IsDefined(Duration))
+            if (Duration.HasValue)
             {
                 writer.WritePropertyName("duration"u8);
                 writer.WriteStringValue(Duration.Value, "P");
             }
-            if (Optional.IsDefined(Status))
+            if (Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Optional.IsDefined(ProgressPercentage))
+            if (ProgressPercentage.HasValue)
             {
                 writer.WritePropertyName("progressPercentage"u8);
                 writer.WriteNumberValue(ProgressPercentage.Value);
             }
-            if (Optional.IsDefined(TaskExecutionDetails))
+            if (TaskExecutionDetails != null)
             {
                 writer.WritePropertyName("taskExecutionDetails"u8);
                 writer.WriteStringValue(TaskExecutionDetails);
@@ -178,7 +178,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IaasVmBackupJobTaskDetails(taskId.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), instanceId.Value, Optional.ToNullable(duration), status.Value, Optional.ToNullable(progressPercentage), taskExecutionDetails.Value, serializedAdditionalRawData);
+            return new IaasVmBackupJobTaskDetails(
+                taskId.Value,
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                instanceId.Value,
+                Optional.ToNullable(duration),
+                status.Value,
+                Optional.ToNullable(progressPercentage),
+                taskExecutionDetails.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IaasVmBackupJobTaskDetails>.Write(ModelReaderWriterOptions options)

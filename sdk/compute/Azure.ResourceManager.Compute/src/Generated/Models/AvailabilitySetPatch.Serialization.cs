@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -45,17 +45,17 @@ namespace Azure.ResourceManager.Compute.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(PlatformUpdateDomainCount))
+            if (PlatformUpdateDomainCount.HasValue)
             {
                 writer.WritePropertyName("platformUpdateDomainCount"u8);
                 writer.WriteNumberValue(PlatformUpdateDomainCount.Value);
             }
-            if (Optional.IsDefined(PlatformFaultDomainCount))
+            if (PlatformFaultDomainCount.HasValue)
             {
                 writer.WritePropertyName("platformFaultDomainCount"u8);
                 writer.WriteNumberValue(PlatformFaultDomainCount.Value);
             }
-            if (Optional.IsCollectionDefined(VirtualMachines))
+            if (!(VirtualMachines is ChangeTrackingList<WritableSubResource> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("virtualMachines"u8);
                 writer.WriteStartArray();
@@ -65,12 +65,12 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ProximityPlacementGroup))
+            if (ProximityPlacementGroup != null)
             {
                 writer.WritePropertyName("proximityPlacementGroup"u8);
                 JsonSerializer.Serialize(writer, ProximityPlacementGroup);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Statuses))
+            if (options.Format != "W" && !(Statuses is ChangeTrackingList<InstanceViewStatus> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("statuses"u8);
                 writer.WriteStartArray();
@@ -120,12 +120,12 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             Optional<ComputeSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<int> platformUpdateDomainCount = default;
             Optional<int> platformFaultDomainCount = default;
-            Optional<IList<WritableSubResource>> virtualMachines = default;
+            IList<WritableSubResource> virtualMachines = default;
             Optional<WritableSubResource> proximityPlacementGroup = default;
-            Optional<IReadOnlyList<InstanceViewStatus>> statuses = default;
+            IReadOnlyList<InstanceViewStatus> statuses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    sku = ComputeSku.DeserializeComputeSku(property.Value);
+                    sku = ComputeSku.DeserializeComputeSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Compute.Models
                             List<InstanceViewStatus> array = new List<InstanceViewStatus>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(InstanceViewStatus.DeserializeInstanceViewStatus(item));
+                                array.Add(InstanceViewStatus.DeserializeInstanceViewStatus(item, options));
                             }
                             statuses = array;
                             continue;
@@ -226,7 +226,15 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailabilitySetPatch(Optional.ToDictionary(tags), serializedAdditionalRawData, sku.Value, Optional.ToNullable(platformUpdateDomainCount), Optional.ToNullable(platformFaultDomainCount), Optional.ToList(virtualMachines), proximityPlacementGroup, Optional.ToList(statuses));
+            return new AvailabilitySetPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                sku.Value,
+                Optional.ToNullable(platformUpdateDomainCount),
+                Optional.ToNullable(platformFaultDomainCount),
+                virtualMachines ?? new ChangeTrackingList<WritableSubResource>(),
+                proximityPlacementGroup,
+                statuses ?? new ChangeTrackingList<InstanceViewStatus>());
         }
 
         BinaryData IPersistableModel<AvailabilitySetPatch>.Write(ModelReaderWriterOptions options)

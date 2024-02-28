@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Orbital.Models
 {
@@ -55,9 +54,18 @@ namespace Azure.ResourceManager.Orbital.Models
         /// <exception cref="ArgumentNullException"> <paramref name="ipAddress"/>, <paramref name="endPointName"/> or <paramref name="port"/> is null. </exception>
         public OrbitalContactEndpoint(IPAddress ipAddress, string endPointName, string port, OrbitalContactProtocol protocol)
         {
-            Argument.AssertNotNull(ipAddress, nameof(ipAddress));
-            Argument.AssertNotNull(endPointName, nameof(endPointName));
-            Argument.AssertNotNull(port, nameof(port));
+            if (ipAddress == null)
+            {
+                throw new ArgumentNullException(nameof(ipAddress));
+            }
+            if (endPointName == null)
+            {
+                throw new ArgumentNullException(nameof(endPointName));
+            }
+            if (port == null)
+            {
+                throw new ArgumentNullException(nameof(port));
+            }
 
             IPAddress = ipAddress;
             EndPointName = endPointName;

@@ -53,7 +53,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <exception cref="ArgumentNullException"> <paramref name="selector"/> is null. </exception>
         public OwaspCrsExclusionEntry(OwaspCrsExclusionEntryMatchVariable matchVariable, OwaspCrsExclusionEntrySelectorMatchOperator selectorMatchOperator, string selector)
         {
-            Argument.AssertNotNull(selector, nameof(selector));
+            if (selector == null)
+            {
+                throw new ArgumentNullException(nameof(selector));
+            }
 
             MatchVariable = matchVariable;
             SelectorMatchOperator = selectorMatchOperator;

@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ConnectionState))
+            if (ConnectionState.HasValue)
             {
                 writer.WritePropertyName("connectionState"u8);
                 writer.WriteStringValue(ConnectionState.Value.ToString());
             }
-            if (Optional.IsDefined(IPFrom))
+            if (IPFrom != null)
             {
                 writer.WritePropertyName("iPFrom"u8);
                 writer.WriteStringValue(IPFrom);
             }
-            if (Optional.IsDefined(IPTo))
+            if (IPTo != null)
             {
                 writer.WritePropertyName("iPTo"u8);
                 writer.WriteStringValue(IPTo);
             }
-            if (Optional.IsDefined(Port))
+            if (Port.HasValue)
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (Optional.IsDefined(Exception))
+            if (Exception != null)
             {
                 writer.WritePropertyName("exception"u8);
                 writer.WriteStringValue(Exception);
@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CassandraConnectionError(Optional.ToNullable(connectionState), ipFrom.Value, ipTo.Value, Optional.ToNullable(port), exception.Value, serializedAdditionalRawData);
+            return new CassandraConnectionError(
+                Optional.ToNullable(connectionState),
+                ipFrom.Value,
+                ipTo.Value,
+                Optional.ToNullable(port),
+                exception.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CassandraConnectionError>.Write(ModelReaderWriterOptions options)

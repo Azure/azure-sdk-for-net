@@ -27,37 +27,37 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(SnapshotName))
+            if (options.Format != "W" && SnapshotName != null)
             {
                 writer.WritePropertyName("snapshotName"u8);
                 writer.WriteStringValue(SnapshotName);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("createdAt"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ReportProperties))
+            if (options.Format != "W" && ReportProperties != null)
             {
                 writer.WritePropertyName("reportProperties"u8);
                 writer.WriteObjectValue(ReportProperties);
             }
-            if (options.Format != "W" && Optional.IsDefined(ReportSystemData))
+            if (options.Format != "W" && ReportSystemData != null)
             {
                 writer.WritePropertyName("reportSystemData"u8);
                 JsonSerializer.Serialize(writer, ReportSystemData);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ComplianceResults))
+            if (options.Format != "W" && !(ComplianceResults is ChangeTrackingList<ComplianceResult> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("complianceResults"u8);
                 writer.WriteStartArray();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             Optional<ProvisioningState> provisioningState = default;
             Optional<ReportProperties> reportProperties = default;
             Optional<SystemData> reportSystemData = default;
-            Optional<IReadOnlyList<ComplianceResult>> complianceResults = default;
+            IReadOnlyList<ComplianceResult> complianceResults = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     {
                         continue;
                     }
-                    reportProperties = ReportProperties.DeserializeReportProperties(property.Value);
+                    reportProperties = ReportProperties.DeserializeReportProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("reportSystemData"u8))
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     List<ComplianceResult> array = new List<ComplianceResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ComplianceResult.DeserializeComplianceResult(item));
+                        array.Add(ComplianceResult.DeserializeComplianceResult(item, options));
                     }
                     complianceResults = array;
                     continue;
@@ -182,7 +182,15 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SnapshotProperties(id.Value, snapshotName.Value, Optional.ToNullable(createdAt), Optional.ToNullable(provisioningState), reportProperties.Value, reportSystemData, Optional.ToList(complianceResults), serializedAdditionalRawData);
+            return new SnapshotProperties(
+                id.Value,
+                snapshotName.Value,
+                Optional.ToNullable(createdAt),
+                Optional.ToNullable(provisioningState),
+                reportProperties.Value,
+                reportSystemData,
+                complianceResults ?? new ChangeTrackingList<ComplianceResult>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SnapshotProperties>.Write(ModelReaderWriterOptions options)

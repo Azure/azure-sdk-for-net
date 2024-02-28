@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.LabServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ShutdownOnDisconnect))
+            if (ShutdownOnDisconnect.HasValue)
             {
                 writer.WritePropertyName("shutdownOnDisconnect"u8);
                 writer.WriteStringValue(ShutdownOnDisconnect.Value.ToSerialString());
             }
-            if (Optional.IsDefined(ShutdownWhenNotConnected))
+            if (ShutdownWhenNotConnected.HasValue)
             {
                 writer.WritePropertyName("shutdownWhenNotConnected"u8);
                 writer.WriteStringValue(ShutdownWhenNotConnected.Value.ToSerialString());
             }
-            if (Optional.IsDefined(ShutdownOnIdle))
+            if (ShutdownOnIdle.HasValue)
             {
                 writer.WritePropertyName("shutdownOnIdle"u8);
                 writer.WriteStringValue(ShutdownOnIdle.Value.ToSerialString());
             }
-            if (Optional.IsDefined(DisconnectDelay))
+            if (DisconnectDelay.HasValue)
             {
                 writer.WritePropertyName("disconnectDelay"u8);
                 writer.WriteStringValue(DisconnectDelay.Value, "P");
             }
-            if (Optional.IsDefined(NoConnectDelay))
+            if (NoConnectDelay.HasValue)
             {
                 writer.WritePropertyName("noConnectDelay"u8);
                 writer.WriteStringValue(NoConnectDelay.Value, "P");
             }
-            if (Optional.IsDefined(IdleDelay))
+            if (IdleDelay.HasValue)
             {
                 writer.WritePropertyName("idleDelay"u8);
                 writer.WriteStringValue(IdleDelay.Value, "P");
@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabAutoShutdownProfile(Optional.ToNullable(shutdownOnDisconnect), Optional.ToNullable(shutdownWhenNotConnected), Optional.ToNullable(shutdownOnIdle), Optional.ToNullable(disconnectDelay), Optional.ToNullable(noConnectDelay), Optional.ToNullable(idleDelay), serializedAdditionalRawData);
+            return new LabAutoShutdownProfile(
+                Optional.ToNullable(shutdownOnDisconnect),
+                Optional.ToNullable(shutdownWhenNotConnected),
+                Optional.ToNullable(shutdownOnIdle),
+                Optional.ToNullable(disconnectDelay),
+                Optional.ToNullable(noConnectDelay),
+                Optional.ToNullable(idleDelay),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabAutoShutdownProfile>.Write(ModelReaderWriterOptions options)

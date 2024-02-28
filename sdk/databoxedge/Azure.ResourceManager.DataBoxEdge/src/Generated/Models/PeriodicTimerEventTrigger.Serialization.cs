@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteObjectValue(SourceInfo);
             writer.WritePropertyName("sinkInfo"u8);
             writer.WriteObjectValue(SinkInfo);
-            if (Optional.IsDefined(CustomContextTag))
+            if (CustomContextTag != null)
             {
                 writer.WritePropertyName("customContextTag"u8);
                 writer.WriteStringValue(CustomContextTag);
@@ -151,12 +151,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         if (property0.NameEquals("sourceInfo"u8))
                         {
-                            sourceInfo = PeriodicTimerSourceInfo.DeserializePeriodicTimerSourceInfo(property0.Value);
+                            sourceInfo = PeriodicTimerSourceInfo.DeserializePeriodicTimerSourceInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("sinkInfo"u8))
                         {
-                            sinkInfo = DataBoxEdgeRoleSinkInfo.DeserializeDataBoxEdgeRoleSinkInfo(property0.Value);
+                            sinkInfo = DataBoxEdgeRoleSinkInfo.DeserializeDataBoxEdgeRoleSinkInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("customContextTag"u8))
@@ -173,7 +173,16 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PeriodicTimerEventTrigger(id, name, type, systemData.Value, kind, serializedAdditionalRawData, sourceInfo, sinkInfo, customContextTag.Value);
+            return new PeriodicTimerEventTrigger(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData,
+                sourceInfo,
+                sinkInfo,
+                customContextTag.Value);
         }
 
         BinaryData IPersistableModel<PeriodicTimerEventTrigger>.Write(ModelReaderWriterOptions options)

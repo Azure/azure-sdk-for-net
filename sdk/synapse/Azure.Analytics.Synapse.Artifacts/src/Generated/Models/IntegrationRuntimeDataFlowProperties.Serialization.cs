@@ -19,22 +19,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ComputeType))
+            if (ComputeType.HasValue)
             {
                 writer.WritePropertyName("computeType"u8);
                 writer.WriteStringValue(ComputeType.Value.ToString());
             }
-            if (Optional.IsDefined(CoreCount))
+            if (CoreCount.HasValue)
             {
                 writer.WritePropertyName("coreCount"u8);
                 writer.WriteNumberValue(CoreCount.Value);
             }
-            if (Optional.IsDefined(TimeToLive))
+            if (TimeToLive.HasValue)
             {
                 writer.WritePropertyName("timeToLive"u8);
                 writer.WriteNumberValue(TimeToLive.Value);
             }
-            if (Optional.IsDefined(Cleanup))
+            if (Cleanup.HasValue)
             {
                 writer.WritePropertyName("cleanup"u8);
                 writer.WriteBooleanValue(Cleanup.Value);

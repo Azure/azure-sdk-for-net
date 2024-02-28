@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProxyUri))
+            if (options.Format != "W" && ProxyUri != null)
             {
                 writer.WritePropertyName("proxyUrl"u8);
                 writer.WriteStringValue(ProxyUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(IncomingConnectionsPorts))
+            if (options.Format != "W" && !(IncomingConnectionsPorts is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("incomingConnectionsPorts"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ExtensionsAllowList))
+            if (options.Format != "W" && !(ExtensionsAllowList is ChangeTrackingList<HybridComputeConfigurationExtension> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("extensionsAllowList"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ExtensionsBlockList))
+            if (options.Format != "W" && !(ExtensionsBlockList is ChangeTrackingList<HybridComputeConfigurationExtension> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("extensionsBlockList"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ProxyBypass))
+            if (options.Format != "W" && !(ProxyBypass is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("proxyBypass"u8);
                 writer.WriteStartArray();
@@ -71,17 +71,17 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ExtensionsEnabled))
+            if (options.Format != "W" && ExtensionsEnabled != null)
             {
                 writer.WritePropertyName("extensionsEnabled"u8);
                 writer.WriteStringValue(ExtensionsEnabled);
             }
-            if (options.Format != "W" && Optional.IsDefined(GuestConfigurationEnabled))
+            if (options.Format != "W" && GuestConfigurationEnabled != null)
             {
                 writer.WritePropertyName("guestConfigurationEnabled"u8);
                 writer.WriteStringValue(GuestConfigurationEnabled);
             }
-            if (options.Format != "W" && Optional.IsDefined(ConfigMode))
+            if (options.Format != "W" && ConfigMode.HasValue)
             {
                 writer.WritePropertyName("configMode"u8);
                 writer.WriteStringValue(ConfigMode.Value.ToString());
@@ -125,10 +125,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 return null;
             }
             Optional<Uri> proxyUrl = default;
-            Optional<IReadOnlyList<string>> incomingConnectionsPorts = default;
-            Optional<IReadOnlyList<HybridComputeConfigurationExtension>> extensionsAllowList = default;
-            Optional<IReadOnlyList<HybridComputeConfigurationExtension>> extensionsBlockList = default;
-            Optional<IReadOnlyList<string>> proxyBypass = default;
+            IReadOnlyList<string> incomingConnectionsPorts = default;
+            IReadOnlyList<HybridComputeConfigurationExtension> extensionsAllowList = default;
+            IReadOnlyList<HybridComputeConfigurationExtension> extensionsBlockList = default;
+            IReadOnlyList<string> proxyBypass = default;
             Optional<string> extensionsEnabled = default;
             Optional<string> guestConfigurationEnabled = default;
             Optional<AgentConfigurationMode> configMode = default;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     List<HybridComputeConfigurationExtension> array = new List<HybridComputeConfigurationExtension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HybridComputeConfigurationExtension.DeserializeHybridComputeConfigurationExtension(item));
+                        array.Add(HybridComputeConfigurationExtension.DeserializeHybridComputeConfigurationExtension(item, options));
                     }
                     extensionsAllowList = array;
                     continue;
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     List<HybridComputeConfigurationExtension> array = new List<HybridComputeConfigurationExtension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HybridComputeConfigurationExtension.DeserializeHybridComputeConfigurationExtension(item));
+                        array.Add(HybridComputeConfigurationExtension.DeserializeHybridComputeConfigurationExtension(item, options));
                     }
                     extensionsBlockList = array;
                     continue;
@@ -226,7 +226,16 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AgentConfiguration(proxyUrl.Value, Optional.ToList(incomingConnectionsPorts), Optional.ToList(extensionsAllowList), Optional.ToList(extensionsBlockList), Optional.ToList(proxyBypass), extensionsEnabled.Value, guestConfigurationEnabled.Value, Optional.ToNullable(configMode), serializedAdditionalRawData);
+            return new AgentConfiguration(
+                proxyUrl.Value,
+                incomingConnectionsPorts ?? new ChangeTrackingList<string>(),
+                extensionsAllowList ?? new ChangeTrackingList<HybridComputeConfigurationExtension>(),
+                extensionsBlockList ?? new ChangeTrackingList<HybridComputeConfigurationExtension>(),
+                proxyBypass ?? new ChangeTrackingList<string>(),
+                extensionsEnabled.Value,
+                guestConfigurationEnabled.Value,
+                Optional.ToNullable(configMode),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AgentConfiguration>.Write(ModelReaderWriterOptions options)

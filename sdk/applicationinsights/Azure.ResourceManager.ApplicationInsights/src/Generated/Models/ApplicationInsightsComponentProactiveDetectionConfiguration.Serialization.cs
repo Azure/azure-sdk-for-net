@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("Name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(IsEnabled))
+            if (IsEnabled.HasValue)
             {
                 writer.WritePropertyName("Enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(SendEmailsToSubscriptionOwners))
+            if (SendEmailsToSubscriptionOwners.HasValue)
             {
                 writer.WritePropertyName("SendEmailsToSubscriptionOwners"u8);
                 writer.WriteBooleanValue(SendEmailsToSubscriptionOwners.Value);
             }
-            if (Optional.IsCollectionDefined(CustomEmails))
+            if (!(CustomEmails is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("CustomEmails"u8);
                 writer.WriteStartArray();
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(LastUpdatedTime))
+            if (LastUpdatedTime != null)
             {
                 writer.WritePropertyName("LastUpdatedTime"u8);
                 writer.WriteStringValue(LastUpdatedTime);
             }
-            if (Optional.IsDefined(RuleDefinitions))
+            if (RuleDefinitions != null)
             {
                 writer.WritePropertyName("RuleDefinitions"u8);
                 writer.WriteObjectValue(RuleDefinitions);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             Optional<string> name = default;
             Optional<bool> enabled = default;
             Optional<bool> sendEmailsToSubscriptionOwners = default;
-            Optional<IList<string>> customEmails = default;
+            IList<string> customEmails = default;
             Optional<string> lastUpdatedTime = default;
             Optional<ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions> ruleDefinitions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     {
                         continue;
                     }
-                    ruleDefinitions = ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions.DeserializeApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions(property.Value);
+                    ruleDefinitions = ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions.DeserializeApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -166,7 +166,14 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationInsightsComponentProactiveDetectionConfiguration(name.Value, Optional.ToNullable(enabled), Optional.ToNullable(sendEmailsToSubscriptionOwners), Optional.ToList(customEmails), lastUpdatedTime.Value, ruleDefinitions.Value, serializedAdditionalRawData);
+            return new ApplicationInsightsComponentProactiveDetectionConfiguration(
+                name.Value,
+                Optional.ToNullable(enabled),
+                Optional.ToNullable(sendEmailsToSubscriptionOwners),
+                customEmails ?? new ChangeTrackingList<string>(),
+                lastUpdatedTime.Value,
+                ruleDefinitions.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationInsightsComponentProactiveDetectionConfiguration>.Write(ModelReaderWriterOptions options)

@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Title))
+            if (Title != null)
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Uri))
+            if (Uri != null)
             {
                 writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (Optional.IsDefined(IsSsoEnabled))
+            if (IsSsoEnabled.HasValue)
             {
                 writer.WritePropertyName("ssoEnabled"u8);
                 writer.WriteBooleanValue(IsSsoEnabled.Value);
             }
-            if (Optional.IsDefined(IsTokenRelayed))
+            if (IsTokenRelayed.HasValue)
             {
                 writer.WritePropertyName("tokenRelay"u8);
                 writer.WriteBooleanValue(IsTokenRelayed.Value);
             }
-            if (Optional.IsCollectionDefined(Predicates))
+            if (!(Predicates is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("predicates"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Filters))
+            if (!(Filters is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("filters"u8);
                 writer.WriteStartArray();
@@ -71,12 +71,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Order))
+            if (Order.HasValue)
             {
                 writer.WritePropertyName("order"u8);
                 writer.WriteNumberValue(Order.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartArray();
@@ -129,10 +129,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<Uri> uri = default;
             Optional<bool> ssoEnabled = default;
             Optional<bool> tokenRelay = default;
-            Optional<IList<string>> predicates = default;
-            Optional<IList<string>> filters = default;
+            IList<string> predicates = default;
+            IList<string> filters = default;
             Optional<int> order = default;
-            Optional<IList<string>> tags = default;
+            IList<string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -231,7 +231,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformGatewayApiRoute(title.Value, description.Value, uri.Value, Optional.ToNullable(ssoEnabled), Optional.ToNullable(tokenRelay), Optional.ToList(predicates), Optional.ToList(filters), Optional.ToNullable(order), Optional.ToList(tags), serializedAdditionalRawData);
+            return new AppPlatformGatewayApiRoute(
+                title.Value,
+                description.Value,
+                uri.Value,
+                Optional.ToNullable(ssoEnabled),
+                Optional.ToNullable(tokenRelay),
+                predicates ?? new ChangeTrackingList<string>(),
+                filters ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(order),
+                tags ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformGatewayApiRoute>.Write(ModelReaderWriterOptions options)

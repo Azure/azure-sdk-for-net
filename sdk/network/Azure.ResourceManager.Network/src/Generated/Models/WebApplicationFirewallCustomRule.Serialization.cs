@@ -27,29 +27,29 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("priority"u8);
             writer.WriteNumberValue(Priority);
-            if (Optional.IsDefined(State))
+            if (State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(RateLimitDuration))
+            if (RateLimitDuration.HasValue)
             {
                 writer.WritePropertyName("rateLimitDuration"u8);
                 writer.WriteStringValue(RateLimitDuration.Value.ToString());
             }
-            if (Optional.IsDefined(RateLimitThreshold))
+            if (RateLimitThreshold.HasValue)
             {
                 writer.WritePropertyName("rateLimitThreshold"u8);
                 writer.WriteNumberValue(RateLimitThreshold.Value);
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(GroupByUserSession))
+            if (!(GroupByUserSession is ChangeTrackingList<GroupByUserSession> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("groupByUserSession"u8);
                 writer.WriteStartArray();
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<int> rateLimitThreshold = default;
             WebApplicationFirewallRuleType ruleType = default;
             IList<MatchCondition> matchConditions = default;
-            Optional<IList<GroupByUserSession>> groupByUserSession = default;
+            IList<GroupByUserSession> groupByUserSession = default;
             WebApplicationFirewallAction action = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<MatchCondition> array = new List<MatchCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MatchCondition.DeserializeMatchCondition(item));
+                        array.Add(MatchCondition.DeserializeMatchCondition(item, options));
                     }
                     matchConditions = array;
                     continue;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<GroupByUserSession> array = new List<GroupByUserSession>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.GroupByUserSession.DeserializeGroupByUserSession(item));
+                        array.Add(Models.GroupByUserSession.DeserializeGroupByUserSession(item, options));
                     }
                     groupByUserSession = array;
                     continue;
@@ -213,7 +213,18 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebApplicationFirewallCustomRule(name.Value, Optional.ToNullable(etag), priority, Optional.ToNullable(state), Optional.ToNullable(rateLimitDuration), Optional.ToNullable(rateLimitThreshold), ruleType, matchConditions, Optional.ToList(groupByUserSession), action, serializedAdditionalRawData);
+            return new WebApplicationFirewallCustomRule(
+                name.Value,
+                Optional.ToNullable(etag),
+                priority,
+                Optional.ToNullable(state),
+                Optional.ToNullable(rateLimitDuration),
+                Optional.ToNullable(rateLimitThreshold),
+                ruleType,
+                matchConditions,
+                groupByUserSession ?? new ChangeTrackingList<GroupByUserSession>(),
+                action,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebApplicationFirewallCustomRule>.Write(ModelReaderWriterOptions options)

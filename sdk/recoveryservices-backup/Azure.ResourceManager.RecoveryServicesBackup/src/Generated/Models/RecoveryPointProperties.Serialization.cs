@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ExpireOn))
+            if (ExpireOn.HasValue)
             {
                 writer.WritePropertyName("expiryTime"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (Optional.IsDefined(RuleName))
+            if (RuleName != null)
             {
                 writer.WritePropertyName("ruleName"u8);
                 writer.WriteStringValue(RuleName);
             }
-            if (Optional.IsDefined(IsSoftDeleted))
+            if (IsSoftDeleted.HasValue)
             {
                 writer.WritePropertyName("isSoftDeleted"u8);
                 writer.WriteBooleanValue(IsSoftDeleted.Value);

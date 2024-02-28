@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                     {
                         continue;
                     }
-                    properties = CertificateVerificationCodeProperties.DeserializeCertificateVerificationCodeProperties(property.Value);
+                    properties = CertificateVerificationCodeProperties.DeserializeCertificateVerificationCodeProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -154,7 +154,14 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CertificateVerificationCodeResult(id, name, type, systemData.Value, Optional.ToNullable(etag), properties.Value, serializedAdditionalRawData);
+            return new CertificateVerificationCodeResult(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(etag),
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CertificateVerificationCodeResult>.Write(ModelReaderWriterOptions options)

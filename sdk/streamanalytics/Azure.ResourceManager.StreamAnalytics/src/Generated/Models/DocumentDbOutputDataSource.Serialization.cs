@@ -30,37 +30,37 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStringValue(OutputDataSourceType);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AccountId))
+            if (AccountId != null)
             {
                 writer.WritePropertyName("accountId"u8);
                 writer.WriteStringValue(AccountId);
             }
-            if (Optional.IsDefined(AccountKey))
+            if (AccountKey != null)
             {
                 writer.WritePropertyName("accountKey"u8);
                 writer.WriteStringValue(AccountKey);
             }
-            if (Optional.IsDefined(Database))
+            if (Database != null)
             {
                 writer.WritePropertyName("database"u8);
                 writer.WriteStringValue(Database);
             }
-            if (Optional.IsDefined(CollectionNamePattern))
+            if (CollectionNamePattern != null)
             {
                 writer.WritePropertyName("collectionNamePattern"u8);
                 writer.WriteStringValue(CollectionNamePattern);
             }
-            if (Optional.IsDefined(PartitionKey))
+            if (PartitionKey != null)
             {
                 writer.WritePropertyName("partitionKey"u8);
                 writer.WriteStringValue(PartitionKey);
             }
-            if (Optional.IsDefined(DocumentId))
+            if (DocumentId != null)
             {
                 writer.WritePropertyName("documentId"u8);
                 writer.WriteStringValue(DocumentId);
             }
-            if (Optional.IsDefined(AuthenticationMode))
+            if (AuthenticationMode.HasValue)
             {
                 writer.WritePropertyName("authenticationMode"u8);
                 writer.WriteStringValue(AuthenticationMode.Value.ToString());
@@ -178,7 +178,16 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DocumentDbOutputDataSource(type, serializedAdditionalRawData, accountId.Value, accountKey.Value, database.Value, collectionNamePattern.Value, partitionKey.Value, documentId.Value, Optional.ToNullable(authenticationMode));
+            return new DocumentDbOutputDataSource(
+                type,
+                serializedAdditionalRawData,
+                accountId.Value,
+                accountKey.Value,
+                database.Value,
+                collectionNamePattern.Value,
+                partitionKey.Value,
+                documentId.Value,
+                Optional.ToNullable(authenticationMode));
         }
 
         BinaryData IPersistableModel<DocumentDbOutputDataSource>.Write(ModelReaderWriterOptions options)

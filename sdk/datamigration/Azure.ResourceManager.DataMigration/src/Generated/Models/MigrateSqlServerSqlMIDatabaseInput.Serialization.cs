@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("restoreDatabaseName"u8);
             writer.WriteStringValue(RestoreDatabaseName);
-            if (Optional.IsDefined(BackupFileShare))
+            if (BackupFileShare != null)
             {
                 writer.WritePropertyName("backupFileShare"u8);
                 writer.WriteObjectValue(BackupFileShare);
             }
-            if (Optional.IsCollectionDefined(BackupFilePaths))
+            if (!(BackupFilePaths is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("backupFilePaths"u8);
                 writer.WriteStartArray();
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             string name = default;
             string restoreDatabaseName = default;
             Optional<FileShare> backupFileShare = default;
-            Optional<IList<string>> backupFilePaths = default;
+            IList<string> backupFilePaths = default;
             Optional<string> id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    backupFileShare = FileShare.DeserializeFileShare(property.Value);
+                    backupFileShare = FileShare.DeserializeFileShare(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("backupFilePaths"u8))
@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateSqlServerSqlMIDatabaseInput(name, restoreDatabaseName, backupFileShare.Value, Optional.ToList(backupFilePaths), id.Value, serializedAdditionalRawData);
+            return new MigrateSqlServerSqlMIDatabaseInput(
+                name,
+                restoreDatabaseName,
+                backupFileShare.Value,
+                backupFilePaths ?? new ChangeTrackingList<string>(),
+                id.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MigrateSqlServerSqlMIDatabaseInput>.Write(ModelReaderWriterOptions options)

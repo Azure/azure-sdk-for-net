@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<MachineLearningFeatureSetContainerData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<MachineLearningFeatureSetContainerData>> value = default;
+            IReadOnlyList<MachineLearningFeatureSetContainerData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningFeatureSetContainerData> array = new List<MachineLearningFeatureSetContainerData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningFeatureSetContainerData.DeserializeMachineLearningFeatureSetContainerData(item));
+                        array.Add(MachineLearningFeatureSetContainerData.DeserializeMachineLearningFeatureSetContainerData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FeaturesetContainerResourceArmPaginatedResult(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new FeaturesetContainerResourceArmPaginatedResult(nextLink.Value, value ?? new ChangeTrackingList<MachineLearningFeatureSetContainerData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FeaturesetContainerResourceArmPaginatedResult>.Write(ModelReaderWriterOptions options)

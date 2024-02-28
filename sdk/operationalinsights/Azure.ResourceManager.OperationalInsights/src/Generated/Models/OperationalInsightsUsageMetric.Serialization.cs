@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteObjectValue(Name);
             }
-            if (Optional.IsDefined(Unit))
+            if (Unit != null)
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit);
             }
-            if (Optional.IsDefined(CurrentValue))
+            if (CurrentValue.HasValue)
             {
                 writer.WritePropertyName("currentValue"u8);
                 writer.WriteNumberValue(CurrentValue.Value);
             }
-            if (Optional.IsDefined(Limit))
+            if (Limit.HasValue)
             {
                 writer.WritePropertyName("limit"u8);
                 writer.WriteNumberValue(Limit.Value);
             }
-            if (Optional.IsDefined(NextResetOn))
+            if (NextResetOn.HasValue)
             {
                 writer.WritePropertyName("nextResetTime"u8);
                 writer.WriteStringValue(NextResetOn.Value, "O");
             }
-            if (Optional.IsDefined(QuotaPeriod))
+            if (QuotaPeriod != null)
             {
                 writer.WritePropertyName("quotaPeriod"u8);
                 writer.WriteStringValue(QuotaPeriod);
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     {
                         continue;
                     }
-                    name = OperationalInsightsMetricName.DeserializeOperationalInsightsMetricName(property.Value);
+                    name = OperationalInsightsMetricName.DeserializeOperationalInsightsMetricName(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("unit"u8))
@@ -156,7 +156,14 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationalInsightsUsageMetric(name.Value, unit.Value, Optional.ToNullable(currentValue), Optional.ToNullable(limit), Optional.ToNullable(nextResetTime), quotaPeriod.Value, serializedAdditionalRawData);
+            return new OperationalInsightsUsageMetric(
+                name.Value,
+                unit.Value,
+                Optional.ToNullable(currentValue),
+                Optional.ToNullable(limit),
+                Optional.ToNullable(nextResetTime),
+                quotaPeriod.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationalInsightsUsageMetric>.Write(ModelReaderWriterOptions options)

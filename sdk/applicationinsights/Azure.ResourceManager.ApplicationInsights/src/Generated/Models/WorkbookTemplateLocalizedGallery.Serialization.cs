@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TemplateData))
+            if (TemplateData != null)
             {
                 writer.WritePropertyName("templateData"u8);
 #if NET6_0_OR_GREATER
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
 #endif
             }
-            if (Optional.IsCollectionDefined(Galleries))
+            if (!(Galleries is ChangeTrackingList<WorkbookTemplateGallery> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("galleries"u8);
                 writer.WriteStartArray();
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 return null;
             }
             Optional<BinaryData> templateData = default;
-            Optional<IList<WorkbookTemplateGallery>> galleries = default;
+            IList<WorkbookTemplateGallery> galleries = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     List<WorkbookTemplateGallery> array = new List<WorkbookTemplateGallery>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WorkbookTemplateGallery.DeserializeWorkbookTemplateGallery(item));
+                        array.Add(WorkbookTemplateGallery.DeserializeWorkbookTemplateGallery(item, options));
                     }
                     galleries = array;
                     continue;
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkbookTemplateLocalizedGallery(templateData.Value, Optional.ToList(galleries), serializedAdditionalRawData);
+            return new WorkbookTemplateLocalizedGallery(templateData.Value, galleries ?? new ChangeTrackingList<WorkbookTemplateGallery>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkbookTemplateLocalizedGallery>.Write(ModelReaderWriterOptions options)

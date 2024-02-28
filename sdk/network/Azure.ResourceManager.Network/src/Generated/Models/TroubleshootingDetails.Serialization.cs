@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(ReasonType))
+            if (ReasonType != null)
             {
                 writer.WritePropertyName("reasonType"u8);
                 writer.WriteStringValue(ReasonType);
             }
-            if (Optional.IsDefined(Summary))
+            if (Summary != null)
             {
                 writer.WritePropertyName("summary"u8);
                 writer.WriteStringValue(Summary);
             }
-            if (Optional.IsDefined(Detail))
+            if (Detail != null)
             {
                 writer.WritePropertyName("detail"u8);
                 writer.WriteStringValue(Detail);
             }
-            if (Optional.IsCollectionDefined(RecommendedActions))
+            if (!(RecommendedActions is ChangeTrackingList<TroubleshootingRecommendedActions> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("recommendedActions"u8);
                 writer.WriteStartArray();
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> reasonType = default;
             Optional<string> summary = default;
             Optional<string> detail = default;
-            Optional<IReadOnlyList<TroubleshootingRecommendedActions>> recommendedActions = default;
+            IReadOnlyList<TroubleshootingRecommendedActions> recommendedActions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<TroubleshootingRecommendedActions> array = new List<TroubleshootingRecommendedActions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TroubleshootingRecommendedActions.DeserializeTroubleshootingRecommendedActions(item));
+                        array.Add(TroubleshootingRecommendedActions.DeserializeTroubleshootingRecommendedActions(item, options));
                     }
                     recommendedActions = array;
                     continue;
@@ -143,7 +143,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TroubleshootingDetails(id.Value, reasonType.Value, summary.Value, detail.Value, Optional.ToList(recommendedActions), serializedAdditionalRawData);
+            return new TroubleshootingDetails(
+                id.Value,
+                reasonType.Value,
+                summary.Value,
+                detail.Value,
+                recommendedActions ?? new ChangeTrackingList<TroubleshootingRecommendedActions>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TroubleshootingDetails>.Write(ModelReaderWriterOptions options)

@@ -26,29 +26,29 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(SourceControlSyncJobId))
+            if (SourceControlSyncJobId != null)
             {
                 writer.WritePropertyName("sourceControlSyncJobId"u8);
                 writer.WriteStringValue(SourceControlSyncJobId);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(ProvisioningState))
+            if (ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && StartOn.HasValue)
             {
                 if (StartOn != null)
                 {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Automation.Models
                     writer.WriteNull("startTime");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(EndOn))
+            if (options.Format != "W" && EndOn.HasValue)
             {
                 if (EndOn != null)
                 {
@@ -72,12 +72,12 @@ namespace Azure.ResourceManager.Automation.Models
                     writer.WriteNull("endTime");
                 }
             }
-            if (Optional.IsDefined(SyncType))
+            if (SyncType.HasValue)
             {
                 writer.WritePropertyName("syncType"u8);
                 writer.WriteStringValue(SyncType.Value.ToString());
             }
-            if (Optional.IsDefined(Exception))
+            if (Exception != null)
             {
                 writer.WritePropertyName("exception"u8);
                 writer.WriteStringValue(Exception);
@@ -217,7 +217,16 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SourceControlSyncJobResult(id.Value, sourceControlSyncJobId.Value, Optional.ToNullable(creationTime), Optional.ToNullable(provisioningState), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(syncType), exception.Value, serializedAdditionalRawData);
+            return new SourceControlSyncJobResult(
+                id.Value,
+                sourceControlSyncJobId.Value,
+                Optional.ToNullable(creationTime),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                Optional.ToNullable(syncType),
+                exception.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SourceControlSyncJobResult>.Write(ModelReaderWriterOptions options)

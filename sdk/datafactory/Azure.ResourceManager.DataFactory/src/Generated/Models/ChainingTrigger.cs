@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -22,9 +21,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/>, <paramref name="dependsOn"/> or <paramref name="runDimension"/> is null. </exception>
         public ChainingTrigger(TriggerPipelineReference pipeline, IEnumerable<DataFactoryPipelineReference> dependsOn, string runDimension)
         {
-            Argument.AssertNotNull(pipeline, nameof(pipeline));
-            Argument.AssertNotNull(dependsOn, nameof(dependsOn));
-            Argument.AssertNotNull(runDimension, nameof(runDimension));
+            if (pipeline == null)
+            {
+                throw new ArgumentNullException(nameof(pipeline));
+            }
+            if (dependsOn == null)
+            {
+                throw new ArgumentNullException(nameof(dependsOn));
+            }
+            if (runDimension == null)
+            {
+                throw new ArgumentNullException(nameof(runDimension));
+            }
 
             Pipeline = pipeline;
             DependsOn = dependsOn.ToList();

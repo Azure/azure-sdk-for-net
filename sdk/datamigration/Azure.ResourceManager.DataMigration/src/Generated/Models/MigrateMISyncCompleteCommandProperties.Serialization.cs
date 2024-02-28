@@ -26,19 +26,19 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Input))
+            if (Input != null)
             {
                 writer.WritePropertyName("input"u8);
                 writer.WriteObjectValue(Input);
             }
-            if (options.Format != "W" && Optional.IsDefined(Output))
+            if (options.Format != "W" && Output != null)
             {
                 writer.WritePropertyName("output"u8);
                 writer.WriteObjectValue(Output);
             }
             writer.WritePropertyName("commandType"u8);
             writer.WriteStringValue(CommandType.ToString());
-            if (options.Format != "W" && Optional.IsCollectionDefined(Errors))
+            if (options.Format != "W" && !(Errors is ChangeTrackingList<ODataError> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W" && State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<MigrateMISyncCompleteCommandInput> input = default;
             Optional<MigrateMISyncCompleteCommandOutput> output = default;
             CommandType commandType = default;
-            Optional<IReadOnlyList<ODataError>> errors = default;
+            IReadOnlyList<ODataError> errors = default;
             Optional<CommandState> state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    input = MigrateMISyncCompleteCommandInput.DeserializeMigrateMISyncCompleteCommandInput(property.Value);
+                    input = MigrateMISyncCompleteCommandInput.DeserializeMigrateMISyncCompleteCommandInput(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("output"u8))
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    output = MigrateMISyncCompleteCommandOutput.DeserializeMigrateMISyncCompleteCommandOutput(property.Value);
+                    output = MigrateMISyncCompleteCommandOutput.DeserializeMigrateMISyncCompleteCommandOutput(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("commandType"u8))
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ODataError> array = new List<ODataError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ODataError.DeserializeODataError(item));
+                        array.Add(ODataError.DeserializeODataError(item, options));
                     }
                     errors = array;
                     continue;
@@ -152,7 +152,13 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateMISyncCompleteCommandProperties(commandType, Optional.ToList(errors), Optional.ToNullable(state), serializedAdditionalRawData, input.Value, output.Value);
+            return new MigrateMISyncCompleteCommandProperties(
+                commandType,
+                errors ?? new ChangeTrackingList<ODataError>(),
+                Optional.ToNullable(state),
+                serializedAdditionalRawData,
+                input.Value,
+                output.Value);
         }
 
         BinaryData IPersistableModel<MigrateMISyncCompleteCommandProperties>.Write(ModelReaderWriterOptions options)

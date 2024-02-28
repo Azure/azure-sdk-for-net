@@ -31,17 +31,17 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(SimState))
+            if (options.Format != "W" && SimState.HasValue)
             {
                 writer.WritePropertyName("simState"u8);
                 writer.WriteStringValue(SimState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SiteProvisioningState))
+            if (options.Format != "W" && !(SiteProvisioningState is ChangeTrackingDictionary<string, MobileNetworkSiteProvisioningState> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("siteProvisioningState"u8);
                 writer.WriteStartObject();
@@ -54,22 +54,22 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
             writer.WritePropertyName("internationalMobileSubscriberIdentity"u8);
             writer.WriteStringValue(InternationalMobileSubscriberIdentity);
-            if (Optional.IsDefined(IntegratedCircuitCardIdentifier))
+            if (IntegratedCircuitCardIdentifier != null)
             {
                 writer.WritePropertyName("integratedCircuitCardIdentifier"u8);
                 writer.WriteStringValue(IntegratedCircuitCardIdentifier);
             }
-            if (Optional.IsDefined(DeviceType))
+            if (DeviceType != null)
             {
                 writer.WritePropertyName("deviceType"u8);
                 writer.WriteStringValue(DeviceType);
             }
-            if (Optional.IsDefined(SimPolicy))
+            if (SimPolicy != null)
             {
                 writer.WritePropertyName("simPolicy"u8);
                 JsonSerializer.Serialize(writer, SimPolicy);
             }
-            if (Optional.IsCollectionDefined(StaticIPConfiguration))
+            if (!(StaticIPConfiguration is ChangeTrackingList<SimStaticIPProperties> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("staticIpConfiguration"u8);
                 writer.WriteStartArray();
@@ -79,22 +79,22 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(VendorName))
+            if (options.Format != "W" && VendorName != null)
             {
                 writer.WritePropertyName("vendorName"u8);
                 writer.WriteStringValue(VendorName);
             }
-            if (options.Format != "W" && Optional.IsDefined(VendorKeyFingerprint))
+            if (options.Format != "W" && VendorKeyFingerprint != null)
             {
                 writer.WritePropertyName("vendorKeyFingerprint"u8);
                 writer.WriteStringValue(VendorKeyFingerprint);
             }
-            if (Optional.IsDefined(AuthenticationKey))
+            if (AuthenticationKey != null)
             {
                 writer.WritePropertyName("authenticationKey"u8);
                 writer.WriteStringValue(AuthenticationKey);
             }
-            if (Optional.IsDefined(OperatorKeyCode))
+            if (OperatorKeyCode != null)
             {
                 writer.WritePropertyName("operatorKeyCode"u8);
                 writer.WriteStringValue(OperatorKeyCode);
@@ -141,12 +141,12 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             string name = default;
             Optional<MobileNetworkProvisioningState> provisioningState = default;
             Optional<MobileNetworkSimState> simState = default;
-            Optional<IReadOnlyDictionary<string, MobileNetworkSiteProvisioningState>> siteProvisioningState = default;
+            IReadOnlyDictionary<string, MobileNetworkSiteProvisioningState> siteProvisioningState = default;
             string internationalMobileSubscriberIdentity = default;
             Optional<string> integratedCircuitCardIdentifier = default;
             Optional<string> deviceType = default;
             Optional<WritableSubResource> simPolicy = default;
-            Optional<IList<SimStaticIPProperties>> staticIPConfiguration = default;
+            IList<SimStaticIPProperties> staticIPConfiguration = default;
             Optional<string> vendorName = default;
             Optional<string> vendorKeyFingerprint = default;
             Optional<string> authenticationKey = default;
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                             List<SimStaticIPProperties> array = new List<SimStaticIPProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SimStaticIPProperties.DeserializeSimStaticIPProperties(item));
+                                array.Add(SimStaticIPProperties.DeserializeSimStaticIPProperties(item, options));
                             }
                             staticIPConfiguration = array;
                             continue;
@@ -268,7 +268,21 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SimNameAndProperties(name, Optional.ToNullable(provisioningState), Optional.ToNullable(simState), Optional.ToDictionary(siteProvisioningState), internationalMobileSubscriberIdentity, integratedCircuitCardIdentifier.Value, deviceType.Value, simPolicy, Optional.ToList(staticIPConfiguration), vendorName.Value, vendorKeyFingerprint.Value, authenticationKey.Value, operatorKeyCode.Value, serializedAdditionalRawData);
+            return new SimNameAndProperties(
+                name,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(simState),
+                siteProvisioningState ?? new ChangeTrackingDictionary<string, MobileNetworkSiteProvisioningState>(),
+                internationalMobileSubscriberIdentity,
+                integratedCircuitCardIdentifier.Value,
+                deviceType.Value,
+                simPolicy,
+                staticIPConfiguration ?? new ChangeTrackingList<SimStaticIPProperties>(),
+                vendorName.Value,
+                vendorKeyFingerprint.Value,
+                authenticationKey.Value,
+                operatorKeyCode.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SimNameAndProperties>.Write(ModelReaderWriterOptions options)

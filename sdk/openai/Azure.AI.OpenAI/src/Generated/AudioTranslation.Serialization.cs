@@ -29,22 +29,22 @@ namespace Azure.AI.OpenAI
             writer.WriteStartObject();
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
-            if (Optional.IsDefined(InternalAudioTaskLabel))
+            if (InternalAudioTaskLabel.HasValue)
             {
                 writer.WritePropertyName("task"u8);
                 writer.WriteStringValue(InternalAudioTaskLabel.Value.ToString());
             }
-            if (Optional.IsDefined(Language))
+            if (Language != null)
             {
                 writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);
             }
-            if (Optional.IsDefined(Duration))
+            if (Duration.HasValue)
             {
                 writer.WritePropertyName("duration"u8);
                 writer.WriteNumberValue(Convert.ToDouble(Duration.Value.ToString("s\\.fff")));
             }
-            if (Optional.IsCollectionDefined(Segments))
+            if (!(Segments is ChangeTrackingList<AudioTranslationSegment> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("segments"u8);
                 writer.WriteStartArray();
@@ -96,7 +96,7 @@ namespace Azure.AI.OpenAI
             Optional<AudioTaskLabel> task = default;
             Optional<string> language = default;
             Optional<TimeSpan> duration = default;
-            Optional<IReadOnlyList<AudioTranslationSegment>> segments = default;
+            IReadOnlyList<AudioTranslationSegment> segments = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,7 +138,7 @@ namespace Azure.AI.OpenAI
                     List<AudioTranslationSegment> array = new List<AudioTranslationSegment>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AudioTranslationSegment.DeserializeAudioTranslationSegment(item));
+                        array.Add(AudioTranslationSegment.DeserializeAudioTranslationSegment(item, options));
                     }
                     segments = array;
                     continue;
@@ -149,7 +149,13 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AudioTranslation(text, Optional.ToNullable(task), language.Value, Optional.ToNullable(duration), Optional.ToList(segments), serializedAdditionalRawData);
+            return new AudioTranslation(
+                text,
+                Optional.ToNullable(task),
+                language.Value,
+                Optional.ToNullable(duration),
+                segments ?? new ChangeTrackingList<AudioTranslationSegment>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AudioTranslation>.Write(ModelReaderWriterOptions options)

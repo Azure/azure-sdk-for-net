@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Quantum.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Quantum.Models
                     {
                         continue;
                     }
-                    properties = ProviderProperties.DeserializeProviderProperties(property.Value);
+                    properties = ProviderProperties.DeserializeProviderProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

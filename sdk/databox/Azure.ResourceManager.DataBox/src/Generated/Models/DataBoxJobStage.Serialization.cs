@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(StageName))
+            if (options.Format != "W" && StageName.HasValue)
             {
                 writer.WritePropertyName("stageName"u8);
                 writer.WriteStringValue(StageName.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DisplayName))
+            if (options.Format != "W" && DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Optional.IsDefined(StageStatus))
+            if (options.Format != "W" && StageStatus.HasValue)
             {
                 writer.WritePropertyName("stageStatus"u8);
                 writer.WriteStringValue(StageStatus.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(StageTime))
+            if (options.Format != "W" && StageTime.HasValue)
             {
                 writer.WritePropertyName("stageTime"u8);
                 writer.WriteStringValue(StageTime.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(JobStageDetails))
+            if (options.Format != "W" && JobStageDetails != null)
             {
                 writer.WritePropertyName("jobStageDetails"u8);
 #if NET6_0_OR_GREATER
@@ -152,7 +152,13 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxJobStage(Optional.ToNullable(stageName), displayName.Value, Optional.ToNullable(stageStatus), Optional.ToNullable(stageTime), jobStageDetails.Value, serializedAdditionalRawData);
+            return new DataBoxJobStage(
+                Optional.ToNullable(stageName),
+                displayName.Value,
+                Optional.ToNullable(stageStatus),
+                Optional.ToNullable(stageTime),
+                jobStageDetails.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxJobStage>.Write(ModelReaderWriterOptions options)

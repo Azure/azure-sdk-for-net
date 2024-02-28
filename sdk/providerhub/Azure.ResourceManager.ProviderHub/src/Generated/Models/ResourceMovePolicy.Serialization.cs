@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsValidationRequired))
+            if (IsValidationRequired.HasValue)
             {
                 writer.WritePropertyName("validationRequired"u8);
                 writer.WriteBooleanValue(IsValidationRequired.Value);
             }
-            if (Optional.IsDefined(IsCrossResourceGroupMoveEnabled))
+            if (IsCrossResourceGroupMoveEnabled.HasValue)
             {
                 writer.WritePropertyName("crossResourceGroupMoveEnabled"u8);
                 writer.WriteBooleanValue(IsCrossResourceGroupMoveEnabled.Value);
             }
-            if (Optional.IsDefined(IsCrossSubscriptionMoveEnabled))
+            if (IsCrossSubscriptionMoveEnabled.HasValue)
             {
                 writer.WritePropertyName("crossSubscriptionMoveEnabled"u8);
                 writer.WriteBooleanValue(IsCrossSubscriptionMoveEnabled.Value);

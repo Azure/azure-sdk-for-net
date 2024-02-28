@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Properties))
+            if (!(Properties is ChangeTrackingDictionary<string, AppServiceStorageAccessInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteStartObject();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, AppServiceStorageAccessInfo>> properties = default;
+            IDictionary<string, AppServiceStorageAccessInfo> properties = default;
             Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppService.Models
                     Dictionary<string, AppServiceStorageAccessInfo> dictionary = new Dictionary<string, AppServiceStorageAccessInfo>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, AppServiceStorageAccessInfo.DeserializeAppServiceStorageAccessInfo(property0.Value));
+                        dictionary.Add(property0.Name, AppServiceStorageAccessInfo.DeserializeAppServiceStorageAccessInfo(property0.Value, options));
                     }
                     properties = dictionary;
                     continue;
@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureStoragePropertyDictionary(id, name, type, systemData.Value, Optional.ToDictionary(properties), kind.Value, serializedAdditionalRawData);
+            return new AzureStoragePropertyDictionary(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties ?? new ChangeTrackingDictionary<string, AppServiceStorageAccessInfo>(),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureStoragePropertyDictionary>.Write(ModelReaderWriterOptions options)

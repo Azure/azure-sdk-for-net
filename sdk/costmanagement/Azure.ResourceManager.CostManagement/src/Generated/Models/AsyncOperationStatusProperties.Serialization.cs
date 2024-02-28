@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ReportUri))
+            if (ReportUri.HasValue)
             {
                 writer.WritePropertyName("reportUrl"u8);
                 writer.WriteStringValue(ReportUri.Value.ToString());
             }
-            if (Optional.IsDefined(SecondaryReportUri))
+            if (SecondaryReportUri.HasValue)
             {
                 writer.WritePropertyName("secondaryReportUrl"u8);
                 writer.WriteStringValue(SecondaryReportUri.Value.ToString());
             }
-            if (Optional.IsDefined(ValidUntil))
+            if (ValidUntil.HasValue)
             {
                 writer.WritePropertyName("validUntil"u8);
                 writer.WriteStringValue(ValidUntil.Value, "O");

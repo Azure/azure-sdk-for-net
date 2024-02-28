@@ -42,24 +42,24 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ClusterExtensionId))
+            if (ClusterExtensionId != null)
             {
                 writer.WritePropertyName("clusterExtensionId"u8);
                 writer.WriteStringValue(ClusterExtensionId);
             }
-            if (Optional.IsDefined(ExtensionType))
+            if (ExtensionType != null)
             {
                 writer.WritePropertyName("extensionType"u8);
                 writer.WriteStringValue(ExtensionType);
             }
-            if (Optional.IsCollectionDefined(TypesMetadata))
+            if (!(TypesMetadata is ChangeTrackingList<CustomLocationEnabledResourceTypeMetadata> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("typesMetadata"u8);
                 writer.WriteStartArray();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             Optional<SystemData> systemData = default;
             Optional<ResourceIdentifier> clusterExtensionId = default;
             Optional<string> extensionType = default;
-            Optional<IList<CustomLocationEnabledResourceTypeMetadata>> typesMetadata = default;
+            IList<CustomLocationEnabledResourceTypeMetadata> typesMetadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                             List<CustomLocationEnabledResourceTypeMetadata> array = new List<CustomLocationEnabledResourceTypeMetadata>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(CustomLocationEnabledResourceTypeMetadata.DeserializeCustomLocationEnabledResourceTypeMetadata(item));
+                                array.Add(CustomLocationEnabledResourceTypeMetadata.DeserializeCustomLocationEnabledResourceTypeMetadata(item, options));
                             }
                             typesMetadata = array;
                             continue;
@@ -189,7 +189,15 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomLocationEnabledResourceType(id, name, type, systemData.Value, clusterExtensionId.Value, extensionType.Value, Optional.ToList(typesMetadata), serializedAdditionalRawData);
+            return new CustomLocationEnabledResourceType(
+                id,
+                name,
+                type,
+                systemData.Value,
+                clusterExtensionId.Value,
+                extensionType.Value,
+                typesMetadata ?? new ChangeTrackingList<CustomLocationEnabledResourceTypeMetadata>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CustomLocationEnabledResourceType>.Write(ModelReaderWriterOptions options)

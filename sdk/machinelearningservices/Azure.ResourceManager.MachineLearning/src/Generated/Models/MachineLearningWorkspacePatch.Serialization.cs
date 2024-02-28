@@ -27,18 +27,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -51,72 +51,72 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ApplicationInsights))
+            if (ApplicationInsights != null)
             {
                 writer.WritePropertyName("applicationInsights"u8);
                 writer.WriteStringValue(ApplicationInsights);
             }
-            if (Optional.IsDefined(ContainerRegistry))
+            if (ContainerRegistry != null)
             {
                 writer.WritePropertyName("containerRegistry"u8);
                 writer.WriteStringValue(ContainerRegistry);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(EnableDataIsolation))
+            if (EnableDataIsolation.HasValue)
             {
                 writer.WritePropertyName("enableDataIsolation"u8);
                 writer.WriteBooleanValue(EnableDataIsolation.Value);
             }
-            if (Optional.IsDefined(Encryption))
+            if (Encryption != null)
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
-            if (Optional.IsDefined(FeatureStoreSettings))
+            if (FeatureStoreSettings != null)
             {
                 writer.WritePropertyName("featureStoreSettings"u8);
                 writer.WriteObjectValue(FeatureStoreSettings);
             }
-            if (Optional.IsDefined(FriendlyName))
+            if (FriendlyName != null)
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Optional.IsDefined(ImageBuildCompute))
+            if (ImageBuildCompute != null)
             {
                 writer.WritePropertyName("imageBuildCompute"u8);
                 writer.WriteStringValue(ImageBuildCompute);
             }
-            if (Optional.IsDefined(ManagedNetwork))
+            if (ManagedNetwork != null)
             {
                 writer.WritePropertyName("managedNetwork"u8);
                 writer.WriteObjectValue(ManagedNetwork);
             }
-            if (Optional.IsDefined(PrimaryUserAssignedIdentity))
+            if (PrimaryUserAssignedIdentity != null)
             {
                 writer.WritePropertyName("primaryUserAssignedIdentity"u8);
                 writer.WriteStringValue(PrimaryUserAssignedIdentity);
             }
-            if (Optional.IsDefined(PublicNetworkAccessType))
+            if (PublicNetworkAccessType.HasValue)
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccessType.Value.ToString());
             }
-            if (Optional.IsDefined(ServiceManagedResourcesSettings))
+            if (ServiceManagedResourcesSettings != null)
             {
                 writer.WritePropertyName("serviceManagedResourcesSettings"u8);
                 writer.WriteObjectValue(ServiceManagedResourcesSettings);
             }
-            if (Optional.IsDefined(SoftDeleteRetentionInDays))
+            if (SoftDeleteRetentionInDays.HasValue)
             {
                 writer.WritePropertyName("softDeleteRetentionInDays"u8);
                 writer.WriteNumberValue(SoftDeleteRetentionInDays.Value);
             }
-            if (Optional.IsDefined(V1LegacyMode))
+            if (V1LegacyMode.HasValue)
             {
                 writer.WritePropertyName("v1LegacyMode"u8);
                 writer.WriteBooleanValue(V1LegacyMode.Value);
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<MachineLearningSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<string> applicationInsights = default;
             Optional<string> containerRegistry = default;
             Optional<string> description = default;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    sku = MachineLearningSku.DeserializeMachineLearningSku(property.Value);
+                    sku = MachineLearningSku.DeserializeMachineLearningSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                             {
                                 continue;
                             }
-                            encryption = EncryptionUpdateProperties.DeserializeEncryptionUpdateProperties(property0.Value);
+                            encryption = EncryptionUpdateProperties.DeserializeEncryptionUpdateProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("featureStoreSettings"u8))
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                             {
                                 continue;
                             }
-                            featureStoreSettings = FeatureStoreSettings.DeserializeFeatureStoreSettings(property0.Value);
+                            featureStoreSettings = FeatureStoreSettings.DeserializeFeatureStoreSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("friendlyName"u8))
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                             {
                                 continue;
                             }
-                            managedNetwork = ManagedNetworkSettings.DeserializeManagedNetworkSettings(property0.Value);
+                            managedNetwork = ManagedNetworkSettings.DeserializeManagedNetworkSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("primaryUserAssignedIdentity"u8))
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                             {
                                 continue;
                             }
-                            serviceManagedResourcesSettings = ServiceManagedResourcesSettings.DeserializeServiceManagedResourcesSettings(property0.Value);
+                            serviceManagedResourcesSettings = ServiceManagedResourcesSettings.DeserializeServiceManagedResourcesSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("softDeleteRetentionInDays"u8))
@@ -334,7 +334,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningWorkspacePatch(identity, sku.Value, Optional.ToDictionary(tags), applicationInsights.Value, containerRegistry.Value, description.Value, Optional.ToNullable(enableDataIsolation), encryption.Value, featureStoreSettings.Value, friendlyName.Value, imageBuildCompute.Value, managedNetwork.Value, primaryUserAssignedIdentity.Value, Optional.ToNullable(publicNetworkAccess), serviceManagedResourcesSettings.Value, Optional.ToNullable(softDeleteRetentionInDays), Optional.ToNullable(v1LegacyMode), serializedAdditionalRawData);
+            return new MachineLearningWorkspacePatch(
+                identity,
+                sku.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                applicationInsights.Value,
+                containerRegistry.Value,
+                description.Value,
+                Optional.ToNullable(enableDataIsolation),
+                encryption.Value,
+                featureStoreSettings.Value,
+                friendlyName.Value,
+                imageBuildCompute.Value,
+                managedNetwork.Value,
+                primaryUserAssignedIdentity.Value,
+                Optional.ToNullable(publicNetworkAccess),
+                serviceManagedResourcesSettings.Value,
+                Optional.ToNullable(softDeleteRetentionInDays),
+                Optional.ToNullable(v1LegacyMode),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningWorkspacePatch>.Write(ModelReaderWriterOptions options)

@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.LabServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ActiveDirectoryGroupId))
+            if (ActiveDirectoryGroupId != null)
             {
                 writer.WritePropertyName("activeDirectoryGroupId"u8);
                 writer.WriteStringValue(ActiveDirectoryGroupId);
             }
-            if (Optional.IsDefined(LtiContextId))
+            if (LtiContextId != null)
             {
                 writer.WritePropertyName("ltiContextId"u8);
                 writer.WriteStringValue(LtiContextId);
             }
-            if (Optional.IsDefined(LmsInstance))
+            if (LmsInstance != null)
             {
                 writer.WritePropertyName("lmsInstance"u8);
                 writer.WriteStringValue(LmsInstance.AbsoluteUri);
             }
-            if (Optional.IsDefined(LtiClientId))
+            if (LtiClientId != null)
             {
                 writer.WritePropertyName("ltiClientId"u8);
                 writer.WriteStringValue(LtiClientId);
             }
-            if (Optional.IsDefined(LtiRosterEndpoint))
+            if (LtiRosterEndpoint != null)
             {
                 writer.WritePropertyName("ltiRosterEndpoint"u8);
                 writer.WriteStringValue(LtiRosterEndpoint.AbsoluteUri);
@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabRosterProfile(activeDirectoryGroupId.Value, ltiContextId.Value, lmsInstance.Value, ltiClientId.Value, ltiRosterEndpoint.Value, serializedAdditionalRawData);
+            return new LabRosterProfile(
+                activeDirectoryGroupId.Value,
+                ltiContextId.Value,
+                lmsInstance.Value,
+                ltiClientId.Value,
+                ltiRosterEndpoint.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabRosterProfile>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(DependsOn))
+            if (!(DependsOn is ChangeTrackingList<BasicArmDependency> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
@@ -36,17 +36,17 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(ResourceType))
+            if (ResourceType.HasValue)
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Optional.IsDefined(ResourceName))
+            if (ResourceName != null)
             {
                 writer.WritePropertyName("resourceName"u8);
                 writer.WriteStringValue(ResourceName);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<BasicArmDependency>> dependsOn = default;
+            IReadOnlyList<BasicArmDependency> dependsOn = default;
             Optional<string> id = default;
             Optional<ResourceType> resourceType = default;
             Optional<string> resourceName = default;
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<BasicArmDependency> array = new List<BasicArmDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BasicArmDependency.DeserializeBasicArmDependency(item));
+                        array.Add(BasicArmDependency.DeserializeBasicArmDependency(item, options));
                     }
                     dependsOn = array;
                     continue;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmDependency(Optional.ToList(dependsOn), id.Value, Optional.ToNullable(resourceType), resourceName.Value, serializedAdditionalRawData);
+            return new ArmDependency(dependsOn ?? new ChangeTrackingList<BasicArmDependency>(), id.Value, Optional.ToNullable(resourceType), resourceName.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArmDependency>.Write(ModelReaderWriterOptions options)

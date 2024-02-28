@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Consumption.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Tags))
+            if (options.Format != "W" && !(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -59,14 +59,14 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Pricesheets))
+            if (options.Format != "W" && !(Pricesheets is ChangeTrackingList<PriceSheetProperties> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("pricesheets"u8);
                 writer.WriteStartArray();
@@ -76,12 +76,12 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (options.Format != "W" && Optional.IsDefined(Download))
+            if (options.Format != "W" && Download != null)
             {
                 writer.WritePropertyName("download"u8);
                 writer.WriteObjectValue(Download);
@@ -126,12 +126,12 @@ namespace Azure.ResourceManager.Consumption.Models
                 return null;
             }
             Optional<ETag> etag = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            IReadOnlyDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IReadOnlyList<PriceSheetProperties>> pricesheets = default;
+            IReadOnlyList<PriceSheetProperties> pricesheets = default;
             Optional<string> nextLink = default;
             Optional<ConsumptionMeterDetails> download = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             List<PriceSheetProperties> array = new List<PriceSheetProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PriceSheetProperties.DeserializePriceSheetProperties(item));
+                                array.Add(PriceSheetProperties.DeserializePriceSheetProperties(item, options));
                             }
                             pricesheets = array;
                             continue;
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            download = ConsumptionMeterDetails.DeserializeConsumptionMeterDetails(property0.Value);
+                            download = ConsumptionMeterDetails.DeserializeConsumptionMeterDetails(property0.Value, options);
                             continue;
                         }
                     }
@@ -231,7 +231,17 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PriceSheetResult(id, name, type, systemData.Value, Optional.ToList(pricesheets), nextLink.Value, download.Value, Optional.ToNullable(etag), Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new PriceSheetResult(
+                id,
+                name,
+                type,
+                systemData.Value,
+                pricesheets ?? new ChangeTrackingList<PriceSheetProperties>(),
+                nextLink.Value,
+                download.Value,
+                Optional.ToNullable(etag),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PriceSheetResult>.Write(ModelReaderWriterOptions options)

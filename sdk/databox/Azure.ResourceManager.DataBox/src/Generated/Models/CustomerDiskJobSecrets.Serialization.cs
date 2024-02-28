@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(DiskSecrets))
+            if (options.Format != "W" && !(DiskSecrets is ChangeTrackingList<DataBoxDiskSecret> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("diskSecrets"u8);
                 writer.WriteStartArray();
@@ -37,19 +37,19 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(CarrierAccountNumber))
+            if (options.Format != "W" && CarrierAccountNumber != null)
             {
                 writer.WritePropertyName("carrierAccountNumber"u8);
                 writer.WriteStringValue(CarrierAccountNumber);
             }
             writer.WritePropertyName("jobSecretsType"u8);
             writer.WriteStringValue(JobSecretsType.ToSerialString());
-            if (options.Format != "W" && Optional.IsDefined(DataCenterAccessSecurityCode))
+            if (options.Format != "W" && DataCenterAccessSecurityCode != null)
             {
                 writer.WritePropertyName("dcAccessSecurityCode"u8);
                 writer.WriteObjectValue(DataCenterAccessSecurityCode);
             }
-            if (options.Format != "W" && Optional.IsDefined(Error))
+            if (options.Format != "W" && Error != null)
             {
                 writer.WritePropertyName("error"u8);
                 JsonSerializer.Serialize(writer, Error);
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DataBoxDiskSecret>> diskSecrets = default;
+            IReadOnlyList<DataBoxDiskSecret> diskSecrets = default;
             Optional<string> carrierAccountNumber = default;
             DataBoxOrderType jobSecretsType = default;
             Optional<DataCenterAccessSecurityCode> dcAccessSecurityCode = default;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     List<DataBoxDiskSecret> array = new List<DataBoxDiskSecret>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataBoxDiskSecret.DeserializeDataBoxDiskSecret(item));
+                        array.Add(DataBoxDiskSecret.DeserializeDataBoxDiskSecret(item, options));
                     }
                     diskSecrets = array;
                     continue;
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    dcAccessSecurityCode = DataCenterAccessSecurityCode.DeserializeDataCenterAccessSecurityCode(property.Value);
+                    dcAccessSecurityCode = DataCenterAccessSecurityCode.DeserializeDataCenterAccessSecurityCode(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("error"u8))
@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomerDiskJobSecrets(jobSecretsType, dcAccessSecurityCode.Value, error.Value, serializedAdditionalRawData, Optional.ToList(diskSecrets), carrierAccountNumber.Value);
+            return new CustomerDiskJobSecrets(
+                jobSecretsType,
+                dcAccessSecurityCode.Value,
+                error.Value,
+                serializedAdditionalRawData,
+                diskSecrets ?? new ChangeTrackingList<DataBoxDiskSecret>(),
+                carrierAccountNumber.Value);
         }
 
         BinaryData IPersistableModel<CustomerDiskJobSecrets>.Write(ModelReaderWriterOptions options)

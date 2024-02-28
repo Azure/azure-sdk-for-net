@@ -44,14 +44,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(AdditionalData))
+            if (options.Format != "W" && !(AdditionalData is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("additionalData"u8);
                 writer.WriteStartObject();
@@ -74,27 +74,27 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsDefined(FriendlyName))
+            if (options.Format != "W" && FriendlyName != null)
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (options.Format != "W" && Optional.IsDefined(KeyEntityId))
+            if (options.Format != "W" && KeyEntityId != null)
             {
                 writer.WritePropertyName("keyEntityId"u8);
                 writer.WriteStringValue(KeyEntityId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ValueData))
+            if (options.Format != "W" && ValueData != null)
             {
                 writer.WritePropertyName("valueData"u8);
                 writer.WriteStringValue(ValueData);
             }
-            if (options.Format != "W" && Optional.IsDefined(ValueName))
+            if (options.Format != "W" && ValueName != null)
             {
                 writer.WritePropertyName("valueName"u8);
                 writer.WriteStringValue(ValueName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ValueType))
+            if (options.Format != "W" && ValueType.HasValue)
             {
                 writer.WritePropertyName("valueType"u8);
                 writer.WriteStringValue(ValueType.Value.ToString());
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IReadOnlyDictionary<string, BinaryData>> additionalData = default;
+            IReadOnlyDictionary<string, BinaryData> additionalData = default;
             Optional<string> friendlyName = default;
             Optional<string> keyEntityId = default;
             Optional<string> valueData = default;
@@ -250,7 +250,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsRegistryValueEntity(id, name, type, systemData.Value, kind, serializedAdditionalRawData, Optional.ToDictionary(additionalData), friendlyName.Value, keyEntityId.Value, valueData.Value, valueName.Value, Optional.ToNullable(valueType));
+            return new SecurityInsightsRegistryValueEntity(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData,
+                additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                friendlyName.Value,
+                keyEntityId.Value,
+                valueData.Value,
+                valueName.Value,
+                Optional.ToNullable(valueType));
         }
 
         BinaryData IPersistableModel<SecurityInsightsRegistryValueEntity>.Write(ModelReaderWriterOptions options)

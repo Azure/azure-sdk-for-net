@@ -17,20 +17,25 @@ namespace Azure.Search.Documents.Models
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (Optional.IsDefined(KNearestNeighborsCount))
+            if (KNearestNeighborsCount.HasValue)
             {
                 writer.WritePropertyName("k"u8);
                 writer.WriteNumberValue(KNearestNeighborsCount.Value);
             }
-            if (Optional.IsDefined(FieldsRaw))
+            if (FieldsRaw != null)
             {
                 writer.WritePropertyName("fields"u8);
                 writer.WriteStringValue(FieldsRaw);
             }
-            if (Optional.IsDefined(Exhaustive))
+            if (Exhaustive.HasValue)
             {
                 writer.WritePropertyName("exhaustive"u8);
                 writer.WriteBooleanValue(Exhaustive.Value);
+            }
+            if (Oversampling.HasValue)
+            {
+                writer.WritePropertyName("oversampling"u8);
+                writer.WriteNumberValue(Oversampling.Value);
             }
             writer.WriteEndObject();
         }

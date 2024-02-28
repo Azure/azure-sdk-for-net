@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.DataShare.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ActivationCode))
+            if (ActivationCode != null)
             {
                 writer.WritePropertyName("activationCode"u8);
                 writer.WriteStringValue(ActivationCode);
             }
-            if (options.Format != "W" && Optional.IsDefined(ActivationExpireOn))
+            if (options.Format != "W" && ActivationExpireOn.HasValue)
             {
                 writer.WritePropertyName("activationExpirationDate"u8);
                 writer.WriteStringValue(ActivationExpireOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(Email))
+            if (options.Format != "W" && Email != null)
             {
                 writer.WritePropertyName("email"u8);
                 writer.WriteStringValue(Email);
             }
-            if (options.Format != "W" && Optional.IsDefined(RegistrationStatus))
+            if (options.Format != "W" && RegistrationStatus.HasValue)
             {
                 writer.WritePropertyName("registrationStatus"u8);
                 writer.WriteStringValue(RegistrationStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(TenantId))
+            if (options.Format != "W" && TenantId.HasValue)
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataShareEmailRegistration(activationCode.Value, Optional.ToNullable(activationExpirationDate), email.Value, Optional.ToNullable(registrationStatus), Optional.ToNullable(tenantId), serializedAdditionalRawData);
+            return new DataShareEmailRegistration(
+                activationCode.Value,
+                Optional.ToNullable(activationExpirationDate),
+                email.Value,
+                Optional.ToNullable(registrationStatus),
+                Optional.ToNullable(tenantId),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataShareEmailRegistration>.Write(ModelReaderWriterOptions options)

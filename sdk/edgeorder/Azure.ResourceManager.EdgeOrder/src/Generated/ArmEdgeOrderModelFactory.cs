@@ -33,7 +33,17 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new EdgeOrderAddressData(id, name, resourceType, systemData, tags, location, shippingAddress, contactDetails, addressValidationStatus, serializedAdditionalRawData: null);
+            return new EdgeOrderAddressData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                shippingAddress,
+                contactDetails,
+                addressValidationStatus,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.EdgeOrderItemAddressProperties"/>. </summary>
@@ -76,7 +86,17 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             productLines ??= new List<ProductLine>();
             resourceProviderDetails ??= new List<ResourceProviderDetails>();
 
-            return new ProductFamily(displayName, description, imageInformation?.ToList(), costInformation, availabilityInformation, hierarchyInformation, filterableProperties?.ToList(), productLines?.ToList(), resourceProviderDetails?.ToList(), serializedAdditionalRawData: null);
+            return new ProductFamily(
+                displayName,
+                description,
+                imageInformation?.ToList(),
+                costInformation,
+                availabilityInformation,
+                hierarchyInformation,
+                filterableProperties?.ToList(),
+                productLines?.ToList(),
+                resourceProviderDetails?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ProductLine"/>. </summary>
@@ -95,7 +115,16 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             filterableProperties ??= new List<FilterableProperty>();
             products ??= new List<EdgeOrderProduct>();
 
-            return new ProductLine(displayName, description, imageInformation?.ToList(), costInformation, availabilityInformation, hierarchyInformation, filterableProperties?.ToList(), products?.ToList(), serializedAdditionalRawData: null);
+            return new ProductLine(
+                displayName,
+                description,
+                imageInformation?.ToList(),
+                costInformation,
+                availabilityInformation,
+                hierarchyInformation,
+                filterableProperties?.ToList(),
+                products?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.EdgeOrderProduct"/>. </summary>
@@ -114,7 +143,16 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             filterableProperties ??= new List<FilterableProperty>();
             configurations ??= new List<ProductConfiguration>();
 
-            return new EdgeOrderProduct(displayName, description, imageInformation?.ToList(), costInformation, availabilityInformation, hierarchyInformation, filterableProperties?.ToList(), configurations?.ToList(), serializedAdditionalRawData: null);
+            return new EdgeOrderProduct(
+                displayName,
+                description,
+                imageInformation?.ToList(),
+                costInformation,
+                availabilityInformation,
+                hierarchyInformation,
+                filterableProperties?.ToList(),
+                configurations?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ProductConfiguration"/>. </summary>
@@ -134,7 +172,17 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             filterableProperties ??= new List<FilterableProperty>();
             specifications ??= new List<ProductSpecification>();
 
-            return new ProductConfiguration(displayName, description, imageInformation?.ToList(), costInformation, availabilityInformation, hierarchyInformation, filterableProperties?.ToList(), specifications?.ToList(), dimensions, serializedAdditionalRawData: null);
+            return new ProductConfiguration(
+                displayName,
+                description,
+                imageInformation?.ToList(),
+                costInformation,
+                availabilityInformation,
+                hierarchyInformation,
+                filterableProperties?.ToList(),
+                specifications?.ToList(),
+                dimensions,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ProductSpecification"/>. </summary>
@@ -157,7 +205,15 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <returns> A new <see cref="Models.ProductDimensions"/> instance for mocking. </returns>
         public static ProductDimensions ProductDimensions(double? length = null, double? height = null, double? width = null, ProductLengthHeightWidthUnit? lengthHeightUnit = null, double? weight = null, double? depth = null, ProductWeightMeasurementUnit? weightUnit = null)
         {
-            return new ProductDimensions(length, height, width, lengthHeightUnit, weight, depth, weightUnit, serializedAdditionalRawData: null);
+            return new ProductDimensions(
+                length,
+                height,
+                width,
+                lengthHeightUnit,
+                weight,
+                depth,
+                weightUnit,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ProductDescription"/>. </summary>
@@ -174,7 +230,14 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             attributes ??= new List<string>();
             links ??= new List<ProductLink>();
 
-            return new ProductDescription(descriptionType, shortDescription, longDescription, keywords?.ToList(), attributes?.ToList(), links?.ToList(), serializedAdditionalRawData: null);
+            return new ProductDescription(
+                descriptionType,
+                shortDescription,
+                longDescription,
+                keywords?.ToList(),
+                attributes?.ToList(),
+                links?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ProductLink"/>. </summary>
@@ -278,7 +341,17 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             productLines ??= new List<ProductLine>();
             resourceProviderDetails ??= new List<ResourceProviderDetails>();
 
-            return new ProductFamiliesMetadata(displayName, description, imageInformation?.ToList(), costInformation, availabilityInformation, hierarchyInformation, filterableProperties?.ToList(), productLines?.ToList(), resourceProviderDetails?.ToList(), serializedAdditionalRawData: null);
+            return new ProductFamiliesMetadata(
+                displayName,
+                description,
+                imageInformation?.ToList(),
+                costInformation,
+                availabilityInformation,
+                hierarchyInformation,
+                filterableProperties?.ToList(),
+                productLines?.ToList(),
+                resourceProviderDetails?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="EdgeOrder.EdgeOrderData"/>. </summary>
@@ -295,7 +368,15 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             orderItemIds ??= new List<ResourceIdentifier>();
             orderStageHistory ??= new List<EdgeOrderStageDetails>();
 
-            return new EdgeOrderData(id, name, resourceType, systemData, orderItemIds?.ToList(), currentStage, orderStageHistory?.ToList(), serializedAdditionalRawData: null);
+            return new EdgeOrderData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                orderItemIds?.ToList(),
+                currentStage,
+                orderStageHistory?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.EdgeOrderStageDetails"/>. </summary>
@@ -325,7 +406,18 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new EdgeOrderItemData(id, name, resourceType, systemData, tags, location, orderItemDetails, addressDetails, startOn, orderId, serializedAdditionalRawData: null);
+            return new EdgeOrderItemData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                orderItemDetails,
+                addressDetails,
+                startOn,
+                orderId,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.EdgeOrderItemDetails"/>. </summary>
@@ -352,7 +444,24 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             notificationEmailList ??= new List<string>();
             managementRPDetailsList ??= new List<ResourceProviderDetails>();
 
-            return new EdgeOrderItemDetails(productDetails, orderItemType, currentStage, orderItemStageHistory?.ToList(), preferences, forwardShippingDetails, reverseShippingDetails, notificationEmailList?.ToList(), cancellationReason, cancellationStatus, deletionStatus, returnReason, returnStatus, firstOrDefaultManagementResourceProviderNamespace != null ? new ResourceProviderDetails(firstOrDefaultManagementResourceProviderNamespace, serializedAdditionalRawData: null) : null, managementRPDetailsList?.ToList(), error, serializedAdditionalRawData: null);
+            return new EdgeOrderItemDetails(
+                productDetails,
+                orderItemType,
+                currentStage,
+                orderItemStageHistory?.ToList(),
+                preferences,
+                forwardShippingDetails,
+                reverseShippingDetails,
+                notificationEmailList?.ToList(),
+                cancellationReason,
+                cancellationStatus,
+                deletionStatus,
+                returnReason,
+                returnStatus,
+                firstOrDefaultManagementResourceProviderNamespace != null ? new ResourceProviderDetails(firstOrDefaultManagementResourceProviderNamespace, serializedAdditionalRawData: null) : null,
+                managementRPDetailsList?.ToList(),
+                error,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ProductDetails"/>. </summary>
@@ -366,7 +475,13 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         {
             deviceDetails ??= new List<EdgeOrderProductDeviceDetails>();
 
-            return new ProductDetails(displayInfo, hierarchyInformation, count, productDoubleEncryptionStatus, deviceDetails?.ToList(), serializedAdditionalRawData: null);
+            return new ProductDetails(
+                displayInfo,
+                hierarchyInformation,
+                count,
+                productDoubleEncryptionStatus,
+                deviceDetails?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ProductDisplayInfo"/>. </summary>
@@ -408,7 +523,13 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <returns> A new <see cref="Models.ReverseShippingDetails"/> instance for mocking. </returns>
         public static ReverseShippingDetails ReverseShippingDetails(string sasKeyForLabel = null, string carrierName = null, string carrierDisplayName = null, string trackingId = null, Uri trackingUri = null)
         {
-            return new ReverseShippingDetails(sasKeyForLabel, carrierName, carrierDisplayName, trackingId, trackingUri, serializedAdditionalRawData: null);
+            return new ReverseShippingDetails(
+                sasKeyForLabel,
+                carrierName,
+                carrierDisplayName,
+                trackingId,
+                trackingUri,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.EdgeOrderItemAddressDetails"/>. </summary>
@@ -450,7 +571,14 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <returns> A new <see cref="Models.PurchaseMeterDetails"/> instance for mocking. </returns>
         public static PurchaseMeterDetails PurchaseMeterDetails(double? multiplier = null, EdgeOrderProductChargingType? chargingType = null, string productId = null, string skuId = null, string termId = null)
         {
-            return new PurchaseMeterDetails(BillingType.Purchase, multiplier, chargingType, serializedAdditionalRawData: null, productId, skuId, termId);
+            return new PurchaseMeterDetails(
+                BillingType.Purchase,
+                multiplier,
+                chargingType,
+                serializedAdditionalRawData: null,
+                productId,
+                skuId,
+                termId);
         }
     }
 }

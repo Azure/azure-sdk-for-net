@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,14 +47,14 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ValidationMethod))
+            if (ValidationMethod != null)
             {
                 writer.WritePropertyName("validationMethod"u8);
                 writer.WriteStringValue(ValidationMethod);
@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StaticSiteCustomDomainContent(id, name, type, systemData.Value, validationMethod.Value, kind.Value, serializedAdditionalRawData);
+            return new StaticSiteCustomDomainContent(
+                id,
+                name,
+                type,
+                systemData.Value,
+                validationMethod.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StaticSiteCustomDomainContent>.Write(ModelReaderWriterOptions options)

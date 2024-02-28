@@ -28,29 +28,29 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(TrustedClientCertificates))
+            if (!(TrustedClientCertificates is ChangeTrackingList<WritableSubResource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("trustedClientCertificates"u8);
                 writer.WriteStartArray();
@@ -60,17 +60,17 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SslPolicy))
+            if (SslPolicy != null)
             {
                 writer.WritePropertyName("sslPolicy"u8);
                 writer.WriteObjectValue(SslPolicy);
             }
-            if (Optional.IsDefined(ClientAuthConfiguration))
+            if (ClientAuthConfiguration != null)
             {
                 writer.WritePropertyName("clientAuthConfiguration"u8);
                 writer.WriteObjectValue(ClientAuthConfiguration);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
-            Optional<IList<WritableSubResource>> trustedClientCertificates = default;
+            IList<WritableSubResource> trustedClientCertificates = default;
             Optional<ApplicationGatewaySslPolicy> sslPolicy = default;
             Optional<ApplicationGatewayClientAuthConfiguration> clientAuthConfiguration = default;
             Optional<NetworkProvisioningState> provisioningState = default;
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            sslPolicy = ApplicationGatewaySslPolicy.DeserializeApplicationGatewaySslPolicy(property0.Value);
+                            sslPolicy = ApplicationGatewaySslPolicy.DeserializeApplicationGatewaySslPolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("clientAuthConfiguration"u8))
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            clientAuthConfiguration = ApplicationGatewayClientAuthConfiguration.DeserializeApplicationGatewayClientAuthConfiguration(property0.Value);
+                            clientAuthConfiguration = ApplicationGatewayClientAuthConfiguration.DeserializeApplicationGatewayClientAuthConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -217,7 +217,16 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewaySslProfile(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToList(trustedClientCertificates), sslPolicy.Value, clientAuthConfiguration.Value, Optional.ToNullable(provisioningState));
+            return new ApplicationGatewaySslProfile(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                trustedClientCertificates ?? new ChangeTrackingList<WritableSubResource>(),
+                sslPolicy.Value,
+                clientAuthConfiguration.Value,
+                Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<ApplicationGatewaySslProfile>.Write(ModelReaderWriterOptions options)

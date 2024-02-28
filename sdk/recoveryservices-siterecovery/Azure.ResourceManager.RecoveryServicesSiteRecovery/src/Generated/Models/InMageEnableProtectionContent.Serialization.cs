@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(VmFriendlyName))
+            if (VmFriendlyName != null)
             {
                 writer.WritePropertyName("vmFriendlyName"u8);
                 writer.WriteStringValue(VmFriendlyName);
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStringValue(ProcessServerId);
             writer.WritePropertyName("retentionDrive"u8);
             writer.WriteStringValue(RetentionDrive);
-            if (Optional.IsDefined(RunAsAccountId))
+            if (RunAsAccountId != null)
             {
                 writer.WritePropertyName("runAsAccountId"u8);
                 writer.WriteStringValue(RunAsAccountId);
@@ -46,17 +46,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStringValue(MultiVmGroupId);
             writer.WritePropertyName("multiVmGroupName"u8);
             writer.WriteStringValue(MultiVmGroupName);
-            if (Optional.IsDefined(DatastoreName))
+            if (DatastoreName != null)
             {
                 writer.WritePropertyName("datastoreName"u8);
                 writer.WriteStringValue(DatastoreName);
             }
-            if (Optional.IsDefined(DiskExclusionContent))
+            if (DiskExclusionContent != null)
             {
                 writer.WritePropertyName("diskExclusionInput"u8);
                 writer.WriteObjectValue(DiskExclusionContent);
             }
-            if (Optional.IsCollectionDefined(DisksToInclude))
+            if (!(DisksToInclude is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("disksToInclude"u8);
                 writer.WriteStartArray();
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string multiVmGroupName = default;
             Optional<string> datastoreName = default;
             Optional<InMageDiskExclusionContent> diskExclusionContent = default;
-            Optional<IList<string>> disksToInclude = default;
+            IList<string> disksToInclude = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    diskExclusionContent = InMageDiskExclusionContent.DeserializeInMageDiskExclusionContent(property.Value);
+                    diskExclusionContent = InMageDiskExclusionContent.DeserializeInMageDiskExclusionContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("disksToInclude"u8))
@@ -195,7 +195,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageEnableProtectionContent(instanceType, serializedAdditionalRawData, vmFriendlyName.Value, masterTargetId, processServerId, retentionDrive, runAsAccountId.Value, multiVmGroupId, multiVmGroupName, datastoreName.Value, diskExclusionContent.Value, Optional.ToList(disksToInclude));
+            return new InMageEnableProtectionContent(
+                instanceType,
+                serializedAdditionalRawData,
+                vmFriendlyName.Value,
+                masterTargetId,
+                processServerId,
+                retentionDrive,
+                runAsAccountId.Value,
+                multiVmGroupId,
+                multiVmGroupName,
+                datastoreName.Value,
+                diskExclusionContent.Value,
+                disksToInclude ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<InMageEnableProtectionContent>.Write(ModelReaderWriterOptions options)

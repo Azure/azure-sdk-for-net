@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<ProtectableContainerResource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ProtectableContainerResource>> value = default;
+            IReadOnlyList<ProtectableContainerResource> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<ProtectableContainerResource> array = new List<ProtectableContainerResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProtectableContainerResource.DeserializeProtectableContainerResource(item));
+                        array.Add(ProtectableContainerResource.DeserializeProtectableContainerResource(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProtectableContainerResourceList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ProtectableContainerResourceList(value ?? new ChangeTrackingList<ProtectableContainerResource>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProtectableContainerResourceList>.Write(ModelReaderWriterOptions options)

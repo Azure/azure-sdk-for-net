@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Peering.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(WorkspaceId))
+            if (options.Format != "W" && WorkspaceId != null)
             {
                 writer.WritePropertyName("workspaceID"u8);
                 writer.WriteStringValue(WorkspaceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(Key))
+            if (options.Format != "W" && Key != null)
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ConnectedAgents))
+            if (options.Format != "W" && !(ConnectedAgents is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("connectedAgents"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Peering.Models
             }
             Optional<string> workspaceId = default;
             Optional<string> key = default;
-            Optional<IReadOnlyList<string>> connectedAgents = default;
+            IReadOnlyList<string> connectedAgents = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Peering.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PeeringLogAnalyticsWorkspaceProperties(workspaceId.Value, key.Value, Optional.ToList(connectedAgents), serializedAdditionalRawData);
+            return new PeeringLogAnalyticsWorkspaceProperties(workspaceId.Value, key.Value, connectedAgents ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PeeringLogAnalyticsWorkspaceProperties>.Write(ModelReaderWriterOptions options)

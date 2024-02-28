@@ -281,7 +281,10 @@ namespace Azure.ResourceManager.ElasticSan
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ElasticSanPrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, ElasticSanPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _elasticSanPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("ElasticSanPrivateEndpointConnectionResource.Update");
             scope.Start();
@@ -327,7 +330,10 @@ namespace Azure.ResourceManager.ElasticSan
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ElasticSanPrivateEndpointConnectionResource> Update(WaitUntil waitUntil, ElasticSanPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _elasticSanPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("ElasticSanPrivateEndpointConnectionResource.Update");
             scope.Start();

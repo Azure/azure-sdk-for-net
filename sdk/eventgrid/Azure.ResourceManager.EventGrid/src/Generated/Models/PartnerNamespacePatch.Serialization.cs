@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (PublicNetworkAccess.HasValue)
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(InboundIPRules))
+            if (!(InboundIPRules is ChangeTrackingList<EventGridInboundIPRule> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("inboundIpRules"u8);
                 writer.WriteStartArray();
@@ -54,12 +54,12 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(MinimumTlsVersionAllowed))
+            if (MinimumTlsVersionAllowed.HasValue)
             {
                 writer.WritePropertyName("minimumTlsVersionAllowed"u8);
                 writer.WriteStringValue(MinimumTlsVersionAllowed.Value.ToString());
             }
-            if (Optional.IsDefined(IsLocalAuthDisabled))
+            if (IsLocalAuthDisabled.HasValue)
             {
                 writer.WritePropertyName("disableLocalAuth"u8);
                 writer.WriteBooleanValue(IsLocalAuthDisabled.Value);
@@ -103,9 +103,9 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<EventGridPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<IList<EventGridInboundIPRule>> inboundIPRules = default;
+            IList<EventGridInboundIPRule> inboundIPRules = default;
             Optional<TlsVersion> minimumTlsVersionAllowed = default;
             Optional<bool> disableLocalAuth = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                             List<EventGridInboundIPRule> array = new List<EventGridInboundIPRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(EventGridInboundIPRule.DeserializeEventGridInboundIPRule(item));
+                                array.Add(EventGridInboundIPRule.DeserializeEventGridInboundIPRule(item, options));
                             }
                             inboundIPRules = array;
                             continue;
@@ -185,7 +185,13 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PartnerNamespacePatch(Optional.ToDictionary(tags), Optional.ToNullable(publicNetworkAccess), Optional.ToList(inboundIPRules), Optional.ToNullable(minimumTlsVersionAllowed), Optional.ToNullable(disableLocalAuth), serializedAdditionalRawData);
+            return new PartnerNamespacePatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(publicNetworkAccess),
+                inboundIPRules ?? new ChangeTrackingList<EventGridInboundIPRule>(),
+                Optional.ToNullable(minimumTlsVersionAllowed),
+                Optional.ToNullable(disableLocalAuth),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PartnerNamespacePatch>.Write(ModelReaderWriterOptions options)

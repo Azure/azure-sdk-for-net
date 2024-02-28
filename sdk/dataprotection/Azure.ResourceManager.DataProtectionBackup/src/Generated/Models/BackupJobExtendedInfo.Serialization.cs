@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AdditionalDetails))
+            if (!(AdditionalDetails is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("additionalDetails"u8);
                 writer.WriteStartObject();
@@ -37,27 +37,27 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsDefined(BackupInstanceState))
+            if (options.Format != "W" && BackupInstanceState != null)
             {
                 writer.WritePropertyName("backupInstanceState"u8);
                 writer.WriteStringValue(BackupInstanceState);
             }
-            if (options.Format != "W" && Optional.IsDefined(DataTransferredInBytes))
+            if (options.Format != "W" && DataTransferredInBytes.HasValue)
             {
                 writer.WritePropertyName("dataTransferredInBytes"u8);
                 writer.WriteNumberValue(DataTransferredInBytes.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(RecoveryDestination))
+            if (options.Format != "W" && RecoveryDestination != null)
             {
                 writer.WritePropertyName("recoveryDestination"u8);
                 writer.WriteStringValue(RecoveryDestination);
             }
-            if (options.Format != "W" && Optional.IsDefined(SourceRecoverPoint))
+            if (options.Format != "W" && SourceRecoverPoint != null)
             {
                 writer.WritePropertyName("sourceRecoverPoint"u8);
                 writer.WriteObjectValue(SourceRecoverPoint);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SubTasks))
+            if (options.Format != "W" && !(SubTasks is ChangeTrackingList<BackupJobSubTask> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("subTasks"u8);
                 writer.WriteStartArray();
@@ -67,12 +67,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetRecoverPoint))
+            if (options.Format != "W" && TargetRecoverPoint != null)
             {
                 writer.WritePropertyName("targetRecoverPoint"u8);
                 writer.WriteObjectValue(TargetRecoverPoint);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(WarningDetails))
+            if (options.Format != "W" && !(WarningDetails is ChangeTrackingList<UserFacingWarningDetail> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("warningDetails"u8);
                 writer.WriteStartArray();
@@ -120,14 +120,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<IReadOnlyDictionary<string, string>> additionalDetails = default;
+            IReadOnlyDictionary<string, string> additionalDetails = default;
             Optional<string> backupInstanceState = default;
             Optional<double> dataTransferredInBytes = default;
             Optional<string> recoveryDestination = default;
             Optional<RestoreJobRecoveryPointDetails> sourceRecoverPoint = default;
-            Optional<IReadOnlyList<BackupJobSubTask>> subTasks = default;
+            IReadOnlyList<BackupJobSubTask> subTasks = default;
             Optional<RestoreJobRecoveryPointDetails> targetRecoverPoint = default;
-            Optional<IReadOnlyList<UserFacingWarningDetail>> warningDetails = default;
+            IReadOnlyList<UserFacingWarningDetail> warningDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    sourceRecoverPoint = RestoreJobRecoveryPointDetails.DeserializeRestoreJobRecoveryPointDetails(property.Value);
+                    sourceRecoverPoint = RestoreJobRecoveryPointDetails.DeserializeRestoreJobRecoveryPointDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("subTasks"u8))
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     List<BackupJobSubTask> array = new List<BackupJobSubTask>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BackupJobSubTask.DeserializeBackupJobSubTask(item));
+                        array.Add(BackupJobSubTask.DeserializeBackupJobSubTask(item, options));
                     }
                     subTasks = array;
                     continue;
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    targetRecoverPoint = RestoreJobRecoveryPointDetails.DeserializeRestoreJobRecoveryPointDetails(property.Value);
+                    targetRecoverPoint = RestoreJobRecoveryPointDetails.DeserializeRestoreJobRecoveryPointDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("warningDetails"u8))
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     List<UserFacingWarningDetail> array = new List<UserFacingWarningDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UserFacingWarningDetail.DeserializeUserFacingWarningDetail(item));
+                        array.Add(UserFacingWarningDetail.DeserializeUserFacingWarningDetail(item, options));
                     }
                     warningDetails = array;
                     continue;
@@ -217,7 +217,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupJobExtendedInfo(Optional.ToDictionary(additionalDetails), backupInstanceState.Value, Optional.ToNullable(dataTransferredInBytes), recoveryDestination.Value, sourceRecoverPoint.Value, Optional.ToList(subTasks), targetRecoverPoint.Value, Optional.ToList(warningDetails), serializedAdditionalRawData);
+            return new BackupJobExtendedInfo(
+                additionalDetails ?? new ChangeTrackingDictionary<string, string>(),
+                backupInstanceState.Value,
+                Optional.ToNullable(dataTransferredInBytes),
+                recoveryDestination.Value,
+                sourceRecoverPoint.Value,
+                subTasks ?? new ChangeTrackingList<BackupJobSubTask>(),
+                targetRecoverPoint.Value,
+                warningDetails ?? new ChangeTrackingList<UserFacingWarningDetail>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupJobExtendedInfo>.Write(ModelReaderWriterOptions options)

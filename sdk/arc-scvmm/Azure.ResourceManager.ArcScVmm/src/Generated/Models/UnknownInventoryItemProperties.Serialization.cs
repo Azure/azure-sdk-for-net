@@ -28,22 +28,22 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             writer.WriteStartObject();
             writer.WritePropertyName("inventoryType"u8);
             writer.WriteStringValue(InventoryType.ToString());
-            if (options.Format != "W" && Optional.IsDefined(ManagedResourceId))
+            if (options.Format != "W" && ManagedResourceId != null)
             {
                 writer.WritePropertyName("managedResourceId"u8);
                 writer.WriteStringValue(ManagedResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(Uuid))
+            if (options.Format != "W" && Uuid != null)
             {
                 writer.WritePropertyName("uuid"u8);
                 writer.WriteStringValue(Uuid);
             }
-            if (options.Format != "W" && Optional.IsDefined(InventoryItemName))
+            if (options.Format != "W" && InventoryItemName != null)
             {
                 writer.WritePropertyName("inventoryItemName"u8);
                 writer.WriteStringValue(InventoryItemName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownInventoryItemProperties(document.RootElement, options);
+            return DeserializeInventoryItemProperties(document.RootElement, options);
         }
 
         internal static UnknownInventoryItemProperties DeserializeUnknownInventoryItemProperties(JsonElement element, ModelReaderWriterOptions options = null)
@@ -126,7 +126,13 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownInventoryItemProperties(inventoryType, managedResourceId.Value, uuid.Value, inventoryItemName.Value, provisioningState.Value, serializedAdditionalRawData);
+            return new UnknownInventoryItemProperties(
+                inventoryType,
+                managedResourceId.Value,
+                uuid.Value,
+                inventoryItemName.Value,
+                provisioningState.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InventoryItemProperties>.Write(ModelReaderWriterOptions options)
@@ -151,7 +157,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownInventoryItemProperties(document.RootElement, options);
+                        return DeserializeInventoryItemProperties(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(InventoryItemProperties)} does not support '{options.Format}' format.");

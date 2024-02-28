@@ -17,7 +17,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -28,7 +28,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteObjectValue(CredentialsInternal);
             writer.WritePropertyName("container"u8);
             writer.WriteObjectValue(Container);
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 if (Identity != null)
                 {
@@ -40,7 +40,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("identity");
                 }
             }
-            if (Optional.IsDefined(DataChangeDetectionPolicy))
+            if (DataChangeDetectionPolicy != null)
             {
                 if (DataChangeDetectionPolicy != null)
                 {
@@ -52,7 +52,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("dataChangeDetectionPolicy");
                 }
             }
-            if (Optional.IsDefined(DataDeletionDetectionPolicy))
+            if (DataDeletionDetectionPolicy != null)
             {
                 if (DataDeletionDetectionPolicy != null)
                 {
@@ -64,12 +64,12 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("dataDeletionDetectionPolicy");
                 }
             }
-            if (Optional.IsDefined(_etag))
+            if (_etag != null)
             {
                 writer.WritePropertyName("@odata.etag"u8);
                 writer.WriteStringValue(_etag);
             }
-            if (Optional.IsDefined(EncryptionKey))
+            if (EncryptionKey != null)
             {
                 if (EncryptionKey != null)
                 {
@@ -173,7 +173,17 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SearchIndexerDataSourceConnection(name, description.Value, type, credentials, container, identity.Value, dataChangeDetectionPolicy.Value, dataDeletionDetectionPolicy.Value, odataEtag.Value, encryptionKey.Value);
+            return new SearchIndexerDataSourceConnection(
+                name,
+                description.Value,
+                type,
+                credentials,
+                container,
+                identity.Value,
+                dataChangeDetectionPolicy.Value,
+                dataDeletionDetectionPolicy.Value,
+                odataEtag.Value,
+                encryptionKey.Value);
         }
     }
 }

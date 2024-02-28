@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteStringValue(ResourceId);
             writer.WritePropertyName("changeType"u8);
             writer.WriteStringValue(ChangeType.ToSerialString());
-            if (Optional.IsDefined(UnsupportedReason))
+            if (UnsupportedReason != null)
             {
                 writer.WritePropertyName("unsupportedReason"u8);
                 writer.WriteStringValue(UnsupportedReason);
             }
-            if (Optional.IsDefined(Before))
+            if (Before != null)
             {
                 writer.WritePropertyName("before"u8);
 #if NET6_0_OR_GREATER
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
 #endif
             }
-            if (Optional.IsDefined(After))
+            if (After != null)
             {
                 writer.WritePropertyName("after"u8);
 #if NET6_0_OR_GREATER
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
 #endif
             }
-            if (Optional.IsCollectionDefined(Delta))
+            if (!(Delta is ChangeTrackingList<WhatIfPropertyChange> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("delta"u8);
                 writer.WriteStartArray();
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<string> unsupportedReason = default;
             Optional<BinaryData> before = default;
             Optional<BinaryData> after = default;
-            Optional<IReadOnlyList<WhatIfPropertyChange>> delta = default;
+            IReadOnlyList<WhatIfPropertyChange> delta = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<WhatIfPropertyChange> array = new List<WhatIfPropertyChange>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WhatIfPropertyChange.DeserializeWhatIfPropertyChange(item));
+                        array.Add(WhatIfPropertyChange.DeserializeWhatIfPropertyChange(item, options));
                     }
                     delta = array;
                     continue;
@@ -170,7 +170,14 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WhatIfChange(resourceId, changeType, unsupportedReason.Value, before.Value, after.Value, Optional.ToList(delta), serializedAdditionalRawData);
+            return new WhatIfChange(
+                resourceId,
+                changeType,
+                unsupportedReason.Value,
+                before.Value,
+                after.Value,
+                delta ?? new ChangeTrackingList<WhatIfPropertyChange>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WhatIfChange>.Write(ModelReaderWriterOptions options)

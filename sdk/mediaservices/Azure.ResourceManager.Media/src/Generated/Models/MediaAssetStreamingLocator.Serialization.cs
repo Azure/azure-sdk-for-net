@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(AssetName))
+            if (options.Format != "W" && AssetName != null)
             {
                 writer.WritePropertyName("assetName"u8);
                 writer.WriteStringValue(AssetName);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EndOn))
+            if (options.Format != "W" && EndOn.HasValue)
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(StreamingLocatorId))
+            if (options.Format != "W" && StreamingLocatorId.HasValue)
             {
                 writer.WritePropertyName("streamingLocatorId"u8);
                 writer.WriteStringValue(StreamingLocatorId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(StreamingPolicyName))
+            if (options.Format != "W" && StreamingPolicyName != null)
             {
                 writer.WritePropertyName("streamingPolicyName"u8);
                 writer.WriteStringValue(StreamingPolicyName);
             }
-            if (options.Format != "W" && Optional.IsDefined(DefaultContentKeyPolicyName))
+            if (options.Format != "W" && DefaultContentKeyPolicyName != null)
             {
                 writer.WritePropertyName("defaultContentKeyPolicyName"u8);
                 writer.WriteStringValue(DefaultContentKeyPolicyName);
@@ -178,7 +178,16 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MediaAssetStreamingLocator(name.Value, assetName.Value, Optional.ToNullable(created), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(streamingLocatorId), streamingPolicyName.Value, defaultContentKeyPolicyName.Value, serializedAdditionalRawData);
+            return new MediaAssetStreamingLocator(
+                name.Value,
+                assetName.Value,
+                Optional.ToNullable(created),
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                Optional.ToNullable(streamingLocatorId),
+                streamingPolicyName.Value,
+                defaultContentKeyPolicyName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MediaAssetStreamingLocator>.Write(ModelReaderWriterOptions options)

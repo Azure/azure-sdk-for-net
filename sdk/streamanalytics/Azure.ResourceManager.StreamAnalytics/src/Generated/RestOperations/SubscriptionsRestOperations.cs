@@ -64,7 +64,14 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<StreamAnalyticsSubscriptionQuotasListResult>> ListQuotasAsync(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
 
             using var message = CreateListQuotasRequest(subscriptionId, location);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -90,7 +97,14 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<StreamAnalyticsSubscriptionQuotasListResult> ListQuotas(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
 
             using var message = CreateListQuotasRequest(subscriptionId, location);
             _pipeline.Send(message, cancellationToken);
@@ -140,8 +154,18 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> TestQueryAsync(string subscriptionId, AzureLocation location, StreamAnalyticsTestQuery testQuery, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(testQuery, nameof(testQuery));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (testQuery == null)
+            {
+                throw new ArgumentNullException(nameof(testQuery));
+            }
 
             using var message = CreateTestQueryRequest(subscriptionId, location, testQuery);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -164,8 +188,18 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response TestQuery(string subscriptionId, AzureLocation location, StreamAnalyticsTestQuery testQuery, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(testQuery, nameof(testQuery));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (testQuery == null)
+            {
+                throw new ArgumentNullException(nameof(testQuery));
+            }
 
             using var message = CreateTestQueryRequest(subscriptionId, location, testQuery);
             _pipeline.Send(message, cancellationToken);
@@ -211,8 +245,18 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<StreamAnalyticsQueryCompilationResult>> CompileQueryAsync(string subscriptionId, AzureLocation location, StreamAnalyticsCompileQuery compileQuery, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(compileQuery, nameof(compileQuery));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (compileQuery == null)
+            {
+                throw new ArgumentNullException(nameof(compileQuery));
+            }
 
             using var message = CreateCompileQueryRequest(subscriptionId, location, compileQuery);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -239,8 +283,18 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<StreamAnalyticsQueryCompilationResult> CompileQuery(string subscriptionId, AzureLocation location, StreamAnalyticsCompileQuery compileQuery, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(compileQuery, nameof(compileQuery));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (compileQuery == null)
+            {
+                throw new ArgumentNullException(nameof(compileQuery));
+            }
 
             using var message = CreateCompileQueryRequest(subscriptionId, location, compileQuery);
             _pipeline.Send(message, cancellationToken);
@@ -290,8 +344,18 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> SampleInputAsync(string subscriptionId, AzureLocation location, StreamAnalyticsSampleInputContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var message = CreateSampleInputRequest(subscriptionId, location, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -313,8 +377,18 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response SampleInput(string subscriptionId, AzureLocation location, StreamAnalyticsSampleInputContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var message = CreateSampleInputRequest(subscriptionId, location, content);
             _pipeline.Send(message, cancellationToken);
@@ -359,8 +433,18 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> TestInputAsync(string subscriptionId, AzureLocation location, StreamAnalyticsTestContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var message = CreateTestInputRequest(subscriptionId, location, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -382,8 +466,18 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response TestInput(string subscriptionId, AzureLocation location, StreamAnalyticsTestContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var message = CreateTestInputRequest(subscriptionId, location, content);
             _pipeline.Send(message, cancellationToken);
@@ -428,8 +522,18 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> TestOutputAsync(string subscriptionId, AzureLocation location, StreamAnalyticsTestOutput testOutput, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(testOutput, nameof(testOutput));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (testOutput == null)
+            {
+                throw new ArgumentNullException(nameof(testOutput));
+            }
 
             using var message = CreateTestOutputRequest(subscriptionId, location, testOutput);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -451,8 +555,18 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response TestOutput(string subscriptionId, AzureLocation location, StreamAnalyticsTestOutput testOutput, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(testOutput, nameof(testOutput));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (testOutput == null)
+            {
+                throw new ArgumentNullException(nameof(testOutput));
+            }
 
             using var message = CreateTestOutputRequest(subscriptionId, location, testOutput);
             _pipeline.Send(message, cancellationToken);

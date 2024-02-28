@@ -28,22 +28,22 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             writer.WriteStartObject();
             writer.WritePropertyName("inventoryType"u8);
             writer.WriteStringValue(InventoryType.ToString());
-            if (options.Format != "W" && Optional.IsDefined(ManagedResourceId))
+            if (options.Format != "W" && ManagedResourceId != null)
             {
                 writer.WritePropertyName("managedResourceId"u8);
                 writer.WriteStringValue(ManagedResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(Uuid))
+            if (options.Format != "W" && Uuid != null)
             {
                 writer.WritePropertyName("uuid"u8);
                 writer.WriteStringValue(Uuid);
             }
-            if (options.Format != "W" && Optional.IsDefined(InventoryItemName))
+            if (options.Format != "W" && InventoryItemName != null)
             {
                 writer.WritePropertyName("inventoryItemName"u8);
                 writer.WriteStringValue(InventoryItemName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
@@ -126,7 +126,13 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudInventoryItem(inventoryType, managedResourceId.Value, uuid.Value, inventoryItemName.Value, provisioningState.Value, serializedAdditionalRawData);
+            return new CloudInventoryItem(
+                inventoryType,
+                managedResourceId.Value,
+                uuid.Value,
+                inventoryItemName.Value,
+                provisioningState.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudInventoryItem>.Write(ModelReaderWriterOptions options)

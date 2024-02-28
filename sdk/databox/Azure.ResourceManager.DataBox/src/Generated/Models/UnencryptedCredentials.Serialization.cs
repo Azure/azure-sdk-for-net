@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(JobName))
+            if (options.Format != "W" && JobName != null)
             {
                 writer.WritePropertyName("jobName"u8);
                 writer.WriteStringValue(JobName);
             }
-            if (options.Format != "W" && Optional.IsDefined(JobSecrets))
+            if (options.Format != "W" && JobSecrets != null)
             {
                 writer.WritePropertyName("jobSecrets"u8);
                 writer.WriteObjectValue(JobSecrets);
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    jobSecrets = JobSecrets.DeserializeJobSecrets(property.Value);
+                    jobSecrets = JobSecrets.DeserializeJobSecrets(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

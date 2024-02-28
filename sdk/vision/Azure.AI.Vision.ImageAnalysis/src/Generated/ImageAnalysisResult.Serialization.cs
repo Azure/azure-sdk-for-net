@@ -27,12 +27,12 @@ namespace Azure.AI.Vision.ImageAnalysis
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Caption))
+            if (Caption != null)
             {
                 writer.WritePropertyName("captionResult"u8);
                 writer.WriteObjectValue(Caption);
             }
-            if (Optional.IsDefined(DenseCaptions))
+            if (DenseCaptions != null)
             {
                 writer.WritePropertyName("denseCaptionsResult"u8);
                 writer.WriteObjectValue(DenseCaptions);
@@ -41,27 +41,27 @@ namespace Azure.AI.Vision.ImageAnalysis
             writer.WriteObjectValue(Metadata);
             writer.WritePropertyName("modelVersion"u8);
             writer.WriteStringValue(ModelVersion);
-            if (Optional.IsDefined(Objects))
+            if (Objects != null)
             {
                 writer.WritePropertyName("objectsResult"u8);
                 writer.WriteObjectValue(Objects);
             }
-            if (Optional.IsDefined(People))
+            if (People != null)
             {
                 writer.WritePropertyName("peopleResult"u8);
                 writer.WriteObjectValue(People);
             }
-            if (Optional.IsDefined(Read))
+            if (Read != null)
             {
                 writer.WritePropertyName("readResult"u8);
                 writer.WriteObjectValue(Read);
             }
-            if (Optional.IsDefined(SmartCrops))
+            if (SmartCrops != null)
             {
                 writer.WritePropertyName("smartCropsResult"u8);
                 writer.WriteObjectValue(SmartCrops);
             }
-            if (Optional.IsDefined(Tags))
+            if (Tags != null)
             {
                 writer.WritePropertyName("tagsResult"u8);
                 writer.WriteObjectValue(Tags);
@@ -123,7 +123,7 @@ namespace Azure.AI.Vision.ImageAnalysis
                     {
                         continue;
                     }
-                    captionResult = CaptionResult.DeserializeCaptionResult(property.Value);
+                    captionResult = CaptionResult.DeserializeCaptionResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("denseCaptionsResult"u8))
@@ -132,12 +132,12 @@ namespace Azure.AI.Vision.ImageAnalysis
                     {
                         continue;
                     }
-                    denseCaptionsResult = DenseCaptionsResult.DeserializeDenseCaptionsResult(property.Value);
+                    denseCaptionsResult = DenseCaptionsResult.DeserializeDenseCaptionsResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("metadata"u8))
                 {
-                    metadata = ImageMetadata.DeserializeImageMetadata(property.Value);
+                    metadata = ImageMetadata.DeserializeImageMetadata(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("modelVersion"u8))
@@ -151,7 +151,7 @@ namespace Azure.AI.Vision.ImageAnalysis
                     {
                         continue;
                     }
-                    objectsResult = ObjectsResult.DeserializeObjectsResult(property.Value);
+                    objectsResult = ObjectsResult.DeserializeObjectsResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("peopleResult"u8))
@@ -160,7 +160,7 @@ namespace Azure.AI.Vision.ImageAnalysis
                     {
                         continue;
                     }
-                    peopleResult = PeopleResult.DeserializePeopleResult(property.Value);
+                    peopleResult = PeopleResult.DeserializePeopleResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("readResult"u8))
@@ -169,7 +169,7 @@ namespace Azure.AI.Vision.ImageAnalysis
                     {
                         continue;
                     }
-                    readResult = ReadResult.DeserializeReadResult(property.Value);
+                    readResult = ReadResult.DeserializeReadResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("smartCropsResult"u8))
@@ -178,7 +178,7 @@ namespace Azure.AI.Vision.ImageAnalysis
                     {
                         continue;
                     }
-                    smartCropsResult = SmartCropsResult.DeserializeSmartCropsResult(property.Value);
+                    smartCropsResult = SmartCropsResult.DeserializeSmartCropsResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tagsResult"u8))
@@ -187,7 +187,7 @@ namespace Azure.AI.Vision.ImageAnalysis
                     {
                         continue;
                     }
-                    tagsResult = TagsResult.DeserializeTagsResult(property.Value);
+                    tagsResult = TagsResult.DeserializeTagsResult(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -196,7 +196,17 @@ namespace Azure.AI.Vision.ImageAnalysis
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ImageAnalysisResult(captionResult.Value, denseCaptionsResult.Value, metadata, modelVersion, objectsResult.Value, peopleResult.Value, readResult.Value, smartCropsResult.Value, tagsResult.Value, serializedAdditionalRawData);
+            return new ImageAnalysisResult(
+                captionResult.Value,
+                denseCaptionsResult.Value,
+                metadata,
+                modelVersion,
+                objectsResult.Value,
+                peopleResult.Value,
+                readResult.Value,
+                smartCropsResult.Value,
+                tagsResult.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ImageAnalysisResult>.Write(ModelReaderWriterOptions options)

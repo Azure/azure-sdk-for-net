@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -55,24 +55,24 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Size))
+            if (Size.HasValue)
             {
                 writer.WritePropertyName("size"u8);
                 writer.WriteNumberValue(Size.Value);
             }
-            if (Optional.IsDefined(QosType))
+            if (QosType.HasValue)
             {
                 writer.WritePropertyName("qosType"u8);
                 writer.WriteStringValue(QosType.Value.ToString());
             }
-            if (Optional.IsDefined(IsCoolAccessEnabled))
+            if (IsCoolAccessEnabled.HasValue)
             {
                 writer.WritePropertyName("coolAccess"u8);
                 writer.WriteBooleanValue(IsCoolAccessEnabled.Value);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -217,7 +217,17 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CapacityPoolPatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(size), Optional.ToNullable(qosType), Optional.ToNullable(coolAccess), serializedAdditionalRawData);
+            return new CapacityPoolPatch(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                Optional.ToNullable(size),
+                Optional.ToNullable(qosType),
+                Optional.ToNullable(coolAccess),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CapacityPoolPatch>.Write(ModelReaderWriterOptions options)

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             writer.WritePropertyName("metric"u8);
             writer.WriteStringValue(Metric.ToString());
-            if (Optional.IsDefined(Threshold))
+            if (Threshold != null)
             {
                 if (Threshold != null)
                 {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         threshold = null;
                         continue;
                     }
-                    threshold = MonitoringThreshold.DeserializeMonitoringThreshold(property.Value);
+                    threshold = MonitoringThreshold.DeserializeMonitoringThreshold(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

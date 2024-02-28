@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Cidrs))
+            if (!(Cidrs is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("cidrs"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Countries))
+            if (!(Countries is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("countries"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Feeds))
+            if (!(Feeds is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("feeds"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(PrefixLists))
+            if (!(PrefixLists is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("prefixLists"u8);
                 writer.WriteStartArray();
@@ -104,10 +104,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 return null;
             }
-            Optional<IList<string>> cidrs = default;
-            Optional<IList<string>> countries = default;
-            Optional<IList<string>> feeds = default;
-            Optional<IList<string>> prefixLists = default;
+            IList<string> cidrs = default;
+            IList<string> countries = default;
+            IList<string> feeds = default;
+            IList<string> prefixLists = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SourceAddressInfo(Optional.ToList(cidrs), Optional.ToList(countries), Optional.ToList(feeds), Optional.ToList(prefixLists), serializedAdditionalRawData);
+            return new SourceAddressInfo(cidrs ?? new ChangeTrackingList<string>(), countries ?? new ChangeTrackingList<string>(), feeds ?? new ChangeTrackingList<string>(), prefixLists ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SourceAddressInfo>.Write(ModelReaderWriterOptions options)

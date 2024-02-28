@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Avs.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(State))
+            if (State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(VmMembers))
+            if (!(VmMembers is ChangeTrackingList<ResourceIdentifier> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("vmMembers"u8);
                 writer.WriteStartArray();
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(HostMembers))
+            if (!(HostMembers is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("hostMembers"u8);
                 writer.WriteStartArray();
@@ -58,12 +58,12 @@ namespace Azure.ResourceManager.Avs.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AffinityStrength))
+            if (AffinityStrength.HasValue)
             {
                 writer.WritePropertyName("affinityStrength"u8);
                 writer.WriteStringValue(AffinityStrength.Value.ToString());
             }
-            if (Optional.IsDefined(AzureHybridBenefitType))
+            if (AzureHybridBenefitType.HasValue)
             {
                 writer.WritePropertyName("azureHybridBenefitType"u8);
                 writer.WriteStringValue(AzureHybridBenefitType.Value.ToString());
@@ -108,8 +108,8 @@ namespace Azure.ResourceManager.Avs.Models
                 return null;
             }
             Optional<PlacementPolicyState> state = default;
-            Optional<IList<ResourceIdentifier>> vmMembers = default;
-            Optional<IList<string>> hostMembers = default;
+            IList<ResourceIdentifier> vmMembers = default;
+            IList<string> hostMembers = default;
             Optional<VmHostPlacementPolicyAffinityStrength> affinityStrength = default;
             Optional<AzureHybridBenefitType> azureHybridBenefitType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -196,7 +196,13 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PlacementPolicyPatch(Optional.ToNullable(state), Optional.ToList(vmMembers), Optional.ToList(hostMembers), Optional.ToNullable(affinityStrength), Optional.ToNullable(azureHybridBenefitType), serializedAdditionalRawData);
+            return new PlacementPolicyPatch(
+                Optional.ToNullable(state),
+                vmMembers ?? new ChangeTrackingList<ResourceIdentifier>(),
+                hostMembers ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(affinityStrength),
+                Optional.ToNullable(azureHybridBenefitType),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PlacementPolicyPatch>.Write(ModelReaderWriterOptions options)

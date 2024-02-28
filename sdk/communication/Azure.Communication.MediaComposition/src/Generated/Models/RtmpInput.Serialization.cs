@@ -22,14 +22,14 @@ namespace Azure.Communication.MediaComposition
             writer.WriteObjectValue(Resolution);
             writer.WritePropertyName("streamUrl"u8);
             writer.WriteStringValue(StreamUrl);
-            if (Optional.IsDefined(Mode))
+            if (Mode.HasValue)
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (Optional.IsDefined(PlaceholderImageUri))
+            if (PlaceholderImageUri != null)
             {
                 writer.WritePropertyName("placeholderImageUri"u8);
                 writer.WriteStringValue(PlaceholderImageUri);
@@ -86,7 +86,13 @@ namespace Azure.Communication.MediaComposition
                     continue;
                 }
             }
-            return new RtmpInput(kind, placeholderImageUri.Value, streamKey, resolution, streamUrl, Optional.ToNullable(mode));
+            return new RtmpInput(
+                kind,
+                placeholderImageUri.Value,
+                streamKey,
+                resolution,
+                streamUrl,
+                Optional.ToNullable(mode));
         }
     }
 }

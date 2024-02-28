@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ComponentId))
+            if (ComponentId != null)
             {
                 if (ComponentId != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("componentId");
                 }
             }
-            if (Optional.IsDefined(ComponentName))
+            if (ComponentName != null)
             {
                 if (ComponentName != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("componentName");
                 }
             }
-            if (Optional.IsDefined(Version))
+            if (Version != null)
             {
                 if (Version != null)
                 {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("version");
                 }
             }
-            if (Optional.IsDefined(License))
+            if (License != null)
             {
                 if (License != null)
                 {
@@ -74,12 +74,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("license");
                 }
             }
-            if (Optional.IsDefined(ReleaseOn))
+            if (ReleaseOn.HasValue)
             {
                 writer.WritePropertyName("releaseDate"u8);
                 writer.WriteStringValue(ReleaseOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(Paths))
+            if (!(Paths is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("paths"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsUpdateAvailable))
+            if (IsUpdateAvailable.HasValue)
             {
                 writer.WritePropertyName("isUpdateAvailable"u8);
                 writer.WriteStringValue(IsUpdateAvailable.Value.ToString());
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             Optional<string> version = default;
             Optional<string> license = default;
             Optional<DateTimeOffset> releaseDate = default;
-            Optional<IReadOnlyList<string>> paths = default;
+            IReadOnlyList<string> paths = default;
             Optional<IsUpdateAvailable> isUpdateAvailable = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -221,7 +221,15 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SbomComponent(componentId.Value, componentName.Value, version.Value, license.Value, Optional.ToNullable(releaseDate), Optional.ToList(paths), Optional.ToNullable(isUpdateAvailable), serializedAdditionalRawData);
+            return new SbomComponent(
+                componentId.Value,
+                componentName.Value,
+                version.Value,
+                license.Value,
+                Optional.ToNullable(releaseDate),
+                paths ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(isUpdateAvailable),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SbomComponent>.Write(ModelReaderWriterOptions options)

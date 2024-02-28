@@ -27,17 +27,14 @@ namespace Azure.Communication.JobRouter
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DispositionCode))
+            if (DispositionCode != null)
             {
                 writer.WritePropertyName("dispositionCode"u8);
                 writer.WriteStringValue(DispositionCode);
             }
-            if (Optional.IsDefined(CloseAt))
-            {
-                writer.WritePropertyName("closeAt"u8);
-                writer.WriteStringValue(CloseAt, "O");
-            }
-            if (Optional.IsDefined(Note))
+            writer.WritePropertyName("closeAt"u8);
+            writer.WriteStringValue(CloseAt, "O");
+            if (Note != null)
             {
                 writer.WritePropertyName("note"u8);
                 writer.WriteStringValue(Note);

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.DigitalTwins.Core
 {
@@ -19,8 +18,14 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> or <paramref name="filter"/> is null. </exception>
         public DigitalTwinsEventRoute(string endpointName, string filter)
         {
-            Argument.AssertNotNull(endpointName, nameof(endpointName));
-            Argument.AssertNotNull(filter, nameof(filter));
+            if (endpointName == null)
+            {
+                throw new ArgumentNullException(nameof(endpointName));
+            }
+            if (filter == null)
+            {
+                throw new ArgumentNullException(nameof(filter));
+            }
 
             EndpointName = endpointName;
             Filter = filter;

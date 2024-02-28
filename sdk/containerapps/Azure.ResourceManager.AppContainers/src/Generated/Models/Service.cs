@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="serviceType"/> is null. </exception>
         public Service(string serviceType)
         {
-            Argument.AssertNotNull(serviceType, nameof(serviceType));
+            if (serviceType == null)
+            {
+                throw new ArgumentNullException(nameof(serviceType));
+            }
 
             ServiceType = serviceType;
         }

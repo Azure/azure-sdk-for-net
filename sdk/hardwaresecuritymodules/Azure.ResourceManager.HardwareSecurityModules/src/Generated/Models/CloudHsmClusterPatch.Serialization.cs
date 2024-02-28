@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(BackupProperties))
+            if (BackupProperties != null)
             {
                 writer.WritePropertyName("backupProperties"u8);
                 writer.WriteObjectValue(BackupProperties);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<CloudHsmClusterSku> sku = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<BackupProperties> backupProperties = default;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                     {
                         continue;
                     }
-                    sku = CloudHsmClusterSku.DeserializeCloudHsmClusterSku(property.Value);
+                    sku = CloudHsmClusterSku.DeserializeCloudHsmClusterSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                             {
                                 continue;
                             }
-                            backupProperties = BackupProperties.DeserializeBackupProperties(property0.Value);
+                            backupProperties = BackupProperties.DeserializeBackupProperties(property0.Value, options);
                             continue;
                         }
                     }
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudHsmClusterPatch(Optional.ToDictionary(tags), sku.Value, identity, backupProperties.Value, serializedAdditionalRawData);
+            return new CloudHsmClusterPatch(tags ?? new ChangeTrackingDictionary<string, string>(), sku.Value, identity, backupProperties.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudHsmClusterPatch>.Write(ModelReaderWriterOptions options)

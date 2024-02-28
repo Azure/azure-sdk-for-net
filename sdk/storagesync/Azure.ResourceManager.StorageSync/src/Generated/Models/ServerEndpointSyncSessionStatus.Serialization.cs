@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(LastSyncResult))
+            if (options.Format != "W" && LastSyncResult.HasValue)
             {
                 writer.WritePropertyName("lastSyncResult"u8);
                 writer.WriteNumberValue(LastSyncResult.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastSyncTimestamp))
+            if (options.Format != "W" && LastSyncTimestamp.HasValue)
             {
                 writer.WritePropertyName("lastSyncTimestamp"u8);
                 writer.WriteStringValue(LastSyncTimestamp.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastSyncSuccessTimestamp))
+            if (options.Format != "W" && LastSyncSuccessTimestamp.HasValue)
             {
                 writer.WritePropertyName("lastSyncSuccessTimestamp"u8);
                 writer.WriteStringValue(LastSyncSuccessTimestamp.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastSyncPerItemErrorCount))
+            if (options.Format != "W" && LastSyncPerItemErrorCount.HasValue)
             {
                 writer.WritePropertyName("lastSyncPerItemErrorCount"u8);
                 writer.WriteNumberValue(LastSyncPerItemErrorCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(PersistentFilesNotSyncingCount))
+            if (options.Format != "W" && PersistentFilesNotSyncingCount.HasValue)
             {
                 writer.WritePropertyName("persistentFilesNotSyncingCount"u8);
                 writer.WriteNumberValue(PersistentFilesNotSyncingCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(TransientFilesNotSyncingCount))
+            if (options.Format != "W" && TransientFilesNotSyncingCount.HasValue)
             {
                 writer.WritePropertyName("transientFilesNotSyncingCount"u8);
                 writer.WriteNumberValue(TransientFilesNotSyncingCount.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(FilesNotSyncingErrors))
+            if (options.Format != "W" && !(FilesNotSyncingErrors is ChangeTrackingList<ServerEndpointFilesNotSyncingError> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("filesNotSyncingErrors"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(LastSyncMode))
+            if (options.Format != "W" && LastSyncMode.HasValue)
             {
                 writer.WritePropertyName("lastSyncMode"u8);
                 writer.WriteStringValue(LastSyncMode.Value.ToString());
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             Optional<long> lastSyncPerItemErrorCount = default;
             Optional<long> persistentFilesNotSyncingCount = default;
             Optional<long> transientFilesNotSyncingCount = default;
-            Optional<IReadOnlyList<ServerEndpointFilesNotSyncingError>> filesNotSyncingErrors = default;
+            IReadOnlyList<ServerEndpointFilesNotSyncingError> filesNotSyncingErrors = default;
             Optional<ServerEndpointSyncMode> lastSyncMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     List<ServerEndpointFilesNotSyncingError> array = new List<ServerEndpointFilesNotSyncingError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServerEndpointFilesNotSyncingError.DeserializeServerEndpointFilesNotSyncingError(item));
+                        array.Add(ServerEndpointFilesNotSyncingError.DeserializeServerEndpointFilesNotSyncingError(item, options));
                     }
                     filesNotSyncingErrors = array;
                     continue;
@@ -204,7 +204,16 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServerEndpointSyncSessionStatus(Optional.ToNullable(lastSyncResult), Optional.ToNullable(lastSyncTimestamp), Optional.ToNullable(lastSyncSuccessTimestamp), Optional.ToNullable(lastSyncPerItemErrorCount), Optional.ToNullable(persistentFilesNotSyncingCount), Optional.ToNullable(transientFilesNotSyncingCount), Optional.ToList(filesNotSyncingErrors), Optional.ToNullable(lastSyncMode), serializedAdditionalRawData);
+            return new ServerEndpointSyncSessionStatus(
+                Optional.ToNullable(lastSyncResult),
+                Optional.ToNullable(lastSyncTimestamp),
+                Optional.ToNullable(lastSyncSuccessTimestamp),
+                Optional.ToNullable(lastSyncPerItemErrorCount),
+                Optional.ToNullable(persistentFilesNotSyncingCount),
+                Optional.ToNullable(transientFilesNotSyncingCount),
+                filesNotSyncingErrors ?? new ChangeTrackingList<ServerEndpointFilesNotSyncingError>(),
+                Optional.ToNullable(lastSyncMode),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServerEndpointSyncSessionStatus>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CodeConfiguration))
+            if (CodeConfiguration != null)
             {
                 if (CodeConfiguration != null)
                 {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         codeConfiguration = null;
                         continue;
                     }
-                    codeConfiguration = MachineLearningCodeConfiguration.DeserializeMachineLearningCodeConfiguration(property.Value);
+                    codeConfiguration = MachineLearningCodeConfiguration.DeserializeMachineLearningCodeConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("serverType"u8))

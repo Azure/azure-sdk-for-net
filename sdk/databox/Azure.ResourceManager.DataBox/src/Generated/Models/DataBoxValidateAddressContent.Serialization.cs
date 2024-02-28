@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteObjectValue(ShippingAddress);
             writer.WritePropertyName("deviceType"u8);
             writer.WriteStringValue(DeviceType.ToSerialString());
-            if (Optional.IsDefined(TransportPreferences))
+            if (TransportPreferences != null)
             {
                 writer.WritePropertyName("transportPreferences"u8);
                 writer.WriteObjectValue(TransportPreferences);
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 if (property.NameEquals("shippingAddress"u8))
                 {
-                    shippingAddress = DataBoxShippingAddress.DeserializeDataBoxShippingAddress(property.Value);
+                    shippingAddress = DataBoxShippingAddress.DeserializeDataBoxShippingAddress(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("deviceType"u8))
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    transportPreferences = TransportPreferences.DeserializeTransportPreferences(property.Value);
+                    transportPreferences = TransportPreferences.DeserializeTransportPreferences(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("validationType"u8))

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(GroupId))
+            if (options.Format != "W" && GroupId != null)
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
             }
-            if (options.Format != "W" && Optional.IsDefined(RequiredMemberName))
+            if (options.Format != "W" && RequiredMemberName != null)
             {
                 writer.WritePropertyName("requiredMemberName"u8);
                 writer.WriteStringValue(RequiredMemberName);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Fqdns))
+            if (options.Format != "W" && !(Fqdns is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("fqdns"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             Optional<string> groupId = default;
             Optional<string> requiredMemberName = default;
-            Optional<IReadOnlyList<string>> fqdns = default;
+            IReadOnlyList<string> fqdns = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties(groupId.Value, requiredMemberName.Value, Optional.ToList(fqdns), serializedAdditionalRawData);
+            return new NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties(groupId.Value, requiredMemberName.Value, fqdns ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties>.Write(ModelReaderWriterOptions options)

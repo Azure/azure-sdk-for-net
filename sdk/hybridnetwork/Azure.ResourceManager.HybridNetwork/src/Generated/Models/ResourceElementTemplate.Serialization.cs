@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ResourceElementType.ToString());
-            if (Optional.IsDefined(DependsOnProfile))
+            if (DependsOnProfile != null)
             {
                 writer.WritePropertyName("dependsOnProfile"u8);
                 writer.WriteObjectValue(DependsOnProfile);
@@ -80,11 +80,11 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "ArmResourceDefinition": return ArmResourceDefinitionResourceElementTemplateDetails.DeserializeArmResourceDefinitionResourceElementTemplateDetails(element);
-                    case "NetworkFunctionDefinition": return NetworkFunctionDefinitionResourceElementTemplateDetails.DeserializeNetworkFunctionDefinitionResourceElementTemplateDetails(element);
+                    case "ArmResourceDefinition": return ArmResourceDefinitionResourceElementTemplateDetails.DeserializeArmResourceDefinitionResourceElementTemplateDetails(element, options);
+                    case "NetworkFunctionDefinition": return NetworkFunctionDefinitionResourceElementTemplateDetails.DeserializeNetworkFunctionDefinitionResourceElementTemplateDetails(element, options);
                 }
             }
-            return UnknownResourceElementTemplate.DeserializeUnknownResourceElementTemplate(element);
+            return UnknownResourceElementTemplate.DeserializeUnknownResourceElementTemplate(element, options);
         }
 
         BinaryData IPersistableModel<ResourceElementTemplate>.Write(ModelReaderWriterOptions options)

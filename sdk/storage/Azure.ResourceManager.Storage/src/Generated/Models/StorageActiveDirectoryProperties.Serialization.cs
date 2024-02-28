@@ -28,34 +28,34 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStartObject();
             writer.WritePropertyName("domainName"u8);
             writer.WriteStringValue(DomainName);
-            if (Optional.IsDefined(NetBiosDomainName))
+            if (NetBiosDomainName != null)
             {
                 writer.WritePropertyName("netBiosDomainName"u8);
                 writer.WriteStringValue(NetBiosDomainName);
             }
-            if (Optional.IsDefined(ForestName))
+            if (ForestName != null)
             {
                 writer.WritePropertyName("forestName"u8);
                 writer.WriteStringValue(ForestName);
             }
             writer.WritePropertyName("domainGuid"u8);
             writer.WriteStringValue(DomainGuid);
-            if (Optional.IsDefined(DomainSid))
+            if (DomainSid != null)
             {
                 writer.WritePropertyName("domainSid"u8);
                 writer.WriteStringValue(DomainSid);
             }
-            if (Optional.IsDefined(AzureStorageSid))
+            if (AzureStorageSid != null)
             {
                 writer.WritePropertyName("azureStorageSid"u8);
                 writer.WriteStringValue(AzureStorageSid);
             }
-            if (Optional.IsDefined(SamAccountName))
+            if (SamAccountName != null)
             {
                 writer.WritePropertyName("samAccountName"u8);
                 writer.WriteStringValue(SamAccountName);
             }
-            if (Optional.IsDefined(AccountType))
+            if (AccountType.HasValue)
             {
                 writer.WritePropertyName("accountType"u8);
                 writer.WriteStringValue(AccountType.Value.ToString());
@@ -160,7 +160,16 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageActiveDirectoryProperties(domainName, netBiosDomainName.Value, forestName.Value, domainGuid, domainSid.Value, azureStorageSid.Value, samAccountName.Value, Optional.ToNullable(accountType), serializedAdditionalRawData);
+            return new StorageActiveDirectoryProperties(
+                domainName,
+                netBiosDomainName.Value,
+                forestName.Value,
+                domainGuid,
+                domainSid.Value,
+                azureStorageSid.Value,
+                samAccountName.Value,
+                Optional.ToNullable(accountType),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageActiveDirectoryProperties>.Write(ModelReaderWriterOptions options)

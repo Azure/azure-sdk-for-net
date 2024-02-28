@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FilesystemSubnetSize))
+            if (FilesystemSubnetSize.HasValue)
             {
                 writer.WritePropertyName("filesystemSubnetSize"u8);
                 writer.WriteNumberValue(FilesystemSubnetSize.Value);

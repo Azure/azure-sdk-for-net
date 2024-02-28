@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Kusto.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -49,44 +49,44 @@ namespace Azure.ResourceManager.Kusto.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(SoftDeletePeriod))
+            if (SoftDeletePeriod.HasValue)
             {
                 writer.WritePropertyName("softDeletePeriod"u8);
                 writer.WriteStringValue(SoftDeletePeriod.Value, "P");
             }
-            if (Optional.IsDefined(HotCachePeriod))
+            if (HotCachePeriod.HasValue)
             {
                 writer.WritePropertyName("hotCachePeriod"u8);
                 writer.WriteStringValue(HotCachePeriod.Value, "P");
             }
-            if (options.Format != "W" && Optional.IsDefined(Statistics))
+            if (options.Format != "W" && Statistics != null)
             {
                 writer.WritePropertyName("statistics"u8);
                 writer.WriteObjectValue(Statistics);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsFollowed))
+            if (options.Format != "W" && IsFollowed.HasValue)
             {
                 writer.WritePropertyName("isFollowed"u8);
                 writer.WriteBooleanValue(IsFollowed.Value);
             }
-            if (Optional.IsDefined(KeyVaultProperties))
+            if (KeyVaultProperties != null)
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
                 writer.WriteObjectValue(KeyVaultProperties);
             }
-            if (options.Format != "W" && Optional.IsDefined(SuspensionDetails))
+            if (options.Format != "W" && SuspensionDetails != null)
             {
                 writer.WritePropertyName("suspensionDetails"u8);
                 writer.WriteObjectValue(SuspensionDetails);
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Kusto.Models
                             {
                                 continue;
                             }
-                            statistics = DatabaseStatistics.DeserializeDatabaseStatistics(property0.Value);
+                            statistics = DatabaseStatistics.DeserializeDatabaseStatistics(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("isFollowed"u8))
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Kusto.Models
                             {
                                 continue;
                             }
-                            keyVaultProperties = KustoKeyVaultProperties.DeserializeKustoKeyVaultProperties(property0.Value);
+                            keyVaultProperties = KustoKeyVaultProperties.DeserializeKustoKeyVaultProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("suspensionDetails"u8))
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Kusto.Models
                             {
                                 continue;
                             }
-                            suspensionDetails = SuspensionDetails.DeserializeSuspensionDetails(property0.Value);
+                            suspensionDetails = SuspensionDetails.DeserializeSuspensionDetails(property0.Value, options);
                             continue;
                         }
                     }
@@ -266,7 +266,21 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KustoReadWriteDatabase(id, name, type, systemData.Value, Optional.ToNullable(location), kind, serializedAdditionalRawData, Optional.ToNullable(provisioningState), Optional.ToNullable(softDeletePeriod), Optional.ToNullable(hotCachePeriod), statistics.Value, Optional.ToNullable(isFollowed), keyVaultProperties.Value, suspensionDetails.Value);
+            return new KustoReadWriteDatabase(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(location),
+                kind,
+                serializedAdditionalRawData,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(softDeletePeriod),
+                Optional.ToNullable(hotCachePeriod),
+                statistics.Value,
+                Optional.ToNullable(isFollowed),
+                keyVaultProperties.Value,
+                suspensionDetails.Value);
         }
 
         BinaryData IPersistableModel<KustoReadWriteDatabase>.Write(ModelReaderWriterOptions options)

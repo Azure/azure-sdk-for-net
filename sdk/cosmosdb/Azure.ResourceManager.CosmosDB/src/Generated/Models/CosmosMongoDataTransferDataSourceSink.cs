@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -20,8 +19,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> or <paramref name="collectionName"/> is null. </exception>
         public CosmosMongoDataTransferDataSourceSink(string databaseName, string collectionName)
         {
-            Argument.AssertNotNull(databaseName, nameof(databaseName));
-            Argument.AssertNotNull(collectionName, nameof(collectionName));
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+            if (collectionName == null)
+            {
+                throw new ArgumentNullException(nameof(collectionName));
+            }
 
             DatabaseName = databaseName;
             CollectionName = collectionName;

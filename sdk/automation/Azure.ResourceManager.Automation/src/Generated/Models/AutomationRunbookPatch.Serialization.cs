@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -49,22 +49,22 @@ namespace Azure.ResourceManager.Automation.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(IsLogVerboseEnabled))
+            if (IsLogVerboseEnabled.HasValue)
             {
                 writer.WritePropertyName("logVerbose"u8);
                 writer.WriteBooleanValue(IsLogVerboseEnabled.Value);
             }
-            if (Optional.IsDefined(IsLogProgressEnabled))
+            if (IsLogProgressEnabled.HasValue)
             {
                 writer.WritePropertyName("logProgress"u8);
                 writer.WriteBooleanValue(IsLogProgressEnabled.Value);
             }
-            if (Optional.IsDefined(LogActivityTrace))
+            if (LogActivityTrace.HasValue)
             {
                 writer.WritePropertyName("logActivityTrace"u8);
                 writer.WriteNumberValue(LogActivityTrace.Value);
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
             Optional<string> name = default;
             Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<string> description = default;
             Optional<bool> logVerbose = default;
             Optional<bool> logProgress = default;
@@ -197,7 +197,15 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationRunbookPatch(name.Value, Optional.ToNullable(location), Optional.ToDictionary(tags), description.Value, Optional.ToNullable(logVerbose), Optional.ToNullable(logProgress), Optional.ToNullable(logActivityTrace), serializedAdditionalRawData);
+            return new AutomationRunbookPatch(
+                name.Value,
+                Optional.ToNullable(location),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                description.Value,
+                Optional.ToNullable(logVerbose),
+                Optional.ToNullable(logProgress),
+                Optional.ToNullable(logActivityTrace),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationRunbookPatch>.Write(ModelReaderWriterOptions options)

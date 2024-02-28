@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DateTimeBegin))
+            if (DateTimeBegin.HasValue)
             {
                 writer.WritePropertyName("dateTimeBegin"u8);
                 writer.WriteStringValue(DateTimeBegin.Value, "O");
             }
-            if (Optional.IsDefined(DateTimeEnd))
+            if (DateTimeEnd.HasValue)
             {
                 writer.WritePropertyName("dateTimeEnd"u8);
                 writer.WriteStringValue(DateTimeEnd.Value, "O");
             }
-            if (Optional.IsDefined(Granularity))
+            if (Granularity.HasValue)
             {
                 writer.WritePropertyName("granularity"u8);
                 writer.WriteStringValue(Granularity.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Series))
+            if (!(Series is ChangeTrackingList<MetricsResponseSeriesItem> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("series"u8);
                 writer.WriteStartArray();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Optional<DateTimeOffset> dateTimeBegin = default;
             Optional<DateTimeOffset> dateTimeEnd = default;
             Optional<MetricsResponseGranularity> granularity = default;
-            Optional<IReadOnlyList<MetricsResponseSeriesItem>> series = default;
+            IReadOnlyList<MetricsResponseSeriesItem> series = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<MetricsResponseSeriesItem> array = new List<MetricsResponseSeriesItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetricsResponseSeriesItem.DeserializeMetricsResponseSeriesItem(item));
+                        array.Add(MetricsResponseSeriesItem.DeserializeMetricsResponseSeriesItem(item, options));
                     }
                     series = array;
                     continue;
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MetricsResponse(Optional.ToNullable(dateTimeBegin), Optional.ToNullable(dateTimeEnd), Optional.ToNullable(granularity), Optional.ToList(series), serializedAdditionalRawData);
+            return new MetricsResponse(Optional.ToNullable(dateTimeBegin), Optional.ToNullable(dateTimeEnd), Optional.ToNullable(granularity), series ?? new ChangeTrackingList<MetricsResponseSeriesItem>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MetricsResponse>.Write(ModelReaderWriterOptions options)

@@ -40,14 +40,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Solutions))
+            if (!(Solutions is ChangeTrackingList<SolutionMetadataProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("solutions"u8);
                 writer.WriteStartArray();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IList<SolutionMetadataProperties>> solutions = default;
+            IList<SolutionMetadataProperties> solutions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                             List<SolutionMetadataProperties> array = new List<SolutionMetadataProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SolutionMetadataProperties.DeserializeSolutionMetadataProperties(item));
+                                array.Add(SolutionMetadataProperties.DeserializeSolutionMetadataProperties(item, options));
                             }
                             solutions = array;
                             continue;
@@ -161,7 +161,13 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SelfHelpSolutionMetadata(id, name, type, systemData.Value, Optional.ToList(solutions), serializedAdditionalRawData);
+            return new SelfHelpSolutionMetadata(
+                id,
+                name,
+                type,
+                systemData.Value,
+                solutions ?? new ChangeTrackingList<SolutionMetadataProperties>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SelfHelpSolutionMetadata>.Write(ModelReaderWriterOptions options)

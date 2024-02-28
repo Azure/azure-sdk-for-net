@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 using Azure.ResourceManager.StoragePool;
 
 namespace Azure.ResourceManager.StoragePool.Models
@@ -53,7 +52,10 @@ namespace Azure.ResourceManager.StoragePool.Models
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DiskPoolListResult(IEnumerable<DiskPoolData> value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             Value = value.ToList();
         }

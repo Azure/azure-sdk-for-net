@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Address))
+            if (Address != null)
             {
                 writer.WritePropertyName("address"u8);
                 writer.WriteStringValue(Address.ToString());
             }
-            if (Optional.IsDefined(SubnetPrefixLength))
+            if (SubnetPrefixLength.HasValue)
             {
                 writer.WritePropertyName("subnetPrefixLength"u8);
                 writer.WriteNumberValue(SubnetPrefixLength.Value);

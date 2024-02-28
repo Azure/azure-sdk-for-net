@@ -28,22 +28,22 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProfileName))
+            if (options.Format != "W" && ProfileName != null)
             {
                 writer.WritePropertyName("profileName"u8);
                 writer.WriteStringValue(ProfileName);
             }
-            if (Optional.IsDefined(LoadBalancingSettings))
+            if (LoadBalancingSettings != null)
             {
                 writer.WritePropertyName("loadBalancingSettings"u8);
                 writer.WriteObjectValue(LoadBalancingSettings);
             }
-            if (Optional.IsDefined(HealthProbeSettings))
+            if (HealthProbeSettings != null)
             {
                 writer.WritePropertyName("healthProbeSettings"u8);
                 writer.WriteObjectValue(HealthProbeSettings);
             }
-            if (Optional.IsDefined(TrafficRestorationTimeInMinutes))
+            if (TrafficRestorationTimeInMinutes.HasValue)
             {
                 if (TrafficRestorationTimeInMinutes != null)
                 {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     writer.WriteNull("trafficRestorationTimeToHealedOrNewEndpointsInMinutes");
                 }
             }
-            if (Optional.IsDefined(SessionAffinityState))
+            if (SessionAffinityState.HasValue)
             {
                 writer.WritePropertyName("sessionAffinityState"u8);
                 writer.WriteStringValue(SessionAffinityState.Value.ToString());
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Cdn.Models
                             {
                                 continue;
                             }
-                            loadBalancingSettings = LoadBalancingSettings.DeserializeLoadBalancingSettings(property0.Value);
+                            loadBalancingSettings = LoadBalancingSettings.DeserializeLoadBalancingSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("healthProbeSettings"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Cdn.Models
                             {
                                 continue;
                             }
-                            healthProbeSettings = HealthProbeSettings.DeserializeHealthProbeSettings(property0.Value);
+                            healthProbeSettings = HealthProbeSettings.DeserializeHealthProbeSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("trafficRestorationTimeToHealedOrNewEndpointsInMinutes"u8))
@@ -168,7 +168,13 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorOriginGroupPatch(profileName.Value, loadBalancingSettings.Value, healthProbeSettings.Value, Optional.ToNullable(trafficRestorationTimeToHealedOrNewEndpointsInMinutes), Optional.ToNullable(sessionAffinityState), serializedAdditionalRawData);
+            return new FrontDoorOriginGroupPatch(
+                profileName.Value,
+                loadBalancingSettings.Value,
+                healthProbeSettings.Value,
+                Optional.ToNullable(trafficRestorationTimeToHealedOrNewEndpointsInMinutes),
+                Optional.ToNullable(sessionAffinityState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorOriginGroupPatch>.Write(ModelReaderWriterOptions options)

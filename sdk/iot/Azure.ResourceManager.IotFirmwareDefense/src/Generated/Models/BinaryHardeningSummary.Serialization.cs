@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TotalFiles))
+            if (TotalFiles.HasValue)
             {
                 writer.WritePropertyName("totalFiles"u8);
                 writer.WriteNumberValue(TotalFiles.Value);
             }
-            if (Optional.IsDefined(Nx))
+            if (Nx.HasValue)
             {
                 if (Nx != null)
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("nx");
                 }
             }
-            if (Optional.IsDefined(Pie))
+            if (Pie.HasValue)
             {
                 if (Pie != null)
                 {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("pie");
                 }
             }
-            if (Optional.IsDefined(Relro))
+            if (Relro.HasValue)
             {
                 if (Relro != null)
                 {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("relro");
                 }
             }
-            if (Optional.IsDefined(Canary))
+            if (Canary.HasValue)
             {
                 if (Canary != null)
                 {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("canary");
                 }
             }
-            if (Optional.IsDefined(Stripped))
+            if (Stripped.HasValue)
             {
                 if (Stripped != null)
                 {
@@ -204,7 +204,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BinaryHardeningSummary(Optional.ToNullable(totalFiles), Optional.ToNullable(nx), Optional.ToNullable(pie), Optional.ToNullable(relro), Optional.ToNullable(canary), Optional.ToNullable(stripped), serializedAdditionalRawData);
+            return new BinaryHardeningSummary(
+                Optional.ToNullable(totalFiles),
+                Optional.ToNullable(nx),
+                Optional.ToNullable(pie),
+                Optional.ToNullable(relro),
+                Optional.ToNullable(canary),
+                Optional.ToNullable(stripped),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BinaryHardeningSummary>.Write(ModelReaderWriterOptions options)

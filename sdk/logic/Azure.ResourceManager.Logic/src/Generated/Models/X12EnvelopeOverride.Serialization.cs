@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStringValue(SenderApplicationId);
             writer.WritePropertyName("receiverApplicationId"u8);
             writer.WriteStringValue(ReceiverApplicationId);
-            if (Optional.IsDefined(FunctionalIdentifierCode))
+            if (FunctionalIdentifierCode != null)
             {
                 writer.WritePropertyName("functionalIdentifierCode"u8);
                 writer.WriteStringValue(FunctionalIdentifierCode);
@@ -157,7 +157,18 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new X12EnvelopeOverride(targetNamespace, protocolVersion, messageId, responsibleAgencyCode, headerVersion, senderApplicationId, receiverApplicationId, functionalIdentifierCode.Value, dateFormat, timeFormat, serializedAdditionalRawData);
+            return new X12EnvelopeOverride(
+                targetNamespace,
+                protocolVersion,
+                messageId,
+                responsibleAgencyCode,
+                headerVersion,
+                senderApplicationId,
+                receiverApplicationId,
+                functionalIdentifierCode.Value,
+                dateFormat,
+                timeFormat,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<X12EnvelopeOverride>.Write(ModelReaderWriterOptions options)

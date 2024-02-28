@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -18,7 +17,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <exception cref="ArgumentNullException"> <paramref name="host"/> is null. </exception>
         public RemoteDeviceAdapterTarget(string host)
         {
-            Argument.AssertNotNull(host, nameof(host));
+            if (host == null)
+            {
+                throw new ArgumentNullException(nameof(host));
+            }
 
             Host = host;
         }

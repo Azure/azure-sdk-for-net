@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Schema))
+            if (options.Format != "W" && Schema != null)
             {
                 writer.WritePropertyName("$schema"u8);
                 writer.WriteStringValue(Schema);
             }
-            if (options.Format != "W" && Optional.IsDefined(ContentVersion))
+            if (options.Format != "W" && ContentVersion != null)
             {
                 writer.WritePropertyName("contentVersion"u8);
                 writer.WriteStringValue(ContentVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(Parameters))
+            if (options.Format != "W" && Parameters != null)
             {
                 writer.WritePropertyName("parameters"u8);
 #if NET6_0_OR_GREATER
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
 #endif
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Resources))
+            if (options.Format != "W" && !(Resources is ChangeTrackingList<BinaryData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("resources"u8);
                 writer.WriteStartArray();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<string> schema = default;
             Optional<string> contentVersion = default;
             Optional<BinaryData> parameters = default;
-            Optional<IReadOnlyList<BinaryData>> resources = default;
+            IReadOnlyList<BinaryData> resources = default;
             Optional<ResourceIdentifier> id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineCaptureResult(id.Value, serializedAdditionalRawData, schema.Value, contentVersion.Value, parameters.Value, Optional.ToList(resources));
+            return new VirtualMachineCaptureResult(
+                id.Value,
+                serializedAdditionalRawData,
+                schema.Value,
+                contentVersion.Value,
+                parameters.Value,
+                resources ?? new ChangeTrackingList<BinaryData>());
         }
 
         BinaryData IPersistableModel<VirtualMachineCaptureResult>.Write(ModelReaderWriterOptions options)

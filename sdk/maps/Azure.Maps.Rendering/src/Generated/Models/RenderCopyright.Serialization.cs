@@ -20,8 +20,8 @@ namespace Azure.Maps.Rendering
                 return null;
             }
             Optional<string> formatVersion = default;
-            Optional<IReadOnlyList<string>> generalCopyrights = default;
-            Optional<IReadOnlyList<RegionalCopyright>> regions = default;
+            IReadOnlyList<string> generalCopyrights = default;
+            IReadOnlyList<RegionalCopyright> regions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("formatVersion"u8))
@@ -58,7 +58,7 @@ namespace Azure.Maps.Rendering
                     continue;
                 }
             }
-            return new RenderCopyright(formatVersion.Value, Optional.ToList(generalCopyrights), Optional.ToList(regions));
+            return new RenderCopyright(formatVersion.Value, generalCopyrights ?? new ChangeTrackingList<string>(), regions ?? new ChangeTrackingList<RegionalCopyright>());
         }
     }
 }

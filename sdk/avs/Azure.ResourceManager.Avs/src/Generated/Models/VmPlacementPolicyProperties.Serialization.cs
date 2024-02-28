@@ -42,17 +42,17 @@ namespace Azure.ResourceManager.Avs.Models
             writer.WriteStringValue(AffinityType.ToString());
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(PolicyType.ToString());
-            if (Optional.IsDefined(State))
+            if (State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -161,7 +161,14 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VmPlacementPolicyProperties(type, Optional.ToNullable(state), displayName.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData, vmMembers, affinityType);
+            return new VmPlacementPolicyProperties(
+                type,
+                Optional.ToNullable(state),
+                displayName.Value,
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData,
+                vmMembers,
+                affinityType);
         }
 
         BinaryData IPersistableModel<VmPlacementPolicyProperties>.Write(ModelReaderWriterOptions options)

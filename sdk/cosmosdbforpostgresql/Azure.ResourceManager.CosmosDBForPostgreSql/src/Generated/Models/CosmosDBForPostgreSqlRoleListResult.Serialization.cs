@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<CosmosDBForPostgreSqlRoleData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CosmosDBForPostgreSqlRoleData>> value = default;
+            IReadOnlyList<CosmosDBForPostgreSqlRoleData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                     List<CosmosDBForPostgreSqlRoleData> array = new List<CosmosDBForPostgreSqlRoleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CosmosDBForPostgreSqlRoleData.DeserializeCosmosDBForPostgreSqlRoleData(item));
+                        array.Add(CosmosDBForPostgreSqlRoleData.DeserializeCosmosDBForPostgreSqlRoleData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBForPostgreSqlRoleListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new CosmosDBForPostgreSqlRoleListResult(value ?? new ChangeTrackingList<CosmosDBForPostgreSqlRoleData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBForPostgreSqlRoleListResult>.Write(ModelReaderWriterOptions options)

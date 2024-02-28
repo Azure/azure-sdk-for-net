@@ -26,54 +26,54 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SourceResourceId))
+            if (SourceResourceId != null)
             {
                 writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);
             }
-            if (Optional.IsDefined(LastUpdatedOn))
+            if (LastUpdatedOn.HasValue)
             {
                 writer.WritePropertyName("lastUpdatedTime"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
-            if (Optional.IsDefined(ExtendedInfo))
+            if (ExtendedInfo != null)
             {
                 writer.WritePropertyName("extendedInfo"u8);
                 writer.WriteObjectValue(ExtendedInfo);
             }
-            if (Optional.IsDefined(WorkloadType))
+            if (WorkloadType.HasValue)
             {
                 writer.WritePropertyName("workloadType"u8);
                 writer.WriteStringValue(WorkloadType.Value.ToString());
             }
-            if (Optional.IsDefined(OperationType))
+            if (OperationType.HasValue)
             {
                 writer.WritePropertyName("operationType"u8);
                 writer.WriteStringValue(OperationType.Value.ToString());
             }
-            if (Optional.IsDefined(FriendlyName))
+            if (FriendlyName != null)
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Optional.IsDefined(BackupManagementType))
+            if (BackupManagementType.HasValue)
             {
                 writer.WritePropertyName("backupManagementType"u8);
                 writer.WriteStringValue(BackupManagementType.Value.ToString());
             }
-            if (Optional.IsDefined(RegistrationStatus))
+            if (RegistrationStatus != null)
             {
                 writer.WritePropertyName("registrationStatus"u8);
                 writer.WriteStringValue(RegistrationStatus);
             }
-            if (Optional.IsDefined(HealthStatus))
+            if (HealthStatus != null)
             {
                 writer.WritePropertyName("healthStatus"u8);
                 writer.WriteStringValue(HealthStatus);
             }
             writer.WritePropertyName("containerType"u8);
             writer.WriteStringValue(ContainerType.ToSerialString());
-            if (Optional.IsDefined(ProtectableObjectType))
+            if (ProtectableObjectType != null)
             {
                 writer.WritePropertyName("protectableObjectType"u8);
                 writer.WriteStringValue(ProtectableObjectType);
@@ -120,8 +120,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "SQLAGWorkLoadContainer": return SqlAvailabilityGroupWorkloadProtectionContainer.DeserializeSqlAvailabilityGroupWorkloadProtectionContainer(element);
-                    case "VMAppContainer": return VmAppContainerProtectionContainer.DeserializeVmAppContainerProtectionContainer(element);
+                    case "SQLAGWorkLoadContainer": return SqlAvailabilityGroupWorkloadProtectionContainer.DeserializeSqlAvailabilityGroupWorkloadProtectionContainer(element, options);
+                    case "VMAppContainer": return VmAppContainerProtectionContainer.DeserializeVmAppContainerProtectionContainer(element, options);
                 }
             }
             Optional<ResourceIdentifier> sourceResourceId = default;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    extendedInfo = WorkloadContainerExtendedInfo.DeserializeWorkloadContainerExtendedInfo(property.Value);
+                    extendedInfo = WorkloadContainerExtendedInfo.DeserializeWorkloadContainerExtendedInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("workloadType"u8))
@@ -224,7 +224,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadContainer(friendlyName.Value, Optional.ToNullable(backupManagementType), registrationStatus.Value, healthStatus.Value, containerType, protectableObjectType.Value, serializedAdditionalRawData, sourceResourceId.Value, Optional.ToNullable(lastUpdatedTime), extendedInfo.Value, Optional.ToNullable(workloadType), Optional.ToNullable(operationType));
+            return new WorkloadContainer(
+                friendlyName.Value,
+                Optional.ToNullable(backupManagementType),
+                registrationStatus.Value,
+                healthStatus.Value,
+                containerType,
+                protectableObjectType.Value,
+                serializedAdditionalRawData,
+                sourceResourceId.Value,
+                Optional.ToNullable(lastUpdatedTime),
+                extendedInfo.Value,
+                Optional.ToNullable(workloadType),
+                Optional.ToNullable(operationType));
         }
 
         BinaryData IPersistableModel<WorkloadContainer>.Write(ModelReaderWriterOptions options)

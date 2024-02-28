@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Authorization.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Scope))
+            if (options.Format != "W" && Scope != null)
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
@@ -37,47 +37,47 @@ namespace Azure.ResourceManager.Authorization.Models
             writer.WriteStringValue(RoleDefinitionId);
             writer.WritePropertyName("principalId"u8);
             writer.WriteStringValue(PrincipalId);
-            if (Optional.IsDefined(PrincipalType))
+            if (PrincipalType.HasValue)
             {
                 writer.WritePropertyName("principalType"u8);
                 writer.WriteStringValue(PrincipalType.Value.ToString());
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Condition))
+            if (Condition != null)
             {
                 writer.WritePropertyName("condition"u8);
                 writer.WriteStringValue(Condition);
             }
-            if (Optional.IsDefined(ConditionVersion))
+            if (ConditionVersion != null)
             {
                 writer.WritePropertyName("conditionVersion"u8);
                 writer.WriteStringValue(ConditionVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("createdOn"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
+            if (options.Format != "W" && UpdatedOn.HasValue)
             {
                 writer.WritePropertyName("updatedOn"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedBy))
+            if (options.Format != "W" && CreatedBy != null)
             {
                 writer.WritePropertyName("createdBy"u8);
                 writer.WriteStringValue(CreatedBy);
             }
-            if (options.Format != "W" && Optional.IsDefined(UpdatedBy))
+            if (options.Format != "W" && UpdatedBy != null)
             {
                 writer.WritePropertyName("updatedBy"u8);
                 writer.WriteStringValue(UpdatedBy);
             }
-            if (Optional.IsDefined(DelegatedManagedIdentityResourceId))
+            if (DelegatedManagedIdentityResourceId != null)
             {
                 if (DelegatedManagedIdentityResourceId != null)
                 {
@@ -239,7 +239,20 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoleAssignmentCreateOrUpdateContent(scope.Value, roleDefinitionId, principalId, Optional.ToNullable(principalType), description.Value, condition.Value, conditionVersion.Value, Optional.ToNullable(createdOn), Optional.ToNullable(updatedOn), createdBy.Value, updatedBy.Value, delegatedManagedIdentityResourceId.Value, serializedAdditionalRawData);
+            return new RoleAssignmentCreateOrUpdateContent(
+                scope.Value,
+                roleDefinitionId,
+                principalId,
+                Optional.ToNullable(principalType),
+                description.Value,
+                condition.Value,
+                conditionVersion.Value,
+                Optional.ToNullable(createdOn),
+                Optional.ToNullable(updatedOn),
+                createdBy.Value,
+                updatedBy.Value,
+                delegatedManagedIdentityResourceId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoleAssignmentCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

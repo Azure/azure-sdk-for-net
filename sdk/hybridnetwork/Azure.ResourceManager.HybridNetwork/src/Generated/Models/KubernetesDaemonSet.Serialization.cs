@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Namespace))
+            if (Namespace != null)
             {
                 writer.WritePropertyName("namespace"u8);
                 writer.WriteStringValue(Namespace);
             }
-            if (Optional.IsDefined(DesiredNumberOfPods))
+            if (DesiredNumberOfPods.HasValue)
             {
                 writer.WritePropertyName("desired"u8);
                 writer.WriteNumberValue(DesiredNumberOfPods.Value);
             }
-            if (Optional.IsDefined(CurrentNumberOfPods))
+            if (CurrentNumberOfPods.HasValue)
             {
                 writer.WritePropertyName("current"u8);
                 writer.WriteNumberValue(CurrentNumberOfPods.Value);
             }
-            if (Optional.IsDefined(ReadyNumberOfPods))
+            if (ReadyNumberOfPods.HasValue)
             {
                 writer.WritePropertyName("ready"u8);
                 writer.WriteNumberValue(ReadyNumberOfPods.Value);
             }
-            if (Optional.IsDefined(UpToDateNumberOfPods))
+            if (UpToDateNumberOfPods.HasValue)
             {
                 writer.WritePropertyName("upToDate"u8);
                 writer.WriteNumberValue(UpToDateNumberOfPods.Value);
             }
-            if (Optional.IsDefined(AvailableNumberOfPods))
+            if (AvailableNumberOfPods.HasValue)
             {
                 writer.WritePropertyName("available"u8);
                 writer.WriteNumberValue(AvailableNumberOfPods.Value);
             }
-            if (Optional.IsDefined(CreatedOn))
+            if (CreatedOn.HasValue)
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
@@ -186,7 +186,16 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesDaemonSet(name.Value, @namespace.Value, Optional.ToNullable(desired), Optional.ToNullable(current), Optional.ToNullable(ready), Optional.ToNullable(upToDate), Optional.ToNullable(available), Optional.ToNullable(creationTime), serializedAdditionalRawData);
+            return new KubernetesDaemonSet(
+                name.Value,
+                @namespace.Value,
+                Optional.ToNullable(desired),
+                Optional.ToNullable(current),
+                Optional.ToNullable(ready),
+                Optional.ToNullable(upToDate),
+                Optional.ToNullable(available),
+                Optional.ToNullable(creationTime),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesDaemonSet>.Write(ModelReaderWriterOptions options)

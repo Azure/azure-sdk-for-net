@@ -70,15 +70,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "A2A": return A2AEnableProtectionContent.DeserializeA2AEnableProtectionContent(element);
-                    case "A2ACrossClusterMigration": return A2ACrossClusterMigrationEnableProtectionContent.DeserializeA2ACrossClusterMigrationEnableProtectionContent(element);
-                    case "HyperVReplicaAzure": return HyperVReplicaAzureEnableProtectionContent.DeserializeHyperVReplicaAzureEnableProtectionContent(element);
-                    case "InMage": return InMageEnableProtectionContent.DeserializeInMageEnableProtectionContent(element);
-                    case "InMageAzureV2": return InMageAzureV2EnableProtectionContent.DeserializeInMageAzureV2EnableProtectionContent(element);
-                    case "InMageRcm": return InMageRcmEnableProtectionContent.DeserializeInMageRcmEnableProtectionContent(element);
+                    case "A2A": return A2AEnableProtectionContent.DeserializeA2AEnableProtectionContent(element, options);
+                    case "A2ACrossClusterMigration": return A2ACrossClusterMigrationEnableProtectionContent.DeserializeA2ACrossClusterMigrationEnableProtectionContent(element, options);
+                    case "HyperVReplicaAzure": return HyperVReplicaAzureEnableProtectionContent.DeserializeHyperVReplicaAzureEnableProtectionContent(element, options);
+                    case "InMage": return InMageEnableProtectionContent.DeserializeInMageEnableProtectionContent(element, options);
+                    case "InMageAzureV2": return InMageAzureV2EnableProtectionContent.DeserializeInMageAzureV2EnableProtectionContent(element, options);
+                    case "InMageRcm": return InMageRcmEnableProtectionContent.DeserializeInMageRcmEnableProtectionContent(element, options);
                 }
             }
-            return UnknownEnableProtectionProviderSpecificContent.DeserializeUnknownEnableProtectionProviderSpecificContent(element);
+            return UnknownEnableProtectionProviderSpecificContent.DeserializeUnknownEnableProtectionProviderSpecificContent(element, options);
         }
 
         BinaryData IPersistableModel<EnableProtectionProviderSpecificContent>.Write(ModelReaderWriterOptions options)

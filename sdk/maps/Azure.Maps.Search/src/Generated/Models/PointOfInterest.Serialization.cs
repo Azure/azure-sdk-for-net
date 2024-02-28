@@ -22,10 +22,10 @@ namespace Azure.Maps.Search.Models
             Optional<string> name = default;
             Optional<string> phone = default;
             Optional<string> url = default;
-            Optional<IReadOnlyList<PointOfInterestCategorySet>> categorySet = default;
-            Optional<IReadOnlyList<string>> categories = default;
-            Optional<IReadOnlyList<PointOfInterestClassification>> classifications = default;
-            Optional<IReadOnlyList<BrandName>> brands = default;
+            IReadOnlyList<PointOfInterestCategorySet> categorySet = default;
+            IReadOnlyList<string> categories = default;
+            IReadOnlyList<PointOfInterestClassification> classifications = default;
+            IReadOnlyList<BrandName> brands = default;
             Optional<OperatingHours> openingHours = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -110,7 +110,15 @@ namespace Azure.Maps.Search.Models
                     continue;
                 }
             }
-            return new PointOfInterest(name.Value, phone.Value, url.Value, Optional.ToList(categorySet), Optional.ToList(categories), Optional.ToList(classifications), Optional.ToList(brands), openingHours.Value);
+            return new PointOfInterest(
+                name.Value,
+                phone.Value,
+                url.Value,
+                categorySet ?? new ChangeTrackingList<PointOfInterestCategorySet>(),
+                categories ?? new ChangeTrackingList<string>(),
+                classifications ?? new ChangeTrackingList<PointOfInterestClassification>(),
+                brands ?? new ChangeTrackingList<BrandName>(),
+                openingHours.Value);
         }
     }
 }

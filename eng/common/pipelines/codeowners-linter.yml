@@ -30,7 +30,7 @@ stages:
       vmImage: ubuntu-22.04
 
     variables:
-      CodeownersLinterVersion: '1.0.0-dev.20231120.3'
+      CodeownersLinterVersion: '1.0.0-dev.20240227.2'
       DotNetDevOpsFeed: "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json"
       RepoLabelUri: "https://azuresdkartifacts.blob.core.windows.net/azure-sdk-write-teams/repository-labels-blob"
       TeamUserUri: "https://azuresdkartifacts.blob.core.windows.net/azure-sdk-write-teams/azure-sdk-write-teams-blob"

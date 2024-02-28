@@ -31,17 +31,17 @@ namespace Azure.AI.Translation.Text
             writer.WriteStringValue(To);
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
-            if (Optional.IsDefined(Transliteration))
+            if (Transliteration != null)
             {
                 writer.WritePropertyName("transliteration"u8);
                 writer.WriteObjectValue(Transliteration);
             }
-            if (Optional.IsDefined(Alignment))
+            if (Alignment != null)
             {
                 writer.WritePropertyName("alignment"u8);
                 writer.WriteObjectValue(Alignment);
             }
-            if (Optional.IsDefined(SentLen))
+            if (SentLen != null)
             {
                 writer.WritePropertyName("sentLen"u8);
                 writer.WriteObjectValue(SentLen);
@@ -109,7 +109,7 @@ namespace Azure.AI.Translation.Text
                     {
                         continue;
                     }
-                    transliteration = TransliteratedText.DeserializeTransliteratedText(property.Value);
+                    transliteration = TransliteratedText.DeserializeTransliteratedText(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("alignment"u8))
@@ -118,7 +118,7 @@ namespace Azure.AI.Translation.Text
                     {
                         continue;
                     }
-                    alignment = TranslatedTextAlignment.DeserializeTranslatedTextAlignment(property.Value);
+                    alignment = TranslatedTextAlignment.DeserializeTranslatedTextAlignment(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sentLen"u8))
@@ -127,7 +127,7 @@ namespace Azure.AI.Translation.Text
                     {
                         continue;
                     }
-                    sentLen = SentenceLength.DeserializeSentenceLength(property.Value);
+                    sentLen = SentenceLength.DeserializeSentenceLength(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -136,7 +136,13 @@ namespace Azure.AI.Translation.Text
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new Translation(to, text, transliteration.Value, alignment.Value, sentLen.Value, serializedAdditionalRawData);
+            return new Translation(
+                to,
+                text,
+                transliteration.Value,
+                alignment.Value,
+                sentLen.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<Translation>.Write(ModelReaderWriterOptions options)

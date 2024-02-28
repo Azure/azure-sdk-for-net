@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Datadog.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsCollectionDefined(Aliases))
+            if (!(Aliases is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("aliases"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Apps))
+            if (!(Apps is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("apps"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Meta))
+            if (Meta != null)
             {
                 writer.WritePropertyName("meta"u8);
                 writer.WriteObjectValue(Meta);
@@ -95,8 +95,8 @@ namespace Azure.ResourceManager.Datadog.Models
                 return null;
             }
             Optional<string> name = default;
-            Optional<IReadOnlyList<string>> aliases = default;
-            Optional<IReadOnlyList<string>> apps = default;
+            IReadOnlyList<string> aliases = default;
+            IReadOnlyList<string> apps = default;
             Optional<DatadogHostMetadata> meta = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     {
                         continue;
                     }
-                    meta = DatadogHostMetadata.DeserializeDatadogHostMetadata(property.Value);
+                    meta = DatadogHostMetadata.DeserializeDatadogHostMetadata(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatadogHost(name.Value, Optional.ToList(aliases), Optional.ToList(apps), meta.Value, serializedAdditionalRawData);
+            return new DatadogHost(name.Value, aliases ?? new ChangeTrackingList<string>(), apps ?? new ChangeTrackingList<string>(), meta.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatadogHost>.Write(ModelReaderWriterOptions options)

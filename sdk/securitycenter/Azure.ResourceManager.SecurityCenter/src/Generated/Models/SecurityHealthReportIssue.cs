@@ -51,7 +51,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <exception cref="ArgumentNullException"> <paramref name="issueKey"/> is null. </exception>
         public SecurityHealthReportIssue(string issueKey)
         {
-            Argument.AssertNotNull(issueKey, nameof(issueKey));
+            if (issueKey == null)
+            {
+                throw new ArgumentNullException(nameof(issueKey));
+            }
 
             IssueKey = issueKey;
             SecurityValues = new ChangeTrackingList<string>();

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<SynapseAttachedDatabaseConfigurationData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SynapseAttachedDatabaseConfigurationData>> value = default;
+            IReadOnlyList<SynapseAttachedDatabaseConfigurationData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseAttachedDatabaseConfigurationData> array = new List<SynapseAttachedDatabaseConfigurationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseAttachedDatabaseConfigurationData.DeserializeSynapseAttachedDatabaseConfigurationData(item));
+                        array.Add(SynapseAttachedDatabaseConfigurationData.DeserializeSynapseAttachedDatabaseConfigurationData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseAttachedDatabaseConfigurationListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new SynapseAttachedDatabaseConfigurationListResult(value ?? new ChangeTrackingList<SynapseAttachedDatabaseConfigurationData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseAttachedDatabaseConfigurationListResult>.Write(ModelReaderWriterOptions options)

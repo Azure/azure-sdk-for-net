@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Uri))
+            if (Uri != null)
             {
                 writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (Optional.IsCollectionDefined(Messages))
+            if (!(Messages is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("messages"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
             Optional<string> name = default;
             Optional<Uri> uri = default;
-            Optional<IReadOnlyList<string>> messages = default;
+            IReadOnlyList<string> messages = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConfigServerSettingsErrorRecord(name.Value, uri.Value, Optional.ToList(messages), serializedAdditionalRawData);
+            return new ConfigServerSettingsErrorRecord(name.Value, uri.Value, messages ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConfigServerSettingsErrorRecord>.Write(ModelReaderWriterOptions options)

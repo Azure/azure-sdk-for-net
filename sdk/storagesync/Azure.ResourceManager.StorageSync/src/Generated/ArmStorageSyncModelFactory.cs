@@ -68,7 +68,21 @@ namespace Azure.ResourceManager.StorageSync.Models
             tags ??= new Dictionary<string, string>();
             privateEndpointConnections ??= new List<StorageSyncPrivateEndpointConnectionData>();
 
-            return new StorageSyncServiceData(id, name, resourceType, systemData, tags, location, incomingTrafficPolicy, storageSyncServiceStatus, storageSyncServiceUid, provisioningState, lastWorkflowId, lastOperationName, privateEndpointConnections?.ToList(), serializedAdditionalRawData: null);
+            return new StorageSyncServiceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                incomingTrafficPolicy,
+                storageSyncServiceStatus,
+                storageSyncServiceUid,
+                provisioningState,
+                lastWorkflowId,
+                lastOperationName,
+                privateEndpointConnections?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageSync.StorageSyncPrivateEndpointConnectionData"/>. </summary>
@@ -82,7 +96,15 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <returns> A new <see cref="StorageSync.StorageSyncPrivateEndpointConnectionData"/> instance for mocking. </returns>
         public static StorageSyncPrivateEndpointConnectionData StorageSyncPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, StorageSyncPrivateLinkServiceConnectionState connectionState = null, StorageSyncPrivateEndpointConnectionProvisioningState? provisioningState = null)
         {
-            return new StorageSyncPrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState, serializedAdditionalRawData: null);
+            return new StorageSyncPrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null,
+                connectionState,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StorageSyncPrivateLinkResource"/>. </summary>
@@ -99,7 +121,15 @@ namespace Azure.ResourceManager.StorageSync.Models
             requiredMembers ??= new List<string>();
             requiredZoneNames ??= new List<string>();
 
-            return new StorageSyncPrivateLinkResource(id, name, resourceType, systemData, groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), serializedAdditionalRawData: null);
+            return new StorageSyncPrivateLinkResource(
+                id,
+                name,
+                resourceType,
+                systemData,
+                groupId,
+                requiredMembers?.ToList(),
+                requiredZoneNames?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageSync.StorageSyncGroupData"/>. </summary>
@@ -112,7 +142,14 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <returns> A new <see cref="StorageSync.StorageSyncGroupData"/> instance for mocking. </returns>
         public static StorageSyncGroupData StorageSyncGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? uniqueId = null, string syncGroupStatus = null)
         {
-            return new StorageSyncGroupData(id, name, resourceType, systemData, uniqueId, syncGroupStatus, serializedAdditionalRawData: null);
+            return new StorageSyncGroupData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                uniqueId,
+                syncGroupStatus,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StorageSyncGroupCreateOrUpdateContent"/>. </summary>
@@ -124,7 +161,13 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <returns> A new <see cref="Models.StorageSyncGroupCreateOrUpdateContent"/> instance for mocking. </returns>
         public static StorageSyncGroupCreateOrUpdateContent StorageSyncGroupCreateOrUpdateContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, BinaryData properties = null)
         {
-            return new StorageSyncGroupCreateOrUpdateContent(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
+            return new StorageSyncGroupCreateOrUpdateContent(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CloudEndpointCreateOrUpdateContent"/>. </summary>
@@ -139,7 +182,16 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <returns> A new <see cref="Models.CloudEndpointCreateOrUpdateContent"/> instance for mocking. </returns>
         public static CloudEndpointCreateOrUpdateContent CloudEndpointCreateOrUpdateContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier storageAccountResourceId = null, string azureFileShareName = null, Guid? storageAccountTenantId = null, string friendlyName = null)
         {
-            return new CloudEndpointCreateOrUpdateContent(id, name, resourceType, systemData, storageAccountResourceId, azureFileShareName, storageAccountTenantId, friendlyName, serializedAdditionalRawData: null);
+            return new CloudEndpointCreateOrUpdateContent(
+                id,
+                name,
+                resourceType,
+                systemData,
+                storageAccountResourceId,
+                azureFileShareName,
+                storageAccountTenantId,
+                friendlyName,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageSync.CloudEndpointData"/>. </summary>
@@ -160,7 +212,22 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <returns> A new <see cref="StorageSync.CloudEndpointData"/> instance for mocking. </returns>
         public static CloudEndpointData CloudEndpointData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier storageAccountResourceId = null, string azureFileShareName = null, Guid? storageAccountTenantId = null, string partnershipId = null, string friendlyName = null, string isBackupEnabled = null, string provisioningState = null, string lastWorkflowId = null, string lastOperationName = null, CloudEndpointChangeEnumerationStatus changeEnumerationStatus = null)
         {
-            return new CloudEndpointData(id, name, resourceType, systemData, storageAccountResourceId, azureFileShareName, storageAccountTenantId, partnershipId, friendlyName, isBackupEnabled, provisioningState, lastWorkflowId, lastOperationName, changeEnumerationStatus, serializedAdditionalRawData: null);
+            return new CloudEndpointData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                storageAccountResourceId,
+                azureFileShareName,
+                storageAccountTenantId,
+                partnershipId,
+                friendlyName,
+                isBackupEnabled,
+                provisioningState,
+                lastWorkflowId,
+                lastOperationName,
+                changeEnumerationStatus,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CloudEndpointChangeEnumerationStatus"/>. </summary>
@@ -183,7 +250,14 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <returns> A new <see cref="Models.CloudEndpointLastChangeEnumerationStatus"/> instance for mocking. </returns>
         public static CloudEndpointLastChangeEnumerationStatus CloudEndpointLastChangeEnumerationStatus(DateTimeOffset? startedOn = null, DateTimeOffset? completedOn = null, long? namespaceFilesCount = null, long? namespaceDirectoriesCount = null, long? namespaceSizeInBytes = null, DateTimeOffset? nextRunTimestamp = null)
         {
-            return new CloudEndpointLastChangeEnumerationStatus(startedOn, completedOn, namespaceFilesCount, namespaceDirectoriesCount, namespaceSizeInBytes, nextRunTimestamp, serializedAdditionalRawData: null);
+            return new CloudEndpointLastChangeEnumerationStatus(
+                startedOn,
+                completedOn,
+                namespaceFilesCount,
+                namespaceDirectoriesCount,
+                namespaceSizeInBytes,
+                nextRunTimestamp,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CloudEndpointChangeEnumerationActivity"/>. </summary>
@@ -203,7 +277,21 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <returns> A new <see cref="Models.CloudEndpointChangeEnumerationActivity"/> instance for mocking. </returns>
         public static CloudEndpointChangeEnumerationActivity CloudEndpointChangeEnumerationActivity(DateTimeOffset? lastUpdatedOn = null, CloudEndpointChangeEnumerationActivityState? operationState = null, int? statusCode = null, DateTimeOffset? startedOn = null, long? processedFilesCount = null, long? processedDirectoriesCount = null, long? totalFilesCount = null, long? totalDirectoriesCount = null, long? totalSizeInBytes = null, int? progressPercent = null, int? minutesRemaining = null, CloudEndpointChangeEnumerationTotalCountsState? totalCountsState = null, int? deletesProgressPercent = null)
         {
-            return new CloudEndpointChangeEnumerationActivity(lastUpdatedOn, operationState, statusCode, startedOn, processedFilesCount, processedDirectoriesCount, totalFilesCount, totalDirectoriesCount, totalSizeInBytes, progressPercent, minutesRemaining, totalCountsState, deletesProgressPercent, serializedAdditionalRawData: null);
+            return new CloudEndpointChangeEnumerationActivity(
+                lastUpdatedOn,
+                operationState,
+                statusCode,
+                startedOn,
+                processedFilesCount,
+                processedDirectoriesCount,
+                totalFilesCount,
+                totalDirectoriesCount,
+                totalSizeInBytes,
+                progressPercent,
+                minutesRemaining,
+                totalCountsState,
+                deletesProgressPercent,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CloudEndpointPostBackupResult"/>. </summary>
@@ -242,7 +330,23 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <returns> A new <see cref="Models.StorageSyncServerEndpointCreateOrUpdateContent"/> instance for mocking. </returns>
         public static StorageSyncServerEndpointCreateOrUpdateContent StorageSyncServerEndpointCreateOrUpdateContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string serverLocalPath = null, StorageSyncFeatureStatus? cloudTiering = null, int? volumeFreeSpacePercent = null, int? tierFilesOlderThanDays = null, string friendlyName = null, ResourceIdentifier serverResourceId = null, StorageSyncFeatureStatus? offlineDataTransfer = null, string offlineDataTransferShareName = null, InitialDownloadPolicy? initialDownloadPolicy = null, LocalCacheMode? localCacheMode = null, InitialUploadPolicy? initialUploadPolicy = null)
         {
-            return new StorageSyncServerEndpointCreateOrUpdateContent(id, name, resourceType, systemData, serverLocalPath, cloudTiering, volumeFreeSpacePercent, tierFilesOlderThanDays, friendlyName, serverResourceId, offlineDataTransfer, offlineDataTransferShareName, initialDownloadPolicy, localCacheMode, initialUploadPolicy, serializedAdditionalRawData: null);
+            return new StorageSyncServerEndpointCreateOrUpdateContent(
+                id,
+                name,
+                resourceType,
+                systemData,
+                serverLocalPath,
+                cloudTiering,
+                volumeFreeSpacePercent,
+                tierFilesOlderThanDays,
+                friendlyName,
+                serverResourceId,
+                offlineDataTransfer,
+                offlineDataTransferShareName,
+                initialDownloadPolicy,
+                localCacheMode,
+                initialUploadPolicy,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageSync.StorageSyncServerEndpointData"/>. </summary>
@@ -273,7 +377,32 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <returns> A new <see cref="StorageSync.StorageSyncServerEndpointData"/> instance for mocking. </returns>
         public static StorageSyncServerEndpointData StorageSyncServerEndpointData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string serverLocalPath = null, StorageSyncFeatureStatus? cloudTiering = null, int? volumeFreeSpacePercent = null, int? tierFilesOlderThanDays = null, string friendlyName = null, ResourceIdentifier serverResourceId = null, string provisioningState = null, string lastWorkflowId = null, string lastOperationName = null, ServerEndpointSyncStatus syncStatus = null, StorageSyncFeatureStatus? offlineDataTransfer = null, ResourceIdentifier offlineDataTransferStorageAccountResourceId = null, Guid? offlineDataTransferStorageAccountTenantId = null, string offlineDataTransferShareName = null, ServerEndpointCloudTieringStatus cloudTieringStatus = null, ServerEndpointRecallStatus recallStatus = null, InitialDownloadPolicy? initialDownloadPolicy = null, LocalCacheMode? localCacheMode = null, InitialUploadPolicy? initialUploadPolicy = null, string serverName = null)
         {
-            return new StorageSyncServerEndpointData(id, name, resourceType, systemData, serverLocalPath, cloudTiering, volumeFreeSpacePercent, tierFilesOlderThanDays, friendlyName, serverResourceId, provisioningState, lastWorkflowId, lastOperationName, syncStatus, offlineDataTransfer, offlineDataTransferStorageAccountResourceId, offlineDataTransferStorageAccountTenantId, offlineDataTransferShareName, cloudTieringStatus, recallStatus, initialDownloadPolicy, localCacheMode, initialUploadPolicy, serverName, serializedAdditionalRawData: null);
+            return new StorageSyncServerEndpointData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                serverLocalPath,
+                cloudTiering,
+                volumeFreeSpacePercent,
+                tierFilesOlderThanDays,
+                friendlyName,
+                serverResourceId,
+                provisioningState,
+                lastWorkflowId,
+                lastOperationName,
+                syncStatus,
+                offlineDataTransfer,
+                offlineDataTransferStorageAccountResourceId,
+                offlineDataTransferStorageAccountTenantId,
+                offlineDataTransferShareName,
+                cloudTieringStatus,
+                recallStatus,
+                initialDownloadPolicy,
+                localCacheMode,
+                initialUploadPolicy,
+                serverName,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ServerEndpointSyncStatus"/>. </summary>
@@ -292,7 +421,20 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <returns> A new <see cref="Models.ServerEndpointSyncStatus"/> instance for mocking. </returns>
         public static ServerEndpointSyncStatus ServerEndpointSyncStatus(ServerEndpointHealthState? downloadHealth = null, ServerEndpointHealthState? uploadHealth = null, ServerEndpointHealthState? combinedHealth = null, ServerEndpointSyncActivityState? syncActivity = null, long? totalPersistentFilesNotSyncingCount = null, DateTimeOffset? lastUpdatedOn = null, ServerEndpointSyncSessionStatus uploadStatus = null, ServerEndpointSyncSessionStatus downloadStatus = null, ServerEndpointSyncActivityStatus uploadActivity = null, ServerEndpointSyncActivityStatus downloadActivity = null, ServerEndpointOfflineDataTransferState? offlineDataTransferStatus = null, ServerEndpointBackgroundDataDownloadActivity backgroundDataDownloadActivity = null)
         {
-            return new ServerEndpointSyncStatus(downloadHealth, uploadHealth, combinedHealth, syncActivity, totalPersistentFilesNotSyncingCount, lastUpdatedOn, uploadStatus, downloadStatus, uploadActivity, downloadActivity, offlineDataTransferStatus, backgroundDataDownloadActivity, serializedAdditionalRawData: null);
+            return new ServerEndpointSyncStatus(
+                downloadHealth,
+                uploadHealth,
+                combinedHealth,
+                syncActivity,
+                totalPersistentFilesNotSyncingCount,
+                lastUpdatedOn,
+                uploadStatus,
+                downloadStatus,
+                uploadActivity,
+                downloadActivity,
+                offlineDataTransferStatus,
+                backgroundDataDownloadActivity,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ServerEndpointSyncSessionStatus"/>. </summary>
@@ -309,7 +451,16 @@ namespace Azure.ResourceManager.StorageSync.Models
         {
             filesNotSyncingErrors ??= new List<ServerEndpointFilesNotSyncingError>();
 
-            return new ServerEndpointSyncSessionStatus(lastSyncResult, lastSyncTimestamp, lastSyncSuccessTimestamp, lastSyncPerItemErrorCount, persistentFilesNotSyncingCount, transientFilesNotSyncingCount, filesNotSyncingErrors?.ToList(), lastSyncMode, serializedAdditionalRawData: null);
+            return new ServerEndpointSyncSessionStatus(
+                lastSyncResult,
+                lastSyncTimestamp,
+                lastSyncSuccessTimestamp,
+                lastSyncPerItemErrorCount,
+                persistentFilesNotSyncingCount,
+                transientFilesNotSyncingCount,
+                filesNotSyncingErrors?.ToList(),
+                lastSyncMode,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ServerEndpointFilesNotSyncingError"/>. </summary>
@@ -334,7 +485,16 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <returns> A new <see cref="Models.ServerEndpointSyncActivityStatus"/> instance for mocking. </returns>
         public static ServerEndpointSyncActivityStatus ServerEndpointSyncActivityStatus(DateTimeOffset? timestamp = null, long? perItemErrorCount = null, long? appliedItemCount = null, long? totalItemCount = null, long? appliedBytes = null, long? totalBytes = null, ServerEndpointSyncMode? syncMode = null, int? sessionMinutesRemaining = null)
         {
-            return new ServerEndpointSyncActivityStatus(timestamp, perItemErrorCount, appliedItemCount, totalItemCount, appliedBytes, totalBytes, syncMode, sessionMinutesRemaining, serializedAdditionalRawData: null);
+            return new ServerEndpointSyncActivityStatus(
+                timestamp,
+                perItemErrorCount,
+                appliedItemCount,
+                totalItemCount,
+                appliedBytes,
+                totalBytes,
+                syncMode,
+                sessionMinutesRemaining,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ServerEndpointBackgroundDataDownloadActivity"/>. </summary>
@@ -363,7 +523,19 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <returns> A new <see cref="Models.ServerEndpointCloudTieringStatus"/> instance for mocking. </returns>
         public static ServerEndpointCloudTieringStatus ServerEndpointCloudTieringStatus(DateTimeOffset? lastUpdatedOn = null, ServerEndpointHealthState? health = null, DateTimeOffset? healthLastUpdatedOn = null, int? lastCloudTieringResult = null, DateTimeOffset? lastSuccessTimestamp = null, CloudTieringSpaceSavings spaceSavings = null, CloudTieringCachePerformance cachePerformance = null, CloudTieringFilesNotTiering filesNotTiering = null, CloudTieringVolumeFreeSpacePolicyStatus volumeFreeSpacePolicyStatus = null, CloudTieringDatePolicyStatus datePolicyStatus = null, CloudTieringLowDiskMode lowDiskMode = null)
         {
-            return new ServerEndpointCloudTieringStatus(lastUpdatedOn, health, healthLastUpdatedOn, lastCloudTieringResult, lastSuccessTimestamp, spaceSavings, cachePerformance, filesNotTiering, volumeFreeSpacePolicyStatus, datePolicyStatus, lowDiskMode, serializedAdditionalRawData: null);
+            return new ServerEndpointCloudTieringStatus(
+                lastUpdatedOn,
+                health,
+                healthLastUpdatedOn,
+                lastCloudTieringResult,
+                lastSuccessTimestamp,
+                spaceSavings,
+                cachePerformance,
+                filesNotTiering,
+                volumeFreeSpacePolicyStatus,
+                datePolicyStatus,
+                lowDiskMode,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CloudTieringSpaceSavings"/>. </summary>
@@ -376,7 +548,14 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <returns> A new <see cref="Models.CloudTieringSpaceSavings"/> instance for mocking. </returns>
         public static CloudTieringSpaceSavings CloudTieringSpaceSavings(DateTimeOffset? lastUpdatedOn = null, long? volumeSizeInBytes = null, long? cloudTotalSizeInBytes = null, long? cachedSizeInBytes = null, int? spaceSavingsPercent = null, long? spaceSavingsInBytes = null)
         {
-            return new CloudTieringSpaceSavings(lastUpdatedOn, volumeSizeInBytes, cloudTotalSizeInBytes, cachedSizeInBytes, spaceSavingsPercent, spaceSavingsInBytes, serializedAdditionalRawData: null);
+            return new CloudTieringSpaceSavings(
+                lastUpdatedOn,
+                volumeSizeInBytes,
+                cloudTotalSizeInBytes,
+                cachedSizeInBytes,
+                spaceSavingsPercent,
+                spaceSavingsInBytes,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CloudTieringCachePerformance"/>. </summary>
@@ -491,7 +670,35 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <returns> A new <see cref="StorageSync.StorageSyncRegisteredServerData"/> instance for mocking. </returns>
         public static StorageSyncRegisteredServerData StorageSyncRegisteredServerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, BinaryData serverCertificate = null, string agentVersion = null, RegisteredServerAgentVersionStatus? agentVersionStatus = null, DateTimeOffset? agentVersionExpireOn = null, string serverOSVersion = null, int? serverManagementErrorCode = null, string lastHeartbeat = null, string provisioningState = null, string serverRole = null, Guid? clusterId = null, string clusterName = null, Guid? serverId = null, Guid? storageSyncServiceUid = null, string lastWorkflowId = null, string lastOperationName = null, Uri discoveryEndpointUri = null, AzureLocation? resourceLocation = null, AzureLocation? serviceLocation = null, string friendlyName = null, Uri managementEndpointUri = null, Uri monitoringEndpointUri = null, string monitoringConfiguration = null, string serverName = null)
         {
-            return new StorageSyncRegisteredServerData(id, name, resourceType, systemData, serverCertificate, agentVersion, agentVersionStatus, agentVersionExpireOn, serverOSVersion, serverManagementErrorCode, lastHeartbeat, provisioningState, serverRole, clusterId, clusterName, serverId, storageSyncServiceUid, lastWorkflowId, lastOperationName, discoveryEndpointUri, resourceLocation, serviceLocation, friendlyName, managementEndpointUri, monitoringEndpointUri, monitoringConfiguration, serverName, serializedAdditionalRawData: null);
+            return new StorageSyncRegisteredServerData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                serverCertificate,
+                agentVersion,
+                agentVersionStatus,
+                agentVersionExpireOn,
+                serverOSVersion,
+                serverManagementErrorCode,
+                lastHeartbeat,
+                provisioningState,
+                serverRole,
+                clusterId,
+                clusterName,
+                serverId,
+                storageSyncServiceUid,
+                lastWorkflowId,
+                lastOperationName,
+                discoveryEndpointUri,
+                resourceLocation,
+                serviceLocation,
+                friendlyName,
+                managementEndpointUri,
+                monitoringEndpointUri,
+                monitoringConfiguration,
+                serverName,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StorageSyncRegisteredServerCreateOrUpdateContent"/>. </summary>
@@ -511,7 +718,21 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <returns> A new <see cref="Models.StorageSyncRegisteredServerCreateOrUpdateContent"/> instance for mocking. </returns>
         public static StorageSyncRegisteredServerCreateOrUpdateContent StorageSyncRegisteredServerCreateOrUpdateContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, BinaryData serverCertificate = null, string agentVersion = null, string serverOSVersion = null, string lastHeartbeat = null, string serverRole = null, Guid? clusterId = null, string clusterName = null, Guid? serverId = null, string friendlyName = null)
         {
-            return new StorageSyncRegisteredServerCreateOrUpdateContent(id, name, resourceType, systemData, serverCertificate, agentVersion, serverOSVersion, lastHeartbeat, serverRole, clusterId, clusterName, serverId, friendlyName, serializedAdditionalRawData: null);
+            return new StorageSyncRegisteredServerCreateOrUpdateContent(
+                id,
+                name,
+                resourceType,
+                systemData,
+                serverCertificate,
+                agentVersion,
+                serverOSVersion,
+                lastHeartbeat,
+                serverRole,
+                clusterId,
+                clusterName,
+                serverId,
+                friendlyName,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageSync.StorageSyncWorkflowData"/>. </summary>
@@ -530,7 +751,20 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <returns> A new <see cref="StorageSync.StorageSyncWorkflowData"/> instance for mocking. </returns>
         public static StorageSyncWorkflowData StorageSyncWorkflowData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string lastStepName = null, StorageSyncWorkflowStatus? status = null, StorageSyncOperationDirection? operation = null, string steps = null, Guid? lastOperationId = null, string commandName = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastStatusUpdatedOn = null)
         {
-            return new StorageSyncWorkflowData(id, name, resourceType, systemData, lastStepName, status, operation, steps, lastOperationId, commandName, createdOn, lastStatusUpdatedOn, serializedAdditionalRawData: null);
+            return new StorageSyncWorkflowData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                lastStepName,
+                status,
+                operation,
+                steps,
+                lastOperationId,
+                commandName,
+                createdOn,
+                lastStatusUpdatedOn,
+                serializedAdditionalRawData: null);
         }
     }
 }

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DefinitionType))
+            if (DefinitionType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(DefinitionType.Value.ToString());
             }
-            if (Optional.IsDefined(ReadOnly))
+            if (ReadOnly.HasValue)
             {
                 if (ReadOnly != null)
                 {
@@ -43,17 +43,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("readOnly");
                 }
             }
-            if (Optional.IsDefined(Source))
+            if (Source != null)
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
-            if (Optional.IsDefined(Target))
+            if (Target != null)
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target);
             }
-            if (Optional.IsDefined(Consistency))
+            if (Consistency != null)
             {
                 if (Consistency != null)
                 {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("consistency");
                 }
             }
-            if (Optional.IsDefined(Bind))
+            if (Bind != null)
             {
                 if (Bind != null)
                 {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("bind");
                 }
             }
-            if (Optional.IsDefined(Volume))
+            if (Volume != null)
             {
                 if (Volume != null)
                 {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("volume");
                 }
             }
-            if (Optional.IsDefined(Tmpfs))
+            if (Tmpfs != null)
             {
                 if (Tmpfs != null)
                 {
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         bind = null;
                         continue;
                     }
-                    bind = MountBindOptions.DeserializeMountBindOptions(property.Value);
+                    bind = MountBindOptions.DeserializeMountBindOptions(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("volume"u8))
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         volume = null;
                         continue;
                     }
-                    volume = VolumeOptions.DeserializeVolumeOptions(property.Value);
+                    volume = VolumeOptions.DeserializeVolumeOptions(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tmpfs"u8))
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         tmpfs = null;
                         continue;
                     }
-                    tmpfs = TmpfsOptions.DeserializeTmpfsOptions(property.Value);
+                    tmpfs = TmpfsOptions.DeserializeTmpfsOptions(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -226,7 +226,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VolumeDefinition(Optional.ToNullable(type), Optional.ToNullable(readOnly), source.Value, target.Value, consistency.Value, bind.Value, volume.Value, tmpfs.Value, serializedAdditionalRawData);
+            return new VolumeDefinition(
+                Optional.ToNullable(type),
+                Optional.ToNullable(readOnly),
+                source.Value,
+                target.Value,
+                consistency.Value,
+                bind.Value,
+                volume.Value,
+                tmpfs.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VolumeDefinition>.Write(ModelReaderWriterOptions options)

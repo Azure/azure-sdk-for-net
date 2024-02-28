@@ -26,47 +26,47 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceName))
+            if (ResourceName != null)
             {
                 writer.WritePropertyName("resourcename"u8);
                 writer.WriteStringValue(ResourceName);
             }
-            if (Optional.IsDefined(ResourceUniqueId))
+            if (ResourceUniqueId != null)
             {
                 writer.WritePropertyName("resourceUId"u8);
                 writer.WriteStringValue(ResourceUniqueId);
             }
-            if (Optional.IsDefined(ResourceCost))
+            if (ResourceCost.HasValue)
             {
                 writer.WritePropertyName("resourceCost"u8);
                 writer.WriteNumberValue(ResourceCost.Value);
             }
-            if (Optional.IsDefined(ResourceType))
+            if (ResourceType != null)
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (Optional.IsDefined(ResourceOwner))
+            if (ResourceOwner != null)
             {
                 writer.WritePropertyName("resourceOwner"u8);
                 writer.WriteStringValue(ResourceOwner);
             }
-            if (Optional.IsDefined(ResourcePricingTier))
+            if (ResourcePricingTier != null)
             {
                 writer.WritePropertyName("resourcePricingTier"u8);
                 writer.WriteStringValue(ResourcePricingTier);
             }
-            if (Optional.IsDefined(ResourceStatus))
+            if (ResourceStatus != null)
             {
                 writer.WritePropertyName("resourceStatus"u8);
                 writer.WriteStringValue(ResourceStatus);
             }
-            if (Optional.IsDefined(ResourceId))
+            if (ResourceId != null)
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Optional.IsDefined(ExternalResourceId))
+            if (ExternalResourceId != null)
             {
                 writer.WritePropertyName("externalResourceId"u8);
                 writer.WriteStringValue(ExternalResourceId);
@@ -177,7 +177,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabResourceCost(resourcename.Value, resourceUId.Value, Optional.ToNullable(resourceCost), resourceType.Value, resourceOwner.Value, resourcePricingTier.Value, resourceStatus.Value, resourceId.Value, externalResourceId.Value, serializedAdditionalRawData);
+            return new DevTestLabResourceCost(
+                resourcename.Value,
+                resourceUId.Value,
+                Optional.ToNullable(resourceCost),
+                resourceType.Value,
+                resourceOwner.Value,
+                resourcePricingTier.Value,
+                resourceStatus.Value,
+                resourceId.Value,
+                externalResourceId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabResourceCost>.Write(ModelReaderWriterOptions options)

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(BackupType))
+            if (BackupType.HasValue)
             {
                 writer.WritePropertyName("backupType"u8);
                 writer.WriteStringValue(BackupType.Value.ToString());
             }
-            if (Optional.IsDefined(EnableCompression))
+            if (EnableCompression.HasValue)
             {
                 writer.WritePropertyName("enableCompression"u8);
                 writer.WriteBooleanValue(EnableCompression.Value);
             }
-            if (Optional.IsDefined(RecoveryPointExpireOn))
+            if (RecoveryPointExpireOn.HasValue)
             {
                 writer.WritePropertyName("recoveryPointExpiryTimeInUTC"u8);
                 writer.WriteStringValue(RecoveryPointExpireOn.Value, "O");

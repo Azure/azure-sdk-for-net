@@ -347,7 +347,10 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// <returns> An async collection of <see cref="SavingsPlanValidateResult"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SavingsPlanValidateResult> ValidatePurchaseAsync(SavingsPlanPurchaseValidateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateValidatePurchaseRequest(content);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateValidatePurchaseNextPageRequest(nextLink, content);
@@ -377,7 +380,10 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// <returns> A collection of <see cref="SavingsPlanValidateResult"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SavingsPlanValidateResult> ValidatePurchase(SavingsPlanPurchaseValidateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateValidatePurchaseRequest(content);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateValidatePurchaseNextPageRequest(nextLink, content);

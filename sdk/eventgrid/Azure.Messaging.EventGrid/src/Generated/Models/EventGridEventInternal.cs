@@ -7,7 +7,6 @@
 
 using System;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.Models
 {
@@ -24,10 +23,22 @@ namespace Azure.Messaging.EventGrid.Models
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="subject"/>, <paramref name="eventType"/> or <paramref name="dataVersion"/> is null. </exception>
         public EventGridEventInternal(string id, string subject, JsonElement data, string eventType, DateTimeOffset eventTime, string dataVersion)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(subject, nameof(subject));
-            Argument.AssertNotNull(eventType, nameof(eventType));
-            Argument.AssertNotNull(dataVersion, nameof(dataVersion));
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (subject == null)
+            {
+                throw new ArgumentNullException(nameof(subject));
+            }
+            if (eventType == null)
+            {
+                throw new ArgumentNullException(nameof(eventType));
+            }
+            if (dataVersion == null)
+            {
+                throw new ArgumentNullException(nameof(dataVersion));
+            }
 
             Id = id;
             Subject = subject;

@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("protocol"u8);
             writer.WriteStringValue(Protocol.ToString());
-            if (Optional.IsCollectionDefined(SourceAddressPrefixes))
+            if (!(SourceAddressPrefixes is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("sourceAddressPrefixes"u8);
                 writer.WriteStartArray();
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DestinationAddressPrefixes))
+            if (!(DestinationAddressPrefixes is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("destinationAddressPrefixes"u8);
                 writer.WriteStartArray();
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SourcePortRanges))
+            if (!(SourcePortRanges is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("sourcePortRanges"u8);
                 writer.WriteStartArray();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DestinationPortRanges))
+            if (!(DestinationPortRanges is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("destinationPortRanges"u8);
                 writer.WriteStartArray();
@@ -75,22 +75,22 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SourceAddressPrefix))
+            if (SourceAddressPrefix != null)
             {
                 writer.WritePropertyName("sourceAddressPrefix"u8);
                 writer.WriteStringValue(SourceAddressPrefix);
             }
-            if (Optional.IsDefined(DestinationAddressPrefix))
+            if (DestinationAddressPrefix != null)
             {
                 writer.WritePropertyName("destinationAddressPrefix"u8);
                 writer.WriteStringValue(DestinationAddressPrefix);
             }
-            if (Optional.IsDefined(SourcePortRange))
+            if (SourcePortRange != null)
             {
                 writer.WritePropertyName("sourcePortRange"u8);
                 writer.WriteStringValue(SourcePortRange);
             }
-            if (Optional.IsDefined(DestinationPortRange))
+            if (DestinationPortRange != null)
             {
                 writer.WritePropertyName("destinationPortRange"u8);
                 writer.WriteStringValue(DestinationPortRange);
@@ -142,10 +142,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             string name = default;
             Optional<string> description = default;
             ServiceFabricManagedNsgProtocol protocol = default;
-            Optional<IList<string>> sourceAddressPrefixes = default;
-            Optional<IList<string>> destinationAddressPrefixes = default;
-            Optional<IList<string>> sourcePortRanges = default;
-            Optional<IList<string>> destinationPortRanges = default;
+            IList<string> sourceAddressPrefixes = default;
+            IList<string> destinationAddressPrefixes = default;
+            IList<string> sourcePortRanges = default;
+            IList<string> destinationPortRanges = default;
             Optional<string> sourceAddressPrefix = default;
             Optional<string> destinationAddressPrefix = default;
             Optional<string> sourcePortRange = default;
@@ -269,7 +269,22 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceFabricManagedNetworkSecurityRule(name, description.Value, protocol, Optional.ToList(sourceAddressPrefixes), Optional.ToList(destinationAddressPrefixes), Optional.ToList(sourcePortRanges), Optional.ToList(destinationPortRanges), sourceAddressPrefix.Value, destinationAddressPrefix.Value, sourcePortRange.Value, destinationPortRange.Value, access, priority, direction, serializedAdditionalRawData);
+            return new ServiceFabricManagedNetworkSecurityRule(
+                name,
+                description.Value,
+                protocol,
+                sourceAddressPrefixes ?? new ChangeTrackingList<string>(),
+                destinationAddressPrefixes ?? new ChangeTrackingList<string>(),
+                sourcePortRanges ?? new ChangeTrackingList<string>(),
+                destinationPortRanges ?? new ChangeTrackingList<string>(),
+                sourceAddressPrefix.Value,
+                destinationAddressPrefix.Value,
+                sourcePortRange.Value,
+                destinationPortRange.Value,
+                access,
+                priority,
+                direction,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceFabricManagedNetworkSecurityRule>.Write(ModelReaderWriterOptions options)

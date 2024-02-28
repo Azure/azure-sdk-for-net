@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ComponentId))
+            if (ComponentId != null)
             {
                 if (ComponentId != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("componentId");
                 }
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 if (Description != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("description");
                 }
             }
-            if (Optional.IsCollectionDefined(Settings))
+            if (!(Settings is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 if (Settings != null)
                 {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("settings");
                 }
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 if (Tags != null)
                 {
@@ -128,8 +128,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             Optional<MachineLearningIdAssetReference> componentId = default;
             Optional<string> description = default;
-            Optional<IDictionary<string, string>> settings = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> settings = default;
+            IDictionary<string, string> tags = default;
             BatchDeploymentConfigurationType deploymentConfigurationType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         componentId = null;
                         continue;
                     }
-                    componentId = MachineLearningIdAssetReference.DeserializeMachineLearningIdAssetReference(property.Value);
+                    componentId = MachineLearningIdAssetReference.DeserializeMachineLearningIdAssetReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("description"u8))
@@ -196,7 +196,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchPipelineComponentDeploymentConfiguration(deploymentConfigurationType, serializedAdditionalRawData, componentId.Value, description.Value, Optional.ToDictionary(settings), Optional.ToDictionary(tags));
+            return new BatchPipelineComponentDeploymentConfiguration(
+                deploymentConfigurationType,
+                serializedAdditionalRawData,
+                componentId.Value,
+                description.Value,
+                settings ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>());
         }
 
         BinaryData IPersistableModel<BatchPipelineComponentDeploymentConfiguration>.Write(ModelReaderWriterOptions options)

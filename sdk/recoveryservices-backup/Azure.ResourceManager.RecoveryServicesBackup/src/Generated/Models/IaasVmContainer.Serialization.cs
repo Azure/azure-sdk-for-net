@@ -26,44 +26,44 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(VirtualMachineId))
+            if (VirtualMachineId != null)
             {
                 writer.WritePropertyName("virtualMachineId"u8);
                 writer.WriteStringValue(VirtualMachineId);
             }
-            if (Optional.IsDefined(VirtualMachineVersion))
+            if (VirtualMachineVersion != null)
             {
                 writer.WritePropertyName("virtualMachineVersion"u8);
                 writer.WriteStringValue(VirtualMachineVersion);
             }
-            if (Optional.IsDefined(ResourceGroup))
+            if (ResourceGroup != null)
             {
                 writer.WritePropertyName("resourceGroup"u8);
                 writer.WriteStringValue(ResourceGroup);
             }
-            if (Optional.IsDefined(FriendlyName))
+            if (FriendlyName != null)
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Optional.IsDefined(BackupManagementType))
+            if (BackupManagementType.HasValue)
             {
                 writer.WritePropertyName("backupManagementType"u8);
                 writer.WriteStringValue(BackupManagementType.Value.ToString());
             }
-            if (Optional.IsDefined(RegistrationStatus))
+            if (RegistrationStatus != null)
             {
                 writer.WritePropertyName("registrationStatus"u8);
                 writer.WriteStringValue(RegistrationStatus);
             }
-            if (Optional.IsDefined(HealthStatus))
+            if (HealthStatus != null)
             {
                 writer.WritePropertyName("healthStatus"u8);
                 writer.WriteStringValue(HealthStatus);
             }
             writer.WritePropertyName("containerType"u8);
             writer.WriteStringValue(ContainerType.ToSerialString());
-            if (Optional.IsDefined(ProtectableObjectType))
+            if (ProtectableObjectType != null)
             {
                 writer.WritePropertyName("protectableObjectType"u8);
                 writer.WriteStringValue(ProtectableObjectType);
@@ -110,8 +110,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Microsoft.ClassicCompute/virtualMachines": return IaasClassicComputeVmContainer.DeserializeIaasClassicComputeVmContainer(element);
-                    case "Microsoft.Compute/virtualMachines": return IaasComputeVmContainer.DeserializeIaasComputeVmContainer(element);
+                    case "Microsoft.ClassicCompute/virtualMachines": return IaasClassicComputeVmContainer.DeserializeIaasClassicComputeVmContainer(element, options);
+                    case "Microsoft.Compute/virtualMachines": return IaasComputeVmContainer.DeserializeIaasComputeVmContainer(element, options);
                 }
             }
             Optional<ResourceIdentifier> virtualMachineId = default;
@@ -186,7 +186,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IaasVmContainer(friendlyName.Value, Optional.ToNullable(backupManagementType), registrationStatus.Value, healthStatus.Value, containerType, protectableObjectType.Value, serializedAdditionalRawData, virtualMachineId.Value, virtualMachineVersion.Value, resourceGroup.Value);
+            return new IaasVmContainer(
+                friendlyName.Value,
+                Optional.ToNullable(backupManagementType),
+                registrationStatus.Value,
+                healthStatus.Value,
+                containerType,
+                protectableObjectType.Value,
+                serializedAdditionalRawData,
+                virtualMachineId.Value,
+                virtualMachineVersion.Value,
+                resourceGroup.Value);
         }
 
         BinaryData IPersistableModel<IaasVmContainer>.Write(ModelReaderWriterOptions options)

@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(DiskSizeGB))
+            if (DiskSizeGB.HasValue)
             {
                 writer.WritePropertyName("diskSizeGB"u8);
                 writer.WriteNumberValue(DiskSizeGB.Value);
             }
-            if (Optional.IsDefined(DeviceKey))
+            if (DeviceKey.HasValue)
             {
                 writer.WritePropertyName("deviceKey"u8);
                 writer.WriteNumberValue(DeviceKey.Value);
             }
-            if (Optional.IsDefined(DiskMode))
+            if (DiskMode.HasValue)
             {
                 writer.WritePropertyName("diskMode"u8);
                 writer.WriteStringValue(DiskMode.Value.ToString());
             }
-            if (Optional.IsDefined(ControllerKey))
+            if (ControllerKey.HasValue)
             {
                 writer.WritePropertyName("controllerKey"u8);
                 writer.WriteNumberValue(ControllerKey.Value);
             }
-            if (Optional.IsDefined(UnitNumber))
+            if (UnitNumber.HasValue)
             {
                 writer.WritePropertyName("unitNumber"u8);
                 writer.WriteNumberValue(UnitNumber.Value);
             }
-            if (Optional.IsDefined(DeviceName))
+            if (DeviceName != null)
             {
                 writer.WritePropertyName("deviceName"u8);
                 writer.WriteStringValue(DeviceName);
             }
-            if (Optional.IsDefined(DiskType))
+            if (DiskType.HasValue)
             {
                 writer.WritePropertyName("diskType"u8);
                 writer.WriteStringValue(DiskType.Value.ToString());
@@ -186,7 +186,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareVirtualDiskUpdate(name.Value, Optional.ToNullable(diskSizeGB), Optional.ToNullable(deviceKey), Optional.ToNullable(diskMode), Optional.ToNullable(controllerKey), Optional.ToNullable(unitNumber), deviceName.Value, Optional.ToNullable(diskType), serializedAdditionalRawData);
+            return new VMwareVirtualDiskUpdate(
+                name.Value,
+                Optional.ToNullable(diskSizeGB),
+                Optional.ToNullable(deviceKey),
+                Optional.ToNullable(diskMode),
+                Optional.ToNullable(controllerKey),
+                Optional.ToNullable(unitNumber),
+                deviceName.Value,
+                Optional.ToNullable(diskType),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VMwareVirtualDiskUpdate>.Write(ModelReaderWriterOptions options)

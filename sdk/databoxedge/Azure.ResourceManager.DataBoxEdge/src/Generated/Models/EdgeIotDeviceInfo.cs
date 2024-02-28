@@ -52,8 +52,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <exception cref="ArgumentNullException"> <paramref name="deviceId"/> or <paramref name="iotHostHub"/> is null. </exception>
         public EdgeIotDeviceInfo(string deviceId, string iotHostHub)
         {
-            Argument.AssertNotNull(deviceId, nameof(deviceId));
-            Argument.AssertNotNull(iotHostHub, nameof(iotHostHub));
+            if (deviceId == null)
+            {
+                throw new ArgumentNullException(nameof(deviceId));
+            }
+            if (iotHostHub == null)
+            {
+                throw new ArgumentNullException(nameof(iotHostHub));
+            }
 
             DeviceId = deviceId;
             IotHostHub = iotHostHub;

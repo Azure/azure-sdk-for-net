@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(KeyVaultProperties))
+            if (KeyVaultProperties != null)
             {
                 if (KeyVaultProperties != null)
                 {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                         keyVaultProperties = null;
                         continue;
                     }
-                    keyVaultProperties = AppConfigurationKeyVaultProperties.DeserializeAppConfigurationKeyVaultProperties(property.Value);
+                    keyVaultProperties = AppConfigurationKeyVaultProperties.DeserializeAppConfigurationKeyVaultProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

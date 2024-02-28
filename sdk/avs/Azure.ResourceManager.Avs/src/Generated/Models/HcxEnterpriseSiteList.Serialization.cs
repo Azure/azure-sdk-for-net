@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Avs.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<HcxEnterpriseSiteData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<HcxEnterpriseSiteData>> value = default;
+            IReadOnlyList<HcxEnterpriseSiteData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Avs.Models
                     List<HcxEnterpriseSiteData> array = new List<HcxEnterpriseSiteData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HcxEnterpriseSiteData.DeserializeHcxEnterpriseSiteData(item));
+                        array.Add(HcxEnterpriseSiteData.DeserializeHcxEnterpriseSiteData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HcxEnterpriseSiteList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new HcxEnterpriseSiteList(value ?? new ChangeTrackingList<HcxEnterpriseSiteData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HcxEnterpriseSiteList>.Write(ModelReaderWriterOptions options)

@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<NetworkCloudKubernetesClusterData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<NetworkCloudKubernetesClusterData>> value = default;
+            IReadOnlyList<NetworkCloudKubernetesClusterData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     List<NetworkCloudKubernetesClusterData> array = new List<NetworkCloudKubernetesClusterData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkCloudKubernetesClusterData.DeserializeNetworkCloudKubernetesClusterData(item));
+                        array.Add(NetworkCloudKubernetesClusterData.DeserializeNetworkCloudKubernetesClusterData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesClusterList(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new KubernetesClusterList(nextLink.Value, value ?? new ChangeTrackingList<NetworkCloudKubernetesClusterData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesClusterList>.Write(ModelReaderWriterOptions options)

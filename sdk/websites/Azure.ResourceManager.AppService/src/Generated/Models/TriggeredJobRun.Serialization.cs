@@ -26,57 +26,57 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(WebJobId))
+            if (WebJobId != null)
             {
                 writer.WritePropertyName("web_job_id"u8);
                 writer.WriteStringValue(WebJobId);
             }
-            if (Optional.IsDefined(WebJobName))
+            if (WebJobName != null)
             {
                 writer.WritePropertyName("web_job_name"u8);
                 writer.WriteStringValue(WebJobName);
             }
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (Optional.IsDefined(StartOn))
+            if (StartOn.HasValue)
             {
                 writer.WritePropertyName("start_time"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (EndOn.HasValue)
             {
                 writer.WritePropertyName("end_time"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Optional.IsDefined(Duration))
+            if (Duration.HasValue)
             {
                 writer.WritePropertyName("duration"u8);
                 writer.WriteStringValue(Duration.Value, "c");
             }
-            if (Optional.IsDefined(OutputUri))
+            if (OutputUri != null)
             {
                 writer.WritePropertyName("output_url"u8);
                 writer.WriteStringValue(OutputUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ErrorUri))
+            if (ErrorUri != null)
             {
                 writer.WritePropertyName("error_url"u8);
                 writer.WriteStringValue(ErrorUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(Uri))
+            if (Uri != null)
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (Optional.IsDefined(JobName))
+            if (JobName != null)
             {
                 writer.WritePropertyName("job_name"u8);
                 writer.WriteStringValue(JobName);
             }
-            if (Optional.IsDefined(Trigger))
+            if (Trigger != null)
             {
                 writer.WritePropertyName("trigger"u8);
                 writer.WriteStringValue(Trigger);
@@ -223,7 +223,19 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TriggeredJobRun(webJobId.Value, webJobName.Value, Optional.ToNullable(status), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(duration), outputUrl.Value, errorUrl.Value, url.Value, jobName.Value, trigger.Value, serializedAdditionalRawData);
+            return new TriggeredJobRun(
+                webJobId.Value,
+                webJobName.Value,
+                Optional.ToNullable(status),
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                Optional.ToNullable(duration),
+                outputUrl.Value,
+                errorUrl.Value,
+                url.Value,
+                jobName.Value,
+                trigger.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TriggeredJobRun>.Write(ModelReaderWriterOptions options)

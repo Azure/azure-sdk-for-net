@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Properties))
+            if (!(Properties is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteStartObject();
@@ -50,39 +50,39 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceId))
+            if (options.Format != "W" && ResourceId != null)
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status);
-            if (Optional.IsDefined(PercentComplete))
+            if (PercentComplete.HasValue)
             {
                 writer.WritePropertyName("percentComplete"u8);
                 writer.WriteNumberValue(PercentComplete.Value);
             }
-            if (Optional.IsDefined(StartOn))
+            if (StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (EndOn.HasValue)
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(Operations))
+            if (!(Operations is ChangeTrackingList<OperationStatusResult> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("operations"u8);
                 writer.WriteStartArray();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Error))
+            if (Error != null)
             {
                 writer.WritePropertyName("error"u8);
                 JsonSerializer.Serialize(writer, Error);
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<IReadOnlyDictionary<string, BinaryData>> properties = default;
+            IReadOnlyDictionary<string, BinaryData> properties = default;
             Optional<ResourceIdentifier> id = default;
             Optional<ResourceIdentifier> resourceId = default;
             Optional<string> name = default;
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             Optional<float> percentComplete = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;
-            Optional<IReadOnlyList<OperationStatusResult>> operations = default;
+            IReadOnlyList<OperationStatusResult> operations = default;
             Optional<ResponseError> error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     List<OperationStatusResult> array = new List<OperationStatusResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeOperationStatusResult(item));
+                        array.Add(DeserializeOperationStatusResult(item, options));
                     }
                     operations = array;
                     continue;
@@ -254,7 +254,18 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationStatusExtendedResult(id.Value, resourceId.Value, name.Value, status, Optional.ToNullable(percentComplete), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToList(operations), error.Value, serializedAdditionalRawData, Optional.ToDictionary(properties));
+            return new OperationStatusExtendedResult(
+                id.Value,
+                resourceId.Value,
+                name.Value,
+                status,
+                Optional.ToNullable(percentComplete),
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                operations ?? new ChangeTrackingList<OperationStatusResult>(),
+                error.Value,
+                serializedAdditionalRawData,
+                properties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
         BinaryData IPersistableModel<OperationStatusExtendedResult>.Write(ModelReaderWriterOptions options)

@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(StorageSizeInGB))
+            if (StorageSizeInGB.HasValue)
             {
                 writer.WritePropertyName("storageSizeGB"u8);
                 writer.WriteNumberValue(StorageSizeInGB.Value);
             }
-            if (Optional.IsDefined(Iops))
+            if (Iops.HasValue)
             {
                 writer.WritePropertyName("iops"u8);
                 writer.WriteNumberValue(Iops.Value);
             }
-            if (Optional.IsDefined(AutoGrow))
+            if (AutoGrow.HasValue)
             {
                 writer.WritePropertyName("autoGrow"u8);
                 writer.WriteStringValue(AutoGrow.Value.ToString());
             }
-            if (Optional.IsDefined(LogOnDisk))
+            if (LogOnDisk.HasValue)
             {
                 writer.WritePropertyName("logOnDisk"u8);
                 writer.WriteStringValue(LogOnDisk.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(StorageSku))
+            if (options.Format != "W" && StorageSku != null)
             {
                 writer.WritePropertyName("storageSku"u8);
                 writer.WriteStringValue(StorageSku);
             }
-            if (Optional.IsDefined(AutoIoScaling))
+            if (AutoIoScaling.HasValue)
             {
                 writer.WritePropertyName("autoIoScaling"u8);
                 writer.WriteStringValue(AutoIoScaling.Value.ToString());
@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlFlexibleServerStorage(Optional.ToNullable(storageSizeGB), Optional.ToNullable(iops), Optional.ToNullable(autoGrow), Optional.ToNullable(logOnDisk), storageSku.Value, Optional.ToNullable(autoIoScaling), serializedAdditionalRawData);
+            return new MySqlFlexibleServerStorage(
+                Optional.ToNullable(storageSizeGB),
+                Optional.ToNullable(iops),
+                Optional.ToNullable(autoGrow),
+                Optional.ToNullable(logOnDisk),
+                storageSku.Value,
+                Optional.ToNullable(autoIoScaling),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlFlexibleServerStorage>.Write(ModelReaderWriterOptions options)

@@ -36,12 +36,12 @@ namespace Azure.Communication.JobRouter
             writer.WriteStringValue(JobId);
             writer.WritePropertyName("capacityCost"u8);
             writer.WriteNumberValue(CapacityCost);
-            if (Optional.IsDefined(OfferedAt))
+            if (OfferedAt.HasValue)
             {
                 writer.WritePropertyName("offeredAt"u8);
                 writer.WriteStringValue(OfferedAt.Value, "O");
             }
-            if (Optional.IsDefined(ExpiresAt))
+            if (ExpiresAt.HasValue)
             {
                 writer.WritePropertyName("expiresAt"u8);
                 writer.WriteStringValue(ExpiresAt.Value, "O");
@@ -132,7 +132,13 @@ namespace Azure.Communication.JobRouter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RouterJobOffer(offerId, jobId, capacityCost, Optional.ToNullable(offeredAt), Optional.ToNullable(expiresAt), serializedAdditionalRawData);
+            return new RouterJobOffer(
+                offerId,
+                jobId,
+                capacityCost,
+                Optional.ToNullable(offeredAt),
+                Optional.ToNullable(expiresAt),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RouterJobOffer>.Write(ModelReaderWriterOptions options)
