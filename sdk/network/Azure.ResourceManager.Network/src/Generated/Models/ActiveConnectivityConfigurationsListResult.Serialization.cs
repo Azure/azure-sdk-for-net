@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             IReadOnlyList<ActiveConnectivityConfiguration> value = default;
-            Optional<string> skipToken = default;
+            string skipToken = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ActiveConnectivityConfigurationsListResult(value ?? new ChangeTrackingList<ActiveConnectivityConfiguration>(), skipToken.Value, serializedAdditionalRawData);
+            return new ActiveConnectivityConfigurationsListResult(value ?? new ChangeTrackingList<ActiveConnectivityConfiguration>(), skipToken, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ActiveConnectivityConfigurationsListResult>.Write(ModelReaderWriterOptions options)

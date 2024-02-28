@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.PrivateDns.Models
             {
                 return null;
             }
-            Optional<int> priority = default;
-            Optional<int> weight = default;
-            Optional<int> port = default;
-            Optional<string> target = default;
+            int? priority = default;
+            int? weight = default;
+            int? port = default;
+            string target = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateDnsSrvRecordInfo(Optional.ToNullable(priority), Optional.ToNullable(weight), Optional.ToNullable(port), target.Value, serializedAdditionalRawData);
+            return new PrivateDnsSrvRecordInfo(priority, weight, port, target, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateDnsSrvRecordInfo>.Write(ModelReaderWriterOptions options)

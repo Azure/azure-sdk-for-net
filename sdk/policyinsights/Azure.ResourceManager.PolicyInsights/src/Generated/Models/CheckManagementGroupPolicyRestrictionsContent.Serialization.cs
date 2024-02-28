@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<CheckRestrictionsResourceDetails> resourceDetails = default;
+            CheckRestrictionsResourceDetails resourceDetails = default;
             IList<PendingField> pendingFields = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CheckManagementGroupPolicyRestrictionsContent(resourceDetails.Value, pendingFields ?? new ChangeTrackingList<PendingField>(), serializedAdditionalRawData);
+            return new CheckManagementGroupPolicyRestrictionsContent(resourceDetails, pendingFields ?? new ChangeTrackingList<PendingField>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CheckManagementGroupPolicyRestrictionsContent>.Write(ModelReaderWriterOptions options)

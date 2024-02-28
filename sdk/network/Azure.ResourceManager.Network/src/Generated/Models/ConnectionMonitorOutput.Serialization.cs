@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<OutputType> type = default;
-            Optional<ConnectionMonitorWorkspaceSettings> workspaceSettings = default;
+            OutputType? type = default;
+            ConnectionMonitorWorkspaceSettings workspaceSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectionMonitorOutput(Optional.ToNullable(type), workspaceSettings.Value, serializedAdditionalRawData);
+            return new ConnectionMonitorOutput(type, workspaceSettings, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectionMonitorOutput>.Write(ModelReaderWriterOptions options)

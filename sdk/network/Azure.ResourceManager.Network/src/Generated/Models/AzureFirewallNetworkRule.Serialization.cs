@@ -144,8 +144,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> description = default;
+            string name = default;
+            string description = default;
             IList<AzureFirewallNetworkRuleProtocol> protocols = default;
             IList<string> sourceAddresses = default;
             IList<string> destinationAddresses = default;
@@ -272,8 +272,8 @@ namespace Azure.ResourceManager.Network.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AzureFirewallNetworkRule(
-                name.Value,
-                description.Value,
+                name,
+                description,
                 protocols ?? new ChangeTrackingList<AzureFirewallNetworkRuleProtocol>(),
                 sourceAddresses ?? new ChangeTrackingList<string>(),
                 destinationAddresses ?? new ChangeTrackingList<string>(),

@@ -187,16 +187,16 @@ namespace Azure.ResourceManager.NetworkCloud
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IReadOnlyList<ResourceIdentifier> associatedResourceIds = default;
-            Optional<ResourceIdentifier> clusterId = default;
-            Optional<L2NetworkDetailedStatus> detailedStatus = default;
-            Optional<string> detailedStatusMessage = default;
+            ResourceIdentifier clusterId = default;
+            L2NetworkDetailedStatus? detailedStatus = default;
+            string detailedStatusMessage = default;
             IReadOnlyList<ResourceIdentifier> hybridAksClustersAssociatedIds = default;
-            Optional<HybridAksPluginType> hybridAksPluginType = default;
-            Optional<string> interfaceName = default;
+            HybridAksPluginType? hybridAksPluginType = default;
+            string interfaceName = default;
             ResourceIdentifier l2IsolationDomainId = default;
-            Optional<L2NetworkProvisioningState> provisioningState = default;
+            L2NetworkProvisioningState? provisioningState = default;
             IReadOnlyList<ResourceIdentifier> virtualMachinesAssociatedIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -386,19 +386,19 @@ namespace Azure.ResourceManager.NetworkCloud
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 extendedLocation,
                 associatedResourceIds ?? new ChangeTrackingList<ResourceIdentifier>(),
-                clusterId.Value,
-                Optional.ToNullable(detailedStatus),
-                detailedStatusMessage.Value,
+                clusterId,
+                detailedStatus,
+                detailedStatusMessage,
                 hybridAksClustersAssociatedIds ?? new ChangeTrackingList<ResourceIdentifier>(),
-                Optional.ToNullable(hybridAksPluginType),
-                interfaceName.Value,
+                hybridAksPluginType,
+                interfaceName,
                 l2IsolationDomainId,
-                Optional.ToNullable(provisioningState),
+                provisioningState,
                 virtualMachinesAssociatedIds ?? new ChangeTrackingList<ResourceIdentifier>(),
                 serializedAdditionalRawData);
         }

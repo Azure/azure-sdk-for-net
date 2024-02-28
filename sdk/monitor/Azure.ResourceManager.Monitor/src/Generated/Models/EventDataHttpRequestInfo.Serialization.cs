@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<string> clientRequestId = default;
-            Optional<IPAddress> clientIPAddress = default;
-            Optional<string> method = default;
-            Optional<Uri> uri = default;
+            string clientRequestId = default;
+            IPAddress clientIPAddress = default;
+            string method = default;
+            Uri uri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventDataHttpRequestInfo(clientRequestId.Value, clientIPAddress.Value, method.Value, uri.Value, serializedAdditionalRawData);
+            return new EventDataHttpRequestInfo(clientRequestId, clientIPAddress, method, uri, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventDataHttpRequestInfo>.Write(ModelReaderWriterOptions options)

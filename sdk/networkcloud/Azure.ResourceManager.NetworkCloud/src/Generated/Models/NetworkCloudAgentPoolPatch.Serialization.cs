@@ -89,8 +89,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<long> count = default;
-            Optional<AgentPoolUpgradeSettings> upgradeSettings = default;
+            long? count = default;
+            AgentPoolUpgradeSettings upgradeSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudAgentPoolPatch(tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(count), upgradeSettings.Value, serializedAdditionalRawData);
+            return new NetworkCloudAgentPoolPatch(tags ?? new ChangeTrackingDictionary<string, string>(), count, upgradeSettings, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudAgentPoolPatch>.Write(ModelReaderWriterOptions options)

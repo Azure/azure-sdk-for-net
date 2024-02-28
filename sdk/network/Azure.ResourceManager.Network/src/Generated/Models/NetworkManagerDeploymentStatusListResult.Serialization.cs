@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             IReadOnlyList<NetworkManagerDeploymentStatus> value = default;
-            Optional<string> skipToken = default;
+            string skipToken = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkManagerDeploymentStatusListResult(value ?? new ChangeTrackingList<NetworkManagerDeploymentStatus>(), skipToken.Value, serializedAdditionalRawData);
+            return new NetworkManagerDeploymentStatusListResult(value ?? new ChangeTrackingList<NetworkManagerDeploymentStatus>(), skipToken, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkManagerDeploymentStatusListResult>.Write(ModelReaderWriterOptions options)

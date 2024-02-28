@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<HubPublicIPAddresses> publicIPs = default;
-            Optional<string> privateIPAddress = default;
+            HubPublicIPAddresses publicIPs = default;
+            string privateIPAddress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HubIPAddresses(publicIPs.Value, privateIPAddress.Value, serializedAdditionalRawData);
+            return new HubIPAddresses(publicIPs, privateIPAddress, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HubIPAddresses>.Write(ModelReaderWriterOptions options)

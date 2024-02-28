@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 return null;
             }
             OperationalInsightsWorkspaceSkuName name = default;
-            Optional<OperationalInsightsWorkspaceCapacityReservationLevel> capacityReservationLevel = default;
-            Optional<DateTimeOffset> lastSkuUpdate = default;
+            OperationalInsightsWorkspaceCapacityReservationLevel? capacityReservationLevel = default;
+            DateTimeOffset? lastSkuUpdate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationalInsightsWorkspaceSku(name, Optional.ToNullable(capacityReservationLevel), Optional.ToNullable(lastSkuUpdate), serializedAdditionalRawData);
+            return new OperationalInsightsWorkspaceSku(name, capacityReservationLevel, lastSkuUpdate, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationalInsightsWorkspaceSku>.Write(ModelReaderWriterOptions options)

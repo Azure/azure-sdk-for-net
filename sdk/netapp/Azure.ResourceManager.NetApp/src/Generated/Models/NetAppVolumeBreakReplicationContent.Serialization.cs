@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<bool> forceBreakReplication = default;
+            bool? forceBreakReplication = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppVolumeBreakReplicationContent(Optional.ToNullable(forceBreakReplication), serializedAdditionalRawData);
+            return new NetAppVolumeBreakReplicationContent(forceBreakReplication, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppVolumeBreakReplicationContent>.Write(ModelReaderWriterOptions options)

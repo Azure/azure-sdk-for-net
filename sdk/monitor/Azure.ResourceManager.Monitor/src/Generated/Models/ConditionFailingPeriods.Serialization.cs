@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<long> numberOfEvaluationPeriods = default;
-            Optional<long> minFailingPeriodsToAlert = default;
+            long? numberOfEvaluationPeriods = default;
+            long? minFailingPeriodsToAlert = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConditionFailingPeriods(Optional.ToNullable(numberOfEvaluationPeriods), Optional.ToNullable(minFailingPeriodsToAlert), serializedAdditionalRawData);
+            return new ConditionFailingPeriods(numberOfEvaluationPeriods, minFailingPeriodsToAlert, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConditionFailingPeriods>.Write(ModelReaderWriterOptions options)

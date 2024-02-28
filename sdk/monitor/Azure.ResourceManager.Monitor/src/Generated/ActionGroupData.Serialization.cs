@@ -227,9 +227,9 @@ namespace Azure.ResourceManager.Monitor
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> groupShortName = default;
-            Optional<bool> enabled = default;
+            SystemData systemData = default;
+            string groupShortName = default;
+            bool? enabled = default;
             IList<MonitorEmailReceiver> emailReceivers = default;
             IList<MonitorSmsReceiver> smsReceivers = default;
             IList<MonitorWebhookReceiver> webhookReceivers = default;
@@ -478,11 +478,11 @@ namespace Azure.ResourceManager.Monitor
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                groupShortName.Value,
-                Optional.ToNullable(enabled),
+                groupShortName,
+                enabled,
                 emailReceivers ?? new ChangeTrackingList<MonitorEmailReceiver>(),
                 smsReceivers ?? new ChangeTrackingList<MonitorSmsReceiver>(),
                 webhookReceivers ?? new ChangeTrackingList<MonitorWebhookReceiver>(),

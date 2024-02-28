@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<string> azureUserName = default;
-            Optional<BareMetalMachineKeySetUserSetupStatus> status = default;
-            Optional<string> statusMessage = default;
+            string azureUserName = default;
+            BareMetalMachineKeySetUserSetupStatus? status = default;
+            string statusMessage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KeySetUserStatus(azureUserName.Value, Optional.ToNullable(status), statusMessage.Value, serializedAdditionalRawData);
+            return new KeySetUserStatus(azureUserName, status, statusMessage, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KeySetUserStatus>.Write(ModelReaderWriterOptions options)

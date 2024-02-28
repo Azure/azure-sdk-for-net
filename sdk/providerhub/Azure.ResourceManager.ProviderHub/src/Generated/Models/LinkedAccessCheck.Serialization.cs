@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<string> actionName = default;
-            Optional<string> linkedProperty = default;
-            Optional<string> linkedAction = default;
-            Optional<string> linkedActionVerb = default;
-            Optional<string> linkedType = default;
+            string actionName = default;
+            string linkedProperty = default;
+            string linkedAction = default;
+            string linkedActionVerb = default;
+            string linkedType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,11 +130,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new LinkedAccessCheck(
-                actionName.Value,
-                linkedProperty.Value,
-                linkedAction.Value,
-                linkedActionVerb.Value,
-                linkedType.Value,
+                actionName,
+                linkedProperty,
+                linkedAction,
+                linkedActionVerb,
+                linkedType,
                 serializedAdditionalRawData);
         }
 

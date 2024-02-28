@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<VolumeSnapshotProperties> snapshot = default;
+            VolumeSnapshotProperties snapshot = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppVolumePatchDataProtection(snapshot.Value, serializedAdditionalRawData);
+            return new NetAppVolumePatchDataProtection(snapshot, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppVolumePatchDataProtection>.Write(ModelReaderWriterOptions options)

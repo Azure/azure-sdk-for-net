@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 return null;
             }
-            Optional<string> firstName = default;
-            Optional<string> lastName = default;
-            Optional<string> emailAddress = default;
-            Optional<string> phoneNumber = default;
-            Optional<string> country = default;
+            string firstName = default;
+            string lastName = default;
+            string emailAddress = default;
+            string phoneNumber = default;
+            string country = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,11 +130,11 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new NewRelicObservabilityUserInfo(
-                firstName.Value,
-                lastName.Value,
-                emailAddress.Value,
-                phoneNumber.Value,
-                country.Value,
+                firstName,
+                lastName,
+                emailAddress,
+                phoneNumber,
+                country,
                 serializedAdditionalRawData);
         }
 
