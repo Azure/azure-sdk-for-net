@@ -132,18 +132,6 @@ jobs:
           ArtifactPath: '$(Build.ArtifactStagingDirectory)'
           ArtifactName: 'packages'
 
-      - ${{if eq(variables['System.TeamProject'], 'internal') }}:
-        - task: AzureArtifacts.manifest-generator-task.manifest-generator-task.ManifestGeneratorTask@0
-          displayName: 'Upload Package SBOM'
-          condition: succeededOrFailed()
-          inputs:
-            BuildDropPath: $(Build.ArtifactStagingDirectory)
-
-        - template: /eng/common/pipelines/templates/steps/publish-artifact.yml
-          parameters:
-            ArtifactPath: '$(Build.ArtifactStagingDirectory)/_manifest'
-            ArtifactName: 'manifest'
-
       - template: /eng/common/pipelines/templates/steps/detect-api-changes.yml
         parameters:
           Artifacts: ${{ parameters.Artifacts }}
