@@ -358,7 +358,9 @@ namespace Azure.AI.OpenAI
         public static Azure.AI.OpenAI.EmbeddingItem EmbeddingItem(System.ReadOnlyMemory<float> embedding = default(System.ReadOnlyMemory<float>), int index = 0) { throw null; }
         public static Azure.AI.OpenAI.Embeddings Embeddings(System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.EmbeddingItem> data = null, Azure.AI.OpenAI.EmbeddingsUsage usage = null) { throw null; }
         public static Azure.AI.OpenAI.EmbeddingsUsage EmbeddingsUsage(int promptTokens = 0, int totalTokens = 0) { throw null; }
-        public static Azure.AI.OpenAI.ImageGenerationData ImageGenerationData(System.Uri url = null, string base64Data = null, string revisedPrompt = null) { throw null; }
+        public static Azure.AI.OpenAI.ImageGenerationContentFilterResults ImageGenerationContentFilterResults(Azure.AI.OpenAI.ContentFilterResult sexual = null, Azure.AI.OpenAI.ContentFilterResult violence = null, Azure.AI.OpenAI.ContentFilterResult hate = null, Azure.AI.OpenAI.ContentFilterResult selfHarm = null) { throw null; }
+        public static Azure.AI.OpenAI.ImageGenerationData ImageGenerationData(System.Uri url = null, string base64Data = null, Azure.AI.OpenAI.ImageGenerationContentFilterResults contentFilterResults = null, string revisedPrompt = null, Azure.AI.OpenAI.ImageGenerationPromptFilterResults promptFilterResults = null) { throw null; }
+        public static Azure.AI.OpenAI.ImageGenerationPromptFilterResults ImageGenerationPromptFilterResults(Azure.AI.OpenAI.ContentFilterResult sexual = null, Azure.AI.OpenAI.ContentFilterResult violence = null, Azure.AI.OpenAI.ContentFilterResult hate = null, Azure.AI.OpenAI.ContentFilterResult selfHarm = null, Azure.AI.OpenAI.ContentFilterDetectionResult profanity = null, Azure.AI.OpenAI.ContentFilterDetectionResult jailbreak = null) { throw null; }
         public static Azure.AI.OpenAI.OnYourDataAccessTokenAuthenticationOptions OnYourDataAccessTokenAuthenticationOptions(string accessToken = null) { throw null; }
         public static Azure.AI.OpenAI.OnYourDataApiKeyAuthenticationOptions OnYourDataApiKeyAuthenticationOptions(string key = null) { throw null; }
         public static Azure.AI.OpenAI.OnYourDataConnectionStringAuthenticationOptions OnYourDataConnectionStringAuthenticationOptions(string connectionString = null) { throw null; }
@@ -844,6 +846,7 @@ namespace Azure.AI.OpenAI
         public float? PresencePenalty { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Prompts { get { throw null; } }
         public System.Collections.Generic.IList<string> StopSequences { get { throw null; } }
+        public string Suffix { get { throw null; } set { } }
         public float? Temperature { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<int, int> TokenSelectionBiases { get { throw null; } }
         public string User { get { throw null; } set { } }
@@ -1102,10 +1105,25 @@ namespace Azure.AI.OpenAI
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.FunctionDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.FunctionDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class ImageGenerationContentFilterResults : System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.ImageGenerationContentFilterResults>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.ImageGenerationContentFilterResults>
+    {
+        internal ImageGenerationContentFilterResults() { }
+        public Azure.AI.OpenAI.ContentFilterResult Hate { get { throw null; } }
+        public Azure.AI.OpenAI.ContentFilterResult SelfHarm { get { throw null; } }
+        public Azure.AI.OpenAI.ContentFilterResult Sexual { get { throw null; } }
+        public Azure.AI.OpenAI.ContentFilterResult Violence { get { throw null; } }
+        Azure.AI.OpenAI.ImageGenerationContentFilterResults System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.ImageGenerationContentFilterResults>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.ImageGenerationContentFilterResults>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.OpenAI.ImageGenerationContentFilterResults System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.ImageGenerationContentFilterResults>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.ImageGenerationContentFilterResults>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.ImageGenerationContentFilterResults>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class ImageGenerationData : System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.ImageGenerationData>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.ImageGenerationData>
     {
         internal ImageGenerationData() { }
         public string Base64Data { get { throw null; } }
+        public Azure.AI.OpenAI.ImageGenerationContentFilterResults ContentFilterResults { get { throw null; } }
+        public Azure.AI.OpenAI.ImageGenerationPromptFilterResults PromptFilterResults { get { throw null; } }
         public string RevisedPrompt { get { throw null; } }
         public System.Uri Url { get { throw null; } }
         Azure.AI.OpenAI.ImageGenerationData System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.ImageGenerationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1130,6 +1148,21 @@ namespace Azure.AI.OpenAI
         Azure.AI.OpenAI.ImageGenerationOptions System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.ImageGenerationOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.ImageGenerationOptions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.ImageGenerationOptions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ImageGenerationPromptFilterResults : System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.ImageGenerationPromptFilterResults>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.ImageGenerationPromptFilterResults>
+    {
+        internal ImageGenerationPromptFilterResults() { }
+        public Azure.AI.OpenAI.ContentFilterResult Hate { get { throw null; } }
+        public Azure.AI.OpenAI.ContentFilterDetectionResult Jailbreak { get { throw null; } }
+        public Azure.AI.OpenAI.ContentFilterDetectionResult Profanity { get { throw null; } }
+        public Azure.AI.OpenAI.ContentFilterResult SelfHarm { get { throw null; } }
+        public Azure.AI.OpenAI.ContentFilterResult Sexual { get { throw null; } }
+        public Azure.AI.OpenAI.ContentFilterResult Violence { get { throw null; } }
+        Azure.AI.OpenAI.ImageGenerationPromptFilterResults System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.ImageGenerationPromptFilterResults>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.ImageGenerationPromptFilterResults>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.OpenAI.ImageGenerationPromptFilterResults System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.ImageGenerationPromptFilterResults>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.ImageGenerationPromptFilterResults>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.ImageGenerationPromptFilterResults>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ImageGenerationQuality : System.IEquatable<Azure.AI.OpenAI.ImageGenerationQuality>
