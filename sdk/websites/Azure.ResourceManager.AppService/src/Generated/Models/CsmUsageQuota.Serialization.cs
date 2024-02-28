@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> unit = default;
-            Optional<DateTimeOffset> nextResetTime = default;
-            Optional<long> currentValue = default;
-            Optional<long> limit = default;
-            Optional<LocalizableString> name = default;
+            string unit = default;
+            DateTimeOffset? nextResetTime = default;
+            long? currentValue = default;
+            long? limit = default;
+            LocalizableString name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,11 +146,11 @@ namespace Azure.ResourceManager.AppService.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new CsmUsageQuota(
-                unit.Value,
-                Optional.ToNullable(nextResetTime),
-                Optional.ToNullable(currentValue),
-                Optional.ToNullable(limit),
-                name.Value,
+                unit,
+                nextResetTime,
+                currentValue,
+                limit,
+                name,
                 serializedAdditionalRawData);
         }
 

@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            Optional<bool> sendAadLogs = default;
-            Optional<bool> sendSubscriptionLogs = default;
-            Optional<bool> sendResourceLogs = default;
+            bool? sendAadLogs = default;
+            bool? sendSubscriptionLogs = default;
+            bool? sendResourceLogs = default;
             IList<FilteringTag> filteringTags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogRules(Optional.ToNullable(sendAadLogs), Optional.ToNullable(sendSubscriptionLogs), Optional.ToNullable(sendResourceLogs), filteringTags ?? new ChangeTrackingList<FilteringTag>(), serializedAdditionalRawData);
+            return new LogRules(sendAadLogs, sendSubscriptionLogs, sendResourceLogs, filteringTags ?? new ChangeTrackingList<FilteringTag>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogRules>.Write(ModelReaderWriterOptions options)

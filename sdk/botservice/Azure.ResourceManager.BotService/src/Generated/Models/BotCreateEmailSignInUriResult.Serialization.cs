@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<AzureLocation> location = default;
-            Optional<CreateEmailSignInUrlResponseProperties> properties = default;
+            ResourceIdentifier id = default;
+            AzureLocation? location = default;
+            CreateEmailSignInUrlResponseProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BotCreateEmailSignInUriResult(id.Value, Optional.ToNullable(location), properties.Value, serializedAdditionalRawData);
+            return new BotCreateEmailSignInUriResult(id, location, properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BotCreateEmailSignInUriResult>.Write(ModelReaderWriterOptions options)

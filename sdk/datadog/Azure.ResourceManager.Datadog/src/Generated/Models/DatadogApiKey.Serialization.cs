@@ -81,10 +81,10 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            Optional<string> createdBy = default;
-            Optional<string> name = default;
+            string createdBy = default;
+            string name = default;
             string key = default;
-            Optional<string> created = default;
+            string created = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatadogApiKey(createdBy.Value, name.Value, key, created.Value, serializedAdditionalRawData);
+            return new DatadogApiKey(createdBy, name, key, created, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatadogApiKey>.Write(ModelReaderWriterOptions options)

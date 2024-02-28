@@ -107,15 +107,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> colls = default;
-            Optional<string> users = default;
-            Optional<string> self = default;
-            Optional<string> rid = default;
-            Optional<float> ts = default;
-            Optional<ETag> etag = default;
+            string colls = default;
+            string users = default;
+            string self = default;
+            string rid = default;
+            float? ts = default;
+            ETag? etag = default;
             string id = default;
-            Optional<ResourceRestoreParameters> restoreParameters = default;
-            Optional<CosmosDBAccountCreateMode> createMode = default;
+            ResourceRestoreParameters restoreParameters = default;
+            CosmosDBAccountCreateMode? createMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -189,15 +189,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new RestorableSqlDatabasePropertiesResourceDatabase(
                 id,
-                restoreParameters.Value,
-                Optional.ToNullable(createMode),
+                restoreParameters,
+                createMode,
                 serializedAdditionalRawData,
-                colls.Value,
-                users.Value,
-                self.Value,
-                rid.Value,
-                Optional.ToNullable(ts),
-                Optional.ToNullable(etag));
+                colls,
+                users,
+                self,
+                rid,
+                ts,
+                etag);
         }
 
         BinaryData IPersistableModel<RestorableSqlDatabasePropertiesResourceDatabase>.Write(ModelReaderWriterOptions options)

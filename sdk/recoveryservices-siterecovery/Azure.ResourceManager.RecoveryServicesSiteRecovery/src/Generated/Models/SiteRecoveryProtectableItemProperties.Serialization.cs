@@ -109,13 +109,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> friendlyName = default;
-            Optional<string> protectionStatus = default;
-            Optional<ResourceIdentifier> replicationProtectedItemId = default;
-            Optional<ResourceIdentifier> recoveryServicesProviderId = default;
+            string friendlyName = default;
+            string protectionStatus = default;
+            ResourceIdentifier replicationProtectedItemId = default;
+            ResourceIdentifier recoveryServicesProviderId = default;
             IReadOnlyList<string> protectionReadinessErrors = default;
             IReadOnlyList<string> supportedReplicationProviders = default;
-            Optional<SiteRecoveryReplicationProviderSettings> customDetails = default;
+            SiteRecoveryReplicationProviderSettings customDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -192,13 +192,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SiteRecoveryProtectableItemProperties(
-                friendlyName.Value,
-                protectionStatus.Value,
-                replicationProtectedItemId.Value,
-                recoveryServicesProviderId.Value,
+                friendlyName,
+                protectionStatus,
+                replicationProtectedItemId,
+                recoveryServicesProviderId,
                 protectionReadinessErrors ?? new ChangeTrackingList<string>(),
                 supportedReplicationProviders ?? new ChangeTrackingList<string>(),
-                customDetails.Value,
+                customDetails,
                 serializedAdditionalRawData);
         }
 

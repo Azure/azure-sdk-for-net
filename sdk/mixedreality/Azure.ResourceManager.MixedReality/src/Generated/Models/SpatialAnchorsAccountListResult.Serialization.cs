@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.MixedReality.Models
                 return null;
             }
             IReadOnlyList<SpatialAnchorsAccountData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MixedReality.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SpatialAnchorsAccountListResult(value ?? new ChangeTrackingList<SpatialAnchorsAccountData>(), nextLink.Value, serializedAdditionalRawData);
+            return new SpatialAnchorsAccountListResult(value ?? new ChangeTrackingList<SpatialAnchorsAccountData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SpatialAnchorsAccountListResult>.Write(ModelReaderWriterOptions options)

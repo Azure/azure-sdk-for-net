@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<WritableSubResource> subnet = default;
-            Optional<WritableSubResource> publicIPAddress = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<NetworkIPAllocationMethod> privateIPAllocationMethod = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            WritableSubResource subnet = default;
+            WritableSubResource publicIPAddress = default;
+            NetworkProvisioningState? provisioningState = default;
+            NetworkIPAllocationMethod? privateIPAllocationMethod = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -208,15 +208,15 @@ namespace Azure.ResourceManager.Network.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new BastionHostIPConfiguration(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
+                id,
+                name,
+                type,
                 serializedAdditionalRawData,
-                Optional.ToNullable(etag),
+                etag,
                 subnet,
                 publicIPAddress,
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(privateIPAllocationMethod));
+                provisioningState,
+                privateIPAllocationMethod);
         }
 
         BinaryData IPersistableModel<BastionHostIPConfiguration>.Write(ModelReaderWriterOptions options)

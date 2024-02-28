@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 return null;
             }
-            Optional<ReportProperties> properties = default;
+            ReportProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReportResourcePatch(properties.Value, serializedAdditionalRawData);
+            return new ReportResourcePatch(properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReportResourcePatch>.Write(ModelReaderWriterOptions options)

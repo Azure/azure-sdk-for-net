@@ -196,23 +196,23 @@ namespace Azure.ResourceManager.ApiManagement.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
+            SystemData systemData = default;
+            string description = default;
             IList<AuthorizationMethod> authorizationMethods = default;
             IList<ClientAuthenticationMethod> clientAuthenticationMethod = default;
             IList<TokenBodyParameterContract> tokenBodyParameters = default;
-            Optional<string> tokenEndpoint = default;
-            Optional<bool> supportState = default;
-            Optional<string> defaultScope = default;
+            string tokenEndpoint = default;
+            bool? supportState = default;
+            string defaultScope = default;
             IList<BearerTokenSendingMethod> bearerTokenSendingMethods = default;
-            Optional<string> resourceOwnerUsername = default;
-            Optional<string> resourceOwnerPassword = default;
-            Optional<string> displayName = default;
-            Optional<string> clientRegistrationEndpoint = default;
-            Optional<string> authorizationEndpoint = default;
+            string resourceOwnerUsername = default;
+            string resourceOwnerPassword = default;
+            string displayName = default;
+            string clientRegistrationEndpoint = default;
+            string authorizationEndpoint = default;
             IList<GrantType> grantTypes = default;
-            Optional<string> clientId = default;
-            Optional<string> clientSecret = default;
+            string clientId = default;
+            string clientSecret = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -392,23 +392,23 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                description.Value,
+                systemData,
+                description,
                 authorizationMethods ?? new ChangeTrackingList<AuthorizationMethod>(),
                 clientAuthenticationMethod ?? new ChangeTrackingList<ClientAuthenticationMethod>(),
                 tokenBodyParameters ?? new ChangeTrackingList<TokenBodyParameterContract>(),
-                tokenEndpoint.Value,
-                Optional.ToNullable(supportState),
-                defaultScope.Value,
+                tokenEndpoint,
+                supportState,
+                defaultScope,
                 bearerTokenSendingMethods ?? new ChangeTrackingList<BearerTokenSendingMethod>(),
-                resourceOwnerUsername.Value,
-                resourceOwnerPassword.Value,
-                displayName.Value,
-                clientRegistrationEndpoint.Value,
-                authorizationEndpoint.Value,
+                resourceOwnerUsername,
+                resourceOwnerPassword,
+                displayName,
+                clientRegistrationEndpoint,
+                authorizationEndpoint,
                 grantTypes ?? new ChangeTrackingList<GrantType>(),
-                clientId.Value,
-                clientSecret.Value,
+                clientId,
+                clientSecret,
                 serializedAdditionalRawData);
         }
 

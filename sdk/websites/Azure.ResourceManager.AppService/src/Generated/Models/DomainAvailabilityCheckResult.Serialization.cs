@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<bool> available = default;
-            Optional<AppServiceDomainType> domainType = default;
+            string name = default;
+            bool? available = default;
+            AppServiceDomainType? domainType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DomainAvailabilityCheckResult(name.Value, Optional.ToNullable(available), Optional.ToNullable(domainType), serializedAdditionalRawData);
+            return new DomainAvailabilityCheckResult(name, available, domainType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DomainAvailabilityCheckResult>.Write(ModelReaderWriterOptions options)

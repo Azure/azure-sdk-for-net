@@ -96,9 +96,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 return null;
             }
             WebApplicationRuleMatchVariable matchVariable = default;
-            Optional<string> selector = default;
+            string selector = default;
             WebApplicationRuleMatchOperator @operator = default;
-            Optional<bool> negateCondition = default;
+            bool? negateCondition = default;
             IList<string> matchValue = default;
             IList<WebApplicationRuleMatchTransformType> transforms = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -161,9 +161,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new WebApplicationRuleMatchCondition(
                 matchVariable,
-                selector.Value,
+                selector,
                 @operator,
-                Optional.ToNullable(negateCondition),
+                negateCondition,
                 matchValue,
                 transforms ?? new ChangeTrackingList<WebApplicationRuleMatchTransformType>(),
                 serializedAdditionalRawData);

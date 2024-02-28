@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<long> peerAsn = default;
-            Optional<int> vlanId = default;
-            Optional<long> fabricAsn = default;
-            Optional<string> primaryIPv4Prefix = default;
-            Optional<string> primaryIPv6Prefix = default;
-            Optional<string> secondaryIPv4Prefix = default;
-            Optional<string> secondaryIPv6Prefix = default;
+            long? peerAsn = default;
+            int? vlanId = default;
+            long? fabricAsn = default;
+            string primaryIPv4Prefix = default;
+            string primaryIPv6Prefix = default;
+            string secondaryIPv4Prefix = default;
+            string secondaryIPv6Prefix = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,14 +164,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new NetworkToNetworkInterconnectOptionBLayer3Configuration(
-                primaryIPv4Prefix.Value,
-                primaryIPv6Prefix.Value,
-                secondaryIPv4Prefix.Value,
-                secondaryIPv6Prefix.Value,
+                primaryIPv4Prefix,
+                primaryIPv6Prefix,
+                secondaryIPv4Prefix,
+                secondaryIPv6Prefix,
                 serializedAdditionalRawData,
-                Optional.ToNullable(peerAsn),
-                Optional.ToNullable(vlanId),
-                Optional.ToNullable(fabricAsn));
+                peerAsn,
+                vlanId,
+                fabricAsn);
         }
 
         BinaryData IPersistableModel<NetworkToNetworkInterconnectOptionBLayer3Configuration>.Write(ModelReaderWriterOptions options)

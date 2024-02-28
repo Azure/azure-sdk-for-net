@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Monitor.Models
             IList<WindowsFirewallLogsDataSource> windowsFirewallLogs = default;
             IList<PrometheusForwarderDataSource> prometheusForwarder = default;
             IList<PlatformTelemetryDataSource> platformTelemetry = default;
-            Optional<DataSourcesSpecDataImports> dataImports = default;
+            DataSourcesSpecDataImports dataImports = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 windowsFirewallLogs ?? new ChangeTrackingList<WindowsFirewallLogsDataSource>(),
                 prometheusForwarder ?? new ChangeTrackingList<PrometheusForwarderDataSource>(),
                 platformTelemetry ?? new ChangeTrackingList<PlatformTelemetryDataSource>(),
-                dataImports.Value,
+                dataImports,
                 serializedAdditionalRawData);
         }
 

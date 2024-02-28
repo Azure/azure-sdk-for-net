@@ -124,16 +124,16 @@ namespace Azure.ResourceManager.MySql.Models
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<MySqlSku> sku = default;
+            ManagedServiceIdentity identity = default;
+            MySqlSku sku = default;
             IDictionary<string, string> tags = default;
-            Optional<MySqlStorageProfile> storageProfile = default;
-            Optional<string> administratorLoginPassword = default;
-            Optional<MySqlServerVersion> version = default;
-            Optional<MySqlSslEnforcementEnum> sslEnforcement = default;
-            Optional<MySqlMinimalTlsVersionEnum> minimalTlsVersion = default;
-            Optional<MySqlPublicNetworkAccessEnum> publicNetworkAccess = default;
-            Optional<string> replicationRole = default;
+            MySqlStorageProfile storageProfile = default;
+            string administratorLoginPassword = default;
+            MySqlServerVersion? version = default;
+            MySqlSslEnforcementEnum? sslEnforcement = default;
+            MySqlMinimalTlsVersionEnum? minimalTlsVersion = default;
+            MySqlPublicNetworkAccessEnum? publicNetworkAccess = default;
+            string replicationRole = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -245,15 +245,15 @@ namespace Azure.ResourceManager.MySql.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MySqlServerPatch(
                 identity,
-                sku.Value,
+                sku,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                storageProfile.Value,
-                administratorLoginPassword.Value,
-                Optional.ToNullable(version),
-                Optional.ToNullable(sslEnforcement),
-                Optional.ToNullable(minimalTlsVersion),
-                Optional.ToNullable(publicNetworkAccess),
-                replicationRole.Value,
+                storageProfile,
+                administratorLoginPassword,
+                version,
+                sslEnforcement,
+                minimalTlsVersion,
+                publicNetworkAccess,
+                replicationRole,
                 serializedAdditionalRawData);
         }
 

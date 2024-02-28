@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<Uri> certificateUrl = default;
+            Uri certificateUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudServiceVaultCertificate(certificateUrl.Value, serializedAdditionalRawData);
+            return new CloudServiceVaultCertificate(certificateUrl, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudServiceVaultCertificate>.Write(ModelReaderWriterOptions options)

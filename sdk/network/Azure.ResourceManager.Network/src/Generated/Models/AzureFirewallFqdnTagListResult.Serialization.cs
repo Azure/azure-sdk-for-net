@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             IReadOnlyList<AzureFirewallFqdnTag> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureFirewallFqdnTagListResult(value ?? new ChangeTrackingList<AzureFirewallFqdnTag>(), nextLink.Value, serializedAdditionalRawData);
+            return new AzureFirewallFqdnTagListResult(value ?? new ChangeTrackingList<AzureFirewallFqdnTag>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureFirewallFqdnTagListResult>.Write(ModelReaderWriterOptions options)

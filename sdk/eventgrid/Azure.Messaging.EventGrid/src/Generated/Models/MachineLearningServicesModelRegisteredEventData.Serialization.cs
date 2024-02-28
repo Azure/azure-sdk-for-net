@@ -21,10 +21,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> modelName = default;
-            Optional<string> modelVersion = default;
-            Optional<object> modelTags = default;
-            Optional<object> modelProperties = default;
+            string modelName = default;
+            string modelVersion = default;
+            object modelTags = default;
+            object modelProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("modelName"u8))
@@ -56,7 +56,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new MachineLearningServicesModelRegisteredEventData(modelName.Value, modelVersion.Value, modelTags.Value, modelProperties.Value);
+            return new MachineLearningServicesModelRegisteredEventData(modelName, modelVersion, modelTags, modelProperties);
         }
 
         internal partial class MachineLearningServicesModelRegisteredEventDataConverter : JsonConverter<MachineLearningServicesModelRegisteredEventData>

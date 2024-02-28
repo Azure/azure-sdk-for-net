@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             string metric = default;
-            Optional<MonitoringThreshold> threshold = default;
+            MonitoringThreshold threshold = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomMetricThreshold(metric, threshold.Value, serializedAdditionalRawData);
+            return new CustomMetricThreshold(metric, threshold, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CustomMetricThreshold>.Write(ModelReaderWriterOptions options)

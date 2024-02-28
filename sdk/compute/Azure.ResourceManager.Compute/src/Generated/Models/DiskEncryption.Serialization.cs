@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> diskEncryptionSetId = default;
-            Optional<ComputeEncryptionType> type = default;
+            ResourceIdentifier diskEncryptionSetId = default;
+            ComputeEncryptionType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiskEncryption(diskEncryptionSetId.Value, Optional.ToNullable(type), serializedAdditionalRawData);
+            return new DiskEncryption(diskEncryptionSetId, type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiskEncryption>.Write(ModelReaderWriterOptions options)

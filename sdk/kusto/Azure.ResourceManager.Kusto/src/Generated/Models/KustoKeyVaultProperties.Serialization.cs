@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Optional<string> keyName = default;
-            Optional<string> keyVersion = default;
-            Optional<Uri> keyVaultUri = default;
-            Optional<string> userIdentity = default;
+            string keyName = default;
+            string keyVersion = default;
+            Uri keyVaultUri = default;
+            string userIdentity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KustoKeyVaultProperties(keyName.Value, keyVersion.Value, keyVaultUri.Value, userIdentity.Value, serializedAdditionalRawData);
+            return new KustoKeyVaultProperties(keyName, keyVersion, keyVaultUri, userIdentity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KustoKeyVaultProperties>.Write(ModelReaderWriterOptions options)

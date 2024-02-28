@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<int> originResponseTimeoutSeconds = default;
+            int? originResponseTimeoutSeconds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProfilePatch(tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(originResponseTimeoutSeconds), serializedAdditionalRawData);
+            return new ProfilePatch(tags ?? new ChangeTrackingDictionary<string, string>(), originResponseTimeoutSeconds, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProfilePatch>.Write(ModelReaderWriterOptions options)

@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             IList<VirtualMachineNetworkInterfaceReference> networkInterfaces = default;
-            Optional<NetworkApiVersion> networkApiVersion = default;
+            NetworkApiVersion? networkApiVersion = default;
             IList<VirtualMachineNetworkInterfaceConfiguration> networkInterfaceConfigurations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineNetworkProfile(networkInterfaces ?? new ChangeTrackingList<VirtualMachineNetworkInterfaceReference>(), Optional.ToNullable(networkApiVersion), networkInterfaceConfigurations ?? new ChangeTrackingList<VirtualMachineNetworkInterfaceConfiguration>(), serializedAdditionalRawData);
+            return new VirtualMachineNetworkProfile(networkInterfaces ?? new ChangeTrackingList<VirtualMachineNetworkInterfaceReference>(), networkApiVersion, networkInterfaceConfigurations ?? new ChangeTrackingList<VirtualMachineNetworkInterfaceConfiguration>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineNetworkProfile>.Write(ModelReaderWriterOptions options)

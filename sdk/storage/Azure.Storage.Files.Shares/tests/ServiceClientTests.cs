@@ -93,16 +93,16 @@ namespace Azure.Storage.Files.Shares.Tests
             // Arrange
             ShareServiceClient service = InstrumentClient(
                 new ShareServiceClient(
-                    s_invalidUri,
+                    new Uri(TestConfigDefault.FileServiceEndpoint),
                     new StorageSharedKeyCredential(
                         TestConfigDefault.AccountName,
-                        TestConfigDefault.AccountKey),
+                        TestConstants.InvalidAccountKey),
                     GetOptions()));
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 service.GetPropertiesAsync(),
-                e => Assert.AreEqual(ShareErrorCode.AccountIsDisabled.ToString(), e.ErrorCode));
+                e => Assert.AreEqual(ShareErrorCode.AuthenticationFailed.ToString(), e.ErrorCode));
         }
 
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/25266")]
@@ -172,16 +172,16 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareServiceProperties> properties = await service.GetPropertiesAsync();
             ShareServiceClient fakeService = InstrumentClient(
                 new ShareServiceClient(
-                    new Uri("https://error.file.core.windows.net"),
+                    new Uri(TestConfigDefault.FileServiceEndpoint),
                     new StorageSharedKeyCredential(
                         TestConfigDefault.AccountName,
-                        TestConfigDefault.AccountKey),
+                        TestConstants.InvalidAccountKey),
                     GetOptions()));
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 fakeService.SetPropertiesAsync(properties),
-                e => Assert.AreEqual(ShareErrorCode.AccountIsDisabled.ToString(), e.ErrorCode));
+                e => Assert.AreEqual(ShareErrorCode.AuthenticationFailed.ToString(), e.ErrorCode));
         }
 
         [RecordedTest]
@@ -319,16 +319,16 @@ namespace Azure.Storage.Files.Shares.Tests
             // Arrange
             ShareServiceClient service = InstrumentClient(
                 new ShareServiceClient(
-                    new Uri("https://error.file.core.windows.net"),
+                    new Uri(TestConfigDefault.FileServiceEndpoint),
                     new StorageSharedKeyCredential(
                         TestConfigDefault.AccountName,
-                        TestConfigDefault.AccountKey),
+                        TestConstants.InvalidAccountKey),
                     GetOptions()));
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 service.GetSharesAsync().ToListAsync(),
-                e => Assert.AreEqual(ShareErrorCode.AccountIsDisabled.ToString(), e.ErrorCode));
+                e => Assert.AreEqual(ShareErrorCode.AuthenticationFailed.ToString(), e.ErrorCode));
         }
 
         [RecordedTest]

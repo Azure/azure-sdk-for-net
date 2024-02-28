@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<BlobRestoreProgressStatus> status = default;
-            Optional<string> failureReason = default;
-            Optional<string> restoreId = default;
-            Optional<BlobRestoreContent> parameters = default;
+            BlobRestoreProgressStatus? status = default;
+            string failureReason = default;
+            string restoreId = default;
+            BlobRestoreContent parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BlobRestoreStatus(Optional.ToNullable(status), failureReason.Value, restoreId.Value, parameters.Value, serializedAdditionalRawData);
+            return new BlobRestoreStatus(status, failureReason, restoreId, parameters, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BlobRestoreStatus>.Write(ModelReaderWriterOptions options)

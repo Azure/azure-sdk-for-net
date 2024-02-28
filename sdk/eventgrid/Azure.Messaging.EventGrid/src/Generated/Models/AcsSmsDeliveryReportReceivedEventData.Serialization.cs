@@ -22,14 +22,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> deliveryStatus = default;
-            Optional<string> deliveryStatusDetails = default;
+            string deliveryStatus = default;
+            string deliveryStatusDetails = default;
             IReadOnlyList<AcsSmsDeliveryAttemptProperties> deliveryAttempts = default;
-            Optional<DateTimeOffset> receivedTimestamp = default;
-            Optional<string> tag = default;
-            Optional<string> messageId = default;
-            Optional<string> @from = default;
-            Optional<string> to = default;
+            DateTimeOffset? receivedTimestamp = default;
+            string tag = default;
+            string messageId = default;
+            string @from = default;
+            string to = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deliveryStatus"u8))
@@ -87,14 +87,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             return new AcsSmsDeliveryReportReceivedEventData(
-                messageId.Value,
-                @from.Value,
-                to.Value,
-                deliveryStatus.Value,
-                deliveryStatusDetails.Value,
+                messageId,
+                @from,
+                to,
+                deliveryStatus,
+                deliveryStatusDetails,
                 deliveryAttempts ?? new ChangeTrackingList<AcsSmsDeliveryAttemptProperties>(),
-                Optional.ToNullable(receivedTimestamp),
-                tag.Value);
+                receivedTimestamp,
+                tag);
         }
 
         internal partial class AcsSmsDeliveryReportReceivedEventDataConverter : JsonConverter<AcsSmsDeliveryReportReceivedEventData>

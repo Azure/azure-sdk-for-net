@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
@@ -15,8 +14,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         internal static CurrencyValue DeserializeCurrencyValue(JsonElement element)
         {
             double amount = default;
-            Optional<string> currencySymbol = default;
-            Optional<string> currencyCode = default;
+            string currencySymbol = default;
+            string currencyCode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("amount"u8))
@@ -35,7 +34,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new CurrencyValue(amount, currencySymbol.Value, currencyCode.Value);
+            return new CurrencyValue(amount, currencySymbol, currencyCode);
         }
     }
 }

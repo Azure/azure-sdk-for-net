@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
@@ -18,7 +17,7 @@ namespace Azure.Search.Documents.Models
             {
                 return null;
             }
-            Optional<SemanticDebugInfo> semantic = default;
+            SemanticDebugInfo semantic = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("semantic"u8))
@@ -31,7 +30,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new DocumentDebugInfo(semantic.Value);
+            return new DocumentDebugInfo(semantic);
         }
     }
 }

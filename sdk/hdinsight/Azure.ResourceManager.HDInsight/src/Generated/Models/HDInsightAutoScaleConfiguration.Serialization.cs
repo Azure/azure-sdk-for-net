@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<HDInsightAutoScaleCapacity> capacity = default;
-            Optional<HDInsightAutoScaleRecurrence> recurrence = default;
+            HDInsightAutoScaleCapacity capacity = default;
+            HDInsightAutoScaleRecurrence recurrence = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightAutoScaleConfiguration(capacity.Value, recurrence.Value, serializedAdditionalRawData);
+            return new HDInsightAutoScaleConfiguration(capacity, recurrence, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightAutoScaleConfiguration>.Write(ModelReaderWriterOptions options)

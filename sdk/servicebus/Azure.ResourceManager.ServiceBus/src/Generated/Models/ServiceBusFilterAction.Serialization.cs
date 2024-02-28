@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.ServiceBus.Models
             {
                 return null;
             }
-            Optional<string> sqlExpression = default;
-            Optional<int> compatibilityLevel = default;
-            Optional<bool> requiresPreprocessing = default;
+            string sqlExpression = default;
+            int? compatibilityLevel = default;
+            bool? requiresPreprocessing = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceBusFilterAction(sqlExpression.Value, Optional.ToNullable(compatibilityLevel), Optional.ToNullable(requiresPreprocessing), serializedAdditionalRawData);
+            return new ServiceBusFilterAction(sqlExpression, compatibilityLevel, requiresPreprocessing, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceBusFilterAction>.Write(ModelReaderWriterOptions options)

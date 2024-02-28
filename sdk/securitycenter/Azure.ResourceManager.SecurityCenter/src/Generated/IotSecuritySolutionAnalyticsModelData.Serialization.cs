@@ -142,9 +142,9 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IotSeverityMetrics> metrics = default;
-            Optional<long> unhealthyDeviceCount = default;
+            SystemData systemData = default;
+            IotSeverityMetrics metrics = default;
+            long? unhealthyDeviceCount = default;
             IReadOnlyList<IotSecuritySolutionAnalyticsModelDevicesMetrics> devicesMetrics = default;
             IList<IotSecurityAlertedDevice> topAlertedDevices = default;
             IList<IotSecurityDeviceAlert> mostPrevalentDeviceAlerts = default;
@@ -273,9 +273,9 @@ namespace Azure.ResourceManager.SecurityCenter
                 id,
                 name,
                 type,
-                systemData.Value,
-                metrics.Value,
-                Optional.ToNullable(unhealthyDeviceCount),
+                systemData,
+                metrics,
+                unhealthyDeviceCount,
                 devicesMetrics ?? new ChangeTrackingList<IotSecuritySolutionAnalyticsModelDevicesMetrics>(),
                 topAlertedDevices ?? new ChangeTrackingList<IotSecurityAlertedDevice>(),
                 mostPrevalentDeviceAlerts ?? new ChangeTrackingList<IotSecurityDeviceAlert>(),

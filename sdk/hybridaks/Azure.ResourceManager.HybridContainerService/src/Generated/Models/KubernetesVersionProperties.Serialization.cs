@@ -85,8 +85,8 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<string> version = default;
-            Optional<bool> isPreview = default;
+            string version = default;
+            bool? isPreview = default;
             IReadOnlyDictionary<string, KubernetesPatchVersions> patchVersions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesVersionProperties(version.Value, Optional.ToNullable(isPreview), patchVersions ?? new ChangeTrackingDictionary<string, KubernetesPatchVersions>(), serializedAdditionalRawData);
+            return new KubernetesVersionProperties(version, isPreview, patchVersions ?? new ChangeTrackingDictionary<string, KubernetesPatchVersions>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesVersionProperties>.Write(ModelReaderWriterOptions options)

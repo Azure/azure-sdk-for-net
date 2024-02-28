@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> region = default;
-            Optional<WritableSubResource> workspaceId = default;
+            string region = default;
+            WritableSubResource workspaceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirewallPolicyLogAnalyticsWorkspace(region.Value, workspaceId, serializedAdditionalRawData);
+            return new FirewallPolicyLogAnalyticsWorkspace(region, workspaceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirewallPolicyLogAnalyticsWorkspace>.Write(ModelReaderWriterOptions options)

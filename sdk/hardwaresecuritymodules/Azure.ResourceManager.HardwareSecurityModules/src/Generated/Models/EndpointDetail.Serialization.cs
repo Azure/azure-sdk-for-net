@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             {
                 return null;
             }
-            Optional<string> ipAddress = default;
-            Optional<int> port = default;
-            Optional<string> protocol = default;
-            Optional<string> description = default;
+            string ipAddress = default;
+            int? port = default;
+            string protocol = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EndpointDetail(ipAddress.Value, Optional.ToNullable(port), protocol.Value, description.Value, serializedAdditionalRawData);
+            return new EndpointDetail(ipAddress, port, protocol, description, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EndpointDetail>.Write(ModelReaderWriterOptions options)

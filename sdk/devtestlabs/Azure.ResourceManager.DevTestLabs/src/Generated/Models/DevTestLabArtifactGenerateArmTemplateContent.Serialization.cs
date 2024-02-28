@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<string> vmName = default;
+            string vmName = default;
             IList<DevTestLabParameter> parameters = default;
-            Optional<AzureLocation> location = default;
-            Optional<DevTestLabFileUploadOption> fileUploadOptions = default;
+            AzureLocation? location = default;
+            DevTestLabFileUploadOption? fileUploadOptions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabArtifactGenerateArmTemplateContent(vmName.Value, parameters ?? new ChangeTrackingList<DevTestLabParameter>(), Optional.ToNullable(location), Optional.ToNullable(fileUploadOptions), serializedAdditionalRawData);
+            return new DevTestLabArtifactGenerateArmTemplateContent(vmName, parameters ?? new ChangeTrackingList<DevTestLabParameter>(), location, fileUploadOptions, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabArtifactGenerateArmTemplateContent>.Write(ModelReaderWriterOptions options)

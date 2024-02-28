@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<string> deploymentProfile = default;
-            Optional<DeploymentStatusProperties> deploymentStatus = default;
+            ProvisioningState? provisioningState = default;
+            string deploymentProfile = default;
+            DeploymentStatusProperties deploymentStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComponentProperties(Optional.ToNullable(provisioningState), deploymentProfile.Value, deploymentStatus.Value, serializedAdditionalRawData);
+            return new ComponentProperties(provisioningState, deploymentProfile, deploymentStatus, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComponentProperties>.Write(ModelReaderWriterOptions options)

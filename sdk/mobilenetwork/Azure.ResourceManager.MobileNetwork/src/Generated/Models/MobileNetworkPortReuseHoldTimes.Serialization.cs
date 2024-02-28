@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 return null;
             }
-            Optional<int> tcp = default;
-            Optional<int> udp = default;
+            int? tcp = default;
+            int? udp = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MobileNetworkPortReuseHoldTimes(Optional.ToNullable(tcp), Optional.ToNullable(udp), serializedAdditionalRawData);
+            return new MobileNetworkPortReuseHoldTimes(tcp, udp, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MobileNetworkPortReuseHoldTimes>.Write(ModelReaderWriterOptions options)

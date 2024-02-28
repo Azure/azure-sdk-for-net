@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<MySqlFlexibleServerEnableStatusEnum> restartWithFailover = default;
-            Optional<int> maxFailoverSeconds = default;
+            MySqlFlexibleServerEnableStatusEnum? restartWithFailover = default;
+            int? maxFailoverSeconds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlFlexibleServerRestartParameter(Optional.ToNullable(restartWithFailover), Optional.ToNullable(maxFailoverSeconds), serializedAdditionalRawData);
+            return new MySqlFlexibleServerRestartParameter(restartWithFailover, maxFailoverSeconds, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlFlexibleServerRestartParameter>.Write(ModelReaderWriterOptions options)

@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
@@ -20,9 +19,9 @@ namespace Azure.Monitor.Query.Models
                 return null;
             }
             IReadOnlyList<LogsTable> tables = default;
-            Optional<JsonElement> statistics = default;
-            Optional<JsonElement> render = default;
-            Optional<JsonElement> error = default;
+            JsonElement statistics = default;
+            JsonElement render = default;
+            JsonElement error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tables"u8))

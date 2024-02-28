@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<Uri> uri = default;
+            string name = default;
+            Uri uri = default;
             IReadOnlyList<string> messages = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConfigServerSettingsErrorRecord(name.Value, uri.Value, messages ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new ConfigServerSettingsErrorRecord(name, uri, messages ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConfigServerSettingsErrorRecord>.Write(ModelReaderWriterOptions options)

@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             {
                 return null;
             }
-            Optional<AppConfigurationPrivateLinkServiceConnectionStatus> status = default;
-            Optional<string> description = default;
-            Optional<AppConfigurationActionsRequired> actionsRequired = default;
+            AppConfigurationPrivateLinkServiceConnectionStatus? status = default;
+            string description = default;
+            AppConfigurationActionsRequired? actionsRequired = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppConfigurationPrivateLinkServiceConnectionState(Optional.ToNullable(status), description.Value, Optional.ToNullable(actionsRequired), serializedAdditionalRawData);
+            return new AppConfigurationPrivateLinkServiceConnectionState(status, description, actionsRequired, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppConfigurationPrivateLinkServiceConnectionState>.Write(ModelReaderWriterOptions options)

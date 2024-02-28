@@ -215,32 +215,32 @@ namespace Azure.ResourceManager.Storage.Models
             StorageSku sku = default;
             StorageKind kind = default;
             AzureLocation location = default;
-            Optional<ExtendedLocation> extendedLocation = default;
+            ExtendedLocation extendedLocation = default;
             IDictionary<string, string> tags = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<AllowedCopyScope> allowedCopyScope = default;
-            Optional<StoragePublicNetworkAccess> publicNetworkAccess = default;
-            Optional<StorageAccountSasPolicy> sasPolicy = default;
-            Optional<StorageAccountKeyPolicy> keyPolicy = default;
-            Optional<StorageCustomDomain> customDomain = default;
-            Optional<StorageAccountEncryption> encryption = default;
-            Optional<StorageAccountNetworkRuleSet> networkAcls = default;
-            Optional<StorageAccountAccessTier> accessTier = default;
-            Optional<FilesIdentityBasedAuthentication> azureFilesIdentityBasedAuthentication = default;
-            Optional<bool> supportsHttpsTrafficOnly = default;
-            Optional<bool> isSftpEnabled = default;
-            Optional<bool> isLocalUserEnabled = default;
-            Optional<bool> isHnsEnabled = default;
-            Optional<LargeFileSharesState> largeFileSharesState = default;
-            Optional<StorageRoutingPreference> routingPreference = default;
-            Optional<bool> allowBlobPublicAccess = default;
-            Optional<StorageMinimumTlsVersion> minimumTlsVersion = default;
-            Optional<bool> allowSharedKeyAccess = default;
-            Optional<bool> isNfsV3Enabled = default;
-            Optional<bool> allowCrossTenantReplication = default;
-            Optional<bool> defaultToOAuthAuthentication = default;
-            Optional<ImmutableStorageAccount> immutableStorageWithVersioning = default;
-            Optional<StorageDnsEndpointType> dnsEndpointType = default;
+            ManagedServiceIdentity identity = default;
+            AllowedCopyScope? allowedCopyScope = default;
+            StoragePublicNetworkAccess? publicNetworkAccess = default;
+            StorageAccountSasPolicy sasPolicy = default;
+            StorageAccountKeyPolicy keyPolicy = default;
+            StorageCustomDomain customDomain = default;
+            StorageAccountEncryption encryption = default;
+            StorageAccountNetworkRuleSet networkAcls = default;
+            StorageAccountAccessTier? accessTier = default;
+            FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication = default;
+            bool? supportsHttpsTrafficOnly = default;
+            bool? isSftpEnabled = default;
+            bool? isLocalUserEnabled = default;
+            bool? isHnsEnabled = default;
+            LargeFileSharesState? largeFileSharesState = default;
+            StorageRoutingPreference routingPreference = default;
+            bool? allowBlobPublicAccess = default;
+            StorageMinimumTlsVersion? minimumTlsVersion = default;
+            bool? allowSharedKeyAccess = default;
+            bool? isNfsV3Enabled = default;
+            bool? allowCrossTenantReplication = default;
+            bool? defaultToOAuthAuthentication = default;
+            ImmutableStorageAccount immutableStorageWithVersioning = default;
+            StorageDnsEndpointType? dnsEndpointType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -525,29 +525,29 @@ namespace Azure.ResourceManager.Storage.Models
                 extendedLocation,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 identity,
-                Optional.ToNullable(allowedCopyScope),
-                Optional.ToNullable(publicNetworkAccess),
-                sasPolicy.Value,
-                keyPolicy.Value,
-                customDomain.Value,
-                encryption.Value,
-                networkAcls.Value,
-                Optional.ToNullable(accessTier),
-                azureFilesIdentityBasedAuthentication.Value,
-                Optional.ToNullable(supportsHttpsTrafficOnly),
-                Optional.ToNullable(isSftpEnabled),
-                Optional.ToNullable(isLocalUserEnabled),
-                Optional.ToNullable(isHnsEnabled),
-                Optional.ToNullable(largeFileSharesState),
-                routingPreference.Value,
-                Optional.ToNullable(allowBlobPublicAccess),
-                Optional.ToNullable(minimumTlsVersion),
-                Optional.ToNullable(allowSharedKeyAccess),
-                Optional.ToNullable(isNfsV3Enabled),
-                Optional.ToNullable(allowCrossTenantReplication),
-                Optional.ToNullable(defaultToOAuthAuthentication),
-                immutableStorageWithVersioning.Value,
-                Optional.ToNullable(dnsEndpointType),
+                allowedCopyScope,
+                publicNetworkAccess,
+                sasPolicy,
+                keyPolicy,
+                customDomain,
+                encryption,
+                networkAcls,
+                accessTier,
+                azureFilesIdentityBasedAuthentication,
+                supportsHttpsTrafficOnly,
+                isSftpEnabled,
+                isLocalUserEnabled,
+                isHnsEnabled,
+                largeFileSharesState,
+                routingPreference,
+                allowBlobPublicAccess,
+                minimumTlsVersion,
+                allowSharedKeyAccess,
+                isNfsV3Enabled,
+                allowCrossTenantReplication,
+                defaultToOAuthAuthentication,
+                immutableStorageWithVersioning,
+                dnsEndpointType,
                 serializedAdditionalRawData);
         }
 

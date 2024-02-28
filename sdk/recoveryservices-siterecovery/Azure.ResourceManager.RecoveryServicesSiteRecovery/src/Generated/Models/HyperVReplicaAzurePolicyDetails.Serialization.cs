@@ -96,12 +96,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<int> recoveryPointHistoryDurationInHours = default;
-            Optional<int> applicationConsistentSnapshotFrequencyInHours = default;
-            Optional<int> replicationInterval = default;
-            Optional<string> onlineReplicationStartTime = default;
-            Optional<string> encryption = default;
-            Optional<ResourceIdentifier> activeStorageAccountId = default;
+            int? recoveryPointHistoryDurationInHours = default;
+            int? applicationConsistentSnapshotFrequencyInHours = default;
+            int? replicationInterval = default;
+            string onlineReplicationStartTime = default;
+            string encryption = default;
+            ResourceIdentifier activeStorageAccountId = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -167,12 +167,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new HyperVReplicaAzurePolicyDetails(
                 instanceType,
                 serializedAdditionalRawData,
-                Optional.ToNullable(recoveryPointHistoryDurationInHours),
-                Optional.ToNullable(applicationConsistentSnapshotFrequencyInHours),
-                Optional.ToNullable(replicationInterval),
-                onlineReplicationStartTime.Value,
-                encryption.Value,
-                activeStorageAccountId.Value);
+                recoveryPointHistoryDurationInHours,
+                applicationConsistentSnapshotFrequencyInHours,
+                replicationInterval,
+                onlineReplicationStartTime,
+                encryption,
+                activeStorageAccountId);
         }
 
         BinaryData IPersistableModel<HyperVReplicaAzurePolicyDetails>.Write(ModelReaderWriterOptions options)

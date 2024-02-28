@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> value = default;
+            string value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UserTokenResult(value.Value, serializedAdditionalRawData);
+            return new UserTokenResult(value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UserTokenResult>.Write(ModelReaderWriterOptions options)

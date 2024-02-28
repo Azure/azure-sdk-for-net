@@ -90,8 +90,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<EdgeProfilePatch> edgeProfile = default;
+            ManagedServiceIdentity identity = default;
+            EdgeProfilePatch edgeProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeDevicePatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, edgeProfile.Value, serializedAdditionalRawData);
+            return new DataBoxEdgeDevicePatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, edgeProfile, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeDevicePatch>.Write(ModelReaderWriterOptions options)

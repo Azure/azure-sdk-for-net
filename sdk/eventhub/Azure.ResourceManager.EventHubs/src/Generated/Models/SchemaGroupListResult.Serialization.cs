@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 return null;
             }
             IReadOnlyList<EventHubsSchemaGroupData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SchemaGroupListResult(value ?? new ChangeTrackingList<EventHubsSchemaGroupData>(), nextLink.Value, serializedAdditionalRawData);
+            return new SchemaGroupListResult(value ?? new ChangeTrackingList<EventHubsSchemaGroupData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SchemaGroupListResult>.Write(ModelReaderWriterOptions options)

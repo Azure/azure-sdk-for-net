@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<string> used = default;
-            Optional<string> available = default;
+            string used = default;
+            string available = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IPPoolInfo(used.Value, available.Value, serializedAdditionalRawData);
+            return new IPPoolInfo(used, available, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IPPoolInfo>.Write(ModelReaderWriterOptions options)

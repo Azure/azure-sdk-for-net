@@ -114,11 +114,11 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Optional<string> resourceType = default;
+            string resourceType = default;
             IReadOnlyList<StorageCacheSkuCapability> capabilities = default;
             IReadOnlyList<string> locations = default;
             IReadOnlyList<StorageCacheSkuLocationInfo> locationInfo = default;
-            Optional<string> name = default;
+            string name = default;
             IReadOnlyList<StorageCacheRestriction> restrictions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -197,11 +197,11 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new StorageCacheSku(
-                resourceType.Value,
+                resourceType,
                 capabilities ?? new ChangeTrackingList<StorageCacheSkuCapability>(),
                 locations ?? new ChangeTrackingList<string>(),
                 locationInfo ?? new ChangeTrackingList<StorageCacheSkuLocationInfo>(),
-                name.Value,
+                name,
                 restrictions ?? new ChangeTrackingList<StorageCacheRestriction>(),
                 serializedAdditionalRawData);
         }

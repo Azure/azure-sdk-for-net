@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> value = default;
+            string name = default;
+            string value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabParameter(name.Value, value.Value, serializedAdditionalRawData);
+            return new DevTestLabParameter(name, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabParameter>.Write(ModelReaderWriterOptions options)

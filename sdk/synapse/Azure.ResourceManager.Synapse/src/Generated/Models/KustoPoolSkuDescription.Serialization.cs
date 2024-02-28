@@ -121,9 +121,9 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<string> resourceType = default;
-            Optional<string> name = default;
-            Optional<string> size = default;
+            string resourceType = default;
+            string name = default;
+            string size = default;
             IReadOnlyList<AzureLocation> locations = default;
             IReadOnlyList<KustoPoolSkuLocationInfoItem> locationInfo = default;
             IReadOnlyList<BinaryData> restrictions = default;
@@ -202,9 +202,9 @@ namespace Azure.ResourceManager.Synapse.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new KustoPoolSkuDescription(
-                resourceType.Value,
-                name.Value,
-                size.Value,
+                resourceType,
+                name,
+                size,
                 locations ?? new ChangeTrackingList<AzureLocation>(),
                 locationInfo ?? new ChangeTrackingList<KustoPoolSkuLocationInfoItem>(),
                 restrictions ?? new ChangeTrackingList<BinaryData>(),

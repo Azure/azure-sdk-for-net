@@ -100,9 +100,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<TrafficRegionCategory> nextTrafficRegion = default;
-            Optional<DateTimeOffset> nextTrafficRegionScheduledTime = default;
-            Optional<SubscriptionReregistrationResult> subscriptionReregistrationResult = default;
+            TrafficRegionCategory? nextTrafficRegion = default;
+            DateTimeOffset? nextTrafficRegionScheduledTime = default;
+            SubscriptionReregistrationResult? subscriptionReregistrationResult = default;
             IList<AzureLocation> completedRegions = default;
             IDictionary<string, ExtendedErrorInfo> failedOrSkippedRegions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -174,9 +174,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 completedRegions ?? new ChangeTrackingList<AzureLocation>(),
                 failedOrSkippedRegions ?? new ChangeTrackingDictionary<string, ExtendedErrorInfo>(),
                 serializedAdditionalRawData,
-                Optional.ToNullable(nextTrafficRegion),
-                Optional.ToNullable(nextTrafficRegionScheduledTime),
-                Optional.ToNullable(subscriptionReregistrationResult));
+                nextTrafficRegion,
+                nextTrafficRegionScheduledTime,
+                subscriptionReregistrationResult);
         }
 
         BinaryData IPersistableModel<DefaultRolloutStatus>.Write(ModelReaderWriterOptions options)

@@ -162,21 +162,21 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> serverEdition = default;
-            Optional<int> storageQuotaInMb = default;
-            Optional<int> vCores = default;
-            Optional<bool> enableHa = default;
-            Optional<bool> enablePublicIPAccess = default;
-            Optional<bool> isReadOnly = default;
-            Optional<string> administratorLogin = default;
-            Optional<string> fullyQualifiedDomainName = default;
-            Optional<CosmosDBForPostgreSqlServerRole> role = default;
-            Optional<string> state = default;
-            Optional<string> haState = default;
-            Optional<string> availabilityZone = default;
-            Optional<string> postgresqlVersion = default;
-            Optional<string> citusVersion = default;
+            SystemData systemData = default;
+            string serverEdition = default;
+            int? storageQuotaInMb = default;
+            int? vCores = default;
+            bool? enableHa = default;
+            bool? enablePublicIPAccess = default;
+            bool? isReadOnly = default;
+            string administratorLogin = default;
+            string fullyQualifiedDomainName = default;
+            CosmosDBForPostgreSqlServerRole? role = default;
+            string state = default;
+            string haState = default;
+            string availabilityZone = default;
+            string postgresqlVersion = default;
+            string citusVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -321,21 +321,21 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 id,
                 name,
                 type,
-                systemData.Value,
-                serverEdition.Value,
-                Optional.ToNullable(storageQuotaInMb),
-                Optional.ToNullable(vCores),
-                Optional.ToNullable(enableHa),
-                Optional.ToNullable(enablePublicIPAccess),
-                Optional.ToNullable(isReadOnly),
-                administratorLogin.Value,
-                fullyQualifiedDomainName.Value,
-                Optional.ToNullable(role),
-                state.Value,
-                haState.Value,
-                availabilityZone.Value,
-                postgresqlVersion.Value,
-                citusVersion.Value,
+                systemData,
+                serverEdition,
+                storageQuotaInMb,
+                vCores,
+                enableHa,
+                enablePublicIPAccess,
+                isReadOnly,
+                administratorLogin,
+                fullyQualifiedDomainName,
+                role,
+                state,
+                haState,
+                availabilityZone,
+                postgresqlVersion,
+                citusVersion,
                 serializedAdditionalRawData);
         }
 

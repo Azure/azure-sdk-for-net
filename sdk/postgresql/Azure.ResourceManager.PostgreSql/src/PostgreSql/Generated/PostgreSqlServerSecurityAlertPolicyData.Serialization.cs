@@ -137,14 +137,14 @@ namespace Azure.ResourceManager.PostgreSql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<PostgreSqlServerSecurityAlertPolicyState> state = default;
+            SystemData systemData = default;
+            PostgreSqlServerSecurityAlertPolicyState? state = default;
             IList<string> disabledAlerts = default;
             IList<string> emailAddresses = default;
-            Optional<bool> emailAccountAdmins = default;
-            Optional<string> storageEndpoint = default;
-            Optional<string> storageAccountAccessKey = default;
-            Optional<int> retentionDays = default;
+            bool? emailAccountAdmins = default;
+            string storageEndpoint = default;
+            string storageAccountAccessKey = default;
+            int? retentionDays = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -260,14 +260,14 @@ namespace Azure.ResourceManager.PostgreSql
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(state),
+                systemData,
+                state,
                 disabledAlerts ?? new ChangeTrackingList<string>(),
                 emailAddresses ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(emailAccountAdmins),
-                storageEndpoint.Value,
-                storageAccountAccessKey.Value,
-                Optional.ToNullable(retentionDays),
+                emailAccountAdmins,
+                storageEndpoint,
+                storageAccountAccessKey,
+                retentionDays,
                 serializedAdditionalRawData);
         }
 

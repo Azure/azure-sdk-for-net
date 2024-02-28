@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
@@ -19,7 +18,7 @@ namespace Azure.Search.Documents.Models
             {
                 return null;
             }
-            Optional<double> searchCoverage = default;
+            double? searchCoverage = default;
             IReadOnlyList<AutocompleteItem> value = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -43,7 +42,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new AutocompleteResults(Optional.ToNullable(searchCoverage), value);
+            return new AutocompleteResults(searchCoverage, value);
         }
     }
 }

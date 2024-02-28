@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<ViewPivotType> type = default;
-            Optional<string> name = default;
+            ViewPivotType? type = default;
+            string name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ViewPivotProperties(Optional.ToNullable(type), name.Value, serializedAdditionalRawData);
+            return new ViewPivotProperties(type, name, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ViewPivotProperties>.Write(ModelReaderWriterOptions options)

@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 return null;
             }
-            Optional<NewRelicObservabilitySendAadLogsStatus> sendAadLogs = default;
-            Optional<NewRelicObservabilitySendSubscriptionLogsStatus> sendSubscriptionLogs = default;
-            Optional<NewRelicObservabilitySendActivityLogsStatus> sendActivityLogs = default;
+            NewRelicObservabilitySendAadLogsStatus? sendAadLogs = default;
+            NewRelicObservabilitySendSubscriptionLogsStatus? sendSubscriptionLogs = default;
+            NewRelicObservabilitySendActivityLogsStatus? sendActivityLogs = default;
             IList<NewRelicObservabilityFilteringTag> filteringTags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NewRelicObservabilityLogRules(Optional.ToNullable(sendAadLogs), Optional.ToNullable(sendSubscriptionLogs), Optional.ToNullable(sendActivityLogs), filteringTags ?? new ChangeTrackingList<NewRelicObservabilityFilteringTag>(), serializedAdditionalRawData);
+            return new NewRelicObservabilityLogRules(sendAadLogs, sendSubscriptionLogs, sendActivityLogs, filteringTags ?? new ChangeTrackingList<NewRelicObservabilityFilteringTag>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NewRelicObservabilityLogRules>.Write(ModelReaderWriterOptions options)

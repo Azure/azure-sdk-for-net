@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<AzureLocation> sourceRegion = default;
-            Optional<ResourceIdentifier> sourceBackupInstanceId = default;
+            AzureLocation? sourceRegion = default;
+            ResourceIdentifier sourceBackupInstanceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FetchSecondaryRPsRequestContent(Optional.ToNullable(sourceRegion), sourceBackupInstanceId.Value, serializedAdditionalRawData);
+            return new FetchSecondaryRPsRequestContent(sourceRegion, sourceBackupInstanceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FetchSecondaryRPsRequestContent>.Write(ModelReaderWriterOptions options)

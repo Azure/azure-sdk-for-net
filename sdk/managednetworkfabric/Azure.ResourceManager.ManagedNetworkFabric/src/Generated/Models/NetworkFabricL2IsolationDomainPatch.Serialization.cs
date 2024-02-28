@@ -89,8 +89,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<string> annotation = default;
-            Optional<int> mtu = default;
+            string annotation = default;
+            int? mtu = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkFabricL2IsolationDomainPatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, annotation.Value, Optional.ToNullable(mtu));
+            return new NetworkFabricL2IsolationDomainPatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, annotation, mtu);
         }
 
         BinaryData IPersistableModel<NetworkFabricL2IsolationDomainPatch>.Write(ModelReaderWriterOptions options)

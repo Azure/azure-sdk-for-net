@@ -112,9 +112,9 @@ namespace Azure.ResourceManager.Media
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<PresentationTimeRange> presentationTimeRange = default;
-            Optional<FirstQuality> firstQuality = default;
+            SystemData systemData = default;
+            PresentationTimeRange presentationTimeRange = default;
+            FirstQuality firstQuality = default;
             IList<FilterTrackSelection> tracks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -198,9 +198,9 @@ namespace Azure.ResourceManager.Media
                 id,
                 name,
                 type,
-                systemData.Value,
-                presentationTimeRange.Value,
-                firstQuality.Value,
+                systemData,
+                presentationTimeRange,
+                firstQuality,
                 tracks ?? new ChangeTrackingList<FilterTrackSelection>(),
                 serializedAdditionalRawData);
         }

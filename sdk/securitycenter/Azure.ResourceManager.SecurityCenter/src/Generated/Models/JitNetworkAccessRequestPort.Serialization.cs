@@ -93,12 +93,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 return null;
             }
             int number = default;
-            Optional<string> allowedSourceAddressPrefix = default;
+            string allowedSourceAddressPrefix = default;
             IList<string> allowedSourceAddressPrefixes = default;
             DateTimeOffset endTimeUtc = default;
             JitNetworkAccessPortStatus status = default;
             JitNetworkAccessPortStatusReason statusReason = default;
-            Optional<int> mappedPort = default;
+            int? mappedPort = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -159,12 +159,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new JitNetworkAccessRequestPort(
                 number,
-                allowedSourceAddressPrefix.Value,
+                allowedSourceAddressPrefix,
                 allowedSourceAddressPrefixes ?? new ChangeTrackingList<string>(),
                 endTimeUtc,
                 status,
                 statusReason,
-                Optional.ToNullable(mappedPort),
+                mappedPort,
                 serializedAdditionalRawData);
         }
 

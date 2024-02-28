@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> networkInterface = default;
+            string networkInterface = default;
             IList<string> networkSecurityGroups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EffectiveNetworkSecurityGroups(networkInterface.Value, networkSecurityGroups ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new EffectiveNetworkSecurityGroups(networkInterface, networkSecurityGroups ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EffectiveNetworkSecurityGroups>.Write(ModelReaderWriterOptions options)

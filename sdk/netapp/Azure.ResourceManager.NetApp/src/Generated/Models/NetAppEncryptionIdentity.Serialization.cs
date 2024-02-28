@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<string> principalId = default;
-            Optional<string> userAssignedIdentity = default;
+            string principalId = default;
+            string userAssignedIdentity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppEncryptionIdentity(principalId.Value, userAssignedIdentity.Value, serializedAdditionalRawData);
+            return new NetAppEncryptionIdentity(principalId, userAssignedIdentity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppEncryptionIdentity>.Write(ModelReaderWriterOptions options)

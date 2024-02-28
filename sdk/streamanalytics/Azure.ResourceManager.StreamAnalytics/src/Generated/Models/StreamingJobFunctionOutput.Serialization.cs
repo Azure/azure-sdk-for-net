@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Optional<string> dataType = default;
+            string dataType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamingJobFunctionOutput(dataType.Value, serializedAdditionalRawData);
+            return new StreamingJobFunctionOutput(dataType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamingJobFunctionOutput>.Write(ModelReaderWriterOptions options)

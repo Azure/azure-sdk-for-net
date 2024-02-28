@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             IList<string> additionalWorkspaceStorageAccounts = default;
-            Optional<string> defaultWorkspaceResourceGroup = default;
+            string defaultWorkspaceResourceGroup = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkspaceHubConfig(additionalWorkspaceStorageAccounts ?? new ChangeTrackingList<string>(), defaultWorkspaceResourceGroup.Value, serializedAdditionalRawData);
+            return new WorkspaceHubConfig(additionalWorkspaceStorageAccounts ?? new ChangeTrackingList<string>(), defaultWorkspaceResourceGroup, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkspaceHubConfig>.Write(ModelReaderWriterOptions options)

@@ -91,9 +91,9 @@ namespace Azure.AI.DocumentIntelligence
             }
             string code = default;
             string message = default;
-            Optional<string> target = default;
+            string target = default;
             IReadOnlyList<DocumentIntelligenceError> details = default;
-            Optional<InnerError> innererror = default;
+            InnerError innererror = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -145,9 +145,9 @@ namespace Azure.AI.DocumentIntelligence
             return new DocumentIntelligenceError(
                 code,
                 message,
-                target.Value,
+                target,
                 details ?? new ChangeTrackingList<DocumentIntelligenceError>(),
-                innererror.Value,
+                innererror,
                 serializedAdditionalRawData);
         }
 

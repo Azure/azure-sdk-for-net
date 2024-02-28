@@ -140,20 +140,20 @@ namespace Azure.ResourceManager.Batch
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> thumbprintAlgorithm = default;
-            Optional<string> thumbprint = default;
-            Optional<BatchAccountCertificateFormat> format = default;
-            Optional<BatchAccountCertificateProvisioningState> provisioningState = default;
-            Optional<DateTimeOffset> provisioningStateTransitionTime = default;
-            Optional<BatchAccountCertificateProvisioningState> previousProvisioningState = default;
-            Optional<DateTimeOffset> previousProvisioningStateTransitionTime = default;
-            Optional<string> publicData = default;
-            Optional<ResponseError> deleteCertificateError = default;
+            SystemData systemData = default;
+            string thumbprintAlgorithm = default;
+            string thumbprint = default;
+            BatchAccountCertificateFormat? format = default;
+            BatchAccountCertificateProvisioningState? provisioningState = default;
+            DateTimeOffset? provisioningStateTransitionTime = default;
+            BatchAccountCertificateProvisioningState? previousProvisioningState = default;
+            DateTimeOffset? previousProvisioningStateTransitionTime = default;
+            string publicData = default;
+            ResponseError deleteCertificateError = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -282,17 +282,17 @@ namespace Azure.ResourceManager.Batch
                 id,
                 name,
                 type,
-                systemData.Value,
-                thumbprintAlgorithm.Value,
-                thumbprint.Value,
-                Optional.ToNullable(format),
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(provisioningStateTransitionTime),
-                Optional.ToNullable(previousProvisioningState),
-                Optional.ToNullable(previousProvisioningStateTransitionTime),
-                publicData.Value,
-                deleteCertificateError.Value,
-                Optional.ToNullable(etag),
+                systemData,
+                thumbprintAlgorithm,
+                thumbprint,
+                format,
+                provisioningState,
+                provisioningStateTransitionTime,
+                previousProvisioningState,
+                previousProvisioningStateTransitionTime,
+                publicData,
+                deleteCertificateError,
+                etag,
                 serializedAdditionalRawData);
         }
 

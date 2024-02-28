@@ -128,11 +128,11 @@ namespace Azure.ResourceManager.ManagedNetwork
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<ETag> etag = default;
-            Optional<Scope> scope = default;
-            Optional<ConnectivityCollection> connectivity = default;
+            SystemData systemData = default;
+            ProvisioningState? provisioningState = default;
+            ETag? etag = default;
+            Scope scope = default;
+            ConnectivityCollection connectivity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -238,13 +238,13 @@ namespace Azure.ResourceManager.ManagedNetwork
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(etag),
-                scope.Value,
-                connectivity.Value,
+                provisioningState,
+                etag,
+                scope,
+                connectivity,
                 serializedAdditionalRawData);
         }
 

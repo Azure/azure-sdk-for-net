@@ -161,17 +161,17 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<MoverProvisioningState> provisioningState = default;
+            MoverProvisioningState? provisioningState = default;
             ResourceIdentifier sourceId = default;
-            Optional<ResourceIdentifier> targetId = default;
-            Optional<ResourceIdentifier> existingTargetId = default;
-            Optional<MoverResourceSettings> resourceSettings = default;
-            Optional<MoverResourceSettings> sourceResourceSettings = default;
-            Optional<MoverResourcePropertiesMoveStatus> moveStatus = default;
+            ResourceIdentifier targetId = default;
+            ResourceIdentifier existingTargetId = default;
+            MoverResourceSettings resourceSettings = default;
+            MoverResourceSettings sourceResourceSettings = default;
+            MoverResourcePropertiesMoveStatus moveStatus = default;
             IReadOnlyList<MoverResourceDependency> dependsOn = default;
             IList<MoverResourceDependencyOverride> dependsOnOverrides = default;
-            Optional<bool> isResolveRequired = default;
-            Optional<MoveResourcePropertiesErrors> errors = default;
+            bool? isResolveRequired = default;
+            MoveResourcePropertiesErrors errors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -293,17 +293,17 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MoverResourceProperties(
-                Optional.ToNullable(provisioningState),
+                provisioningState,
                 sourceId,
-                targetId.Value,
-                existingTargetId.Value,
-                resourceSettings.Value,
-                sourceResourceSettings.Value,
-                moveStatus.Value,
+                targetId,
+                existingTargetId,
+                resourceSettings,
+                sourceResourceSettings,
+                moveStatus,
                 dependsOn ?? new ChangeTrackingList<MoverResourceDependency>(),
                 dependsOnOverrides ?? new ChangeTrackingList<MoverResourceDependencyOverride>(),
-                Optional.ToNullable(isResolveRequired),
-                errors.Value,
+                isResolveRequired,
+                errors,
                 serializedAdditionalRawData);
         }
 

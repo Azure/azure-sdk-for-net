@@ -186,25 +186,25 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ExtendedLocation> extendedLocation = default;
-            Optional<PublicIPPrefixSku> sku = default;
-            Optional<ETag> etag = default;
+            ExtendedLocation extendedLocation = default;
+            PublicIPPrefixSku sku = default;
+            ETag? etag = default;
             IList<string> zones = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
             IDictionary<string, string> tags = default;
-            Optional<NetworkIPVersion> publicIPAddressVersion = default;
+            NetworkIPVersion? publicIPAddressVersion = default;
             IList<IPTag> ipTags = default;
-            Optional<int> prefixLength = default;
-            Optional<string> ipPrefix = default;
+            int? prefixLength = default;
+            string ipPrefix = default;
             IReadOnlyList<SubResource> publicIPAddresses = default;
-            Optional<WritableSubResource> loadBalancerFrontendIPConfiguration = default;
-            Optional<WritableSubResource> customIPPrefix = default;
-            Optional<Guid> resourceGuid = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<NatGatewayData> natGateway = default;
+            WritableSubResource loadBalancerFrontendIPConfiguration = default;
+            WritableSubResource customIPPrefix = default;
+            Guid? resourceGuid = default;
+            NetworkProvisioningState? provisioningState = default;
+            NatGatewayData natGateway = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -411,26 +411,26 @@ namespace Azure.ResourceManager.Network
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new PublicIPPrefixData(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
-                Optional.ToNullable(location),
+                id,
+                name,
+                type,
+                location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
                 extendedLocation,
-                sku.Value,
-                Optional.ToNullable(etag),
+                sku,
+                etag,
                 zones ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(publicIPAddressVersion),
+                publicIPAddressVersion,
                 ipTags ?? new ChangeTrackingList<IPTag>(),
-                Optional.ToNullable(prefixLength),
-                ipPrefix.Value,
+                prefixLength,
+                ipPrefix,
                 publicIPAddresses ?? new ChangeTrackingList<SubResource>(),
                 loadBalancerFrontendIPConfiguration,
                 customIPPrefix,
-                Optional.ToNullable(resourceGuid),
-                Optional.ToNullable(provisioningState),
-                natGateway.Value);
+                resourceGuid,
+                provisioningState,
+                natGateway);
         }
 
         BinaryData IPersistableModel<PublicIPPrefixData>.Write(ModelReaderWriterOptions options)

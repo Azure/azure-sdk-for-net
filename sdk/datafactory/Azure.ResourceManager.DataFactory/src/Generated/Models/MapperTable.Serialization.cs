@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<string> name = default;
+            string name = default;
             IList<MapperTableSchema> schema = default;
             IList<MapperDslConnectorProperties> dslConnectorProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MapperTable(name.Value, schema ?? new ChangeTrackingList<MapperTableSchema>(), dslConnectorProperties ?? new ChangeTrackingList<MapperDslConnectorProperties>(), serializedAdditionalRawData);
+            return new MapperTable(name, schema ?? new ChangeTrackingList<MapperTableSchema>(), dslConnectorProperties ?? new ChangeTrackingList<MapperDslConnectorProperties>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MapperTable>.Write(ModelReaderWriterOptions options)

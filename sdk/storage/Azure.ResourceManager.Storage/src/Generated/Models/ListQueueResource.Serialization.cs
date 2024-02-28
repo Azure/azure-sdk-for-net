@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Storage.Models
                 return null;
             }
             IReadOnlyList<StorageQueueData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ListQueueResource(value ?? new ChangeTrackingList<StorageQueueData>(), nextLink.Value, serializedAdditionalRawData);
+            return new ListQueueResource(value ?? new ChangeTrackingList<StorageQueueData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ListQueueResource>.Write(ModelReaderWriterOptions options)

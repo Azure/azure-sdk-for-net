@@ -138,12 +138,12 @@ namespace Azure.ResourceManager.NetworkCloud
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             string availabilityZone = default;
-            Optional<ResourceIdentifier> clusterId = default;
-            Optional<RackDetailedStatus> detailedStatus = default;
-            Optional<string> detailedStatusMessage = default;
-            Optional<RackProvisioningState> provisioningState = default;
+            ResourceIdentifier clusterId = default;
+            RackDetailedStatus? detailedStatus = default;
+            string detailedStatusMessage = default;
+            RackProvisioningState? provisioningState = default;
             string rackLocation = default;
             string rackSerialNumber = default;
             ResourceIdentifier rackSkuId = default;
@@ -273,15 +273,15 @@ namespace Azure.ResourceManager.NetworkCloud
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 extendedLocation,
                 availabilityZone,
-                clusterId.Value,
-                Optional.ToNullable(detailedStatus),
-                detailedStatusMessage.Value,
-                Optional.ToNullable(provisioningState),
+                clusterId,
+                detailedStatus,
+                detailedStatusMessage,
+                provisioningState,
                 rackLocation,
                 rackSerialNumber,
                 rackSkuId,

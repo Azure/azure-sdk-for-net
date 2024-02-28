@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<string> groupName = default;
-            Optional<string> groupId = default;
+            string groupName = default;
+            string groupId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClientGroupInfo(groupName.Value, groupId.Value, serializedAdditionalRawData);
+            return new ClientGroupInfo(groupName, groupId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClientGroupInfo>.Write(ModelReaderWriterOptions options)

@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<int> snapshotsToKeep = default;
-            Optional<string> day = default;
-            Optional<int> hour = default;
-            Optional<int> minute = default;
-            Optional<long> usedBytes = default;
+            int? snapshotsToKeep = default;
+            string day = default;
+            int? hour = default;
+            int? minute = default;
+            long? usedBytes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,11 +146,11 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SnapshotPolicyWeeklySchedule(
-                Optional.ToNullable(snapshotsToKeep),
-                day.Value,
-                Optional.ToNullable(hour),
-                Optional.ToNullable(minute),
-                Optional.ToNullable(usedBytes),
+                snapshotsToKeep,
+                day,
+                hour,
+                minute,
+                usedBytes,
                 serializedAdditionalRawData);
         }
 

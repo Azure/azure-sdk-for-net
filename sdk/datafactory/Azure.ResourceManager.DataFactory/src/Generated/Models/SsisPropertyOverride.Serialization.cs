@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             DataFactoryElement<string> value = default;
-            Optional<bool> isSensitive = default;
+            bool? isSensitive = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SsisPropertyOverride(value, Optional.ToNullable(isSensitive), serializedAdditionalRawData);
+            return new SsisPropertyOverride(value, isSensitive, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SsisPropertyOverride>.Write(ModelReaderWriterOptions options)

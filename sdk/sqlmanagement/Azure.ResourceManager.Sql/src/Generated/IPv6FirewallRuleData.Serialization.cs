@@ -92,11 +92,11 @@ namespace Azure.ResourceManager.Sql
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<string> startIPv6Address = default;
-            Optional<string> endIPv6Address = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            string startIPv6Address = default;
+            string endIPv6Address = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -153,12 +153,12 @@ namespace Azure.ResourceManager.Sql
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new IPv6FirewallRuleData(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
+                id,
+                name,
+                type,
                 serializedAdditionalRawData,
-                startIPv6Address.Value,
-                endIPv6Address.Value);
+                startIPv6Address,
+                endIPv6Address);
         }
 
         BinaryData IPersistableModel<IPv6FirewallRuleData>.Write(ModelReaderWriterOptions options)

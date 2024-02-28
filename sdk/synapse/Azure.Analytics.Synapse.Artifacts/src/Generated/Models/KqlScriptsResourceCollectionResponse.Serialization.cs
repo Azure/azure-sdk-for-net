@@ -23,7 +23,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             IReadOnlyList<KqlScriptResource> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -46,7 +46,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new KqlScriptsResourceCollectionResponse(value ?? new ChangeTrackingList<KqlScriptResource>(), nextLink.Value);
+            return new KqlScriptsResourceCollectionResponse(value ?? new ChangeTrackingList<KqlScriptResource>(), nextLink);
         }
 
         internal partial class KqlScriptsResourceCollectionResponseConverter : JsonConverter<KqlScriptsResourceCollectionResponse>

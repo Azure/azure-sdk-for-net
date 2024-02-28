@@ -85,9 +85,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<MachineLearningInputDeliveryMode> mode = default;
+            MachineLearningInputDeliveryMode? mode = default;
             Uri uri = default;
-            Optional<string> description = default;
+            string description = default;
             JobInputType jobInputType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningTritonModelJobInput(description.Value, jobInputType, serializedAdditionalRawData, Optional.ToNullable(mode), uri);
+            return new MachineLearningTritonModelJobInput(description, jobInputType, serializedAdditionalRawData, mode, uri);
         }
 
         BinaryData IPersistableModel<MachineLearningTritonModelJobInput>.Write(ModelReaderWriterOptions options)

@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<long> minStorageSize = default;
-            Optional<long> maxStorageSize = default;
-            Optional<long> minBackupRetentionDays = default;
-            Optional<long> maxBackupRetentionDays = default;
+            string name = default;
+            long? minStorageSize = default;
+            long? maxStorageSize = default;
+            long? minBackupRetentionDays = default;
+            long? maxBackupRetentionDays = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,11 +146,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MySqlFlexibleServerStorageEditionCapability(
-                name.Value,
-                Optional.ToNullable(minStorageSize),
-                Optional.ToNullable(maxStorageSize),
-                Optional.ToNullable(minBackupRetentionDays),
-                Optional.ToNullable(maxBackupRetentionDays),
+                name,
+                minStorageSize,
+                maxStorageSize,
+                minBackupRetentionDays,
+                maxBackupRetentionDays,
                 serializedAdditionalRawData);
         }
 

@@ -34,8 +34,8 @@ namespace Azure.IoT.Hub.Service.Models
             {
                 return null;
             }
-            Optional<string> primaryThumbprint = default;
-            Optional<string> secondaryThumbprint = default;
+            string primaryThumbprint = default;
+            string secondaryThumbprint = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryThumbprint"u8))
@@ -49,7 +49,7 @@ namespace Azure.IoT.Hub.Service.Models
                     continue;
                 }
             }
-            return new X509Thumbprint(primaryThumbprint.Value, secondaryThumbprint.Value);
+            return new X509Thumbprint(primaryThumbprint, secondaryThumbprint);
         }
     }
 }

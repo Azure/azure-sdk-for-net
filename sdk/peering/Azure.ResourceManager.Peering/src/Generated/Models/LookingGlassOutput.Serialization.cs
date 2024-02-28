@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Optional<LookingGlassCommand> command = default;
-            Optional<string> output = default;
+            LookingGlassCommand? command = default;
+            string output = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Peering.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LookingGlassOutput(Optional.ToNullable(command), output.Value, serializedAdditionalRawData);
+            return new LookingGlassOutput(command, output, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LookingGlassOutput>.Write(ModelReaderWriterOptions options)

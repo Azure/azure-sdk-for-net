@@ -126,15 +126,15 @@ namespace Azure.ResourceManager.Logic.Models
                 return null;
             }
             string assemblyName = default;
-            Optional<string> assemblyVersion = default;
-            Optional<string> assemblyCulture = default;
-            Optional<string> assemblyPublicKeyToken = default;
-            Optional<BinaryData> content = default;
-            Optional<ContentType> contentType = default;
-            Optional<LogicContentLink> contentLink = default;
-            Optional<DateTimeOffset> createdTime = default;
-            Optional<DateTimeOffset> changedTime = default;
-            Optional<BinaryData> metadata = default;
+            string assemblyVersion = default;
+            string assemblyCulture = default;
+            string assemblyPublicKeyToken = default;
+            BinaryData content = default;
+            ContentType? contentType = default;
+            LogicContentLink contentLink = default;
+            DateTimeOffset? createdTime = default;
+            DateTimeOffset? changedTime = default;
+            BinaryData metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -220,17 +220,17 @@ namespace Azure.ResourceManager.Logic.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new IntegrationAccountAssemblyProperties(
-                Optional.ToNullable(createdTime),
-                Optional.ToNullable(changedTime),
-                metadata.Value,
+                createdTime,
+                changedTime,
+                metadata,
                 serializedAdditionalRawData,
-                content.Value,
-                Optional.ToNullable(contentType),
-                contentLink.Value,
+                content,
+                contentType,
+                contentLink,
                 assemblyName,
-                assemblyVersion.Value,
-                assemblyCulture.Value,
-                assemblyPublicKeyToken.Value);
+                assemblyVersion,
+                assemblyCulture,
+                assemblyPublicKeyToken);
         }
 
         BinaryData IPersistableModel<IntegrationAccountAssemblyProperties>.Write(ModelReaderWriterOptions options)

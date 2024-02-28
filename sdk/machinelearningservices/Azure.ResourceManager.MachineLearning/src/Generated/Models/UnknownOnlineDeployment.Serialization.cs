@@ -249,21 +249,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<bool> appInsightsEnabled = default;
-            Optional<DataCollector> dataCollector = default;
-            Optional<MachineLearningEgressPublicNetworkAccessType> egressPublicNetworkAccess = default;
+            bool? appInsightsEnabled = default;
+            DataCollector dataCollector = default;
+            MachineLearningEgressPublicNetworkAccessType? egressPublicNetworkAccess = default;
             MachineLearningEndpointComputeType endpointComputeType = "Unknown";
-            Optional<string> instanceType = default;
-            Optional<MachineLearningProbeSettings> livenessProbe = default;
-            Optional<string> model = default;
-            Optional<string> modelMountPath = default;
-            Optional<MachineLearningDeploymentProvisioningState> provisioningState = default;
-            Optional<MachineLearningProbeSettings> readinessProbe = default;
-            Optional<MachineLearningOnlineRequestSettings> requestSettings = default;
-            Optional<MachineLearningOnlineScaleSettings> scaleSettings = default;
-            Optional<MachineLearningCodeConfiguration> codeConfiguration = default;
-            Optional<string> description = default;
-            Optional<string> environmentId = default;
+            string instanceType = default;
+            MachineLearningProbeSettings livenessProbe = default;
+            string model = default;
+            string modelMountPath = default;
+            MachineLearningDeploymentProvisioningState? provisioningState = default;
+            MachineLearningProbeSettings readinessProbe = default;
+            MachineLearningOnlineRequestSettings requestSettings = default;
+            MachineLearningOnlineScaleSettings scaleSettings = default;
+            MachineLearningCodeConfiguration codeConfiguration = default;
+            string description = default;
+            string environmentId = default;
             IDictionary<string, string> environmentVariables = default;
             IDictionary<string, string> properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -449,24 +449,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new UnknownOnlineDeployment(
-                codeConfiguration.Value,
-                description.Value,
-                environmentId.Value,
+                codeConfiguration,
+                description,
+                environmentId,
                 environmentVariables ?? new ChangeTrackingDictionary<string, string>(),
                 properties ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
-                Optional.ToNullable(appInsightsEnabled),
-                dataCollector.Value,
-                Optional.ToNullable(egressPublicNetworkAccess),
+                appInsightsEnabled,
+                dataCollector,
+                egressPublicNetworkAccess,
                 endpointComputeType,
-                instanceType.Value,
-                livenessProbe.Value,
-                model.Value,
-                modelMountPath.Value,
-                Optional.ToNullable(provisioningState),
-                readinessProbe.Value,
-                requestSettings.Value,
-                scaleSettings.Value);
+                instanceType,
+                livenessProbe,
+                model,
+                modelMountPath,
+                provisioningState,
+                readinessProbe,
+                requestSettings,
+                scaleSettings);
         }
 
         BinaryData IPersistableModel<MachineLearningOnlineDeploymentProperties>.Write(ModelReaderWriterOptions options)

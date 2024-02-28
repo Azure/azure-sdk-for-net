@@ -122,9 +122,9 @@ namespace Azure.ResourceManager.Grafana
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<GrafanaProvisioningState> provisioningState = default;
-            Optional<string> groupId = default;
+            SystemData systemData = default;
+            GrafanaProvisioningState? provisioningState = default;
+            string groupId = default;
             IReadOnlyList<string> requiredMembers = default;
             IList<string> requiredZoneNames = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -219,9 +219,9 @@ namespace Azure.ResourceManager.Grafana
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(provisioningState),
-                groupId.Value,
+                systemData,
+                provisioningState,
+                groupId,
                 requiredMembers ?? new ChangeTrackingList<string>(),
                 requiredZoneNames ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);

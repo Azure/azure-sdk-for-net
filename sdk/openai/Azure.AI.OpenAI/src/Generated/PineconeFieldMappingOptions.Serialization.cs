@@ -42,40 +42,17 @@ namespace Azure.AI.OpenAI
                 writer.WritePropertyName("filepathField"u8);
                 writer.WriteStringValue(FilepathFieldName);
             }
-            if (!(ContentFieldNames is ChangeTrackingList<string> collection && collection.IsUndefined))
+            writer.WritePropertyName("contentFields"u8);
+            writer.WriteStartArray();
+            foreach (var item in ContentFieldNames)
             {
-                writer.WritePropertyName("contentFields"u8);
-                writer.WriteStartArray();
-                foreach (var item in ContentFieldNames)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
+                writer.WriteStringValue(item);
             }
+            writer.WriteEndArray();
             if (ContentFieldSeparator != null)
             {
                 writer.WritePropertyName("contentFieldsSeparator"u8);
                 writer.WriteStringValue(ContentFieldSeparator);
-            }
-            if (!(VectorFieldNames is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
-            {
-                writer.WritePropertyName("vectorFields"u8);
-                writer.WriteStartArray();
-                foreach (var item in VectorFieldNames)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (!(ImageVectorFieldNames is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
-            {
-                writer.WritePropertyName("imageVectorFields"u8);
-                writer.WriteStartArray();
-                foreach (var item in ImageVectorFieldNames)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -115,13 +92,11 @@ namespace Azure.AI.OpenAI
             {
                 return null;
             }
-            Optional<string> titleField = default;
-            Optional<string> urlField = default;
-            Optional<string> filepathField = default;
+            string titleField = default;
+            string urlField = default;
+            string filepathField = default;
             IList<string> contentFields = default;
-            Optional<string> contentFieldsSeparator = default;
-            IList<string> vectorFields = default;
-            IList<string> imageVectorFields = default;
+            string contentFieldsSeparator = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -143,10 +118,6 @@ namespace Azure.AI.OpenAI
                 }
                 if (property.NameEquals("contentFields"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -160,34 +131,6 @@ namespace Azure.AI.OpenAI
                     contentFieldsSeparator = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vectorFields"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
-                    }
-                    vectorFields = array;
-                    continue;
-                }
-                if (property.NameEquals("imageVectorFields"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
-                    }
-                    imageVectorFields = array;
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -195,13 +138,11 @@ namespace Azure.AI.OpenAI
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new PineconeFieldMappingOptions(
-                titleField.Value,
-                urlField.Value,
-                filepathField.Value,
-                contentFields ?? new ChangeTrackingList<string>(),
-                contentFieldsSeparator.Value,
-                vectorFields ?? new ChangeTrackingList<string>(),
-                imageVectorFields ?? new ChangeTrackingList<string>(),
+                titleField,
+                urlField,
+                filepathField,
+                contentFields,
+                contentFieldsSeparator,
                 serializedAdditionalRawData);
         }
 

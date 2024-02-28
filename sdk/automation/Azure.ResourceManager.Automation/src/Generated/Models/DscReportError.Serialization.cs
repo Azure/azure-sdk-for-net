@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> errorSource = default;
-            Optional<string> resourceId = default;
-            Optional<string> errorCode = default;
-            Optional<string> errorMessage = default;
-            Optional<string> locale = default;
-            Optional<string> errorDetails = default;
+            string errorSource = default;
+            string resourceId = default;
+            string errorCode = default;
+            string errorMessage = default;
+            string locale = default;
+            string errorDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,12 +141,12 @@ namespace Azure.ResourceManager.Automation.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DscReportError(
-                errorSource.Value,
-                resourceId.Value,
-                errorCode.Value,
-                errorMessage.Value,
-                locale.Value,
-                errorDetails.Value,
+                errorSource,
+                resourceId,
+                errorCode,
+                errorMessage,
+                locale,
+                errorDetails,
                 serializedAdditionalRawData);
         }
 

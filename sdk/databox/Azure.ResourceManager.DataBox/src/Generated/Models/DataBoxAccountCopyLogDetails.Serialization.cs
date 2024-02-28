@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<string> accountName = default;
-            Optional<string> copyLogLink = default;
-            Optional<string> copyVerboseLogLink = default;
+            string accountName = default;
+            string copyLogLink = default;
+            string copyVerboseLogLink = default;
             DataBoxOrderType copyLogDetailsType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxAccountCopyLogDetails(copyLogDetailsType, serializedAdditionalRawData, accountName.Value, copyLogLink.Value, copyVerboseLogLink.Value);
+            return new DataBoxAccountCopyLogDetails(copyLogDetailsType, serializedAdditionalRawData, accountName, copyLogLink, copyVerboseLogLink);
         }
 
         BinaryData IPersistableModel<DataBoxAccountCopyLogDetails>.Write(ModelReaderWriterOptions options)

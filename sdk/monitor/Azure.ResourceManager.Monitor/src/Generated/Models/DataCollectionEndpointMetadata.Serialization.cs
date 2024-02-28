@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<string> provisionedBy = default;
-            Optional<string> provisionedByResourceId = default;
+            string provisionedBy = default;
+            string provisionedByResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataCollectionEndpointMetadata(provisionedBy.Value, provisionedByResourceId.Value, serializedAdditionalRawData);
+            return new DataCollectionEndpointMetadata(provisionedBy, provisionedByResourceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataCollectionEndpointMetadata>.Write(ModelReaderWriterOptions options)

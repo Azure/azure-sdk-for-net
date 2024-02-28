@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<string> message = default;
-            Optional<string> errorResource = default;
+            string code = default;
+            string message = default;
+            string errorResource = default;
             IReadOnlyList<string> messageArguments = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightClusterValidationErrorInfo(code.Value, message.Value, errorResource.Value, messageArguments ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new HDInsightClusterValidationErrorInfo(code, message, errorResource, messageArguments ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightClusterValidationErrorInfo>.Write(ModelReaderWriterOptions options)

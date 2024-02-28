@@ -133,15 +133,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> annotation = default;
-            Optional<string> physicalIdentifier = default;
-            Optional<string> connectedTo = default;
-            Optional<NetworkDeviceInterfaceType> interfaceType = default;
-            Optional<IPAddress> ipv4Address = default;
-            Optional<string> ipv6Address = default;
-            Optional<NetworkFabricProvisioningState> provisioningState = default;
-            Optional<NetworkFabricAdministrativeState> administrativeState = default;
+            SystemData systemData = default;
+            string annotation = default;
+            string physicalIdentifier = default;
+            string connectedTo = default;
+            NetworkDeviceInterfaceType? interfaceType = default;
+            IPAddress ipv4Address = default;
+            string ipv6Address = default;
+            NetworkFabricProvisioningState? provisioningState = default;
+            NetworkFabricAdministrativeState? administrativeState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -248,15 +248,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 id,
                 name,
                 type,
-                systemData.Value,
-                annotation.Value,
-                physicalIdentifier.Value,
-                connectedTo.Value,
-                Optional.ToNullable(interfaceType),
-                ipv4Address.Value,
-                ipv6Address.Value,
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(administrativeState),
+                systemData,
+                annotation,
+                physicalIdentifier,
+                connectedTo,
+                interfaceType,
+                ipv4Address,
+                ipv6Address,
+                provisioningState,
+                administrativeState,
                 serializedAdditionalRawData);
         }
 

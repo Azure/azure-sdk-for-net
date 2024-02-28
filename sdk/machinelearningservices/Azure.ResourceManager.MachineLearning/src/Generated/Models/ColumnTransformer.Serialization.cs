@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             IList<string> fields = default;
-            Optional<BinaryData> parameters = default;
+            BinaryData parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ColumnTransformer(fields ?? new ChangeTrackingList<string>(), parameters.Value, serializedAdditionalRawData);
+            return new ColumnTransformer(fields ?? new ChangeTrackingList<string>(), parameters, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ColumnTransformer>.Write(ModelReaderWriterOptions options)

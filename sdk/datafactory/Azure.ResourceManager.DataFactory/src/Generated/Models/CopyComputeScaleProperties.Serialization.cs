@@ -71,8 +71,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<int> dataIntegrationUnit = default;
-            Optional<int> timeToLive = default;
+            int? dataIntegrationUnit = default;
+            int? timeToLive = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new CopyComputeScaleProperties(Optional.ToNullable(dataIntegrationUnit), Optional.ToNullable(timeToLive), additionalProperties);
+            return new CopyComputeScaleProperties(dataIntegrationUnit, timeToLive, additionalProperties);
         }
 
         BinaryData IPersistableModel<CopyComputeScaleProperties>.Write(ModelReaderWriterOptions options)

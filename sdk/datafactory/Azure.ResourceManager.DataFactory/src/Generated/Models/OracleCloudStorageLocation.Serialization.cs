@@ -84,11 +84,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryElement<string>> bucketName = default;
-            Optional<DataFactoryElement<string>> version = default;
+            DataFactoryElement<string> bucketName = default;
+            DataFactoryElement<string> version = default;
             string type = default;
-            Optional<DataFactoryElement<string>> folderPath = default;
-            Optional<DataFactoryElement<string>> fileName = default;
+            DataFactoryElement<string> folderPath = default;
+            DataFactoryElement<string> fileName = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -139,11 +139,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new OracleCloudStorageLocation(
                 type,
-                folderPath.Value,
-                fileName.Value,
+                folderPath,
+                fileName,
                 additionalProperties,
-                bucketName.Value,
-                version.Value);
+                bucketName,
+                version);
         }
 
         BinaryData IPersistableModel<OracleCloudStorageLocation>.Write(ModelReaderWriterOptions options)

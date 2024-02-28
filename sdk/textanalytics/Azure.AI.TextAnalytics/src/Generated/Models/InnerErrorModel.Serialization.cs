@@ -53,8 +53,8 @@ namespace Azure.AI.TextAnalytics.Models
             InnerErrorCode code = default;
             string message = default;
             IDictionary<string, string> details = default;
-            Optional<string> target = default;
-            Optional<InnerErrorModel> innererror = default;
+            string target = default;
+            InnerErrorModel innererror = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -96,7 +96,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new InnerErrorModel(code, message, details ?? new ChangeTrackingDictionary<string, string>(), target.Value, innererror.Value);
+            return new InnerErrorModel(code, message, details ?? new ChangeTrackingDictionary<string, string>(), target, innererror);
         }
     }
 }

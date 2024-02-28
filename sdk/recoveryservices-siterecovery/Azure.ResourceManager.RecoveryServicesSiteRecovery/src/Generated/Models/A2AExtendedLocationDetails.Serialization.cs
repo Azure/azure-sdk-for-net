@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<SiteRecoveryExtendedLocation> primaryExtendedLocation = default;
-            Optional<SiteRecoveryExtendedLocation> recoveryExtendedLocation = default;
+            SiteRecoveryExtendedLocation primaryExtendedLocation = default;
+            SiteRecoveryExtendedLocation recoveryExtendedLocation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new A2AExtendedLocationDetails(primaryExtendedLocation.Value, recoveryExtendedLocation.Value, serializedAdditionalRawData);
+            return new A2AExtendedLocationDetails(primaryExtendedLocation, recoveryExtendedLocation, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<A2AExtendedLocationDetails>.Write(ModelReaderWriterOptions options)

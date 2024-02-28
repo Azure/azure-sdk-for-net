@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<string> userAssignedIdentity = default;
+            string userAssignedIdentity = default;
             bool useSystemAssignedIdentity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceIdentity(userAssignedIdentity.Value, useSystemAssignedIdentity, serializedAdditionalRawData);
+            return new ResourceIdentity(userAssignedIdentity, useSystemAssignedIdentity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceIdentity>.Write(ModelReaderWriterOptions options)

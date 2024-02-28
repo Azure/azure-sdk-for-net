@@ -49,7 +49,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<PipelineReference> pipelineReference = default;
+            PipelineReference pipelineReference = default;
             IDictionary<string, object> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -84,7 +84,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new TriggerPipelineReference(pipelineReference.Value, parameters ?? new ChangeTrackingDictionary<string, object>());
+            return new TriggerPipelineReference(pipelineReference, parameters ?? new ChangeTrackingDictionary<string, object>());
         }
 
         internal partial class TriggerPipelineReferenceConverter : JsonConverter<TriggerPipelineReference>

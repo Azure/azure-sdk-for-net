@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
             {
                 return null;
             }
-            Optional<IPAddress> ipv4Address = default;
+            IPAddress ipv4Address = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateDnsARecordInfo(ipv4Address.Value, serializedAdditionalRawData);
+            return new PrivateDnsARecordInfo(ipv4Address, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateDnsARecordInfo>.Write(ModelReaderWriterOptions options)

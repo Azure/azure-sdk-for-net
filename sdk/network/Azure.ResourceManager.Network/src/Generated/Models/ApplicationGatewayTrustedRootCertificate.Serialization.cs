@@ -110,13 +110,13 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<BinaryData> data = default;
-            Optional<string> keyVaultSecretId = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            BinaryData data = default;
+            string keyVaultSecretId = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -195,14 +195,14 @@ namespace Azure.ResourceManager.Network.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ApplicationGatewayTrustedRootCertificate(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
+                id,
+                name,
+                type,
                 serializedAdditionalRawData,
-                Optional.ToNullable(etag),
-                data.Value,
-                keyVaultSecretId.Value,
-                Optional.ToNullable(provisioningState));
+                etag,
+                data,
+                keyVaultSecretId,
+                provisioningState);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayTrustedRootCertificate>.Write(ModelReaderWriterOptions options)

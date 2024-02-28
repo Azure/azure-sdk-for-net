@@ -43,9 +43,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             IDictionary<string, string> tags = default;
             string location = default;
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
+            string id = default;
+            string name = default;
+            string type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -83,7 +83,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new TrackedResource(id.Value, name.Value, type.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location);
+            return new TrackedResource(id, name, type, tags ?? new ChangeTrackingDictionary<string, string>(), location);
         }
 
         internal partial class TrackedResourceConverter : JsonConverter<TrackedResource>

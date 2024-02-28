@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 return null;
             }
             IReadOnlyList<AuthorizationClassicAdministrator> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AuthorizationClassicAdministratorListResult(value ?? new ChangeTrackingList<AuthorizationClassicAdministrator>(), nextLink.Value, serializedAdditionalRawData);
+            return new AuthorizationClassicAdministratorListResult(value ?? new ChangeTrackingList<AuthorizationClassicAdministrator>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AuthorizationClassicAdministratorListResult>.Write(ModelReaderWriterOptions options)

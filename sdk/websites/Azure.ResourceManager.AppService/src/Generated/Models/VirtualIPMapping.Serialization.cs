@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> virtualIP = default;
-            Optional<int> internalHttpPort = default;
-            Optional<int> internalHttpsPort = default;
-            Optional<bool> inUse = default;
-            Optional<string> serviceName = default;
+            string virtualIP = default;
+            int? internalHttpPort = default;
+            int? internalHttpsPort = default;
+            bool? inUse = default;
+            string serviceName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -142,11 +142,11 @@ namespace Azure.ResourceManager.AppService.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new VirtualIPMapping(
-                virtualIP.Value,
-                Optional.ToNullable(internalHttpPort),
-                Optional.ToNullable(internalHttpsPort),
-                Optional.ToNullable(inUse),
-                serviceName.Value,
+                virtualIP,
+                internalHttpPort,
+                internalHttpsPort,
+                inUse,
+                serviceName,
                 serializedAdditionalRawData);
         }
 

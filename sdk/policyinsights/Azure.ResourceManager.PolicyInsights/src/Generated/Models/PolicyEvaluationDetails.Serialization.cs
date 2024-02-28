@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 return null;
             }
             IReadOnlyList<ExpressionEvaluationDetails> evaluatedExpressions = default;
-            Optional<IfNotExistsEvaluationDetails> ifNotExistsDetails = default;
+            IfNotExistsEvaluationDetails ifNotExistsDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicyEvaluationDetails(evaluatedExpressions ?? new ChangeTrackingList<ExpressionEvaluationDetails>(), ifNotExistsDetails.Value, serializedAdditionalRawData);
+            return new PolicyEvaluationDetails(evaluatedExpressions ?? new ChangeTrackingList<ExpressionEvaluationDetails>(), ifNotExistsDetails, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicyEvaluationDetails>.Write(ModelReaderWriterOptions options)

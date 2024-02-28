@@ -137,14 +137,14 @@ namespace Azure.ResourceManager.Cdn
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> ruleSetName = default;
-            Optional<int> order = default;
+            SystemData systemData = default;
+            string ruleSetName = default;
+            int? order = default;
             IList<DeliveryRuleCondition> conditions = default;
             IList<DeliveryRuleAction> actions = default;
-            Optional<MatchProcessingBehavior> matchProcessingBehavior = default;
-            Optional<FrontDoorProvisioningState> provisioningState = default;
-            Optional<FrontDoorDeploymentStatus> deploymentStatus = default;
+            MatchProcessingBehavior? matchProcessingBehavior = default;
+            FrontDoorProvisioningState? provisioningState = default;
+            FrontDoorDeploymentStatus? deploymentStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -264,14 +264,14 @@ namespace Azure.ResourceManager.Cdn
                 id,
                 name,
                 type,
-                systemData.Value,
-                ruleSetName.Value,
-                Optional.ToNullable(order),
+                systemData,
+                ruleSetName,
+                order,
                 conditions ?? new ChangeTrackingList<DeliveryRuleCondition>(),
                 actions ?? new ChangeTrackingList<DeliveryRuleAction>(),
-                Optional.ToNullable(matchProcessingBehavior),
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(deploymentStatus),
+                matchProcessingBehavior,
+                provisioningState,
+                deploymentStatus,
                 serializedAdditionalRawData);
         }
 

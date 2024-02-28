@@ -20,16 +20,16 @@ namespace Azure.MixedReality.RemoteRendering
                 return null;
             }
             string id = default;
-            Optional<int> arrInspectorPort = default;
-            Optional<int> handshakePort = default;
-            Optional<int> elapsedTimeMinutes = default;
-            Optional<string> hostname = default;
-            Optional<int> maxLeaseTimeMinutes = default;
+            int? arrInspectorPort = default;
+            int? handshakePort = default;
+            int? elapsedTimeMinutes = default;
+            string hostname = default;
+            int? maxLeaseTimeMinutes = default;
             RenderingServerSize size = default;
             RenderingSessionStatus status = default;
-            Optional<float> teraflops = default;
-            Optional<RemoteRenderingServiceError> error = default;
-            Optional<DateTimeOffset> creationTime = default;
+            float? teraflops = default;
+            RemoteRenderingServiceError error = default;
+            DateTimeOffset? creationTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -119,16 +119,16 @@ namespace Azure.MixedReality.RemoteRendering
             }
             return new RenderingSession(
                 id,
-                Optional.ToNullable(arrInspectorPort),
-                Optional.ToNullable(handshakePort),
-                Optional.ToNullable(elapsedTimeMinutes),
-                hostname.Value,
-                Optional.ToNullable(maxLeaseTimeMinutes),
+                arrInspectorPort,
+                handshakePort,
+                elapsedTimeMinutes,
+                hostname,
+                maxLeaseTimeMinutes,
                 size,
                 status,
-                Optional.ToNullable(teraflops),
-                error.Value,
-                Optional.ToNullable(creationTime));
+                teraflops,
+                error,
+                creationTime);
         }
     }
 }

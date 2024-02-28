@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Support.Models
             {
                 return null;
             }
-            Optional<string> content = default;
-            Optional<float> chunkIndex = default;
+            string content = default;
+            float? chunkIndex = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Support.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UploadFileContent(content.Value, Optional.ToNullable(chunkIndex), serializedAdditionalRawData);
+            return new UploadFileContent(content, chunkIndex, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UploadFileContent>.Write(ModelReaderWriterOptions options)

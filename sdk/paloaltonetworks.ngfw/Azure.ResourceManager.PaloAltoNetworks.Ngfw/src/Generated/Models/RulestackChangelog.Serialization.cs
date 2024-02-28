@@ -82,8 +82,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 return null;
             }
             IReadOnlyList<string> changes = default;
-            Optional<DateTimeOffset> lastCommitted = default;
-            Optional<DateTimeOffset> lastModified = default;
+            DateTimeOffset? lastCommitted = default;
+            DateTimeOffset? lastModified = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RulestackChangelog(changes, Optional.ToNullable(lastCommitted), Optional.ToNullable(lastModified), serializedAdditionalRawData);
+            return new RulestackChangelog(changes, lastCommitted, lastModified, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RulestackChangelog>.Write(ModelReaderWriterOptions options)

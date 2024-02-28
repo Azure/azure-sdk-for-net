@@ -48,8 +48,8 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             string name = default;
-            Optional<string> source = default;
-            Optional<string> sourceContext = default;
+            string source = default;
+            string sourceContext = default;
             IList<InputFieldMappingEntry> inputs = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -83,7 +83,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new InputFieldMappingEntry(name, source.Value, sourceContext.Value, inputs ?? new ChangeTrackingList<InputFieldMappingEntry>());
+            return new InputFieldMappingEntry(name, source, sourceContext, inputs ?? new ChangeTrackingList<InputFieldMappingEntry>());
         }
     }
 }

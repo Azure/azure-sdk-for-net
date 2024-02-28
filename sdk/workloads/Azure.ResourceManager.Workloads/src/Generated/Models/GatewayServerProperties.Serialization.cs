@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<long?> port = default;
-            Optional<SapHealthState> health = default;
+            long? port = default;
+            SapHealthState? health = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GatewayServerProperties(Optional.ToNullable(port), Optional.ToNullable(health), serializedAdditionalRawData);
+            return new GatewayServerProperties(port, health, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GatewayServerProperties>.Write(ModelReaderWriterOptions options)

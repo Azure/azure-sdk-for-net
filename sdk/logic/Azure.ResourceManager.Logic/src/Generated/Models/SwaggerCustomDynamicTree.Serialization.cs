@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<SwaggerCustomDynamicTreeSettings> settings = default;
-            Optional<SwaggerCustomDynamicTreeCommand> open = default;
-            Optional<SwaggerCustomDynamicTreeCommand> browse = default;
+            SwaggerCustomDynamicTreeSettings settings = default;
+            SwaggerCustomDynamicTreeCommand open = default;
+            SwaggerCustomDynamicTreeCommand browse = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SwaggerCustomDynamicTree(settings.Value, open.Value, browse.Value, serializedAdditionalRawData);
+            return new SwaggerCustomDynamicTree(settings, open, browse, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SwaggerCustomDynamicTree>.Write(ModelReaderWriterOptions options)

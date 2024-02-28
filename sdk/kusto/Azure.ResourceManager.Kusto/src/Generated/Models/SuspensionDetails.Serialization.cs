@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> suspensionStartDate = default;
+            DateTimeOffset? suspensionStartDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SuspensionDetails(Optional.ToNullable(suspensionStartDate), serializedAdditionalRawData);
+            return new SuspensionDetails(suspensionStartDate, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SuspensionDetails>.Write(ModelReaderWriterOptions options)

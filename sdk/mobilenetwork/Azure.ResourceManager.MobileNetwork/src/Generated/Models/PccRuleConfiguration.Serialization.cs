@@ -87,8 +87,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
             string ruleName = default;
             int rulePrecedence = default;
-            Optional<PccRuleQosPolicy> ruleQosPolicy = default;
-            Optional<MobileNetworkTrafficControlPermission> trafficControl = default;
+            PccRuleQosPolicy ruleQosPolicy = default;
+            MobileNetworkTrafficControlPermission? trafficControl = default;
             IList<MobileNetworkServiceDataFlowTemplate> serviceDataFlowTemplates = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -141,8 +141,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             return new PccRuleConfiguration(
                 ruleName,
                 rulePrecedence,
-                ruleQosPolicy.Value,
-                Optional.ToNullable(trafficControl),
+                ruleQosPolicy,
+                trafficControl,
                 serviceDataFlowTemplates,
                 serializedAdditionalRawData);
         }

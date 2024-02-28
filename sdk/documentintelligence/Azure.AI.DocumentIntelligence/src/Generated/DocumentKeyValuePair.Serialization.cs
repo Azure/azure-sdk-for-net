@@ -75,7 +75,7 @@ namespace Azure.AI.DocumentIntelligence
                 return null;
             }
             DocumentKeyValueElement key = default;
-            Optional<DocumentKeyValueElement> value = default;
+            DocumentKeyValueElement value = default;
             float confidence = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -106,7 +106,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DocumentKeyValuePair(key, value.Value, confidence, serializedAdditionalRawData);
+            return new DocumentKeyValuePair(key, value, confidence, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DocumentKeyValuePair>.Write(ModelReaderWriterOptions options)

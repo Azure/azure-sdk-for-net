@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> initialReplicationType = default;
-            Optional<string> initialReplicationProgressPercentage = default;
+            string initialReplicationType = default;
+            string initialReplicationProgressPercentage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InitialReplicationDetails(initialReplicationType.Value, initialReplicationProgressPercentage.Value, serializedAdditionalRawData);
+            return new InitialReplicationDetails(initialReplicationType, initialReplicationProgressPercentage, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InitialReplicationDetails>.Write(ModelReaderWriterOptions options)

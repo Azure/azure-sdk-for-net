@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.MySql.Models
             {
                 return null;
             }
-            Optional<string> targetServerVersion = default;
+            string targetServerVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.MySql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlServerUpgradeContent(targetServerVersion.Value, serializedAdditionalRawData);
+            return new MySqlServerUpgradeContent(targetServerVersion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlServerUpgradeContent>.Write(ModelReaderWriterOptions options)

@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             {
                 return null;
             }
-            Optional<string> message = default;
-            Optional<bool> nameAvailable = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
+            string message = default;
+            bool? nameAvailable = default;
+            string name = default;
+            ResourceType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBForPostgreSqlClusterNameAvailabilityResult(message.Value, Optional.ToNullable(nameAvailable), name.Value, Optional.ToNullable(type), serializedAdditionalRawData);
+            return new CosmosDBForPostgreSqlClusterNameAvailabilityResult(message, nameAvailable, name, type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBForPostgreSqlClusterNameAvailabilityResult>.Write(ModelReaderWriterOptions options)

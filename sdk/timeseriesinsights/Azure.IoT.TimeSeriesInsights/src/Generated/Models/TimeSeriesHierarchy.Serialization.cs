@@ -33,7 +33,7 @@ namespace Azure.IoT.TimeSeriesInsights
             {
                 return null;
             }
-            Optional<string> id = default;
+            string id = default;
             string name = default;
             TimeSeriesHierarchySource source = default;
             foreach (var property in element.EnumerateObject())
@@ -54,7 +54,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     continue;
                 }
             }
-            return new TimeSeriesHierarchy(id.Value, name, source);
+            return new TimeSeriesHierarchy(id, name, source);
         }
     }
 }

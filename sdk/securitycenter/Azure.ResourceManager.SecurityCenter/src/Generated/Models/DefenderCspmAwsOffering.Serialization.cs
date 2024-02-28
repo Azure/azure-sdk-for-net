@@ -101,14 +101,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<DefenderCspmAwsOfferingVmScanners> vmScanners = default;
-            Optional<DefenderCspmAwsOfferingDataSensitivityDiscovery> dataSensitivityDiscovery = default;
-            Optional<DefenderCspmAwsOfferingDatabasesDspm> databasesDspm = default;
-            Optional<DefenderCspmAwsOfferingCiem> ciem = default;
-            Optional<DefenderCspmAwsOfferingMdcContainersImageAssessment> mdcContainersImageAssessment = default;
-            Optional<DefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S> mdcContainersAgentlessDiscoveryK8S = default;
+            DefenderCspmAwsOfferingVmScanners vmScanners = default;
+            DefenderCspmAwsOfferingDataSensitivityDiscovery dataSensitivityDiscovery = default;
+            DefenderCspmAwsOfferingDatabasesDspm databasesDspm = default;
+            DefenderCspmAwsOfferingCiem ciem = default;
+            DefenderCspmAwsOfferingMdcContainersImageAssessment mdcContainersImageAssessment = default;
+            DefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S mdcContainersAgentlessDiscoveryK8S = default;
             OfferingType offeringType = default;
-            Optional<string> description = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -185,14 +185,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DefenderCspmAwsOffering(
                 offeringType,
-                description.Value,
+                description,
                 serializedAdditionalRawData,
-                vmScanners.Value,
-                dataSensitivityDiscovery.Value,
-                databasesDspm.Value,
-                ciem.Value,
-                mdcContainersImageAssessment.Value,
-                mdcContainersAgentlessDiscoveryK8S.Value);
+                vmScanners,
+                dataSensitivityDiscovery,
+                databasesDspm,
+                ciem,
+                mdcContainersImageAssessment,
+                mdcContainersAgentlessDiscoveryK8S);
         }
 
         BinaryData IPersistableModel<DefenderCspmAwsOffering>.Write(ModelReaderWriterOptions options)

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 return null;
             }
             IReadOnlyList<ServiceBusNetworkRuleSetData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkRuleSetListResult(value ?? new ChangeTrackingList<ServiceBusNetworkRuleSetData>(), nextLink.Value, serializedAdditionalRawData);
+            return new NetworkRuleSetListResult(value ?? new ChangeTrackingList<ServiceBusNetworkRuleSetData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkRuleSetListResult>.Write(ModelReaderWriterOptions options)

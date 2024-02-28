@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<Uri> trackingUrl = default;
-            Optional<string> carrierName = default;
-            Optional<string> trackingId = default;
+            Uri trackingUrl = default;
+            string carrierName = default;
+            string trackingId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PackageShippingDetails(trackingUrl.Value, carrierName.Value, trackingId.Value, serializedAdditionalRawData);
+            return new PackageShippingDetails(trackingUrl, carrierName, trackingId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PackageShippingDetails>.Write(ModelReaderWriterOptions options)

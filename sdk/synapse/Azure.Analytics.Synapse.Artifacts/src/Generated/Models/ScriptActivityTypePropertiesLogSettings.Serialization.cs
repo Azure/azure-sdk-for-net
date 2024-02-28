@@ -32,7 +32,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             ScriptActivityLogDestination logDestination = default;
-            Optional<LogLocationSettings> logLocationSettings = default;
+            LogLocationSettings logLocationSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("logDestination"u8))
@@ -50,7 +50,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new ScriptActivityTypePropertiesLogSettings(logDestination, logLocationSettings.Value);
+            return new ScriptActivityTypePropertiesLogSettings(logDestination, logLocationSettings);
         }
     }
 }

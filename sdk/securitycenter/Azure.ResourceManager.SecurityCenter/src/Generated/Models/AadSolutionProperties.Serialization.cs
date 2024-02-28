@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<AadConnectivityStateType> connectivityState = default;
-            Optional<string> deviceVendor = default;
-            Optional<string> deviceType = default;
-            Optional<WritableSubResource> workspace = default;
+            AadConnectivityStateType? connectivityState = default;
+            string deviceVendor = default;
+            string deviceType = default;
+            WritableSubResource workspace = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AadSolutionProperties(deviceVendor.Value, deviceType.Value, workspace, additionalProperties, Optional.ToNullable(connectivityState));
+            return new AadSolutionProperties(deviceVendor, deviceType, workspace, additionalProperties, connectivityState);
         }
 
         BinaryData IPersistableModel<AadSolutionProperties>.Write(ModelReaderWriterOptions options)

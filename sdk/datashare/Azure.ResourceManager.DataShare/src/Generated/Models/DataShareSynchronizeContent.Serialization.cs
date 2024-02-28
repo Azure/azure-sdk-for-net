@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataShare.Models
             {
                 return null;
             }
-            Optional<SynchronizationMode> synchronizationMode = default;
+            SynchronizationMode? synchronizationMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataShareSynchronizeContent(Optional.ToNullable(synchronizationMode), serializedAdditionalRawData);
+            return new DataShareSynchronizeContent(synchronizationMode, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataShareSynchronizeContent>.Write(ModelReaderWriterOptions options)

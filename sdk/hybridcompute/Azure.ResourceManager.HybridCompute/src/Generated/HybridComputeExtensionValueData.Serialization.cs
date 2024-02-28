@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.HybridCompute
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> version = default;
-            Optional<string> extensionType = default;
-            Optional<string> publisher = default;
+            SystemData systemData = default;
+            string version = default;
+            string extensionType = default;
+            string publisher = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -175,10 +175,10 @@ namespace Azure.ResourceManager.HybridCompute
                 id,
                 name,
                 type,
-                systemData.Value,
-                version.Value,
-                extensionType.Value,
-                publisher.Value,
+                systemData,
+                version,
+                extensionType,
+                publisher,
                 serializedAdditionalRawData);
         }
 

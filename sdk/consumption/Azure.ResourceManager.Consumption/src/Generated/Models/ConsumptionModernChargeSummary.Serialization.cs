@@ -152,22 +152,22 @@ namespace Azure.ResourceManager.Consumption.Models
                 return null;
             }
             ChargeSummaryKind kind = default;
-            Optional<ETag> eTag = default;
+            ETag? eTag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> billingPeriodId = default;
-            Optional<string> usageStart = default;
-            Optional<string> usageEnd = default;
-            Optional<ConsumptionAmount> azureCharges = default;
-            Optional<ConsumptionAmount> chargesBilledSeparately = default;
-            Optional<ConsumptionAmount> marketplaceCharges = default;
-            Optional<string> billingAccountId = default;
-            Optional<string> billingProfileId = default;
-            Optional<string> invoiceSectionId = default;
-            Optional<string> customerId = default;
-            Optional<bool> isInvoiced = default;
+            SystemData systemData = default;
+            string billingPeriodId = default;
+            string usageStart = default;
+            string usageEnd = default;
+            ConsumptionAmount azureCharges = default;
+            ConsumptionAmount chargesBilledSeparately = default;
+            ConsumptionAmount marketplaceCharges = default;
+            string billingAccountId = default;
+            string billingProfileId = default;
+            string invoiceSectionId = default;
+            string customerId = default;
+            bool? isInvoiced = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -303,21 +303,21 @@ namespace Azure.ResourceManager.Consumption.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 kind,
-                Optional.ToNullable(eTag),
+                eTag,
                 serializedAdditionalRawData,
-                billingPeriodId.Value,
-                usageStart.Value,
-                usageEnd.Value,
-                azureCharges.Value,
-                chargesBilledSeparately.Value,
-                marketplaceCharges.Value,
-                billingAccountId.Value,
-                billingProfileId.Value,
-                invoiceSectionId.Value,
-                customerId.Value,
-                Optional.ToNullable(isInvoiced));
+                billingPeriodId,
+                usageStart,
+                usageEnd,
+                azureCharges,
+                chargesBilledSeparately,
+                marketplaceCharges,
+                billingAccountId,
+                billingProfileId,
+                invoiceSectionId,
+                customerId,
+                isInvoiced);
         }
 
         BinaryData IPersistableModel<ConsumptionModernChargeSummary>.Write(ModelReaderWriterOptions options)

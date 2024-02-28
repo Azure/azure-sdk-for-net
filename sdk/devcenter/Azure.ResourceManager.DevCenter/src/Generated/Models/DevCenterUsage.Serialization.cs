@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            Optional<long> currentValue = default;
-            Optional<long> limit = default;
-            Optional<DevCenterUsageUnit> unit = default;
-            Optional<DevCenterUsageName> name = default;
+            long? currentValue = default;
+            long? limit = default;
+            DevCenterUsageUnit? unit = default;
+            DevCenterUsageName name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevCenterUsage(Optional.ToNullable(currentValue), Optional.ToNullable(limit), Optional.ToNullable(unit), name.Value, serializedAdditionalRawData);
+            return new DevCenterUsage(currentValue, limit, unit, name, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevCenterUsage>.Write(ModelReaderWriterOptions options)

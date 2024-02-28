@@ -83,11 +83,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<CosmosDBServiceSize> instanceSize = default;
-            Optional<int> instanceCount = default;
+            DateTimeOffset? creationTime = default;
+            CosmosDBServiceSize? instanceSize = default;
+            int? instanceCount = default;
             CosmosDBServiceType serviceType = "Unknown";
-            Optional<CosmosDBServiceStatus> status = default;
+            CosmosDBServiceStatus? status = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,11 +137,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new UnknownServiceResourceProperties(
-                Optional.ToNullable(creationTime),
-                Optional.ToNullable(instanceSize),
-                Optional.ToNullable(instanceCount),
+                creationTime,
+                instanceSize,
+                instanceCount,
                 serviceType,
-                Optional.ToNullable(status),
+                status,
                 additionalProperties);
         }
 

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Avs.Models
                 return null;
             }
             IReadOnlyList<string> hosts = default;
-            Optional<string> zone = default;
+            string zone = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvsClusterZone(hosts ?? new ChangeTrackingList<string>(), zone.Value, serializedAdditionalRawData);
+            return new AvsClusterZone(hosts ?? new ChangeTrackingList<string>(), zone, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvsClusterZone>.Write(ModelReaderWriterOptions options)
