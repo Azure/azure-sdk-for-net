@@ -15,6 +15,7 @@ namespace Azure.Provisioning.ResourceManager
     public class ResourceGroup : Resource<ResourceGroupData>
     {
         internal static readonly ResourceType ResourceType = "Microsoft.Resources/resourceGroups";
+        internal const string AnonymousResourceGroupName = "resourceGroup()";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ResourceGroup"/>.
@@ -24,8 +25,8 @@ namespace Azure.Provisioning.ResourceManager
         /// <param name="version">The version of the resourceGroup.</param>
         /// <param name="location">The location of the resourceGroup.</param>
         /// <param name="parent">The parent of the resourceGroup.</param>
-        public ResourceGroup(IConstruct scope, string name = "rg", string version = "2023-07-01", AzureLocation? location = default, Subscription? parent = default)
-            : base(scope, parent, name, ResourceType, version, (name) => ResourceManagerModelFactory.ResourceGroupData(
+        public ResourceGroup(IConstruct scope, string? name = "rg", string version = "2023-07-01", AzureLocation? location = default, Subscription? parent = default)
+            : base(scope, parent, name!, ResourceType, version, (name) => ResourceManagerModelFactory.ResourceGroupData(
                 name: name,
                 resourceType: ResourceType,
                 tags: new Dictionary<string, string> { { "azd-env-name", scope.EnvironmentName } },
@@ -42,6 +43,12 @@ namespace Azure.Provisioning.ResourceManager
                 result = scope.GetOrCreateSubscription();
             }
             return result;
+        }
+
+        /// <inheritdoc/>
+        protected override string GetAzureName(IConstruct scope, string resourceName)
+        {
+            return resourceName == AnonymousResourceGroupName ? resourceName : base.GetAzureName(scope, resourceName);
         }
     }
 }

@@ -8,6 +8,7 @@ using System.IO;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Core.Tests.TestFramework;
 using Azure.Identity;
@@ -171,6 +172,31 @@ namespace Azure.Provisioning.Tests
         }
 
         [Test]
+        public async Task WebSiteUsingL3ResourceGroupScope()
+        {
+            var infra = new TestInfrastructure(scope: ConstructScope.ResourceGroup, useAnonymousResourceGroup: true);
+            infra.AddWebSiteWithSqlBackEnd();
+
+            infra.GetSingleResource<ResourceGroup>()!.Properties.Tags.Add("key", "value");
+            infra.GetSingleResourceInScope<KeyVault>()!.Properties.Tags.Add("key", "value");
+
+            foreach (var website in infra.GetResources().Where(r => r is WebSite))
+            {
+                Assert.AreEqual("subscription()", ((WebSite)website).Properties.AppServicePlanId.SubscriptionId);
+                Assert.AreEqual("resourceGroup()", ((WebSite)website).Properties.AppServicePlanId.ResourceGroupName);
+            }
+
+            infra.Build(GetOutputPath());
+
+            await ValidateBicepAsync(BinaryData.FromObjectAsJson(
+                new
+                {
+                    sqlAdminPassword = new { value = "password" },
+                    appUserPassword = new { value = "password" }
+                }), anonymousResourceGroup: true);
+        }
+
+        [Test]
         public async Task StorageBlobDefaults()
         {
             var infra = new TestInfrastructure();
@@ -254,7 +280,7 @@ namespace Azure.Provisioning.Tests
             await ValidateBicepAsync();
         }
 
-        public async Task ValidateBicepAsync(BinaryData? parameters = null)
+        public async Task ValidateBicepAsync(BinaryData? parameters = null, bool anonymousResourceGroup = false)
         {
             if (TestEnvironment.GlobalIsRunningInCI)
             {
@@ -262,6 +288,10 @@ namespace Azure.Provisioning.Tests
             }
 
             var testPath = Path.Combine(_infrastructureRoot, TestContext.CurrentContext.Test.Name);
+            var client = new ArmClient(new DefaultAzureCredential());
+            ResourceGroupResource? rg = null;
+
+            SubscriptionResource subscription = await client.GetSubscriptions().GetAsync(Environment.GetEnvironmentVariable("SUBSCRIPTION_ID"));
 
             try
             {
@@ -286,25 +316,40 @@ namespace Azure.Provisioning.Tests
                     }
                 }
 
-                var client = new ArmClient(new DefaultAzureCredential());
-                SubscriptionResource subscription = await client.GetSubscriptions().GetAsync(Environment.GetEnvironmentVariable("SUBSCRIPTION_ID"));
+                ResourceIdentifier scope;
+                if (anonymousResourceGroup)
+                {
+                    var rgs = subscription.GetResourceGroups();
+                    var data = new ResourceGroupData("westus");
+                    rg = (await rgs.CreateOrUpdateAsync(WaitUntil.Completed, TestContext.CurrentContext.Test.Name, data)).Value;
+                    scope = ResourceGroupResource.CreateResourceIdentifier(subscription.Id.SubscriptionId,
+                        TestContext.CurrentContext.Test.Name);
+                }
+                else
+                {
+                    scope = subscription.Id;
+                }
 
-                var identifier = ArmDeploymentResource.CreateResourceIdentifier(subscription.Id, TestContext.CurrentContext.Test.Name);
-                var resource = client.GetArmDeploymentResource(identifier);
-                await resource.ValidateAsync(WaitUntil.Completed,
-                    new ArmDeploymentContent(
-                        new ArmDeploymentProperties(ArmDeploymentMode.Incremental)
-                        {
-                            Template = new BinaryData(File.ReadAllText(Path.Combine(testPath, "main.json"))),
-                            Parameters = parameters
-                        })
+                var resource = client.GetArmDeploymentResource(ArmDeploymentResource.CreateResourceIdentifier(scope, TestContext.CurrentContext.Test.Name));
+                var content = new ArmDeploymentContent(
+                    new ArmDeploymentProperties(ArmDeploymentMode.Incremental)
                     {
-                        Location = "westus"
+                        Template = new BinaryData(File.ReadAllText(Path.Combine(testPath, "main.json"))),
+                        Parameters = parameters
                     });
+                if (!anonymousResourceGroup)
+                {
+                    content.Location = "westus";
+                }
+                await resource.ValidateAsync(WaitUntil.Completed, content);
             }
             finally
             {
                 File.Delete(Path.Combine(testPath, "main.json"));
+                if (rg != null)
+                {
+                    await rg.DeleteAsync(WaitUntil.Completed);
+                }
             }
         }
 
