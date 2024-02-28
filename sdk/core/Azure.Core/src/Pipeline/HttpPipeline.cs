@@ -109,12 +109,14 @@ namespace Azure.Core.Pipeline
         /// <returns>The message.</returns>
         public HttpMessage CreateMessage(RequestContext? context, ResponseClassifier? classifier = default)
         {
-            HttpMessage message = CreateMessage();
-            if (classifier != null)
+            Request request = CreateRequest();
+            HttpMessage message = new(request, classifier ?? ResponseClassifier);
+
+            if (context != null)
             {
-                message.ResponseClassifier = classifier;
+                message.ApplyRequestContext(context, classifier);
             }
-            message.ApplyRequestContext(context, classifier);
+
             return message;
         }
 
@@ -131,7 +133,7 @@ namespace Azure.Core.Pipeline
         /// <returns>The <see cref="ValueTask"/> representing the asynchronous operation.</returns>
         public ValueTask SendAsync(HttpMessage message, CancellationToken cancellationToken)
         {
-            message.CancellationToken = cancellationToken;
+            message.SetCancellationToken(cancellationToken);
             message.ProcessingStartTime = DateTimeOffset.UtcNow;
             AddHttpMessageProperties(message);
 
@@ -147,6 +149,7 @@ namespace Azure.Core.Pipeline
         {
             int length = _pipeline.Length + message.Policies!.Count;
             HttpPipelinePolicy[] policies = ArrayPool<HttpPipelinePolicy>.Shared.Rent(length);
+
             try
             {
                 ReadOnlyMemory<HttpPipelinePolicy> pipeline = CreateRequestPipeline(policies, message.Policies);
@@ -165,7 +168,7 @@ namespace Azure.Core.Pipeline
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         public void Send(HttpMessage message, CancellationToken cancellationToken)
         {
-            message.CancellationToken = cancellationToken;
+            message.SetCancellationToken(cancellationToken);
             message.ProcessingStartTime = DateTimeOffset.UtcNow;
             AddHttpMessageProperties(message);
 

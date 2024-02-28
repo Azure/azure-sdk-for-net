@@ -46,7 +46,7 @@ namespace Azure.Core.Pipeline
             cts.CancelAfter(networkTimeout);
             try
             {
-                message.CancellationToken = cts.Token;
+                message.SetCancellationToken(cts.Token);
                 if (async)
                 {
                     await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
@@ -63,7 +63,7 @@ namespace Azure.Core.Pipeline
             }
             finally
             {
-                message.CancellationToken = oldToken;
+                message.SetCancellationToken(oldToken);
                 cts.CancelAfter(Timeout.Infinite);
             }
 
