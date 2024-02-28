@@ -145,10 +145,10 @@ namespace Azure
             if (async)
             {
                 await contentStream.CopyToAsync(bufferStream, cancellationToken).ConfigureAwait(false);
-#if NETSTANDARD2_0
-                contentStream.Dispose();
-#else
+#if NET6_0_OR_GREATER
                 await contentStream.DisposeAsync().ConfigureAwait(false);
+#else
+                contentStream.Dispose();
 #endif
             }
             else
