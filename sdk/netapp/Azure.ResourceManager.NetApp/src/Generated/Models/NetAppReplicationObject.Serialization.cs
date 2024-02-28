@@ -154,9 +154,8 @@ namespace Azure.ResourceManager.NetApp.Models
                 endpointType,
                 replicationSchedule,
                 remoteVolumeResourceId,
-                remoteVolumeRegion,
                 remotePath,
-                remoteVolumeRegion.Value,
+                remoteVolumeRegion,
                 serializedAdditionalRawData);
         }
 
