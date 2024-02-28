@@ -24,8 +24,7 @@ namespace Azure.Provisioning.AppService
         public WebSitePublishingCredentialPolicy(IConstruct scope, string resourceName, string version = "2021-02-01", AzureLocation? location = default)
             : base(scope, null, resourceName, ResourceTypeName, version, (name) => ArmAppServiceModelFactory.CsmPublishingCredentialsPoliciesEntityData(
                 name: name,
-                allow: false),
-                null)
+                allow: false))
         {
         }
     }

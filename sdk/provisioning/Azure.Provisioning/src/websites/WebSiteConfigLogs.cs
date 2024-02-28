@@ -39,8 +39,7 @@ namespace Azure.Provisioning.AppService
                         RetentionInDays = 1,
                         RetentionInMb = 35
                     }
-                }),
-                null)
+                }))
         {
         }
 

@@ -13,6 +13,7 @@ using Azure.Core;
 using Azure.Provisioning.ResourceManager;
 using Azure.Provisioning.Resources;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Models;
 
 namespace Azure.Provisioning
 {
@@ -25,7 +26,7 @@ namespace Azure.Provisioning
     {
         internal Dictionary<object, Dictionary<string, Parameter>> ParameterOverrides { get; }
 
-        internal Dictionary<object, Dictionary<string, string>> PropertyOverrides { get; }
+        private Dictionary<object, Dictionary<string, string>> PropertyOverrides { get; }
 
         private IList<Resource> Dependencies { get; }
 

@@ -5,9 +5,15 @@ namespace Azure.Provisioning
         public static T? GetSingleResourceInScope<T>(this Azure.Provisioning.IConstruct construct) where T : Azure.Provisioning.Resource { throw null; }
         public static T? GetSingleResource<T>(this Azure.Provisioning.IConstruct construct) where T : Azure.Provisioning.Resource { throw null; }
     }
+    public partial class Configuration
+    {
+        public Configuration() { }
+        public bool UsePromptMode { get { throw null; } set { } }
+    }
     public abstract partial class Construct : Azure.Provisioning.IConstruct
     {
         protected Construct(Azure.Provisioning.IConstruct? scope, string name, Azure.Provisioning.ConstructScope constructScope = Azure.Provisioning.ConstructScope.ResourceGroup, System.Guid? tenantId = default(System.Guid?), System.Guid? subscriptionId = default(System.Guid?), string? envName = null, Azure.Provisioning.ResourceManager.ResourceGroup? resourceGroup = null) { }
+        public Azure.Provisioning.Configuration? Configuration { get { throw null; } }
         public Azure.Provisioning.ConstructScope ConstructScope { get { throw null; } }
         public string EnvironmentName { get { throw null; } }
         public string Name { get { throw null; } }
@@ -34,6 +40,7 @@ namespace Azure.Provisioning
     }
     public partial interface IConstruct
     {
+        Azure.Provisioning.Configuration? Configuration { get; }
         Azure.Provisioning.ConstructScope ConstructScope { get; }
         string EnvironmentName { get; }
         string Name { get; }
@@ -52,7 +59,7 @@ namespace Azure.Provisioning
     }
     public abstract partial class Infrastructure : Azure.Provisioning.Construct
     {
-        public Infrastructure(Azure.Provisioning.ConstructScope constructScope = Azure.Provisioning.ConstructScope.Subscription, System.Guid? tenantId = default(System.Guid?), System.Guid? subscriptionId = default(System.Guid?), string? envName = null, bool useAnonymousResourceGroup = false) : base (default(Azure.Provisioning.IConstruct), default(string), default(Azure.Provisioning.ConstructScope), default(System.Guid?), default(System.Guid?), default(string), default(Azure.Provisioning.ResourceManager.ResourceGroup)) { }
+        public Infrastructure(Azure.Provisioning.ConstructScope constructScope = Azure.Provisioning.ConstructScope.Subscription, System.Guid? tenantId = default(System.Guid?), System.Guid? subscriptionId = default(System.Guid?), string? envName = null, Azure.Provisioning.Configuration? configuration = null) : base (default(Azure.Provisioning.IConstruct), default(string), default(Azure.Provisioning.ConstructScope), default(System.Guid?), default(System.Guid?), default(string), default(Azure.Provisioning.ResourceManager.ResourceGroup)) { }
         public void Build(string? outputPath = null) { }
     }
     public partial class Output
@@ -95,6 +102,7 @@ namespace Azure.Provisioning
         public T Properties { get { throw null; } }
         public Azure.Provisioning.Output AddOutput(System.Linq.Expressions.Expression<System.Func<T, object?>> propertySelector, string outputName, bool isLiteral = false, bool isSecure = false) { throw null; }
         public void AssignParameter(System.Linq.Expressions.Expression<System.Func<T, object?>> propertySelector, Azure.Provisioning.Parameter parameter) { }
+        public void AssignProperty(System.Linq.Expressions.Expression<System.Func<T, object?>> propertySelector, string propertyValue) { }
     }
 }
 namespace Azure.Provisioning.AppConfiguration

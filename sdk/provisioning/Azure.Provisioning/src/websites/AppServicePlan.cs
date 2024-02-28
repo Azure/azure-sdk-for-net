@@ -29,8 +29,7 @@ namespace Azure.Provisioning.AppService
                 name: name,
                 location: location ?? Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS,
                 sku: new AppServiceSkuDescription() { Name = "B1" },
-                isReserved: true),
-                data => data.Location)
+                isReserved: true))
         {
         }
 

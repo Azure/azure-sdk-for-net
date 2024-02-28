@@ -13,7 +13,7 @@ namespace Azure.Provisioning.AppService
         public ApplicationSettingsResource(IConstruct scope, IDictionary<string, string> appSettings, WebSite? parent = null, string version = "2021-02-01")
             : base(scope, parent, "appsettings", ResourceTypeName, version, (name) => ArmAppServiceModelFactory.AppServiceConfigurationDictionary(
                 name: "appsettings",
-                properties: appSettings), null)
+                properties: appSettings))
         {
         }
 

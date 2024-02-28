@@ -36,8 +36,7 @@ namespace Azure.Provisioning.Resources
                 timeout: TimeSpan.FromMinutes(5),
                 cleanupPreference: ScriptCleanupOptions.OnSuccess,
                 environmentVariables: scriptEnvironmentVariables,
-                scriptContent: scriptContent),
-                data => data.Location)
+                scriptContent: scriptContent))
         {
         }
 
@@ -84,8 +83,7 @@ namespace Azure.Provisioning.Resources
                         SCRIPT_END
 
                         ./sqlcmd -S ${DBSERVER} -d ${DBNAME} -U ${SQLADMIN} -i ./initDb.sql
-                        """),
-                data => data.Location)
+                        """))
         {
             AssignParameter(data => data.EnvironmentVariables[0].SecureValue, appUserPasswordSecret);
             AssignParameter(data => data.EnvironmentVariables[1].SecureValue, sqlAdminPasswordSecret);

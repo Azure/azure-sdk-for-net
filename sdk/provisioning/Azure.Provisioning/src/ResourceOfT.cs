@@ -5,6 +5,8 @@ using System;
 using System.Linq;
 using System.Linq.Expressions;
 using Azure.Core;
+using Azure.Provisioning.ResourceManager;
+using Azure.ResourceManager.Models;
 
 namespace Azure.Provisioning
 {
@@ -33,21 +35,23 @@ namespace Azure.Provisioning
         /// <param name="resourceType">The resourceType.</param>
         /// <param name="version">The version.</param>
         /// <param name="createProperties">Lambda to create the ARM properties.</param>
-        /// <param name="locationSelector"></param>
         protected Resource(
             IConstruct scope,
             Resource? parent,
             string resourceName,
             ResourceType resourceType,
             string version,
-            Func<string, T> createProperties,
-            Expression<Func<T, object?>>? locationSelector)
+            Func<string, T> createProperties)
             : base(scope, parent, resourceName, resourceType, version, name => createProperties(name))
         {
             Properties = (T)ResourceData;
-            if (locationSelector != null && ((Construct)scope).FindInfrastructure()?.UseAnonymousResourceGroup == true)
+
+            // Resources that have a non-RG parent do not require a location value
+            if (scope.Configuration?.UsePromptMode == true && Parent is ResourceGroup)
             {
-                AssignProperty(locationSelector, "resourceGroup().location");
+                // We can't use the lambda overload because not all of the T's will inherit from TrackedResourceData
+                // TODO we may need to add a protected LocationSelector property in the future if there are exceptions to the rule
+                AssignProperty(Properties, "Location", $"{ResourceGroup.AnonymousResourceGroupName}.location");
             }
         }
 
@@ -136,6 +140,8 @@ namespace Azure.Provisioning
                     {
                         GetBicepExpression(memberExpression.Expression, ref result);
                     }
+                    break;
+                case UnaryExpression unaryExpression:
                     break;
                 case MethodCallExpression methodCallExpression:
                     break; // skip

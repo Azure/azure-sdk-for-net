@@ -30,8 +30,7 @@ namespace Azure.Provisioning.ResourceManager
                 name: name,
                 resourceType: ResourceType,
                 tags: new Dictionary<string, string> { { "azd-env-name", scope.EnvironmentName } },
-                location: location ?? Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS),
-                null)
+                location: location ?? Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS))
         {
         }
 

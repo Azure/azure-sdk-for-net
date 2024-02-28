@@ -254,18 +254,6 @@ namespace Azure.Provisioning
                 {
                     start++;
                 }
-                line = line.Slice(start);
-                int end = line.IndexOf(':');
-                if (end > 0)
-                {
-                    // foo: 1
-                    // foo: 'something.url'
-                    string name = line.Slice(0, end).ToString();
-                    if (resource.ParameterOverrides.TryGetValue(name, out var value))
-                    {
-                        lineToWrite = $"{new string(' ', start)}{name}: {value}";
-                    }
-                }
                 stream.WriteLine($"{indent}{lineToWrite}");
             }
         }

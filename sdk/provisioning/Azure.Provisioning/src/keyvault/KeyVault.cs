@@ -31,7 +31,6 @@ namespace Azure.Provisioning.KeyVaults
                 resourceType: ResourceTypeName,
                 location: location ?? Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS,
                 properties: ArmKeyVaultModelFactory.KeyVaultProperties(
-                    tenantId: scope.Root.Properties.TenantId!.Value,
                     sku: new KeyVaultSku(KeyVaultSkuFamily.A, KeyVaultSkuName.Standard),
                     accessPolicies: Environment.GetEnvironmentVariable("AZURE_PRINCIPAL_ID") is not null ? new List<KeyVaultAccessPolicy>()
                     {
@@ -44,8 +43,7 @@ namespace Azure.Provisioning.KeyVaults
                             }
                         })
                     } : default,
-                    enableRbacAuthorization: true)),
-                data => data.Location)
+                    enableRbacAuthorization: true)))
         {
             AddOutput(kv => kv.Properties.VaultUri, "vaultUri");
             if (scope.Root.Properties.TenantId == Guid.Empty)

@@ -28,8 +28,7 @@ namespace Azure.Provisioning.AppConfiguration
                 name: name,
                 resourceType: ResourceTypeName,
                 location: location ?? Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS,
-                skuName: "free"),
-                data => data.Location)
+                skuName: "free"))
         {
             AddOutput(store => store.Endpoint, $"{Name}_endpoint");
         }

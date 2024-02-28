@@ -41,6 +41,11 @@ namespace Azure.Provisioning
         public Subscription? Subscription { get; }
 
         /// <summary>
+        /// Gets the configuration for the construct.
+        /// </summary>
+        public Configuration? Configuration { get; }
+
+        /// <summary>
         /// Gets the parent of the construct.
         /// </summary>
         public IConstruct? Scope { get; }
@@ -85,11 +90,5 @@ namespace Azure.Provisioning
         /// </summary>
         /// <param name="output">The <see cref="Output"/> to add.</param>
         public void AddOutput(Output output);
-
-        /// <summary>
-        /// Finds the infrastructure for the construct.
-        /// </summary>
-        /// <returns></returns>
-        public Infrastructure? FindInfrastructure();
     }
 }

@@ -23,7 +23,7 @@ namespace Azure.Provisioning.ResourceManager
         /// <param name="tenantId">The tenant id.</param>
         public Tenant(IConstruct scope, Guid? tenantId = null)
             : base(scope, null, tenantId?.ToString()!, ResourceTypeName, "2022-12-01", (name) => ResourceManagerModelFactory.TenantData(
-                tenantId: tenantId.HasValue ? tenantId.Value : Guid.Parse(name)), null)
+                tenantId: tenantId.HasValue ? tenantId.Value : Guid.Parse(name)))
         {
         }
 

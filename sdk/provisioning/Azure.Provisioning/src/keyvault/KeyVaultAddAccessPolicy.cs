@@ -29,8 +29,7 @@ namespace Azure.Provisioning.KeyVaults
                                 IdentityAccessSecretPermission.List
                             }
                         })
-                }),
-                data => data.Location)
+                }))
         {
             AssignParameter(p => p.AccessPolicies[0].ObjectId, principalIdParameter);
         }

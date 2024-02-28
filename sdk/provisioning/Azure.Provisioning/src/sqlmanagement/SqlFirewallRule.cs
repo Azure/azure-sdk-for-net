@@ -25,8 +25,7 @@ namespace Azure.Provisioning.Sql
                 resourceType: ResourceTypeName,
                 startIPAddress: "0.0.0.1",
                 endIPAddress: "255.255.255.254"
-                ),
-                null)
+                ))
         {
         }
 

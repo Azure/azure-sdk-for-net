@@ -27,8 +27,7 @@ namespace Azure.Provisioning.KeyVaults
                 resourceType: ResourceTypeName,
                 properties: ArmKeyVaultModelFactory.SecretProperties(
                     value: Guid.Empty.ToString())
-                ),
-                data => data.Location)
+                ))
         {
         }
 
@@ -45,8 +44,7 @@ namespace Azure.Provisioning.KeyVaults
                 resourceType: ResourceTypeName,
                 properties: ArmKeyVaultModelFactory.SecretProperties(
                     value: connectionString.Value)
-                ),
-                data => data.Location)
+                ))
         {
         }
 
