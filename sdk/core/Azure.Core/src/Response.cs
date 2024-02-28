@@ -39,8 +39,7 @@ namespace Azure
         /// the base <see cref="PipelineResponse"/> type.
         /// </summary>
         protected override PipelineResponseHeaders HeadersCore
-            // TODO
-            => throw new NotImplementedException("Subtypes must implement this method.");
+            => new ResponseHeadersAdapter(Headers);
 
         /// <summary>
         /// Gets the contents of HTTP response, if it is available.
@@ -184,6 +183,43 @@ namespace Azure
         {
             public AzureCoreResponse(T value, Response response)
                 : base(value, response) { }
+        }
+
+        /// <summary>
+        /// This adapter adapts the Azure.Core <see cref="ResponseHeaders"/>
+        /// type to the System.ClientModel <see cref="PipelineResponseHeaders"/>
+        /// interface, so that <see cref="Response"/> can implement the
+        /// <see cref="HeadersCore"/> property inherited from
+        /// <see cref="PipelineResponse"/>.
+        /// </summary>
+        private class ResponseHeadersAdapter : PipelineResponseHeaders
+        {
+            /// <summary>
+            /// Headers on the Azure.Core Response type to adapt to.
+            /// </summary>
+            private readonly ResponseHeaders _headers;
+
+            public ResponseHeadersAdapter(ResponseHeaders headers)
+            {
+                _headers = headers;
+            }
+
+            public override bool TryGetValue(string name, out string? value)
+                => _headers.TryGetValue(name, out value);
+
+            public override bool TryGetValues(string name, out IEnumerable<string>? values)
+                => _headers.TryGetValues(name, out values);
+
+            public override IEnumerator<KeyValuePair<string, string>> GetEnumerator()
+                => GetHeaderValues().GetEnumerator();
+
+            private IEnumerable<KeyValuePair<string, string>> GetHeaderValues()
+            {
+                foreach (HttpHeader header in _headers)
+                {
+                    yield return new KeyValuePair<string, string>(header.Name, header.Value);
+                }
+            }
         }
     }
 }
