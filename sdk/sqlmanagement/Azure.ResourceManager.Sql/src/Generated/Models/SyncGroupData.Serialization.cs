@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -13,15 +15,43 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class SyncGroupData : IUtf8JsonSerializable
+    public partial class SyncGroupData : IUtf8JsonSerializable, IJsonModel<SyncGroupData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SyncGroupData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SyncGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SyncGroupData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SyncGroupData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -29,6 +59,11 @@ namespace Azure.ResourceManager.Sql
             {
                 writer.WritePropertyName("interval"u8);
                 writer.WriteNumberValue(Interval.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LastSyncOn))
+            {
+                writer.WritePropertyName("lastSyncTime"u8);
+                writer.WriteStringValue(LastSyncOn.Value, "O");
             }
             if (Optional.IsDefined(ConflictResolutionPolicy))
             {
@@ -50,6 +85,11 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("hubDatabasePassword"u8);
                 writer.WriteStringValue(HubDatabasePassword);
             }
+            if (options.Format != "W" && Optional.IsDefined(SyncState))
+            {
+                writer.WritePropertyName("syncState"u8);
+                writer.WriteStringValue(SyncState.Value.ToString());
+            }
             if (Optional.IsDefined(Schema))
             {
                 writer.WritePropertyName("schema"u8);
@@ -70,12 +110,46 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("usePrivateLinkConnection"u8);
                 writer.WriteBooleanValue(UsePrivateLinkConnection.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(PrivateEndpointName))
+            {
+                writer.WritePropertyName("privateEndpointName"u8);
+                writer.WriteStringValue(PrivateEndpointName);
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SyncGroupData DeserializeSyncGroupData(JsonElement element)
+        SyncGroupData IJsonModel<SyncGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SyncGroupData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SyncGroupData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSyncGroupData(document.RootElement, options);
+        }
+
+        internal static SyncGroupData DeserializeSyncGroupData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -97,6 +171,8 @@ namespace Azure.ResourceManager.Sql
             Optional<int> conflictLoggingRetentionInDays = default;
             Optional<bool> usePrivateLinkConnection = default;
             Optional<string> privateEndpointName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -240,8 +316,44 @@ namespace Azure.ResourceManager.Sql
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SyncGroupData(id, name, type, systemData.Value, sku.Value, Optional.ToNullable(interval), Optional.ToNullable(lastSyncTime), Optional.ToNullable(conflictResolutionPolicy), syncDatabaseId.Value, hubDatabaseUserName.Value, hubDatabasePassword.Value, Optional.ToNullable(syncState), schema.Value, Optional.ToNullable(enableConflictLogging), Optional.ToNullable(conflictLoggingRetentionInDays), Optional.ToNullable(usePrivateLinkConnection), privateEndpointName.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SyncGroupData(id, name, type, systemData.Value, sku.Value, Optional.ToNullable(interval), Optional.ToNullable(lastSyncTime), Optional.ToNullable(conflictResolutionPolicy), syncDatabaseId.Value, hubDatabaseUserName.Value, hubDatabasePassword.Value, Optional.ToNullable(syncState), schema.Value, Optional.ToNullable(enableConflictLogging), Optional.ToNullable(conflictLoggingRetentionInDays), Optional.ToNullable(usePrivateLinkConnection), privateEndpointName.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SyncGroupData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SyncGroupData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SyncGroupData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SyncGroupData IPersistableModel<SyncGroupData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SyncGroupData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSyncGroupData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SyncGroupData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SyncGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

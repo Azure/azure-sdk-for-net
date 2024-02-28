@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class PeriodicTimerSourceInfo : IUtf8JsonSerializable
+    public partial class PeriodicTimerSourceInfo : IUtf8JsonSerializable, IJsonModel<PeriodicTimerSourceInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PeriodicTimerSourceInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PeriodicTimerSourceInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PeriodicTimerSourceInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PeriodicTimerSourceInfo)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("startTime"u8);
             writer.WriteStringValue(StartOn, "O");
@@ -25,11 +35,40 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WritePropertyName("topic"u8);
                 writer.WriteStringValue(Topic);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PeriodicTimerSourceInfo DeserializePeriodicTimerSourceInfo(JsonElement element)
+        PeriodicTimerSourceInfo IJsonModel<PeriodicTimerSourceInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PeriodicTimerSourceInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PeriodicTimerSourceInfo)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePeriodicTimerSourceInfo(document.RootElement, options);
+        }
+
+        internal static PeriodicTimerSourceInfo DeserializePeriodicTimerSourceInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -37,6 +76,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             DateTimeOffset startTime = default;
             string schedule = default;
             Optional<string> topic = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("startTime"u8))
@@ -54,8 +95,44 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     topic = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PeriodicTimerSourceInfo(startTime, schedule, topic.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PeriodicTimerSourceInfo(startTime, schedule, topic.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PeriodicTimerSourceInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PeriodicTimerSourceInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(PeriodicTimerSourceInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        PeriodicTimerSourceInfo IPersistableModel<PeriodicTimerSourceInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PeriodicTimerSourceInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePeriodicTimerSourceInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PeriodicTimerSourceInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PeriodicTimerSourceInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -185,6 +185,27 @@ namespace Azure.Messaging.EventGrid
             return new StorageTaskCompletedEventData(status, completedDateTime, taskExecutionId, taskName, summaryReportBlobUri);
         }
 
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.StorageTaskAssignmentQueuedEventData"/>. </summary>
+        /// <param name="queuedOn"> The time at which a storage task was queued. </param>
+        /// <param name="taskExecutionId"> The execution id for a storage task. </param>
+        /// <returns> A new <see cref="SystemEvents.StorageTaskAssignmentQueuedEventData"/> instance for mocking. </returns>
+        public static StorageTaskAssignmentQueuedEventData StorageTaskAssignmentQueuedEventData(DateTimeOffset? queuedOn = null, string taskExecutionId = null)
+        {
+            return new StorageTaskAssignmentQueuedEventData(queuedOn, taskExecutionId);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.StorageTaskAssignmentCompletedEventData"/>. </summary>
+        /// <param name="status"> The status for a storage task. </param>
+        /// <param name="completedOn"> The time at which a storage task was completed. </param>
+        /// <param name="taskExecutionId"> The execution id for a storage task. </param>
+        /// <param name="taskName"> The task name for a storage task. </param>
+        /// <param name="summaryReportBlobUri"> The summary report blob url for a storage task. </param>
+        /// <returns> A new <see cref="SystemEvents.StorageTaskAssignmentCompletedEventData"/> instance for mocking. </returns>
+        public static StorageTaskAssignmentCompletedEventData StorageTaskAssignmentCompletedEventData(StorageTaskAssignmentCompletedStatus? status = null, DateTimeOffset? completedOn = null, string taskExecutionId = null, string taskName = null, Uri summaryReportBlobUri = null)
+        {
+            return new StorageTaskAssignmentCompletedEventData(status, completedOn, taskExecutionId, taskName, summaryReportBlobUri);
+        }
+
         /// <summary> Initializes a new instance of <see cref="SystemEvents.EventHubCaptureFileCreatedEventData"/>. </summary>
         /// <param name="fileurl"> The path to the capture file. </param>
         /// <param name="fileType"> The file type of the capture file. </param>
@@ -2377,14 +2398,16 @@ namespace Azure.Messaging.EventGrid
         /// <param name="version"> The version of the thread. </param>
         /// <param name="createdByCommunicationIdentifier"> The communication identifier of the user who created the thread. </param>
         /// <param name="properties"> The thread properties. </param>
+        /// <param name="metadata"> The chat thread created metadata. </param>
         /// <param name="participants"> The list of properties of participants who are part of the thread. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatThreadCreatedEventData"/> instance for mocking. </returns>
-        public static AcsChatThreadCreatedEventData AcsChatThreadCreatedEventData(string transactionId = null, string threadId = null, DateTimeOffset? createTime = null, long? version = null, CommunicationIdentifierModel createdByCommunicationIdentifier = null, IReadOnlyDictionary<string, object> properties = null, IEnumerable<AcsChatThreadParticipantProperties> participants = null)
+        public static AcsChatThreadCreatedEventData AcsChatThreadCreatedEventData(string transactionId = null, string threadId = null, DateTimeOffset? createTime = null, long? version = null, CommunicationIdentifierModel createdByCommunicationIdentifier = null, IReadOnlyDictionary<string, object> properties = null, IReadOnlyDictionary<string, string> metadata = null, IEnumerable<AcsChatThreadParticipantProperties> participants = null)
         {
             properties ??= new Dictionary<string, object>();
+            metadata ??= new Dictionary<string, string>();
             participants ??= new List<AcsChatThreadParticipantProperties>();
 
-            return new AcsChatThreadCreatedEventData(transactionId, threadId, createTime, version, createdByCommunicationIdentifier, properties, participants?.ToList());
+            return new AcsChatThreadCreatedEventData(transactionId, threadId, createTime, version, createdByCommunicationIdentifier, properties, metadata, participants?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsChatThreadEventInThreadBaseProperties"/>. </summary>
@@ -3108,6 +3131,193 @@ namespace Azure.Messaging.EventGrid
         public static ResourceNotificationsResourceManagementDeletedEventData ResourceNotificationsResourceManagementDeletedEventData(ResourceNotificationsResourceDeletedDetails resourceDetails = null, ResourceNotificationsOperationalDetails operationalDetails = null)
         {
             return new ResourceNotificationsResourceManagementDeletedEventData(resourceDetails, operationalDetails);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AvsPrivateCloudUpdatingEventData"/>. </summary>
+        /// <param name="operationId"> Id of the operation that caused this event. </param>
+        /// <returns> A new <see cref="SystemEvents.AvsPrivateCloudUpdatingEventData"/> instance for mocking. </returns>
+        public static AvsPrivateCloudUpdatingEventData AvsPrivateCloudUpdatingEventData(string operationId = null)
+        {
+            return new AvsPrivateCloudUpdatingEventData(operationId);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AvsPrivateCloudEventData"/>. </summary>
+        /// <param name="operationId"> Id of the operation that caused this event. </param>
+        /// <returns> A new <see cref="SystemEvents.AvsPrivateCloudEventData"/> instance for mocking. </returns>
+        public static AvsPrivateCloudEventData AvsPrivateCloudEventData(string operationId = null)
+        {
+            return new AvsPrivateCloudEventData(operationId);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AvsPrivateCloudUpdatedEventData"/>. </summary>
+        /// <param name="operationId"> Id of the operation that caused this event. </param>
+        /// <returns> A new <see cref="SystemEvents.AvsPrivateCloudUpdatedEventData"/> instance for mocking. </returns>
+        public static AvsPrivateCloudUpdatedEventData AvsPrivateCloudUpdatedEventData(string operationId = null)
+        {
+            return new AvsPrivateCloudUpdatedEventData(operationId);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AvsPrivateCloudFailedEventData"/>. </summary>
+        /// <param name="operationId"> Id of the operation that caused this event. </param>
+        /// <param name="failureMessage"> Failure reason of an event. </param>
+        /// <returns> A new <see cref="SystemEvents.AvsPrivateCloudFailedEventData"/> instance for mocking. </returns>
+        public static AvsPrivateCloudFailedEventData AvsPrivateCloudFailedEventData(string operationId = null, string failureMessage = null)
+        {
+            return new AvsPrivateCloudFailedEventData(operationId, failureMessage);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AvsClusterCreatedEventData"/>. </summary>
+        /// <param name="operationId"> Id of the operation that caused this event. </param>
+        /// <param name="addedHostNames"> Hosts added to the cluster in this event, if any. </param>
+        /// <param name="removedHostNames"> Hosts removed to the cluster in this event, if any. </param>
+        /// <param name="inMaintenanceHostNames"> Hosts in Maintenance mode in the cluster, if any. </param>
+        /// <returns> A new <see cref="SystemEvents.AvsClusterCreatedEventData"/> instance for mocking. </returns>
+        public static AvsClusterCreatedEventData AvsClusterCreatedEventData(string operationId = null, IEnumerable<string> addedHostNames = null, IEnumerable<string> removedHostNames = null, IEnumerable<string> inMaintenanceHostNames = null)
+        {
+            addedHostNames ??= new List<string>();
+            removedHostNames ??= new List<string>();
+            inMaintenanceHostNames ??= new List<string>();
+
+            return new AvsClusterCreatedEventData(operationId, addedHostNames?.ToList(), removedHostNames?.ToList(), inMaintenanceHostNames?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AvsClusterEventData"/>. </summary>
+        /// <param name="operationId"> Id of the operation that caused this event. </param>
+        /// <param name="addedHostNames"> Hosts added to the cluster in this event, if any. </param>
+        /// <param name="removedHostNames"> Hosts removed to the cluster in this event, if any. </param>
+        /// <param name="inMaintenanceHostNames"> Hosts in Maintenance mode in the cluster, if any. </param>
+        /// <returns> A new <see cref="SystemEvents.AvsClusterEventData"/> instance for mocking. </returns>
+        public static AvsClusterEventData AvsClusterEventData(string operationId = null, IEnumerable<string> addedHostNames = null, IEnumerable<string> removedHostNames = null, IEnumerable<string> inMaintenanceHostNames = null)
+        {
+            addedHostNames ??= new List<string>();
+            removedHostNames ??= new List<string>();
+            inMaintenanceHostNames ??= new List<string>();
+
+            return new AvsClusterEventData(operationId, addedHostNames?.ToList(), removedHostNames?.ToList(), inMaintenanceHostNames?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AvsClusterDeletedEventData"/>. </summary>
+        /// <param name="operationId"> Id of the operation that caused this event. </param>
+        /// <param name="addedHostNames"> Hosts added to the cluster in this event, if any. </param>
+        /// <param name="removedHostNames"> Hosts removed to the cluster in this event, if any. </param>
+        /// <param name="inMaintenanceHostNames"> Hosts in Maintenance mode in the cluster, if any. </param>
+        /// <returns> A new <see cref="SystemEvents.AvsClusterDeletedEventData"/> instance for mocking. </returns>
+        public static AvsClusterDeletedEventData AvsClusterDeletedEventData(string operationId = null, IEnumerable<string> addedHostNames = null, IEnumerable<string> removedHostNames = null, IEnumerable<string> inMaintenanceHostNames = null)
+        {
+            addedHostNames ??= new List<string>();
+            removedHostNames ??= new List<string>();
+            inMaintenanceHostNames ??= new List<string>();
+
+            return new AvsClusterDeletedEventData(operationId, addedHostNames?.ToList(), removedHostNames?.ToList(), inMaintenanceHostNames?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AvsClusterUpdatingEventData"/>. </summary>
+        /// <param name="operationId"> Id of the operation that caused this event. </param>
+        /// <param name="addedHostNames"> Hosts added to the cluster in this event, if any. </param>
+        /// <param name="removedHostNames"> Hosts removed to the cluster in this event, if any. </param>
+        /// <param name="inMaintenanceHostNames"> Hosts in Maintenance mode in the cluster, if any. </param>
+        /// <returns> A new <see cref="SystemEvents.AvsClusterUpdatingEventData"/> instance for mocking. </returns>
+        public static AvsClusterUpdatingEventData AvsClusterUpdatingEventData(string operationId = null, IEnumerable<string> addedHostNames = null, IEnumerable<string> removedHostNames = null, IEnumerable<string> inMaintenanceHostNames = null)
+        {
+            addedHostNames ??= new List<string>();
+            removedHostNames ??= new List<string>();
+            inMaintenanceHostNames ??= new List<string>();
+
+            return new AvsClusterUpdatingEventData(operationId, addedHostNames?.ToList(), removedHostNames?.ToList(), inMaintenanceHostNames?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AvsClusterUpdatedEventData"/>. </summary>
+        /// <param name="operationId"> Id of the operation that caused this event. </param>
+        /// <param name="addedHostNames"> Hosts added to the cluster in this event, if any. </param>
+        /// <param name="removedHostNames"> Hosts removed to the cluster in this event, if any. </param>
+        /// <param name="inMaintenanceHostNames"> Hosts in Maintenance mode in the cluster, if any. </param>
+        /// <returns> A new <see cref="SystemEvents.AvsClusterUpdatedEventData"/> instance for mocking. </returns>
+        public static AvsClusterUpdatedEventData AvsClusterUpdatedEventData(string operationId = null, IEnumerable<string> addedHostNames = null, IEnumerable<string> removedHostNames = null, IEnumerable<string> inMaintenanceHostNames = null)
+        {
+            addedHostNames ??= new List<string>();
+            removedHostNames ??= new List<string>();
+            inMaintenanceHostNames ??= new List<string>();
+
+            return new AvsClusterUpdatedEventData(operationId, addedHostNames?.ToList(), removedHostNames?.ToList(), inMaintenanceHostNames?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AvsClusterFailedEventData"/>. </summary>
+        /// <param name="operationId"> Id of the operation that caused this event. </param>
+        /// <param name="addedHostNames"> Hosts added to the cluster in this event, if any. </param>
+        /// <param name="removedHostNames"> Hosts removed to the cluster in this event, if any. </param>
+        /// <param name="inMaintenanceHostNames"> Hosts in Maintenance mode in the cluster, if any. </param>
+        /// <param name="failureMessage"> Failure reason of an event. </param>
+        /// <returns> A new <see cref="SystemEvents.AvsClusterFailedEventData"/> instance for mocking. </returns>
+        public static AvsClusterFailedEventData AvsClusterFailedEventData(string operationId = null, IEnumerable<string> addedHostNames = null, IEnumerable<string> removedHostNames = null, IEnumerable<string> inMaintenanceHostNames = null, string failureMessage = null)
+        {
+            addedHostNames ??= new List<string>();
+            removedHostNames ??= new List<string>();
+            inMaintenanceHostNames ??= new List<string>();
+
+            return new AvsClusterFailedEventData(operationId, addedHostNames?.ToList(), removedHostNames?.ToList(), inMaintenanceHostNames?.ToList(), failureMessage);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AvsScriptExecutionStartedEventData"/>. </summary>
+        /// <param name="operationId"> Id of the operation that caused this event. </param>
+        /// <param name="cmdletId"> Cmdlet referenced in the execution that caused this event. </param>
+        /// <param name="output"> Stdout outputs from the execution, if any. </param>
+        /// <returns> A new <see cref="SystemEvents.AvsScriptExecutionStartedEventData"/> instance for mocking. </returns>
+        public static AvsScriptExecutionStartedEventData AvsScriptExecutionStartedEventData(string operationId = null, string cmdletId = null, IEnumerable<string> output = null)
+        {
+            output ??= new List<string>();
+
+            return new AvsScriptExecutionStartedEventData(operationId, cmdletId, output?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AvsScriptExecutionEventData"/>. </summary>
+        /// <param name="operationId"> Id of the operation that caused this event. </param>
+        /// <param name="cmdletId"> Cmdlet referenced in the execution that caused this event. </param>
+        /// <param name="output"> Stdout outputs from the execution, if any. </param>
+        /// <returns> A new <see cref="SystemEvents.AvsScriptExecutionEventData"/> instance for mocking. </returns>
+        public static AvsScriptExecutionEventData AvsScriptExecutionEventData(string operationId = null, string cmdletId = null, IEnumerable<string> output = null)
+        {
+            output ??= new List<string>();
+
+            return new AvsScriptExecutionEventData(operationId, cmdletId, output?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AvsScriptExecutionFinishedEventData"/>. </summary>
+        /// <param name="operationId"> Id of the operation that caused this event. </param>
+        /// <param name="cmdletId"> Cmdlet referenced in the execution that caused this event. </param>
+        /// <param name="output"> Stdout outputs from the execution, if any. </param>
+        /// <param name="namedOutputs"> Named outputs of completed execution, if any. </param>
+        /// <returns> A new <see cref="SystemEvents.AvsScriptExecutionFinishedEventData"/> instance for mocking. </returns>
+        public static AvsScriptExecutionFinishedEventData AvsScriptExecutionFinishedEventData(string operationId = null, string cmdletId = null, IEnumerable<string> output = null, IReadOnlyDictionary<string, string> namedOutputs = null)
+        {
+            output ??= new List<string>();
+            namedOutputs ??= new Dictionary<string, string>();
+
+            return new AvsScriptExecutionFinishedEventData(operationId, cmdletId, output?.ToList(), namedOutputs);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AvsScriptExecutionCancelledEventData"/>. </summary>
+        /// <param name="operationId"> Id of the operation that caused this event. </param>
+        /// <param name="cmdletId"> Cmdlet referenced in the execution that caused this event. </param>
+        /// <param name="output"> Stdout outputs from the execution, if any. </param>
+        /// <returns> A new <see cref="SystemEvents.AvsScriptExecutionCancelledEventData"/> instance for mocking. </returns>
+        public static AvsScriptExecutionCancelledEventData AvsScriptExecutionCancelledEventData(string operationId = null, string cmdletId = null, IEnumerable<string> output = null)
+        {
+            output ??= new List<string>();
+
+            return new AvsScriptExecutionCancelledEventData(operationId, cmdletId, output?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AvsScriptExecutionFailedEventData"/>. </summary>
+        /// <param name="operationId"> Id of the operation that caused this event. </param>
+        /// <param name="cmdletId"> Cmdlet referenced in the execution that caused this event. </param>
+        /// <param name="output"> Stdout outputs from the execution, if any. </param>
+        /// <param name="failureMessage"> Failure reason of an event. </param>
+        /// <returns> A new <see cref="SystemEvents.AvsScriptExecutionFailedEventData"/> instance for mocking. </returns>
+        public static AvsScriptExecutionFailedEventData AvsScriptExecutionFailedEventData(string operationId = null, string cmdletId = null, IEnumerable<string> output = null, string failureMessage = null)
+        {
+            output ??= new List<string>();
+
+            return new AvsScriptExecutionFailedEventData(operationId, cmdletId, output?.ToList(), failureMessage);
         }
     }
 }

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -13,10 +15,177 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    public partial class ConsumptionBalanceResult
+    public partial class ConsumptionBalanceResult : IUtf8JsonSerializable, IJsonModel<ConsumptionBalanceResult>
     {
-        internal static ConsumptionBalanceResult DeserializeConsumptionBalanceResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionBalanceResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ConsumptionBalanceResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionBalanceResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConsumptionBalanceResult)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Currency))
+            {
+                writer.WritePropertyName("currency"u8);
+                writer.WriteStringValue(Currency);
+            }
+            if (options.Format != "W" && Optional.IsDefined(BeginningBalance))
+            {
+                writer.WritePropertyName("beginningBalance"u8);
+                writer.WriteNumberValue(BeginningBalance.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(EndingBalance))
+            {
+                writer.WritePropertyName("endingBalance"u8);
+                writer.WriteNumberValue(EndingBalance.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(NewPurchases))
+            {
+                writer.WritePropertyName("newPurchases"u8);
+                writer.WriteNumberValue(NewPurchases.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Adjustments))
+            {
+                writer.WritePropertyName("adjustments"u8);
+                writer.WriteNumberValue(Adjustments.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Utilized))
+            {
+                writer.WritePropertyName("utilized"u8);
+                writer.WriteNumberValue(Utilized.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ServiceOverage))
+            {
+                writer.WritePropertyName("serviceOverage"u8);
+                writer.WriteNumberValue(ServiceOverage.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ChargesBilledSeparately))
+            {
+                writer.WritePropertyName("chargesBilledSeparately"u8);
+                writer.WriteNumberValue(ChargesBilledSeparately.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TotalOverage))
+            {
+                writer.WritePropertyName("totalOverage"u8);
+                writer.WriteNumberValue(TotalOverage.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TotalUsage))
+            {
+                writer.WritePropertyName("totalUsage"u8);
+                writer.WriteNumberValue(TotalUsage.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(AzureMarketplaceServiceCharges))
+            {
+                writer.WritePropertyName("azureMarketplaceServiceCharges"u8);
+                writer.WriteNumberValue(AzureMarketplaceServiceCharges.Value);
+            }
+            if (Optional.IsDefined(BillingFrequency))
+            {
+                writer.WritePropertyName("billingFrequency"u8);
+                writer.WriteStringValue(BillingFrequency.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsPriceHidden))
+            {
+                writer.WritePropertyName("priceHidden"u8);
+                writer.WriteBooleanValue(IsPriceHidden.Value);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(NewPurchasesDetails))
+            {
+                writer.WritePropertyName("newPurchasesDetails"u8);
+                writer.WriteStartArray();
+                foreach (var item in NewPurchasesDetails)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(AdjustmentDetails))
+            {
+                writer.WritePropertyName("adjustmentDetails"u8);
+                writer.WriteStartArray();
+                foreach (var item in AdjustmentDetails)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ConsumptionBalanceResult IJsonModel<ConsumptionBalanceResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionBalanceResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConsumptionBalanceResult)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeConsumptionBalanceResult(document.RootElement, options);
+        }
+
+        internal static ConsumptionBalanceResult DeserializeConsumptionBalanceResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +211,8 @@ namespace Azure.ResourceManager.Consumption.Models
             Optional<bool> priceHidden = default;
             Optional<IReadOnlyList<ConsumptionBalanceNewPurchasesDetail>> newPurchasesDetails = default;
             Optional<IReadOnlyList<ConsumptionBalanceAdjustmentDetail>> adjustmentDetails = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -244,8 +415,44 @@ namespace Azure.ResourceManager.Consumption.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ConsumptionBalanceResult(id, name, type, systemData.Value, currency.Value, Optional.ToNullable(beginningBalance), Optional.ToNullable(endingBalance), Optional.ToNullable(newPurchases), Optional.ToNullable(adjustments), Optional.ToNullable(utilized), Optional.ToNullable(serviceOverage), Optional.ToNullable(chargesBilledSeparately), Optional.ToNullable(totalOverage), Optional.ToNullable(totalUsage), Optional.ToNullable(azureMarketplaceServiceCharges), Optional.ToNullable(billingFrequency), Optional.ToNullable(priceHidden), Optional.ToList(newPurchasesDetails), Optional.ToList(adjustmentDetails), Optional.ToNullable(etag), Optional.ToDictionary(tags));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ConsumptionBalanceResult(id, name, type, systemData.Value, currency.Value, Optional.ToNullable(beginningBalance), Optional.ToNullable(endingBalance), Optional.ToNullable(newPurchases), Optional.ToNullable(adjustments), Optional.ToNullable(utilized), Optional.ToNullable(serviceOverage), Optional.ToNullable(chargesBilledSeparately), Optional.ToNullable(totalOverage), Optional.ToNullable(totalUsage), Optional.ToNullable(azureMarketplaceServiceCharges), Optional.ToNullable(billingFrequency), Optional.ToNullable(priceHidden), Optional.ToList(newPurchasesDetails), Optional.ToList(adjustmentDetails), Optional.ToNullable(etag), Optional.ToDictionary(tags), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ConsumptionBalanceResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionBalanceResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ConsumptionBalanceResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ConsumptionBalanceResult IPersistableModel<ConsumptionBalanceResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionBalanceResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeConsumptionBalanceResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ConsumptionBalanceResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ConsumptionBalanceResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

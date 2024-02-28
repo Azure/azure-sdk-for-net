@@ -37,7 +37,7 @@ namespace Azure.AI.OpenAI
         {
             tokens ??= new List<int>();
 
-            return new AudioTranscriptionSegment(id, start, end, text, temperature, averageLogProbability, compressionRatio, noSpeechProbability, tokens?.ToList(), seek);
+            return new AudioTranscriptionSegment(id, start, end, text, temperature, averageLogProbability, compressionRatio, noSpeechProbability, tokens?.ToList(), seek, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.AudioTranslationSegment"/>. </summary>
@@ -62,7 +62,7 @@ namespace Azure.AI.OpenAI
         {
             tokens ??= new List<int>();
 
-            return new AudioTranslationSegment(id, start, end, text, temperature, averageLogProbability, compressionRatio, noSpeechProbability, tokens?.ToList(), seek);
+            return new AudioTranslationSegment(id, start, end, text, temperature, averageLogProbability, compressionRatio, noSpeechProbability, tokens?.ToList(), seek, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.Completions"/>. </summary>
@@ -87,22 +87,16 @@ namespace Azure.AI.OpenAI
             promptFilterResults ??= new List<ContentFilterResultsForPrompt>();
             choices ??= new List<Choice>();
 
-            return new Completions(id, created, promptFilterResults?.ToList(), choices?.ToList(), usage);
+            return new Completions(id, created, promptFilterResults?.ToList(), choices?.ToList(), usage, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.ContentFilterResultsForPrompt"/>. </summary>
         /// <param name="promptIndex"> The index of this prompt in the set of prompt results. </param>
         /// <param name="contentFilterResults"> Content filtering results for this prompt. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="contentFilterResults"/> is null. </exception>
         /// <returns> A new <see cref="OpenAI.ContentFilterResultsForPrompt"/> instance for mocking. </returns>
         public static ContentFilterResultsForPrompt ContentFilterResultsForPrompt(int promptIndex = default, ContentFilterResultDetailsForPrompt contentFilterResults = null)
         {
-            if (contentFilterResults == null)
-            {
-                throw new ArgumentNullException(nameof(contentFilterResults));
-            }
-
-            return new ContentFilterResultsForPrompt(promptIndex, contentFilterResults);
+            return new ContentFilterResultsForPrompt(promptIndex, contentFilterResults, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.ContentFilterResultDetailsForPrompt"/>. </summary>
@@ -139,7 +133,7 @@ namespace Azure.AI.OpenAI
         {
             customBlocklists ??= new List<ContentFilterBlocklistIdResult>();
 
-            return new ContentFilterResultDetailsForPrompt(sexual, violence, hate, selfHarm, profanity, customBlocklists?.ToList(), error, jailbreak);
+            return new ContentFilterResultDetailsForPrompt(sexual, violence, hate, selfHarm, profanity, customBlocklists?.ToList(), error, jailbreak, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.ContentFilterResult"/>. </summary>
@@ -148,7 +142,7 @@ namespace Azure.AI.OpenAI
         /// <returns> A new <see cref="OpenAI.ContentFilterResult"/> instance for mocking. </returns>
         public static ContentFilterResult ContentFilterResult(ContentFilterSeverity severity = default, bool filtered = default)
         {
-            return new ContentFilterResult(severity, filtered);
+            return new ContentFilterResult(severity, filtered, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.ContentFilterDetectionResult"/>. </summary>
@@ -157,22 +151,16 @@ namespace Azure.AI.OpenAI
         /// <returns> A new <see cref="OpenAI.ContentFilterDetectionResult"/> instance for mocking. </returns>
         public static ContentFilterDetectionResult ContentFilterDetectionResult(bool filtered = default, bool detected = default)
         {
-            return new ContentFilterDetectionResult(filtered, detected);
+            return new ContentFilterDetectionResult(filtered, detected, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.ContentFilterBlocklistIdResult"/>. </summary>
         /// <param name="id"> The ID of the custom blocklist evaluated. </param>
         /// <param name="filtered"> A value indicating whether or not the content has been filtered. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> A new <see cref="OpenAI.ContentFilterBlocklistIdResult"/> instance for mocking. </returns>
         public static ContentFilterBlocklistIdResult ContentFilterBlocklistIdResult(string id = null, bool filtered = default)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-
-            return new ContentFilterBlocklistIdResult(id, filtered);
+            return new ContentFilterBlocklistIdResult(id, filtered, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.Choice"/>. </summary>
@@ -188,7 +176,7 @@ namespace Azure.AI.OpenAI
         /// <returns> A new <see cref="OpenAI.Choice"/> instance for mocking. </returns>
         public static Choice Choice(string text = null, int index = default, ContentFilterResultsForChoice contentFilterResults = null, CompletionsLogProbabilityModel logProbabilityModel = null, CompletionsFinishReason? finishReason = null)
         {
-            return new Choice(text, index, contentFilterResults, logProbabilityModel, finishReason);
+            return new Choice(text, index, contentFilterResults, logProbabilityModel, finishReason, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.ContentFilterResultsForChoice"/>. </summary>
@@ -226,7 +214,7 @@ namespace Azure.AI.OpenAI
         {
             customBlocklists ??= new List<ContentFilterBlocklistIdResult>();
 
-            return new ContentFilterResultsForChoice(sexual, violence, hate, selfHarm, profanity, customBlocklists?.ToList(), error, protectedMaterialText, protectedMaterialCode);
+            return new ContentFilterResultsForChoice(sexual, violence, hate, selfHarm, profanity, customBlocklists?.ToList(), error, protectedMaterialText, protectedMaterialCode, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.ContentFilterCitedDetectionResult"/>. </summary>
@@ -237,7 +225,7 @@ namespace Azure.AI.OpenAI
         /// <returns> A new <see cref="OpenAI.ContentFilterCitedDetectionResult"/> instance for mocking. </returns>
         public static ContentFilterCitedDetectionResult ContentFilterCitedDetectionResult(bool filtered = default, bool detected = default, Uri url = null, string license = null)
         {
-            return new ContentFilterCitedDetectionResult(filtered, detected, url, license);
+            return new ContentFilterCitedDetectionResult(filtered, detected, url, license, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.CompletionsLogProbabilityModel"/>. </summary>
@@ -253,7 +241,7 @@ namespace Azure.AI.OpenAI
             topLogProbabilities ??= new List<IDictionary<string, float?>>();
             textOffsets ??= new List<int>();
 
-            return new CompletionsLogProbabilityModel(tokens?.ToList(), tokenLogProbabilities?.ToList(), topLogProbabilities?.ToList(), textOffsets?.ToList());
+            return new CompletionsLogProbabilityModel(tokens?.ToList(), tokenLogProbabilities?.ToList(), topLogProbabilities?.ToList(), textOffsets?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.CompletionsUsage"/>. </summary>
@@ -263,7 +251,7 @@ namespace Azure.AI.OpenAI
         /// <returns> A new <see cref="OpenAI.CompletionsUsage"/> instance for mocking. </returns>
         public static CompletionsUsage CompletionsUsage(int completionTokens = default, int promptTokens = default, int totalTokens = default)
         {
-            return new CompletionsUsage(completionTokens, promptTokens, totalTokens);
+            return new CompletionsUsage(completionTokens, promptTokens, totalTokens, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.ChatCompletions"/>. </summary>
@@ -292,7 +280,7 @@ namespace Azure.AI.OpenAI
             choices ??= new List<ChatChoice>();
             promptFilterResults ??= new List<ContentFilterResultsForPrompt>();
 
-            return new ChatCompletions(id, created, choices?.ToList(), promptFilterResults?.ToList(), systemFingerprint, usage);
+            return new ChatCompletions(id, created, choices?.ToList(), promptFilterResults?.ToList(), systemFingerprint, usage, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.ChatResponseMessage"/>. </summary>
@@ -315,7 +303,7 @@ namespace Azure.AI.OpenAI
         {
             toolCalls ??= new List<ChatCompletionsToolCall>();
 
-            return new ChatResponseMessage(role, content, toolCalls?.ToList(), functionCall, azureExtensionsContext);
+            return new ChatResponseMessage(role, content, toolCalls?.ToList(), functionCall, azureExtensionsContext, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.AzureChatExtensionsMessageContext"/>. </summary>
@@ -330,7 +318,7 @@ namespace Azure.AI.OpenAI
         {
             messages ??= new List<ChatResponseMessage>();
 
-            return new AzureChatExtensionsMessageContext(messages?.ToList());
+            return new AzureChatExtensionsMessageContext(messages?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.AzureChatEnhancements"/>. </summary>
@@ -338,7 +326,7 @@ namespace Azure.AI.OpenAI
         /// <returns> A new <see cref="OpenAI.AzureChatEnhancements"/> instance for mocking. </returns>
         public static AzureChatEnhancements AzureChatEnhancements(AzureGroundingEnhancement grounding = null)
         {
-            return new AzureChatEnhancements(grounding);
+            return new AzureChatEnhancements(grounding, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.AzureGroundingEnhancement"/>. </summary>
@@ -348,7 +336,7 @@ namespace Azure.AI.OpenAI
         {
             lines ??= new List<AzureGroundingEnhancementLine>();
 
-            return new AzureGroundingEnhancement(lines?.ToList());
+            return new AzureGroundingEnhancement(lines?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.AzureGroundingEnhancementLine"/>. </summary>
@@ -359,7 +347,7 @@ namespace Azure.AI.OpenAI
         {
             spans ??= new List<AzureGroundingEnhancementLineSpan>();
 
-            return new AzureGroundingEnhancementLine(text, spans?.ToList());
+            return new AzureGroundingEnhancementLine(text, spans?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.AzureGroundingEnhancementLineSpan"/>. </summary>
@@ -375,7 +363,7 @@ namespace Azure.AI.OpenAI
         {
             polygon ??= new List<AzureGroundingEnhancementCoordinatePoint>();
 
-            return new AzureGroundingEnhancementLineSpan(text, offset, length, polygon?.ToList());
+            return new AzureGroundingEnhancementLineSpan(text, offset, length, polygon?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.AzureGroundingEnhancementCoordinatePoint"/>. </summary>
@@ -384,7 +372,7 @@ namespace Azure.AI.OpenAI
         /// <returns> A new <see cref="OpenAI.AzureGroundingEnhancementCoordinatePoint"/> instance for mocking. </returns>
         public static AzureGroundingEnhancementCoordinatePoint AzureGroundingEnhancementCoordinatePoint(float x = default, float y = default)
         {
-            return new AzureGroundingEnhancementCoordinatePoint(x, y);
+            return new AzureGroundingEnhancementCoordinatePoint(x, y, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.ImageGenerationData"/>. </summary>
@@ -397,7 +385,7 @@ namespace Azure.AI.OpenAI
         /// <returns> A new <see cref="OpenAI.ImageGenerationData"/> instance for mocking. </returns>
         public static ImageGenerationData ImageGenerationData(Uri url = null, string base64Data = null, string revisedPrompt = null)
         {
-            return new ImageGenerationData(url, base64Data, revisedPrompt);
+            return new ImageGenerationData(url, base64Data, revisedPrompt, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.Embeddings"/>. </summary>
@@ -408,7 +396,7 @@ namespace Azure.AI.OpenAI
         {
             data ??= new List<EmbeddingItem>();
 
-            return new Embeddings(data?.ToList(), usage);
+            return new Embeddings(data?.ToList(), usage, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.EmbeddingItem"/>. </summary>
@@ -420,7 +408,7 @@ namespace Azure.AI.OpenAI
         /// <returns> A new <see cref="OpenAI.EmbeddingItem"/> instance for mocking. </returns>
         public static EmbeddingItem EmbeddingItem(ReadOnlyMemory<float> embedding = default, int index = default)
         {
-            return new EmbeddingItem(embedding, index);
+            return new EmbeddingItem(embedding, index, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.EmbeddingsUsage"/>. </summary>
@@ -429,7 +417,7 @@ namespace Azure.AI.OpenAI
         /// <returns> A new <see cref="OpenAI.EmbeddingsUsage"/> instance for mocking. </returns>
         public static EmbeddingsUsage EmbeddingsUsage(int promptTokens = default, int totalTokens = default)
         {
-            return new EmbeddingsUsage(promptTokens, totalTokens);
+            return new EmbeddingsUsage(promptTokens, totalTokens, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.StopFinishDetails"/>. </summary>
@@ -437,7 +425,147 @@ namespace Azure.AI.OpenAI
         /// <returns> A new <see cref="OpenAI.StopFinishDetails"/> instance for mocking. </returns>
         public static StopFinishDetails StopFinishDetails(string stop = null)
         {
-            return new StopFinishDetails("stop", stop);
+            return new StopFinishDetails("stop", serializedAdditionalRawData: null, stop);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.ChatMessageTextContentItem"/>. </summary>
+        /// <param name="text"> The content of the message. </param>
+        /// <returns> A new <see cref="OpenAI.ChatMessageTextContentItem"/> instance for mocking. </returns>
+        public static ChatMessageTextContentItem ChatMessageTextContentItem(string text = null)
+        {
+            return new ChatMessageTextContentItem("text", serializedAdditionalRawData: null, text);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.ChatMessageImageContentItem"/>. </summary>
+        /// <param name="imageUrl"> An internet location, which must be accessible to the model,from which the image may be retrieved. </param>
+        /// <returns> A new <see cref="OpenAI.ChatMessageImageContentItem"/> instance for mocking. </returns>
+        public static ChatMessageImageContentItem ChatMessageImageContentItem(ChatMessageImageUrl imageUrl = null)
+        {
+            return new ChatMessageImageContentItem("image_url", serializedAdditionalRawData: null, imageUrl);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.ChatMessageImageUrl"/>. </summary>
+        /// <param name="url"> The URL of the image. </param>
+        /// <param name="detail">
+        /// The evaluation quality setting to use, which controls relative prioritization of speed, token consumption, and
+        /// accuracy.
+        /// </param>
+        /// <returns> A new <see cref="OpenAI.ChatMessageImageUrl"/> instance for mocking. </returns>
+        public static ChatMessageImageUrl ChatMessageImageUrl(Uri url = null, ChatMessageImageDetailLevel? detail = null)
+        {
+            return new ChatMessageImageUrl(url, detail, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.ChatRequestSystemMessage"/>. </summary>
+        /// <param name="content"> The contents of the system message. </param>
+        /// <param name="name"> An optional name for the participant. </param>
+        /// <returns> A new <see cref="OpenAI.ChatRequestSystemMessage"/> instance for mocking. </returns>
+        public static ChatRequestSystemMessage ChatRequestSystemMessage(string content = null, string name = null)
+        {
+            return new ChatRequestSystemMessage(ChatRole.System, serializedAdditionalRawData: null, content, name);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.ChatRequestAssistantMessage"/>. </summary>
+        /// <param name="content"> The content of the message. </param>
+        /// <param name="name"> An optional name for the participant. </param>
+        /// <param name="toolCalls">
+        /// The tool calls that must be resolved and have their outputs appended to subsequent input messages for the chat
+        /// completions request to resolve as configured.
+        /// </param>
+        /// <param name="functionCall">
+        /// The function call that must be resolved and have its output appended to subsequent input messages for the chat
+        /// completions request to resolve as configured.
+        /// </param>
+        /// <returns> A new <see cref="OpenAI.ChatRequestAssistantMessage"/> instance for mocking. </returns>
+        public static ChatRequestAssistantMessage ChatRequestAssistantMessage(string content = null, string name = null, IEnumerable<ChatCompletionsToolCall> toolCalls = null, FunctionCall functionCall = null)
+        {
+            toolCalls ??= new List<ChatCompletionsToolCall>();
+
+            return new ChatRequestAssistantMessage(ChatRole.Assistant, serializedAdditionalRawData: null, content, name, toolCalls?.ToList(), functionCall);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.ChatRequestToolMessage"/>. </summary>
+        /// <param name="content"> The content of the message. </param>
+        /// <param name="toolCallId"> The ID of the tool call resolved by the provided content. </param>
+        /// <returns> A new <see cref="OpenAI.ChatRequestToolMessage"/> instance for mocking. </returns>
+        public static ChatRequestToolMessage ChatRequestToolMessage(string content = null, string toolCallId = null)
+        {
+            return new ChatRequestToolMessage(ChatRole.Tool, serializedAdditionalRawData: null, content, toolCallId);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.ChatRequestFunctionMessage"/>. </summary>
+        /// <param name="name"> The name of the function that was called to produce output. </param>
+        /// <param name="content"> The output of the function as requested by the function call. </param>
+        /// <returns> A new <see cref="OpenAI.ChatRequestFunctionMessage"/> instance for mocking. </returns>
+        public static ChatRequestFunctionMessage ChatRequestFunctionMessage(string name = null, string content = null)
+        {
+            return new ChatRequestFunctionMessage(ChatRole.Function, serializedAdditionalRawData: null, name, content);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.ChatCompletionsFunctionToolDefinition"/>. </summary>
+        /// <param name="function"> The function definition details for the function tool. </param>
+        /// <returns> A new <see cref="OpenAI.ChatCompletionsFunctionToolDefinition"/> instance for mocking. </returns>
+        public static ChatCompletionsFunctionToolDefinition ChatCompletionsFunctionToolDefinition(FunctionDefinition function = null)
+        {
+            return new ChatCompletionsFunctionToolDefinition("function", serializedAdditionalRawData: null, function);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.OnYourDataApiKeyAuthenticationOptions"/>. </summary>
+        /// <param name="key"> The API key to use for authentication. </param>
+        /// <returns> A new <see cref="OpenAI.OnYourDataApiKeyAuthenticationOptions"/> instance for mocking. </returns>
+        public static OnYourDataApiKeyAuthenticationOptions OnYourDataApiKeyAuthenticationOptions(string key = null)
+        {
+            return new OnYourDataApiKeyAuthenticationOptions(OnYourDataAuthenticationType.ApiKey, serializedAdditionalRawData: null, key);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.OnYourDataConnectionStringAuthenticationOptions"/>. </summary>
+        /// <param name="connectionString"> The connection string to use for authentication. </param>
+        /// <returns> A new <see cref="OpenAI.OnYourDataConnectionStringAuthenticationOptions"/> instance for mocking. </returns>
+        public static OnYourDataConnectionStringAuthenticationOptions OnYourDataConnectionStringAuthenticationOptions(string connectionString = null)
+        {
+            return new OnYourDataConnectionStringAuthenticationOptions(OnYourDataAuthenticationType.ConnectionString, serializedAdditionalRawData: null, connectionString);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.OnYourDataKeyAndKeyIdAuthenticationOptions"/>. </summary>
+        /// <param name="key"> The key to use for authentication. </param>
+        /// <param name="keyId"> The key ID to use for authentication. </param>
+        /// <returns> A new <see cref="OpenAI.OnYourDataKeyAndKeyIdAuthenticationOptions"/> instance for mocking. </returns>
+        public static OnYourDataKeyAndKeyIdAuthenticationOptions OnYourDataKeyAndKeyIdAuthenticationOptions(string key = null, string keyId = null)
+        {
+            return new OnYourDataKeyAndKeyIdAuthenticationOptions(OnYourDataAuthenticationType.KeyAndKeyId, serializedAdditionalRawData: null, key, keyId);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.OnYourDataUserAssignedManagedIdentityAuthenticationOptions"/>. </summary>
+        /// <param name="managedIdentityResourceId"> The resource ID of the user-assigned managed identity to use for authentication. </param>
+        /// <returns> A new <see cref="OpenAI.OnYourDataUserAssignedManagedIdentityAuthenticationOptions"/> instance for mocking. </returns>
+        public static OnYourDataUserAssignedManagedIdentityAuthenticationOptions OnYourDataUserAssignedManagedIdentityAuthenticationOptions(string managedIdentityResourceId = null)
+        {
+            return new OnYourDataUserAssignedManagedIdentityAuthenticationOptions(OnYourDataAuthenticationType.UserAssignedManagedIdentity, serializedAdditionalRawData: null, managedIdentityResourceId);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.OnYourDataEndpointVectorizationSource"/>. </summary>
+        /// <param name="endpoint"> Specifies the resource endpoint URL from which embeddings should be retrieved. It should be in the format of https://YOUR_RESOURCE_NAME.openai.azure.com/openai/deployments/YOUR_DEPLOYMENT_NAME/embeddings. The api-version query parameter is not allowed. </param>
+        /// <param name="authentication"> Specifies the authentication options to use when retrieving embeddings from the specified endpoint. </param>
+        /// <returns> A new <see cref="OpenAI.OnYourDataEndpointVectorizationSource"/> instance for mocking. </returns>
+        public static OnYourDataEndpointVectorizationSource OnYourDataEndpointVectorizationSource(Uri endpoint = null, OnYourDataAuthenticationOptions authentication = null)
+        {
+            return new OnYourDataEndpointVectorizationSource(OnYourDataVectorizationSourceType.Endpoint, serializedAdditionalRawData: null, endpoint, authentication);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.OnYourDataDeploymentNameVectorizationSource"/>. </summary>
+        /// <param name="deploymentName"> The embedding model deployment name within the same Azure OpenAI resource. This enables you to use vector search without Azure OpenAI api-key and without Azure OpenAI public network access. </param>
+        /// <returns> A new <see cref="OpenAI.OnYourDataDeploymentNameVectorizationSource"/> instance for mocking. </returns>
+        public static OnYourDataDeploymentNameVectorizationSource OnYourDataDeploymentNameVectorizationSource(string deploymentName = null)
+        {
+            return new OnYourDataDeploymentNameVectorizationSource(OnYourDataVectorizationSourceType.DeploymentName, serializedAdditionalRawData: null, deploymentName);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.OnYourDataModelIdVectorizationSource"/>. </summary>
+        /// <param name="modelId"> The embedding model ID build inside the search service. Currently only supported by Elasticsearch®. </param>
+        /// <returns> A new <see cref="OpenAI.OnYourDataModelIdVectorizationSource"/> instance for mocking. </returns>
+        public static OnYourDataModelIdVectorizationSource OnYourDataModelIdVectorizationSource(string modelId = null)
+        {
+            return new OnYourDataModelIdVectorizationSource(OnYourDataVectorizationSourceType.ModelId, serializedAdditionalRawData: null, modelId);
         }
     }
 }

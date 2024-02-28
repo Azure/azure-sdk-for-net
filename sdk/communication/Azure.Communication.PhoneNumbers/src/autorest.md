@@ -32,7 +32,6 @@ directive:
   transform: >
     $["x-ms-client-name"] = "twoLetterIsoCountryName";
 ```
-
 ### Change naming of Error to ErrorMessage
 ``` yaml
 directive:
@@ -42,7 +41,15 @@ directive:
     $["x-ms-enum"].name = "ErrorMessage";
 ```
 
-### Remove from Generated Models
+``` yaml
+directive:
+  from: swagger-document
+  where: $.parameters.Endpoint
+  transform: >
+    $["format"] = "";
+```
+
+# Removed Models
 ``` yaml
 directive:
   - remove-operation-match: /.*Reservation.*/i
@@ -53,4 +60,6 @@ directive:
   - remove-model: PhoneNumbersBrowseResult
   - remove-model: PhoneNumberBrowseCapabilitiesRequest
   - remove-model: PhoneNumbersReservationPurchaseRequest
-```
+  - remove-model: Error
+  - remove-model: AvailablePhoneNumber
+  - remove-model: AvailablePhoneNumberCost

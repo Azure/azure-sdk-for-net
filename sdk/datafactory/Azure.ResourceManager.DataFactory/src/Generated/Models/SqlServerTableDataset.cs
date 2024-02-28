@@ -46,6 +46,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = datasetType ?? "SqlServerTable";
         }
 
+        /// <summary> Initializes a new instance of <see cref="SqlServerTableDataset"/> for deserialization. </summary>
+        internal SqlServerTableDataset()
+        {
+        }
+
         /// <summary>
         /// This property will be retired. Please consider using schema + table properties instead.
         /// <para>

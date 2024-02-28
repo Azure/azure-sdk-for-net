@@ -45,6 +45,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = datasetType ?? "MongoDbAtlasCollection";
         }
 
+        /// <summary> Initializes a new instance of <see cref="MongoDBAtlasCollectionDataset"/> for deserialization. </summary>
+        internal MongoDBAtlasCollectionDataset()
+        {
+        }
+
         /// <summary> The collection name of the MongoDB Atlas database. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Collection { get; set; }
     }

@@ -20,5 +20,10 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             PolicyType = policyType;
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownSecurityPolicyProperties"/> for deserialization. </summary>
+        internal UnknownSecurityPolicyProperties()
+        {
+        }
     }
 }

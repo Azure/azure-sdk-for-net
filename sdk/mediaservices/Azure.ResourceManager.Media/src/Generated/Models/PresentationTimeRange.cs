@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> The presentation time range, this is asset related and not recommended for Account Filter. </summary>
     public partial class PresentationTimeRange
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="PresentationTimeRange"/>. </summary>
         public PresentationTimeRange()
         {
@@ -22,7 +57,8 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="liveBackoffDuration"> The relative to end right edge. </param>
         /// <param name="timescale"> The time scale of time stamps. </param>
         /// <param name="forceEndTimestamp"> The indicator of forcing existing of end time stamp. </param>
-        internal PresentationTimeRange(long? startTimestamp, long? endTimestamp, long? presentationWindowDuration, long? liveBackoffDuration, long? timescale, bool? forceEndTimestamp)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PresentationTimeRange(long? startTimestamp, long? endTimestamp, long? presentationWindowDuration, long? liveBackoffDuration, long? timescale, bool? forceEndTimestamp, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StartTimestamp = startTimestamp;
             EndTimestamp = endTimestamp;
@@ -30,6 +66,7 @@ namespace Azure.ResourceManager.Media.Models
             LiveBackoffDuration = liveBackoffDuration;
             Timescale = timescale;
             ForceEndTimestamp = forceEndTimestamp;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The absolute start time boundary. </summary>

@@ -30,7 +30,10 @@ public class ApiKeyAuthenticationPolicyTests : SyncAsyncTestBase
             Transport = new MockPipelineTransport("Transport", new int[] { 200 })
         };
 
-        ClientPipeline pipeline = ClientPipeline.Create(options, keyPolicy);
+        ClientPipeline pipeline = ClientPipeline.Create(options,
+            perCallPolicies: ReadOnlySpan<PipelinePolicy>.Empty,
+            perTryPolicies: new PipelinePolicy[] { keyPolicy },
+            beforeTransportPolicies: ReadOnlySpan<PipelinePolicy>.Empty);
 
         using PipelineMessage message = pipeline.CreateMessage();
         await pipeline.SendSyncOrAsync(message, IsAsync);
@@ -54,7 +57,10 @@ public class ApiKeyAuthenticationPolicyTests : SyncAsyncTestBase
             Transport = new MockPipelineTransport("Transport", new int[] { 200 })
         };
 
-        ClientPipeline pipeline = ClientPipeline.Create(options, keyPolicy);
+        ClientPipeline pipeline = ClientPipeline.Create(options,
+            perCallPolicies: ReadOnlySpan<PipelinePolicy>.Empty,
+            perTryPolicies: new PipelinePolicy[] { keyPolicy },
+            beforeTransportPolicies: ReadOnlySpan<PipelinePolicy>.Empty);
 
         using PipelineMessage message = pipeline.CreateMessage();
         await pipeline.SendSyncOrAsync(message, IsAsync);
@@ -77,7 +83,10 @@ public class ApiKeyAuthenticationPolicyTests : SyncAsyncTestBase
             Transport = new MockPipelineTransport("Transport", new int[] { 200, 200 })
         };
 
-        ClientPipeline pipeline = ClientPipeline.Create(options, keyPolicy);
+        ClientPipeline pipeline = ClientPipeline.Create(options,
+            perCallPolicies: ReadOnlySpan<PipelinePolicy>.Empty,
+            perTryPolicies: new PipelinePolicy[] { keyPolicy },
+            beforeTransportPolicies: ReadOnlySpan<PipelinePolicy>.Empty);
 
         using PipelineMessage message = pipeline.CreateMessage();
         await pipeline.SendSyncOrAsync(message, IsAsync);
@@ -102,7 +111,10 @@ public class ApiKeyAuthenticationPolicyTests : SyncAsyncTestBase
             Transport = new MockPipelineTransport("Transport", new int[] { 200, 200 })
         };
 
-        ClientPipeline pipeline = ClientPipeline.Create(options, keyPolicy);
+        ClientPipeline pipeline = ClientPipeline.Create(options,
+            perCallPolicies: ReadOnlySpan<PipelinePolicy>.Empty,
+            perTryPolicies: new PipelinePolicy[] { keyPolicy },
+            beforeTransportPolicies: ReadOnlySpan<PipelinePolicy>.Empty);
 
         using PipelineMessage message = pipeline.CreateMessage();
         await pipeline.SendSyncOrAsync(message, IsAsync);
@@ -125,7 +137,10 @@ public class ApiKeyAuthenticationPolicyTests : SyncAsyncTestBase
             Transport = new MockPipelineTransport("Transport", new int[] { 200 })
         };
 
-        ClientPipeline pipeline = ClientPipeline.Create(options, keyPolicy);
+        ClientPipeline pipeline = ClientPipeline.Create(options,
+            perCallPolicies: ReadOnlySpan<PipelinePolicy>.Empty,
+            perTryPolicies: new PipelinePolicy[] { keyPolicy },
+            beforeTransportPolicies: ReadOnlySpan<PipelinePolicy>.Empty);
 
         using PipelineMessage message = pipeline.CreateMessage();
         await pipeline.SendSyncOrAsync(message, IsAsync);
@@ -147,7 +162,10 @@ public class ApiKeyAuthenticationPolicyTests : SyncAsyncTestBase
             Transport = new MockPipelineTransport("Transport", new int[] { 200 })
         };
 
-        ClientPipeline pipeline = ClientPipeline.Create(options, keyPolicy);
+        ClientPipeline pipeline = ClientPipeline.Create(options,
+            perCallPolicies: ReadOnlySpan<PipelinePolicy>.Empty,
+            perTryPolicies: new PipelinePolicy[] { keyPolicy },
+            beforeTransportPolicies: ReadOnlySpan<PipelinePolicy>.Empty);
 
         using PipelineMessage message = pipeline.CreateMessage();
         await pipeline.SendSyncOrAsync(message, IsAsync);

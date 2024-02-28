@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.TrafficManager.Models
 {
-    public partial class ExpectedStatusCodeRangeInfo : IUtf8JsonSerializable
+    public partial class ExpectedStatusCodeRangeInfo : IUtf8JsonSerializable, IJsonModel<ExpectedStatusCodeRangeInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExpectedStatusCodeRangeInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ExpectedStatusCodeRangeInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ExpectedStatusCodeRangeInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ExpectedStatusCodeRangeInfo)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Min))
             {
@@ -25,17 +36,48 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 writer.WritePropertyName("max"u8);
                 writer.WriteNumberValue(Max.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ExpectedStatusCodeRangeInfo DeserializeExpectedStatusCodeRangeInfo(JsonElement element)
+        ExpectedStatusCodeRangeInfo IJsonModel<ExpectedStatusCodeRangeInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ExpectedStatusCodeRangeInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ExpectedStatusCodeRangeInfo)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeExpectedStatusCodeRangeInfo(document.RootElement, options);
+        }
+
+        internal static ExpectedStatusCodeRangeInfo DeserializeExpectedStatusCodeRangeInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<int> min = default;
             Optional<int> max = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("min"u8))
@@ -56,8 +98,44 @@ namespace Azure.ResourceManager.TrafficManager.Models
                     max = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ExpectedStatusCodeRangeInfo(Optional.ToNullable(min), Optional.ToNullable(max));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ExpectedStatusCodeRangeInfo(Optional.ToNullable(min), Optional.ToNullable(max), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ExpectedStatusCodeRangeInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExpectedStatusCodeRangeInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ExpectedStatusCodeRangeInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ExpectedStatusCodeRangeInfo IPersistableModel<ExpectedStatusCodeRangeInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExpectedStatusCodeRangeInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeExpectedStatusCodeRangeInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ExpectedStatusCodeRangeInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ExpectedStatusCodeRangeInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,21 +5,106 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    public partial class AllSavingsBenefitDetails : IUtf8JsonSerializable
+    public partial class AllSavingsBenefitDetails : IUtf8JsonSerializable, IJsonModel<AllSavingsBenefitDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AllSavingsBenefitDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AllSavingsBenefitDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AllSavingsBenefitDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AllSavingsBenefitDetails)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(OverageCost))
+            {
+                writer.WritePropertyName("overageCost"u8);
+                writer.WriteNumberValue(OverageCost.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(BenefitCost))
+            {
+                writer.WritePropertyName("benefitCost"u8);
+                writer.WriteNumberValue(BenefitCost.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TotalCost))
+            {
+                writer.WritePropertyName("totalCost"u8);
+                writer.WriteNumberValue(TotalCost.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SavingsAmount))
+            {
+                writer.WritePropertyName("savingsAmount"u8);
+                writer.WriteNumberValue(SavingsAmount.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SavingsPercentage))
+            {
+                writer.WritePropertyName("savingsPercentage"u8);
+                writer.WriteNumberValue(SavingsPercentage.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CoveragePercentage))
+            {
+                writer.WritePropertyName("coveragePercentage"u8);
+                writer.WriteNumberValue(CoveragePercentage.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CommitmentAmount))
+            {
+                writer.WritePropertyName("commitmentAmount"u8);
+                writer.WriteNumberValue(CommitmentAmount.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(AverageUtilizationPercentage))
+            {
+                writer.WritePropertyName("averageUtilizationPercentage"u8);
+                writer.WriteNumberValue(AverageUtilizationPercentage.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(WastageCost))
+            {
+                writer.WritePropertyName("wastageCost"u8);
+                writer.WriteNumberValue(WastageCost.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AllSavingsBenefitDetails DeserializeAllSavingsBenefitDetails(JsonElement element)
+        AllSavingsBenefitDetails IJsonModel<AllSavingsBenefitDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AllSavingsBenefitDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AllSavingsBenefitDetails)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAllSavingsBenefitDetails(document.RootElement, options);
+        }
+
+        internal static AllSavingsBenefitDetails DeserializeAllSavingsBenefitDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -33,6 +118,8 @@ namespace Azure.ResourceManager.CostManagement.Models
             Optional<decimal> commitmentAmount = default;
             Optional<decimal> averageUtilizationPercentage = default;
             Optional<decimal> wastageCost = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("overageCost"u8))
@@ -116,8 +203,44 @@ namespace Azure.ResourceManager.CostManagement.Models
                     wastageCost = property.Value.GetDecimal();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AllSavingsBenefitDetails(Optional.ToNullable(overageCost), Optional.ToNullable(benefitCost), Optional.ToNullable(totalCost), Optional.ToNullable(savingsAmount), Optional.ToNullable(savingsPercentage), Optional.ToNullable(coveragePercentage), Optional.ToNullable(commitmentAmount), Optional.ToNullable(averageUtilizationPercentage), Optional.ToNullable(wastageCost));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AllSavingsBenefitDetails(Optional.ToNullable(overageCost), Optional.ToNullable(benefitCost), Optional.ToNullable(totalCost), Optional.ToNullable(savingsAmount), Optional.ToNullable(savingsPercentage), Optional.ToNullable(coveragePercentage), Optional.ToNullable(commitmentAmount), Optional.ToNullable(averageUtilizationPercentage), Optional.ToNullable(wastageCost), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AllSavingsBenefitDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AllSavingsBenefitDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AllSavingsBenefitDetails)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AllSavingsBenefitDetails IPersistableModel<AllSavingsBenefitDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AllSavingsBenefitDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAllSavingsBenefitDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AllSavingsBenefitDetails)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AllSavingsBenefitDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
-    public partial class SourceAddressInfo : IUtf8JsonSerializable
+    public partial class SourceAddressInfo : IUtf8JsonSerializable, IJsonModel<SourceAddressInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SourceAddressInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SourceAddressInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SourceAddressInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SourceAddressInfo)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Cidrs))
             {
@@ -56,11 +66,40 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SourceAddressInfo DeserializeSourceAddressInfo(JsonElement element)
+        SourceAddressInfo IJsonModel<SourceAddressInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SourceAddressInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SourceAddressInfo)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSourceAddressInfo(document.RootElement, options);
+        }
+
+        internal static SourceAddressInfo DeserializeSourceAddressInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -69,6 +108,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             Optional<IList<string>> countries = default;
             Optional<IList<string>> feeds = default;
             Optional<IList<string>> prefixLists = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cidrs"u8))
@@ -127,8 +168,44 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     prefixLists = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SourceAddressInfo(Optional.ToList(cidrs), Optional.ToList(countries), Optional.ToList(feeds), Optional.ToList(prefixLists));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SourceAddressInfo(Optional.ToList(cidrs), Optional.ToList(countries), Optional.ToList(feeds), Optional.ToList(prefixLists), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SourceAddressInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SourceAddressInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SourceAddressInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SourceAddressInfo IPersistableModel<SourceAddressInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SourceAddressInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSourceAddressInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SourceAddressInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SourceAddressInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

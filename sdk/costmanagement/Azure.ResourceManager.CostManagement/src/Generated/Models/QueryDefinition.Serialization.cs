@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    public partial class QueryDefinition : IUtf8JsonSerializable
+    public partial class QueryDefinition : IUtf8JsonSerializable, IJsonModel<QueryDefinition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QueryDefinition>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<QueryDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<QueryDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(QueryDefinition)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ExportType.ToString());
@@ -26,7 +37,114 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
             writer.WritePropertyName("dataset"u8);
             writer.WriteObjectValue(Dataset);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        QueryDefinition IJsonModel<QueryDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<QueryDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(QueryDefinition)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeQueryDefinition(document.RootElement, options);
+        }
+
+        internal static QueryDefinition DeserializeQueryDefinition(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            ExportType type = default;
+            TimeframeType timeframe = default;
+            Optional<QueryTimePeriod> timePeriod = default;
+            QueryDataset dataset = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("type"u8))
+                {
+                    type = new ExportType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("timeframe"u8))
+                {
+                    timeframe = new TimeframeType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("timePeriod"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    timePeriod = QueryTimePeriod.DeserializeQueryTimePeriod(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("dataset"u8))
+                {
+                    dataset = QueryDataset.DeserializeQueryDataset(property.Value);
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new QueryDefinition(type, timeframe, timePeriod.Value, dataset, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<QueryDefinition>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<QueryDefinition>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(QueryDefinition)} does not support '{options.Format}' format.");
+            }
+        }
+
+        QueryDefinition IPersistableModel<QueryDefinition>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<QueryDefinition>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeQueryDefinition(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(QueryDefinition)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<QueryDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

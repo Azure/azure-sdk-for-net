@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         private async Task<DataFactoryLinkedServiceResource> CreateWebLinkedService(DataFactoryResource dataFactory, string linkedServiceName)
         {
-            WebLinkedServiceTypeProperties webLinkedServiceTypeProperties = new UnknownWebLinkedServiceTypeProperties("http://localhost", WebAuthenticationType.ClientCertificate);
+            WebLinkedServiceTypeProperties webLinkedServiceTypeProperties = new UnknownWebLinkedServiceTypeProperties("http://localhost", WebAuthenticationType.ClientCertificate, null);
 
             DataFactoryLinkedServiceData linkedService = new DataFactoryLinkedServiceData(new WebLinkedService(webLinkedServiceTypeProperties) { });
             var result = await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, linkedService);
@@ -1691,7 +1691,10 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         private async Task<DataFactoryLinkedServiceResource> CreateMySqlLinkedService(DataFactoryResource dataFactory, string linkedServiceName)
         {
-            DataFactoryLinkedServiceData linkedService = new DataFactoryLinkedServiceData(new MySqlLinkedService(DataFactoryElement<string>.FromSecretString("server=10.0.0.122;port=3306;database=db;user=https:\\\\test.com;sslmode=1;usesystemtruststore=0")) { });
+            DataFactoryLinkedServiceData linkedService = new DataFactoryLinkedServiceData(new MySqlLinkedService()
+            {
+                ConnectionString = DataFactoryElement<string>.FromSecretString("server=10.0.0.122;port=3306;database=db;user=https:\\\\test.com;sslmode=1;usesystemtruststore=0")
+            });
             var result = await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, linkedService);
             return result.Value;
         }
@@ -2207,6 +2210,42 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                 return new DataFactoryDatasetData(new SharePointOnlineListResourceDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
                 {
                     ListName = "listname"
+                });
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task Dataset_Avro_Create()
+        {
+            await DatasetCreate("avro", CreateAzureBlobStorageLinkedService, (string linkedServiceName) =>
+            {
+                return new DataFactoryDatasetData(new AvroDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+                {
+                    Schema = DataFactoryElement<BinaryData>.FromLiteral(BinaryData.FromString("{\"type\": \"record\",\"name\": \"HybridDelivery.ClientLibraryJob\",\"fields\": [{\"name\": \"TIMESTAMP\",\"type\": [\"string\",\"null\"]}]}")),
+                    DataLocation = new AzureBlobStorageLocation()
+                    {
+                        FileName = "TestQuerySchema.avro",
+                        FolderPath = "querytest"
+                    }
+                });
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task Dataset_Json_Create()
+        {
+            await DatasetCreate("json", CreateAzureBlobStorageLinkedService, (string linkedServiceName) =>
+            {
+                return new DataFactoryDatasetData(new JsonDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+                {
+                    Schema = DataFactoryElement<BinaryData>.FromLiteral(BinaryData.FromString("{\"type\": \"object\",\"properties\": {\"studentName\": {\"type\": \"string\"},\"age\": {\"type\": \"integer\"},\"gender\": {\"type\": \"string\"},\"studentID\": {\"type\": \"string\"},\"major\": {\"type\": \"string\"},\"grades\": {\"type\": \"object\",\"properties\": {\"math\": {\"type\": \"integer\"},\"english\": {\"type\": \"integer\"},\"programming\": {\"type\": \"integer\"}}},\"contact\": {\"type\":\"object\",\"properties\": {\"phone\": {\"type\": \"string\"},\"email\": {\"type\": \"string\"}}}}}")),
+                    DataLocation = new AzureBlobStorageLocation()
+                    {
+                        FileName = "TestQuerySchema.json",
+                        FolderPath = "querytest"
+                    }
                 });
             });
         }

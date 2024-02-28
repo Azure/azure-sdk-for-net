@@ -60,6 +60,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = datasetType ?? "HttpFile";
         }
 
+        /// <summary> Initializes a new instance of <see cref="DataFactoryHttpDataset"/> for deserialization. </summary>
+        internal DataFactoryHttpDataset()
+        {
+        }
+
         /// <summary> The relative URL based on the URL in the HttpLinkedService refers to an HTTP file Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> RelativeUri { get; set; }
         /// <summary> The HTTP method for the HTTP request. Type: string (or Expression with resultType string). </summary>

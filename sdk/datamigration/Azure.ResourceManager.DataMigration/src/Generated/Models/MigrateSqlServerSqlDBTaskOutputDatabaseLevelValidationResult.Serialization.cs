@@ -6,15 +6,112 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult
+    public partial class MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult : IUtf8JsonSerializable, IJsonModel<MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult>
     {
-        internal static MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult DeserializeMigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(MigrationId))
+            {
+                writer.WritePropertyName("migrationId"u8);
+                writer.WriteStringValue(MigrationId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SourceDatabaseName))
+            {
+                writer.WritePropertyName("sourceDatabaseName"u8);
+                writer.WriteStringValue(SourceDatabaseName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TargetDatabaseName))
+            {
+                writer.WritePropertyName("targetDatabaseName"u8);
+                writer.WriteStringValue(TargetDatabaseName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(StartedOn))
+            {
+                writer.WritePropertyName("startedOn"u8);
+                writer.WriteStringValue(StartedOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(EndedOn))
+            {
+                writer.WritePropertyName("endedOn"u8);
+                writer.WriteStringValue(EndedOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(DataIntegrityValidationResult))
+            {
+                writer.WritePropertyName("dataIntegrityValidationResult"u8);
+                writer.WriteObjectValue(DataIntegrityValidationResult);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SchemaValidationResult))
+            {
+                writer.WritePropertyName("schemaValidationResult"u8);
+                writer.WriteObjectValue(SchemaValidationResult);
+            }
+            if (options.Format != "W" && Optional.IsDefined(QueryAnalysisValidationResult))
+            {
+                writer.WritePropertyName("queryAnalysisValidationResult"u8);
+                writer.WriteObjectValue(QueryAnalysisValidationResult);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            writer.WritePropertyName("resultType"u8);
+            writer.WriteStringValue(ResultType);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult IJsonModel<MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult(document.RootElement, options);
+        }
+
+        internal static MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult DeserializeMigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -30,6 +127,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<ValidationStatus> status = default;
             Optional<string> id = default;
             string resultType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("migrationId"u8))
@@ -111,8 +210,44 @@ namespace Azure.ResourceManager.DataMigration.Models
                     resultType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult(id.Value, resultType, migrationId.Value, sourceDatabaseName.Value, targetDatabaseName.Value, Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), dataIntegrityValidationResult.Value, schemaValidationResult.Value, queryAnalysisValidationResult.Value, Optional.ToNullable(status));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult(id.Value, resultType, serializedAdditionalRawData, migrationId.Value, sourceDatabaseName.Value, targetDatabaseName.Value, Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), dataIntegrityValidationResult.Value, schemaValidationResult.Value, queryAnalysisValidationResult.Value, Optional.ToNullable(status));
         }
+
+        BinaryData IPersistableModel<MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult IPersistableModel<MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

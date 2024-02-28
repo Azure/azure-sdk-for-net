@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
     /// <summary> security services. </summary>
     public partial class RulestackSecurityServices
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="RulestackSecurityServices"/>. </summary>
         public RulestackSecurityServices()
         {
@@ -24,7 +59,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="dnsSubscription"> DNS Subscription profile data. </param>
         /// <param name="outboundUnTrustCertificate"> Untrusted Egress Decryption profile data. </param>
         /// <param name="outboundTrustCertificate"> Trusted Egress Decryption profile data. </param>
-        internal RulestackSecurityServices(string vulnerabilityProfile, string antiSpywareProfile, string antiVirusProfile, string urlFilteringProfile, string fileBlockingProfile, string dnsSubscription, string outboundUnTrustCertificate, string outboundTrustCertificate)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RulestackSecurityServices(string vulnerabilityProfile, string antiSpywareProfile, string antiVirusProfile, string urlFilteringProfile, string fileBlockingProfile, string dnsSubscription, string outboundUnTrustCertificate, string outboundTrustCertificate, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VulnerabilityProfile = vulnerabilityProfile;
             AntiSpywareProfile = antiSpywareProfile;
@@ -34,6 +70,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             DnsSubscription = dnsSubscription;
             OutboundUnTrustCertificate = outboundUnTrustCertificate;
             OutboundTrustCertificate = outboundTrustCertificate;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> IPs Vulnerability Profile Data. </summary>

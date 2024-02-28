@@ -25,5 +25,10 @@ namespace Azure.ResourceManager.BotService.Models
         {
             ChannelName = channelName ?? "Unknown";
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownChannel"/> for deserialization. </summary>
+        internal UnknownChannel()
+        {
+        }
     }
 }

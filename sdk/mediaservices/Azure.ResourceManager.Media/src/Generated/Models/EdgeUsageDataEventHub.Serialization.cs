@@ -5,15 +5,76 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class EdgeUsageDataEventHub
+    public partial class EdgeUsageDataEventHub : IUtf8JsonSerializable, IJsonModel<EdgeUsageDataEventHub>
     {
-        internal static EdgeUsageDataEventHub DeserializeEdgeUsageDataEventHub(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeUsageDataEventHub>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<EdgeUsageDataEventHub>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeUsageDataEventHub>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EdgeUsageDataEventHub)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Namespace))
+            {
+                writer.WritePropertyName("namespace"u8);
+                writer.WriteStringValue(Namespace);
+            }
+            if (Optional.IsDefined(Token))
+            {
+                writer.WritePropertyName("token"u8);
+                writer.WriteStringValue(Token);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        EdgeUsageDataEventHub IJsonModel<EdgeUsageDataEventHub>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeUsageDataEventHub>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EdgeUsageDataEventHub)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEdgeUsageDataEventHub(document.RootElement, options);
+        }
+
+        internal static EdgeUsageDataEventHub DeserializeEdgeUsageDataEventHub(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +82,8 @@ namespace Azure.ResourceManager.Media.Models
             Optional<string> name = default;
             Optional<string> @namespace = default;
             Optional<string> token = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -38,8 +101,44 @@ namespace Azure.ResourceManager.Media.Models
                     token = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new EdgeUsageDataEventHub(name.Value, @namespace.Value, token.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new EdgeUsageDataEventHub(name.Value, @namespace.Value, token.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<EdgeUsageDataEventHub>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeUsageDataEventHub>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(EdgeUsageDataEventHub)} does not support '{options.Format}' format.");
+            }
+        }
+
+        EdgeUsageDataEventHub IPersistableModel<EdgeUsageDataEventHub>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeUsageDataEventHub>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeEdgeUsageDataEventHub(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EdgeUsageDataEventHub)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<EdgeUsageDataEventHub>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

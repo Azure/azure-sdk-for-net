@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Private Endpoint destination for a Private Endpoint Outbound Rule for the managed network of a machine learning workspace. </summary>
     public partial class PrivateEndpointDestination
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="PrivateEndpointDestination"/>. </summary>
         public PrivateEndpointDestination()
         {
@@ -20,12 +55,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="sparkEnabled"></param>
         /// <param name="sparkStatus"> Type of a managed network Outbound Rule of a machine learning workspace. </param>
         /// <param name="subresourceTarget"></param>
-        internal PrivateEndpointDestination(string serviceResourceId, bool? sparkEnabled, OutboundRuleStatus? sparkStatus, string subresourceTarget)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PrivateEndpointDestination(string serviceResourceId, bool? sparkEnabled, OutboundRuleStatus? sparkStatus, string subresourceTarget, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ServiceResourceId = serviceResourceId;
             SparkEnabled = sparkEnabled;
             SparkStatus = sparkStatus;
             SubresourceTarget = subresourceTarget;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the service resource id. </summary>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
@@ -20,7 +22,8 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of <see cref="MonitorWorkspaceDefaultIngestionSettings"/>. </summary>
         /// <param name="dataCollectionRuleResourceId"> The Azure resource Id of the default data collection rule for this workspace. </param>
         /// <param name="dataCollectionEndpointResourceId"> The Azure resource Id of the default data collection endpoint for this workspace. </param>
-        internal MonitorWorkspaceDefaultIngestionSettings(ResourceIdentifier dataCollectionRuleResourceId, ResourceIdentifier dataCollectionEndpointResourceId) : base(dataCollectionRuleResourceId, dataCollectionEndpointResourceId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MonitorWorkspaceDefaultIngestionSettings(ResourceIdentifier dataCollectionRuleResourceId, ResourceIdentifier dataCollectionEndpointResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(dataCollectionRuleResourceId, dataCollectionEndpointResourceId, serializedAdditionalRawData)
         {
         }
     }

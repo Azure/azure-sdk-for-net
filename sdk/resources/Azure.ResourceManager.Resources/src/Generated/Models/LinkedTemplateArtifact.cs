@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
@@ -13,6 +14,38 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Represents a Template Spec artifact containing an embedded Azure Resource Manager template for use as a linked template. </summary>
     public partial class LinkedTemplateArtifact
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="LinkedTemplateArtifact"/>. </summary>
         /// <param name="path"> A filesystem safe relative path of the artifact. </param>
         /// <param name="template"> The Azure Resource Manager template. </param>
@@ -24,6 +57,22 @@ namespace Azure.ResourceManager.Resources.Models
 
             Path = path;
             Template = template;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LinkedTemplateArtifact"/>. </summary>
+        /// <param name="path"> A filesystem safe relative path of the artifact. </param>
+        /// <param name="template"> The Azure Resource Manager template. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LinkedTemplateArtifact(string path, BinaryData template, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Path = path;
+            Template = template;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LinkedTemplateArtifact"/> for deserialization. </summary>
+        internal LinkedTemplateArtifact()
+        {
         }
 
         /// <summary> A filesystem safe relative path of the artifact. </summary>

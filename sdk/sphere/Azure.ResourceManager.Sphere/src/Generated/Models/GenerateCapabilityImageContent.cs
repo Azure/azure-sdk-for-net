@@ -15,6 +15,38 @@ namespace Azure.ResourceManager.Sphere.Models
     /// <summary> Request of the action to create a signed device capability image. </summary>
     public partial class GenerateCapabilityImageContent
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="GenerateCapabilityImageContent"/>. </summary>
         /// <param name="capabilities"> List of capabilities to create. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="capabilities"/> is null. </exception>
@@ -27,9 +59,16 @@ namespace Azure.ResourceManager.Sphere.Models
 
         /// <summary> Initializes a new instance of <see cref="GenerateCapabilityImageContent"/>. </summary>
         /// <param name="capabilities"> List of capabilities to create. </param>
-        internal GenerateCapabilityImageContent(IList<SphereCapabilityType> capabilities)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GenerateCapabilityImageContent(IList<SphereCapabilityType> capabilities, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Capabilities = capabilities;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GenerateCapabilityImageContent"/> for deserialization. </summary>
+        internal GenerateCapabilityImageContent()
+        {
         }
 
         /// <summary> List of capabilities to create. </summary>

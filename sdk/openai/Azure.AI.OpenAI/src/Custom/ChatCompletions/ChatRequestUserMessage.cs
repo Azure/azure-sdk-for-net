@@ -18,6 +18,7 @@ namespace Azure.AI.OpenAI;
 //   conditionally serialize based on which instantiation was used.
 
 [CodeGenSuppress("ChatRequestUserMessage", typeof(BinaryData))]
+[CodeGenSerialization(nameof(Content), SerializationValueHook = nameof(SerializeContent))]
 public partial class ChatRequestUserMessage : ChatRequestMessage
 {
     /// <summary>
@@ -28,7 +29,6 @@ public partial class ChatRequestUserMessage : ChatRequestMessage
     /// <see cref="ChatRequestUserMessage"/> may use either plain text content, which is represented by this property,
     /// or a collection of content items instead represented by <see cref="MultimodalContentItems"/>.
     /// </remarks>
-    [CodeGenMemberSerializationHooks(SerializationValueHook = nameof(SerializeContent))]
     public string Content { get; protected set; }
 
     /// <summary>
@@ -49,9 +49,9 @@ public partial class ChatRequestUserMessage : ChatRequestMessage
     /// <paramref name="content"/> is null or empty.
     /// </exception>
     public ChatRequestUserMessage(string content)
-        : base(ChatRole.User)
     {
         Argument.AssertNotNullOrEmpty(content, nameof(content));
+        Role = ChatRole.User;
         Content = content;
     }
 
@@ -63,9 +63,9 @@ public partial class ChatRequestUserMessage : ChatRequestMessage
     /// <paramref name="content"/> is null or empty.
     /// </exception>
     public ChatRequestUserMessage(IEnumerable<ChatMessageContentItem> content)
-        : base(ChatRole.User)
     {
         Argument.AssertNotNullOrEmpty(content, nameof(content));
+        Role = ChatRole.User;
         MultimodalContentItems = content.ToList();
     }
 
@@ -77,9 +77,9 @@ public partial class ChatRequestUserMessage : ChatRequestMessage
     /// <paramref name="content"/> is null or empty.
     /// </exception>
     public ChatRequestUserMessage(params ChatMessageContentItem[] content)
-        : base(ChatRole.User)
     {
         Argument.AssertNotNullOrEmpty(content, nameof(content));
+        Role = ChatRole.User;
         MultimodalContentItems = content.ToList();
     }
 

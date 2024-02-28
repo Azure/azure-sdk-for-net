@@ -284,7 +284,10 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         private async Task<DataFactoryDatasetResource> CreateDefaultMySqlTableDataset(DataFactoryResource dataFactory, string linkedServiceName, string datasetName)
         {
-            DataFactoryLinkedServiceData lkWebSource = new DataFactoryLinkedServiceData(new MySqlLinkedService("server=10.0.0.122;port=3306;database=db;user=https:\\\\test.com;sslmode=1;usesystemtruststore=0"));
+            DataFactoryLinkedServiceData lkWebSource = new DataFactoryLinkedServiceData(new MySqlLinkedService()
+            {
+                ConnectionString = "server=10.0.0.122;port=3306;database=db;user=https:\\\\test.com;sslmode=1;usesystemtruststore=0"
+            });
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkWebSource);
 
             DataFactoryDatasetData dsWebSource = new DataFactoryDatasetData(new MySqlTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
@@ -1842,7 +1845,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                         new CopyActivity(taskName, new AzureSqlSource()
                             {
                                 SqlReaderQuery = "SELECT TOP 1 * FROM DBO.TestTable",
-                                PartitionOption = BinaryData.FromString("\"DynamicRange\""),
+                                PartitionOption = "DynamicRange",
                                 PartitionSettings = new SqlPartitionSettings()
                                 {
                                     PartitionColumnName = "partitionColumnName",
@@ -4335,7 +4338,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                                 new DatasetReference(DatasetReferenceType.DatasetReference,datasetSinkName)
                             },
                             ValidateDataConsistency = true,
-                            SkipErrorFile = new SkipErrorFile(true,true),
+                            SkipErrorFile = new SkipErrorFile(true,true, null),
                             LogStorageSettings = new LogStorageSettings(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference,linkedServiceSourceName))
                             {
                                 Path = "test",
@@ -4405,7 +4408,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                                 new DatasetReference(DatasetReferenceType.DatasetReference,datasetSinkName)
                             },
                             ValidateDataConsistency = true,
-                            SkipErrorFile = new SkipErrorFile(true,true),
+                            SkipErrorFile = new SkipErrorFile(true,true, null),
                             LogSettings = new DataFactoryLogSettings(new LogLocationSettings(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference,linkedServiceSourceName))
                             {
                                 Path = "test"
@@ -6558,14 +6561,14 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                                 {
                                     DefaultValues =
                                     {
-                                        new DWCopyCommandDefaultValue(BinaryData.FromString("\"col_string\""),BinaryData.FromString("\"Cincinnati\"")),
-                                        new DWCopyCommandDefaultValue(BinaryData.FromString("\"col_binary\""),BinaryData.FromString("\"0xAE\"")),
-                                        new DWCopyCommandDefaultValue(BinaryData.FromString("\"col_datetime\""),BinaryData.FromString("\"December 5, 1985\"")),
-                                        new DWCopyCommandDefaultValue(BinaryData.FromString("\"col_integer\""),BinaryData.FromString("\"1894\"")),
-                                        new DWCopyCommandDefaultValue(BinaryData.FromString("\"col_decimal\""),BinaryData.FromString("\"12.345000000\"")),
-                                        new DWCopyCommandDefaultValue(BinaryData.FromString("\"col_float\""),BinaryData.FromString("\"0.5E-2\"")),
-                                        new DWCopyCommandDefaultValue(BinaryData.FromString("\"col_money\""),BinaryData.FromString("\"$542023.14\"")),
-                                        new DWCopyCommandDefaultValue(BinaryData.FromString("\"col_uniqueidentifier1\""),BinaryData.FromString("\"6F9619FF-8B86-D011-B42D-00C04FC964FF\""))
+                                        new DWCopyCommandDefaultValue(BinaryData.FromString("\"col_string\""),BinaryData.FromString("\"Cincinnati\"") , null),
+                                        new DWCopyCommandDefaultValue(BinaryData.FromString("\"col_binary\""),BinaryData.FromString("\"0xAE\""), null),
+                                        new DWCopyCommandDefaultValue(BinaryData.FromString("\"col_datetime\""),BinaryData.FromString("\"December 5, 1985\""), null),
+                                        new DWCopyCommandDefaultValue(BinaryData.FromString("\"col_integer\""),BinaryData.FromString("\"1894\""), null),
+                                        new DWCopyCommandDefaultValue(BinaryData.FromString("\"col_decimal\""),BinaryData.FromString("\"12.345000000\""), null),
+                                        new DWCopyCommandDefaultValue(BinaryData.FromString("\"col_float\""),BinaryData.FromString("\"0.5E-2\""), null),
+                                        new DWCopyCommandDefaultValue(BinaryData.FromString("\"col_money\""),BinaryData.FromString("\"$542023.14\""), null),
+                                        new DWCopyCommandDefaultValue(BinaryData.FromString("\"col_uniqueidentifier1\""),BinaryData.FromString("\"6F9619FF-8B86-D011-B42D-00C04FC964FF\""), null)
                                     }
                                 },
                                 AdditionalProperties =
@@ -6634,7 +6637,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                     },
                     Parameters =
                     {
-                        new KeyValuePair<string, EntityParameterSpecification>("parallelOption",new EntityParameterSpecification(EntityParameterType.String,BinaryData.FromString("\"fakeValue\"")))
+                        new KeyValuePair<string, EntityParameterSpecification>("parallelOption",new EntityParameterSpecification(EntityParameterType.String,BinaryData.FromString("\"fakeValue\"") ,null))
                     }
                 };
             });
@@ -6790,7 +6793,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                             Source = new SqlMISource()
                             {
                                 SqlReaderQuery = "select * from my_table",
-                                PartitionOption = BinaryData.FromString("\"DynamicRange\""),
+                                PartitionOption = "DynamicRange",
                                 PartitionSettings = new SqlPartitionSettings()
                                 {
                                     PartitionColumnName = "column",
@@ -6802,7 +6805,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                             {
                                 SqlWriterTableType = "MarketingType",
                                 SqlWriterUseTableLock = true,
-                                WriteBehavior = BinaryData.FromString("\"Upsert\""),
+                                WriteBehavior = "Upsert",
                                 UpsertSettings = new SqlUpsertSettings()
                                 {
                                     UseTempDB = true,
@@ -6861,7 +6864,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                                         Dataset = new DatasetReference(DatasetReferenceType.DatasetReference,datasetSinkName),
                                         Script = "sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinput(\n\t\tSampleId as string,\n\t\tSampleDetail as string\n\t),\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> UserQueryDSAzureSqlDatabase2"
                                     }
-                                })
+                                }, null)
                             },
                             Sinks =
                             {
@@ -6907,7 +6910,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                                         Dataset = new DatasetReference(DatasetReferenceType.DatasetReference,datasetSinkName),
                                         Script = "sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinput(\n\t\tSampleId as string,\n\t\tSampleDetail as string\n\t),\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> UserQueryDSAzureSqlDatabase2"
                                     }
-                                })
+                                }, null)
                             }
                         }
                     }
@@ -6972,8 +6975,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                                 EndOn = "2019-05-05T16:00:00.000Z",
                                 OutputColumns = new List<Office365TableOutputColumn>()
                                 {
-                                    new Office365TableOutputColumn("Id"),
-                                    new Office365TableOutputColumn("CreatedDateTime"),
+                                    new Office365TableOutputColumn("Id", null),
+                                    new Office365TableOutputColumn("CreatedDateTime", null),
                                 }
                             },
                             Sink = new AzureDataLakeStoreSink()

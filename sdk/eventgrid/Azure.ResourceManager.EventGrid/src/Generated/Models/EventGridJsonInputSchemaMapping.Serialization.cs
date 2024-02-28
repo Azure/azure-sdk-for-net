@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class EventGridJsonInputSchemaMapping : IUtf8JsonSerializable
+    public partial class EventGridJsonInputSchemaMapping : IUtf8JsonSerializable, IJsonModel<EventGridJsonInputSchemaMapping>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventGridJsonInputSchemaMapping>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<EventGridJsonInputSchemaMapping>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<EventGridJsonInputSchemaMapping>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EventGridJsonInputSchemaMapping)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("inputSchemaMappingType"u8);
             writer.WriteStringValue(InputSchemaMappingType.ToString());
@@ -50,11 +61,40 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WriteObjectValue(DataVersion);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static EventGridJsonInputSchemaMapping DeserializeEventGridJsonInputSchemaMapping(JsonElement element)
+        EventGridJsonInputSchemaMapping IJsonModel<EventGridJsonInputSchemaMapping>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<EventGridJsonInputSchemaMapping>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EventGridJsonInputSchemaMapping)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEventGridJsonInputSchemaMapping(document.RootElement, options);
+        }
+
+        internal static EventGridJsonInputSchemaMapping DeserializeEventGridJsonInputSchemaMapping(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -66,6 +106,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             Optional<JsonFieldWithDefault> eventType = default;
             Optional<JsonFieldWithDefault> subject = default;
             Optional<JsonFieldWithDefault> dataVersion = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("inputSchemaMappingType"u8))
@@ -139,8 +181,44 @@ namespace Azure.ResourceManager.EventGrid.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new EventGridJsonInputSchemaMapping(inputSchemaMappingType, id.Value, topic.Value, eventTime.Value, eventType.Value, subject.Value, dataVersion.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new EventGridJsonInputSchemaMapping(inputSchemaMappingType, serializedAdditionalRawData, id.Value, topic.Value, eventTime.Value, eventType.Value, subject.Value, dataVersion.Value);
         }
+
+        BinaryData IPersistableModel<EventGridJsonInputSchemaMapping>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EventGridJsonInputSchemaMapping>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(EventGridJsonInputSchemaMapping)} does not support '{options.Format}' format.");
+            }
+        }
+
+        EventGridJsonInputSchemaMapping IPersistableModel<EventGridJsonInputSchemaMapping>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EventGridJsonInputSchemaMapping>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeEventGridJsonInputSchemaMapping(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EventGridJsonInputSchemaMapping)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<EventGridJsonInputSchemaMapping>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

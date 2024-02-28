@@ -5,15 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
-    public partial class FirewallUpdateProperties : IUtf8JsonSerializable
+    public partial class FirewallUpdateProperties : IUtf8JsonSerializable, IJsonModel<FirewallUpdateProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FirewallUpdateProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<FirewallUpdateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<FirewallUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FirewallUpdateProperties)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(PanETag))
             {
@@ -65,7 +77,181 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 writer.WritePropertyName("marketplaceDetails"u8);
                 writer.WriteObjectValue(MarketplaceDetails);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        FirewallUpdateProperties IJsonModel<FirewallUpdateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FirewallUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FirewallUpdateProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFirewallUpdateProperties(document.RootElement, options);
+        }
+
+        internal static FirewallUpdateProperties DeserializeFirewallUpdateProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<ETag> panETag = default;
+            Optional<FirewallNetworkProfile> networkProfile = default;
+            Optional<FirewallBooleanType> isPanoramaManaged = default;
+            Optional<FirewallPanoramaConfiguration> panoramaConfig = default;
+            Optional<RulestackDetails> associatedRulestack = default;
+            Optional<FirewallDnsSettings> dnsSettings = default;
+            Optional<IList<FirewallFrontendSetting>> frontEndSettings = default;
+            Optional<FirewallBillingPlanInfo> planData = default;
+            Optional<PanFirewallMarketplaceDetails> marketplaceDetails = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("panEtag"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    panETag = new ETag(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("networkProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    networkProfile = FirewallNetworkProfile.DeserializeFirewallNetworkProfile(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("isPanoramaManaged"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isPanoramaManaged = new FirewallBooleanType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("panoramaConfig"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    panoramaConfig = FirewallPanoramaConfiguration.DeserializeFirewallPanoramaConfiguration(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("associatedRulestack"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    associatedRulestack = RulestackDetails.DeserializeRulestackDetails(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("dnsSettings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dnsSettings = FirewallDnsSettings.DeserializeFirewallDnsSettings(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("frontEndSettings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<FirewallFrontendSetting> array = new List<FirewallFrontendSetting>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(FirewallFrontendSetting.DeserializeFirewallFrontendSetting(item));
+                    }
+                    frontEndSettings = array;
+                    continue;
+                }
+                if (property.NameEquals("planData"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    planData = FirewallBillingPlanInfo.DeserializeFirewallBillingPlanInfo(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("marketplaceDetails"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    marketplaceDetails = PanFirewallMarketplaceDetails.DeserializePanFirewallMarketplaceDetails(property.Value);
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new FirewallUpdateProperties(Optional.ToNullable(panETag), networkProfile.Value, Optional.ToNullable(isPanoramaManaged), panoramaConfig.Value, associatedRulestack.Value, dnsSettings.Value, Optional.ToList(frontEndSettings), planData.Value, marketplaceDetails.Value, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<FirewallUpdateProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FirewallUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(FirewallUpdateProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        FirewallUpdateProperties IPersistableModel<FirewallUpdateProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FirewallUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeFirewallUpdateProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FirewallUpdateProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<FirewallUpdateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

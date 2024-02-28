@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningAksNetworkingConfiguration : IUtf8JsonSerializable
+    public partial class MachineLearningAksNetworkingConfiguration : IUtf8JsonSerializable, IJsonModel<MachineLearningAksNetworkingConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningAksNetworkingConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MachineLearningAksNetworkingConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningAksNetworkingConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningAksNetworkingConfiguration)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SubnetId))
             {
@@ -35,11 +46,40 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("dockerBridgeCidr"u8);
                 writer.WriteStringValue(DockerBridgeCidr);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningAksNetworkingConfiguration DeserializeMachineLearningAksNetworkingConfiguration(JsonElement element)
+        MachineLearningAksNetworkingConfiguration IJsonModel<MachineLearningAksNetworkingConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningAksNetworkingConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningAksNetworkingConfiguration)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningAksNetworkingConfiguration(document.RootElement, options);
+        }
+
+        internal static MachineLearningAksNetworkingConfiguration DeserializeMachineLearningAksNetworkingConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +88,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> serviceCidr = default;
             Optional<string> dnsServiceIP = default;
             Optional<string> dockerBridgeCidr = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subnetId"u8))
@@ -74,8 +116,44 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     dockerBridgeCidr = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MachineLearningAksNetworkingConfiguration(subnetId.Value, serviceCidr.Value, dnsServiceIP.Value, dockerBridgeCidr.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MachineLearningAksNetworkingConfiguration(subnetId.Value, serviceCidr.Value, dnsServiceIP.Value, dockerBridgeCidr.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MachineLearningAksNetworkingConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningAksNetworkingConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningAksNetworkingConfiguration)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MachineLearningAksNetworkingConfiguration IPersistableModel<MachineLearningAksNetworkingConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningAksNetworkingConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMachineLearningAksNetworkingConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningAksNetworkingConfiguration)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MachineLearningAksNetworkingConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

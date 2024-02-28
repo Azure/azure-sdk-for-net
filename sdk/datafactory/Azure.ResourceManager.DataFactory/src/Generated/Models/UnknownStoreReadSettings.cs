@@ -23,5 +23,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             StoreReadSettingsType = storeReadSettingsType ?? "Unknown";
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownStoreReadSettings"/> for deserialization. </summary>
+        internal UnknownStoreReadSettings()
+        {
+        }
     }
 }

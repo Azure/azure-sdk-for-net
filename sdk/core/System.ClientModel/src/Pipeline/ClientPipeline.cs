@@ -44,15 +44,9 @@ public sealed partial class ClientPipeline
 
     #region Factory methods for creating a pipeline instance
 
-    public static ClientPipeline Create()
-        => Create(ClientPipelineOptions.Default,
+    public static ClientPipeline Create(ClientPipelineOptions? options = default)
+        => Create(options ?? ClientPipelineOptions.Default,
             ReadOnlySpan<PipelinePolicy>.Empty,
-            ReadOnlySpan<PipelinePolicy>.Empty,
-            ReadOnlySpan<PipelinePolicy>.Empty);
-
-    public static ClientPipeline Create(ClientPipelineOptions options, params PipelinePolicy[] perCallPolicies)
-        => Create(options,
-            perCallPolicies,
             ReadOnlySpan<PipelinePolicy>.Empty,
             ReadOnlySpan<PipelinePolicy>.Empty);
 
@@ -64,6 +58,8 @@ public sealed partial class ClientPipeline
     {
         Argument.AssertNotNull(options, nameof(options));
 
+        options.Freeze();
+
         // Add length of client-specific policies.
         int pipelineLength = perCallPolicies.Length + perTryPolicies.Length + beforeTransportPolicies.Length;
 
@@ -73,7 +69,6 @@ public sealed partial class ClientPipeline
         pipelineLength += options.BeforeTransportPolicies?.Length ?? 0;
 
         pipelineLength++; // for retry policy
-        pipelineLength++; // for response buffering policy
         pipelineLength++; // for transport
 
         PipelinePolicy[] policies = new PipelinePolicy[pipelineLength];
@@ -107,9 +102,6 @@ public sealed partial class ClientPipeline
 
         int perTryIndex = index;
 
-        // Response buffering comes before the transport.
-        policies[index++] = ResponseBufferingPolicy.Default;
-
         // Before transport policies come before the transport.
         beforeTransportPolicies.CopyTo(policies.AsSpan(index));
         index += beforeTransportPolicies.Length;
@@ -132,20 +124,21 @@ public sealed partial class ClientPipeline
 
     #endregion
 
-    public PipelineMessage CreateMessage() => _transport.CreateMessage();
+    public PipelineMessage CreateMessage()
+    {
+        PipelineMessage message = _transport.CreateMessage();
+        message.NetworkTimeout = _networkTimeout;
+        return message;
+    }
 
     public void Send(PipelineMessage message)
     {
-        message.NetworkTimeout ??= _networkTimeout;
-
         IReadOnlyList<PipelinePolicy> policies = GetProcessor(message);
         policies[0].Process(message, policies, 0);
     }
 
     public async ValueTask SendAsync(PipelineMessage message)
     {
-        message.NetworkTimeout ??= _networkTimeout;
-
         IReadOnlyList<PipelinePolicy> policies = GetProcessor(message);
         await policies[0].ProcessAsync(message, policies, 0).ConfigureAwait(false);
     }

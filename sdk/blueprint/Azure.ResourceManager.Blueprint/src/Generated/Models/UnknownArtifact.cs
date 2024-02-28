@@ -27,5 +27,10 @@ namespace Azure.ResourceManager.Blueprint.Models
         {
             Kind = kind;
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownArtifact"/> for deserialization. </summary>
+        internal UnknownArtifact()
+        {
+        }
     }
 }

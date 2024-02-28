@@ -5,15 +5,116 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class StampCapacity
+    public partial class StampCapacity : IUtf8JsonSerializable, IJsonModel<StampCapacity>
     {
-        internal static StampCapacity DeserializeStampCapacity(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StampCapacity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<StampCapacity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<StampCapacity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StampCapacity)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(AvailableCapacity))
+            {
+                writer.WritePropertyName("availableCapacity"u8);
+                writer.WriteNumberValue(AvailableCapacity.Value);
+            }
+            if (Optional.IsDefined(TotalCapacity))
+            {
+                writer.WritePropertyName("totalCapacity"u8);
+                writer.WriteNumberValue(TotalCapacity.Value);
+            }
+            if (Optional.IsDefined(Unit))
+            {
+                writer.WritePropertyName("unit"u8);
+                writer.WriteStringValue(Unit);
+            }
+            if (Optional.IsDefined(ComputeMode))
+            {
+                writer.WritePropertyName("computeMode"u8);
+                writer.WriteStringValue(ComputeMode.Value.ToSerialString());
+            }
+            if (Optional.IsDefined(WorkerSize))
+            {
+                writer.WritePropertyName("workerSize"u8);
+                writer.WriteStringValue(WorkerSize.Value.ToSerialString());
+            }
+            if (Optional.IsDefined(WorkerSizeId))
+            {
+                writer.WritePropertyName("workerSizeId"u8);
+                writer.WriteNumberValue(WorkerSizeId.Value);
+            }
+            if (Optional.IsDefined(ExcludeFromCapacityAllocation))
+            {
+                writer.WritePropertyName("excludeFromCapacityAllocation"u8);
+                writer.WriteBooleanValue(ExcludeFromCapacityAllocation.Value);
+            }
+            if (Optional.IsDefined(IsApplicableForAllComputeModes))
+            {
+                writer.WritePropertyName("isApplicableForAllComputeModes"u8);
+                writer.WriteBooleanValue(IsApplicableForAllComputeModes.Value);
+            }
+            if (Optional.IsDefined(SiteMode))
+            {
+                writer.WritePropertyName("siteMode"u8);
+                writer.WriteStringValue(SiteMode);
+            }
+            if (Optional.IsDefined(IsLinux))
+            {
+                writer.WritePropertyName("isLinux"u8);
+                writer.WriteBooleanValue(IsLinux.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        StampCapacity IJsonModel<StampCapacity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StampCapacity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StampCapacity)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStampCapacity(document.RootElement, options);
+        }
+
+        internal static StampCapacity DeserializeStampCapacity(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -29,6 +130,8 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<bool> isApplicableForAllComputeModes = default;
             Optional<string> siteMode = default;
             Optional<bool> isLinux = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -118,8 +221,44 @@ namespace Azure.ResourceManager.AppService.Models
                     isLinux = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new StampCapacity(name.Value, Optional.ToNullable(availableCapacity), Optional.ToNullable(totalCapacity), unit.Value, Optional.ToNullable(computeMode), Optional.ToNullable(workerSize), Optional.ToNullable(workerSizeId), Optional.ToNullable(excludeFromCapacityAllocation), Optional.ToNullable(isApplicableForAllComputeModes), siteMode.Value, Optional.ToNullable(isLinux));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new StampCapacity(name.Value, Optional.ToNullable(availableCapacity), Optional.ToNullable(totalCapacity), unit.Value, Optional.ToNullable(computeMode), Optional.ToNullable(workerSize), Optional.ToNullable(workerSizeId), Optional.ToNullable(excludeFromCapacityAllocation), Optional.ToNullable(isApplicableForAllComputeModes), siteMode.Value, Optional.ToNullable(isLinux), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<StampCapacity>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StampCapacity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(StampCapacity)} does not support '{options.Format}' format.");
+            }
+        }
+
+        StampCapacity IPersistableModel<StampCapacity>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StampCapacity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeStampCapacity(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StampCapacity)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<StampCapacity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -135,13 +135,10 @@ internal static class ResourceExtensions
 
         if (shouldReportMetricTelemetry && metricsData != null)
         {
-            azureMonitorResource.MetricTelemetry = new TelemetryItem(DateTime.UtcNow, azureMonitorResource, instrumentationKey!)
+            azureMonitorResource.MonitorBaseData = new MonitorBase
             {
-                Data = new MonitorBase
-                {
-                    BaseType = "MetricData",
-                    BaseData = metricsData
-                }
+                BaseType = "MetricData",
+                BaseData = metricsData
             };
         }
 

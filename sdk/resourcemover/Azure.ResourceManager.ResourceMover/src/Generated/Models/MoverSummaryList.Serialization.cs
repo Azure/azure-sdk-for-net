@@ -5,22 +5,84 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
-    internal partial class MoverSummaryList
+    internal partial class MoverSummaryList : IUtf8JsonSerializable, IJsonModel<MoverSummaryList>
     {
-        internal static MoverSummaryList DeserializeMoverSummaryList(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MoverSummaryList>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MoverSummaryList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MoverSummaryList>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MoverSummaryList)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(FieldName))
+            {
+                writer.WritePropertyName("fieldName"u8);
+                writer.WriteStringValue(FieldName);
+            }
+            if (Optional.IsCollectionDefined(Summary))
+            {
+                writer.WritePropertyName("summary"u8);
+                writer.WriteStartArray();
+                foreach (var item in Summary)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        MoverSummaryList IJsonModel<MoverSummaryList>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MoverSummaryList>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MoverSummaryList)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMoverSummaryList(document.RootElement, options);
+        }
+
+        internal static MoverSummaryList DeserializeMoverSummaryList(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> fieldName = default;
             Optional<IReadOnlyList<MoverSummaryItemInfo>> summary = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fieldName"u8))
@@ -42,8 +104,44 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     summary = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MoverSummaryList(fieldName.Value, Optional.ToList(summary));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MoverSummaryList(fieldName.Value, Optional.ToList(summary), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MoverSummaryList>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MoverSummaryList>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MoverSummaryList)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MoverSummaryList IPersistableModel<MoverSummaryList>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MoverSummaryList>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMoverSummaryList(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MoverSummaryList)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MoverSummaryList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -41,6 +41,11 @@ namespace Azure.ResourceManager.Maintenance.Models
             Data = data;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ResourceGroupResourceCreateOrUpdateConfigurationAssignmentByParentOptions"/> for deserialization. </summary>
+        internal ResourceGroupResourceCreateOrUpdateConfigurationAssignmentByParentOptions()
+        {
+        }
+
         /// <summary> Resource provider name. </summary>
         public string ProviderName { get; }
         /// <summary> Resource parent type. </summary>

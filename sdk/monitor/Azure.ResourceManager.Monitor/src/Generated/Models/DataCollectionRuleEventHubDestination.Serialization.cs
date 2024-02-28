@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class DataCollectionRuleEventHubDestination : IUtf8JsonSerializable
+    public partial class DataCollectionRuleEventHubDestination : IUtf8JsonSerializable, IJsonModel<DataCollectionRuleEventHubDestination>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataCollectionRuleEventHubDestination>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DataCollectionRuleEventHubDestination>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleEventHubDestination>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataCollectionRuleEventHubDestination)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(EventHubResourceId))
             {
@@ -25,17 +36,48 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DataCollectionRuleEventHubDestination DeserializeDataCollectionRuleEventHubDestination(JsonElement element)
+        DataCollectionRuleEventHubDestination IJsonModel<DataCollectionRuleEventHubDestination>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleEventHubDestination>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataCollectionRuleEventHubDestination)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataCollectionRuleEventHubDestination(document.RootElement, options);
+        }
+
+        internal static DataCollectionRuleEventHubDestination DeserializeDataCollectionRuleEventHubDestination(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<ResourceIdentifier> eventHubResourceId = default;
             Optional<string> name = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eventHubResourceId"u8))
@@ -52,8 +94,44 @@ namespace Azure.ResourceManager.Monitor.Models
                     name = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataCollectionRuleEventHubDestination(eventHubResourceId.Value, name.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DataCollectionRuleEventHubDestination(eventHubResourceId.Value, name.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DataCollectionRuleEventHubDestination>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleEventHubDestination>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DataCollectionRuleEventHubDestination)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DataCollectionRuleEventHubDestination IPersistableModel<DataCollectionRuleEventHubDestination>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleEventHubDestination>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDataCollectionRuleEventHubDestination(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataCollectionRuleEventHubDestination)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataCollectionRuleEventHubDestination>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

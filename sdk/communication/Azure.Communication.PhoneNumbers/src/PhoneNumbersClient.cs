@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -22,6 +23,7 @@ namespace Azure.Communication.PhoneNumbers
     {
         internal InternalPhoneNumbersClient InternalClient { get; }
         internal InternalPhoneNumbersRestClient RestClient { get; }
+
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         private readonly string _acceptedLanguage;
@@ -236,14 +238,15 @@ namespace Azure.Communication.PhoneNumbers
 
         /// <summary> Purchases phone numbers. </summary>
         /// <param name="searchId"> The search id. </param>
+        /// <param name="consentToNotResellNumbers"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<PurchasePhoneNumbersOperation> StartPurchasePhoneNumbersAsync(string searchId, CancellationToken cancellationToken = default)
+        public virtual async Task<PurchasePhoneNumbersOperation> StartPurchasePhoneNumbersAsync(string searchId, bool consentToNotResellNumbers, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(StartPurchasePhoneNumbers)}");
             scope.Start();
             try
             {
-                var originalResponse = await InternalClient.StartPurchasePhoneNumbersAsync(searchId, null, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await InternalClient.StartPurchasePhoneNumbersAsync(searchId, consentToNotResellNumbers, cancellationToken).ConfigureAwait(false);
                 return new PurchasePhoneNumbersOperation(originalResponse);
             }
             catch (Exception e)
@@ -255,14 +258,15 @@ namespace Azure.Communication.PhoneNumbers
 
         /// <summary> Purchases phone numbers. </summary>
         /// <param name="searchId"> The search id. </param>
+        /// <param name="consentToNotResellNumbers"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual PurchasePhoneNumbersOperation StartPurchasePhoneNumbers(string searchId, CancellationToken cancellationToken = default)
+        public virtual PurchasePhoneNumbersOperation StartPurchasePhoneNumbers(string searchId, bool consentToNotResellNumbers, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(StartPurchasePhoneNumbers)}");
             scope.Start();
             try
             {
-                var originalResponse = InternalClient.StartPurchasePhoneNumbers(searchId, null, cancellationToken);
+                var originalResponse = InternalClient.StartPurchasePhoneNumbers(searchId, consentToNotResellNumbers, cancellationToken);
                 return new PurchasePhoneNumbersOperation(originalResponse);
             }
             catch (Exception e)
@@ -704,6 +708,48 @@ namespace Azure.Communication.PhoneNumbers
                 }
             }
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PhoneNumberOffering.DeserializePhoneNumberOffering, _clientDiagnostics, _pipeline, "InternalPhoneNumbersClient.ListOfferings", "phoneNumberOfferings", "nextLink", cancellationToken);
+        }
+
+        /// <summary> Search for operator information about specified phone numbers. </summary>
+        /// <param name="phoneNumbers"> The phone numbers to search. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<OperatorInformationResult>> SearchOperatorInformationAsync(IEnumerable<string> phoneNumbers, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(phoneNumbers, nameof(phoneNumbers));
+
+            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(SearchOperatorInformation)}");
+            scope.Start();
+            try
+            {
+                var response = await InternalClient.OperatorInformationSearchAsync(phoneNumbers, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Search for operator information about specified phone numbers. </summary>
+        /// <param name="phoneNumbers"> The phone numbers to search. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<OperatorInformationResult> SearchOperatorInformation(IEnumerable<string> phoneNumbers, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(phoneNumbers, nameof(phoneNumbers));
+
+            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(SearchOperatorInformation)}");
+            scope.Start();
+            try
+            {
+                var response = InternalClient.OperatorInformationSearch(phoneNumbers, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Lists the available area codes within a given country and locality. </summary>

@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    public partial class UpdatePrerequisite : IUtf8JsonSerializable
+    public partial class UpdatePrerequisite : IUtf8JsonSerializable, IJsonModel<UpdatePrerequisite>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UpdatePrerequisite>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<UpdatePrerequisite>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<UpdatePrerequisite>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(UpdatePrerequisite)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(UpdateType))
             {
@@ -30,11 +41,40 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("packageName"u8);
                 writer.WriteStringValue(PackageName);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UpdatePrerequisite DeserializeUpdatePrerequisite(JsonElement element)
+        UpdatePrerequisite IJsonModel<UpdatePrerequisite>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<UpdatePrerequisite>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(UpdatePrerequisite)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeUpdatePrerequisite(document.RootElement, options);
+        }
+
+        internal static UpdatePrerequisite DeserializeUpdatePrerequisite(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +82,8 @@ namespace Azure.ResourceManager.Hci.Models
             Optional<string> updateType = default;
             Optional<string> version = default;
             Optional<string> packageName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("updateType"u8))
@@ -59,8 +101,44 @@ namespace Azure.ResourceManager.Hci.Models
                     packageName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new UpdatePrerequisite(updateType.Value, version.Value, packageName.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new UpdatePrerequisite(updateType.Value, version.Value, packageName.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<UpdatePrerequisite>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<UpdatePrerequisite>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(UpdatePrerequisite)} does not support '{options.Format}' format.");
+            }
+        }
+
+        UpdatePrerequisite IPersistableModel<UpdatePrerequisite>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<UpdatePrerequisite>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeUpdatePrerequisite(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(UpdatePrerequisite)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<UpdatePrerequisite>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

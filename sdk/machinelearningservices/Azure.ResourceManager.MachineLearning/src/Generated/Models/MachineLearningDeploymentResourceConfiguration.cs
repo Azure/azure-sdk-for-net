@@ -27,7 +27,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// For use with elastic training, currently supported by PyTorch distribution type only.
         /// </param>
         /// <param name="properties"> Additional properties bag. </param>
-        internal MachineLearningDeploymentResourceConfiguration(int? instanceCount, string instanceType, IList<string> locations, int? maxInstanceCount, IDictionary<string, BinaryData> properties) : base(instanceCount, instanceType, locations, maxInstanceCount, properties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningDeploymentResourceConfiguration(int? instanceCount, string instanceType, IList<string> locations, int? maxInstanceCount, IDictionary<string, BinaryData> properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(instanceCount, instanceType, locations, maxInstanceCount, properties, serializedAdditionalRawData)
         {
         }
     }
