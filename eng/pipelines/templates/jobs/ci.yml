@@ -250,11 +250,6 @@ jobs:
 
         - template: /eng/common/pipelines/templates/steps/eng-common-workflow-enforcer.yml
 
-        - template: /eng/common/pipelines/templates/steps/credscan.yml
-          parameters:
-            BaselineFilePath: $(Build.sourcesdirectory)/eng/dotnet.gdnbaselines
-            ServiceDirectory: ${{ parameters.ServiceDirectory }}
-
     - template: /eng/common/pipelines/templates/jobs/generate-job-matrix.yml
       parameters:
         GenerateJobName: generate_target_service_test_matrix

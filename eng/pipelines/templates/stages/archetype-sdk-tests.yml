@@ -135,7 +135,7 @@ extends:
         suppressionsFile: $(Build.SourcesDirectory)/eng/CredScanSuppression.json
         scanFolder: $(Build.SourcesDirectory)/credscan.tsv
         toolVersion: 2.3.12.23
-        baselineFiles: $(Build.SourcesDirectory)/eng/<language>.gdnbaselines
+        baselineFiles: $(Build.SourcesDirectory)/eng/dotnet.gdnbaselines
 
     stages:
       - ${{ each cloud in parameters.CloudConfig }}:
