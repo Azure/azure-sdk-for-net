@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Rid))
+            if (options.Format != "W" && Rid != null)
             {
                 writer.WritePropertyName("_rid"u8);
                 writer.WriteStringValue(Rid);
             }
-            if (options.Format != "W" && Optional.IsDefined(OperationType))
+            if (options.Format != "W" && OperationType.HasValue)
             {
                 writer.WritePropertyName("operationType"u8);
                 writer.WriteStringValue(OperationType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CanUndelete))
+            if (options.Format != "W" && CanUndelete != null)
             {
                 writer.WritePropertyName("canUndelete"u8);
                 writer.WriteStringValue(CanUndelete);
             }
-            if (options.Format != "W" && Optional.IsDefined(CanUndeleteReason))
+            if (options.Format != "W" && CanUndeleteReason != null)
             {
                 writer.WritePropertyName("canUndeleteReason"u8);
                 writer.WriteStringValue(CanUndeleteReason);
             }
-            if (options.Format != "W" && Optional.IsDefined(EventTimestamp))
+            if (options.Format != "W" && EventTimestamp != null)
             {
                 writer.WritePropertyName("eventTimestamp"u8);
                 writer.WriteStringValue(EventTimestamp);
             }
-            if (options.Format != "W" && Optional.IsDefined(TableName))
+            if (options.Format != "W" && TableName != null)
             {
                 writer.WritePropertyName("ownerId"u8);
                 writer.WriteStringValue(TableName);
             }
-            if (options.Format != "W" && Optional.IsDefined(TableId))
+            if (options.Format != "W" && TableId != null)
             {
                 writer.WritePropertyName("ownerResourceId"u8);
                 writer.WriteStringValue(TableId);
@@ -155,7 +155,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExtendedRestorableTableResourceInfo(rid.Value, Optional.ToNullable(operationType), canUndelete.Value, canUndeleteReason.Value, eventTimestamp.Value, ownerId.Value, ownerResourceId.Value, serializedAdditionalRawData);
+            return new ExtendedRestorableTableResourceInfo(
+                rid.Value,
+                Optional.ToNullable(operationType),
+                canUndelete.Value,
+                canUndeleteReason.Value,
+                eventTimestamp.Value,
+                ownerId.Value,
+                ownerResourceId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExtendedRestorableTableResourceInfo>.Write(ModelReaderWriterOptions options)

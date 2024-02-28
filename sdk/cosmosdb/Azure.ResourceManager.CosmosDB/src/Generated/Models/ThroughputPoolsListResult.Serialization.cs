@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<ThroughputPoolResourceData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ThroughputPoolResourceData>> value = default;
+            IReadOnlyList<ThroughputPoolResourceData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<ThroughputPoolResourceData> array = new List<ThroughputPoolResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ThroughputPoolResourceData.DeserializeThroughputPoolResourceData(item));
+                        array.Add(ThroughputPoolResourceData.DeserializeThroughputPoolResourceData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ThroughputPoolsListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ThroughputPoolsListResult(value ?? new ChangeTrackingList<ThroughputPoolResourceData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ThroughputPoolsListResult>.Write(ModelReaderWriterOptions options)

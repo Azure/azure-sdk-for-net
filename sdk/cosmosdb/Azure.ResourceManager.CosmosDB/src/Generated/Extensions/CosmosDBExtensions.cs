@@ -933,7 +933,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="ThroughputPoolResource"/> object. </returns>
         public static ThroughputPoolResource GetThroughputPoolResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableCosmosDBArmClient(client).GetThroughputPoolResource(id);
         }
@@ -952,7 +955,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="ThroughputPoolAccountResource"/> object. </returns>
         public static ThroughputPoolAccountResource GetThroughputPoolAccountResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableCosmosDBArmClient(client).GetThroughputPoolAccountResource(id);
         }
@@ -1275,7 +1281,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An object representing collection of ThroughputPoolResources and their operations over a ThroughputPoolResource. </returns>
         public static ThroughputPoolResourceCollection GetThroughputPoolResources(this ResourceGroupResource resourceGroupResource)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableCosmosDBResourceGroupResource(resourceGroupResource).GetThroughputPoolResources();
         }
@@ -1313,7 +1322,10 @@ namespace Azure.ResourceManager.CosmosDB
         [ForwardsClientCalls]
         public static async Task<Response<ThroughputPoolResource>> GetThroughputPoolResourceAsync(this ResourceGroupResource resourceGroupResource, string throughputPoolName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return await GetMockableCosmosDBResourceGroupResource(resourceGroupResource).GetThroughputPoolResourceAsync(throughputPoolName, cancellationToken).ConfigureAwait(false);
         }
@@ -1351,7 +1363,10 @@ namespace Azure.ResourceManager.CosmosDB
         [ForwardsClientCalls]
         public static Response<ThroughputPoolResource> GetThroughputPoolResource(this ResourceGroupResource resourceGroupResource, string throughputPoolName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableCosmosDBResourceGroupResource(resourceGroupResource).GetThroughputPoolResource(throughputPoolName, cancellationToken);
         }
@@ -1799,7 +1814,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An async collection of <see cref="ThroughputPoolResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ThroughputPoolResource> GetThroughputPoolResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableCosmosDBSubscriptionResource(subscriptionResource).GetThroughputPoolResourcesAsync(cancellationToken);
         }
@@ -1835,7 +1853,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> A collection of <see cref="ThroughputPoolResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ThroughputPoolResource> GetThroughputPoolResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableCosmosDBSubscriptionResource(subscriptionResource).GetThroughputPoolResources(cancellationToken);
         }

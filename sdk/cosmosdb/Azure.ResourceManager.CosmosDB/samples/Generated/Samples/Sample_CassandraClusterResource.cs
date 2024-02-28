@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -198,10 +197,10 @@ IPAddress = "10.52.221.4",
             // invoke the operation
             CassandraCommandPostBody body = new CassandraCommandPostBody("nodetool", "10.0.1.12")
             {
-                Arguments = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
-                {
-                    ["status"] = ""
-                }),
+                Arguments =
+{
+["status"] = "",
+},
             };
             ArmOperation<CassandraCommandOutput> lro = await cassandraCluster.InvokeCommandAsync(WaitUntil.Completed, body);
             CassandraCommandOutput result = lro.Value;

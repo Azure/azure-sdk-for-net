@@ -68,10 +68,38 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="throughputPoolName"/> or <paramref name="throughputPoolAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ThroughputPoolAccountResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string throughputPoolName, string throughputPoolAccountName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(throughputPoolName, nameof(throughputPoolName));
-            Argument.AssertNotNullOrEmpty(throughputPoolAccountName, nameof(throughputPoolAccountName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (throughputPoolName == null)
+            {
+                throw new ArgumentNullException(nameof(throughputPoolName));
+            }
+            if (throughputPoolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(throughputPoolName));
+            }
+            if (throughputPoolAccountName == null)
+            {
+                throw new ArgumentNullException(nameof(throughputPoolAccountName));
+            }
+            if (throughputPoolAccountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(throughputPoolAccountName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, throughputPoolName, throughputPoolAccountName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -101,10 +129,38 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="throughputPoolName"/> or <paramref name="throughputPoolAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ThroughputPoolAccountResourceData> Get(string subscriptionId, string resourceGroupName, string throughputPoolName, string throughputPoolAccountName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(throughputPoolName, nameof(throughputPoolName));
-            Argument.AssertNotNullOrEmpty(throughputPoolAccountName, nameof(throughputPoolAccountName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (throughputPoolName == null)
+            {
+                throw new ArgumentNullException(nameof(throughputPoolName));
+            }
+            if (throughputPoolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(throughputPoolName));
+            }
+            if (throughputPoolAccountName == null)
+            {
+                throw new ArgumentNullException(nameof(throughputPoolAccountName));
+            }
+            if (throughputPoolAccountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(throughputPoolAccountName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, throughputPoolName, throughputPoolAccountName);
             _pipeline.Send(message, cancellationToken);
@@ -161,11 +217,42 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="throughputPoolName"/> or <paramref name="throughputPoolAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string throughputPoolName, string throughputPoolAccountName, ThroughputPoolAccountResourceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(throughputPoolName, nameof(throughputPoolName));
-            Argument.AssertNotNullOrEmpty(throughputPoolAccountName, nameof(throughputPoolAccountName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (throughputPoolName == null)
+            {
+                throw new ArgumentNullException(nameof(throughputPoolName));
+            }
+            if (throughputPoolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(throughputPoolName));
+            }
+            if (throughputPoolAccountName == null)
+            {
+                throw new ArgumentNullException(nameof(throughputPoolAccountName));
+            }
+            if (throughputPoolAccountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(throughputPoolAccountName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, throughputPoolName, throughputPoolAccountName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -190,11 +277,42 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="throughputPoolName"/> or <paramref name="throughputPoolAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Create(string subscriptionId, string resourceGroupName, string throughputPoolName, string throughputPoolAccountName, ThroughputPoolAccountResourceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(throughputPoolName, nameof(throughputPoolName));
-            Argument.AssertNotNullOrEmpty(throughputPoolAccountName, nameof(throughputPoolAccountName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (throughputPoolName == null)
+            {
+                throw new ArgumentNullException(nameof(throughputPoolName));
+            }
+            if (throughputPoolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(throughputPoolName));
+            }
+            if (throughputPoolAccountName == null)
+            {
+                throw new ArgumentNullException(nameof(throughputPoolAccountName));
+            }
+            if (throughputPoolAccountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(throughputPoolAccountName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, throughputPoolName, throughputPoolAccountName, data);
             _pipeline.Send(message, cancellationToken);
@@ -240,10 +358,38 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="throughputPoolName"/> or <paramref name="throughputPoolAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string throughputPoolName, string throughputPoolAccountName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(throughputPoolName, nameof(throughputPoolName));
-            Argument.AssertNotNullOrEmpty(throughputPoolAccountName, nameof(throughputPoolAccountName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (throughputPoolName == null)
+            {
+                throw new ArgumentNullException(nameof(throughputPoolName));
+            }
+            if (throughputPoolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(throughputPoolName));
+            }
+            if (throughputPoolAccountName == null)
+            {
+                throw new ArgumentNullException(nameof(throughputPoolAccountName));
+            }
+            if (throughputPoolAccountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(throughputPoolAccountName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, throughputPoolName, throughputPoolAccountName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -267,10 +413,38 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="throughputPoolName"/> or <paramref name="throughputPoolAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string throughputPoolName, string throughputPoolAccountName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(throughputPoolName, nameof(throughputPoolName));
-            Argument.AssertNotNullOrEmpty(throughputPoolAccountName, nameof(throughputPoolAccountName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (throughputPoolName == null)
+            {
+                throw new ArgumentNullException(nameof(throughputPoolName));
+            }
+            if (throughputPoolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(throughputPoolName));
+            }
+            if (throughputPoolAccountName == null)
+            {
+                throw new ArgumentNullException(nameof(throughputPoolAccountName));
+            }
+            if (throughputPoolAccountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(throughputPoolAccountName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, throughputPoolName, throughputPoolAccountName);
             _pipeline.Send(message, cancellationToken);

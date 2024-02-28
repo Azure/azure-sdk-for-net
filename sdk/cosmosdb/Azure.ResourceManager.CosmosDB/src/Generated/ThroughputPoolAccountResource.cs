@@ -281,7 +281,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ThroughputPoolAccountResource>> UpdateAsync(WaitUntil waitUntil, ThroughputPoolAccountResourceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _throughputPoolAccountResourceThroughputPoolAccountClientDiagnostics.CreateScope("ThroughputPoolAccountResource.Update");
             scope.Start();
@@ -327,7 +330,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ThroughputPoolAccountResource> Update(WaitUntil waitUntil, ThroughputPoolAccountResourceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _throughputPoolAccountResourceThroughputPoolAccountClientDiagnostics.CreateScope("ThroughputPoolAccountResource.Update");
             scope.Start();

@@ -88,8 +88,18 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="throughputPoolName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ThroughputPoolResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string throughputPoolName, ThroughputPoolResourceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(throughputPoolName, nameof(throughputPoolName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (throughputPoolName == null)
+            {
+                throw new ArgumentNullException(nameof(throughputPoolName));
+            }
+            if (throughputPoolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(throughputPoolName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _throughputPoolResourceThroughputPoolClientDiagnostics.CreateScope("ThroughputPoolResourceCollection.CreateOrUpdate");
             scope.Start();
@@ -137,8 +147,18 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="throughputPoolName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ThroughputPoolResource> CreateOrUpdate(WaitUntil waitUntil, string throughputPoolName, ThroughputPoolResourceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(throughputPoolName, nameof(throughputPoolName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (throughputPoolName == null)
+            {
+                throw new ArgumentNullException(nameof(throughputPoolName));
+            }
+            if (throughputPoolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(throughputPoolName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _throughputPoolResourceThroughputPoolClientDiagnostics.CreateScope("ThroughputPoolResourceCollection.CreateOrUpdate");
             scope.Start();
@@ -184,7 +204,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="throughputPoolName"/> is null. </exception>
         public virtual async Task<Response<ThroughputPoolResource>> GetAsync(string throughputPoolName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(throughputPoolName, nameof(throughputPoolName));
+            if (throughputPoolName == null)
+            {
+                throw new ArgumentNullException(nameof(throughputPoolName));
+            }
+            if (throughputPoolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(throughputPoolName));
+            }
 
             using var scope = _throughputPoolResourceThroughputPoolClientDiagnostics.CreateScope("ThroughputPoolResourceCollection.Get");
             scope.Start();
@@ -229,7 +256,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="throughputPoolName"/> is null. </exception>
         public virtual Response<ThroughputPoolResource> Get(string throughputPoolName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(throughputPoolName, nameof(throughputPoolName));
+            if (throughputPoolName == null)
+            {
+                throw new ArgumentNullException(nameof(throughputPoolName));
+            }
+            if (throughputPoolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(throughputPoolName));
+            }
 
             using var scope = _throughputPoolResourceThroughputPoolClientDiagnostics.CreateScope("ThroughputPoolResourceCollection.Get");
             scope.Start();
@@ -334,7 +368,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="throughputPoolName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string throughputPoolName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(throughputPoolName, nameof(throughputPoolName));
+            if (throughputPoolName == null)
+            {
+                throw new ArgumentNullException(nameof(throughputPoolName));
+            }
+            if (throughputPoolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(throughputPoolName));
+            }
 
             using var scope = _throughputPoolResourceThroughputPoolClientDiagnostics.CreateScope("ThroughputPoolResourceCollection.Exists");
             scope.Start();
@@ -377,7 +418,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="throughputPoolName"/> is null. </exception>
         public virtual Response<bool> Exists(string throughputPoolName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(throughputPoolName, nameof(throughputPoolName));
+            if (throughputPoolName == null)
+            {
+                throw new ArgumentNullException(nameof(throughputPoolName));
+            }
+            if (throughputPoolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(throughputPoolName));
+            }
 
             using var scope = _throughputPoolResourceThroughputPoolClientDiagnostics.CreateScope("ThroughputPoolResourceCollection.Exists");
             scope.Start();
@@ -420,7 +468,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="throughputPoolName"/> is null. </exception>
         public virtual async Task<NullableResponse<ThroughputPoolResource>> GetIfExistsAsync(string throughputPoolName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(throughputPoolName, nameof(throughputPoolName));
+            if (throughputPoolName == null)
+            {
+                throw new ArgumentNullException(nameof(throughputPoolName));
+            }
+            if (throughputPoolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(throughputPoolName));
+            }
 
             using var scope = _throughputPoolResourceThroughputPoolClientDiagnostics.CreateScope("ThroughputPoolResourceCollection.GetIfExists");
             scope.Start();
@@ -465,7 +520,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="throughputPoolName"/> is null. </exception>
         public virtual NullableResponse<ThroughputPoolResource> GetIfExists(string throughputPoolName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(throughputPoolName, nameof(throughputPoolName));
+            if (throughputPoolName == null)
+            {
+                throw new ArgumentNullException(nameof(throughputPoolName));
+            }
+            if (throughputPoolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(throughputPoolName));
+            }
 
             using var scope = _throughputPoolResourceThroughputPoolClientDiagnostics.CreateScope("ThroughputPoolResourceCollection.GetIfExists");
             scope.Start();

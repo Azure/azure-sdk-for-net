@@ -28,29 +28,28 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             writer.WritePropertyName("command"u8);
             writer.WriteStringValue(Command);
-            if (Optional.IsDefined(Arguments))
+            if (!(Arguments is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("arguments"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Arguments);
-#else
-                using (JsonDocument document = JsonDocument.Parse(Arguments))
+                writer.WriteStartObject();
+                foreach (var item in Arguments)
                 {
-                    JsonSerializer.Serialize(writer, document.RootElement);
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
                 }
-#endif
+                writer.WriteEndObject();
             }
             writer.WritePropertyName("host"u8);
             writer.WriteStringValue(Host);
-            if (Optional.IsDefined(CassandraStopStart))
+            if (CassandraStopStart.HasValue)
             {
                 writer.WritePropertyName("cassandra-stop-start"u8);
                 writer.WriteBooleanValue(CassandraStopStart.Value);
             }
-            if (Optional.IsDefined(ReadWrite))
+            if (AllowWrite.HasValue)
             {
                 writer.WritePropertyName("readWrite"u8);
-                writer.WriteBooleanValue(ReadWrite.Value);
+                writer.WriteBooleanValue(AllowWrite.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -91,7 +90,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             string command = default;
-            Optional<BinaryData> arguments = default;
+            IDictionary<string, string> arguments = default;
             string host = default;
             Optional<bool> cassandraStopStart = default;
             Optional<bool> readWrite = default;
@@ -110,7 +109,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    arguments = BinaryData.FromString(property.Value.GetRawText());
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    arguments = dictionary;
                     continue;
                 }
                 if (property.NameEquals("host"u8))
@@ -142,7 +146,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CassandraCommandPostBody(command, arguments.Value, host, Optional.ToNullable(cassandraStopStart), Optional.ToNullable(readWrite), serializedAdditionalRawData);
+            return new CassandraCommandPostBody(
+                command,
+                arguments ?? new ChangeTrackingDictionary<string, string>(),
+                host,
+                Optional.ToNullable(cassandraStopStart),
+                Optional.ToNullable(readWrite),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CassandraCommandPostBody>.Write(ModelReaderWriterOptions options)

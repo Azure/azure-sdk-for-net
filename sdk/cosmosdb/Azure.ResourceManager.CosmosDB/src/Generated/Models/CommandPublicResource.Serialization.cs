@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Command))
+            if (Command != null)
             {
                 writer.WritePropertyName("command"u8);
                 writer.WriteStringValue(Command);
             }
-            if (Optional.IsDefined(CommandId))
+            if (CommandId != null)
             {
                 writer.WritePropertyName("commandId"u8);
                 writer.WriteStringValue(CommandId);
             }
-            if (Optional.IsDefined(Arguments))
+            if (Arguments != null)
             {
                 writer.WritePropertyName("arguments"u8);
 #if NET6_0_OR_GREATER
@@ -48,37 +48,37 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
 #endif
             }
-            if (Optional.IsDefined(Host))
+            if (Host != null)
             {
                 writer.WritePropertyName("host"u8);
                 writer.WriteStringValue(Host);
             }
-            if (Optional.IsDefined(IsAdmin))
+            if (IsAdmin.HasValue)
             {
                 writer.WritePropertyName("isAdmin"u8);
                 writer.WriteBooleanValue(IsAdmin.Value);
             }
-            if (Optional.IsDefined(CassandraStopStart))
+            if (CassandraStopStart.HasValue)
             {
                 writer.WritePropertyName("cassandraStopStart"u8);
                 writer.WriteBooleanValue(CassandraStopStart.Value);
             }
-            if (Optional.IsDefined(ReadWrite))
+            if (ReadWrite.HasValue)
             {
                 writer.WritePropertyName("readWrite"u8);
                 writer.WriteBooleanValue(ReadWrite.Value);
             }
-            if (Optional.IsDefined(Result))
+            if (Result != null)
             {
                 writer.WritePropertyName("result"u8);
                 writer.WriteStringValue(Result);
             }
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(OutputFile))
+            if (OutputFile != null)
             {
                 writer.WritePropertyName("outputFile"u8);
                 writer.WriteStringValue(OutputFile);
@@ -211,7 +211,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CommandPublicResource(command.Value, commandId.Value, arguments.Value, host.Value, Optional.ToNullable(isAdmin), Optional.ToNullable(cassandraStopStart), Optional.ToNullable(readWrite), result.Value, Optional.ToNullable(status), outputFile.Value, serializedAdditionalRawData);
+            return new CommandPublicResource(
+                command.Value,
+                commandId.Value,
+                arguments.Value,
+                host.Value,
+                Optional.ToNullable(isAdmin),
+                Optional.ToNullable(cassandraStopStart),
+                Optional.ToNullable(readWrite),
+                result.Value,
+                Optional.ToNullable(status),
+                outputFile.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CommandPublicResource>.Write(ModelReaderWriterOptions options)

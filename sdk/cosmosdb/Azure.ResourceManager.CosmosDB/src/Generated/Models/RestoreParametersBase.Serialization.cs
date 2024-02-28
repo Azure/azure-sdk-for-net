@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("restoreTimestampInUtc"u8);
                 writer.WriteStringValue(RestoreTimestampInUtc.Value, "O");
             }
-            if (Optional.IsDefined(RestoreWithTtlDisabled))
+            if (RestoreWithTtlDisabled.HasValue)
             {
                 writer.WritePropertyName("restoreWithTtlDisabled"u8);
                 writer.WriteBooleanValue(RestoreWithTtlDisabled.Value);
