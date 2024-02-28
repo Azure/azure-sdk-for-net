@@ -36,9 +36,11 @@ stages:
                     PackagesPath: $(Pipeline.Workspace)/${{parameters.ArtifactName}}
                     BuildToolsPath: $(AzureSDKBuildToolsPath)
 
-                - publish: $(Pipeline.Workspace)/${{parameters.ArtifactName}}
-                  artifact: ${{parameters.ArtifactName}}-signed
-                  displayName: 'Store signed packages in ${{parameters.ArtifactName}}-signed artifact'
+                - template: /eng/common/pipelines/templates/steps/publish-artifact.yml
+                  parameters:
+                    DisplayName: 'Store signed packages in ${{parameters.ArtifactName}}-signed artifact'
+                    ArtifactPath: $(Pipeline.Workspace)/${{parameters.ArtifactName}}
+                    ArtifactName: ${{parameters.ArtifactName}}-signed
 
   - ${{if and(in(variables['Build.Reason'], 'Manual', ''), eq(variables['System.TeamProject'], 'internal'))}}:
     - ${{ each artifact in parameters.Artifacts }}:
@@ -117,17 +119,19 @@ stages:
                     deploy:
                       steps:
                         - checkout: none
-                        - task: NuGetCommand@2
+                        - task: 1ES.PublishNuget@1
                           displayName: 'Publish ${{artifact.name}} package to NuGet.org'
                           inputs:
                             command: push
+                            packageParentPath: $(Pipeline.Workspace)
                             packagesToPush: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.nupkg;!$(Pipeline.Workspace)//${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.symbols.nupkg'
                             nuGetFeedType: external
                             publishFeedCredentials: Nuget.org
-                        - task: NuGetCommand@2
+                        - task: 1ES.PublishNuget@1
                           displayName: 'Publish to DevOps Feed'
                           inputs:
                             command: push
+                            packageParentPath: $(Pipeline.Workspace)
                             packagesToPush: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.nupkg;!$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.symbols.nupkg'
                             publishVstsFeed: ${{ parameters.DevOpsFeedID }}
 
@@ -285,10 +289,10 @@ stages:
               echo "Using DevopsFeedId = $devopsFeedId"
             displayName: Setup DevOpsFeedId
           - ${{ each artifact in parameters.Artifacts }}:
-            - task: NuGetCommand@2
+            - task: 1ES.PublishNuget@1
               displayName: 'Publish to DevOps Feed'
               inputs:
-                command: push
+                packageParentPath: '$(Pipeline.Workspace)'
                 packagesToPush: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.nupkg;!$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.symbols.nupkg'
                 publishVstsFeed: $(DevOpsFeedID)
 
