@@ -94,6 +94,46 @@ namespace Azure.Communication.Chat
             }
         }
 
+        /// <summary>Creates a ChatThreadClient asynchronously. <see cref="ChatThreadClient"/>.</summary>
+        /// <param name = "options" > CreateChatThreadOptions </param>
+        /// <param name="cancellationToken">The cancellation token for the task.</param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual async Task<Response<CreateChatThreadResult>> CreateChatThreadAsync(CreateChatThreadOptions options, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatClient)}.{nameof(CreateChatThread)}");
+            scope.Start();
+            try
+            {
+                options.IdempotencyToken ??= Guid.NewGuid().ToString();
+                Response<CreateChatThreadResultInternal> createChatThreadResultInternal = await _chatRestClient.CreateChatThreadAsync(options.Topic, options.Participants.Select(x => x.ToChatParticipantInternal()),options.Metadata, options.RetentionPolicy, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new CreateChatThreadResult(createChatThreadResultInternal.Value), createChatThreadResultInternal.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+        /// <param name = "options" > Retention policy</param>
+        /// <param name="cancellationToken">The cancellation token for the task.</param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual Response<CreateChatThreadResult> CreateChatThread(CreateChatThreadOptions options, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatClient)}.{nameof(CreateChatThread)}");
+            scope.Start();
+            try
+            {
+                options.IdempotencyToken ??= Guid.NewGuid().ToString();
+                Response<CreateChatThreadResultInternal> createChatThreadResultInternal = _chatRestClient.CreateChatThread(options.Topic, options.Participants.Select(x => x.ToChatParticipantInternal()), options.Metadata, options.RetentionPolicy,cancellationToken);
+                return Response.FromValue(new CreateChatThreadResult(createChatThreadResultInternal.Value), createChatThreadResultInternal.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
         /// <summary> Initializes a new instance of ChatThreadClient. <see cref="ChatThreadClient"/>.</summary>
         /// <param name="threadId"> The thread id for the ChatThreadClient instance. </param>
         public virtual ChatThreadClient GetChatThreadClient(string threadId)

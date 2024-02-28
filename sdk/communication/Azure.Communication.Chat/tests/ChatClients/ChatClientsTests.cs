@@ -25,7 +25,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
 
         private const string AddParticipantsdWithErrorsApiResponsePayload = "{\"invalidParticipants\":[{\"code\":\"404\",\"message\":\"Not found\",\"target\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345677\"},{\"code\":\"401\",\"message\":\"Authentication failed\",\"target\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345678\"},{\"code\":\"403\",\"message\":\"Permissions check failed\",\"target\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345679\"}]}";
 
-        private const string CreateChatThreadSuccessApiResponsePayload = "{\"chatThread\":{\"id\":\"19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2\",\"topic\":\"Topic for testing success\",\"createdOn\":\"2021-02-25T22:34:48Z\",\"createdByCommunicationIdentifier\":{\"rawId\":\"8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c\",\"communicationUser\":{\"id\":\"8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c\"}}}}";
+        private const string CreateChatThreadSuccessApiResponsePayload = "{\"chatThread\":{\"id\":\"19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2\",\"topic\":\"Topic for testing success\",\"createdOn\":\"2021-02-25T22:34:48Z\",\"createdByCommunicationIdentifier\":{\"rawId\":\"8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c\",\"communicationUser\":{\"id\":\"8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c\"}}}, \"retentionPolicy\":{ \"kind\":\"threadCreationDate\", \"deleteThreadAfterDays\":40 }}";
 
         private const string GetThreadApiResponsePayload = "{\"id\":\"19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2\",\"topic\":\"Test Thread\",\"createdOn\":\"2021-02-26T00:46:08Z\",\"createdByCommunicationIdentifier\":{\"rawId\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-8f5e-776d-ea7c-5a3a0d0027b7\",\"communicationUser\":{\"id\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-8f5e-776d-ea7c-5a3a0d0027b7\"}}}";
 
@@ -46,6 +46,8 @@ namespace Azure.Communication.Chat.Tests.ChatClients
         private const string GetThreadsApiResponsePayloadPage2 = "{\"value\":[{\"id\":\"4\",\"topic\":\"Test Thread 4\",\"lastMessageReceivedOn\":\"2021-02-26T00:46:09Z\"},{\"id\":\"5\",\"topic\":\"Test Thread 5\",\"lastMessageReceivedOn\":\"2021-02-25T23:38:20Z\"},{\"id\":\"6\",\"topic\":\"Test Thread 6\",\"lastMessageReceivedOn\":\"2021-02-25T23:33:29Z\"}]}";
 
         private const string GetThreadsApiResponseEmptyPayload = "{}";
+
+        private const string GetThreadWithRetentionPolicy = "{ \"id\":\"19:2b07853d87b74ca0a331cdb94b6e0436@thread.v2\", \"topic\":\"General\", \"createdOn\":\"2024-02-27T03:22:34Z\", \"createdByCommunicationIdentifier\":{ \"rawId\":\"8:acs:188d4cea-0a9b-4840-8fdc-7a5c71fe9bd0_0000001c-4b3a-2d1d-c8df-024822001b4f\", \"communicationUser\":{ \"id\":\"8:acs:188d4cea-0a9b-4840-8fdc-7a5c71fe9bd0_0000001c-4b3a-2d1d-c8df-024822001b4f\" } }, \"retentionPolicy\":{ \"kind\":\"threadCreationDate\", \"deleteThreadAfterDays\":40 } }";
 
         public ChatClientsTests(bool isAsync) : base(isAsync)
         {
@@ -244,6 +246,23 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             Assert.AreEqual("8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c", CommunicationIdentifierSerializer.Serialize(createChatThreadResult.ChatThread.CreatedBy).CommunicationUser.Id);
             Assert.AreEqual("Topic for testing success", createChatThreadResult.ChatThread.Topic);
             Assert.AreEqual("19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2", createChatThreadResult.ChatThread.Id);
+        }
+
+        [Test]
+        public void CreateChatThreadWithRetentionPolicyShouldSucceed()
+        {
+            //act
+            var chatClient = CreateMockChatClient(201, CreateChatThreadSuccessApiResponsePayload);
+            var chatParticipant = new ChatParticipant(new CommunicationUserIdentifier("8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c"));
+            CreateChatThreadResult createChatThreadResult = chatClient.CreateChatThread(new CreateChatThreadOptions ("new topic"){ RetentionPolicy = new ThreadCreationDateRetentionPolicy (40)});
+
+            //assert
+            var chatThread = createChatThreadResult.ChatThread;
+            Assert.AreEqual("8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c", CommunicationIdentifierSerializer.Serialize(chatThread.CreatedBy).CommunicationUser.Id);
+            Assert.AreEqual("Topic for testing success", chatThread.Topic);
+            Assert.AreEqual("19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2", chatThread.Id);
+            Assert.IsTrue(chatThread.RetentionPolicy is ThreadCreationDateRetentionPolicy threadRetentionPolicy);
+            //Assert.AreEqual(40, threadRetentionPolicy.DeleteThreadAfterDays);
         }
 
         [Test]
