@@ -92,6 +92,19 @@ namespace Azure.Provisioning
         }
 
         /// <summary>
+        ///
+        /// </summary>
+        /// <returns></returns>
+        public Infrastructure? FindInfrastructure()
+        {
+            if (this is Infrastructure infrastructure)
+            {
+                return infrastructure;
+            }
+            return Scope?.FindInfrastructure();
+        }
+
+        /// <summary>
         /// Registers an existing resource with this construct that will be used by other resources in the construct.
         /// </summary>
         /// <typeparam name="T">The type of <see cref="Resource"/> to use.</typeparam>

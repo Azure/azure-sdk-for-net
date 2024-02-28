@@ -33,10 +33,22 @@ namespace Azure.Provisioning
         /// <param name="resourceType">The resourceType.</param>
         /// <param name="version">The version.</param>
         /// <param name="createProperties">Lambda to create the ARM properties.</param>
-        protected Resource(IConstruct scope, Resource? parent, string resourceName, ResourceType resourceType, string version, Func<string, T> createProperties)
-            : base(scope, parent, resourceName, resourceType, version, (name) => createProperties(name))
+        /// <param name="locationSelector"></param>
+        protected Resource(
+            IConstruct scope,
+            Resource? parent,
+            string resourceName,
+            ResourceType resourceType,
+            string version,
+            Func<string, T> createProperties,
+            Expression<Func<T, object?>>? locationSelector)
+            : base(scope, parent, resourceName, resourceType, version, name => createProperties(name))
         {
             Properties = (T)ResourceData;
+            if (locationSelector != null && ((Construct)scope).FindInfrastructure()?.UseAnonymousResourceGroup == true)
+            {
+                AssignProperty(locationSelector, "resourceGroup().location");
+            }
         }
 
         /// <summary>
@@ -49,6 +61,18 @@ namespace Azure.Provisioning
         {
             (object instance, string name, string expression) = EvaluateLambda(propertySelector);
             AssignParameter(instance, name, parameter);
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="propertySelector"></param>
+        /// <param name="propertyValue"></param>
+        /// <exception cref="NotSupportedException"></exception>
+        public void AssignProperty(Expression<Func<T, object?>> propertySelector, string propertyValue)
+        {
+            (object instance, string name, string expression) = EvaluateLambda(propertySelector);
+            AssignProperty(instance, name, propertyValue);
         }
 
         /// <summary>

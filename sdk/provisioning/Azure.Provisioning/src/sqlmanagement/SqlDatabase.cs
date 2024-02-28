@@ -27,7 +27,8 @@ namespace Azure.Provisioning.Sql
             : base(scope, parent, name, ResourceTypeName, version, (name) => ArmSqlModelFactory.SqlDatabaseData(
                 name: name,
                 resourceType: ResourceTypeName,
-                location: location ?? Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS))
+                location: location ?? Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS),
+                data => data.Location)
         {
         }
 

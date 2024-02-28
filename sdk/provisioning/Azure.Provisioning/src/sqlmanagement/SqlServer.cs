@@ -32,7 +32,8 @@ namespace Azure.Provisioning.Sql
                 minTlsVersion: "1.2",
                 publicNetworkAccess: ServerNetworkAccessFlag.Enabled,
                 administratorLogin: "sqladmin",
-                administratorLoginPassword: Guid.Empty.ToString()))
+                administratorLoginPassword: Guid.Empty.ToString()),
+                data => data.Location)
         {
         }
 

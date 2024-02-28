@@ -32,7 +32,8 @@ namespace Azure.Provisioning.ResourceManager
                   (name) => ResourceManagerModelFactory.SubscriptionData(
                       id: SubscriptionResource.CreateResourceIdentifier(name),
                       subscriptionId: name,
-                      tenantId: scope.Root.Properties.TenantId))
+                      tenantId: scope.Root.Properties.TenantId),
+                  null)
         {
         }
 

@@ -31,8 +31,13 @@ namespace Azure.Provisioning.Storage
                 resourceType: ResourceTypeName,
                 location: Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS,
                 sku: new StorageSku(sku),
-                kind: StorageKind.StorageV2))
+                kind: StorageKind.StorageV2),
+                data => data.Location)
         {
+            if (scope.FindInfrastructure()?.UseAnonymousResourceGroup == true)
+            {
+                AssignProperty(sa => sa.Location, "resourceGroup().location");
+            }
         }
 
         /// <inheritdoc/>

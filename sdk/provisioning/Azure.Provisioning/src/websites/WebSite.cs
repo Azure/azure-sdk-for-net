@@ -68,7 +68,8 @@ namespace Azure.Provisioning.AppService
                         }
                     }),
                 isHttpsOnly: true,
-                identity: new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)))
+                identity: new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)),
+                data => data.Location)
         {
             var appSettings = runtime == WebSiteRuntime.Dotnetcore
                 ? new Dictionary<string, string>()
