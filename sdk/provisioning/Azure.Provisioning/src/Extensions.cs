@@ -4,7 +4,6 @@
 using System;
 using System.IO;
 using System.Text;
-using Azure.Provisioning.Authorization;
 using Azure.Provisioning.ResourceManager;
 using Azure.Provisioning.Resources;
 
@@ -24,12 +23,7 @@ namespace Azure.Provisioning
         public static bool IsChildResource(this Resource resource)
         {
             //TODO: this is a bit of a hack. We should probably have a better way to determine if a resource is a child resource
-            return resource.Parent is not null &&
-                   resource.Parent is not ResourceGroup &&
-                   resource.Parent is not Subscription &&
-                   resource is not DeploymentScript &&
-                   resource is not Subscription &&
-                   resource is not RoleAssignment;
+            return resource is DeploymentScript || (resource.Parent is not null && resource.Parent is not ResourceGroup && resource.Parent is not Subscription);
         }
 
         public static void Write(this MemoryStream stream, string value)

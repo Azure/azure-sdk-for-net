@@ -14,14 +14,13 @@ namespace Azure.Provisioning
     {
         private readonly Infrastructure _infrastructure;
         private ModuleConstruct? _rootConstruct;
-        private Resource? _rootResource;
 
         public ModuleInfrastructure(Infrastructure infrastructure)
         {
             _infrastructure = infrastructure;
             Dictionary<Resource, List<Resource>> resourceTree = BuildResourceTree();
 
-            BuildModuleConstructs(_rootResource!, resourceTree, null);
+            BuildModuleConstructs(_infrastructure.Root, resourceTree, null);
 
             AddOutputsToModules();
         }
@@ -59,21 +58,6 @@ namespace Azure.Provisioning
             foreach (var resource in resources)
             {
                 VisitResource(resource, resourceTree, visited);
-            }
-
-            // prune tenant if there are no children
-            if (resourceTree[_infrastructure.Root].Count == 0)
-            {
-                resourceTree.Remove(_infrastructure.Root);
-            }
-
-            // find the root resource
-            foreach (var resource in resources)
-            {
-                if (resource.Parent == null)
-                {
-                    _rootResource = resource;
-                }
             }
 
             return resourceTree;
@@ -115,13 +99,6 @@ namespace Azure.Provisioning
                 {
                     construct.IsRoot = true;
                     _rootConstruct = construct;
-
-                    // If the root is just a regular resource, then this is an anonymous resource group deployment,
-                    // so the resources will be added to the root construct.
-                    if (resource is not ResourceGroup and not Subscription and not Tenant)
-                    {
-                        parentScope = construct;
-                    }
                 }
             }
 
@@ -166,10 +143,6 @@ namespace Azure.Provisioning
 
         private bool NeedsModuleConstruct(Resource resource, Dictionary<Resource, List<Resource>> resourceTree)
         {
-            if (_rootResource is not (Tenant or Subscription or ResourceGroup) && _rootConstruct == null)
-            {
-                return true;
-            }
             if (resource is not (Tenant or Subscription or ResourceGroup))
             {
                 return false;
@@ -179,7 +152,19 @@ namespace Azure.Provisioning
                 // TODO add management group check
                 return resourceTree[resource].Count > 1;
             }
-            if (resource is Subscription || resource is ResourceGroup)
+
+            if (resource is Subscription)
+            {
+                foreach (var child in resourceTree[resource])
+                {
+                    if (child is not ResourceGroup || child is ResourceGroup { IsAnonymous: false })
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            if (resource is ResourceGroup)
             {
                 // TODO add policy support
                 return resourceTree[resource].Count > 0;

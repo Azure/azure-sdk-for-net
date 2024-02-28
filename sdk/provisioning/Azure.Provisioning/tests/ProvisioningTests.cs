@@ -107,7 +107,6 @@ namespace Azure.Provisioning.Tests
         public async Task WebSiteUsingL2()
         {
             var infra = new TestInfrastructure();
-            infra.AddResourceGroup();
             infra.AddFrontEndWebSite();
             Assert.AreEqual("subscription()", infra.GetSingleResourceInScope<WebSite>()!.Properties.AppServicePlanId.SubscriptionId);
 
@@ -129,7 +128,6 @@ namespace Azure.Provisioning.Tests
         public async Task WebSiteUsingL3()
         {
             var infra = new TestInfrastructure();
-            infra.AddResourceGroup();
             infra.AddWebSiteWithSqlBackEnd();
 
             infra.GetSingleResource<ResourceGroup>()!.Properties.Tags.Add("key", "value");
@@ -154,7 +152,6 @@ namespace Azure.Provisioning.Tests
         public async Task WebSiteUsingL3SpecificSubscription()
         {
             var infra = new TestInfrastructure(Guid.Empty);
-            infra.AddResourceGroup();
             infra.AddWebSiteWithSqlBackEnd();
 
             infra.GetSingleResource<ResourceGroup>()!.Properties.Tags.Add("key", "value");
@@ -175,10 +172,34 @@ namespace Azure.Provisioning.Tests
         }
 
         [Test]
+        public async Task WebSiteUsingL3ResourceGroupScope()
+        {
+            var infra = new TestInfrastructure(scope: ConstructScope.ResourceGroup);
+            infra.AddWebSiteWithSqlBackEnd();
+
+            infra.GetSingleResource<ResourceGroup>()!.Properties.Tags.Add("key", "value");
+            infra.GetSingleResourceInScope<KeyVault>()!.Properties.Tags.Add("key", "value");
+
+            foreach (var website in infra.GetResources().Where(r => r is WebSite))
+            {
+                Assert.AreEqual("subscription()", ((WebSite)website).Properties.AppServicePlanId.SubscriptionId);
+                Assert.AreEqual("resourceGroup()", ((WebSite)website).Properties.AppServicePlanId.ResourceGroupName);
+            }
+
+            infra.Build(GetOutputPath());
+
+            await ValidateBicepAsync(BinaryData.FromObjectAsJson(
+                new
+                {
+                    sqlAdminPassword = new { value = "password" },
+                    appUserPassword = new { value = "password" }
+                }), anonymousResourceGroup: true);
+        }
+
+        [Test]
         public async Task StorageBlobDefaults()
         {
             var infra = new TestInfrastructure();
-            infra.AddResourceGroup();
             infra.AddStorageAccount(name: "photoAcct", sku: StorageSkuName.PremiumLrs, kind: StorageKind.BlockBlobStorage);
             infra.AddBlobService();
             infra.Build(GetOutputPath());
@@ -187,21 +208,9 @@ namespace Azure.Provisioning.Tests
         }
 
         [Test]
-        public async Task ResourceGroupScope()
-        {
-            var infra = new TestInfrastructure(null, ConstructScope.ResourceGroup);
-            infra.AddStorageAccount(name: "photoAcct", sku: StorageSkuName.PremiumLrs, kind: StorageKind.BlockBlobStorage);
-            infra.AddBlobService();
-            infra.Build(GetOutputPath());
-
-            await ValidateBicepAsync(anonymousResourceGroup: true);
-        }
-
-        [Test]
         public async Task StorageBlobDropDown()
         {
             var infra = new TestInfrastructure();
-            infra.AddResourceGroup();
             infra.AddStorageAccount(name: "photoAcct", sku: StorageSkuName.PremiumLrs, kind: StorageKind.BlockBlobStorage);
             var blob = infra.AddBlobService();
             blob.Properties.DeleteRetentionPolicy = new DeleteRetentionPolicy()
@@ -217,7 +226,6 @@ namespace Azure.Provisioning.Tests
         public async Task AppConfiguration()
         {
             var infra = new TestInfrastructure();
-            infra.AddResourceGroup();
             infra.AddAppConfigurationStore();
             infra.Build(GetOutputPath());
 

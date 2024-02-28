@@ -23,17 +23,17 @@ namespace Azure.Provisioning.ResourceManager
                 throw new InvalidOperationException("ResourceGroup already exists on the construct");
             }
 
-            return new ResourceGroup(construct, name: "rg");
+            return new ResourceGroup(construct, name: "rg", isAnonymous: construct.ConstructScope == ConstructScope.ResourceGroup);
         }
 
         /// <summary>
-        /// Gets the resource group of the construct.
+        /// Gets or adds the resource group of the construct.
         /// </summary>
         /// <param name="construct">The construct.</param>
         /// <returns>The see <see cref="ResourceGroup"/>.</returns>
-        public static ResourceGroup? GetResourceGroup(this IConstruct construct)
+        public static ResourceGroup GetOrAddResourceGroup(this IConstruct construct)
         {
-            return construct.ResourceGroup ?? construct.GetSingleResource<ResourceGroup>();
+            return construct.ResourceGroup ?? construct.GetSingleResource<ResourceGroup>() ?? construct.AddResourceGroup();
         }
 
         /// <summary>

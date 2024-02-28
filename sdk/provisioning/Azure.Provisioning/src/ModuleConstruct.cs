@@ -118,6 +118,10 @@ namespace Azure.Provisioning
                 {
                     continue;
                 }
+                if (resource is ResourceGroup { IsAnonymous: true })
+                {
+                    continue;
+                }
                 stream.WriteLine();
                 WriteLines(0, ModelReaderWriter.Write(resource, options), stream, resource);
             }

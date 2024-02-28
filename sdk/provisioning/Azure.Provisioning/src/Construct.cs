@@ -64,11 +64,6 @@ namespace Azure.Provisioning
             Subscription? subscription = default,
             ResourceGroup? resourceGroup = default)
         {
-            // if (scope is null && constructScope == ConstructScope.ResourceGroup && this is not Infrastructure)
-            // {
-            //     throw new ArgumentException($"Scope cannot be null if construct scope is {nameof(ConstructScope.ResourceGroup)}");
-            // }
-
             Scope = scope;
             Scope?.AddConstruct(this);
             _resources = new List<Resource>();
@@ -79,9 +74,9 @@ namespace Azure.Provisioning
             Name = name;
             Root = tenant ?? scope?.Root ?? new Tenant(this, tenantId);
             ConstructScope = constructScope;
-            if (constructScope == ConstructScope.ResourceGroup && this is not Infrastructure)
+            if (constructScope == ConstructScope.ResourceGroup)
             {
-                ResourceGroup = resourceGroup ?? scope?.ResourceGroup ?? scope?.GetResourceGroup();
+                ResourceGroup = resourceGroup ?? scope?.ResourceGroup ?? scope?.GetOrAddResourceGroup();
             }
             if (constructScope == ConstructScope.Subscription)
             {
