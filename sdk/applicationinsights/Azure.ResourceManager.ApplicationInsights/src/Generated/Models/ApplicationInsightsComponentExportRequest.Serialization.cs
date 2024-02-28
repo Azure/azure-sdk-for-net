@@ -109,15 +109,15 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<string> recordTypes = default;
-            Optional<string> destinationType = default;
-            Optional<string> destinationAddress = default;
-            Optional<string> isEnabled = default;
-            Optional<string> notificationQueueEnabled = default;
-            Optional<Uri> notificationQueueUri = default;
-            Optional<string> destinationStorageSubscriptionId = default;
-            Optional<string> destinationStorageLocationId = default;
-            Optional<string> destinationAccountId = default;
+            string recordTypes = default;
+            string destinationType = default;
+            string destinationAddress = default;
+            string isEnabled = default;
+            string notificationQueueEnabled = default;
+            Uri notificationQueueUri = default;
+            string destinationStorageSubscriptionId = default;
+            string destinationStorageLocationId = default;
+            string destinationAccountId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -178,15 +178,15 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ApplicationInsightsComponentExportRequest(
-                recordTypes.Value,
-                destinationType.Value,
-                destinationAddress.Value,
-                isEnabled.Value,
-                notificationQueueEnabled.Value,
-                notificationQueueUri.Value,
-                destinationStorageSubscriptionId.Value,
-                destinationStorageLocationId.Value,
-                destinationAccountId.Value,
+                recordTypes,
+                destinationType,
+                destinationAddress,
+                isEnabled,
+                notificationQueueEnabled,
+                notificationQueueUri,
+                destinationStorageSubscriptionId,
+                destinationStorageLocationId,
+                destinationAccountId,
                 serializedAdditionalRawData);
         }
 

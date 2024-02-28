@@ -199,20 +199,20 @@ namespace Azure.ResourceManager.Cdn.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<string> originPath = default;
+            string originPath = default;
             IList<string> contentTypesToCompress = default;
-            Optional<string> originHostHeader = default;
-            Optional<bool> isCompressionEnabled = default;
-            Optional<bool> isHttpAllowed = default;
-            Optional<bool> isHttpsAllowed = default;
-            Optional<QueryStringCachingBehavior> queryStringCachingBehavior = default;
-            Optional<OptimizationType?> optimizationType = default;
-            Optional<string> probePath = default;
+            string originHostHeader = default;
+            bool? isCompressionEnabled = default;
+            bool? isHttpAllowed = default;
+            bool? isHttpsAllowed = default;
+            QueryStringCachingBehavior? queryStringCachingBehavior = default;
+            OptimizationType? optimizationType = default;
+            string probePath = default;
             IList<GeoFilter> geoFilters = default;
-            Optional<EndpointPropertiesUpdateParametersDefaultOriginGroup> defaultOriginGroup = default;
+            EndpointPropertiesUpdateParametersDefaultOriginGroup defaultOriginGroup = default;
             IList<UriSigningKey> uriSigningKeys = default;
-            Optional<EndpointDeliveryPolicy> deliveryPolicy = default;
-            Optional<EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink> webApplicationFirewallPolicyLink = default;
+            EndpointDeliveryPolicy deliveryPolicy = default;
+            EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink webApplicationFirewallPolicyLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -385,20 +385,20 @@ namespace Azure.ResourceManager.Cdn.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new CdnEndpointPatch(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                originPath.Value,
+                originPath,
                 contentTypesToCompress ?? new ChangeTrackingList<string>(),
-                originHostHeader.Value,
-                Optional.ToNullable(isCompressionEnabled),
-                Optional.ToNullable(isHttpAllowed),
-                Optional.ToNullable(isHttpsAllowed),
-                Optional.ToNullable(queryStringCachingBehavior),
-                Optional.ToNullable(optimizationType),
-                probePath.Value,
+                originHostHeader,
+                isCompressionEnabled,
+                isHttpAllowed,
+                isHttpsAllowed,
+                queryStringCachingBehavior,
+                optimizationType,
+                probePath,
                 geoFilters ?? new ChangeTrackingList<GeoFilter>(),
-                defaultOriginGroup.Value,
+                defaultOriginGroup,
                 uriSigningKeys ?? new ChangeTrackingList<UriSigningKey>(),
-                deliveryPolicy.Value,
-                webApplicationFirewallPolicyLink.Value,
+                deliveryPolicy,
+                webApplicationFirewallPolicyLink,
                 serializedAdditionalRawData);
         }
 

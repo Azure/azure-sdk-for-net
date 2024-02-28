@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 return null;
             }
-            Optional<string> familyName = default;
-            Optional<ControlFamilyType> familyType = default;
-            Optional<ControlFamilyStatus> familyStatus = default;
+            string familyName = default;
+            ControlFamilyType? familyType = default;
+            ControlFamilyStatus? familyStatus = default;
             IReadOnlyList<Control> controls = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ControlFamily(familyName.Value, Optional.ToNullable(familyType), Optional.ToNullable(familyStatus), controls ?? new ChangeTrackingList<Control>(), serializedAdditionalRawData);
+            return new ControlFamily(familyName, familyType, familyStatus, controls ?? new ChangeTrackingList<Control>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ControlFamily>.Write(ModelReaderWriterOptions options)

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             IReadOnlyList<string> zones = default;
             IReadOnlyList<AppPlatformSkuZoneDetails> zoneDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformSkuLocationInfo(Optional.ToNullable(location), zones ?? new ChangeTrackingList<string>(), zoneDetails ?? new ChangeTrackingList<AppPlatformSkuZoneDetails>(), serializedAdditionalRawData);
+            return new AppPlatformSkuLocationInfo(location, zones ?? new ChangeTrackingList<string>(), zoneDetails ?? new ChangeTrackingList<AppPlatformSkuZoneDetails>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformSkuLocationInfo>.Write(ModelReaderWriterOptions options)

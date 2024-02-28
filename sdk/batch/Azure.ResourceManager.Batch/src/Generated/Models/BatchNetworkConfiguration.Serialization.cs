@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> subnetId = default;
-            Optional<DynamicVNetAssignmentScope> dynamicVnetAssignmentScope = default;
-            Optional<PoolEndpointConfiguration> endpointConfiguration = default;
-            Optional<BatchPublicIPAddressConfiguration> publicIPAddressConfiguration = default;
-            Optional<bool> enableAcceleratedNetworking = default;
+            ResourceIdentifier subnetId = default;
+            DynamicVNetAssignmentScope? dynamicVnetAssignmentScope = default;
+            PoolEndpointConfiguration endpointConfiguration = default;
+            BatchPublicIPAddressConfiguration publicIPAddressConfiguration = default;
+            bool? enableAcceleratedNetworking = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,11 +150,11 @@ namespace Azure.ResourceManager.Batch.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new BatchNetworkConfiguration(
-                subnetId.Value,
-                Optional.ToNullable(dynamicVnetAssignmentScope),
-                endpointConfiguration.Value,
-                publicIPAddressConfiguration.Value,
-                Optional.ToNullable(enableAcceleratedNetworking),
+                subnetId,
+                dynamicVnetAssignmentScope,
+                endpointConfiguration,
+                publicIPAddressConfiguration,
+                enableAcceleratedNetworking,
                 serializedAdditionalRawData);
         }
 

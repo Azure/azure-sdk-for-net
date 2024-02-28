@@ -49,11 +49,11 @@ namespace Azure.Communication
             {
                 return null;
             }
-            Optional<CommunicationIdentifierModelKind> kind = default;
-            Optional<string> rawId = default;
-            Optional<CommunicationUserIdentifierModel> communicationUser = default;
-            Optional<PhoneNumberIdentifierModel> phoneNumber = default;
-            Optional<MicrosoftTeamsUserIdentifierModel> microsoftTeamsUser = default;
+            CommunicationIdentifierModelKind? kind = default;
+            string rawId = default;
+            CommunicationUserIdentifierModel communicationUser = default;
+            PhoneNumberIdentifierModel phoneNumber = default;
+            MicrosoftTeamsUserIdentifierModel microsoftTeamsUser = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -98,7 +98,7 @@ namespace Azure.Communication
                     continue;
                 }
             }
-            return new CommunicationIdentifierModel(Optional.ToNullable(kind), rawId.Value, communicationUser.Value, phoneNumber.Value, microsoftTeamsUser.Value);
+            return new CommunicationIdentifierModel(kind, rawId, communicationUser, phoneNumber, microsoftTeamsUser);
         }
     }
 }

@@ -149,13 +149,13 @@ namespace Azure.ResourceManager.Cdn
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<HealthProbeSettings> healthProbeSettings = default;
+            SystemData systemData = default;
+            HealthProbeSettings healthProbeSettings = default;
             IList<WritableSubResource> origins = default;
-            Optional<int?> trafficRestorationTimeToHealedOrNewEndpointsInMinutes = default;
-            Optional<ResponseBasedOriginErrorDetectionSettings> responseBasedOriginErrorDetectionSettings = default;
-            Optional<OriginGroupResourceState> resourceState = default;
-            Optional<OriginGroupProvisioningState> provisioningState = default;
+            int? trafficRestorationTimeToHealedOrNewEndpointsInMinutes = default;
+            ResponseBasedOriginErrorDetectionSettings responseBasedOriginErrorDetectionSettings = default;
+            OriginGroupResourceState? resourceState = default;
+            OriginGroupProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -268,13 +268,13 @@ namespace Azure.ResourceManager.Cdn
                 id,
                 name,
                 type,
-                systemData.Value,
-                healthProbeSettings.Value,
+                systemData,
+                healthProbeSettings,
                 origins ?? new ChangeTrackingList<WritableSubResource>(),
-                Optional.ToNullable(trafficRestorationTimeToHealedOrNewEndpointsInMinutes),
-                responseBasedOriginErrorDetectionSettings.Value,
-                Optional.ToNullable(resourceState),
-                Optional.ToNullable(provisioningState),
+                trafficRestorationTimeToHealedOrNewEndpointsInMinutes,
+                responseBasedOriginErrorDetectionSettings,
+                resourceState,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

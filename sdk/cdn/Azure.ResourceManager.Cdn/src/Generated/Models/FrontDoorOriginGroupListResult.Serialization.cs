@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 return null;
             }
             IReadOnlyList<FrontDoorOriginGroupData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorOriginGroupListResult(value ?? new ChangeTrackingList<FrontDoorOriginGroupData>(), nextLink.Value, serializedAdditionalRawData);
+            return new FrontDoorOriginGroupListResult(value ?? new ChangeTrackingList<FrontDoorOriginGroupData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorOriginGroupListResult>.Write(ModelReaderWriterOptions options)

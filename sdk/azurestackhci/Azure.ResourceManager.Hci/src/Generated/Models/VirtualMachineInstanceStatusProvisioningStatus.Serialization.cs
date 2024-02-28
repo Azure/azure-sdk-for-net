@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<string> operationId = default;
-            Optional<HciClusterStatus> status = default;
+            string operationId = default;
+            HciClusterStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineInstanceStatusProvisioningStatus(operationId.Value, Optional.ToNullable(status), serializedAdditionalRawData);
+            return new VirtualMachineInstanceStatusProvisioningStatus(operationId, status, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineInstanceStatusProvisioningStatus>.Write(ModelReaderWriterOptions options)

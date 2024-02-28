@@ -20,14 +20,14 @@ namespace Azure.Communication.CallingServer
             {
                 return null;
             }
-            Optional<string> callConnectionId = default;
-            Optional<string> serverCallId = default;
-            Optional<CallSourceInternal> source = default;
+            string callConnectionId = default;
+            string serverCallId = default;
+            CallSourceInternal source = default;
             IReadOnlyList<CommunicationIdentifierModel> targets = default;
-            Optional<CallConnectionState> callConnectionState = default;
-            Optional<string> subject = default;
-            Optional<string> callbackUri = default;
-            Optional<string> mediaSubscriptionId = default;
+            CallConnectionState? callConnectionState = default;
+            string subject = default;
+            string callbackUri = default;
+            string mediaSubscriptionId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("callConnectionId"u8))
@@ -89,14 +89,14 @@ namespace Azure.Communication.CallingServer
                 }
             }
             return new CallConnectionPropertiesInternal(
-                callConnectionId.Value,
-                serverCallId.Value,
-                source.Value,
+                callConnectionId,
+                serverCallId,
+                source,
                 targets ?? new ChangeTrackingList<CommunicationIdentifierModel>(),
-                Optional.ToNullable(callConnectionState),
-                subject.Value,
-                callbackUri.Value,
-                mediaSubscriptionId.Value);
+                callConnectionState,
+                subject,
+                callbackUri,
+                mediaSubscriptionId);
         }
     }
 }

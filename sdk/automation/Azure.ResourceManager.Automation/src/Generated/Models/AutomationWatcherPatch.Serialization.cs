@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<long> executionFrequencyInSeconds = default;
+            string name = default;
+            long? executionFrequencyInSeconds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationWatcherPatch(name.Value, Optional.ToNullable(executionFrequencyInSeconds), serializedAdditionalRawData);
+            return new AutomationWatcherPatch(name, executionFrequencyInSeconds, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationWatcherPatch>.Write(ModelReaderWriterOptions options)

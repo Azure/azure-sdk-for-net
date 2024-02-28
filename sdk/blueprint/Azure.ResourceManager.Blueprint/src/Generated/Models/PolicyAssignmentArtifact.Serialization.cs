@@ -129,13 +129,13 @@ namespace Azure.ResourceManager.Blueprint.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
+            SystemData systemData = default;
+            string displayName = default;
+            string description = default;
             IList<string> dependsOn = default;
             string policyDefinitionId = default;
             IDictionary<string, ParameterValue> parameters = default;
-            Optional<string> resourceGroup = default;
+            string resourceGroup = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -235,15 +235,15 @@ namespace Azure.ResourceManager.Blueprint.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 kind,
                 serializedAdditionalRawData,
-                displayName.Value,
-                description.Value,
+                displayName,
+                description,
                 dependsOn ?? new ChangeTrackingList<string>(),
                 policyDefinitionId,
                 parameters,
-                resourceGroup.Value);
+                resourceGroup);
         }
 
         BinaryData IPersistableModel<PolicyAssignmentArtifact>.Write(ModelReaderWriterOptions options)

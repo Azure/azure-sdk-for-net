@@ -118,15 +118,15 @@ namespace Azure.ResourceManager.Analysis.Models
             {
                 return null;
             }
-            Optional<AnalysisResourceSku> sku = default;
+            AnalysisResourceSku sku = default;
             IDictionary<string, string> tags = default;
-            Optional<ServerAdministrators> asAdministrators = default;
-            Optional<Uri> backupBlobContainerUri = default;
-            Optional<AnalysisGatewayDetails> gatewayDetails = default;
-            Optional<AnalysisIPv4FirewallSettings> ipV4FirewallSettings = default;
-            Optional<AnalysisConnectionMode> querypoolConnectionMode = default;
-            Optional<AnalysisManagedMode> managedMode = default;
-            Optional<ServerMonitorMode> serverMonitorMode = default;
+            ServerAdministrators asAdministrators = default;
+            Uri backupBlobContainerUri = default;
+            AnalysisGatewayDetails gatewayDetails = default;
+            AnalysisIPv4FirewallSettings ipV4FirewallSettings = default;
+            AnalysisConnectionMode? querypoolConnectionMode = default;
+            AnalysisManagedMode? managedMode = default;
+            ServerMonitorMode? serverMonitorMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -236,15 +236,15 @@ namespace Azure.ResourceManager.Analysis.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AnalysisServerPatch(
-                sku.Value,
+                sku,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                asAdministrators.Value,
-                backupBlobContainerUri.Value,
-                gatewayDetails.Value,
-                ipV4FirewallSettings.Value,
-                Optional.ToNullable(querypoolConnectionMode),
-                Optional.ToNullable(managedMode),
-                Optional.ToNullable(serverMonitorMode),
+                asAdministrators,
+                backupBlobContainerUri,
+                gatewayDetails,
+                ipV4FirewallSettings,
+                querypoolConnectionMode,
+                managedMode,
+                serverMonitorMode,
                 serializedAdditionalRawData);
         }
 

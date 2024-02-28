@@ -92,9 +92,9 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<string> etag = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
+            string etag = default;
+            string name = default;
+            string type = default;
             IList<Route> routes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RouteTable(etag.Value, name.Value, type.Value, routes ?? new ChangeTrackingList<Route>(), serializedAdditionalRawData);
+            return new RouteTable(etag, name, type, routes ?? new ChangeTrackingList<Route>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RouteTable>.Write(ModelReaderWriterOptions options)

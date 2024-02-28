@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<AppPlatformConfigServerGitProperty> gitProperty = default;
+            AppPlatformConfigServerGitProperty gitProperty = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConfigServerSettings(gitProperty.Value, serializedAdditionalRawData);
+            return new ConfigServerSettings(gitProperty, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConfigServerSettings>.Write(ModelReaderWriterOptions options)

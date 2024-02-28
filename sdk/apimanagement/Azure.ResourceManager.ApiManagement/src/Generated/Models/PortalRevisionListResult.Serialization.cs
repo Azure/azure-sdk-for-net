@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 return null;
             }
             IReadOnlyList<ApiManagementPortalRevisionData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PortalRevisionListResult(value ?? new ChangeTrackingList<ApiManagementPortalRevisionData>(), nextLink.Value, serializedAdditionalRawData);
+            return new PortalRevisionListResult(value ?? new ChangeTrackingList<ApiManagementPortalRevisionData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PortalRevisionListResult>.Write(ModelReaderWriterOptions options)

@@ -135,13 +135,13 @@ namespace Azure.ResourceManager.Batch.Models
             }
             AzureLocation location = default;
             IDictionary<string, string> tags = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<BatchAccountAutoStorageBaseConfiguration> autoStorage = default;
-            Optional<BatchAccountPoolAllocationMode> poolAllocationMode = default;
-            Optional<BatchKeyVaultReference> keyVaultReference = default;
-            Optional<BatchPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<BatchNetworkProfile> networkProfile = default;
-            Optional<BatchAccountEncryptionConfiguration> encryption = default;
+            ManagedServiceIdentity identity = default;
+            BatchAccountAutoStorageBaseConfiguration autoStorage = default;
+            BatchAccountPoolAllocationMode? poolAllocationMode = default;
+            BatchKeyVaultReference keyVaultReference = default;
+            BatchPublicNetworkAccess? publicNetworkAccess = default;
+            BatchNetworkProfile networkProfile = default;
+            BatchAccountEncryptionConfiguration encryption = default;
             IList<BatchAuthenticationMode> allowedAuthenticationModes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -266,12 +266,12 @@ namespace Azure.ResourceManager.Batch.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 identity,
-                autoStorage.Value,
-                Optional.ToNullable(poolAllocationMode),
-                keyVaultReference.Value,
-                Optional.ToNullable(publicNetworkAccess),
-                networkProfile.Value,
-                encryption.Value,
+                autoStorage,
+                poolAllocationMode,
+                keyVaultReference,
+                publicNetworkAccess,
+                networkProfile,
+                encryption,
                 allowedAuthenticationModes ?? new ChangeTrackingList<BatchAuthenticationMode>(),
                 serializedAdditionalRawData);
         }

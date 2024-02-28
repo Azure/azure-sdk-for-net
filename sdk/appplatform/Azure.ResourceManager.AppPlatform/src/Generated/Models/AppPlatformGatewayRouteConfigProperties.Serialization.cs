@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<AppPlatformGatewayProvisioningState> provisioningState = default;
-            Optional<ResourceIdentifier> appResourceId = default;
-            Optional<GatewayRouteConfigOpenApiProperties> openApi = default;
-            Optional<AppPlatformGatewayRouteConfigProtocol> protocol = default;
+            AppPlatformGatewayProvisioningState? provisioningState = default;
+            ResourceIdentifier appResourceId = default;
+            GatewayRouteConfigOpenApiProperties openApi = default;
+            AppPlatformGatewayRouteConfigProtocol? protocol = default;
             IList<AppPlatformGatewayApiRoute> routes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -160,10 +160,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AppPlatformGatewayRouteConfigProperties(
-                Optional.ToNullable(provisioningState),
-                appResourceId.Value,
-                openApi.Value,
-                Optional.ToNullable(protocol),
+                provisioningState,
+                appResourceId,
+                openApi,
+                protocol,
                 routes ?? new ChangeTrackingList<AppPlatformGatewayApiRoute>(),
                 serializedAdditionalRawData);
         }

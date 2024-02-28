@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Automanage.Models
             {
                 return null;
             }
-            Optional<ConfigurationProfileProperties> properties = default;
+            ConfigurationProfileProperties properties = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Automanage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomanageConfigurationProfilePatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, properties.Value);
+            return new AutomanageConfigurationProfilePatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, properties);
         }
 
         BinaryData IPersistableModel<AutomanageConfigurationProfilePatch>.Write(ModelReaderWriterOptions options)

@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<bool> enableAutomaticUpdates = default;
-            Optional<SshConfiguration> ssh = default;
-            Optional<string> timeZone = default;
-            Optional<bool> provisionVmAgent = default;
-            Optional<bool> provisionVmConfigAgent = default;
+            bool? enableAutomaticUpdates = default;
+            SshConfiguration ssh = default;
+            string timeZone = default;
+            bool? provisionVmAgent = default;
+            bool? provisionVmConfigAgent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,11 +146,11 @@ namespace Azure.ResourceManager.Hci.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new VirtualMachineInstancePropertiesOSProfileWindowsConfiguration(
-                Optional.ToNullable(enableAutomaticUpdates),
-                ssh.Value,
-                timeZone.Value,
-                Optional.ToNullable(provisionVmAgent),
-                Optional.ToNullable(provisionVmConfigAgent),
+                enableAutomaticUpdates,
+                ssh,
+                timeZone,
+                provisionVmAgent,
+                provisionVmConfigAgent,
                 serializedAdditionalRawData);
         }
 

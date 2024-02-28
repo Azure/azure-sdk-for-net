@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<VmSizeEnum> vmSize = default;
-            Optional<int> processors = default;
-            Optional<long> memoryMB = default;
+            VmSizeEnum? vmSize = default;
+            int? processors = default;
+            long? memoryMB = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HardwareProfileUpdate(Optional.ToNullable(vmSize), Optional.ToNullable(processors), Optional.ToNullable(memoryMB), serializedAdditionalRawData);
+            return new HardwareProfileUpdate(vmSize, processors, memoryMB, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HardwareProfileUpdate>.Write(ModelReaderWriterOptions options)

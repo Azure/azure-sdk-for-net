@@ -117,14 +117,14 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<string> definition = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            string definition = default;
             IReadOnlyList<AutomationActivityParameterSet> parameterSets = default;
             IReadOnlyList<AutomationActivityOutputType> outputTypes = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<string> description = default;
+            DateTimeOffset? creationTime = default;
+            DateTimeOffset? lastModifiedTime = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -218,14 +218,14 @@ namespace Azure.ResourceManager.Automation.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AutomationActivity(
-                id.Value,
-                name.Value,
-                definition.Value,
+                id,
+                name,
+                definition,
                 parameterSets ?? new ChangeTrackingList<AutomationActivityParameterSet>(),
                 outputTypes ?? new ChangeTrackingList<AutomationActivityOutputType>(),
-                Optional.ToNullable(creationTime),
-                Optional.ToNullable(lastModifiedTime),
-                description.Value,
+                creationTime,
+                lastModifiedTime,
+                description,
                 serializedAdditionalRawData);
         }
 

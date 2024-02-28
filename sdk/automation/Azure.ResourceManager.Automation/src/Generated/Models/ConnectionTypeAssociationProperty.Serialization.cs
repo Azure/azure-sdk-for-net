@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> name = default;
+            string name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectionTypeAssociationProperty(name.Value, serializedAdditionalRawData);
+            return new ConnectionTypeAssociationProperty(name, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectionTypeAssociationProperty>.Write(ModelReaderWriterOptions options)

@@ -117,12 +117,12 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<bool> builtIn = default;
-            Optional<ApiManagementGroupType> type0 = default;
-            Optional<string> externalId = default;
+            SystemData systemData = default;
+            string displayName = default;
+            string description = default;
+            bool? builtIn = default;
+            ApiManagementGroupType? type0 = default;
+            string externalId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -206,12 +206,12 @@ namespace Azure.ResourceManager.ApiManagement
                 id,
                 name,
                 type,
-                systemData.Value,
-                displayName.Value,
-                description.Value,
-                Optional.ToNullable(builtIn),
-                Optional.ToNullable(type0),
-                externalId.Value,
+                systemData,
+                displayName,
+                description,
+                builtIn,
+                type0,
+                externalId,
                 serializedAdditionalRawData);
         }
 
