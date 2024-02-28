@@ -280,52 +280,52 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 return null;
             }
-            Optional<ProtectedItemActiveLocation> activeLocation = default;
+            ProtectedItemActiveLocation? activeLocation = default;
             ResourceIdentifier targetHciClusterId = default;
             ResourceIdentifier targetArcClusterCustomLocationId = default;
-            Optional<string> targetAzStackHciClusterName = default;
+            string targetAzStackHciClusterName = default;
             ResourceIdentifier storageContainerId = default;
             ResourceIdentifier targetResourceGroupId = default;
-            Optional<string> targetLocation = default;
+            string targetLocation = default;
             string customLocationRegion = default;
             IList<VMwareToAzStackHciDiskInput> disksToInclude = default;
             IList<VMwareToAzStackHciNicInput> nicsToInclude = default;
             IReadOnlyList<VMwareToAzStackHciProtectedDiskProperties> protectedDisks = default;
             IReadOnlyList<VMwareToAzStackHciProtectedNicProperties> protectedNics = default;
-            Optional<string> targetVmBiosId = default;
-            Optional<string> targetVmName = default;
+            string targetVmBiosId = default;
+            string targetVmName = default;
             string hyperVGeneration = default;
-            Optional<string> targetNetworkId = default;
-            Optional<string> testNetworkId = default;
-            Optional<int> targetCpuCores = default;
-            Optional<bool> isDynamicRam = default;
-            Optional<ProtectedItemDynamicMemoryConfig> dynamicMemoryConfig = default;
-            Optional<int> targetMemoryInMegaBytes = default;
-            Optional<string> osType = default;
-            Optional<string> osName = default;
-            Optional<string> firmwareType = default;
+            string targetNetworkId = default;
+            string testNetworkId = default;
+            int? targetCpuCores = default;
+            bool? isDynamicRam = default;
+            ProtectedItemDynamicMemoryConfig dynamicMemoryConfig = default;
+            int? targetMemoryInMegaBytes = default;
+            string osType = default;
+            string osName = default;
+            string firmwareType = default;
             ResourceIdentifier fabricDiscoveryMachineId = default;
-            Optional<string> sourceVmName = default;
-            Optional<int> sourceCpuCores = default;
-            Optional<double> sourceMemoryInMegaBytes = default;
+            string sourceVmName = default;
+            int? sourceCpuCores = default;
+            double? sourceMemoryInMegaBytes = default;
             string runAsAccountId = default;
             string sourceDraName = default;
             string targetDraName = default;
-            Optional<string> sourceApplianceName = default;
-            Optional<string> targetApplianceName = default;
-            Optional<string> failoverRecoveryPointId = default;
-            Optional<DateTimeOffset> lastRecoveryPointReceived = default;
-            Optional<string> lastRecoveryPointId = default;
-            Optional<int> initialReplicationProgressPercentage = default;
-            Optional<int> migrationProgressPercentage = default;
-            Optional<int> resumeProgressPercentage = default;
-            Optional<int> resyncProgressPercentage = default;
-            Optional<long> resyncRetryCount = default;
-            Optional<bool> resyncRequired = default;
-            Optional<VMwareToAzureMigrateResyncState> resyncState = default;
-            Optional<bool> performAutoResync = default;
-            Optional<long> resumeRetryCount = default;
-            Optional<DateTimeOffset> lastReplicationUpdateTime = default;
+            string sourceApplianceName = default;
+            string targetApplianceName = default;
+            string failoverRecoveryPointId = default;
+            DateTimeOffset? lastRecoveryPointReceived = default;
+            string lastRecoveryPointId = default;
+            int? initialReplicationProgressPercentage = default;
+            int? migrationProgressPercentage = default;
+            int? resumeProgressPercentage = default;
+            int? resyncProgressPercentage = default;
+            long? resyncRetryCount = default;
+            bool? resyncRequired = default;
+            VMwareToAzureMigrateResyncState? resyncState = default;
+            bool? performAutoResync = default;
+            long? resumeRetryCount = default;
+            DateTimeOffset? lastReplicationUpdateTime = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -675,52 +675,52 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             return new VMwareToAzStackHciProtectedItemModelCustomProperties(
                 instanceType,
                 serializedAdditionalRawData,
-                Optional.ToNullable(activeLocation),
+                activeLocation,
                 targetHciClusterId,
                 targetArcClusterCustomLocationId,
-                targetAzStackHciClusterName.Value,
+                targetAzStackHciClusterName,
                 storageContainerId,
                 targetResourceGroupId,
-                targetLocation.Value,
+                targetLocation,
                 customLocationRegion,
                 disksToInclude,
                 nicsToInclude,
                 protectedDisks ?? new ChangeTrackingList<VMwareToAzStackHciProtectedDiskProperties>(),
                 protectedNics ?? new ChangeTrackingList<VMwareToAzStackHciProtectedNicProperties>(),
-                targetVmBiosId.Value,
-                targetVmName.Value,
+                targetVmBiosId,
+                targetVmName,
                 hyperVGeneration,
-                targetNetworkId.Value,
-                testNetworkId.Value,
-                Optional.ToNullable(targetCpuCores),
-                Optional.ToNullable(isDynamicRam),
-                dynamicMemoryConfig.Value,
-                Optional.ToNullable(targetMemoryInMegaBytes),
-                osType.Value,
-                osName.Value,
-                firmwareType.Value,
+                targetNetworkId,
+                testNetworkId,
+                targetCpuCores,
+                isDynamicRam,
+                dynamicMemoryConfig,
+                targetMemoryInMegaBytes,
+                osType,
+                osName,
+                firmwareType,
                 fabricDiscoveryMachineId,
-                sourceVmName.Value,
-                Optional.ToNullable(sourceCpuCores),
-                Optional.ToNullable(sourceMemoryInMegaBytes),
+                sourceVmName,
+                sourceCpuCores,
+                sourceMemoryInMegaBytes,
                 runAsAccountId,
                 sourceDraName,
                 targetDraName,
-                sourceApplianceName.Value,
-                targetApplianceName.Value,
-                failoverRecoveryPointId.Value,
-                Optional.ToNullable(lastRecoveryPointReceived),
-                lastRecoveryPointId.Value,
-                Optional.ToNullable(initialReplicationProgressPercentage),
-                Optional.ToNullable(migrationProgressPercentage),
-                Optional.ToNullable(resumeProgressPercentage),
-                Optional.ToNullable(resyncProgressPercentage),
-                Optional.ToNullable(resyncRetryCount),
-                Optional.ToNullable(resyncRequired),
-                Optional.ToNullable(resyncState),
-                Optional.ToNullable(performAutoResync),
-                Optional.ToNullable(resumeRetryCount),
-                Optional.ToNullable(lastReplicationUpdateTime));
+                sourceApplianceName,
+                targetApplianceName,
+                failoverRecoveryPointId,
+                lastRecoveryPointReceived,
+                lastRecoveryPointId,
+                initialReplicationProgressPercentage,
+                migrationProgressPercentage,
+                resumeProgressPercentage,
+                resyncProgressPercentage,
+                resyncRetryCount,
+                resyncRequired,
+                resyncState,
+                performAutoResync,
+                resumeRetryCount,
+                lastReplicationUpdateTime);
         }
 
         BinaryData IPersistableModel<VMwareToAzStackHciProtectedItemModelCustomProperties>.Write(ModelReaderWriterOptions options)

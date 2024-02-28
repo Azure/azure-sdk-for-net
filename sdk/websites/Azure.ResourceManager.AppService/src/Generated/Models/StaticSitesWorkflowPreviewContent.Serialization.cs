@@ -108,14 +108,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Uri> repositoryUrl = default;
-            Optional<string> branch = default;
-            Optional<StaticSiteBuildProperties> buildProperties = default;
+            SystemData systemData = default;
+            Uri repositoryUrl = default;
+            string branch = default;
+            StaticSiteBuildProperties buildProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -194,11 +194,11 @@ namespace Azure.ResourceManager.AppService.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                repositoryUrl.Value,
-                branch.Value,
-                buildProperties.Value,
-                kind.Value,
+                systemData,
+                repositoryUrl,
+                branch,
+                buildProperties,
+                kind,
                 serializedAdditionalRawData);
         }
 

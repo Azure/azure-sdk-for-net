@@ -114,9 +114,9 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            Optional<string> caller = default;
+            string caller = default;
             IList<string> operations = default;
-            Optional<RoleManagementAssignmentLevel> level = default;
+            RoleManagementAssignmentLevel? level = default;
             IList<string> targetObjects = default;
             IList<string> inheritableSettings = default;
             IList<string> enforcedSettings = default;
@@ -201,9 +201,9 @@ namespace Azure.ResourceManager.Authorization.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new RoleManagementPolicyRuleTarget(
-                caller.Value,
+                caller,
                 operations ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(level),
+                level,
                 targetObjects ?? new ChangeTrackingList<string>(),
                 inheritableSettings ?? new ChangeTrackingList<string>(),
                 enforcedSettings ?? new ChangeTrackingList<string>(),

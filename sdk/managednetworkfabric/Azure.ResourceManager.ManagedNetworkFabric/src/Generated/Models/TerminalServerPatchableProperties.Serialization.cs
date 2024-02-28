@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<string> username = default;
-            Optional<string> password = default;
-            Optional<string> serialNumber = default;
+            string username = default;
+            string password = default;
+            string serialNumber = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TerminalServerPatchableProperties(username.Value, password.Value, serialNumber.Value, serializedAdditionalRawData);
+            return new TerminalServerPatchableProperties(username, password, serialNumber, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TerminalServerPatchableProperties>.Write(ModelReaderWriterOptions options)

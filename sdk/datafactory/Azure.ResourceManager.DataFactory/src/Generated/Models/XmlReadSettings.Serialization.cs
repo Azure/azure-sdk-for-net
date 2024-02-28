@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<CompressionReadSettings> compressionProperties = default;
-            Optional<DataFactoryElement<string>> validationMode = default;
-            Optional<DataFactoryElement<bool>> detectDataType = default;
-            Optional<DataFactoryElement<bool>> namespaces = default;
-            Optional<DataFactoryElement<IDictionary<string, string>>> namespacePrefixes = default;
+            CompressionReadSettings compressionProperties = default;
+            DataFactoryElement<string> validationMode = default;
+            DataFactoryElement<bool> detectDataType = default;
+            DataFactoryElement<bool> namespaces = default;
+            DataFactoryElement<IDictionary<string, string>> namespacePrefixes = default;
             string type = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -155,11 +155,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new XmlReadSettings(
                 type,
                 additionalProperties,
-                compressionProperties.Value,
-                validationMode.Value,
-                detectDataType.Value,
-                namespaces.Value,
-                namespacePrefixes.Value);
+                compressionProperties,
+                validationMode,
+                detectDataType,
+                namespaces,
+                namespacePrefixes);
         }
 
         BinaryData IPersistableModel<XmlReadSettings>.Write(ModelReaderWriterOptions options)

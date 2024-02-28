@@ -130,13 +130,13 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
             IDictionary<string, string> tags = default;
-            Optional<string> vendor = default;
+            string vendor = default;
             IReadOnlyList<string> availableVersions = default;
             IList<NetworkVirtualApplianceSkuInstances> availableScaleUnits = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -250,14 +250,14 @@ namespace Azure.ResourceManager.Network
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new NetworkVirtualApplianceSkuData(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
-                Optional.ToNullable(location),
+                id,
+                name,
+                type,
+                location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
-                Optional.ToNullable(etag),
-                vendor.Value,
+                etag,
+                vendor,
                 availableVersions ?? new ChangeTrackingList<string>(),
                 availableScaleUnits ?? new ChangeTrackingList<NetworkVirtualApplianceSkuInstances>());
         }

@@ -143,17 +143,17 @@ namespace Azure.ResourceManager.Synapse
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
+            SystemData systemData = default;
+            string description = default;
             IDictionary<string, string> configs = default;
             IList<string> annotations = default;
-            Optional<string> notes = default;
-            Optional<string> createdBy = default;
-            Optional<DateTimeOffset> created = default;
+            string notes = default;
+            string createdBy = default;
+            DateTimeOffset? created = default;
             IDictionary<string, string> configMergeRule = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -276,15 +276,15 @@ namespace Azure.ResourceManager.Synapse
                 id,
                 name,
                 type,
-                systemData.Value,
-                description.Value,
+                systemData,
+                description,
                 configs,
                 annotations ?? new ChangeTrackingList<string>(),
-                notes.Value,
-                createdBy.Value,
-                Optional.ToNullable(created),
+                notes,
+                createdBy,
+                created,
                 configMergeRule ?? new ChangeTrackingDictionary<string, string>(),
-                Optional.ToNullable(etag),
+                etag,
                 serializedAdditionalRawData);
         }
 

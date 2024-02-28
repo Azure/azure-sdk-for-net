@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<WinRMListenerProtocolType> protocol = default;
-            Optional<Uri> certificateUrl = default;
+            WinRMListenerProtocolType? protocol = default;
+            Uri certificateUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WinRMListener(Optional.ToNullable(protocol), certificateUrl.Value, serializedAdditionalRawData);
+            return new WinRMListener(protocol, certificateUrl, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WinRMListener>.Write(ModelReaderWriterOptions options)

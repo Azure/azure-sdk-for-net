@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 return null;
             }
-            Optional<string> mimeType = default;
-            Optional<Uri> url = default;
+            string mimeType = default;
+            Uri url = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Billing.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PaymentMethodLogo(mimeType.Value, url.Value, serializedAdditionalRawData);
+            return new PaymentMethodLogo(mimeType, url, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PaymentMethodLogo>.Write(ModelReaderWriterOptions options)

@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<IntegrationServiceEnvironmentAccessEndpointType> type = default;
+            IntegrationServiceEnvironmentAccessEndpointType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationServiceEnvironmentAccessEndpoint(Optional.ToNullable(type), serializedAdditionalRawData);
+            return new IntegrationServiceEnvironmentAccessEndpoint(type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationServiceEnvironmentAccessEndpoint>.Write(ModelReaderWriterOptions options)

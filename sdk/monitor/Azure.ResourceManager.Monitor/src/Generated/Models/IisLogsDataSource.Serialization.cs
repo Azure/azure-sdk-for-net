@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             IList<string> streams = default;
             IList<string> logDirectories = default;
-            Optional<string> name = default;
+            string name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IisLogsDataSource(streams, logDirectories ?? new ChangeTrackingList<string>(), name.Value, serializedAdditionalRawData);
+            return new IisLogsDataSource(streams, logDirectories ?? new ChangeTrackingList<string>(), name, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IisLogsDataSource>.Write(ModelReaderWriterOptions options)

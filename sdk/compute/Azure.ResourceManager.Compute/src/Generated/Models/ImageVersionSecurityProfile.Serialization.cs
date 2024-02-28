@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<GalleryImageVersionUefiSettings> uefiSettings = default;
+            GalleryImageVersionUefiSettings uefiSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ImageVersionSecurityProfile(uefiSettings.Value, serializedAdditionalRawData);
+            return new ImageVersionSecurityProfile(uefiSettings, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ImageVersionSecurityProfile>.Write(ModelReaderWriterOptions options)

@@ -91,12 +91,12 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<string> nodeSize = default;
-            Optional<int> numberOfNodes = default;
-            Optional<int> maxParallelExecutionsPerNode = default;
-            Optional<SynapseIntegrationRuntimeDataFlowProperties> dataFlowProperties = default;
-            Optional<SynapseIntegrationRuntimeVnetProperties> vNetProperties = default;
+            AzureLocation? location = default;
+            string nodeSize = default;
+            int? numberOfNodes = default;
+            int? maxParallelExecutionsPerNode = default;
+            SynapseIntegrationRuntimeDataFlowProperties dataFlowProperties = default;
+            SynapseIntegrationRuntimeVnetProperties vNetProperties = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -155,12 +155,12 @@ namespace Azure.ResourceManager.Synapse.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new SynapseIntegrationRuntimeComputeProperties(
-                Optional.ToNullable(location),
-                nodeSize.Value,
-                Optional.ToNullable(numberOfNodes),
-                Optional.ToNullable(maxParallelExecutionsPerNode),
-                dataFlowProperties.Value,
-                vNetProperties.Value,
+                location,
+                nodeSize,
+                numberOfNodes,
+                maxParallelExecutionsPerNode,
+                dataFlowProperties,
+                vNetProperties,
                 additionalProperties);
         }
 

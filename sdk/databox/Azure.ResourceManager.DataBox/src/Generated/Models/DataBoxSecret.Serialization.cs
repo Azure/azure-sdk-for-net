@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<string> deviceSerialNumber = default;
-            Optional<string> devicePassword = default;
+            string deviceSerialNumber = default;
+            string devicePassword = default;
             IReadOnlyList<ApplianceNetworkConfiguration> networkConfigurations = default;
-            Optional<string> encodedValidationCertPubKey = default;
+            string encodedValidationCertPubKey = default;
             IReadOnlyList<DataBoxAccountCredentialDetails> accountCredentialDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -158,10 +158,10 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DataBoxSecret(
-                deviceSerialNumber.Value,
-                devicePassword.Value,
+                deviceSerialNumber,
+                devicePassword,
                 networkConfigurations ?? new ChangeTrackingList<ApplianceNetworkConfiguration>(),
-                encodedValidationCertPubKey.Value,
+                encodedValidationCertPubKey,
                 accountCredentialDetails ?? new ChangeTrackingList<DataBoxAccountCredentialDetails>(),
                 serializedAdditionalRawData);
         }

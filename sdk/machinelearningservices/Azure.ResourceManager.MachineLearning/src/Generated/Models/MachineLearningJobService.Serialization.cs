@@ -154,13 +154,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> endpoint = default;
-            Optional<string> errorMessage = default;
-            Optional<string> jobServiceType = default;
-            Optional<JobNodes> nodes = default;
-            Optional<int?> port = default;
+            string endpoint = default;
+            string errorMessage = default;
+            string jobServiceType = default;
+            JobNodes nodes = default;
+            int? port = default;
             IDictionary<string, string> properties = default;
-            Optional<string> status = default;
+            string status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -247,13 +247,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MachineLearningJobService(
-                endpoint.Value,
-                errorMessage.Value,
-                jobServiceType.Value,
-                nodes.Value,
-                Optional.ToNullable(port),
+                endpoint,
+                errorMessage,
+                jobServiceType,
+                nodes,
+                port,
                 properties ?? new ChangeTrackingDictionary<string, string>(),
-                status.Value,
+                status,
                 serializedAdditionalRawData);
         }
 

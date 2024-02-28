@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             {
                 return null;
             }
-            Optional<string> enabled = default;
+            string enabled = default;
             IList<LiveTraceCategory> categories = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LiveTraceConfiguration(enabled.Value, categories ?? new ChangeTrackingList<LiveTraceCategory>(), serializedAdditionalRawData);
+            return new LiveTraceConfiguration(enabled, categories ?? new ChangeTrackingList<LiveTraceCategory>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LiveTraceConfiguration>.Write(ModelReaderWriterOptions options)

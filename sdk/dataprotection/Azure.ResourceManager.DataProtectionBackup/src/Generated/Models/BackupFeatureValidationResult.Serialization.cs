@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<BackupSupportedFeatureType> featureType = default;
+            BackupSupportedFeatureType? featureType = default;
             IReadOnlyList<BackupSupportedFeature> features = default;
             string objectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupFeatureValidationResult(objectType, serializedAdditionalRawData, Optional.ToNullable(featureType), features ?? new ChangeTrackingList<BackupSupportedFeature>());
+            return new BackupFeatureValidationResult(objectType, serializedAdditionalRawData, featureType, features ?? new ChangeTrackingList<BackupSupportedFeature>());
         }
 
         BinaryData IPersistableModel<BackupFeatureValidationResult>.Write(ModelReaderWriterOptions options)

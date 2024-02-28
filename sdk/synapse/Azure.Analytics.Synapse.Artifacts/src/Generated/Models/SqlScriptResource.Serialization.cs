@@ -31,10 +31,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> id = default;
+            string id = default;
             string name = default;
-            Optional<string> type = default;
-            Optional<string> etag = default;
+            string type = default;
+            string etag = default;
             SqlScript properties = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -64,7 +64,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new SqlScriptResource(id.Value, name, type.Value, etag.Value, properties);
+            return new SqlScriptResource(id, name, type, etag, properties);
         }
 
         internal partial class SqlScriptResourceConverter : JsonConverter<SqlScriptResource>

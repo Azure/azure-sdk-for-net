@@ -138,11 +138,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             IList<string> schemaOwners = default;
             IList<string> manifestOwners = default;
-            Optional<string> incidentRoutingService = default;
-            Optional<string> incidentRoutingTeam = default;
-            Optional<string> incidentContactEmail = default;
+            string incidentRoutingService = default;
+            string incidentRoutingTeam = default;
+            string incidentContactEmail = default;
             IList<ServiceTreeInfo> serviceTreeInfos = default;
-            Optional<ResourceAccessPolicy> resourceAccessPolicy = default;
+            ResourceAccessPolicy? resourceAccessPolicy = default;
             IList<BinaryData> resourceAccessRoles = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -244,11 +244,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new ResourceProviderManagement(
                 schemaOwners ?? new ChangeTrackingList<string>(),
                 manifestOwners ?? new ChangeTrackingList<string>(),
-                incidentRoutingService.Value,
-                incidentRoutingTeam.Value,
-                incidentContactEmail.Value,
+                incidentRoutingService,
+                incidentRoutingTeam,
+                incidentContactEmail,
                 serviceTreeInfos ?? new ChangeTrackingList<ServiceTreeInfo>(),
-                Optional.ToNullable(resourceAccessPolicy),
+                resourceAccessPolicy,
                 resourceAccessRoles ?? new ChangeTrackingList<BinaryData>(),
                 serializedAdditionalRawData);
         }

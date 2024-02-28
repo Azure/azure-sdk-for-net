@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<VirtualNetworkPropertiesStatusOperationStatus> operationStatus = default;
+            VirtualNetworkPropertiesStatusOperationStatus operationStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridContainerServiceNetworkStatus(operationStatus.Value, serializedAdditionalRawData);
+            return new HybridContainerServiceNetworkStatus(operationStatus, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridContainerServiceNetworkStatus>.Write(ModelReaderWriterOptions options)

@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<ComputePublicIPAddressSkuName> name = default;
-            Optional<ComputePublicIPAddressSkuTier> tier = default;
+            ComputePublicIPAddressSkuName? name = default;
+            ComputePublicIPAddressSkuTier? tier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComputePublicIPAddressSku(Optional.ToNullable(name), Optional.ToNullable(tier), serializedAdditionalRawData);
+            return new ComputePublicIPAddressSku(name, tier, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComputePublicIPAddressSku>.Write(ModelReaderWriterOptions options)

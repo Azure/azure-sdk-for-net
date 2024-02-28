@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.Redis.Models
             {
                 return null;
             }
-            Optional<int> sslPort = default;
-            Optional<int> nonSslPort = default;
-            Optional<string> zone = default;
-            Optional<int> shardId = default;
-            Optional<bool> isMaster = default;
-            Optional<bool> isPrimary = default;
+            int? sslPort = default;
+            int? nonSslPort = default;
+            string zone = default;
+            int? shardId = default;
+            bool? isMaster = default;
+            bool? isPrimary = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -161,12 +161,12 @@ namespace Azure.ResourceManager.Redis.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new RedisInstanceDetails(
-                Optional.ToNullable(sslPort),
-                Optional.ToNullable(nonSslPort),
-                zone.Value,
-                Optional.ToNullable(shardId),
-                Optional.ToNullable(isMaster),
-                Optional.ToNullable(isPrimary),
+                sslPort,
+                nonSslPort,
+                zone,
+                shardId,
+                isMaster,
+                isPrimary,
                 serializedAdditionalRawData);
         }
 

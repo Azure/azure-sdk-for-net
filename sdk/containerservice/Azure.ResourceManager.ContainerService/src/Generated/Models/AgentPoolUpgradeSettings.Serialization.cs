@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<string> maxSurge = default;
-            Optional<int> drainTimeoutInMinutes = default;
+            string maxSurge = default;
+            int? drainTimeoutInMinutes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AgentPoolUpgradeSettings(maxSurge.Value, Optional.ToNullable(drainTimeoutInMinutes), serializedAdditionalRawData);
+            return new AgentPoolUpgradeSettings(maxSurge, drainTimeoutInMinutes, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AgentPoolUpgradeSettings>.Write(ModelReaderWriterOptions options)

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Billing.Models
                 return null;
             }
             IReadOnlyList<BillingPaymentMethodLinkData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Billing.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PaymentMethodLinksListResult(value ?? new ChangeTrackingList<BillingPaymentMethodLinkData>(), nextLink.Value, serializedAdditionalRawData);
+            return new PaymentMethodLinksListResult(value ?? new ChangeTrackingList<BillingPaymentMethodLinkData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PaymentMethodLinksListResult>.Write(ModelReaderWriterOptions options)

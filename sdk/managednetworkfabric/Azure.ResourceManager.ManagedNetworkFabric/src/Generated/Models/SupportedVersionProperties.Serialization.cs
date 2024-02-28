@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<string> version = default;
-            Optional<string> vendorOSVersion = default;
-            Optional<string> vendorFirmwareVersion = default;
-            Optional<NetworkFabricBooleanValue> isDefault = default;
+            string version = default;
+            string vendorOSVersion = default;
+            string vendorFirmwareVersion = default;
+            NetworkFabricBooleanValue? isDefault = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SupportedVersionProperties(version.Value, vendorOSVersion.Value, vendorFirmwareVersion.Value, Optional.ToNullable(isDefault), serializedAdditionalRawData);
+            return new SupportedVersionProperties(version, vendorOSVersion, vendorFirmwareVersion, isDefault, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SupportedVersionProperties>.Write(ModelReaderWriterOptions options)

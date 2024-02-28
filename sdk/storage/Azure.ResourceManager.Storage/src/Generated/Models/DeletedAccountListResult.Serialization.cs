@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Storage.Models
                 return null;
             }
             IReadOnlyList<DeletedAccountData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeletedAccountListResult(value ?? new ChangeTrackingList<DeletedAccountData>(), nextLink.Value, serializedAdditionalRawData);
+            return new DeletedAccountListResult(value ?? new ChangeTrackingList<DeletedAccountData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeletedAccountListResult>.Write(ModelReaderWriterOptions options)

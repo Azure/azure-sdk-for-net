@@ -34,8 +34,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<float> govLength = default;
-            Optional<Mpeg4Profile> profile = default;
+            float? govLength = default;
+            Mpeg4Profile? profile = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("govLength"u8))
@@ -57,7 +57,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new Mpeg4Configuration(Optional.ToNullable(govLength), Optional.ToNullable(profile));
+            return new Mpeg4Configuration(govLength, profile);
         }
     }
 }

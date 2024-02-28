@@ -153,19 +153,19 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
             IDictionary<string, EntityParameterSpecification> parameters = default;
             IList<BinaryData> annotations = default;
             DataFactoryElement<string> url = default;
-            Optional<HttpAuthenticationType> authenticationType = default;
-            Optional<DataFactoryElement<string>> userName = default;
-            Optional<DataFactorySecretBaseDefinition> password = default;
-            Optional<DataFactoryElement<IDictionary<string, string>>> authHeaders = default;
-            Optional<DataFactoryElement<string>> embeddedCertData = default;
-            Optional<DataFactoryElement<string>> certThumbprint = default;
-            Optional<string> encryptedCredential = default;
-            Optional<DataFactoryElement<bool>> enableServerCertificateValidation = default;
+            HttpAuthenticationType? authenticationType = default;
+            DataFactoryElement<string> userName = default;
+            DataFactorySecretBaseDefinition password = default;
+            DataFactoryElement<IDictionary<string, string>> authHeaders = default;
+            DataFactoryElement<string> embeddedCertData = default;
+            DataFactoryElement<string> certThumbprint = default;
+            string encryptedCredential = default;
+            DataFactoryElement<bool> enableServerCertificateValidation = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -314,20 +314,20 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new HttpLinkedService(
                 type,
-                connectVia.Value,
-                description.Value,
+                connectVia,
+                description,
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 annotations ?? new ChangeTrackingList<BinaryData>(),
                 additionalProperties,
                 url,
-                Optional.ToNullable(authenticationType),
-                userName.Value,
+                authenticationType,
+                userName,
                 password,
-                authHeaders.Value,
-                embeddedCertData.Value,
-                certThumbprint.Value,
-                encryptedCredential.Value,
-                enableServerCertificateValidation.Value);
+                authHeaders,
+                embeddedCertData,
+                certThumbprint,
+                encryptedCredential,
+                enableServerCertificateValidation);
         }
 
         BinaryData IPersistableModel<HttpLinkedService>.Write(ModelReaderWriterOptions options)

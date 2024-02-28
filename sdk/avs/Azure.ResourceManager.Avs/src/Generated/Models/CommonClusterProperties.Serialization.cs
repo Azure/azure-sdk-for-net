@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Optional<int> clusterSize = default;
-            Optional<AvsPrivateCloudClusterProvisioningState> provisioningState = default;
-            Optional<int> clusterId = default;
+            int? clusterSize = default;
+            AvsPrivateCloudClusterProvisioningState? provisioningState = default;
+            int? clusterId = default;
             IList<string> hosts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CommonClusterProperties(Optional.ToNullable(clusterSize), Optional.ToNullable(provisioningState), Optional.ToNullable(clusterId), hosts ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new CommonClusterProperties(clusterSize, provisioningState, clusterId, hosts ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CommonClusterProperties>.Write(ModelReaderWriterOptions options)

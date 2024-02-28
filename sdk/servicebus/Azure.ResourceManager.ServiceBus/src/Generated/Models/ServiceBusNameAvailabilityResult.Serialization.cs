@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.ServiceBus.Models
             {
                 return null;
             }
-            Optional<string> message = default;
-            Optional<bool> nameAvailable = default;
-            Optional<ServiceBusNameUnavailableReason> reason = default;
+            string message = default;
+            bool? nameAvailable = default;
+            ServiceBusNameUnavailableReason? reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceBusNameAvailabilityResult(message.Value, Optional.ToNullable(nameAvailable), Optional.ToNullable(reason), serializedAdditionalRawData);
+            return new ServiceBusNameAvailabilityResult(message, nameAvailable, reason, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceBusNameAvailabilityResult>.Write(ModelReaderWriterOptions options)

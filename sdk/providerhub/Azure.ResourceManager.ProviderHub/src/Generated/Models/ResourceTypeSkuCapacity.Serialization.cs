@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 return null;
             }
             int minimum = default;
-            Optional<int> maximum = default;
-            Optional<int> @default = default;
-            Optional<ResourceTypeSkuScaleType> scaleType = default;
+            int? maximum = default;
+            int? @default = default;
+            ResourceTypeSkuScaleType? scaleType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceTypeSkuCapacity(minimum, Optional.ToNullable(maximum), Optional.ToNullable(@default), Optional.ToNullable(scaleType), serializedAdditionalRawData);
+            return new ResourceTypeSkuCapacity(minimum, maximum, @default, scaleType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceTypeSkuCapacity>.Write(ModelReaderWriterOptions options)

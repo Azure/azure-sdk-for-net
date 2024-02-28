@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 return null;
             }
             IReadOnlyList<ContainerAppDaprComponentData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DaprComponentsCollection(value, nextLink.Value, serializedAdditionalRawData);
+            return new DaprComponentsCollection(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DaprComponentsCollection>.Write(ModelReaderWriterOptions options)

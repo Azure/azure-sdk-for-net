@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> migrationId = default;
-            Optional<string> sourceDatabaseName = default;
-            Optional<string> targetDatabaseName = default;
-            Optional<DateTimeOffset> startedOn = default;
-            Optional<DateTimeOffset> endedOn = default;
-            Optional<ValidationStatus> status = default;
+            string id = default;
+            string migrationId = default;
+            string sourceDatabaseName = default;
+            string targetDatabaseName = default;
+            DateTimeOffset? startedOn = default;
+            DateTimeOffset? endedOn = default;
+            ValidationStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,13 +164,13 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MigrationValidationDatabaseSummaryResult(
-                id.Value,
-                migrationId.Value,
-                sourceDatabaseName.Value,
-                targetDatabaseName.Value,
-                Optional.ToNullable(startedOn),
-                Optional.ToNullable(endedOn),
-                Optional.ToNullable(status),
+                id,
+                migrationId,
+                sourceDatabaseName,
+                targetDatabaseName,
+                startedOn,
+                endedOn,
+                status,
                 serializedAdditionalRawData);
         }
 

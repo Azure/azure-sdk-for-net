@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<string> timeGrain = default;
-            Optional<SqlMetricUnitType> unit = default;
-            Optional<SqlMetricName> name = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            string timeGrain = default;
+            SqlMetricUnitType? unit = default;
+            SqlMetricName name = default;
             IReadOnlyList<SqlMetricValue> metricValues = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -171,11 +171,11 @@ namespace Azure.ResourceManager.Sql.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SqlMetric(
-                Optional.ToNullable(startTime),
-                Optional.ToNullable(endTime),
-                timeGrain.Value,
-                Optional.ToNullable(unit),
-                name.Value,
+                startTime,
+                endTime,
+                timeGrain,
+                unit,
+                name,
                 metricValues ?? new ChangeTrackingList<SqlMetricValue>(),
                 serializedAdditionalRawData);
         }

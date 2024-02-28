@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<string> deliveryRegion = default;
+            string deliveryRegion = default;
             IList<CidrIPAddress> ipv4Addresses = default;
             IList<CidrIPAddress> ipv6Addresses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IPAddressGroup(deliveryRegion.Value, ipv4Addresses ?? new ChangeTrackingList<CidrIPAddress>(), ipv6Addresses ?? new ChangeTrackingList<CidrIPAddress>(), serializedAdditionalRawData);
+            return new IPAddressGroup(deliveryRegion, ipv4Addresses ?? new ChangeTrackingList<CidrIPAddress>(), ipv6Addresses ?? new ChangeTrackingList<CidrIPAddress>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IPAddressGroup>.Write(ModelReaderWriterOptions options)

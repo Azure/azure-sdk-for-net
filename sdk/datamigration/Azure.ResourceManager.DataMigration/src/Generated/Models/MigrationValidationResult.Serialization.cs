@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> migrationId = default;
+            string id = default;
+            string migrationId = default;
             IReadOnlyDictionary<string, MigrationValidationDatabaseSummaryResult> summaryResults = default;
-            Optional<ValidationStatus> status = default;
+            ValidationStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrationValidationResult(id.Value, migrationId.Value, summaryResults ?? new ChangeTrackingDictionary<string, MigrationValidationDatabaseSummaryResult>(), Optional.ToNullable(status), serializedAdditionalRawData);
+            return new MigrationValidationResult(id, migrationId, summaryResults ?? new ChangeTrackingDictionary<string, MigrationValidationDatabaseSummaryResult>(), status, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MigrationValidationResult>.Write(ModelReaderWriterOptions options)

@@ -38,7 +38,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             PipelineReferenceType type = default;
             string referenceName = default;
-            Optional<string> name = default;
+            string name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -57,7 +57,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new PipelineReference(type, referenceName, name.Value);
+            return new PipelineReference(type, referenceName, name);
         }
 
         internal partial class PipelineReferenceConverter : JsonConverter<PipelineReference>

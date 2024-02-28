@@ -123,16 +123,16 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<string> name0 = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<long> asn = default;
-            Optional<long> tunnelIdentifier = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            string name0 = default;
+            NetworkProvisioningState? provisioningState = default;
+            long? asn = default;
+            long? tunnelIdentifier = default;
             IList<string> bgpPeerAddress = default;
-            Optional<bool> enableInternetSecurity = default;
-            Optional<RoutingConfiguration> routingConfiguration = default;
+            bool? enableInternetSecurity = default;
+            RoutingConfiguration routingConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -243,17 +243,17 @@ namespace Azure.ResourceManager.Network
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new NetworkVirtualApplianceConnectionData(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
+                id,
+                name,
+                type,
                 serializedAdditionalRawData,
-                name0.Value,
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(asn),
-                Optional.ToNullable(tunnelIdentifier),
+                name0,
+                provisioningState,
+                asn,
+                tunnelIdentifier,
                 bgpPeerAddress ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(enableInternetSecurity),
-                routingConfiguration.Value);
+                enableInternetSecurity,
+                routingConfiguration);
         }
 
         BinaryData IPersistableModel<NetworkVirtualApplianceConnectionData>.Write(ModelReaderWriterOptions options)

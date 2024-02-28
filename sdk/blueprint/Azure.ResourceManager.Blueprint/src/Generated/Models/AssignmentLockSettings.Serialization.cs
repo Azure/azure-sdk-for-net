@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             {
                 return null;
             }
-            Optional<AssignmentLockMode> mode = default;
+            AssignmentLockMode? mode = default;
             IList<string> excludedPrincipals = default;
             IList<string> excludedActions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AssignmentLockSettings(Optional.ToNullable(mode), excludedPrincipals ?? new ChangeTrackingList<string>(), excludedActions ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new AssignmentLockSettings(mode, excludedPrincipals ?? new ChangeTrackingList<string>(), excludedActions ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AssignmentLockSettings>.Write(ModelReaderWriterOptions options)

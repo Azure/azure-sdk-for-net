@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<AppPlatformBuildResultProvisioningState> provisioningState = default;
-            Optional<string> buildPodName = default;
+            string name = default;
+            AppPlatformBuildResultProvisioningState? provisioningState = default;
+            string buildPodName = default;
             IReadOnlyList<AppPlatformBuildStageProperties> buildStages = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformBuildResultProperties(name.Value, Optional.ToNullable(provisioningState), buildPodName.Value, buildStages ?? new ChangeTrackingList<AppPlatformBuildStageProperties>(), serializedAdditionalRawData);
+            return new AppPlatformBuildResultProperties(name, provisioningState, buildPodName, buildStages ?? new ChangeTrackingList<AppPlatformBuildStageProperties>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformBuildResultProperties>.Write(ModelReaderWriterOptions options)

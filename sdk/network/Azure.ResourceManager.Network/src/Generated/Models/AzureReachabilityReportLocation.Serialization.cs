@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             string country = default;
-            Optional<string> state = default;
-            Optional<string> city = default;
+            string state = default;
+            string city = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureReachabilityReportLocation(country, state.Value, city.Value, serializedAdditionalRawData);
+            return new AzureReachabilityReportLocation(country, state, city, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureReachabilityReportLocation>.Write(ModelReaderWriterOptions options)

@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<DataBoxSkuName> skuName = default;
+            DataBoxSkuName? skuName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TransportAvailabilityRequest(Optional.ToNullable(skuName), serializedAdditionalRawData);
+            return new TransportAvailabilityRequest(skuName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TransportAvailabilityRequest>.Write(ModelReaderWriterOptions options)

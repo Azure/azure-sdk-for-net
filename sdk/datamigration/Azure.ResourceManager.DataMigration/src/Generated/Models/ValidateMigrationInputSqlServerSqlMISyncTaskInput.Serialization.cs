@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             IList<MigrateSqlServerSqlMIDatabaseInput> selectedDatabases = default;
-            Optional<FileShare> backupFileShare = default;
+            FileShare backupFileShare = default;
             string storageResourceId = default;
             SqlConnectionInfo sourceConnectionInfo = default;
             MISqlConnectionInfo targetConnectionInfo = default;
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ValidateMigrationInputSqlServerSqlMISyncTaskInput(
                 selectedDatabases,
-                backupFileShare.Value,
+                backupFileShare,
                 storageResourceId,
                 sourceConnectionInfo,
                 targetConnectionInfo,

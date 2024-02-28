@@ -95,9 +95,9 @@ namespace Azure.ResourceManager.EventGrid.Models
                 return null;
             }
             EndpointType endpointType = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<int> maxEventsPerBatch = default;
-            Optional<int> preferredBatchSizeInKilobytes = default;
+            ResourceIdentifier resourceId = default;
+            int? maxEventsPerBatch = default;
+            int? preferredBatchSizeInKilobytes = default;
             IList<DeliveryAttributeMapping> deliveryAttributeMappings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -170,9 +170,9 @@ namespace Azure.ResourceManager.EventGrid.Models
             return new AzureFunctionEventSubscriptionDestination(
                 endpointType,
                 serializedAdditionalRawData,
-                resourceId.Value,
-                Optional.ToNullable(maxEventsPerBatch),
-                Optional.ToNullable(preferredBatchSizeInKilobytes),
+                resourceId,
+                maxEventsPerBatch,
+                preferredBatchSizeInKilobytes,
                 deliveryAttributeMappings ?? new ChangeTrackingList<DeliveryAttributeMapping>());
         }
 

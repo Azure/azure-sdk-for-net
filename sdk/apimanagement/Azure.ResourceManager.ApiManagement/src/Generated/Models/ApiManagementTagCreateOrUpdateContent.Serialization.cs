@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> displayName = default;
+            string displayName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementTagCreateOrUpdateContent(displayName.Value, serializedAdditionalRawData);
+            return new ApiManagementTagCreateOrUpdateContent(displayName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementTagCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

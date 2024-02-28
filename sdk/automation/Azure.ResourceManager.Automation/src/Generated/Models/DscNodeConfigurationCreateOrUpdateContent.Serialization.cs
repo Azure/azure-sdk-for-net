@@ -98,11 +98,11 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> name = default;
+            string name = default;
             IDictionary<string, string> tags = default;
-            Optional<AutomationContentSource> source = default;
-            Optional<DscConfigurationAssociationProperty> configuration = default;
-            Optional<bool> incrementNodeConfigurationBuild = default;
+            AutomationContentSource source = default;
+            DscConfigurationAssociationProperty configuration = default;
+            bool? incrementNodeConfigurationBuild = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -172,11 +172,11 @@ namespace Azure.ResourceManager.Automation.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DscNodeConfigurationCreateOrUpdateContent(
-                name.Value,
+                name,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                source.Value,
-                configuration.Value,
-                Optional.ToNullable(incrementNodeConfigurationBuild),
+                source,
+                configuration,
+                incrementNodeConfigurationBuild,
                 serializedAdditionalRawData);
         }
 

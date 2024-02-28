@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             {
                 return null;
             }
-            Optional<string> trend = default;
+            string trend = default;
             IReadOnlyList<BillingBenefitsSavingsPlanUtilizationAggregate> aggregates = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BillingBenefitsSavingsPlanUtilization(trend.Value, aggregates ?? new ChangeTrackingList<BillingBenefitsSavingsPlanUtilizationAggregate>(), serializedAdditionalRawData);
+            return new BillingBenefitsSavingsPlanUtilization(trend, aggregates ?? new ChangeTrackingList<BillingBenefitsSavingsPlanUtilizationAggregate>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BillingBenefitsSavingsPlanUtilization>.Write(ModelReaderWriterOptions options)

@@ -123,10 +123,10 @@ namespace Azure.ResourceManager.SelfHelp
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> solutionId = default;
+            SystemData systemData = default;
+            string solutionId = default;
             IDictionary<string, string> parameters = default;
-            Optional<TroubleshooterProvisioningState> provisioningState = default;
+            TroubleshooterProvisioningState? provisioningState = default;
             IReadOnlyList<SelfHelpStep> steps = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -220,10 +220,10 @@ namespace Azure.ResourceManager.SelfHelp
                 id,
                 name,
                 type,
-                systemData.Value,
-                solutionId.Value,
+                systemData,
+                solutionId,
                 parameters ?? new ChangeTrackingDictionary<string, string>(),
-                Optional.ToNullable(provisioningState),
+                provisioningState,
                 steps ?? new ChangeTrackingList<SelfHelpStep>(),
                 serializedAdditionalRawData);
         }

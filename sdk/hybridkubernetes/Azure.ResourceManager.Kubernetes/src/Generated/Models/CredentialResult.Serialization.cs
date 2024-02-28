@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Kubernetes.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<byte[]> value = default;
+            string name = default;
+            byte[] value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CredentialResult(name.Value, value.Value, serializedAdditionalRawData);
+            return new CredentialResult(name, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CredentialResult>.Write(ModelReaderWriterOptions options)

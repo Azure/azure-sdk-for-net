@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Optional<string> prefix = default;
-            Optional<string> nextHop = default;
-            Optional<string> asPath = default;
-            Optional<string> originAsValidationState = default;
-            Optional<string> rpkiValidationState = default;
-            Optional<string> trustAnchor = default;
-            Optional<string> receivedTimestamp = default;
+            string prefix = default;
+            string nextHop = default;
+            string asPath = default;
+            string originAsValidationState = default;
+            string rpkiValidationState = default;
+            string trustAnchor = default;
+            string receivedTimestamp = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -152,13 +152,13 @@ namespace Azure.ResourceManager.Peering.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new PeeringReceivedRoute(
-                prefix.Value,
-                nextHop.Value,
-                asPath.Value,
-                originAsValidationState.Value,
-                rpkiValidationState.Value,
-                trustAnchor.Value,
-                receivedTimestamp.Value,
+                prefix,
+                nextHop,
+                asPath,
+                originAsValidationState,
+                rpkiValidationState,
+                trustAnchor,
+                receivedTimestamp,
                 serializedAdditionalRawData);
         }
 

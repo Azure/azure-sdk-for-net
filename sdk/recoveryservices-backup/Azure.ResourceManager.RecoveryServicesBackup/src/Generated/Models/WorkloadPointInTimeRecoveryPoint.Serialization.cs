@@ -120,11 +120,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             IList<PointInTimeRange> timeRanges = default;
-            Optional<DateTimeOffset> recoveryPointTimeInUTC = default;
-            Optional<RestorePointType> type = default;
+            DateTimeOffset? recoveryPointTimeInUTC = default;
+            RestorePointType? type = default;
             IList<RecoveryPointTierInformationV2> recoveryPointTierDetails = default;
             IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo = default;
-            Optional<RecoveryPointProperties> recoveryPointProperties = default;
+            RecoveryPointProperties recoveryPointProperties = default;
             string objectType = "AzureWorkloadPointInTimeRecoveryPoint";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -213,11 +213,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new WorkloadPointInTimeRecoveryPoint(
                 objectType,
                 serializedAdditionalRawData,
-                Optional.ToNullable(recoveryPointTimeInUTC),
-                Optional.ToNullable(type),
+                recoveryPointTimeInUTC,
+                type,
                 recoveryPointTierDetails ?? new ChangeTrackingList<RecoveryPointTierInformationV2>(),
                 recoveryPointMoveReadinessInfo ?? new ChangeTrackingDictionary<string, RecoveryPointMoveReadinessInfo>(),
-                recoveryPointProperties.Value,
+                recoveryPointProperties,
                 timeRanges ?? new ChangeTrackingList<PointInTimeRange>());
         }
 

@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             {
                 return null;
             }
-            Optional<string> keyIdentifier = default;
-            Optional<string> identityClientId = default;
+            string keyIdentifier = default;
+            string identityClientId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppConfigurationKeyVaultProperties(keyIdentifier.Value, identityClientId.Value, serializedAdditionalRawData);
+            return new AppConfigurationKeyVaultProperties(keyIdentifier, identityClientId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppConfigurationKeyVaultProperties>.Write(ModelReaderWriterOptions options)

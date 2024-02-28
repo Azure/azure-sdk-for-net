@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<int> port = default;
-            Optional<int> identifier = default;
-            Optional<GatewayLoadBalancerTunnelProtocol> protocol = default;
-            Optional<GatewayLoadBalancerTunnelInterfaceType> type = default;
+            int? port = default;
+            int? identifier = default;
+            GatewayLoadBalancerTunnelProtocol? protocol = default;
+            GatewayLoadBalancerTunnelInterfaceType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GatewayLoadBalancerTunnelInterface(Optional.ToNullable(port), Optional.ToNullable(identifier), Optional.ToNullable(protocol), Optional.ToNullable(type), serializedAdditionalRawData);
+            return new GatewayLoadBalancerTunnelInterface(port, identifier, protocol, type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GatewayLoadBalancerTunnelInterface>.Write(ModelReaderWriterOptions options)

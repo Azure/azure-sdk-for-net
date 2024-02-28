@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Maps.Geolocation
 {
@@ -18,7 +17,7 @@ namespace Azure.Maps.Geolocation
             {
                 return null;
             }
-            Optional<string> isoCode = default;
+            string isoCode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isoCode"u8))
@@ -27,7 +26,7 @@ namespace Azure.Maps.Geolocation
                     continue;
                 }
             }
-            return new CountryRegion(isoCode.Value);
+            return new CountryRegion(isoCode);
         }
     }
 }

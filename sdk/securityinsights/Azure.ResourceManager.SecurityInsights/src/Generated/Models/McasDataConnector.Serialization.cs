@@ -107,13 +107,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 return null;
             }
             DataConnectorKind kind = default;
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> tenantId = default;
-            Optional<McasDataConnectorDataTypes> dataTypes = default;
+            SystemData systemData = default;
+            Guid? tenantId = default;
+            McasDataConnectorDataTypes dataTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -196,12 +196,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 kind,
-                Optional.ToNullable(etag),
+                etag,
                 serializedAdditionalRawData,
-                Optional.ToNullable(tenantId),
-                dataTypes.Value);
+                tenantId,
+                dataTypes);
         }
 
         BinaryData IPersistableModel<McasDataConnector>.Write(ModelReaderWriterOptions options)

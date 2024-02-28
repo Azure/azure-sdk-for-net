@@ -101,14 +101,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> virtualMachineId = default;
-            Optional<string> virtualMachineVersion = default;
-            Optional<string> resourceGroup = default;
-            Optional<string> backupManagementType = default;
-            Optional<string> workloadType = default;
+            ResourceIdentifier virtualMachineId = default;
+            string virtualMachineVersion = default;
+            string resourceGroup = default;
+            string backupManagementType = default;
+            string workloadType = default;
             string protectableItemType = default;
-            Optional<string> friendlyName = default;
-            Optional<BackupProtectionStatus> protectionState = default;
+            string friendlyName = default;
+            BackupProtectionStatus? protectionState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -168,15 +168,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new IaasComputeVmProtectableItem(
-                backupManagementType.Value,
-                workloadType.Value,
+                backupManagementType,
+                workloadType,
                 protectableItemType,
-                friendlyName.Value,
-                Optional.ToNullable(protectionState),
+                friendlyName,
+                protectionState,
                 serializedAdditionalRawData,
-                virtualMachineId.Value,
-                virtualMachineVersion.Value,
-                resourceGroup.Value);
+                virtualMachineId,
+                virtualMachineVersion,
+                resourceGroup);
         }
 
         BinaryData IPersistableModel<IaasComputeVmProtectableItem>.Write(ModelReaderWriterOptions options)

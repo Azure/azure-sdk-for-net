@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<ContainerAppQueueScaleRule> azureQueue = default;
-            Optional<ContainerAppCustomScaleRule> custom = default;
-            Optional<ContainerAppHttpScaleRule> http = default;
-            Optional<ContainerAppTcpScaleRule> tcp = default;
+            string name = default;
+            ContainerAppQueueScaleRule azureQueue = default;
+            ContainerAppCustomScaleRule custom = default;
+            ContainerAppHttpScaleRule http = default;
+            ContainerAppTcpScaleRule tcp = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,11 +146,11 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ContainerAppScaleRule(
-                name.Value,
-                azureQueue.Value,
-                custom.Value,
-                http.Value,
-                tcp.Value,
+                name,
+                azureQueue,
+                custom,
+                http,
+                tcp,
                 serializedAdditionalRawData);
         }
 

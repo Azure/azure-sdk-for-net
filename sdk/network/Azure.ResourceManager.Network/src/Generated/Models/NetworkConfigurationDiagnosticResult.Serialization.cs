@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<NetworkConfigurationDiagnosticProfile> profile = default;
-            Optional<NetworkSecurityGroupResult> networkSecurityGroupResult = default;
+            NetworkConfigurationDiagnosticProfile profile = default;
+            NetworkSecurityGroupResult networkSecurityGroupResult = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkConfigurationDiagnosticResult(profile.Value, networkSecurityGroupResult.Value, serializedAdditionalRawData);
+            return new NetworkConfigurationDiagnosticResult(profile, networkSecurityGroupResult, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkConfigurationDiagnosticResult>.Write(ModelReaderWriterOptions options)

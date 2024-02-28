@@ -94,11 +94,11 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<LoginRoutes> routes = default;
-            Optional<bool> preserveUrlFragmentsForLogins = default;
+            LoginRoutes routes = default;
+            bool? preserveUrlFragmentsForLogins = default;
             IList<string> allowedExternalRedirectUrls = default;
-            Optional<ContainerAppCookieExpiration> cookieExpiration = default;
-            Optional<ContainerAppLoginNonce> nonce = default;
+            ContainerAppCookieExpiration cookieExpiration = default;
+            ContainerAppLoginNonce nonce = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,11 +160,11 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ContainerAppLogin(
-                routes.Value,
-                Optional.ToNullable(preserveUrlFragmentsForLogins),
+                routes,
+                preserveUrlFragmentsForLogins,
                 allowedExternalRedirectUrls ?? new ChangeTrackingList<string>(),
-                cookieExpiration.Value,
-                nonce.Value,
+                cookieExpiration,
+                nonce,
                 serializedAdditionalRawData);
         }
 

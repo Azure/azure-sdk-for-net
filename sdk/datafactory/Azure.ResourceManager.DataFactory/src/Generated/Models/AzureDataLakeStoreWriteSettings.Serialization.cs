@@ -94,11 +94,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryElement<string>> expiryDateTime = default;
+            DataFactoryElement<string> expiryDateTime = default;
             string type = default;
-            Optional<DataFactoryElement<int>> maxConcurrentConnections = default;
-            Optional<DataFactoryElement<bool>> disableMetricsCollection = default;
-            Optional<DataFactoryElement<string>> copyBehavior = default;
+            DataFactoryElement<int> maxConcurrentConnections = default;
+            DataFactoryElement<bool> disableMetricsCollection = default;
+            DataFactoryElement<string> copyBehavior = default;
             IList<DataFactoryMetadataItemInfo> metadata = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -164,12 +164,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new AzureDataLakeStoreWriteSettings(
                 type,
-                maxConcurrentConnections.Value,
-                disableMetricsCollection.Value,
-                copyBehavior.Value,
+                maxConcurrentConnections,
+                disableMetricsCollection,
+                copyBehavior,
                 metadata ?? new ChangeTrackingList<DataFactoryMetadataItemInfo>(),
                 additionalProperties,
-                expiryDateTime.Value);
+                expiryDateTime);
         }
 
         BinaryData IPersistableModel<AzureDataLakeStoreWriteSettings>.Write(ModelReaderWriterOptions options)

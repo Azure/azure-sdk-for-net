@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<bool> disablePasswordAuthentication = default;
-            Optional<SapSshConfiguration> ssh = default;
-            Optional<SapSshKeyPair> sshKeyPair = default;
+            bool? disablePasswordAuthentication = default;
+            SapSshConfiguration ssh = default;
+            SapSshKeyPair sshKeyPair = default;
             SapOSType osType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SapLinuxConfiguration(osType, serializedAdditionalRawData, Optional.ToNullable(disablePasswordAuthentication), ssh.Value, sshKeyPair.Value);
+            return new SapLinuxConfiguration(osType, serializedAdditionalRawData, disablePasswordAuthentication, ssh, sshKeyPair);
         }
 
         BinaryData IPersistableModel<SapLinuxConfiguration>.Write(ModelReaderWriterOptions options)

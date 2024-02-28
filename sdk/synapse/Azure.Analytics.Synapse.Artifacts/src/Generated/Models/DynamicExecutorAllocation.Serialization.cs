@@ -32,7 +32,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
+            bool? enabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -45,7 +45,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new DynamicExecutorAllocation(Optional.ToNullable(enabled));
+            return new DynamicExecutorAllocation(enabled);
         }
 
         internal partial class DynamicExecutorAllocationConverter : JsonConverter<DynamicExecutorAllocation>

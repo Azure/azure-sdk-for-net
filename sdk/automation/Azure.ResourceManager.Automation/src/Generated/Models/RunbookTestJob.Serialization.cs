@@ -146,17 +146,17 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<string> status = default;
-            Optional<string> statusDetails = default;
-            Optional<string> runOn = default;
-            Optional<DateTimeOffset?> startTime = default;
-            Optional<DateTimeOffset?> endTime = default;
-            Optional<string> exception = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<DateTimeOffset?> lastStatusModifiedTime = default;
+            DateTimeOffset? creationTime = default;
+            string status = default;
+            string statusDetails = default;
+            string runOn = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            string exception = default;
+            DateTimeOffset? lastModifiedTime = default;
+            DateTimeOffset? lastStatusModifiedTime = default;
             IReadOnlyDictionary<string, string> parameters = default;
-            Optional<int> logActivityTrace = default;
+            int? logActivityTrace = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -259,17 +259,17 @@ namespace Azure.ResourceManager.Automation.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new RunbookTestJob(
-                Optional.ToNullable(creationTime),
-                status.Value,
-                statusDetails.Value,
-                runOn.Value,
-                Optional.ToNullable(startTime),
-                Optional.ToNullable(endTime),
-                exception.Value,
-                Optional.ToNullable(lastModifiedTime),
-                Optional.ToNullable(lastStatusModifiedTime),
+                creationTime,
+                status,
+                statusDetails,
+                runOn,
+                startTime,
+                endTime,
+                exception,
+                lastModifiedTime,
+                lastStatusModifiedTime,
                 parameters ?? new ChangeTrackingDictionary<string, string>(),
-                Optional.ToNullable(logActivityTrace),
+                logActivityTrace,
                 serializedAdditionalRawData);
         }
 

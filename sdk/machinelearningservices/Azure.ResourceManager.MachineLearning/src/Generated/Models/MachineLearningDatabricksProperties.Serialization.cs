@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> databricksAccessToken = default;
-            Optional<Uri> workspaceUrl = default;
+            string databricksAccessToken = default;
+            Uri workspaceUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningDatabricksProperties(databricksAccessToken.Value, workspaceUrl.Value, serializedAdditionalRawData);
+            return new MachineLearningDatabricksProperties(databricksAccessToken, workspaceUrl, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningDatabricksProperties>.Write(ModelReaderWriterOptions options)

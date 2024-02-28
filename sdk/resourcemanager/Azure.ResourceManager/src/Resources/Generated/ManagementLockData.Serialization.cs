@@ -109,9 +109,9 @@ namespace Azure.ResourceManager.Resources
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             ManagementLockLevel level = default;
-            Optional<string> notes = default;
+            string notes = default;
             IList<ManagementLockOwner> owners = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -187,9 +187,9 @@ namespace Azure.ResourceManager.Resources
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 level,
-                notes.Value,
+                notes,
                 owners ?? new ChangeTrackingList<ManagementLockOwner>(),
                 serializedAdditionalRawData);
         }

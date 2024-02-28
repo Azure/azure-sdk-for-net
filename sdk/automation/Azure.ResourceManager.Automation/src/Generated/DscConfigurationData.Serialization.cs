@@ -164,23 +164,23 @@ namespace Azure.ResourceManager.Automation
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DscConfigurationProvisioningState> provisioningState = default;
-            Optional<int> jobCount = default;
+            SystemData systemData = default;
+            DscConfigurationProvisioningState? provisioningState = default;
+            int? jobCount = default;
             IDictionary<string, DscConfigurationParameterDefinition> parameters = default;
-            Optional<AutomationContentSource> source = default;
-            Optional<DscConfigurationState> state = default;
-            Optional<bool> logVerbose = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<int> nodeConfigurationCount = default;
-            Optional<string> description = default;
+            AutomationContentSource source = default;
+            DscConfigurationState? state = default;
+            bool? logVerbose = default;
+            DateTimeOffset? creationTime = default;
+            DateTimeOffset? lastModifiedTime = default;
+            int? nodeConfigurationCount = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -350,20 +350,20 @@ namespace Azure.ResourceManager.Automation
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                Optional.ToNullable(etag),
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(jobCount),
+                etag,
+                provisioningState,
+                jobCount,
                 parameters ?? new ChangeTrackingDictionary<string, DscConfigurationParameterDefinition>(),
-                source.Value,
-                Optional.ToNullable(state),
-                Optional.ToNullable(logVerbose),
-                Optional.ToNullable(creationTime),
-                Optional.ToNullable(lastModifiedTime),
-                Optional.ToNullable(nodeConfigurationCount),
-                description.Value,
+                source,
+                state,
+                logVerbose,
+                creationTime,
+                lastModifiedTime,
+                nodeConfigurationCount,
+                description,
                 serializedAdditionalRawData);
         }
 

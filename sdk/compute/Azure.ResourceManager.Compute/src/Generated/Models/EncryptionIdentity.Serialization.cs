@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> userAssignedIdentityResourceId = default;
+            string userAssignedIdentityResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EncryptionIdentity(userAssignedIdentityResourceId.Value, serializedAdditionalRawData);
+            return new EncryptionIdentity(userAssignedIdentityResourceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EncryptionIdentity>.Write(ModelReaderWriterOptions options)

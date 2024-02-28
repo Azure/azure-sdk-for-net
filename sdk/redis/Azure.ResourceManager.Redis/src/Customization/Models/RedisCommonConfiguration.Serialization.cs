@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Redis.Models
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static void ReadIsRdbBackupEnabled(JsonProperty property, ref Optional<bool> IsRdbBackupEnabled)
+        internal static void ReadIsRdbBackupEnabled(JsonProperty property, ref bool? IsRdbBackupEnabled)
         {
             if (property.Value.ValueKind == JsonValueKind.Null)
                 return;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Redis.Models
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static void ReadIsAofBackupEnabled(JsonProperty property, ref Optional<bool> IsAofBackupEnabled)
+        internal static void ReadIsAofBackupEnabled(JsonProperty property, ref bool? IsAofBackupEnabled)
         {
             if (property.Value.ValueKind == JsonValueKind.Null)
                 return;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Redis.Models
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static void ReadRdbBackupMaxSnapshotCount(JsonProperty property, ref Optional<int> RdbBackupMaxSnapshotCount)
+        internal static void ReadRdbBackupMaxSnapshotCount(JsonProperty property, ref int? RdbBackupMaxSnapshotCount)
         {
             if (property.Value.ValueKind == JsonValueKind.Null)
                 return;

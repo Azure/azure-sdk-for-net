@@ -53,8 +53,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 return null;
             }
             string videoName = default;
-            Optional<VideoCreationProperties> videoCreationProperties = default;
-            Optional<VideoPublishingOptions> videoPublishingOptions = default;
+            VideoCreationProperties videoCreationProperties = default;
+            VideoPublishingOptions videoPublishingOptions = default;
             string localMediaCachePath = default;
             string localMediaCacheMaximumSizeMiB = default;
             string type = default;
@@ -121,8 +121,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 name,
                 inputs,
                 videoName,
-                videoCreationProperties.Value,
-                videoPublishingOptions.Value,
+                videoCreationProperties,
+                videoPublishingOptions,
                 localMediaCachePath,
                 localMediaCacheMaximumSizeMiB);
         }

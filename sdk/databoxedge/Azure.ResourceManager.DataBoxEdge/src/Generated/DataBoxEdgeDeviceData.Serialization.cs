@@ -213,33 +213,33 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 return null;
             }
-            Optional<DataBoxEdgeSku> sku = default;
-            Optional<ETag> etag = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<DataBoxEdgeDeviceKind> kind = default;
+            DataBoxEdgeSku sku = default;
+            ETag? etag = default;
+            ManagedServiceIdentity identity = default;
+            DataBoxEdgeDeviceKind? kind = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DataBoxEdgeDeviceStatus> dataBoxEdgeDeviceStatus = default;
-            Optional<string> serialNumber = default;
-            Optional<string> description = default;
-            Optional<string> modelDescription = default;
-            Optional<DataBoxEdgeDeviceType> deviceType = default;
-            Optional<string> friendlyName = default;
-            Optional<string> culture = default;
-            Optional<string> deviceModel = default;
-            Optional<string> deviceSoftwareVersion = default;
-            Optional<long> deviceLocalCapacity = default;
-            Optional<string> timeZone = default;
-            Optional<string> deviceHcsVersion = default;
+            SystemData systemData = default;
+            DataBoxEdgeDeviceStatus? dataBoxEdgeDeviceStatus = default;
+            string serialNumber = default;
+            string description = default;
+            string modelDescription = default;
+            DataBoxEdgeDeviceType? deviceType = default;
+            string friendlyName = default;
+            string culture = default;
+            string deviceModel = default;
+            string deviceSoftwareVersion = default;
+            long? deviceLocalCapacity = default;
+            string timeZone = default;
+            string deviceHcsVersion = default;
             IReadOnlyList<DataBoxEdgeRoleType> configuredRoleTypes = default;
-            Optional<int> nodeCount = default;
-            Optional<DataBoxEdgeResourceMoveDetails> resourceMoveDetails = default;
-            Optional<EdgeProfile> edgeProfile = default;
-            Optional<DataResidency> dataResidency = default;
+            int? nodeCount = default;
+            DataBoxEdgeResourceMoveDetails resourceMoveDetails = default;
+            EdgeProfile edgeProfile = default;
+            DataResidency dataResidency = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -467,30 +467,30 @@ namespace Azure.ResourceManager.DataBoxEdge
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                sku.Value,
-                Optional.ToNullable(etag),
+                sku,
+                etag,
                 identity,
-                Optional.ToNullable(kind),
-                Optional.ToNullable(dataBoxEdgeDeviceStatus),
-                serialNumber.Value,
-                description.Value,
-                modelDescription.Value,
-                Optional.ToNullable(deviceType),
-                friendlyName.Value,
-                culture.Value,
-                deviceModel.Value,
-                deviceSoftwareVersion.Value,
-                Optional.ToNullable(deviceLocalCapacity),
-                timeZone.Value,
-                deviceHcsVersion.Value,
+                kind,
+                dataBoxEdgeDeviceStatus,
+                serialNumber,
+                description,
+                modelDescription,
+                deviceType,
+                friendlyName,
+                culture,
+                deviceModel,
+                deviceSoftwareVersion,
+                deviceLocalCapacity,
+                timeZone,
+                deviceHcsVersion,
                 configuredRoleTypes ?? new ChangeTrackingList<DataBoxEdgeRoleType>(),
-                Optional.ToNullable(nodeCount),
-                resourceMoveDetails.Value,
-                edgeProfile.Value,
-                dataResidency.Value,
+                nodeCount,
+                resourceMoveDetails,
+                edgeProfile,
+                dataResidency,
                 serializedAdditionalRawData);
         }
 

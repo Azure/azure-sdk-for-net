@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<PolicyOverrideKind> kind = default;
-            Optional<string> value = default;
+            PolicyOverrideKind? kind = default;
+            string value = default;
             IList<ResourceSelectorExpression> selectors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicyOverride(Optional.ToNullable(kind), value.Value, selectors ?? new ChangeTrackingList<ResourceSelectorExpression>(), serializedAdditionalRawData);
+            return new PolicyOverride(kind, value, selectors ?? new ChangeTrackingList<ResourceSelectorExpression>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicyOverride>.Write(ModelReaderWriterOptions options)

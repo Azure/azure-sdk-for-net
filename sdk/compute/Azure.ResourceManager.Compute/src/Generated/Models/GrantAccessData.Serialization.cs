@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Compute.Models
             }
             AccessLevel access = default;
             int durationInSeconds = default;
-            Optional<bool> getSecureVmGuestStateSas = default;
-            Optional<DiskImageFileFormat> fileFormat = default;
+            bool? getSecureVmGuestStateSas = default;
+            DiskImageFileFormat? fileFormat = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GrantAccessData(access, durationInSeconds, Optional.ToNullable(getSecureVmGuestStateSas), Optional.ToNullable(fileFormat), serializedAdditionalRawData);
+            return new GrantAccessData(access, durationInSeconds, getSecureVmGuestStateSas, fileFormat, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GrantAccessData>.Write(ModelReaderWriterOptions options)

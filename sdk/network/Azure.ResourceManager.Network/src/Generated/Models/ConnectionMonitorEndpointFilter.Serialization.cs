@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ConnectionMonitorEndpointFilterType> type = default;
+            ConnectionMonitorEndpointFilterType? type = default;
             IList<ConnectionMonitorEndpointFilterItem> items = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectionMonitorEndpointFilter(Optional.ToNullable(type), items ?? new ChangeTrackingList<ConnectionMonitorEndpointFilterItem>(), serializedAdditionalRawData);
+            return new ConnectionMonitorEndpointFilter(type, items ?? new ChangeTrackingList<ConnectionMonitorEndpointFilterItem>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectionMonitorEndpointFilter>.Write(ModelReaderWriterOptions options)

@@ -15,6 +15,7 @@ param (
 
 New-Item $OutputDirectory -ItemType Directory -ErrorAction SilentlyContinue | Out-Null
 $OutputDirectory = Resolve-Path $OutputDirectory
+$EmitterPackageJsonPath = Resolve-Path $EmitterPackageJsonPath
 
 $tempFile = New-TemporaryFile
 Remove-Item $tempFile

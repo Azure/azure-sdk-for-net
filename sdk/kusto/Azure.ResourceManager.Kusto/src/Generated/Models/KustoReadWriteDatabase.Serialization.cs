@@ -130,19 +130,19 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             KustoKind kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<KustoProvisioningState> provisioningState = default;
-            Optional<TimeSpan> softDeletePeriod = default;
-            Optional<TimeSpan> hotCachePeriod = default;
-            Optional<DatabaseStatistics> statistics = default;
-            Optional<bool> isFollowed = default;
-            Optional<KustoKeyVaultProperties> keyVaultProperties = default;
-            Optional<SuspensionDetails> suspensionDetails = default;
+            SystemData systemData = default;
+            KustoProvisioningState? provisioningState = default;
+            TimeSpan? softDeletePeriod = default;
+            TimeSpan? hotCachePeriod = default;
+            DatabaseStatistics statistics = default;
+            bool? isFollowed = default;
+            KustoKeyVaultProperties keyVaultProperties = default;
+            SuspensionDetails suspensionDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -270,17 +270,17 @@ namespace Azure.ResourceManager.Kusto.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(location),
+                systemData,
+                location,
                 kind,
                 serializedAdditionalRawData,
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(softDeletePeriod),
-                Optional.ToNullable(hotCachePeriod),
-                statistics.Value,
-                Optional.ToNullable(isFollowed),
-                keyVaultProperties.Value,
-                suspensionDetails.Value);
+                provisioningState,
+                softDeletePeriod,
+                hotCachePeriod,
+                statistics,
+                isFollowed,
+                keyVaultProperties,
+                suspensionDetails);
         }
 
         BinaryData IPersistableModel<KustoReadWriteDatabase>.Write(ModelReaderWriterOptions options)

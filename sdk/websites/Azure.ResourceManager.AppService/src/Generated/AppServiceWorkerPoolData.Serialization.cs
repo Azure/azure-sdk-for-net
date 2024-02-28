@@ -129,16 +129,16 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<AppServiceSkuDescription> sku = default;
-            Optional<string> kind = default;
+            AppServiceSkuDescription sku = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> workerSizeId = default;
-            Optional<ComputeModeOption> computeMode = default;
-            Optional<string> workerSize = default;
-            Optional<int> workerCount = default;
+            SystemData systemData = default;
+            int? workerSizeId = default;
+            ComputeModeOption? computeMode = default;
+            string workerSize = default;
+            int? workerCount = default;
             IReadOnlyList<string> instanceNames = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -250,14 +250,14 @@ namespace Azure.ResourceManager.AppService
                 id,
                 name,
                 type,
-                systemData.Value,
-                sku.Value,
-                Optional.ToNullable(workerSizeId),
-                Optional.ToNullable(computeMode),
-                workerSize.Value,
-                Optional.ToNullable(workerCount),
+                systemData,
+                sku,
+                workerSizeId,
+                computeMode,
+                workerSize,
+                workerCount,
                 instanceNames ?? new ChangeTrackingList<string>(),
-                kind.Value,
+                kind,
                 serializedAdditionalRawData);
         }
 

@@ -85,8 +85,8 @@ namespace Azure.AI.OpenAI
                 return null;
             }
             string name = default;
-            Optional<string> description = default;
-            Optional<BinaryData> parameters = default;
+            string description = default;
+            BinaryData parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -116,7 +116,7 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FunctionDefinition(name, description.Value, parameters.Value, serializedAdditionalRawData);
+            return new FunctionDefinition(name, description, parameters, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FunctionDefinition>.Write(ModelReaderWriterOptions options)

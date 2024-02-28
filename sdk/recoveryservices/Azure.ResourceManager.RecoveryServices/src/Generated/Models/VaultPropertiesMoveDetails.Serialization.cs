@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Optional<string> operationId = default;
-            Optional<DateTimeOffset> startTimeUtc = default;
-            Optional<DateTimeOffset> completionTimeUtc = default;
-            Optional<ResourceIdentifier> sourceResourceId = default;
-            Optional<ResourceIdentifier> targetResourceId = default;
+            string operationId = default;
+            DateTimeOffset? startTimeUtc = default;
+            DateTimeOffset? completionTimeUtc = default;
+            ResourceIdentifier sourceResourceId = default;
+            ResourceIdentifier targetResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,11 +146,11 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new VaultPropertiesMoveDetails(
-                operationId.Value,
-                Optional.ToNullable(startTimeUtc),
-                Optional.ToNullable(completionTimeUtc),
-                sourceResourceId.Value,
-                targetResourceId.Value,
+                operationId,
+                startTimeUtc,
+                completionTimeUtc,
+                sourceResourceId,
+                targetResourceId,
                 serializedAdditionalRawData);
         }
 

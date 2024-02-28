@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IReadOnlyList<MachineLearningWorkspaceData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkspaceListResult(nextLink.Value, value ?? new ChangeTrackingList<MachineLearningWorkspaceData>(), serializedAdditionalRawData);
+            return new WorkspaceListResult(nextLink, value ?? new ChangeTrackingList<MachineLearningWorkspaceData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkspaceListResult>.Write(ModelReaderWriterOptions options)

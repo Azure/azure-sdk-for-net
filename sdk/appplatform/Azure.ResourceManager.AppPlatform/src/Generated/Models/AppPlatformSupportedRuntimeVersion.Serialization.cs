@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<AppPlatformSupportedRuntimeValue> value = default;
-            Optional<AppPlatformSupportedRuntimePlatform> platform = default;
-            Optional<string> version = default;
+            AppPlatformSupportedRuntimeValue? value = default;
+            AppPlatformSupportedRuntimePlatform? platform = default;
+            string version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformSupportedRuntimeVersion(Optional.ToNullable(value), Optional.ToNullable(platform), version.Value, serializedAdditionalRawData);
+            return new AppPlatformSupportedRuntimeVersion(value, platform, version, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformSupportedRuntimeVersion>.Write(ModelReaderWriterOptions options)

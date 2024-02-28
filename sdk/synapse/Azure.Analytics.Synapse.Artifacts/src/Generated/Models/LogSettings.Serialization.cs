@@ -39,8 +39,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> enableCopyActivityLog = default;
-            Optional<CopyActivityLogSettings> copyActivityLogSettings = default;
+            object enableCopyActivityLog = default;
+            CopyActivityLogSettings copyActivityLogSettings = default;
             LogLocationSettings logLocationSettings = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -68,7 +68,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new LogSettings(enableCopyActivityLog.Value, copyActivityLogSettings.Value, logLocationSettings);
+            return new LogSettings(enableCopyActivityLog, copyActivityLogSettings, logLocationSettings);
         }
 
         internal partial class LogSettingsConverter : JsonConverter<LogSettings>

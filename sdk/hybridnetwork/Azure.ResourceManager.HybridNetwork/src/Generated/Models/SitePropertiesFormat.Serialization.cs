@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<ProvisioningState> provisioningState = default;
+            ProvisioningState? provisioningState = default;
             IList<NFVIs> nfvis = default;
             IReadOnlyList<WritableSubResource> siteNetworkServiceReferences = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SitePropertiesFormat(Optional.ToNullable(provisioningState), nfvis ?? new ChangeTrackingList<NFVIs>(), siteNetworkServiceReferences ?? new ChangeTrackingList<WritableSubResource>(), serializedAdditionalRawData);
+            return new SitePropertiesFormat(provisioningState, nfvis ?? new ChangeTrackingList<NFVIs>(), siteNetworkServiceReferences ?? new ChangeTrackingList<WritableSubResource>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SitePropertiesFormat>.Write(ModelReaderWriterOptions options)

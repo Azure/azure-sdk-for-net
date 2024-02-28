@@ -108,14 +108,14 @@ namespace Azure.ResourceManager.Maintenance.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> maintenanceConfigurationId = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<MaintenanceConfigurationAssignmentFilter> filter = default;
+            SystemData systemData = default;
+            ResourceIdentifier maintenanceConfigurationId = default;
+            ResourceIdentifier resourceId = default;
+            MaintenanceConfigurationAssignmentFilter filter = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -202,11 +202,11 @@ namespace Azure.ResourceManager.Maintenance.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(location),
-                maintenanceConfigurationId.Value,
-                resourceId.Value,
-                filter.Value,
+                systemData,
+                location,
+                maintenanceConfigurationId,
+                resourceId,
+                filter,
                 serializedAdditionalRawData);
         }
 

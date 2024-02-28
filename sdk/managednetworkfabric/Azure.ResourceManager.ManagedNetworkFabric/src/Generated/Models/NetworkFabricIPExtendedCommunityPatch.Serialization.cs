@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             IDictionary<string, string> tags = default;
             IList<IPExtendedCommunityRule> ipExtendedCommunityRules = default;
-            Optional<string> annotation = default;
+            string annotation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkFabricIPExtendedCommunityPatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, ipExtendedCommunityRules ?? new ChangeTrackingList<IPExtendedCommunityRule>(), annotation.Value);
+            return new NetworkFabricIPExtendedCommunityPatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, ipExtendedCommunityRules ?? new ChangeTrackingList<IPExtendedCommunityRule>(), annotation);
         }
 
         BinaryData IPersistableModel<NetworkFabricIPExtendedCommunityPatch>.Write(ModelReaderWriterOptions options)

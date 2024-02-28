@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> timestamp = default;
-            Optional<string> message = default;
+            DateTimeOffset? timestamp = default;
+            string message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OutstandingCondition(Optional.ToNullable(timestamp), message.Value, serializedAdditionalRawData);
+            return new OutstandingCondition(timestamp, message, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OutstandingCondition>.Write(ModelReaderWriterOptions options)

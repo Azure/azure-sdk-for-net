@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<SiteRecoveryConfigureAlertProperties> properties = default;
+            SiteRecoveryConfigureAlertProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryAlertCreateOrUpdateContent(properties.Value, serializedAdditionalRawData);
+            return new SiteRecoveryAlertCreateOrUpdateContent(properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryAlertCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

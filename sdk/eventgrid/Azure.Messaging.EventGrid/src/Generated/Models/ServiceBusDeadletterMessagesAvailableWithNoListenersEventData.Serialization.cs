@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -21,12 +20,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> namespaceName = default;
-            Optional<string> requestUri = default;
-            Optional<string> entityType = default;
-            Optional<string> queueName = default;
-            Optional<string> topicName = default;
-            Optional<string> subscriptionName = default;
+            string namespaceName = default;
+            string requestUri = default;
+            string entityType = default;
+            string queueName = default;
+            string topicName = default;
+            string subscriptionName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("namespaceName"u8))
@@ -61,12 +60,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             return new ServiceBusDeadletterMessagesAvailableWithNoListenersEventData(
-                namespaceName.Value,
-                requestUri.Value,
-                entityType.Value,
-                queueName.Value,
-                topicName.Value,
-                subscriptionName.Value);
+                namespaceName,
+                requestUri,
+                entityType,
+                queueName,
+                topicName,
+                subscriptionName);
         }
 
         internal partial class ServiceBusDeadletterMessagesAvailableWithNoListenersEventDataConverter : JsonConverter<ServiceBusDeadletterMessagesAvailableWithNoListenersEventData>

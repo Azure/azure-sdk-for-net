@@ -129,9 +129,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<FeatureDataType> dataType = default;
-            Optional<string> featureName = default;
-            Optional<string> description = default;
+            FeatureDataType? dataType = default;
+            string featureName = default;
+            string description = default;
             IDictionary<string, string> properties = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -204,12 +204,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MachineLearningFeatureProperties(
-                description.Value,
+                description,
                 properties ?? new ChangeTrackingDictionary<string, string>(),
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
-                Optional.ToNullable(dataType),
-                featureName.Value);
+                dataType,
+                featureName);
         }
 
         BinaryData IPersistableModel<MachineLearningFeatureProperties>.Write(ModelReaderWriterOptions options)

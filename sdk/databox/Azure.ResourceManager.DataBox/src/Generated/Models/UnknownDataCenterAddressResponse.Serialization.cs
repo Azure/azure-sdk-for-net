@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             DataCenterAddressType dataCenterAddressType = default;
             IReadOnlyList<string> supportedCarriersForReturnShipment = default;
-            Optional<AzureLocation> dataCenterAzureLocation = default;
+            AzureLocation? dataCenterAzureLocation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownDataCenterAddressResponse(dataCenterAddressType, supportedCarriersForReturnShipment ?? new ChangeTrackingList<string>(), Optional.ToNullable(dataCenterAzureLocation), serializedAdditionalRawData);
+            return new UnknownDataCenterAddressResponse(dataCenterAddressType, supportedCarriersForReturnShipment ?? new ChangeTrackingList<string>(), dataCenterAzureLocation, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataCenterAddressResult>.Write(ModelReaderWriterOptions options)

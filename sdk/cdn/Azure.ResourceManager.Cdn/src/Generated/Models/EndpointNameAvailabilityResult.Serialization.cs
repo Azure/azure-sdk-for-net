@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<bool> nameAvailable = default;
-            Optional<string> availableHostname = default;
-            Optional<string> reason = default;
-            Optional<string> message = default;
+            bool? nameAvailable = default;
+            string availableHostname = default;
+            string reason = default;
+            string message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EndpointNameAvailabilityResult(Optional.ToNullable(nameAvailable), availableHostname.Value, reason.Value, message.Value, serializedAdditionalRawData);
+            return new EndpointNameAvailabilityResult(nameAvailable, availableHostname, reason, message, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EndpointNameAvailabilityResult>.Write(ModelReaderWriterOptions options)

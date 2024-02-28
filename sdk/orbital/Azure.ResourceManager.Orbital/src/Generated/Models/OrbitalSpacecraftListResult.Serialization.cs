@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Orbital.Models
                 return null;
             }
             IReadOnlyList<OrbitalSpacecraftData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Orbital.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OrbitalSpacecraftListResult(value ?? new ChangeTrackingList<OrbitalSpacecraftData>(), nextLink.Value, serializedAdditionalRawData);
+            return new OrbitalSpacecraftListResult(value ?? new ChangeTrackingList<OrbitalSpacecraftData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OrbitalSpacecraftListResult>.Write(ModelReaderWriterOptions options)

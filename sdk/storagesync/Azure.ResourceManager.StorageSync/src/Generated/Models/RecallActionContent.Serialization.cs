@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Optional<string> pattern = default;
-            Optional<string> recallPath = default;
+            string pattern = default;
+            string recallPath = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecallActionContent(pattern.Value, recallPath.Value, serializedAdditionalRawData);
+            return new RecallActionContent(pattern, recallPath, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecallActionContent>.Write(ModelReaderWriterOptions options)

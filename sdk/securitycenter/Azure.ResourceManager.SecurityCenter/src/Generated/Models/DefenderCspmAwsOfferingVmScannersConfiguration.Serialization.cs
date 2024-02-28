@@ -85,8 +85,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> cloudRoleArn = default;
-            Optional<DefenderForServersScanningMode> scanningMode = default;
+            string cloudRoleArn = default;
+            DefenderForServersScanningMode? scanningMode = default;
             IDictionary<string, string> exclusionTags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DefenderCspmAwsOfferingVmScannersConfiguration(cloudRoleArn.Value, Optional.ToNullable(scanningMode), exclusionTags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new DefenderCspmAwsOfferingVmScannersConfiguration(cloudRoleArn, scanningMode, exclusionTags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DefenderCspmAwsOfferingVmScannersConfiguration>.Write(ModelReaderWriterOptions options)

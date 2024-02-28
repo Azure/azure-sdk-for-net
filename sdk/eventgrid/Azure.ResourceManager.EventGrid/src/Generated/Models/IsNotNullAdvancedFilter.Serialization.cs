@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 return null;
             }
             AdvancedFilterOperatorType operatorType = default;
-            Optional<string> key = default;
+            string key = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IsNotNullAdvancedFilter(operatorType, key.Value, serializedAdditionalRawData);
+            return new IsNotNullAdvancedFilter(operatorType, key, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IsNotNullAdvancedFilter>.Write(ModelReaderWriterOptions options)

@@ -108,12 +108,12 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<Uri> vaultUri = default;
-            Optional<string> keyName = default;
-            Optional<string> keyVersion = default;
-            Optional<JsonWebKeyEncryptionAlgorithm?> encryptionAlgorithm = default;
-            Optional<ResourceIdentifier> msiResourceId = default;
-            Optional<bool> encryptionAtHost = default;
+            Uri vaultUri = default;
+            string keyName = default;
+            string keyVersion = default;
+            JsonWebKeyEncryptionAlgorithm? encryptionAlgorithm = default;
+            ResourceIdentifier msiResourceId = default;
+            bool? encryptionAtHost = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -173,12 +173,12 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new HDInsightDiskEncryptionProperties(
-                vaultUri.Value,
-                keyName.Value,
-                keyVersion.Value,
-                Optional.ToNullable(encryptionAlgorithm),
-                msiResourceId.Value,
-                Optional.ToNullable(encryptionAtHost),
+                vaultUri,
+                keyName,
+                keyVersion,
+                encryptionAlgorithm,
+                msiResourceId,
+                encryptionAtHost,
                 serializedAdditionalRawData);
         }
 

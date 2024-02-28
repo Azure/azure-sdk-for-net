@@ -96,8 +96,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<TimeSpan> after = default;
+            SystemData systemData = default;
+            TimeSpan? after = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,8 +157,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(after),
+                systemData,
+                after,
                 serializedAdditionalRawData);
         }
 

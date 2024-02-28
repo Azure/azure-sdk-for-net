@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> lastRefreshedAt = default;
-            Optional<DateTimeOffset> oldestRecoveryPoint = default;
-            Optional<int> recoveryPointCount = default;
+            DateTimeOffset? lastRefreshedAt = default;
+            DateTimeOffset? oldestRecoveryPoint = default;
+            int? recoveryPointCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MabFileFolderProtectedItemExtendedInfo(Optional.ToNullable(lastRefreshedAt), Optional.ToNullable(oldestRecoveryPoint), Optional.ToNullable(recoveryPointCount), serializedAdditionalRawData);
+            return new MabFileFolderProtectedItemExtendedInfo(lastRefreshedAt, oldestRecoveryPoint, recoveryPointCount, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MabFileFolderProtectedItemExtendedInfo>.Write(ModelReaderWriterOptions options)

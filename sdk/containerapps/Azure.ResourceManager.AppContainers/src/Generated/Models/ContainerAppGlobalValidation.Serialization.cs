@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<ContainerAppUnauthenticatedClientActionV2> unauthenticatedClientAction = default;
-            Optional<string> redirectToProvider = default;
+            ContainerAppUnauthenticatedClientActionV2? unauthenticatedClientAction = default;
+            string redirectToProvider = default;
             IList<string> excludedPaths = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppGlobalValidation(Optional.ToNullable(unauthenticatedClientAction), redirectToProvider.Value, excludedPaths ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new ContainerAppGlobalValidation(unauthenticatedClientAction, redirectToProvider, excludedPaths ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppGlobalValidation>.Write(ModelReaderWriterOptions options)

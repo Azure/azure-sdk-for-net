@@ -104,14 +104,14 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<PatchOperationStatus> status = default;
-            Optional<string> assessmentActivityId = default;
-            Optional<bool> rebootPending = default;
-            Optional<int> criticalAndSecurityPatchCount = default;
-            Optional<int> otherPatchCount = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<ComputeApiError> error = default;
+            PatchOperationStatus? status = default;
+            string assessmentActivityId = default;
+            bool? rebootPending = default;
+            int? criticalAndSecurityPatchCount = default;
+            int? otherPatchCount = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? lastModifiedTime = default;
+            ComputeApiError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -191,14 +191,14 @@ namespace Azure.ResourceManager.Compute.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AvailablePatchSummary(
-                Optional.ToNullable(status),
-                assessmentActivityId.Value,
-                Optional.ToNullable(rebootPending),
-                Optional.ToNullable(criticalAndSecurityPatchCount),
-                Optional.ToNullable(otherPatchCount),
-                Optional.ToNullable(startTime),
-                Optional.ToNullable(lastModifiedTime),
-                error.Value,
+                status,
+                assessmentActivityId,
+                rebootPending,
+                criticalAndSecurityPatchCount,
+                otherPatchCount,
+                startTime,
+                lastModifiedTime,
+                error,
                 serializedAdditionalRawData);
         }
 

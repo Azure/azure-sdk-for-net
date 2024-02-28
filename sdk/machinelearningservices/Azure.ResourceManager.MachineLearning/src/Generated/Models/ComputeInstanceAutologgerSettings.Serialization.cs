@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<MachineLearningFlowAutoLogger> mlflowAutologger = default;
+            MachineLearningFlowAutoLogger? mlflowAutologger = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComputeInstanceAutologgerSettings(Optional.ToNullable(mlflowAutologger), serializedAdditionalRawData);
+            return new ComputeInstanceAutologgerSettings(mlflowAutologger, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComputeInstanceAutologgerSettings>.Write(ModelReaderWriterOptions options)

@@ -114,14 +114,14 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> category = default;
+            SystemData systemData = default;
+            string category = default;
             IList<EndpointDependency> endpoints = default;
-            Optional<KustoProvisioningState> provisioningState = default;
+            KustoProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -209,11 +209,11 @@ namespace Azure.ResourceManager.Kusto.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(etag),
-                category.Value,
+                systemData,
+                etag,
+                category,
                 endpoints ?? new ChangeTrackingList<EndpointDependency>(),
-                Optional.ToNullable(provisioningState),
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

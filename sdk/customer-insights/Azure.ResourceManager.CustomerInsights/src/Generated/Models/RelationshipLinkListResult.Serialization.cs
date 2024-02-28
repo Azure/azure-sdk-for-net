@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 return null;
             }
             IReadOnlyList<RelationshipLinkResourceFormatData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RelationshipLinkListResult(value ?? new ChangeTrackingList<RelationshipLinkResourceFormatData>(), nextLink.Value, serializedAdditionalRawData);
+            return new RelationshipLinkListResult(value ?? new ChangeTrackingList<RelationshipLinkResourceFormatData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RelationshipLinkListResult>.Write(ModelReaderWriterOptions options)

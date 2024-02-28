@@ -127,14 +127,14 @@ namespace Azure.ResourceManager.Sphere
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<SphereOSFeedType> osFeedType = default;
-            Optional<SphereUpdatePolicy> updatePolicy = default;
-            Optional<SphereAllowCrashDumpCollectionStatus> allowCrashDumpsCollection = default;
-            Optional<RegionalDataBoundary> regionalDataBoundary = default;
-            Optional<bool> hasDeployment = default;
-            Optional<SphereProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            string description = default;
+            SphereOSFeedType? osFeedType = default;
+            SphereUpdatePolicy? updatePolicy = default;
+            SphereAllowCrashDumpCollectionStatus? allowCrashDumpsCollection = default;
+            RegionalDataBoundary? regionalDataBoundary = default;
+            bool? hasDeployment = default;
+            SphereProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -244,14 +244,14 @@ namespace Azure.ResourceManager.Sphere
                 id,
                 name,
                 type,
-                systemData.Value,
-                description.Value,
-                Optional.ToNullable(osFeedType),
-                Optional.ToNullable(updatePolicy),
-                Optional.ToNullable(allowCrashDumpsCollection),
-                Optional.ToNullable(regionalDataBoundary),
-                Optional.ToNullable(hasDeployment),
-                Optional.ToNullable(provisioningState),
+                systemData,
+                description,
+                osFeedType,
+                updatePolicy,
+                allowCrashDumpsCollection,
+                regionalDataBoundary,
+                hasDeployment,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

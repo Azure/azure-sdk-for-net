@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<string> skuId = default;
-            Optional<string> planId = default;
-            Optional<string> planDisplayName = default;
-            Optional<PrivateStorePlanAccessibility> accessibility = default;
-            Optional<string> altStackReference = default;
-            Optional<string> stackType = default;
+            string skuId = default;
+            string planId = default;
+            string planDisplayName = default;
+            PrivateStorePlanAccessibility? accessibility = default;
+            string altStackReference = default;
+            string stackType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -145,12 +145,12 @@ namespace Azure.ResourceManager.Marketplace.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new PrivateStorePlan(
-                skuId.Value,
-                planId.Value,
-                planDisplayName.Value,
-                Optional.ToNullable(accessibility),
-                altStackReference.Value,
-                stackType.Value,
+                skuId,
+                planId,
+                planDisplayName,
+                accessibility,
+                altStackReference,
+                stackType,
                 serializedAdditionalRawData);
         }
 

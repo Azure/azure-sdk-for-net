@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> accountName = default;
-            Optional<string> accountKey = default;
-            Optional<ContainerAppAccessMode> accessMode = default;
-            Optional<string> shareName = default;
+            string accountName = default;
+            string accountKey = default;
+            ContainerAppAccessMode? accessMode = default;
+            string shareName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppAzureFileProperties(accountName.Value, accountKey.Value, Optional.ToNullable(accessMode), shareName.Value, serializedAdditionalRawData);
+            return new ContainerAppAzureFileProperties(accountName, accountKey, accessMode, shareName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppAzureFileProperties>.Write(ModelReaderWriterOptions options)

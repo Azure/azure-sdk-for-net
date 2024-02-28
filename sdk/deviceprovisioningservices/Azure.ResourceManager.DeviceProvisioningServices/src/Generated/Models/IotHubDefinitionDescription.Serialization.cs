@@ -83,9 +83,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             {
                 return null;
             }
-            Optional<bool> applyAllocationPolicy = default;
-            Optional<int> allocationWeight = default;
-            Optional<string> name = default;
+            bool? applyAllocationPolicy = default;
+            int? allocationWeight = default;
+            string name = default;
             string connectionString = default;
             AzureLocation location = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -132,9 +132,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new IotHubDefinitionDescription(
-                Optional.ToNullable(applyAllocationPolicy),
-                Optional.ToNullable(allocationWeight),
-                name.Value,
+                applyAllocationPolicy,
+                allocationWeight,
+                name,
                 connectionString,
                 location,
                 serializedAdditionalRawData);

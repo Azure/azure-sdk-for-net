@@ -157,17 +157,17 @@ namespace Azure.ResourceManager.HDInsight.Containers
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<HDInsightProvisioningStatus> provisioningState = default;
-            Optional<string> deploymentId = default;
-            Optional<string> managedResourceGroupName = default;
-            Optional<string> aksManagedResourceGroupName = default;
-            Optional<ClusterPoolProfile> clusterPoolProfile = default;
-            Optional<ClusterPoolComputeProfile> computeProfile = default;
-            Optional<AksClusterProfile> aksClusterProfile = default;
-            Optional<ClusterPoolNetworkProfile> networkProfile = default;
-            Optional<ClusterPoolLogAnalyticsProfile> logAnalyticsProfile = default;
-            Optional<string> status = default;
+            SystemData systemData = default;
+            HDInsightProvisioningStatus? provisioningState = default;
+            string deploymentId = default;
+            string managedResourceGroupName = default;
+            string aksManagedResourceGroupName = default;
+            ClusterPoolProfile clusterPoolProfile = default;
+            ClusterPoolComputeProfile computeProfile = default;
+            AksClusterProfile aksClusterProfile = default;
+            ClusterPoolNetworkProfile networkProfile = default;
+            ClusterPoolLogAnalyticsProfile logAnalyticsProfile = default;
+            string status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -311,19 +311,19 @@ namespace Azure.ResourceManager.HDInsight.Containers
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                Optional.ToNullable(provisioningState),
-                deploymentId.Value,
-                managedResourceGroupName.Value,
-                aksManagedResourceGroupName.Value,
-                clusterPoolProfile.Value,
-                computeProfile.Value,
-                aksClusterProfile.Value,
-                networkProfile.Value,
-                logAnalyticsProfile.Value,
-                status.Value,
+                provisioningState,
+                deploymentId,
+                managedResourceGroupName,
+                aksManagedResourceGroupName,
+                clusterPoolProfile,
+                computeProfile,
+                aksClusterProfile,
+                networkProfile,
+                logAnalyticsProfile,
+                status,
                 serializedAdditionalRawData);
         }
 

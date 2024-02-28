@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Optional<string> resourceProviderNamespace = default;
+            string resourceProviderNamespace = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceProviderDetails(resourceProviderNamespace.Value, serializedAdditionalRawData);
+            return new ResourceProviderDetails(resourceProviderNamespace, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceProviderDetails>.Write(ModelReaderWriterOptions options)

@@ -104,14 +104,14 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<SynapseIntegrationRuntimeState> state = default;
+            SynapseIntegrationRuntimeState? state = default;
             IntegrationRuntimeType type = default;
-            Optional<string> description = default;
-            Optional<string> referenceName = default;
-            Optional<string> type0 = default;
-            Optional<string> id = default;
-            Optional<SynapseIntegrationRuntimeComputeProperties> computeProperties = default;
-            Optional<SynapseIntegrationRuntimeSsisProperties> ssisProperties = default;
+            string description = default;
+            string referenceName = default;
+            string type0 = default;
+            string id = default;
+            SynapseIntegrationRuntimeComputeProperties computeProperties = default;
+            SynapseIntegrationRuntimeSsisProperties ssisProperties = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -197,14 +197,14 @@ namespace Azure.ResourceManager.Synapse.Models
             additionalProperties = additionalPropertiesDictionary;
             return new SynapseManagedIntegrationRuntime(
                 type,
-                description.Value,
+                description,
                 additionalProperties,
-                Optional.ToNullable(state),
-                referenceName.Value,
-                type0.Value,
-                id.Value,
-                computeProperties.Value,
-                ssisProperties.Value);
+                state,
+                referenceName,
+                type0,
+                id,
+                computeProperties,
+                ssisProperties);
         }
 
         BinaryData IPersistableModel<SynapseManagedIntegrationRuntime>.Write(ModelReaderWriterOptions options)

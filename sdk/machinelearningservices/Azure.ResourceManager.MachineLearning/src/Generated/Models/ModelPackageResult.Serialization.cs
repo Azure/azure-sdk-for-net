@@ -194,16 +194,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<BaseEnvironmentSource> baseEnvironmentSource = default;
-            Optional<string> buildId = default;
-            Optional<PackageBuildState> buildState = default;
+            BaseEnvironmentSource baseEnvironmentSource = default;
+            string buildId = default;
+            PackageBuildState? buildState = default;
             IReadOnlyDictionary<string, string> environmentVariables = default;
-            Optional<InferencingServer> inferencingServer = default;
+            InferencingServer inferencingServer = default;
             IReadOnlyList<ModelPackageInput> inputs = default;
-            Optional<Uri> logUrl = default;
-            Optional<ModelConfiguration> modelConfiguration = default;
+            Uri logUrl = default;
+            ModelConfiguration modelConfiguration = default;
             IReadOnlyDictionary<string, string> tags = default;
-            Optional<string> targetEnvironmentId = default;
+            string targetEnvironmentId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -329,16 +329,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ModelPackageResult(
-                baseEnvironmentSource.Value,
-                buildId.Value,
-                Optional.ToNullable(buildState),
+                baseEnvironmentSource,
+                buildId,
+                buildState,
                 environmentVariables ?? new ChangeTrackingDictionary<string, string>(),
-                inferencingServer.Value,
+                inferencingServer,
                 inputs ?? new ChangeTrackingList<ModelPackageInput>(),
-                logUrl.Value,
-                modelConfiguration.Value,
+                logUrl,
+                modelConfiguration,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                targetEnvironmentId.Value,
+                targetEnvironmentId,
                 serializedAdditionalRawData);
         }
 

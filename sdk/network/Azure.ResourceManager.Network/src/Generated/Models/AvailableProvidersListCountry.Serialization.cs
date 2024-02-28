@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> countryName = default;
+            string countryName = default;
             IReadOnlyList<string> providers = default;
             IReadOnlyList<AvailableProvidersListState> states = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailableProvidersListCountry(countryName.Value, providers ?? new ChangeTrackingList<string>(), states ?? new ChangeTrackingList<AvailableProvidersListState>(), serializedAdditionalRawData);
+            return new AvailableProvidersListCountry(countryName, providers ?? new ChangeTrackingList<string>(), states ?? new ChangeTrackingList<AvailableProvidersListState>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailableProvidersListCountry>.Write(ModelReaderWriterOptions options)

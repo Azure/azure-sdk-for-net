@@ -101,12 +101,12 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<string> planId = default;
-            Optional<PrivateStorePlanStatus> status = default;
-            Optional<BinaryData> requestDate = default;
-            Optional<string> justification = default;
-            Optional<string> subscriptionId = default;
-            Optional<string> subscriptionName = default;
+            string planId = default;
+            PrivateStorePlanStatus? status = default;
+            BinaryData requestDate = default;
+            string justification = default;
+            string subscriptionId = default;
+            string subscriptionName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -156,12 +156,12 @@ namespace Azure.ResourceManager.Marketplace.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new PrivateStorePlanDetails(
-                planId.Value,
-                Optional.ToNullable(status),
-                requestDate.Value,
-                justification.Value,
-                subscriptionId.Value,
-                subscriptionName.Value,
+                planId,
+                status,
+                requestDate,
+                justification,
+                subscriptionId,
+                subscriptionName,
                 serializedAdditionalRawData);
         }
 
