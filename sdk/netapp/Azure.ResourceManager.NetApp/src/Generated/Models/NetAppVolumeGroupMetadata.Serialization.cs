@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -98,7 +99,7 @@ namespace Azure.ResourceManager.NetApp.Models
             NetAppApplicationType? applicationType = default;
             string applicationIdentifier = default;
             IList<NetAppVolumePlacementRule> globalPlacementRules = default;
-            long volumesCount = default;
+            long? volumesCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
