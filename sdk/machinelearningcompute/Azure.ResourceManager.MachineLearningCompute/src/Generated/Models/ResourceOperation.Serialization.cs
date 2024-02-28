@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<ResourceOperationDisplay> display = default;
-            Optional<string> origin = default;
+            string name = default;
+            ResourceOperationDisplay display = default;
+            string origin = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceOperation(name.Value, display.Value, origin.Value, serializedAdditionalRawData);
+            return new ResourceOperation(name, display, origin, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceOperation>.Write(ModelReaderWriterOptions options)

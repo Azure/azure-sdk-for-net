@@ -132,13 +132,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            Optional<string> componentId = default;
-            Optional<string> componentName = default;
-            Optional<string> version = default;
-            Optional<string> license = default;
-            Optional<DateTimeOffset> releaseDate = default;
+            string componentId = default;
+            string componentName = default;
+            string version = default;
+            string license = default;
+            DateTimeOffset? releaseDate = default;
             IReadOnlyList<string> paths = default;
-            Optional<IsUpdateAvailable> isUpdateAvailable = default;
+            IsUpdateAvailable? isUpdateAvailable = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -222,13 +222,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SbomComponent(
-                componentId.Value,
-                componentName.Value,
-                version.Value,
-                license.Value,
-                Optional.ToNullable(releaseDate),
+                componentId,
+                componentName,
+                version,
+                license,
+                releaseDate,
                 paths ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(isUpdateAvailable),
+                isUpdateAvailable,
                 serializedAdditionalRawData);
         }
 

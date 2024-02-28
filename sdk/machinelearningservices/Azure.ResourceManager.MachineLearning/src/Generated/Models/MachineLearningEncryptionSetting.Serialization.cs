@@ -88,12 +88,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> cosmosDbResourceId = default;
-            Optional<MachineLearningCmkIdentity> identity = default;
+            ResourceIdentifier cosmosDbResourceId = default;
+            MachineLearningCmkIdentity identity = default;
             MachineLearningEncryptionKeyVaultProperties keyVaultProperties = default;
-            Optional<ResourceIdentifier> searchAccountResourceId = default;
+            ResourceIdentifier searchAccountResourceId = default;
             MachineLearningEncryptionStatus status = default;
-            Optional<ResourceIdentifier> storageAccountResourceId = default;
+            ResourceIdentifier storageAccountResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -151,12 +151,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MachineLearningEncryptionSetting(
-                cosmosDbResourceId.Value,
-                identity.Value,
+                cosmosDbResourceId,
+                identity,
                 keyVaultProperties,
-                searchAccountResourceId.Value,
+                searchAccountResourceId,
                 status,
-                storageAccountResourceId.Value,
+                storageAccountResourceId,
                 serializedAdditionalRawData);
         }
 

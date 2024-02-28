@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<string> selectedItemValuePath = default;
-            Optional<BinaryData> value = default;
-            Optional<string> parameterReference = default;
-            Optional<bool> required = default;
+            string selectedItemValuePath = default;
+            BinaryData value = default;
+            string parameterReference = default;
+            bool? required = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SwaggerCustomDynamicTreeParameterInfo(selectedItemValuePath.Value, value.Value, parameterReference.Value, Optional.ToNullable(required), serializedAdditionalRawData);
+            return new SwaggerCustomDynamicTreeParameterInfo(selectedItemValuePath, value, parameterReference, required, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SwaggerCustomDynamicTreeParameterInfo>.Write(ModelReaderWriterOptions options)

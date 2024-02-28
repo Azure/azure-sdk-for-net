@@ -140,16 +140,16 @@ namespace Azure.ResourceManager.HybridConnectivity
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<EndpointType> type0 = default;
-            Optional<string> resourceId = default;
-            Optional<string> provisioningState = default;
-            Optional<string> createdBy = default;
-            Optional<Models.CreatedByType> createdByType = default;
-            Optional<DateTimeOffset> createdAt = default;
-            Optional<string> lastModifiedBy = default;
-            Optional<Models.CreatedByType> lastModifiedByType = default;
-            Optional<DateTimeOffset> lastModifiedAt = default;
+            SystemData systemData = default;
+            EndpointType? type0 = default;
+            string resourceId = default;
+            string provisioningState = default;
+            string createdBy = default;
+            Models.CreatedByType? createdByType = default;
+            DateTimeOffset? createdAt = default;
+            string lastModifiedBy = default;
+            Models.CreatedByType? lastModifiedByType = default;
+            DateTimeOffset? lastModifiedAt = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -277,16 +277,16 @@ namespace Azure.ResourceManager.HybridConnectivity
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(type0),
-                resourceId.Value,
-                provisioningState.Value,
-                createdBy.Value,
-                Optional.ToNullable(createdByType),
-                Optional.ToNullable(createdAt),
-                lastModifiedBy.Value,
-                Optional.ToNullable(lastModifiedByType),
-                Optional.ToNullable(lastModifiedAt),
+                systemData,
+                type0,
+                resourceId,
+                provisioningState,
+                createdBy,
+                createdByType,
+                createdAt,
+                lastModifiedBy,
+                lastModifiedByType,
+                lastModifiedAt,
                 serializedAdditionalRawData);
         }
 

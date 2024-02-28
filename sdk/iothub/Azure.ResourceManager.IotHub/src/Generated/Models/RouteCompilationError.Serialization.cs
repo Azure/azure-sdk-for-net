@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<string> message = default;
-            Optional<RouteErrorSeverity> severity = default;
-            Optional<RouteErrorRange> location = default;
+            string message = default;
+            RouteErrorSeverity? severity = default;
+            RouteErrorRange location = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RouteCompilationError(message.Value, Optional.ToNullable(severity), location.Value, serializedAdditionalRawData);
+            return new RouteCompilationError(message, severity, location, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RouteCompilationError>.Write(ModelReaderWriterOptions options)

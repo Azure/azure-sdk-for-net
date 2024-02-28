@@ -182,20 +182,20 @@ namespace Azure.ResourceManager.Media
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<LiveEventInput> input = default;
-            Optional<LiveEventPreview> preview = default;
-            Optional<LiveEventEncoding> encoding = default;
+            SystemData systemData = default;
+            string description = default;
+            LiveEventInput input = default;
+            LiveEventPreview preview = default;
+            LiveEventEncoding encoding = default;
             IList<LiveEventTranscription> transcriptions = default;
-            Optional<string> provisioningState = default;
-            Optional<LiveEventResourceState> resourceState = default;
-            Optional<CrossSiteAccessPolicies> crossSiteAccessPolicies = default;
-            Optional<bool> useStaticHostname = default;
-            Optional<string> hostnamePrefix = default;
+            string provisioningState = default;
+            LiveEventResourceState? resourceState = default;
+            CrossSiteAccessPolicies crossSiteAccessPolicies = default;
+            bool? useStaticHostname = default;
+            string hostnamePrefix = default;
             IList<StreamOptionsFlag> streamOptions = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<DateTimeOffset> lastModified = default;
+            DateTimeOffset? created = default;
+            DateTimeOffset? lastModified = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -380,22 +380,22 @@ namespace Azure.ResourceManager.Media
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                description.Value,
-                input.Value,
-                preview.Value,
-                encoding.Value,
+                description,
+                input,
+                preview,
+                encoding,
                 transcriptions ?? new ChangeTrackingList<LiveEventTranscription>(),
-                provisioningState.Value,
-                Optional.ToNullable(resourceState),
-                crossSiteAccessPolicies.Value,
-                Optional.ToNullable(useStaticHostname),
-                hostnamePrefix.Value,
+                provisioningState,
+                resourceState,
+                crossSiteAccessPolicies,
+                useStaticHostname,
+                hostnamePrefix,
                 streamOptions ?? new ChangeTrackingList<StreamOptionsFlag>(),
-                Optional.ToNullable(created),
-                Optional.ToNullable(lastModified),
+                created,
+                lastModified,
                 serializedAdditionalRawData);
         }
 

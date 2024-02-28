@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<MediaTransformOnErrorType> onError = default;
-            Optional<MediaJobPriority> relativePriority = default;
+            MediaTransformOnErrorType? onError = default;
+            MediaJobPriority? relativePriority = default;
             MediaTransformPreset preset = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MediaTransformOutput(Optional.ToNullable(onError), Optional.ToNullable(relativePriority), preset, serializedAdditionalRawData);
+            return new MediaTransformOutput(onError, relativePriority, preset, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MediaTransformOutput>.Write(ModelReaderWriterOptions options)

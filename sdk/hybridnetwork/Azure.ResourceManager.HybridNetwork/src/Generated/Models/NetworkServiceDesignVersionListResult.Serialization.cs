@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 return null;
             }
             IReadOnlyList<NetworkServiceDesignVersionData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkServiceDesignVersionListResult(value ?? new ChangeTrackingList<NetworkServiceDesignVersionData>(), nextLink.Value, serializedAdditionalRawData);
+            return new NetworkServiceDesignVersionListResult(value ?? new ChangeTrackingList<NetworkServiceDesignVersionData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkServiceDesignVersionListResult>.Write(ModelReaderWriterOptions options)

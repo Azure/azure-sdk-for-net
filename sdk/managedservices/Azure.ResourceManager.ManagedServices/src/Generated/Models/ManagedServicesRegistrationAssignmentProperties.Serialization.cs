@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 return null;
             }
             ResourceIdentifier registrationDefinitionId = default;
-            Optional<ManagedServicesProvisioningState> provisioningState = default;
-            Optional<ManagedServicesRegistrationAssignmentRegistrationData> registrationDefinition = default;
+            ManagedServicesProvisioningState? provisioningState = default;
+            ManagedServicesRegistrationAssignmentRegistrationData registrationDefinition = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedServicesRegistrationAssignmentProperties(registrationDefinitionId, Optional.ToNullable(provisioningState), registrationDefinition.Value, serializedAdditionalRawData);
+            return new ManagedServicesRegistrationAssignmentProperties(registrationDefinitionId, provisioningState, registrationDefinition, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedServicesRegistrationAssignmentProperties>.Write(ModelReaderWriterOptions options)

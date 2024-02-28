@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<string> name = default;
+            string name = default;
             NfviType nfviType = "AutoRest.CSharp.Output.Models.Types.EnumTypeValue";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownNFVIs(name.Value, nfviType, serializedAdditionalRawData);
+            return new UnknownNFVIs(name, nfviType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NFVIs>.Write(ModelReaderWriterOptions options)
