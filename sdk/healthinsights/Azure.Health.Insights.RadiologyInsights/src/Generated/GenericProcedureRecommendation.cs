@@ -6,19 +6,22 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.Health.Insights.RadiologyInsights
 {
     /// <summary> Generic procedure information. </summary>
-    public partial class GenericProcedureRecommendation : ProcedureRecommendation
+    internal partial class GenericProcedureRecommendation : ProcedureRecommendation
     {
         /// <summary> Initializes a new instance of <see cref="GenericProcedureRecommendation"/>. </summary>
-        /// <param name="code"> The procedure modality. </param>
+        /// <param name="code"> Procedure modality : SNOMED CT code. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> is null. </exception>
-        internal GenericProcedureRecommendation(CodeableConcept code)
+        internal GenericProcedureRecommendation(FhirR4CodeableConcept code)
         {
-            Argument.AssertNotNull(code, nameof(code));
+            if (code == null)
+            {
+                throw new ArgumentNullException(nameof(code));
+            }
 
             Kind = "genericProcedureRecommendation";
             Code = code;
@@ -26,17 +29,23 @@ namespace Azure.Health.Insights.RadiologyInsights
 
         /// <summary> Initializes a new instance of <see cref="GenericProcedureRecommendation"/>. </summary>
         /// <param name="kind"> Discriminator. </param>
-        /// <param name="code"> The procedure modality. </param>
-        /// <param name="description"> The procedure description. </param>
-        internal GenericProcedureRecommendation(string kind, CodeableConcept code, string description) : base(kind)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="code"> Procedure modality : SNOMED CT code. </param>
+        /// <param name="description"> Procedure description : MANAGEMENT PROCEDURE (PROCEDURE) or CONSULTATION (PROCEDURE) based on SNOMED CT. </param>
+        internal GenericProcedureRecommendation(string kind, IDictionary<string, BinaryData> serializedAdditionalRawData, FhirR4CodeableConcept code, string description) : base(kind, serializedAdditionalRawData)
         {
             Code = code;
             Description = description;
         }
 
-        /// <summary> The procedure modality. </summary>
-        public CodeableConcept Code { get; }
-        /// <summary> The procedure description. </summary>
+        /// <summary> Initializes a new instance of <see cref="GenericProcedureRecommendation"/> for deserialization. </summary>
+        internal GenericProcedureRecommendation()
+        {
+        }
+
+        /// <summary> Procedure modality : SNOMED CT code. </summary>
+        public FhirR4CodeableConcept Code { get; }
+        /// <summary> Procedure description : MANAGEMENT PROCEDURE (PROCEDURE) or CONSULTATION (PROCEDURE) based on SNOMED CT. </summary>
         public string Description { get; }
     }
 }

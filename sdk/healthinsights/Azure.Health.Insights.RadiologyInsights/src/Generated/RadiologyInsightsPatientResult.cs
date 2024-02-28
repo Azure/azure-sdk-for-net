@@ -8,42 +8,82 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.Health.Insights.RadiologyInsights
 {
-    /// <summary> The results of the model's work for a single patient. </summary>
+    /// <summary> Results of the model's work for a single patient. </summary>
     public partial class RadiologyInsightsPatientResult
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="RadiologyInsightsPatientResult"/>. </summary>
-        /// <param name="patientId"> The identifier given for the patient in the request. </param>
+        /// <param name="patientId"> Identifier given for the patient in the request. </param>
         /// <param name="inferences"> The model's inferences for the given patient. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patientId"/> or <paramref name="inferences"/> is null. </exception>
-        internal RadiologyInsightsPatientResult(string patientId, IEnumerable<RadiologyInsightsInference> inferences)
+        internal RadiologyInsightsPatientResult(string patientId, IEnumerable<FhirR4Extendible> inferences)
         {
-            Argument.AssertNotNull(patientId, nameof(patientId));
-            Argument.AssertNotNull(inferences, nameof(inferences));
+            if (patientId == null)
+            {
+                throw new ArgumentNullException(nameof(patientId));
+            }
+            if (inferences == null)
+            {
+                throw new ArgumentNullException(nameof(inferences));
+            }
 
             PatientId = patientId;
             Inferences = inferences.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="RadiologyInsightsPatientResult"/>. </summary>
-        /// <param name="patientId"> The identifier given for the patient in the request. </param>
+        /// <param name="patientId"> Identifier given for the patient in the request. </param>
         /// <param name="inferences"> The model's inferences for the given patient. </param>
-        internal RadiologyInsightsPatientResult(string patientId, IReadOnlyList<RadiologyInsightsInference> inferences)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RadiologyInsightsPatientResult(string patientId, IReadOnlyList<FhirR4Extendible> inferences, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PatientId = patientId;
             Inferences = inferences;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The identifier given for the patient in the request. </summary>
+        /// <summary> Initializes a new instance of <see cref="RadiologyInsightsPatientResult"/> for deserialization. </summary>
+        internal RadiologyInsightsPatientResult()
+        {
+        }
+
+        /// <summary> Identifier given for the patient in the request. </summary>
         public string PatientId { get; }
-        /// <summary>
-        /// The model's inferences for the given patient.
-        /// Please note <see cref="RadiologyInsightsInference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AgeMismatchInference"/>, <see cref="SexMismatchInference"/>, <see cref="LateralityDiscrepancyInference"/>, <see cref="CompleteOrderDiscrepancyInference"/>, <see cref="LimitedOrderDiscrepancyInference"/>, <see cref="FindingInference"/>, <see cref="CriticalResultInference"/>, <see cref="RadiologyProcedureInference"/>, <see cref="FollowupRecommendationInference"/> and <see cref="FollowupCommunicationInference"/>.
-        /// </summary>
-        public IReadOnlyList<RadiologyInsightsInference> Inferences { get; }
+        /// <summary> The model's inferences for the given patient. </summary>
+        public IReadOnlyList<FhirR4Extendible> Inferences { get; }
     }
 }

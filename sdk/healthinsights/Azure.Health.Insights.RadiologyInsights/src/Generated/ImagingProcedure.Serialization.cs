@@ -5,35 +5,102 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
 namespace Azure.Health.Insights.RadiologyInsights
 {
-    public partial class ImagingProcedure
+    internal partial class ImagingProcedure : IUtf8JsonSerializable, IJsonModel<ImagingProcedure>
     {
-        internal static ImagingProcedure DeserializeImagingProcedure(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ImagingProcedure>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ImagingProcedure>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ImagingProcedure>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ImagingProcedure)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("modality"u8);
+            writer.WriteObjectValue(Modality);
+            writer.WritePropertyName("anatomy"u8);
+            writer.WriteObjectValue(Anatomy);
+            if (Laterality != null)
+            {
+                writer.WritePropertyName("laterality"u8);
+                writer.WriteObjectValue(Laterality);
+            }
+            if (Contrast != null)
+            {
+                writer.WritePropertyName("contrast"u8);
+                writer.WriteObjectValue(Contrast);
+            }
+            if (View != null)
+            {
+                writer.WritePropertyName("view"u8);
+                writer.WriteObjectValue(View);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ImagingProcedure IJsonModel<ImagingProcedure>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ImagingProcedure>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ImagingProcedure)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeImagingProcedure(document.RootElement, options);
+        }
+
+        internal static ImagingProcedure DeserializeImagingProcedure(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            CodeableConcept modality = default;
-            CodeableConcept anatomy = default;
-            Optional<CodeableConcept> laterality = default;
-            Optional<RadiologyCodeWithTypes> contrast = default;
-            Optional<RadiologyCodeWithTypes> view = default;
+            FhirR4CodeableConcept modality = default;
+            FhirR4CodeableConcept anatomy = default;
+            FhirR4CodeableConcept laterality = default;
+            RadiologyCodeWithTypes contrast = default;
+            RadiologyCodeWithTypes view = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("modality"u8))
                 {
-                    modality = CodeableConcept.DeserializeCodeableConcept(property.Value);
+                    modality = FhirR4CodeableConcept.DeserializeFhirR4CodeableConcept(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("anatomy"u8))
                 {
-                    anatomy = CodeableConcept.DeserializeCodeableConcept(property.Value);
+                    anatomy = FhirR4CodeableConcept.DeserializeFhirR4CodeableConcept(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("laterality"u8))
@@ -42,7 +109,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    laterality = CodeableConcept.DeserializeCodeableConcept(property.Value);
+                    laterality = FhirR4CodeableConcept.DeserializeFhirR4CodeableConcept(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("contrast"u8))
@@ -51,7 +118,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    contrast = RadiologyCodeWithTypes.DeserializeRadiologyCodeWithTypes(property.Value);
+                    contrast = RadiologyCodeWithTypes.DeserializeRadiologyCodeWithTypes(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("view"u8))
@@ -60,12 +127,54 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    view = RadiologyCodeWithTypes.DeserializeRadiologyCodeWithTypes(property.Value);
+                    view = RadiologyCodeWithTypes.DeserializeRadiologyCodeWithTypes(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ImagingProcedure(modality, anatomy, laterality.Value, contrast.Value, view.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ImagingProcedure(
+                modality,
+                anatomy,
+                laterality,
+                contrast,
+                view,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ImagingProcedure>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ImagingProcedure>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ImagingProcedure)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ImagingProcedure IPersistableModel<ImagingProcedure>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ImagingProcedure>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeImagingProcedure(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ImagingProcedure)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ImagingProcedure>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -73,6 +182,14 @@ namespace Azure.Health.Insights.RadiologyInsights
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeImagingProcedure(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

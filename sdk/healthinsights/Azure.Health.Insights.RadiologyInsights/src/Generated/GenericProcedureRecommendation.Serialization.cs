@@ -5,28 +5,85 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
 namespace Azure.Health.Insights.RadiologyInsights
 {
-    public partial class GenericProcedureRecommendation
+    internal partial class GenericProcedureRecommendation : IUtf8JsonSerializable, IJsonModel<GenericProcedureRecommendation>
     {
-        internal static GenericProcedureRecommendation DeserializeGenericProcedureRecommendation(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GenericProcedureRecommendation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<GenericProcedureRecommendation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<GenericProcedureRecommendation>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(GenericProcedureRecommendation)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("code"u8);
+            writer.WriteObjectValue(Code);
+            if (Description != null)
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        GenericProcedureRecommendation IJsonModel<GenericProcedureRecommendation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GenericProcedureRecommendation>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(GenericProcedureRecommendation)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeGenericProcedureRecommendation(document.RootElement, options);
+        }
+
+        internal static GenericProcedureRecommendation DeserializeGenericProcedureRecommendation(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            CodeableConcept code = default;
-            Optional<string> description = default;
+            FhirR4CodeableConcept code = default;
+            string description = default;
             string kind = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
                 {
-                    code = CodeableConcept.DeserializeCodeableConcept(property.Value);
+                    code = FhirR4CodeableConcept.DeserializeFhirR4CodeableConcept(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("description"u8))
@@ -39,9 +96,45 @@ namespace Azure.Health.Insights.RadiologyInsights
                     kind = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new GenericProcedureRecommendation(kind, code, description.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new GenericProcedureRecommendation(kind, serializedAdditionalRawData, code, description);
         }
+
+        BinaryData IPersistableModel<GenericProcedureRecommendation>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GenericProcedureRecommendation>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(GenericProcedureRecommendation)} does not support '{options.Format}' format.");
+            }
+        }
+
+        GenericProcedureRecommendation IPersistableModel<GenericProcedureRecommendation>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GenericProcedureRecommendation>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeGenericProcedureRecommendation(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(GenericProcedureRecommendation)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<GenericProcedureRecommendation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -49,6 +142,14 @@ namespace Azure.Health.Insights.RadiologyInsights
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeGenericProcedureRecommendation(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

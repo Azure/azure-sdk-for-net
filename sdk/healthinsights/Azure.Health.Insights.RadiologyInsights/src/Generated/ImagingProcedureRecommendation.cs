@@ -12,34 +12,43 @@ using Azure.Core;
 
 namespace Azure.Health.Insights.RadiologyInsights
 {
-    /// <summary> Radiology procedure. </summary>
-    public partial class ImagingProcedureRecommendation : ProcedureRecommendation
+    /// <summary> Imaging procedures. </summary>
+    internal partial class ImagingProcedureRecommendation : ProcedureRecommendation
     {
         /// <summary> Initializes a new instance of <see cref="ImagingProcedureRecommendation"/>. </summary>
-        /// <param name="imagingProcedures"> Imaging procedure. </param>
+        /// <param name="imagingProcedures"> Imaging procedures. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="imagingProcedures"/> is null. </exception>
         internal ImagingProcedureRecommendation(IEnumerable<ImagingProcedure> imagingProcedures)
         {
-            Argument.AssertNotNull(imagingProcedures, nameof(imagingProcedures));
+            if (imagingProcedures == null)
+            {
+                throw new ArgumentNullException(nameof(imagingProcedures));
+            }
 
             Kind = "imagingProcedureRecommendation";
-            ProcedureCodes = new ChangeTrackingList<CodeableConcept>();
+            ProcedureCodes = new ChangeTrackingList<FhirR4CodeableConcept>();
             ImagingProcedures = imagingProcedures.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ImagingProcedureRecommendation"/>. </summary>
         /// <param name="kind"> Discriminator. </param>
-        /// <param name="procedureCodes"> The LOINC codes for the procedure. </param>
-        /// <param name="imagingProcedures"> Imaging procedure. </param>
-        internal ImagingProcedureRecommendation(string kind, IReadOnlyList<CodeableConcept> procedureCodes, IReadOnlyList<ImagingProcedure> imagingProcedures) : base(kind)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="procedureCodes"> LOINC codes for the procedure. </param>
+        /// <param name="imagingProcedures"> Imaging procedures. </param>
+        internal ImagingProcedureRecommendation(string kind, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<FhirR4CodeableConcept> procedureCodes, IReadOnlyList<ImagingProcedure> imagingProcedures) : base(kind, serializedAdditionalRawData)
         {
             ProcedureCodes = procedureCodes;
             ImagingProcedures = imagingProcedures;
         }
 
-        /// <summary> The LOINC codes for the procedure. </summary>
-        public IReadOnlyList<CodeableConcept> ProcedureCodes { get; }
-        /// <summary> Imaging procedure. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImagingProcedureRecommendation"/> for deserialization. </summary>
+        internal ImagingProcedureRecommendation()
+        {
+        }
+
+        /// <summary> LOINC codes for the procedure. </summary>
+        public IReadOnlyList<FhirR4CodeableConcept> ProcedureCodes { get; }
+        /// <summary> Imaging procedures. </summary>
         public IReadOnlyList<ImagingProcedure> ImagingProcedures { get; }
     }
 }

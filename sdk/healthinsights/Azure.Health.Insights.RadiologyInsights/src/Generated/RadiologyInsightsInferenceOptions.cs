@@ -5,28 +5,65 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Health.Insights.RadiologyInsights
 {
-    /// <summary> The options for the Radiology Insights Inferences. </summary>
+    /// <summary> Options regarding follow up recommendation inferences and finding inferences. </summary>
     public partial class RadiologyInsightsInferenceOptions
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="RadiologyInsightsInferenceOptions"/>. </summary>
         public RadiologyInsightsInferenceOptions()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="RadiologyInsightsInferenceOptions"/>. </summary>
-        /// <param name="followupRecommendation"> Followup Recommendation Options. </param>
-        /// <param name="finding"> Finding Options. </param>
-        internal RadiologyInsightsInferenceOptions(FollowupRecommendationOptions followupRecommendation, FindingOptions finding)
+        /// <param name="followupRecommendationOptions"> Follow-up recommendation options. </param>
+        /// <param name="findingOptions"> Finding options. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RadiologyInsightsInferenceOptions(FollowupRecommendationOptions followupRecommendationOptions, FindingOptions findingOptions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            FollowupRecommendation = followupRecommendation;
-            Finding = finding;
+            FollowupRecommendationOptions = followupRecommendationOptions;
+            FindingOptions = findingOptions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Followup Recommendation Options. </summary>
-        public FollowupRecommendationOptions FollowupRecommendation { get; set; }
-        /// <summary> Finding Options. </summary>
-        public FindingOptions Finding { get; set; }
+        /// <summary> Follow-up recommendation options. </summary>
+        public FollowupRecommendationOptions FollowupRecommendationOptions { get; set; }
+        /// <summary> Finding options. </summary>
+        public FindingOptions FindingOptions { get; set; }
     }
 }

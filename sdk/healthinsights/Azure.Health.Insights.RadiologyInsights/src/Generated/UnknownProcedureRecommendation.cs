@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Health.Insights.RadiologyInsights
 {
     /// <summary> Unknown version of ProcedureRecommendation. </summary>
@@ -12,7 +15,13 @@ namespace Azure.Health.Insights.RadiologyInsights
     {
         /// <summary> Initializes a new instance of <see cref="UnknownProcedureRecommendation"/>. </summary>
         /// <param name="kind"> Discriminator. </param>
-        internal UnknownProcedureRecommendation(string kind) : base(kind)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownProcedureRecommendation(string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(kind, serializedAdditionalRawData)
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownProcedureRecommendation"/> for deserialization. </summary>
+        internal UnknownProcedureRecommendation()
         {
         }
     }

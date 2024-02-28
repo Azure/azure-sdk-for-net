@@ -15,7 +15,32 @@ namespace Azure.Health.Insights.RadiologyInsights
     /// <summary> Model factory for models. </summary>
     public static partial class HealthInsightsRadiologyInsightsModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.Extension"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.PatientRecord"/>. </summary>
+        /// <param name="id"> A given identifier for the patient. Has to be unique across all patients in a single request. </param>
+        /// <param name="info"> Patient structured information, including demographics and known structured clinical information. </param>
+        /// <param name="encounters"> Patient encounters/visits. </param>
+        /// <param name="patientDocuments"> Patient unstructured clinical data, given as documents. </param>
+        /// <returns> A new <see cref="RadiologyInsights.PatientRecord"/> instance for mocking. </returns>
+        public static PatientRecord PatientRecord(string id = null, PatientDetails info = null, IEnumerable<Encounter> encounters = null, IEnumerable<PatientDocument> patientDocuments = null)
+        {
+            encounters ??= new List<Encounter>();
+            patientDocuments ??= new List<PatientDocument>();
+
+            return new PatientRecord(id, info, encounters?.ToList(), patientDocuments?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.FhirR4Element"/>. </summary>
+        /// <param name="id"> Unique id for inter-element referencing. </param>
+        /// <param name="extension"> Additional Content defined by implementations. </param>
+        /// <returns> A new <see cref="RadiologyInsights.FhirR4Element"/> instance for mocking. </returns>
+        public static FhirR4Element FhirR4Element(string id = null, IEnumerable<FhirR4Extension> extension = null)
+        {
+            extension ??= new List<FhirR4Extension>();
+
+            return new FhirR4Element(id, extension?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.FhirR4Extension"/>. </summary>
         /// <param name="id"> Unique id for inter-element referencing. </param>
         /// <param name="extension"> Additional Content defined by implementations. </param>
         /// <param name="url"> Source of the definition for the extension code - a logical name or a URL. </param>
@@ -31,15 +56,31 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="valueDateTime"> Value as dateTime. </param>
         /// <param name="valuePeriod"> Value as Period. </param>
         /// <param name="valueReference"> Value as reference. </param>
-        /// <returns> A new <see cref="RadiologyInsights.Extension"/> instance for mocking. </returns>
-        public static Extension Extension(string id = null, IEnumerable<Extension> extension = null, string url = null, Quantity valueQuantity = null, CodeableConcept valueCodeableConcept = null, string valueString = null, bool? valueBoolean = null, int? valueInteger = null, Range valueRange = null, Ratio valueRatio = null, SampledData valueSampledData = null, TimeSpan? valueTime = null, string valueDateTime = null, Period valuePeriod = null, Reference valueReference = null)
+        /// <returns> A new <see cref="RadiologyInsights.FhirR4Extension"/> instance for mocking. </returns>
+        public static FhirR4Extension FhirR4Extension(string id = null, IEnumerable<FhirR4Extension> extension = null, string url = null, FhirR4Quantity valueQuantity = null, FhirR4CodeableConcept valueCodeableConcept = null, string valueString = null, bool? valueBoolean = null, int? valueInteger = null, FhirR4Range valueRange = null, FhirR4Ratio valueRatio = null, FhirR4SampledData valueSampledData = null, TimeSpan? valueTime = null, string valueDateTime = null, FhirR4Period valuePeriod = null, FhirR4Reference valueReference = null)
         {
-            extension ??= new List<Extension>();
+            extension ??= new List<FhirR4Extension>();
 
-            return new Extension(id, extension?.ToList(), url, valueQuantity, valueCodeableConcept, valueString, valueBoolean, valueInteger, valueRange, valueRatio, valueSampledData, valueTime, valueDateTime, valuePeriod, valueReference);
+            return new FhirR4Extension(
+                id,
+                extension?.ToList(),
+                serializedAdditionalRawData: null,
+                url,
+                valueQuantity,
+                valueCodeableConcept,
+                valueString,
+                valueBoolean,
+                valueInteger,
+                valueRange,
+                valueRatio,
+                valueSampledData,
+                valueTime,
+                valueDateTime,
+                valuePeriod,
+                valueReference);
         }
 
-        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.Quantity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.FhirR4Quantity"/>. </summary>
         /// <param name="id"> Unique id for inter-element referencing. </param>
         /// <param name="extension"> Additional Content defined by implementations. </param>
         /// <param name="value"> Numerical value (with implicit precision). </param>
@@ -47,70 +88,85 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="unit"> Unit representation. </param>
         /// <param name="system"> System that defines coded unit form. </param>
         /// <param name="code"> Coded form of the unit. </param>
-        /// <returns> A new <see cref="RadiologyInsights.Quantity"/> instance for mocking. </returns>
-        public static Quantity Quantity(string id = null, IEnumerable<Extension> extension = null, decimal? value = null, string comparator = null, string unit = null, string system = null, string code = null)
+        /// <returns> A new <see cref="RadiologyInsights.FhirR4Quantity"/> instance for mocking. </returns>
+        public static FhirR4Quantity FhirR4Quantity(string id = null, IEnumerable<FhirR4Extension> extension = null, double? value = null, string comparator = null, string unit = null, string system = null, string code = null)
         {
-            extension ??= new List<Extension>();
+            extension ??= new List<FhirR4Extension>();
 
-            return new Quantity(id, extension?.ToList(), value, comparator, unit, system, code);
+            return new FhirR4Quantity(
+                id,
+                extension?.ToList(),
+                serializedAdditionalRawData: null,
+                value,
+                comparator,
+                unit,
+                system,
+                code);
         }
 
-        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.CodeableConcept"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.FhirR4CodeableConcept"/>. </summary>
         /// <param name="id"> Unique id for inter-element referencing. </param>
         /// <param name="extension"> Additional Content defined by implementations. </param>
         /// <param name="coding"> Code defined by a terminology system. </param>
         /// <param name="text"> Plain text representation of the concept. </param>
-        /// <returns> A new <see cref="RadiologyInsights.CodeableConcept"/> instance for mocking. </returns>
-        public static CodeableConcept CodeableConcept(string id = null, IEnumerable<Extension> extension = null, IEnumerable<Coding> coding = null, string text = null)
+        /// <returns> A new <see cref="RadiologyInsights.FhirR4CodeableConcept"/> instance for mocking. </returns>
+        public static FhirR4CodeableConcept FhirR4CodeableConcept(string id = null, IEnumerable<FhirR4Extension> extension = null, IEnumerable<FhirR4Coding> coding = null, string text = null)
         {
-            extension ??= new List<Extension>();
-            coding ??= new List<Coding>();
+            extension ??= new List<FhirR4Extension>();
+            coding ??= new List<FhirR4Coding>();
 
-            return new CodeableConcept(id, extension?.ToList(), coding?.ToList(), text);
+            return new FhirR4CodeableConcept(id, extension?.ToList(), serializedAdditionalRawData: null, coding?.ToList(), text);
         }
 
-        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.Coding"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.FhirR4Coding"/>. </summary>
         /// <param name="id"> Unique id for inter-element referencing. </param>
         /// <param name="extension"> Additional Content defined by implementations. </param>
         /// <param name="system"> Identity of the terminology system. </param>
         /// <param name="version"> Version of the system - if relevant. </param>
         /// <param name="code"> Symbol in syntax defined by the system. </param>
         /// <param name="display"> Representation defined by the system. </param>
-        /// <returns> A new <see cref="RadiologyInsights.Coding"/> instance for mocking. </returns>
-        public static Coding Coding(string id = null, IEnumerable<Extension> extension = null, string system = null, string version = null, string code = null, string display = null)
+        /// <returns> A new <see cref="RadiologyInsights.FhirR4Coding"/> instance for mocking. </returns>
+        public static FhirR4Coding FhirR4Coding(string id = null, IEnumerable<FhirR4Extension> extension = null, string system = null, string version = null, string code = null, string display = null)
         {
-            extension ??= new List<Extension>();
+            extension ??= new List<FhirR4Extension>();
 
-            return new Coding(id, extension?.ToList(), system, version, code, display);
+            return new FhirR4Coding(
+                id,
+                extension?.ToList(),
+                serializedAdditionalRawData: null,
+                system,
+                version,
+                code,
+                display);
         }
 
-        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.Range"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.FhirR4Range"/>. </summary>
         /// <param name="id"> Unique id for inter-element referencing. </param>
         /// <param name="extension"> Additional Content defined by implementations. </param>
         /// <param name="low"> Low limit. </param>
         /// <param name="high"> High limit. </param>
-        /// <returns> A new <see cref="RadiologyInsights.Range"/> instance for mocking. </returns>
-        public static Range Range(string id = null, IEnumerable<Extension> extension = null, Quantity low = null, Quantity high = null)
+        /// <returns> A new <see cref="RadiologyInsights.FhirR4Range"/> instance for mocking. </returns>
+        public static FhirR4Range FhirR4Range(string id = null, IEnumerable<FhirR4Extension> extension = null, FhirR4Quantity low = null, FhirR4Quantity high = null)
         {
-            extension ??= new List<Extension>();
+            extension ??= new List<FhirR4Extension>();
 
-            return new Range(id, extension?.ToList(), low, high);
+            return new FhirR4Range(id, extension?.ToList(), serializedAdditionalRawData: null, low, high);
         }
 
-        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.Ratio"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.FhirR4Ratio"/>. </summary>
         /// <param name="id"> Unique id for inter-element referencing. </param>
         /// <param name="extension"> Additional Content defined by implementations. </param>
         /// <param name="numerator"> Numerator value. </param>
         /// <param name="denominator"> Denominator value. </param>
-        /// <returns> A new <see cref="RadiologyInsights.Ratio"/> instance for mocking. </returns>
-        public static Ratio Ratio(string id = null, IEnumerable<Extension> extension = null, Quantity numerator = null, Quantity denominator = null)
+        /// <returns> A new <see cref="RadiologyInsights.FhirR4Ratio"/> instance for mocking. </returns>
+        public static FhirR4Ratio FhirR4Ratio(string id = null, IEnumerable<FhirR4Extension> extension = null, FhirR4Quantity numerator = null, FhirR4Quantity denominator = null)
         {
-            extension ??= new List<Extension>();
+            extension ??= new List<FhirR4Extension>();
 
-            return new Ratio(id, extension?.ToList(), numerator, denominator);
+            return new FhirR4Ratio(id, extension?.ToList(), serializedAdditionalRawData: null, numerator, denominator);
         }
 
-        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.SampledData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.FhirR4SampledData"/>. </summary>
         /// <param name="id"> Unique id for inter-element referencing. </param>
         /// <param name="extension"> Additional Content defined by implementations. </param>
         /// <param name="origin"> Zero value and units. </param>
@@ -120,43 +176,60 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="upperLimit"> Upper limit of detection. </param>
         /// <param name="dimensions"> Number of sample points at each time point. </param>
         /// <param name="data"> Decimal values with spaces, or "E" | "U" | "L". </param>
-        /// <returns> A new <see cref="RadiologyInsights.SampledData"/> instance for mocking. </returns>
-        public static SampledData SampledData(string id = null, IEnumerable<Extension> extension = null, Quantity origin = null, decimal period = default, decimal? factor = null, decimal? lowerLimit = null, decimal? upperLimit = null, int dimensions = default, string data = null)
+        /// <returns> A new <see cref="RadiologyInsights.FhirR4SampledData"/> instance for mocking. </returns>
+        public static FhirR4SampledData FhirR4SampledData(string id = null, IEnumerable<FhirR4Extension> extension = null, FhirR4Quantity origin = null, double period = default, double? factor = null, double? lowerLimit = null, double? upperLimit = null, int dimensions = default, string data = null)
         {
-            extension ??= new List<Extension>();
+            extension ??= new List<FhirR4Extension>();
 
-            return new SampledData(id, extension?.ToList(), origin, period, factor, lowerLimit, upperLimit, dimensions, data);
+            return new FhirR4SampledData(
+                id,
+                extension?.ToList(),
+                serializedAdditionalRawData: null,
+                origin,
+                period,
+                factor,
+                lowerLimit,
+                upperLimit,
+                dimensions,
+                data);
         }
 
-        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.Period"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.FhirR4Period"/>. </summary>
         /// <param name="id"> Unique id for inter-element referencing. </param>
         /// <param name="extension"> Additional Content defined by implementations. </param>
         /// <param name="start"> Starting time with inclusive boundary. </param>
         /// <param name="end"> End time with inclusive boundary, if not ongoing. </param>
-        /// <returns> A new <see cref="RadiologyInsights.Period"/> instance for mocking. </returns>
-        public static Period Period(string id = null, IEnumerable<Extension> extension = null, string start = null, string end = null)
+        /// <returns> A new <see cref="RadiologyInsights.FhirR4Period"/> instance for mocking. </returns>
+        public static FhirR4Period FhirR4Period(string id = null, IEnumerable<FhirR4Extension> extension = null, string start = null, string end = null)
         {
-            extension ??= new List<Extension>();
+            extension ??= new List<FhirR4Extension>();
 
-            return new Period(id, extension?.ToList(), start, end);
+            return new FhirR4Period(id, extension?.ToList(), serializedAdditionalRawData: null, start, end);
         }
 
-        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.Reference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.FhirR4Reference"/>. </summary>
         /// <param name="id"> Unique id for inter-element referencing. </param>
         /// <param name="extension"> Additional Content defined by implementations. </param>
-        /// <param name="referenceProperty"> Literal reference, Relative, internal or absolute URL. </param>
+        /// <param name="reference"> Literal reference, Relative, internal or absolute URL. </param>
         /// <param name="type"> Type the reference refers to (e.g. "Patient"). </param>
         /// <param name="identifier"> Logical reference, when literal reference is not known. </param>
         /// <param name="display"> Text alternative for the resource. </param>
-        /// <returns> A new <see cref="RadiologyInsights.Reference"/> instance for mocking. </returns>
-        public static Reference Reference(string id = null, IEnumerable<Extension> extension = null, string referenceProperty = null, string type = null, Identifier identifier = null, string display = null)
+        /// <returns> A new <see cref="RadiologyInsights.FhirR4Reference"/> instance for mocking. </returns>
+        public static FhirR4Reference FhirR4Reference(string id = null, IEnumerable<FhirR4Extension> extension = null, string reference = null, string type = null, FhirR4Identifier identifier = null, string display = null)
         {
-            extension ??= new List<Extension>();
+            extension ??= new List<FhirR4Extension>();
 
-            return new Reference(id, extension?.ToList(), referenceProperty, type, identifier, display);
+            return new FhirR4Reference(
+                id,
+                extension?.ToList(),
+                serializedAdditionalRawData: null,
+                reference,
+                type,
+                identifier,
+                display);
         }
 
-        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.Identifier"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.FhirR4Identifier"/>. </summary>
         /// <param name="id"> Unique id for inter-element referencing. </param>
         /// <param name="extension"> Additional Content defined by implementations. </param>
         /// <param name="use"> usual | official | temp | secondary | old (If known). </param>
@@ -165,24 +238,62 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="value"> The value that is unique. </param>
         /// <param name="period"> Time period when id is/was valid for use. </param>
         /// <param name="assigner"> Organization that issued id (may be just text). </param>
-        /// <returns> A new <see cref="RadiologyInsights.Identifier"/> instance for mocking. </returns>
-        public static Identifier Identifier(string id = null, IEnumerable<Extension> extension = null, string use = null, CodeableConcept type = null, string system = null, string value = null, Period period = null, Reference assigner = null)
+        /// <returns> A new <see cref="RadiologyInsights.FhirR4Identifier"/> instance for mocking. </returns>
+        public static FhirR4Identifier FhirR4Identifier(string id = null, IEnumerable<FhirR4Extension> extension = null, string use = null, FhirR4CodeableConcept type = null, string system = null, string value = null, FhirR4Period period = null, FhirR4Reference assigner = null)
         {
-            extension ??= new List<Extension>();
+            extension ??= new List<FhirR4Extension>();
 
-            return new Identifier(id, extension?.ToList(), use, type, system, value, period, assigner);
+            return new FhirR4Identifier(
+                id,
+                extension?.ToList(),
+                serializedAdditionalRawData: null,
+                use,
+                type,
+                system,
+                value,
+                period,
+                assigner);
         }
 
-        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.OrderedProcedure"/>. </summary>
-        /// <param name="extension"> Additional Content defined by implementations. </param>
-        /// <param name="code"> Procedure code. </param>
-        /// <param name="description"> Procedure description. </param>
-        /// <returns> A new <see cref="RadiologyInsights.OrderedProcedure"/> instance for mocking. </returns>
-        public static OrderedProcedure OrderedProcedure(IEnumerable<Extension> extension = null, CodeableConcept code = null, string description = null)
+        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.Encounter"/>. </summary>
+        /// <param name="id"> The id of the visit. </param>
+        /// <param name="period">
+        /// Time period of the visit.
+        /// In case of admission, use timePeriod.start to indicate the admission time and timePeriod.end to indicate the discharge time.
+        /// </param>
+        /// <param name="class"> The class of the encounter. </param>
+        /// <returns> A new <see cref="RadiologyInsights.Encounter"/> instance for mocking. </returns>
+        public static Encounter Encounter(string id = null, TimePeriod period = null, EncounterClass? @class = null)
         {
-            extension ??= new List<Extension>();
+            return new Encounter(id, period, @class, serializedAdditionalRawData: null);
+        }
 
-            return new OrderedProcedure(extension?.ToList(), code, description);
+        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.PatientDocument"/>. </summary>
+        /// <param name="type"> The type of the patient document, such as 'note' (text document) or 'fhirBundle' (FHIR JSON document). </param>
+        /// <param name="clinicalType"> The type of the clinical document. </param>
+        /// <param name="id"> A given identifier for the document. Has to be unique across all documents for a single patient. </param>
+        /// <param name="language"> A 2 letter ISO 639-1 representation of the language of the document. </param>
+        /// <param name="createdDateTime"> The date and time when the document was created. </param>
+        /// <param name="authors"> Document author(s). </param>
+        /// <param name="specialtyType"> specialty type the document. </param>
+        /// <param name="administrativeMetadata"> Administrative metadata for the document. </param>
+        /// <param name="content"> The content of the patient document. </param>
+        /// <returns> A new <see cref="RadiologyInsights.PatientDocument"/> instance for mocking. </returns>
+        public static PatientDocument PatientDocument(DocumentType type = default, ClinicalDocumentType? clinicalType = null, string id = null, string language = null, DateTimeOffset? createdDateTime = null, IEnumerable<DocumentAuthor> authors = null, SpecialtyType? specialtyType = null, DocumentAdministrativeMetadata administrativeMetadata = null, DocumentContent content = null)
+        {
+            authors ??= new List<DocumentAuthor>();
+
+            return new PatientDocument(
+                type,
+                clinicalType,
+                id,
+                language,
+                createdDateTime,
+                authors?.ToList(),
+                specialtyType,
+                administrativeMetadata,
+                content,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="RadiologyInsights.RadiologyInsightsInferenceResult"/>. </summary>
@@ -193,296 +304,18 @@ namespace Azure.Health.Insights.RadiologyInsights
         {
             patientResults ??= new List<RadiologyInsightsPatientResult>();
 
-            return new RadiologyInsightsInferenceResult(patientResults?.ToList(), modelVersion);
+            return new RadiologyInsightsInferenceResult(patientResults?.ToList(), modelVersion, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="RadiologyInsights.RadiologyInsightsPatientResult"/>. </summary>
-        /// <param name="patientId"> The identifier given for the patient in the request. </param>
+        /// <param name="patientId"> Identifier given for the patient in the request. </param>
         /// <param name="inferences"> The model's inferences for the given patient. </param>
         /// <returns> A new <see cref="RadiologyInsights.RadiologyInsightsPatientResult"/> instance for mocking. </returns>
-        public static RadiologyInsightsPatientResult RadiologyInsightsPatientResult(string patientId = null, IEnumerable<RadiologyInsightsInference> inferences = null)
+        public static RadiologyInsightsPatientResult RadiologyInsightsPatientResult(string patientId = null, IEnumerable<FhirR4Extendible> inferences = null)
         {
-            inferences ??= new List<RadiologyInsightsInference>();
+            inferences ??= new List<FhirR4Extendible>();
 
-            return new RadiologyInsightsPatientResult(patientId, inferences?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.RadiologyInsightsInference"/>. </summary>
-        /// <param name="extension"> Additional Content defined by implementations. </param>
-        /// <param name="kind"> Discriminator. </param>
-        /// <returns> A new <see cref="RadiologyInsights.RadiologyInsightsInference"/> instance for mocking. </returns>
-        public static RadiologyInsightsInference RadiologyInsightsInference(IEnumerable<Extension> extension = null, string kind = null)
-        {
-            extension ??= new List<Extension>();
-
-            return new UnknownRadiologyInsightsInference(extension?.ToList(), kind);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.AgeMismatchInference"/>. </summary>
-        /// <param name="extension"> Additional Content defined by implementations. </param>
-        /// <returns> A new <see cref="RadiologyInsights.AgeMismatchInference"/> instance for mocking. </returns>
-        public static AgeMismatchInference AgeMismatchInference(IEnumerable<Extension> extension = null)
-        {
-            extension ??= new List<Extension>();
-
-            return new AgeMismatchInference(extension?.ToList(), "ageMismatch");
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.SexMismatchInference"/>. </summary>
-        /// <param name="extension"> Additional Content defined by implementations. </param>
-        /// <param name="sexIndication"> sex indication. </param>
-        /// <returns> A new <see cref="RadiologyInsights.SexMismatchInference"/> instance for mocking. </returns>
-        public static SexMismatchInference SexMismatchInference(IEnumerable<Extension> extension = null, CodeableConcept sexIndication = null)
-        {
-            extension ??= new List<Extension>();
-
-            return new SexMismatchInference(extension?.ToList(), "sexMismatch", sexIndication);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.LateralityDiscrepancyInference"/>. </summary>
-        /// <param name="extension"> Additional Content defined by implementations. </param>
-        /// <param name="lateralityIndication"> laterality indication. </param>
-        /// <param name="discrepancyType"> mismatch type. </param>
-        /// <returns> A new <see cref="RadiologyInsights.LateralityDiscrepancyInference"/> instance for mocking. </returns>
-        public static LateralityDiscrepancyInference LateralityDiscrepancyInference(IEnumerable<Extension> extension = null, CodeableConcept lateralityIndication = null, string discrepancyType = null)
-        {
-            extension ??= new List<Extension>();
-
-            return new LateralityDiscrepancyInference(extension?.ToList(), "lateralityDiscrepancy", lateralityIndication, discrepancyType);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.CompleteOrderDiscrepancyInference"/>. </summary>
-        /// <param name="extension"> Additional Content defined by implementations. </param>
-        /// <param name="orderType"> Order Type. </param>
-        /// <param name="missingBodyParts"> List of missing body parts required by a complete order. </param>
-        /// <param name="missingBodyPartMeasurements"> List of missing body parts that require measurement by a complete order. </param>
-        /// <returns> A new <see cref="RadiologyInsights.CompleteOrderDiscrepancyInference"/> instance for mocking. </returns>
-        public static CompleteOrderDiscrepancyInference CompleteOrderDiscrepancyInference(IEnumerable<Extension> extension = null, CodeableConcept orderType = null, IEnumerable<CodeableConcept> missingBodyParts = null, IEnumerable<CodeableConcept> missingBodyPartMeasurements = null)
-        {
-            extension ??= new List<Extension>();
-            missingBodyParts ??= new List<CodeableConcept>();
-            missingBodyPartMeasurements ??= new List<CodeableConcept>();
-
-            return new CompleteOrderDiscrepancyInference(extension?.ToList(), "completeOrderDiscrepancy", orderType, missingBodyParts?.ToList(), missingBodyPartMeasurements?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.LimitedOrderDiscrepancyInference"/>. </summary>
-        /// <param name="extension"> Additional Content defined by implementations. </param>
-        /// <param name="orderType"> Order Type. </param>
-        /// <param name="presentBodyParts"> Complete list of body parts found in the document. </param>
-        /// <param name="presentBodyPartMeasurements"> Complete list of body parts that require measurement by a complete order. </param>
-        /// <returns> A new <see cref="RadiologyInsights.LimitedOrderDiscrepancyInference"/> instance for mocking. </returns>
-        public static LimitedOrderDiscrepancyInference LimitedOrderDiscrepancyInference(IEnumerable<Extension> extension = null, CodeableConcept orderType = null, IEnumerable<CodeableConcept> presentBodyParts = null, IEnumerable<CodeableConcept> presentBodyPartMeasurements = null)
-        {
-            extension ??= new List<Extension>();
-            presentBodyParts ??= new List<CodeableConcept>();
-            presentBodyPartMeasurements ??= new List<CodeableConcept>();
-
-            return new LimitedOrderDiscrepancyInference(extension?.ToList(), "limitedOrderDiscrepancy", orderType, presentBodyParts?.ToList(), presentBodyPartMeasurements?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.FindingInference"/>. </summary>
-        /// <param name="extension"> Additional Content defined by implementations. </param>
-        /// <param name="finding"> The finding data. </param>
-        /// <returns> A new <see cref="RadiologyInsights.FindingInference"/> instance for mocking. </returns>
-        public static FindingInference FindingInference(IEnumerable<Extension> extension = null, Observation finding = null)
-        {
-            extension ??= new List<Extension>();
-
-            return new FindingInference(extension?.ToList(), "finding", finding);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.Narrative"/>. </summary>
-        /// <param name="id"> Unique id for inter-element referencing. </param>
-        /// <param name="extension"> Additional Content defined by implementations. </param>
-        /// <param name="status"> generated, extensions, additional, empty. </param>
-        /// <param name="div"> xhtml. </param>
-        /// <returns> A new <see cref="RadiologyInsights.Narrative"/> instance for mocking. </returns>
-        public static Narrative Narrative(string id = null, IEnumerable<Extension> extension = null, string status = null, string div = null)
-        {
-            extension ??= new List<Extension>();
-
-            return new Narrative(id, extension?.ToList(), status, div);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.Annotation"/>. </summary>
-        /// <param name="id"> Unique id for inter-element referencing. </param>
-        /// <param name="extension"> Additional Content defined by implementations. </param>
-        /// <param name="authorString"> Individual responsible for the annotation. </param>
-        /// <param name="time"> When the annotation was made. </param>
-        /// <param name="text"> The annotation - text content (as markdown). </param>
-        /// <returns> A new <see cref="RadiologyInsights.Annotation"/> instance for mocking. </returns>
-        public static Annotation Annotation(string id = null, IEnumerable<Extension> extension = null, string authorString = null, string time = null, string text = null)
-        {
-            extension ??= new List<Extension>();
-
-            return new Annotation(id, extension?.ToList(), authorString, time, text);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.ObservationComponent"/>. </summary>
-        /// <param name="id"> Unique id for inter-element referencing. </param>
-        /// <param name="extension"> Additional Content defined by implementations. </param>
-        /// <param name="code"> Type of component observation (code / type). </param>
-        /// <param name="valueQuantity"> Value as Quantity. </param>
-        /// <param name="valueCodeableConcept"> Value as CodeableConcept. </param>
-        /// <param name="valueString"> Value as string. </param>
-        /// <param name="valueBoolean"> Value as boolean. </param>
-        /// <param name="valueInteger"> Value as integer. </param>
-        /// <param name="valueRange"> Value as Range. </param>
-        /// <param name="valueRatio"> Value as Ratio. </param>
-        /// <param name="valueSampledData"> Value as SampledData. </param>
-        /// <param name="valueTime"> Value as time (hh:mm:ss). </param>
-        /// <param name="valueDateTime"> Value as dateTime. </param>
-        /// <param name="valuePeriod"> Value as Period. </param>
-        /// <param name="valueReference"> Value as reference. </param>
-        /// <param name="dataAbsentReason"> Why the component result is missing. </param>
-        /// <param name="interpretation"> High, low, normal, etc. </param>
-        /// <param name="referenceRange"> Provides guide for interpretation of component result. </param>
-        /// <returns> A new <see cref="RadiologyInsights.ObservationComponent"/> instance for mocking. </returns>
-        public static ObservationComponent ObservationComponent(string id = null, IEnumerable<Extension> extension = null, CodeableConcept code = null, Quantity valueQuantity = null, CodeableConcept valueCodeableConcept = null, string valueString = null, bool? valueBoolean = null, int? valueInteger = null, Range valueRange = null, Ratio valueRatio = null, SampledData valueSampledData = null, TimeSpan? valueTime = null, string valueDateTime = null, Period valuePeriod = null, Reference valueReference = null, CodeableConcept dataAbsentReason = null, IEnumerable<CodeableConcept> interpretation = null, IEnumerable<ObservationReferenceRange> referenceRange = null)
-        {
-            extension ??= new List<Extension>();
-            interpretation ??= new List<CodeableConcept>();
-            referenceRange ??= new List<ObservationReferenceRange>();
-
-            return new ObservationComponent(id, extension?.ToList(), code, valueQuantity, valueCodeableConcept, valueString, valueBoolean, valueInteger, valueRange, valueRatio, valueSampledData, valueTime, valueDateTime, valuePeriod, valueReference, dataAbsentReason, interpretation?.ToList(), referenceRange?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.CriticalResultInference"/>. </summary>
-        /// <param name="extension"> Additional Content defined by implementations. </param>
-        /// <param name="result"> Critical Result. </param>
-        /// <returns> A new <see cref="RadiologyInsights.CriticalResultInference"/> instance for mocking. </returns>
-        public static CriticalResultInference CriticalResultInference(IEnumerable<Extension> extension = null, CriticalResult result = null)
-        {
-            extension ??= new List<Extension>();
-
-            return new CriticalResultInference(extension?.ToList(), "criticalResult", result);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.CriticalResult"/>. </summary>
-        /// <param name="description"> description of the critical result. </param>
-        /// <param name="finding"> finding inference. </param>
-        /// <returns> A new <see cref="RadiologyInsights.CriticalResult"/> instance for mocking. </returns>
-        public static CriticalResult CriticalResult(string description = null, Observation finding = null)
-        {
-            return new CriticalResult(description, finding);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.RadiologyProcedureInference"/>. </summary>
-        /// <param name="extension"> Additional Content defined by implementations. </param>
-        /// <param name="procedureCodes"> The LOINC codes for the procedure. </param>
-        /// <param name="imagingProcedures"> Imaging procedure. </param>
-        /// <param name="orderedProcedure"> The related procedure information from the document administration information or as extracted from the document. </param>
-        /// <returns> A new <see cref="RadiologyInsights.RadiologyProcedureInference"/> instance for mocking. </returns>
-        public static RadiologyProcedureInference RadiologyProcedureInference(IEnumerable<Extension> extension = null, IEnumerable<CodeableConcept> procedureCodes = null, IEnumerable<ImagingProcedure> imagingProcedures = null, OrderedProcedure orderedProcedure = null)
-        {
-            extension ??= new List<Extension>();
-            procedureCodes ??= new List<CodeableConcept>();
-            imagingProcedures ??= new List<ImagingProcedure>();
-
-            return new RadiologyProcedureInference(extension?.ToList(), "radiologyProcedure", procedureCodes?.ToList(), imagingProcedures?.ToList(), orderedProcedure);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.ImagingProcedure"/>. </summary>
-        /// <param name="modality"> The procedure modality. </param>
-        /// <param name="anatomy"> The procedure anatomy. </param>
-        /// <param name="laterality"> The procedure laterality. </param>
-        /// <param name="contrast"> The procedure contrast. </param>
-        /// <param name="view"> The procedure view. </param>
-        /// <returns> A new <see cref="RadiologyInsights.ImagingProcedure"/> instance for mocking. </returns>
-        public static ImagingProcedure ImagingProcedure(CodeableConcept modality = null, CodeableConcept anatomy = null, CodeableConcept laterality = null, RadiologyCodeWithTypes contrast = null, RadiologyCodeWithTypes view = null)
-        {
-            return new ImagingProcedure(modality, anatomy, laterality, contrast, view);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.RadiologyCodeWithTypes"/>. </summary>
-        /// <param name="code"> Code. </param>
-        /// <param name="types"> Collection of types. </param>
-        /// <returns> A new <see cref="RadiologyInsights.RadiologyCodeWithTypes"/> instance for mocking. </returns>
-        public static RadiologyCodeWithTypes RadiologyCodeWithTypes(CodeableConcept code = null, IEnumerable<CodeableConcept> types = null)
-        {
-            types ??= new List<CodeableConcept>();
-
-            return new RadiologyCodeWithTypes(code, types?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.FollowupRecommendationInference"/>. </summary>
-        /// <param name="extension"> Additional Content defined by implementations. </param>
-        /// <param name="effectiveDateTime"> Clinically relevant time/time-period for recommendation. </param>
-        /// <param name="effectivePeriod"> Clinically relevant time/time-period for recommendation. </param>
-        /// <param name="findings"> Findings related to this recommendation. </param>
-        /// <param name="isConditional">
-        /// Indicate that the sentence with the recommendation holds a conditional statement.
-        /// Examples of conditional phrases: If the patient remains clinically symptomatic, Unless otherwise indicated clinically in the interim.
-        /// </param>
-        /// <param name="isOption">
-        /// Indicate that the sentence with the recommendation holds an optional statement.
-        /// Examples of Optional phrases: 'If there is suspicion for a fracture, recommend a dedicated x-ray of the right clavicle.
-        /// Consider F/U exam in 6-12 months if patient has severe primary hyperparathyroidism, is being treated with high dose steroids or in any medical condition where rapid and severe loss of bone mass could occur.
-        /// If the patient is high risk, follow-up CT thorax is recommended in 12 months to ensure stability.
-        /// </param>
-        /// <param name="isGuideline"> Recommendation is a guideline section describing all the recommendations for the follow-up of a particular finding. </param>
-        /// <param name="isHedging">
-        /// Ambiguous, vague, or imprecise language, that can be considered a Hedging Statement within the sentence of the recommendation.
-        /// Examples of hedging: 'can be considered', 'may be further evaluated', 'correlate clinically', 'as clinically indicated'.
-        /// </param>
-        /// <param name="recommendedProcedure"> Recommended procedure. </param>
-        /// <returns> A new <see cref="RadiologyInsights.FollowupRecommendationInference"/> instance for mocking. </returns>
-        public static FollowupRecommendationInference FollowupRecommendationInference(IEnumerable<Extension> extension = null, string effectiveDateTime = null, Period effectivePeriod = null, IEnumerable<RecommendationFinding> findings = null, bool isConditional = default, bool isOption = default, bool isGuideline = default, bool isHedging = default, ProcedureRecommendation recommendedProcedure = null)
-        {
-            extension ??= new List<Extension>();
-            findings ??= new List<RecommendationFinding>();
-
-            return new FollowupRecommendationInference(extension?.ToList(), "followupRecommendation", effectiveDateTime, effectivePeriod, findings?.ToList(), isConditional, isOption, isGuideline, isHedging, recommendedProcedure);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.RecommendationFinding"/>. </summary>
-        /// <param name="extension"> Additional Content defined by implementations. </param>
-        /// <param name="finding"> finding inference. </param>
-        /// <param name="criticalFinding"> critical finding inference. </param>
-        /// <param name="recommendationFindingStatus"> recommendation finding status. </param>
-        /// <returns> A new <see cref="RadiologyInsights.RecommendationFinding"/> instance for mocking. </returns>
-        public static RecommendationFinding RecommendationFinding(IEnumerable<Extension> extension = null, Observation finding = null, CriticalResult criticalFinding = null, string recommendationFindingStatus = null)
-        {
-            extension ??= new List<Extension>();
-
-            return new RecommendationFinding(extension?.ToList(), finding, criticalFinding, recommendationFindingStatus);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.GenericProcedureRecommendation"/>. </summary>
-        /// <param name="code"> The procedure modality. </param>
-        /// <param name="description"> The procedure description. </param>
-        /// <returns> A new <see cref="RadiologyInsights.GenericProcedureRecommendation"/> instance for mocking. </returns>
-        public static GenericProcedureRecommendation GenericProcedureRecommendation(CodeableConcept code = null, string description = null)
-        {
-            return new GenericProcedureRecommendation("genericProcedureRecommendation", code, description);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.ImagingProcedureRecommendation"/>. </summary>
-        /// <param name="procedureCodes"> The LOINC codes for the procedure. </param>
-        /// <param name="imagingProcedures"> Imaging procedure. </param>
-        /// <returns> A new <see cref="RadiologyInsights.ImagingProcedureRecommendation"/> instance for mocking. </returns>
-        public static ImagingProcedureRecommendation ImagingProcedureRecommendation(IEnumerable<CodeableConcept> procedureCodes = null, IEnumerable<ImagingProcedure> imagingProcedures = null)
-        {
-            procedureCodes ??= new List<CodeableConcept>();
-            imagingProcedures ??= new List<ImagingProcedure>();
-
-            return new ImagingProcedureRecommendation("imagingProcedureRecommendation", procedureCodes?.ToList(), imagingProcedures?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.FollowupCommunicationInference"/>. </summary>
-        /// <param name="extension"> Additional Content defined by implementations. </param>
-        /// <param name="dateTime"> The communication date/time. </param>
-        /// <param name="recipient"> The recipient of the communication. </param>
-        /// <param name="wasAcknowledged"> Communication was acknowledged. </param>
-        /// <returns> A new <see cref="RadiologyInsights.FollowupCommunicationInference"/> instance for mocking. </returns>
-        public static FollowupCommunicationInference FollowupCommunicationInference(IEnumerable<Extension> extension = null, IEnumerable<DateTimeOffset> dateTime = null, IEnumerable<string> recipient = null, bool wasAcknowledged = default)
-        {
-            extension ??= new List<Extension>();
-            dateTime ??= new List<DateTimeOffset>();
-            recipient ??= new List<string>();
-
-            return new FollowupCommunicationInference(extension?.ToList(), "followupCommunication", dateTime?.ToList(), recipient?.ToList(), wasAcknowledged);
+            return new RadiologyInsightsPatientResult(patientId, inferences?.ToList(), serializedAdditionalRawData: null);
         }
     }
 }

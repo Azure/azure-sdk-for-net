@@ -51,8 +51,14 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public RadiologyInsightsClient(Uri endpoint, AzureKeyCredential credential, RadiologyInsightsClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
             options ??= new RadiologyInsightsClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -64,14 +70,17 @@ namespace Azure.Health.Insights.RadiologyInsights
 
         /// <summary> Create Radiology Insights job. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="radiologyInsightsData"> The body of the Radiology Insights request. </param>
+        /// <param name="radiologyInsightsData"> Contains the list of patients, and configuration data. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="radiologyInsightsData"/> is null. </exception>
         /// <remarks> Creates a Radiology Insights job with the given request body. </remarks>
         /// <include file="Docs/RadiologyInsightsClient.xml" path="doc/members/member[@name='InferRadiologyInsightsAsync(WaitUntil,RadiologyInsightsData,CancellationToken)']/*" />
         public virtual async Task<Operation<RadiologyInsightsInferenceResult>> InferRadiologyInsightsAsync(WaitUntil waitUntil, RadiologyInsightsData radiologyInsightsData, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(radiologyInsightsData, nameof(radiologyInsightsData));
+            if (radiologyInsightsData == null)
+            {
+                throw new ArgumentNullException(nameof(radiologyInsightsData));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = radiologyInsightsData.ToRequestContent();
@@ -81,14 +90,17 @@ namespace Azure.Health.Insights.RadiologyInsights
 
         /// <summary> Create Radiology Insights job. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="radiologyInsightsData"> The body of the Radiology Insights request. </param>
+        /// <param name="radiologyInsightsData"> Contains the list of patients, and configuration data. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="radiologyInsightsData"/> is null. </exception>
         /// <remarks> Creates a Radiology Insights job with the given request body. </remarks>
         /// <include file="Docs/RadiologyInsightsClient.xml" path="doc/members/member[@name='InferRadiologyInsights(WaitUntil,RadiologyInsightsData,CancellationToken)']/*" />
         public virtual Operation<RadiologyInsightsInferenceResult> InferRadiologyInsights(WaitUntil waitUntil, RadiologyInsightsData radiologyInsightsData, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(radiologyInsightsData, nameof(radiologyInsightsData));
+            if (radiologyInsightsData == null)
+            {
+                throw new ArgumentNullException(nameof(radiologyInsightsData));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = radiologyInsightsData.ToRequestContent();
@@ -120,7 +132,10 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <include file="Docs/RadiologyInsightsClient.xml" path="doc/members/member[@name='InferRadiologyInsightsAsync(WaitUntil,RequestContent,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> InferRadiologyInsightsAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("RadiologyInsightsClient.InferRadiologyInsights");
             scope.Start();
@@ -160,7 +175,10 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <include file="Docs/RadiologyInsightsClient.xml" path="doc/members/member[@name='InferRadiologyInsights(WaitUntil,RequestContent,RequestContext)']/*" />
         public virtual Operation<BinaryData> InferRadiologyInsights(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("RadiologyInsightsClient.InferRadiologyInsights");
             scope.Start();
