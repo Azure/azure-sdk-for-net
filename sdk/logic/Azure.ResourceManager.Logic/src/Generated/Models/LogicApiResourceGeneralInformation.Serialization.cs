@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<Uri> iconUrl = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<Uri> termsOfUseUrl = default;
-            Optional<string> releaseTag = default;
-            Optional<LogicApiTier> tier = default;
+            Uri iconUrl = default;
+            string displayName = default;
+            string description = default;
+            Uri termsOfUseUrl = default;
+            string releaseTag = default;
+            LogicApiTier? tier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -152,7 +152,14 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicApiResourceGeneralInformation(iconUrl.Value, displayName.Value, description.Value, termsOfUseUrl.Value, releaseTag.Value, Optional.ToNullable(tier), serializedAdditionalRawData);
+            return new LogicApiResourceGeneralInformation(
+                iconUrl,
+                displayName,
+                description,
+                termsOfUseUrl,
+                releaseTag,
+                tier,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicApiResourceGeneralInformation>.Write(ModelReaderWriterOptions options)

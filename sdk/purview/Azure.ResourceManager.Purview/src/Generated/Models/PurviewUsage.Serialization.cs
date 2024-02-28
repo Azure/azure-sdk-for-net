@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Purview.Models
             {
                 return null;
             }
-            Optional<int> currentValue = default;
-            Optional<string> id = default;
-            Optional<int> limit = default;
-            Optional<PurviewUsageName> name = default;
-            Optional<string> unit = default;
+            int? currentValue = default;
+            string id = default;
+            int? limit = default;
+            PurviewUsageName name = default;
+            string unit = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.Purview.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PurviewUsage(Optional.ToNullable(currentValue), id.Value, Optional.ToNullable(limit), name.Value, unit.Value, serializedAdditionalRawData);
+            return new PurviewUsage(
+                currentValue,
+                id,
+                limit,
+                name,
+                unit,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PurviewUsage>.Write(ModelReaderWriterOptions options)

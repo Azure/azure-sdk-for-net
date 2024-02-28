@@ -111,14 +111,14 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            Optional<ResourceType> resourceType = default;
+            ResourceType? resourceType = default;
             IReadOnlyList<string> locations = default;
             IReadOnlyList<DevCenterCapability> capabilities = default;
             string name = default;
-            Optional<DevCenterSkuTier> tier = default;
-            Optional<string> size = default;
-            Optional<string> family = default;
-            Optional<int> capacity = default;
+            DevCenterSkuTier? tier = default;
+            string size = default;
+            string family = default;
+            int? capacity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -199,7 +199,16 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevCenterSkuDetails(name, Optional.ToNullable(tier), size.Value, family.Value, Optional.ToNullable(capacity), serializedAdditionalRawData, Optional.ToNullable(resourceType), locations ?? new ChangeTrackingList<string>(), capabilities ?? new ChangeTrackingList<DevCenterCapability>());
+            return new DevCenterSkuDetails(
+                name,
+                tier,
+                size,
+                family,
+                capacity,
+                serializedAdditionalRawData,
+                resourceType,
+                locations ?? new ChangeTrackingList<string>(),
+                capabilities ?? new ChangeTrackingList<DevCenterCapability>());
         }
 
         BinaryData IPersistableModel<DevCenterSkuDetails>.Write(ModelReaderWriterOptions options)

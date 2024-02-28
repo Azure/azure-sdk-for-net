@@ -104,12 +104,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 return null;
             }
             string taskFilePath = default;
-            Optional<string> valuesFilePath = default;
+            string valuesFilePath = default;
             IList<ContainerRegistryTaskOverridableValue> values = default;
             ContainerRegistryTaskStepType type = default;
             IReadOnlyList<ContainerRegistryBaseImageDependency> baseImageDependencies = default;
-            Optional<string> contextPath = default;
-            Optional<string> contextAccessToken = default;
+            string contextPath = default;
+            string contextAccessToken = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -173,7 +173,15 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryFileTaskStep(type, baseImageDependencies ?? new ChangeTrackingList<ContainerRegistryBaseImageDependency>(), contextPath.Value, contextAccessToken.Value, serializedAdditionalRawData, taskFilePath, valuesFilePath.Value, values ?? new ChangeTrackingList<ContainerRegistryTaskOverridableValue>());
+            return new ContainerRegistryFileTaskStep(
+                type,
+                baseImageDependencies ?? new ChangeTrackingList<ContainerRegistryBaseImageDependency>(),
+                contextPath,
+                contextAccessToken,
+                serializedAdditionalRawData,
+                taskFilePath,
+                valuesFilePath,
+                values ?? new ChangeTrackingList<ContainerRegistryTaskOverridableValue>());
         }
 
         BinaryData IPersistableModel<ContainerRegistryFileTaskStep>.Write(ModelReaderWriterOptions options)

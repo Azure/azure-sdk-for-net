@@ -149,20 +149,20 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 return null;
             }
             AzureLocation location = default;
-            Optional<ManagedServiceIdentity> identity = default;
+            ManagedServiceIdentity identity = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ETag> panETag = default;
-            Optional<AzureLocation> panLocation = default;
-            Optional<RulestackScopeType> scope = default;
+            SystemData systemData = default;
+            ETag? panETag = default;
+            AzureLocation? panLocation = default;
+            RulestackScopeType? scope = default;
             IList<string> associatedSubscriptions = default;
-            Optional<string> description = default;
-            Optional<RuleCreationDefaultMode> defaultMode = default;
-            Optional<string> minAppIdVersion = default;
-            Optional<FirewallProvisioningState> provisioningState = default;
-            Optional<RulestackSecurityServices> securityServices = default;
+            string description = default;
+            RuleCreationDefaultMode? defaultMode = default;
+            string minAppIdVersion = default;
+            FirewallProvisioningState? provisioningState = default;
+            RulestackSecurityServices securityServices = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -302,7 +302,23 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GlobalRulestackData(id, name, type, systemData.Value, location, identity, Optional.ToNullable(panETag), Optional.ToNullable(panLocation), Optional.ToNullable(scope), associatedSubscriptions ?? new ChangeTrackingList<string>(), description.Value, Optional.ToNullable(defaultMode), minAppIdVersion.Value, Optional.ToNullable(provisioningState), securityServices.Value, serializedAdditionalRawData);
+            return new GlobalRulestackData(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                identity,
+                panETag,
+                panLocation,
+                scope,
+                associatedSubscriptions ?? new ChangeTrackingList<string>(),
+                description,
+                defaultMode,
+                minAppIdVersion,
+                provisioningState,
+                securityServices,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GlobalRulestackData>.Write(ModelReaderWriterOptions options)

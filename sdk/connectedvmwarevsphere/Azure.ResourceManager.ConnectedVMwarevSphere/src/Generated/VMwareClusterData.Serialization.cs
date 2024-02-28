@@ -198,28 +198,28 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             {
                 return null;
             }
-            Optional<ExtendedLocation> extendedLocation = default;
-            Optional<string> kind = default;
+            ExtendedLocation extendedLocation = default;
+            string kind = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> uuid = default;
-            Optional<string> vCenterId = default;
-            Optional<string> moRefId = default;
-            Optional<string> inventoryItemId = default;
-            Optional<string> moName = default;
+            SystemData systemData = default;
+            string uuid = default;
+            string vCenterId = default;
+            string moRefId = default;
+            string inventoryItemId = default;
+            string moName = default;
             IReadOnlyList<VMwareResourceStatus> statuses = default;
-            Optional<string> customResourceName = default;
-            Optional<long> usedMemoryGB = default;
-            Optional<long> totalMemoryGB = default;
-            Optional<long> usedCpuMHz = default;
-            Optional<long> totalCpuMHz = default;
+            string customResourceName = default;
+            long? usedMemoryGB = default;
+            long? totalMemoryGB = default;
+            long? usedCpuMHz = default;
+            long? totalCpuMHz = default;
             IReadOnlyList<string> datastoreIds = default;
             IReadOnlyList<string> networkIds = default;
-            Optional<VMwareResourceProvisioningState> provisioningState = default;
+            VMwareResourceProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -416,7 +416,30 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareClusterData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, extendedLocation, kind.Value, uuid.Value, vCenterId.Value, moRefId.Value, inventoryItemId.Value, moName.Value, statuses ?? new ChangeTrackingList<VMwareResourceStatus>(), customResourceName.Value, Optional.ToNullable(usedMemoryGB), Optional.ToNullable(totalMemoryGB), Optional.ToNullable(usedCpuMHz), Optional.ToNullable(totalCpuMHz), datastoreIds ?? new ChangeTrackingList<string>(), networkIds ?? new ChangeTrackingList<string>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new VMwareClusterData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation,
+                kind,
+                uuid,
+                vCenterId,
+                moRefId,
+                inventoryItemId,
+                moName,
+                statuses ?? new ChangeTrackingList<VMwareResourceStatus>(),
+                customResourceName,
+                usedMemoryGB,
+                totalMemoryGB,
+                usedCpuMHz,
+                totalCpuMHz,
+                datastoreIds ?? new ChangeTrackingList<string>(),
+                networkIds ?? new ChangeTrackingList<string>(),
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VMwareClusterData>.Write(ModelReaderWriterOptions options)

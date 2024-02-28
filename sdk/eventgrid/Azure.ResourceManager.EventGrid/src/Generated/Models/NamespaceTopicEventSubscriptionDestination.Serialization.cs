@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 return null;
             }
             EndpointType endpointType = default;
-            Optional<ResourceIdentifier> resourceId = default;
+            ResourceIdentifier resourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NamespaceTopicEventSubscriptionDestination(endpointType, serializedAdditionalRawData, resourceId.Value);
+            return new NamespaceTopicEventSubscriptionDestination(endpointType, serializedAdditionalRawData, resourceId);
         }
 
         BinaryData IPersistableModel<NamespaceTopicEventSubscriptionDestination>.Write(ModelReaderWriterOptions options)

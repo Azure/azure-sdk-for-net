@@ -129,12 +129,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            Optional<long> totalFiles = default;
-            Optional<int?> nx = default;
-            Optional<int?> pie = default;
-            Optional<int?> relro = default;
-            Optional<int?> canary = default;
-            Optional<int?> stripped = default;
+            long? totalFiles = default;
+            int? nx = default;
+            int? pie = default;
+            int? relro = default;
+            int? canary = default;
+            int? stripped = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -204,7 +204,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BinaryHardeningSummary(Optional.ToNullable(totalFiles), Optional.ToNullable(nx), Optional.ToNullable(pie), Optional.ToNullable(relro), Optional.ToNullable(canary), Optional.ToNullable(stripped), serializedAdditionalRawData);
+            return new BinaryHardeningSummary(
+                totalFiles,
+                nx,
+                pie,
+                relro,
+                canary,
+                stripped,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BinaryHardeningSummary>.Write(ModelReaderWriterOptions options)

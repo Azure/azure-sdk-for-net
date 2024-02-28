@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             IList<string> resourceGroups = default;
             IList<string> osTypes = default;
             IList<AzureLocation> locations = default;
-            Optional<VmTagSettings> tagSettings = default;
+            VmTagSettings tagSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -189,7 +189,13 @@ namespace Azure.ResourceManager.Maintenance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MaintenanceConfigurationAssignmentFilter(resourceTypes ?? new ChangeTrackingList<ResourceType>(), resourceGroups ?? new ChangeTrackingList<string>(), osTypes ?? new ChangeTrackingList<string>(), locations ?? new ChangeTrackingList<AzureLocation>(), tagSettings.Value, serializedAdditionalRawData);
+            return new MaintenanceConfigurationAssignmentFilter(
+                resourceTypes ?? new ChangeTrackingList<ResourceType>(),
+                resourceGroups ?? new ChangeTrackingList<string>(),
+                osTypes ?? new ChangeTrackingList<string>(),
+                locations ?? new ChangeTrackingList<AzureLocation>(),
+                tagSettings,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MaintenanceConfigurationAssignmentFilter>.Write(ModelReaderWriterOptions options)

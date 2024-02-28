@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 return null;
             }
-            Optional<FirewallLogType> logType = default;
-            Optional<FirewallLogOption> logOption = default;
-            Optional<FirewallApplicationInsights> applicationInsights = default;
-            Optional<FirewallLogDestination> commonDestination = default;
-            Optional<FirewallLogDestination> trafficLogDestination = default;
-            Optional<FirewallLogDestination> threatLogDestination = default;
-            Optional<FirewallLogDestination> decryptLogDestination = default;
+            FirewallLogType? logType = default;
+            FirewallLogOption? logOption = default;
+            FirewallApplicationInsights applicationInsights = default;
+            FirewallLogDestination commonDestination = default;
+            FirewallLogDestination trafficLogDestination = default;
+            FirewallLogDestination threatLogDestination = default;
+            FirewallLogDestination decryptLogDestination = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,7 +179,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirewallLogSettings(Optional.ToNullable(logType), Optional.ToNullable(logOption), applicationInsights.Value, commonDestination.Value, trafficLogDestination.Value, threatLogDestination.Value, decryptLogDestination.Value, serializedAdditionalRawData);
+            return new FirewallLogSettings(
+                logType,
+                logOption,
+                applicationInsights,
+                commonDestination,
+                trafficLogDestination,
+                threatLogDestination,
+                decryptLogDestination,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirewallLogSettings>.Write(ModelReaderWriterOptions options)

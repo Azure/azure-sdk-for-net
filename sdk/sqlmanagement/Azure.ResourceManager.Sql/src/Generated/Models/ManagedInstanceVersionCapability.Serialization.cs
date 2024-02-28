@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<string> name = default;
+            string name = default;
             IReadOnlyList<ManagedInstanceEditionCapability> supportedEditions = default;
             IReadOnlyList<InstancePoolEditionCapability> supportedInstancePoolEditions = default;
-            Optional<SqlCapabilityStatus> status = default;
-            Optional<string> reason = default;
+            SqlCapabilityStatus? status = default;
+            string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -161,7 +161,13 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedInstanceVersionCapability(name.Value, supportedEditions ?? new ChangeTrackingList<ManagedInstanceEditionCapability>(), supportedInstancePoolEditions ?? new ChangeTrackingList<InstancePoolEditionCapability>(), Optional.ToNullable(status), reason.Value, serializedAdditionalRawData);
+            return new ManagedInstanceVersionCapability(
+                name,
+                supportedEditions ?? new ChangeTrackingList<ManagedInstanceEditionCapability>(),
+                supportedInstancePoolEditions ?? new ChangeTrackingList<InstancePoolEditionCapability>(),
+                status,
+                reason,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedInstanceVersionCapability>.Write(ModelReaderWriterOptions options)

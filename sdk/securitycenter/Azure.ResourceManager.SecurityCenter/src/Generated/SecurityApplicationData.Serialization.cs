@@ -129,10 +129,10 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<ApplicationSourceResourceType> sourceResourceType = default;
+            SystemData systemData = default;
+            string displayName = default;
+            string description = default;
+            ApplicationSourceResourceType? sourceResourceType = default;
             IList<BinaryData> conditionSets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -220,7 +220,16 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityApplicationData(id, name, type, systemData.Value, displayName.Value, description.Value, Optional.ToNullable(sourceResourceType), conditionSets ?? new ChangeTrackingList<BinaryData>(), serializedAdditionalRawData);
+            return new SecurityApplicationData(
+                id,
+                name,
+                type,
+                systemData,
+                displayName,
+                description,
+                sourceResourceType,
+                conditionSets ?? new ChangeTrackingList<BinaryData>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityApplicationData>.Write(ModelReaderWriterOptions options)

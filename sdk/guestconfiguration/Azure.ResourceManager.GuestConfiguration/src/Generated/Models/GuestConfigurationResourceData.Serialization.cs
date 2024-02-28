@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<AzureLocation> location = default;
-            Optional<ResourceType> type = default;
-            Optional<SystemData> systemData = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            AzureLocation? location = default;
+            ResourceType? type = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,7 +146,13 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GuestConfigurationResourceData(id.Value, name.Value, Optional.ToNullable(location), Optional.ToNullable(type), systemData, serializedAdditionalRawData);
+            return new GuestConfigurationResourceData(
+                id,
+                name,
+                location,
+                type,
+                systemData,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GuestConfigurationResourceData>.Write(ModelReaderWriterOptions options)

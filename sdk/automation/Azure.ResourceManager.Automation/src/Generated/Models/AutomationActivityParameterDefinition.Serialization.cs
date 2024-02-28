@@ -119,15 +119,15 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<bool> isMandatory = default;
-            Optional<bool> isDynamic = default;
-            Optional<long> position = default;
-            Optional<bool> valueFromPipeline = default;
-            Optional<bool> valueFromPipelineByPropertyName = default;
-            Optional<bool> valueFromRemainingArguments = default;
-            Optional<string> description = default;
+            string name = default;
+            string type = default;
+            bool? isMandatory = default;
+            bool? isDynamic = default;
+            long? position = default;
+            bool? valueFromPipeline = default;
+            bool? valueFromPipelineByPropertyName = default;
+            bool? valueFromRemainingArguments = default;
+            string description = default;
             IReadOnlyList<AutomationActivityParameterValidationSet> validationSet = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -222,7 +222,18 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationActivityParameterDefinition(name.Value, type.Value, Optional.ToNullable(isMandatory), Optional.ToNullable(isDynamic), Optional.ToNullable(position), Optional.ToNullable(valueFromPipeline), Optional.ToNullable(valueFromPipelineByPropertyName), Optional.ToNullable(valueFromRemainingArguments), description.Value, validationSet ?? new ChangeTrackingList<AutomationActivityParameterValidationSet>(), serializedAdditionalRawData);
+            return new AutomationActivityParameterDefinition(
+                name,
+                type,
+                isMandatory,
+                isDynamic,
+                position,
+                valueFromPipeline,
+                valueFromPipelineByPropertyName,
+                valueFromRemainingArguments,
+                description,
+                validationSet ?? new ChangeTrackingList<AutomationActivityParameterValidationSet>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationActivityParameterDefinition>.Write(ModelReaderWriterOptions options)

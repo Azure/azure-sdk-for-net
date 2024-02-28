@@ -245,15 +245,15 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<string> addressPrefix = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            string addressPrefix = default;
             IList<string> addressPrefixes = default;
-            Optional<NetworkSecurityGroupData> networkSecurityGroup = default;
-            Optional<RouteTableData> routeTable = default;
-            Optional<WritableSubResource> natGateway = default;
+            NetworkSecurityGroupData networkSecurityGroup = default;
+            RouteTableData routeTable = default;
+            WritableSubResource natGateway = default;
             IList<ServiceEndpointProperties> serviceEndpoints = default;
             IList<ServiceEndpointPolicyData> serviceEndpointPolicies = default;
             IReadOnlyList<PrivateEndpointData> privateEndpoints = default;
@@ -263,12 +263,12 @@ namespace Azure.ResourceManager.Network
             IReadOnlyList<ResourceNavigationLink> resourceNavigationLinks = default;
             IReadOnlyList<ServiceAssociationLink> serviceAssociationLinks = default;
             IList<ServiceDelegation> delegations = default;
-            Optional<string> purpose = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<VirtualNetworkPrivateEndpointNetworkPolicy> privateEndpointNetworkPolicies = default;
-            Optional<VirtualNetworkPrivateLinkServiceNetworkPolicy> privateLinkServiceNetworkPolicies = default;
+            string purpose = default;
+            NetworkProvisioningState? provisioningState = default;
+            VirtualNetworkPrivateEndpointNetworkPolicy? privateEndpointNetworkPolicies = default;
+            VirtualNetworkPrivateLinkServiceNetworkPolicy? privateLinkServiceNetworkPolicies = default;
             IList<ApplicationGatewayIPConfiguration> applicationGatewayIPConfigurations = default;
-            Optional<bool> defaultOutboundAccess = default;
+            bool? defaultOutboundAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -550,7 +550,32 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubnetData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), addressPrefix.Value, addressPrefixes ?? new ChangeTrackingList<string>(), networkSecurityGroup.Value, routeTable.Value, natGateway, serviceEndpoints ?? new ChangeTrackingList<ServiceEndpointProperties>(), serviceEndpointPolicies ?? new ChangeTrackingList<ServiceEndpointPolicyData>(), privateEndpoints ?? new ChangeTrackingList<PrivateEndpointData>(), ipConfigurations ?? new ChangeTrackingList<NetworkIPConfiguration>(), ipConfigurationProfiles ?? new ChangeTrackingList<NetworkIPConfigurationProfile>(), ipAllocations ?? new ChangeTrackingList<WritableSubResource>(), resourceNavigationLinks ?? new ChangeTrackingList<ResourceNavigationLink>(), serviceAssociationLinks ?? new ChangeTrackingList<ServiceAssociationLink>(), delegations ?? new ChangeTrackingList<ServiceDelegation>(), purpose.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(privateEndpointNetworkPolicies), Optional.ToNullable(privateLinkServiceNetworkPolicies), applicationGatewayIPConfigurations ?? new ChangeTrackingList<ApplicationGatewayIPConfiguration>(), Optional.ToNullable(defaultOutboundAccess));
+            return new SubnetData(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                etag,
+                addressPrefix,
+                addressPrefixes ?? new ChangeTrackingList<string>(),
+                networkSecurityGroup,
+                routeTable,
+                natGateway,
+                serviceEndpoints ?? new ChangeTrackingList<ServiceEndpointProperties>(),
+                serviceEndpointPolicies ?? new ChangeTrackingList<ServiceEndpointPolicyData>(),
+                privateEndpoints ?? new ChangeTrackingList<PrivateEndpointData>(),
+                ipConfigurations ?? new ChangeTrackingList<NetworkIPConfiguration>(),
+                ipConfigurationProfiles ?? new ChangeTrackingList<NetworkIPConfigurationProfile>(),
+                ipAllocations ?? new ChangeTrackingList<WritableSubResource>(),
+                resourceNavigationLinks ?? new ChangeTrackingList<ResourceNavigationLink>(),
+                serviceAssociationLinks ?? new ChangeTrackingList<ServiceAssociationLink>(),
+                delegations ?? new ChangeTrackingList<ServiceDelegation>(),
+                purpose,
+                provisioningState,
+                privateEndpointNetworkPolicies,
+                privateLinkServiceNetworkPolicies,
+                applicationGatewayIPConfigurations ?? new ChangeTrackingList<ApplicationGatewayIPConfiguration>(),
+                defaultOutboundAccess);
         }
 
         BinaryData IPersistableModel<SubnetData>.Write(ModelReaderWriterOptions options)

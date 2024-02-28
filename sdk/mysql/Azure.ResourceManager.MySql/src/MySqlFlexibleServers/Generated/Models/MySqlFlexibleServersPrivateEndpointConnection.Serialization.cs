@@ -117,11 +117,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IReadOnlyList<string> groupIds = default;
-            Optional<SubResource> privateEndpoint = default;
-            Optional<MySqlFlexibleServersPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
-            Optional<MySqlFlexibleServersPrivateEndpointConnectionProvisioningState> provisioningState = default;
+            SubResource privateEndpoint = default;
+            MySqlFlexibleServersPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
+            MySqlFlexibleServersPrivateEndpointConnectionProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -209,7 +209,16 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlFlexibleServersPrivateEndpointConnection(id, name, type, systemData.Value, groupIds ?? new ChangeTrackingList<string>(), privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new MySqlFlexibleServersPrivateEndpointConnection(
+                id,
+                name,
+                type,
+                systemData,
+                groupIds ?? new ChangeTrackingList<string>(),
+                privateEndpoint,
+                privateLinkServiceConnectionState,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlFlexibleServersPrivateEndpointConnection>.Write(ModelReaderWriterOptions options)

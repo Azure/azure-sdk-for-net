@@ -110,13 +110,13 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<string> operationId = default;
-            Optional<string> itemsPath = default;
-            Optional<string> itemValuePath = default;
-            Optional<string> itemTitlePath = default;
-            Optional<string> itemFullTitlePath = default;
-            Optional<string> itemIsParent = default;
-            Optional<string> selectableFilter = default;
+            string operationId = default;
+            string itemsPath = default;
+            string itemValuePath = default;
+            string itemTitlePath = default;
+            string itemFullTitlePath = default;
+            string itemIsParent = default;
+            string selectableFilter = default;
             IDictionary<string, SwaggerCustomDynamicTreeParameterInfo> parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -177,7 +177,16 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SwaggerCustomDynamicTreeCommand(operationId.Value, itemsPath.Value, itemValuePath.Value, itemTitlePath.Value, itemFullTitlePath.Value, itemIsParent.Value, selectableFilter.Value, parameters ?? new ChangeTrackingDictionary<string, SwaggerCustomDynamicTreeParameterInfo>(), serializedAdditionalRawData);
+            return new SwaggerCustomDynamicTreeCommand(
+                operationId,
+                itemsPath,
+                itemValuePath,
+                itemTitlePath,
+                itemFullTitlePath,
+                itemIsParent,
+                selectableFilter,
+                parameters ?? new ChangeTrackingDictionary<string, SwaggerCustomDynamicTreeParameterInfo>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SwaggerCustomDynamicTreeCommand>.Write(ModelReaderWriterOptions options)

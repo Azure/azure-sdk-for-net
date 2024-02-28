@@ -112,10 +112,10 @@ namespace Azure.Communication.JobRouter
             }
             ETag etag = default;
             string id = default;
-            Optional<string> name = default;
-            Optional<string> fallbackQueueId = default;
+            string name = default;
+            string fallbackQueueId = default;
             IList<QueueSelectorAttachment> queueSelectorAttachments = default;
-            Optional<RouterRule> prioritizationRule = default;
+            RouterRule prioritizationRule = default;
             IList<WorkerSelectorAttachment> workerSelectorAttachments = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -184,7 +184,15 @@ namespace Azure.Communication.JobRouter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClassificationPolicy(etag, id, name.Value, fallbackQueueId.Value, queueSelectorAttachments ?? new ChangeTrackingList<QueueSelectorAttachment>(), prioritizationRule.Value, workerSelectorAttachments ?? new ChangeTrackingList<WorkerSelectorAttachment>(), serializedAdditionalRawData);
+            return new ClassificationPolicy(
+                etag,
+                id,
+                name,
+                fallbackQueueId,
+                queueSelectorAttachments ?? new ChangeTrackingList<QueueSelectorAttachment>(),
+                prioritizationRule,
+                workerSelectorAttachments ?? new ChangeTrackingList<WorkerSelectorAttachment>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClassificationPolicy>.Write(ModelReaderWriterOptions options)

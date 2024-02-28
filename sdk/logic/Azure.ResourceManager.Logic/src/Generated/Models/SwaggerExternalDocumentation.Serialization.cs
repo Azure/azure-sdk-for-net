@@ -97,8 +97,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<string> description = default;
-            Optional<Uri> uri = default;
+            string description = default;
+            Uri uri = default;
             IDictionary<string, BinaryData> extensions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SwaggerExternalDocumentation(description.Value, uri.Value, extensions ?? new ChangeTrackingDictionary<string, BinaryData>(), serializedAdditionalRawData);
+            return new SwaggerExternalDocumentation(description, uri, extensions ?? new ChangeTrackingDictionary<string, BinaryData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SwaggerExternalDocumentation>.Write(ModelReaderWriterOptions options)

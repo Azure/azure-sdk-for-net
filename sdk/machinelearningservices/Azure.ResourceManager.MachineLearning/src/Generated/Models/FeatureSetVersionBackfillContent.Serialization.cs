@@ -113,10 +113,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> description = default;
-            Optional<string> displayName = default;
-            Optional<FeatureWindow> featureWindow = default;
-            Optional<MaterializationComputeResource> resource = default;
+            string description = default;
+            string displayName = default;
+            FeatureWindow featureWindow = default;
+            MaterializationComputeResource resource = default;
             IDictionary<string, string> sparkConfiguration = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -186,7 +186,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FeatureSetVersionBackfillContent(description.Value, displayName.Value, featureWindow.Value, resource.Value, sparkConfiguration ?? new ChangeTrackingDictionary<string, string>(), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new FeatureSetVersionBackfillContent(
+                description,
+                displayName,
+                featureWindow,
+                resource,
+                sparkConfiguration ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FeatureSetVersionBackfillContent>.Write(ModelReaderWriterOptions options)

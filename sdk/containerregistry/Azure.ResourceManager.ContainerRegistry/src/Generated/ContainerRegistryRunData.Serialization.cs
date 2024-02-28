@@ -212,29 +212,29 @@ namespace Azure.ResourceManager.ContainerRegistry
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> runId = default;
-            Optional<ContainerRegistryRunStatus> status = default;
-            Optional<DateTimeOffset> lastUpdatedTime = default;
-            Optional<ContainerRegistryRunType> runType = default;
-            Optional<string> agentPoolName = default;
-            Optional<DateTimeOffset> createTime = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> finishTime = default;
+            SystemData systemData = default;
+            string runId = default;
+            ContainerRegistryRunStatus? status = default;
+            DateTimeOffset? lastUpdatedTime = default;
+            ContainerRegistryRunType? runType = default;
+            string agentPoolName = default;
+            DateTimeOffset? createTime = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? finishTime = default;
             IList<ContainerRegistryImageDescriptor> outputImages = default;
-            Optional<string> task = default;
-            Optional<ContainerRegistryImageUpdateTrigger> imageUpdateTrigger = default;
-            Optional<ContainerRegistrySourceTriggerDescriptor> sourceTrigger = default;
-            Optional<ContainerRegistryTimerTriggerDescriptor> timerTrigger = default;
-            Optional<ContainerRegistryPlatformProperties> platform = default;
-            Optional<ContainerRegistryAgentProperties> agentConfiguration = default;
-            Optional<string> sourceRegistryAuth = default;
+            string task = default;
+            ContainerRegistryImageUpdateTrigger imageUpdateTrigger = default;
+            ContainerRegistrySourceTriggerDescriptor sourceTrigger = default;
+            ContainerRegistryTimerTriggerDescriptor timerTrigger = default;
+            ContainerRegistryPlatformProperties platform = default;
+            ContainerRegistryAgentProperties agentConfiguration = default;
+            string sourceRegistryAuth = default;
             IList<string> customRegistries = default;
-            Optional<string> runErrorMessage = default;
-            Optional<string> updateTriggerToken = default;
-            Optional<ContainerRegistryImageDescriptor> logArtifact = default;
-            Optional<ContainerRegistryProvisioningState> provisioningState = default;
-            Optional<bool> isArchiveEnabled = default;
+            string runErrorMessage = default;
+            string updateTriggerToken = default;
+            ContainerRegistryImageDescriptor logArtifact = default;
+            ContainerRegistryProvisioningState? provisioningState = default;
+            bool? isArchiveEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -465,7 +465,34 @@ namespace Azure.ResourceManager.ContainerRegistry
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryRunData(id, name, type, systemData.Value, runId.Value, Optional.ToNullable(status), Optional.ToNullable(lastUpdatedTime), Optional.ToNullable(runType), agentPoolName.Value, Optional.ToNullable(createTime), Optional.ToNullable(startTime), Optional.ToNullable(finishTime), outputImages ?? new ChangeTrackingList<ContainerRegistryImageDescriptor>(), task.Value, imageUpdateTrigger.Value, sourceTrigger.Value, timerTrigger.Value, platform.Value, agentConfiguration.Value, sourceRegistryAuth.Value, customRegistries ?? new ChangeTrackingList<string>(), runErrorMessage.Value, updateTriggerToken.Value, logArtifact.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(isArchiveEnabled), serializedAdditionalRawData);
+            return new ContainerRegistryRunData(
+                id,
+                name,
+                type,
+                systemData,
+                runId,
+                status,
+                lastUpdatedTime,
+                runType,
+                agentPoolName,
+                createTime,
+                startTime,
+                finishTime,
+                outputImages ?? new ChangeTrackingList<ContainerRegistryImageDescriptor>(),
+                task,
+                imageUpdateTrigger,
+                sourceTrigger,
+                timerTrigger,
+                platform,
+                agentConfiguration,
+                sourceRegistryAuth,
+                customRegistries ?? new ChangeTrackingList<string>(),
+                runErrorMessage,
+                updateTriggerToken,
+                logArtifact,
+                provisioningState,
+                isArchiveEnabled,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryRunData>.Write(ModelReaderWriterOptions options)

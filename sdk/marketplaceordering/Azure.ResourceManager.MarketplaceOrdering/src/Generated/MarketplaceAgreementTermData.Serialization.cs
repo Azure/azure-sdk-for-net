@@ -136,16 +136,16 @@ namespace Azure.ResourceManager.MarketplaceOrdering
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> publisher = default;
-            Optional<string> product = default;
-            Optional<string> plan = default;
-            Optional<Uri> licenseTextLink = default;
-            Optional<Uri> privacyPolicyLink = default;
-            Optional<Uri> marketplaceTermsLink = default;
-            Optional<DateTimeOffset> retrieveDatetime = default;
-            Optional<string> signature = default;
-            Optional<bool> accepted = default;
+            SystemData systemData = default;
+            string publisher = default;
+            string product = default;
+            string plan = default;
+            Uri licenseTextLink = default;
+            Uri privacyPolicyLink = default;
+            Uri marketplaceTermsLink = default;
+            DateTimeOffset? retrieveDatetime = default;
+            string signature = default;
+            bool? accepted = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -257,7 +257,21 @@ namespace Azure.ResourceManager.MarketplaceOrdering
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MarketplaceAgreementTermData(id, name, type, systemData.Value, publisher.Value, product.Value, plan.Value, licenseTextLink.Value, privacyPolicyLink.Value, marketplaceTermsLink.Value, Optional.ToNullable(retrieveDatetime), signature.Value, Optional.ToNullable(accepted), serializedAdditionalRawData);
+            return new MarketplaceAgreementTermData(
+                id,
+                name,
+                type,
+                systemData,
+                publisher,
+                product,
+                plan,
+                licenseTextLink,
+                privacyPolicyLink,
+                marketplaceTermsLink,
+                retrieveDatetime,
+                signature,
+                accepted,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MarketplaceAgreementTermData>.Write(ModelReaderWriterOptions options)

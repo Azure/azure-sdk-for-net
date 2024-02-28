@@ -128,11 +128,11 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> caseManipulation = default;
-            Optional<string> name = default;
-            Optional<string> schemaName = default;
+            string caseManipulation = default;
+            string name = default;
+            string schemaName = default;
             IDictionary<string, string> tableMap = default;
-            Optional<string> targetDatabaseName = default;
+            string targetDatabaseName = default;
             IDictionary<string, string> migrationSetting = default;
             IDictionary<string, string> sourceSetting = default;
             IDictionary<string, string> targetSetting = default;
@@ -222,7 +222,16 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateOracleAzureDBPostgreSqlSyncDatabaseInput(caseManipulation.Value, name.Value, schemaName.Value, tableMap ?? new ChangeTrackingDictionary<string, string>(), targetDatabaseName.Value, migrationSetting ?? new ChangeTrackingDictionary<string, string>(), sourceSetting ?? new ChangeTrackingDictionary<string, string>(), targetSetting ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new MigrateOracleAzureDBPostgreSqlSyncDatabaseInput(
+                caseManipulation,
+                name,
+                schemaName,
+                tableMap ?? new ChangeTrackingDictionary<string, string>(),
+                targetDatabaseName,
+                migrationSetting ?? new ChangeTrackingDictionary<string, string>(),
+                sourceSetting ?? new ChangeTrackingDictionary<string, string>(),
+                targetSetting ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MigrateOracleAzureDBPostgreSqlSyncDatabaseInput>.Write(ModelReaderWriterOptions options)

@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<IntellectualProtectionLevel> protectionLevel = default;
+            IntellectualProtectionLevel? protectionLevel = default;
             string publisher = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntellectualProperty(Optional.ToNullable(protectionLevel), publisher, serializedAdditionalRawData);
+            return new IntellectualProperty(protectionLevel, publisher, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntellectualProperty>.Write(ModelReaderWriterOptions options)

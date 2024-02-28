@@ -335,28 +335,28 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset?> createdDateTime = default;
-            Optional<LabelingDataConfiguration> dataConfiguration = default;
-            Optional<LabelingJobInstructions> jobInstructions = default;
+            DateTimeOffset? createdDateTime = default;
+            LabelingDataConfiguration dataConfiguration = default;
+            LabelingJobInstructions jobInstructions = default;
             IDictionary<string, LabelCategory> labelCategories = default;
-            Optional<LabelingJobMediaProperties> labelingJobMediaProperties = default;
-            Optional<MachineLearningAssistConfiguration> mlAssistConfiguration = default;
-            Optional<ProgressMetrics> progressMetrics = default;
-            Optional<Guid> projectId = default;
-            Optional<JobProvisioningState> provisioningState = default;
+            LabelingJobMediaProperties labelingJobMediaProperties = default;
+            MachineLearningAssistConfiguration mlAssistConfiguration = default;
+            ProgressMetrics progressMetrics = default;
+            Guid? projectId = default;
+            JobProvisioningState? provisioningState = default;
             IReadOnlyList<JobStatusMessage> statusMessages = default;
-            Optional<ResourceIdentifier> componentId = default;
-            Optional<ResourceIdentifier> computeId = default;
-            Optional<string> displayName = default;
-            Optional<string> experimentName = default;
-            Optional<MachineLearningIdentityConfiguration> identity = default;
-            Optional<bool> isArchived = default;
+            ResourceIdentifier componentId = default;
+            ResourceIdentifier computeId = default;
+            string displayName = default;
+            string experimentName = default;
+            MachineLearningIdentityConfiguration identity = default;
+            bool? isArchived = default;
             JobType jobType = default;
-            Optional<NotificationSetting> notificationSetting = default;
+            NotificationSetting notificationSetting = default;
             IDictionary<string, SecretConfiguration> secretsConfiguration = default;
             IDictionary<string, MachineLearningJobService> services = default;
-            Optional<MachineLearningJobStatus> status = default;
-            Optional<string> description = default;
+            MachineLearningJobStatus? status = default;
+            string description = default;
             IDictionary<string, string> properties = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -624,7 +624,32 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabelingJobProperties(description.Value, properties ?? new ChangeTrackingDictionary<string, string>(), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, componentId.Value, computeId.Value, displayName.Value, experimentName.Value, identity.Value, Optional.ToNullable(isArchived), jobType, notificationSetting.Value, secretsConfiguration ?? new ChangeTrackingDictionary<string, SecretConfiguration>(), services ?? new ChangeTrackingDictionary<string, MachineLearningJobService>(), Optional.ToNullable(status), Optional.ToNullable(createdDateTime), dataConfiguration.Value, jobInstructions.Value, labelCategories ?? new ChangeTrackingDictionary<string, LabelCategory>(), labelingJobMediaProperties.Value, mlAssistConfiguration.Value, progressMetrics.Value, Optional.ToNullable(projectId), Optional.ToNullable(provisioningState), statusMessages ?? new ChangeTrackingList<JobStatusMessage>());
+            return new LabelingJobProperties(
+                description,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                componentId,
+                computeId,
+                displayName,
+                experimentName,
+                identity,
+                isArchived,
+                jobType,
+                notificationSetting,
+                secretsConfiguration ?? new ChangeTrackingDictionary<string, SecretConfiguration>(),
+                services ?? new ChangeTrackingDictionary<string, MachineLearningJobService>(),
+                status,
+                createdDateTime,
+                dataConfiguration,
+                jobInstructions,
+                labelCategories ?? new ChangeTrackingDictionary<string, LabelCategory>(),
+                labelingJobMediaProperties,
+                mlAssistConfiguration,
+                progressMetrics,
+                projectId,
+                provisioningState,
+                statusMessages ?? new ChangeTrackingList<JobStatusMessage>());
         }
 
         BinaryData IPersistableModel<LabelingJobProperties>.Write(ModelReaderWriterOptions options)

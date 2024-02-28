@@ -123,12 +123,12 @@ namespace Azure.ResourceManager.StoragePool.Models
             {
                 return null;
             }
-            Optional<string> managedBy = default;
+            string managedBy = default;
             IList<string> managedByExtended = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IList<DiskPoolIscsiTargetPortalGroupAcl> staticAcls = default;
             IList<ManagedDiskIscsiLun> luns = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -224,7 +224,16 @@ namespace Azure.ResourceManager.StoragePool.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiskPoolIscsiTargetPatch(id, name, type, systemData.Value, managedBy.Value, managedByExtended ?? new ChangeTrackingList<string>(), staticAcls ?? new ChangeTrackingList<DiskPoolIscsiTargetPortalGroupAcl>(), luns ?? new ChangeTrackingList<ManagedDiskIscsiLun>(), serializedAdditionalRawData);
+            return new DiskPoolIscsiTargetPatch(
+                id,
+                name,
+                type,
+                systemData,
+                managedBy,
+                managedByExtended ?? new ChangeTrackingList<string>(),
+                staticAcls ?? new ChangeTrackingList<DiskPoolIscsiTargetPortalGroupAcl>(),
+                luns ?? new ChangeTrackingList<ManagedDiskIscsiLun>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiskPoolIscsiTargetPatch>.Write(ModelReaderWriterOptions options)

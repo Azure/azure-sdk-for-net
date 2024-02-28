@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<string> databaseName = default;
-            Optional<string> queryId = default;
-            Optional<string> startTime = default;
-            Optional<string> endTime = default;
+            string databaseName = default;
+            string queryId = default;
+            string startTime = default;
+            string endTime = default;
             IReadOnlyList<QueryMetricInterval> intervals = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -143,7 +143,13 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QueryStatisticsProperties(databaseName.Value, queryId.Value, startTime.Value, endTime.Value, intervals ?? new ChangeTrackingList<QueryMetricInterval>(), serializedAdditionalRawData);
+            return new QueryStatisticsProperties(
+                databaseName,
+                queryId,
+                startTime,
+                endTime,
+                intervals ?? new ChangeTrackingList<QueryMetricInterval>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QueryStatisticsProperties>.Write(ModelReaderWriterOptions options)

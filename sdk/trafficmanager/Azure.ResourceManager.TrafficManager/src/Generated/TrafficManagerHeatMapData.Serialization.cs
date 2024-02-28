@@ -113,11 +113,11 @@ namespace Azure.ResourceManager.TrafficManager
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
             IList<TrafficManagerHeatMapEndpoint> endpoints = default;
             IList<TrafficManagerHeatMapTrafficFlow> trafficFlows = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -211,7 +211,15 @@ namespace Azure.ResourceManager.TrafficManager
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrafficManagerHeatMapData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(startTime), Optional.ToNullable(endTime), endpoints ?? new ChangeTrackingList<TrafficManagerHeatMapEndpoint>(), trafficFlows ?? new ChangeTrackingList<TrafficManagerHeatMapTrafficFlow>());
+            return new TrafficManagerHeatMapData(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                startTime,
+                endTime,
+                endpoints ?? new ChangeTrackingList<TrafficManagerHeatMapEndpoint>(),
+                trafficFlows ?? new ChangeTrackingList<TrafficManagerHeatMapTrafficFlow>());
         }
 
         BinaryData IPersistableModel<TrafficManagerHeatMapData>.Write(ModelReaderWriterOptions options)

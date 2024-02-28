@@ -109,18 +109,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
             IDictionary<string, ParameterSpecification> parameters = default;
             IList<object> annotations = default;
             object accountName = default;
-            Optional<object> servicePrincipalId = default;
-            Optional<SecretBase> servicePrincipalKey = default;
+            object servicePrincipalId = default;
+            SecretBase servicePrincipalKey = default;
             object tenant = default;
-            Optional<object> subscriptionId = default;
-            Optional<object> resourceGroupName = default;
-            Optional<object> dataLakeAnalyticsUri = default;
-            Optional<object> encryptedCredential = default;
+            object subscriptionId = default;
+            object resourceGroupName = default;
+            object dataLakeAnalyticsUri = default;
+            object encryptedCredential = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -258,7 +258,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureDataLakeAnalyticsLinkedService(type, connectVia.Value, description.Value, parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(), annotations ?? new ChangeTrackingList<object>(), additionalProperties, accountName, servicePrincipalId.Value, servicePrincipalKey.Value, tenant, subscriptionId.Value, resourceGroupName.Value, dataLakeAnalyticsUri.Value, encryptedCredential.Value);
+            return new AzureDataLakeAnalyticsLinkedService(
+                type,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                accountName,
+                servicePrincipalId,
+                servicePrincipalKey,
+                tenant,
+                subscriptionId,
+                resourceGroupName,
+                dataLakeAnalyticsUri,
+                encryptedCredential);
         }
 
         internal partial class AzureDataLakeAnalyticsLinkedServiceConverter : JsonConverter<AzureDataLakeAnalyticsLinkedService>

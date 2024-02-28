@@ -129,15 +129,15 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> unit = default;
-            Optional<string> primaryAggregationType = default;
+            SystemData systemData = default;
+            string unit = default;
+            string primaryAggregationType = default;
             IReadOnlyList<ResourceMetricAvailability> metricAvailabilities = default;
-            Optional<Uri> resourceUri = default;
+            Uri resourceUri = default;
             IReadOnlyDictionary<string, string> properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -237,7 +237,18 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceMetricDefinition(id, name, type, systemData.Value, unit.Value, primaryAggregationType.Value, metricAvailabilities ?? new ChangeTrackingList<ResourceMetricAvailability>(), resourceUri.Value, properties ?? new ChangeTrackingDictionary<string, string>(), kind.Value, serializedAdditionalRawData);
+            return new ResourceMetricDefinition(
+                id,
+                name,
+                type,
+                systemData,
+                unit,
+                primaryAggregationType,
+                metricAvailabilities ?? new ChangeTrackingList<ResourceMetricAvailability>(),
+                resourceUri,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceMetricDefinition>.Write(ModelReaderWriterOptions options)

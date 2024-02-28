@@ -147,16 +147,16 @@ namespace Azure.ResourceManager.Authorization
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> scope = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<bool> isOrganizationDefault = default;
-            Optional<RoleManagementPrincipal> lastModifiedBy = default;
-            Optional<DateTimeOffset> lastModifiedDateTime = default;
+            SystemData systemData = default;
+            string scope = default;
+            string displayName = default;
+            string description = default;
+            bool? isOrganizationDefault = default;
+            RoleManagementPrincipal lastModifiedBy = default;
+            DateTimeOffset? lastModifiedDateTime = default;
             IList<RoleManagementPolicyRule> rules = default;
             IReadOnlyList<RoleManagementPolicyRule> effectiveRules = default;
-            Optional<RoleManagementPolicyProperties> policyProperties = default;
+            RoleManagementPolicyProperties policyProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -282,7 +282,21 @@ namespace Azure.ResourceManager.Authorization
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoleManagementPolicyData(id, name, type, systemData.Value, scope.Value, displayName.Value, description.Value, Optional.ToNullable(isOrganizationDefault), lastModifiedBy.Value, Optional.ToNullable(lastModifiedDateTime), rules ?? new ChangeTrackingList<RoleManagementPolicyRule>(), effectiveRules ?? new ChangeTrackingList<RoleManagementPolicyRule>(), policyProperties.Value, serializedAdditionalRawData);
+            return new RoleManagementPolicyData(
+                id,
+                name,
+                type,
+                systemData,
+                scope,
+                displayName,
+                description,
+                isOrganizationDefault,
+                lastModifiedBy,
+                lastModifiedDateTime,
+                rules ?? new ChangeTrackingList<RoleManagementPolicyRule>(),
+                effectiveRules ?? new ChangeTrackingList<RoleManagementPolicyRule>(),
+                policyProperties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoleManagementPolicyData>.Write(ModelReaderWriterOptions options)

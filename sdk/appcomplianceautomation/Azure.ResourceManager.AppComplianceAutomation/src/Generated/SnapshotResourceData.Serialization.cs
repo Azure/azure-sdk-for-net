@@ -91,11 +91,11 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             {
                 return null;
             }
-            Optional<SnapshotProperties> properties = default;
+            SnapshotProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -139,7 +139,13 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SnapshotResourceData(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new SnapshotResourceData(
+                id,
+                name,
+                type,
+                systemData,
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SnapshotResourceData>.Write(ModelReaderWriterOptions options)

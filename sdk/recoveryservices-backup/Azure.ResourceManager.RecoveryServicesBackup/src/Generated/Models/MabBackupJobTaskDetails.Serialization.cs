@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<string> taskId = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<TimeSpan> duration = default;
-            Optional<string> status = default;
+            string taskId = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            TimeSpan? duration = default;
+            string status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MabBackupJobTaskDetails(taskId.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(duration), status.Value, serializedAdditionalRawData);
+            return new MabBackupJobTaskDetails(
+                taskId,
+                startTime,
+                endTime,
+                duration,
+                status,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MabBackupJobTaskDetails>.Write(ModelReaderWriterOptions options)

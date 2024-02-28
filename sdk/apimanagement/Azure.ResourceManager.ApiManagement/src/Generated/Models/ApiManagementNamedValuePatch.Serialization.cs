@@ -98,10 +98,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 return null;
             }
             IList<string> tags = default;
-            Optional<bool> secret = default;
-            Optional<string> displayName = default;
-            Optional<string> value = default;
-            Optional<KeyVaultContractCreateProperties> keyVault = default;
+            bool? secret = default;
+            string displayName = default;
+            string value = default;
+            KeyVaultContractCreateProperties keyVault = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -166,7 +166,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementNamedValuePatch(tags ?? new ChangeTrackingList<string>(), Optional.ToNullable(secret), displayName.Value, value.Value, keyVault.Value, serializedAdditionalRawData);
+            return new ApiManagementNamedValuePatch(
+                tags ?? new ChangeTrackingList<string>(),
+                secret,
+                displayName,
+                value,
+                keyVault,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementNamedValuePatch>.Write(ModelReaderWriterOptions options)

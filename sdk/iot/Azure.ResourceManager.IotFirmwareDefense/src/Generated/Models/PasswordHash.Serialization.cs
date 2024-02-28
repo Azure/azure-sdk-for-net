@@ -148,13 +148,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            Optional<string> passwordHashId = default;
-            Optional<string> filePath = default;
-            Optional<string> salt = default;
-            Optional<string> hash = default;
-            Optional<string> context = default;
-            Optional<string> username = default;
-            Optional<string> algorithm = default;
+            string passwordHashId = default;
+            string filePath = default;
+            string salt = default;
+            string hash = default;
+            string context = default;
+            string username = default;
+            string algorithm = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -235,7 +235,15 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PasswordHash(passwordHashId.Value, filePath.Value, salt.Value, hash.Value, context.Value, username.Value, algorithm.Value, serializedAdditionalRawData);
+            return new PasswordHash(
+                passwordHashId,
+                filePath,
+                salt,
+                hash,
+                context,
+                username,
+                algorithm,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PasswordHash>.Write(ModelReaderWriterOptions options)

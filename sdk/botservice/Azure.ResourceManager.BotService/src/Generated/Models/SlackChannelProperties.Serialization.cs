@@ -116,16 +116,16 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Optional<string> clientId = default;
-            Optional<string> clientSecret = default;
-            Optional<string> verificationToken = default;
-            Optional<string> scopes = default;
-            Optional<Uri> landingPageUrl = default;
-            Optional<string> redirectAction = default;
-            Optional<string> lastSubmissionId = default;
-            Optional<bool> registerBeforeOAuthFlow = default;
-            Optional<bool> isValidated = default;
-            Optional<string> signingSecret = default;
+            string clientId = default;
+            string clientSecret = default;
+            string verificationToken = default;
+            string scopes = default;
+            Uri landingPageUrl = default;
+            string redirectAction = default;
+            string lastSubmissionId = default;
+            bool? registerBeforeOAuthFlow = default;
+            bool? isValidated = default;
+            string signingSecret = default;
             bool isEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -204,7 +204,19 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SlackChannelProperties(clientId.Value, clientSecret.Value, verificationToken.Value, scopes.Value, landingPageUrl.Value, redirectAction.Value, lastSubmissionId.Value, Optional.ToNullable(registerBeforeOAuthFlow), Optional.ToNullable(isValidated), signingSecret.Value, isEnabled, serializedAdditionalRawData);
+            return new SlackChannelProperties(
+                clientId,
+                clientSecret,
+                verificationToken,
+                scopes,
+                landingPageUrl,
+                redirectAction,
+                lastSubmissionId,
+                registerBeforeOAuthFlow,
+                isValidated,
+                signingSecret,
+                isEnabled,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SlackChannelProperties>.Write(ModelReaderWriterOptions options)

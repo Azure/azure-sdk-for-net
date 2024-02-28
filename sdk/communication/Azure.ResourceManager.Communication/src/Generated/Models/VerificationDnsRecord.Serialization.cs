@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Communication.Models
             {
                 return null;
             }
-            Optional<string> type = default;
-            Optional<string> name = default;
-            Optional<string> value = default;
-            Optional<int> ttl = default;
+            string type = default;
+            string name = default;
+            string value = default;
+            int? ttl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Communication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VerificationDnsRecord(type.Value, name.Value, value.Value, Optional.ToNullable(ttl), serializedAdditionalRawData);
+            return new VerificationDnsRecord(type, name, value, ttl, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VerificationDnsRecord>.Write(ModelReaderWriterOptions options)

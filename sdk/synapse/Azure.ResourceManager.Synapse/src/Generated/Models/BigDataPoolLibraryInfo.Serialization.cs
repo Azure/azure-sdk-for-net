@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> path = default;
-            Optional<string> containerName = default;
-            Optional<DateTimeOffset> uploadedTimestamp = default;
-            Optional<string> type = default;
-            Optional<string> provisioningStatus = default;
-            Optional<string> creatorId = default;
+            string name = default;
+            string path = default;
+            string containerName = default;
+            DateTimeOffset? uploadedTimestamp = default;
+            string type = default;
+            string provisioningStatus = default;
+            string creatorId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -155,7 +155,15 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BigDataPoolLibraryInfo(name.Value, path.Value, containerName.Value, Optional.ToNullable(uploadedTimestamp), type.Value, provisioningStatus.Value, creatorId.Value, serializedAdditionalRawData);
+            return new BigDataPoolLibraryInfo(
+                name,
+                path,
+                containerName,
+                uploadedTimestamp,
+                type,
+                provisioningStatus,
+                creatorId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BigDataPoolLibraryInfo>.Write(ModelReaderWriterOptions options)

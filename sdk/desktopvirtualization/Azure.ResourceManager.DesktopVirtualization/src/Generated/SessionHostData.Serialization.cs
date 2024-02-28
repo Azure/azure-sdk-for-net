@@ -182,23 +182,23 @@ namespace Azure.ResourceManager.DesktopVirtualization
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> objectId = default;
-            Optional<DateTimeOffset> lastHeartBeat = default;
-            Optional<int> sessions = default;
-            Optional<string> agentVersion = default;
-            Optional<bool> allowNewSession = default;
-            Optional<string> virtualMachineId = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<string> assignedUser = default;
-            Optional<string> friendlyName = default;
-            Optional<SessionHostStatus> status = default;
-            Optional<DateTimeOffset> statusTimestamp = default;
-            Optional<string> osVersion = default;
-            Optional<string> sxsStackVersion = default;
-            Optional<SessionHostUpdateState> updateState = default;
-            Optional<DateTimeOffset> lastUpdateTime = default;
-            Optional<string> updateErrorMessage = default;
+            SystemData systemData = default;
+            string objectId = default;
+            DateTimeOffset? lastHeartBeat = default;
+            int? sessions = default;
+            string agentVersion = default;
+            bool? allowNewSession = default;
+            string virtualMachineId = default;
+            ResourceIdentifier resourceId = default;
+            string assignedUser = default;
+            string friendlyName = default;
+            SessionHostStatus? status = default;
+            DateTimeOffset? statusTimestamp = default;
+            string osVersion = default;
+            string sxsStackVersion = default;
+            SessionHostUpdateState? updateState = default;
+            DateTimeOffset? lastUpdateTime = default;
+            string updateErrorMessage = default;
             IReadOnlyList<SessionHostHealthCheckReport> sessionHostHealthCheckResults = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -372,7 +372,29 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SessionHostData(id, name, type, systemData.Value, objectId.Value, Optional.ToNullable(lastHeartBeat), Optional.ToNullable(sessions), agentVersion.Value, Optional.ToNullable(allowNewSession), virtualMachineId.Value, resourceId.Value, assignedUser.Value, friendlyName.Value, Optional.ToNullable(status), Optional.ToNullable(statusTimestamp), osVersion.Value, sxsStackVersion.Value, Optional.ToNullable(updateState), Optional.ToNullable(lastUpdateTime), updateErrorMessage.Value, sessionHostHealthCheckResults ?? new ChangeTrackingList<SessionHostHealthCheckReport>(), serializedAdditionalRawData);
+            return new SessionHostData(
+                id,
+                name,
+                type,
+                systemData,
+                objectId,
+                lastHeartBeat,
+                sessions,
+                agentVersion,
+                allowNewSession,
+                virtualMachineId,
+                resourceId,
+                assignedUser,
+                friendlyName,
+                status,
+                statusTimestamp,
+                osVersion,
+                sxsStackVersion,
+                updateState,
+                lastUpdateTime,
+                updateErrorMessage,
+                sessionHostHealthCheckResults ?? new ChangeTrackingList<SessionHostHealthCheckReport>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SessionHostData>.Write(ModelReaderWriterOptions options)

@@ -129,16 +129,16 @@ namespace Azure.ResourceManager.EventHubs
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<bool> trustedServiceAccessEnabled = default;
-            Optional<EventHubsNetworkRuleSetDefaultAction> defaultAction = default;
+            SystemData systemData = default;
+            bool? trustedServiceAccessEnabled = default;
+            EventHubsNetworkRuleSetDefaultAction? defaultAction = default;
             IList<EventHubsNetworkRuleSetVirtualNetworkRules> virtualNetworkRules = default;
             IList<EventHubsNetworkRuleSetIPRules> ipRules = default;
-            Optional<EventHubsPublicNetworkAccessFlag> publicNetworkAccess = default;
+            EventHubsPublicNetworkAccessFlag? publicNetworkAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -249,7 +249,18 @@ namespace Azure.ResourceManager.EventHubs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventHubsNetworkRuleSetData(id, name, type, systemData.Value, Optional.ToNullable(trustedServiceAccessEnabled), Optional.ToNullable(defaultAction), virtualNetworkRules ?? new ChangeTrackingList<EventHubsNetworkRuleSetVirtualNetworkRules>(), ipRules ?? new ChangeTrackingList<EventHubsNetworkRuleSetIPRules>(), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(location), serializedAdditionalRawData);
+            return new EventHubsNetworkRuleSetData(
+                id,
+                name,
+                type,
+                systemData,
+                trustedServiceAccessEnabled,
+                defaultAction,
+                virtualNetworkRules ?? new ChangeTrackingList<EventHubsNetworkRuleSetVirtualNetworkRules>(),
+                ipRules ?? new ChangeTrackingList<EventHubsNetworkRuleSetIPRules>(),
+                publicNetworkAccess,
+                location,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventHubsNetworkRuleSetData>.Write(ModelReaderWriterOptions options)

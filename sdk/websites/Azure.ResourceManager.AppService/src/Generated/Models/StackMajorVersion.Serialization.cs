@@ -155,14 +155,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> displayVersion = default;
-            Optional<string> runtimeVersion = default;
-            Optional<bool> isDefault = default;
+            string displayVersion = default;
+            string runtimeVersion = default;
+            bool? isDefault = default;
             IList<StackMinorVersion> minorVersions = default;
-            Optional<bool> applicationInsights = default;
-            Optional<bool> isPreview = default;
-            Optional<bool> isDeprecated = default;
-            Optional<bool> isHidden = default;
+            bool? applicationInsights = default;
+            bool? isPreview = default;
+            bool? isDeprecated = default;
+            bool? isHidden = default;
             IDictionary<string, BinaryData> appSettingsDictionary = default;
             IDictionary<string, BinaryData> siteConfigPropertiesDictionary = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -286,7 +286,18 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StackMajorVersion(displayVersion.Value, runtimeVersion.Value, Optional.ToNullable(isDefault), minorVersions ?? new ChangeTrackingList<StackMinorVersion>(), Optional.ToNullable(applicationInsights), Optional.ToNullable(isPreview), Optional.ToNullable(isDeprecated), Optional.ToNullable(isHidden), appSettingsDictionary ?? new ChangeTrackingDictionary<string, BinaryData>(), siteConfigPropertiesDictionary ?? new ChangeTrackingDictionary<string, BinaryData>(), serializedAdditionalRawData);
+            return new StackMajorVersion(
+                displayVersion,
+                runtimeVersion,
+                isDefault,
+                minorVersions ?? new ChangeTrackingList<StackMinorVersion>(),
+                applicationInsights,
+                isPreview,
+                isDeprecated,
+                isHidden,
+                appSettingsDictionary ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                siteConfigPropertiesDictionary ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StackMajorVersion>.Write(ModelReaderWriterOptions options)

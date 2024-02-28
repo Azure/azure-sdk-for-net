@@ -97,8 +97,8 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SecurityAssessmentResourceStatus> resourceStatus = default;
+            SystemData systemData = default;
+            SecurityAssessmentResourceStatus? resourceStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -154,7 +154,13 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComplianceResultData(id, name, type, systemData.Value, Optional.ToNullable(resourceStatus), serializedAdditionalRawData);
+            return new ComplianceResultData(
+                id,
+                name,
+                type,
+                systemData,
+                resourceStatus,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComplianceResultData>.Write(ModelReaderWriterOptions options)

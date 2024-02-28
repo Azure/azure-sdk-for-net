@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> skippedReason = default;
-            Optional<string> skippedReasonString = default;
-            Optional<SiteRecoveryJobEntity> jobTask = default;
+            string skippedReason = default;
+            string skippedReasonString = default;
+            SiteRecoveryJobEntity jobTask = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryVmTaskDetails(instanceType, serializedAdditionalRawData, jobTask.Value, skippedReason.Value, skippedReasonString.Value);
+            return new SiteRecoveryVmTaskDetails(instanceType, serializedAdditionalRawData, jobTask, skippedReason, skippedReasonString);
         }
 
         BinaryData IPersistableModel<SiteRecoveryVmTaskDetails>.Write(ModelReaderWriterOptions options)

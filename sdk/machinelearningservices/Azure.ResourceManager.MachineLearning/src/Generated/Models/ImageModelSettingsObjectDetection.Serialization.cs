@@ -586,53 +586,53 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<int?> boxDetectionsPerImage = default;
-            Optional<float?> boxScoreThreshold = default;
-            Optional<int?> imageSize = default;
-            Optional<LogTrainingMetric> logTrainingMetrics = default;
-            Optional<LogValidationLoss> logValidationLoss = default;
-            Optional<int?> maxSize = default;
-            Optional<int?> minSize = default;
-            Optional<MachineLearningModelSize> modelSize = default;
-            Optional<bool?> multiScale = default;
-            Optional<float?> nmsIouThreshold = default;
-            Optional<string> tileGridSize = default;
-            Optional<float?> tileOverlapRatio = default;
-            Optional<float?> tilePredictionsNmsThreshold = default;
-            Optional<float?> validationIouThreshold = default;
-            Optional<ValidationMetricType> validationMetricType = default;
-            Optional<string> advancedSettings = default;
-            Optional<bool?> amsGradient = default;
-            Optional<string> augmentations = default;
-            Optional<float?> beta1 = default;
-            Optional<float?> beta2 = default;
-            Optional<int?> checkpointFrequency = default;
-            Optional<MachineLearningFlowModelJobInput> checkpointModel = default;
-            Optional<string> checkpointRunId = default;
-            Optional<bool?> distributed = default;
-            Optional<bool?> earlyStopping = default;
-            Optional<int?> earlyStoppingDelay = default;
-            Optional<int?> earlyStoppingPatience = default;
-            Optional<bool?> enableOnnxNormalization = default;
-            Optional<int?> evaluationFrequency = default;
-            Optional<int?> gradientAccumulationStep = default;
-            Optional<int?> layersToFreeze = default;
-            Optional<float?> learningRate = default;
-            Optional<LearningRateScheduler> learningRateScheduler = default;
-            Optional<string> modelName = default;
-            Optional<float?> momentum = default;
-            Optional<bool?> nesterov = default;
-            Optional<int?> numberOfEpochs = default;
-            Optional<int?> numberOfWorkers = default;
-            Optional<StochasticOptimizer> optimizer = default;
-            Optional<int?> randomSeed = default;
-            Optional<float?> stepLRGamma = default;
-            Optional<int?> stepLRStepSize = default;
-            Optional<int?> trainingBatchSize = default;
-            Optional<int?> validationBatchSize = default;
-            Optional<float?> warmupCosineLRCycles = default;
-            Optional<int?> warmupCosineLRWarmupEpochs = default;
-            Optional<float?> weightDecay = default;
+            int? boxDetectionsPerImage = default;
+            float? boxScoreThreshold = default;
+            int? imageSize = default;
+            LogTrainingMetric? logTrainingMetrics = default;
+            LogValidationLoss? logValidationLoss = default;
+            int? maxSize = default;
+            int? minSize = default;
+            MachineLearningModelSize? modelSize = default;
+            bool? multiScale = default;
+            float? nmsIouThreshold = default;
+            string tileGridSize = default;
+            float? tileOverlapRatio = default;
+            float? tilePredictionsNmsThreshold = default;
+            float? validationIouThreshold = default;
+            ValidationMetricType? validationMetricType = default;
+            string advancedSettings = default;
+            bool? amsGradient = default;
+            string augmentations = default;
+            float? beta1 = default;
+            float? beta2 = default;
+            int? checkpointFrequency = default;
+            MachineLearningFlowModelJobInput checkpointModel = default;
+            string checkpointRunId = default;
+            bool? distributed = default;
+            bool? earlyStopping = default;
+            int? earlyStoppingDelay = default;
+            int? earlyStoppingPatience = default;
+            bool? enableOnnxNormalization = default;
+            int? evaluationFrequency = default;
+            int? gradientAccumulationStep = default;
+            int? layersToFreeze = default;
+            float? learningRate = default;
+            LearningRateScheduler? learningRateScheduler = default;
+            string modelName = default;
+            float? momentum = default;
+            bool? nesterov = default;
+            int? numberOfEpochs = default;
+            int? numberOfWorkers = default;
+            StochasticOptimizer? optimizer = default;
+            int? randomSeed = default;
+            float? stepLRGamma = default;
+            int? stepLRStepSize = default;
+            int? trainingBatchSize = default;
+            int? validationBatchSize = default;
+            float? warmupCosineLRCycles = default;
+            int? warmupCosineLRWarmupEpochs = default;
+            float? weightDecay = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -1107,7 +1107,55 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ImageModelSettingsObjectDetection(advancedSettings.Value, Optional.ToNullable(amsGradient), augmentations.Value, Optional.ToNullable(beta1), Optional.ToNullable(beta2), Optional.ToNullable(checkpointFrequency), checkpointModel.Value, checkpointRunId.Value, Optional.ToNullable(distributed), Optional.ToNullable(earlyStopping), Optional.ToNullable(earlyStoppingDelay), Optional.ToNullable(earlyStoppingPatience), Optional.ToNullable(enableOnnxNormalization), Optional.ToNullable(evaluationFrequency), Optional.ToNullable(gradientAccumulationStep), Optional.ToNullable(layersToFreeze), Optional.ToNullable(learningRate), Optional.ToNullable(learningRateScheduler), modelName.Value, Optional.ToNullable(momentum), Optional.ToNullable(nesterov), Optional.ToNullable(numberOfEpochs), Optional.ToNullable(numberOfWorkers), Optional.ToNullable(optimizer), Optional.ToNullable(randomSeed), Optional.ToNullable(stepLRGamma), Optional.ToNullable(stepLRStepSize), Optional.ToNullable(trainingBatchSize), Optional.ToNullable(validationBatchSize), Optional.ToNullable(warmupCosineLRCycles), Optional.ToNullable(warmupCosineLRWarmupEpochs), Optional.ToNullable(weightDecay), serializedAdditionalRawData, Optional.ToNullable(boxDetectionsPerImage), Optional.ToNullable(boxScoreThreshold), Optional.ToNullable(imageSize), Optional.ToNullable(logTrainingMetrics), Optional.ToNullable(logValidationLoss), Optional.ToNullable(maxSize), Optional.ToNullable(minSize), Optional.ToNullable(modelSize), Optional.ToNullable(multiScale), Optional.ToNullable(nmsIouThreshold), tileGridSize.Value, Optional.ToNullable(tileOverlapRatio), Optional.ToNullable(tilePredictionsNmsThreshold), Optional.ToNullable(validationIouThreshold), Optional.ToNullable(validationMetricType));
+            return new ImageModelSettingsObjectDetection(
+                advancedSettings,
+                amsGradient,
+                augmentations,
+                beta1,
+                beta2,
+                checkpointFrequency,
+                checkpointModel,
+                checkpointRunId,
+                distributed,
+                earlyStopping,
+                earlyStoppingDelay,
+                earlyStoppingPatience,
+                enableOnnxNormalization,
+                evaluationFrequency,
+                gradientAccumulationStep,
+                layersToFreeze,
+                learningRate,
+                learningRateScheduler,
+                modelName,
+                momentum,
+                nesterov,
+                numberOfEpochs,
+                numberOfWorkers,
+                optimizer,
+                randomSeed,
+                stepLRGamma,
+                stepLRStepSize,
+                trainingBatchSize,
+                validationBatchSize,
+                warmupCosineLRCycles,
+                warmupCosineLRWarmupEpochs,
+                weightDecay,
+                serializedAdditionalRawData,
+                boxDetectionsPerImage,
+                boxScoreThreshold,
+                imageSize,
+                logTrainingMetrics,
+                logValidationLoss,
+                maxSize,
+                minSize,
+                modelSize,
+                multiScale,
+                nmsIouThreshold,
+                tileGridSize,
+                tileOverlapRatio,
+                tilePredictionsNmsThreshold,
+                validationIouThreshold,
+                validationMetricType);
         }
 
         BinaryData IPersistableModel<ImageModelSettingsObjectDetection>.Write(ModelReaderWriterOptions options)

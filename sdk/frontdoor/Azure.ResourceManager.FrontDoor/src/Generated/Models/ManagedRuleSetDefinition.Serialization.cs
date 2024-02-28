@@ -136,11 +136,11 @@ namespace Azure.ResourceManager.FrontDoor.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> provisioningState = default;
-            Optional<string> ruleSetId = default;
-            Optional<string> ruleSetType = default;
-            Optional<string> ruleSetVersion = default;
+            SystemData systemData = default;
+            string provisioningState = default;
+            string ruleSetId = default;
+            string ruleSetType = default;
+            string ruleSetVersion = default;
             IReadOnlyList<ManagedRuleGroupDefinition> ruleGroups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -241,7 +241,19 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedRuleSetDefinition(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, provisioningState.Value, ruleSetId.Value, ruleSetType.Value, ruleSetVersion.Value, ruleGroups ?? new ChangeTrackingList<ManagedRuleGroupDefinition>(), serializedAdditionalRawData);
+            return new ManagedRuleSetDefinition(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                provisioningState,
+                ruleSetId,
+                ruleSetType,
+                ruleSetVersion,
+                ruleGroups ?? new ChangeTrackingList<ManagedRuleGroupDefinition>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedRuleSetDefinition>.Write(ModelReaderWriterOptions options)

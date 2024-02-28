@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<AzureLocation> appLocation = default;
-            Optional<InfrastructureConfiguration> infrastructureConfiguration = default;
-            Optional<SapSoftwareConfiguration> softwareConfiguration = default;
-            Optional<OSSapConfiguration> osSapConfiguration = default;
+            AzureLocation? appLocation = default;
+            InfrastructureConfiguration infrastructureConfiguration = default;
+            SapSoftwareConfiguration softwareConfiguration = default;
+            OSSapConfiguration osSapConfiguration = default;
             SapConfigurationType configurationType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -142,7 +142,13 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeploymentWithOSConfiguration(configurationType, serializedAdditionalRawData, Optional.ToNullable(appLocation), infrastructureConfiguration.Value, softwareConfiguration.Value, osSapConfiguration.Value);
+            return new DeploymentWithOSConfiguration(
+                configurationType,
+                serializedAdditionalRawData,
+                appLocation,
+                infrastructureConfiguration,
+                softwareConfiguration,
+                osSapConfiguration);
         }
 
         BinaryData IPersistableModel<DeploymentWithOSConfiguration>.Write(ModelReaderWriterOptions options)

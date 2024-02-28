@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 return null;
             }
-            Optional<string> organizationId = default;
+            string organizationId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NewRelicObservabilityOrganizationInfo(organizationId.Value, serializedAdditionalRawData);
+            return new NewRelicObservabilityOrganizationInfo(organizationId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NewRelicObservabilityOrganizationInfo>.Write(ModelReaderWriterOptions options)

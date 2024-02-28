@@ -112,15 +112,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> ownerId = default;
-            Optional<string> scope = default;
-            Optional<DateTimeOffset> expirationDate = default;
-            Optional<string> displayName = default;
-            Optional<string> primaryKey = default;
-            Optional<string> secondaryKey = default;
-            Optional<SubscriptionState> state = default;
-            Optional<string> stateComment = default;
-            Optional<bool> allowTracing = default;
+            string ownerId = default;
+            string scope = default;
+            DateTimeOffset? expirationDate = default;
+            string displayName = default;
+            string primaryKey = default;
+            string secondaryKey = default;
+            SubscriptionState? state = default;
+            string stateComment = default;
+            bool? allowTracing = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -200,7 +200,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementSubscriptionPatch(ownerId.Value, scope.Value, Optional.ToNullable(expirationDate), displayName.Value, primaryKey.Value, secondaryKey.Value, Optional.ToNullable(state), stateComment.Value, Optional.ToNullable(allowTracing), serializedAdditionalRawData);
+            return new ApiManagementSubscriptionPatch(
+                ownerId,
+                scope,
+                expirationDate,
+                displayName,
+                primaryKey,
+                secondaryKey,
+                state,
+                stateComment,
+                allowTracing,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementSubscriptionPatch>.Write(ModelReaderWriterOptions options)

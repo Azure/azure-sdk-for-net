@@ -126,11 +126,11 @@ namespace Azure.ResourceManager.OperationalInsights
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> queryPackId = default;
-            Optional<DateTimeOffset> timeCreated = default;
-            Optional<DateTimeOffset> timeModified = default;
-            Optional<string> provisioningState = default;
+            SystemData systemData = default;
+            Guid? queryPackId = default;
+            DateTimeOffset? timeCreated = default;
+            DateTimeOffset? timeModified = default;
+            string provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -228,7 +228,18 @@ namespace Azure.ResourceManager.OperationalInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogAnalyticsQueryPackData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(queryPackId), Optional.ToNullable(timeCreated), Optional.ToNullable(timeModified), provisioningState.Value, serializedAdditionalRawData);
+            return new LogAnalyticsQueryPackData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                queryPackId,
+                timeCreated,
+                timeModified,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogAnalyticsQueryPackData>.Write(ModelReaderWriterOptions options)

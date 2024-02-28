@@ -91,11 +91,11 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> host = default;
+            string host = default;
             IList<ContainerAppHttpHeaderInfo> httpHeaders = default;
-            Optional<string> path = default;
+            string path = default;
             int port = default;
-            Optional<ContainerAppHttpScheme> scheme = default;
+            ContainerAppHttpScheme? scheme = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,7 +144,13 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppHttpRequestInfo(host.Value, httpHeaders ?? new ChangeTrackingList<ContainerAppHttpHeaderInfo>(), path.Value, port, Optional.ToNullable(scheme), serializedAdditionalRawData);
+            return new ContainerAppHttpRequestInfo(
+                host,
+                httpHeaders ?? new ChangeTrackingList<ContainerAppHttpHeaderInfo>(),
+                path,
+                port,
+                scheme,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppHttpRequestInfo>.Write(ModelReaderWriterOptions options)

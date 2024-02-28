@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Logic.Models
             string headerVersion = default;
             string senderApplicationId = default;
             string receiverApplicationId = default;
-            Optional<string> functionalIdentifierCode = default;
+            string functionalIdentifierCode = default;
             X12DateFormat dateFormat = default;
             X12TimeFormat timeFormat = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -157,7 +157,18 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new X12EnvelopeOverride(targetNamespace, protocolVersion, messageId, responsibleAgencyCode, headerVersion, senderApplicationId, receiverApplicationId, functionalIdentifierCode.Value, dateFormat, timeFormat, serializedAdditionalRawData);
+            return new X12EnvelopeOverride(
+                targetNamespace,
+                protocolVersion,
+                messageId,
+                responsibleAgencyCode,
+                headerVersion,
+                senderApplicationId,
+                receiverApplicationId,
+                functionalIdentifierCode,
+                dateFormat,
+                timeFormat,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<X12EnvelopeOverride>.Write(ModelReaderWriterOptions options)

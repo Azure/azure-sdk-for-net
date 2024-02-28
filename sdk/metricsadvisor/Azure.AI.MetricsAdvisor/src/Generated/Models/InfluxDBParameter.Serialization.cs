@@ -81,10 +81,10 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 return null;
             }
-            Optional<string> connectionString = default;
-            Optional<string> database = default;
-            Optional<string> userName = default;
-            Optional<string> password = default;
+            string connectionString = default;
+            string database = default;
+            string userName = default;
+            string password = default;
             string query = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -139,7 +139,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new InfluxDBParameter(connectionString.Value, database.Value, userName.Value, password.Value, query);
+            return new InfluxDBParameter(connectionString, database, userName, password, query);
         }
     }
 }

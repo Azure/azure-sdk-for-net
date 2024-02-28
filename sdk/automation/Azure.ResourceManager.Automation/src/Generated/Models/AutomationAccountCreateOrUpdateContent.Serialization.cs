@@ -114,14 +114,14 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<AzureLocation> location = default;
-            Optional<ManagedServiceIdentity> identity = default;
+            string name = default;
+            AzureLocation? location = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
-            Optional<AutomationSku> sku = default;
-            Optional<AutomationEncryptionProperties> encryption = default;
-            Optional<bool> publicNetworkAccess = default;
-            Optional<bool> disableLocalAuth = default;
+            AutomationSku sku = default;
+            AutomationEncryptionProperties encryption = default;
+            bool? publicNetworkAccess = default;
+            bool? disableLocalAuth = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -217,7 +217,16 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationAccountCreateOrUpdateContent(name.Value, Optional.ToNullable(location), identity, tags ?? new ChangeTrackingDictionary<string, string>(), sku.Value, encryption.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(disableLocalAuth), serializedAdditionalRawData);
+            return new AutomationAccountCreateOrUpdateContent(
+                name,
+                location,
+                identity,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                sku,
+                encryption,
+                publicNetworkAccess,
+                disableLocalAuth,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationAccountCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

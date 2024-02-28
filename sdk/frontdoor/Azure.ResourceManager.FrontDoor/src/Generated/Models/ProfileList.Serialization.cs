@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 return null;
             }
             IReadOnlyList<FrontDoorNetworkExperimentProfileData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProfileList(value ?? new ChangeTrackingList<FrontDoorNetworkExperimentProfileData>(), nextLink.Value, serializedAdditionalRawData);
+            return new ProfileList(value ?? new ChangeTrackingList<FrontDoorNetworkExperimentProfileData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProfileList>.Write(ModelReaderWriterOptions options)

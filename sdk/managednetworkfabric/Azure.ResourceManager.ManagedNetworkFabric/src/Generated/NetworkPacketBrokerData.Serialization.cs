@@ -174,13 +174,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             ResourceIdentifier networkFabricId = default;
             IReadOnlyList<ResourceIdentifier> networkDeviceIds = default;
             IReadOnlyList<ResourceIdentifier> sourceInterfaceIds = default;
             IReadOnlyList<ResourceIdentifier> networkTapIds = default;
             IReadOnlyList<ResourceIdentifier> neighborGroupIds = default;
-            Optional<NetworkFabricProvisioningState> provisioningState = default;
+            NetworkFabricProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -344,7 +344,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkPacketBrokerData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, networkFabricId, networkDeviceIds ?? new ChangeTrackingList<ResourceIdentifier>(), sourceInterfaceIds ?? new ChangeTrackingList<ResourceIdentifier>(), networkTapIds ?? new ChangeTrackingList<ResourceIdentifier>(), neighborGroupIds ?? new ChangeTrackingList<ResourceIdentifier>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new NetworkPacketBrokerData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                networkFabricId,
+                networkDeviceIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                sourceInterfaceIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                networkTapIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                neighborGroupIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkPacketBrokerData>.Write(ModelReaderWriterOptions options)

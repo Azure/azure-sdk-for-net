@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            Optional<bool> isApprovalRequired = default;
-            Optional<bool> isApprovalRequiredForExtension = default;
-            Optional<bool> isRequestorJustificationRequired = default;
-            Optional<RoleManagementApprovalMode> approvalMode = default;
+            bool? isApprovalRequired = default;
+            bool? isApprovalRequiredForExtension = default;
+            bool? isRequestorJustificationRequired = default;
+            RoleManagementApprovalMode? approvalMode = default;
             IList<RoleManagementApprovalStage> approvalStages = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -159,7 +159,13 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoleManagementApprovalSettings(Optional.ToNullable(isApprovalRequired), Optional.ToNullable(isApprovalRequiredForExtension), Optional.ToNullable(isRequestorJustificationRequired), Optional.ToNullable(approvalMode), approvalStages ?? new ChangeTrackingList<RoleManagementApprovalStage>(), serializedAdditionalRawData);
+            return new RoleManagementApprovalSettings(
+                isApprovalRequired,
+                isApprovalRequiredForExtension,
+                isRequestorJustificationRequired,
+                approvalMode,
+                approvalStages ?? new ChangeTrackingList<RoleManagementApprovalStage>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoleManagementApprovalSettings>.Write(ModelReaderWriterOptions options)

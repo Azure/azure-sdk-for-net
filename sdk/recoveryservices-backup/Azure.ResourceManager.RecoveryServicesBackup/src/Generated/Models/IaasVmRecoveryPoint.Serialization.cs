@@ -178,25 +178,25 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<string> recoveryPointType = default;
-            Optional<DateTimeOffset> recoveryPointTime = default;
-            Optional<string> recoveryPointAdditionalInfo = default;
-            Optional<string> sourceVmStorageType = default;
-            Optional<bool> isSourceVmEncrypted = default;
-            Optional<KeyAndSecretDetails> keyAndSecret = default;
-            Optional<bool> isInstantIlrSessionActive = default;
+            string recoveryPointType = default;
+            DateTimeOffset? recoveryPointTime = default;
+            string recoveryPointAdditionalInfo = default;
+            string sourceVmStorageType = default;
+            bool? isSourceVmEncrypted = default;
+            KeyAndSecretDetails keyAndSecret = default;
+            bool? isInstantIlrSessionActive = default;
             IList<RecoveryPointTierInformationV2> recoveryPointTierDetails = default;
-            Optional<bool> isManagedVirtualMachine = default;
-            Optional<string> virtualMachineSize = default;
-            Optional<bool> originalStorageAccountOption = default;
-            Optional<string> osType = default;
-            Optional<RecoveryPointDiskConfiguration> recoveryPointDiskConfiguration = default;
+            bool? isManagedVirtualMachine = default;
+            string virtualMachineSize = default;
+            bool? originalStorageAccountOption = default;
+            string osType = default;
+            RecoveryPointDiskConfiguration recoveryPointDiskConfiguration = default;
             IList<string> zones = default;
             IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo = default;
-            Optional<string> securityType = default;
-            Optional<RecoveryPointProperties> recoveryPointProperties = default;
-            Optional<bool> isPrivateAccessEnabledOnAnyDisk = default;
-            Optional<ExtendedLocation> extendedLocation = default;
+            string securityType = default;
+            RecoveryPointProperties recoveryPointProperties = default;
+            bool? isPrivateAccessEnabledOnAnyDisk = default;
+            ExtendedLocation extendedLocation = default;
             string objectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -375,7 +375,28 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IaasVmRecoveryPoint(objectType, serializedAdditionalRawData, recoveryPointType.Value, Optional.ToNullable(recoveryPointTime), recoveryPointAdditionalInfo.Value, sourceVmStorageType.Value, Optional.ToNullable(isSourceVmEncrypted), keyAndSecret.Value, Optional.ToNullable(isInstantIlrSessionActive), recoveryPointTierDetails ?? new ChangeTrackingList<RecoveryPointTierInformationV2>(), Optional.ToNullable(isManagedVirtualMachine), virtualMachineSize.Value, Optional.ToNullable(originalStorageAccountOption), osType.Value, recoveryPointDiskConfiguration.Value, zones ?? new ChangeTrackingList<string>(), recoveryPointMoveReadinessInfo ?? new ChangeTrackingDictionary<string, RecoveryPointMoveReadinessInfo>(), securityType.Value, recoveryPointProperties.Value, Optional.ToNullable(isPrivateAccessEnabledOnAnyDisk), extendedLocation);
+            return new IaasVmRecoveryPoint(
+                objectType,
+                serializedAdditionalRawData,
+                recoveryPointType,
+                recoveryPointTime,
+                recoveryPointAdditionalInfo,
+                sourceVmStorageType,
+                isSourceVmEncrypted,
+                keyAndSecret,
+                isInstantIlrSessionActive,
+                recoveryPointTierDetails ?? new ChangeTrackingList<RecoveryPointTierInformationV2>(),
+                isManagedVirtualMachine,
+                virtualMachineSize,
+                originalStorageAccountOption,
+                osType,
+                recoveryPointDiskConfiguration,
+                zones ?? new ChangeTrackingList<string>(),
+                recoveryPointMoveReadinessInfo ?? new ChangeTrackingDictionary<string, RecoveryPointMoveReadinessInfo>(),
+                securityType,
+                recoveryPointProperties,
+                isPrivateAccessEnabledOnAnyDisk,
+                extendedLocation);
         }
 
         BinaryData IPersistableModel<IaasVmRecoveryPoint>.Write(ModelReaderWriterOptions options)

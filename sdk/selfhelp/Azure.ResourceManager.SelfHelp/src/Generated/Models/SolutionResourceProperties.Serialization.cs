@@ -122,11 +122,11 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
             IList<TriggerCriterion> triggerCriteria = default;
             IDictionary<string, string> parameters = default;
-            Optional<string> solutionId = default;
-            Optional<SolutionProvisioningState> provisioningState = default;
-            Optional<string> title = default;
-            Optional<string> content = default;
-            Optional<ReplacementMaps> replacementMaps = default;
+            string solutionId = default;
+            SolutionProvisioningState? provisioningState = default;
+            string title = default;
+            string content = default;
+            ReplacementMaps replacementMaps = default;
             IList<SelfHelpSection> sections = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -213,7 +213,16 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SolutionResourceProperties(triggerCriteria ?? new ChangeTrackingList<TriggerCriterion>(), parameters ?? new ChangeTrackingDictionary<string, string>(), solutionId.Value, Optional.ToNullable(provisioningState), title.Value, content.Value, replacementMaps.Value, sections ?? new ChangeTrackingList<SelfHelpSection>(), serializedAdditionalRawData);
+            return new SolutionResourceProperties(
+                triggerCriteria ?? new ChangeTrackingList<TriggerCriterion>(),
+                parameters ?? new ChangeTrackingDictionary<string, string>(),
+                solutionId,
+                provisioningState,
+                title,
+                content,
+                replacementMaps,
+                sections ?? new ChangeTrackingList<SelfHelpSection>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SolutionResourceProperties>.Write(ModelReaderWriterOptions options)

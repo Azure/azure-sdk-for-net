@@ -111,16 +111,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<string> qnaRuntimeEndpoint = default;
-            Optional<string> qnaAzureSearchEndpointKey = default;
-            Optional<ResourceIdentifier> qnaAzureSearchEndpointId = default;
-            Optional<bool> statisticsEnabled = default;
-            Optional<string> eventHubConnectionString = default;
-            Optional<string> storageAccountConnectionString = default;
-            Optional<Guid> aadClientId = default;
-            Optional<Guid> aadTenantId = default;
-            Optional<string> superUser = default;
-            Optional<string> websiteName = default;
+            string qnaRuntimeEndpoint = default;
+            string qnaAzureSearchEndpointKey = default;
+            ResourceIdentifier qnaAzureSearchEndpointId = default;
+            bool? statisticsEnabled = default;
+            string eventHubConnectionString = default;
+            string storageAccountConnectionString = default;
+            Guid? aadClientId = default;
+            Guid? aadTenantId = default;
+            string superUser = default;
+            string websiteName = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -194,7 +194,18 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ServiceAccountApiProperties(qnaRuntimeEndpoint.Value, qnaAzureSearchEndpointKey.Value, qnaAzureSearchEndpointId.Value, Optional.ToNullable(statisticsEnabled), eventHubConnectionString.Value, storageAccountConnectionString.Value, Optional.ToNullable(aadClientId), Optional.ToNullable(aadTenantId), superUser.Value, websiteName.Value, additionalProperties);
+            return new ServiceAccountApiProperties(
+                qnaRuntimeEndpoint,
+                qnaAzureSearchEndpointKey,
+                qnaAzureSearchEndpointId,
+                statisticsEnabled,
+                eventHubConnectionString,
+                storageAccountConnectionString,
+                aadClientId,
+                aadTenantId,
+                superUser,
+                websiteName,
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<ServiceAccountApiProperties>.Write(ModelReaderWriterOptions options)

@@ -91,15 +91,15 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<string> protocolVersion = default;
-            Optional<string> messageId = default;
+            string protocolVersion = default;
+            string messageId = default;
             int dataElementSeparator = default;
             int componentSeparator = default;
             int segmentTerminator = default;
             SegmentTerminatorSuffix segmentTerminatorSuffix = default;
             int replaceCharacter = default;
             bool replaceSeparatorsInPayload = default;
-            Optional<string> targetNamespace = default;
+            string targetNamespace = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -155,7 +155,17 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new X12DelimiterOverrides(protocolVersion.Value, messageId.Value, dataElementSeparator, componentSeparator, segmentTerminator, segmentTerminatorSuffix, replaceCharacter, replaceSeparatorsInPayload, targetNamespace.Value, serializedAdditionalRawData);
+            return new X12DelimiterOverrides(
+                protocolVersion,
+                messageId,
+                dataElementSeparator,
+                componentSeparator,
+                segmentTerminator,
+                segmentTerminatorSuffix,
+                replaceCharacter,
+                replaceSeparatorsInPayload,
+                targetNamespace,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<X12DelimiterOverrides>.Write(ModelReaderWriterOptions options)

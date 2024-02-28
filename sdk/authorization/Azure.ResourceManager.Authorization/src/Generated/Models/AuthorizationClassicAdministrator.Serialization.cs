@@ -101,9 +101,9 @@ namespace Azure.ResourceManager.Authorization.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> emailAddress = default;
-            Optional<string> role = default;
+            SystemData systemData = default;
+            string emailAddress = default;
+            string role = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AuthorizationClassicAdministrator(id, name, type, systemData.Value, emailAddress.Value, role.Value, serializedAdditionalRawData);
+            return new AuthorizationClassicAdministrator(
+                id,
+                name,
+                type,
+                systemData,
+                emailAddress,
+                role,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AuthorizationClassicAdministrator>.Write(ModelReaderWriterOptions options)

@@ -96,8 +96,8 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<bool> isTrusted = default;
+            SystemData systemData = default;
+            bool? isTrusted = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -153,7 +153,13 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementGatewayCertificateAuthorityData(id, name, type, systemData.Value, Optional.ToNullable(isTrusted), serializedAdditionalRawData);
+            return new ApiManagementGatewayCertificateAuthorityData(
+                id,
+                name,
+                type,
+                systemData,
+                isTrusted,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementGatewayCertificateAuthorityData>.Write(ModelReaderWriterOptions options)

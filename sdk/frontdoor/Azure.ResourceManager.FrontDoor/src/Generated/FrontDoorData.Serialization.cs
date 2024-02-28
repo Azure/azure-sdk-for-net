@@ -213,19 +213,19 @@ namespace Azure.ResourceManager.FrontDoor
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> friendlyName = default;
+            SystemData systemData = default;
+            string friendlyName = default;
             IList<RoutingRuleData> routingRules = default;
             IList<FrontDoorLoadBalancingSettingsData> loadBalancingSettings = default;
             IList<FrontDoorHealthProbeSettingsData> healthProbeSettings = default;
             IList<FrontDoorBackendPool> backendPools = default;
             IList<FrontendEndpointData> frontendEndpoints = default;
-            Optional<BackendPoolsSettings> backendPoolsSettings = default;
-            Optional<FrontDoorEnabledState> enabledState = default;
-            Optional<FrontDoorResourceState> resourceState = default;
-            Optional<string> provisioningState = default;
-            Optional<string> cname = default;
-            Optional<string> frontdoorId = default;
+            BackendPoolsSettings backendPoolsSettings = default;
+            FrontDoorEnabledState? enabledState = default;
+            FrontDoorResourceState? resourceState = default;
+            string provisioningState = default;
+            string cname = default;
+            string frontdoorId = default;
             IReadOnlyList<FrontDoorRulesEngineData> rulesEngines = default;
             IReadOnlyDictionary<string, string> extendedProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -438,7 +438,28 @@ namespace Azure.ResourceManager.FrontDoor
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, friendlyName.Value, routingRules ?? new ChangeTrackingList<RoutingRuleData>(), loadBalancingSettings ?? new ChangeTrackingList<FrontDoorLoadBalancingSettingsData>(), healthProbeSettings ?? new ChangeTrackingList<FrontDoorHealthProbeSettingsData>(), backendPools ?? new ChangeTrackingList<FrontDoorBackendPool>(), frontendEndpoints ?? new ChangeTrackingList<FrontendEndpointData>(), backendPoolsSettings.Value, Optional.ToNullable(enabledState), Optional.ToNullable(resourceState), provisioningState.Value, cname.Value, frontdoorId.Value, rulesEngines ?? new ChangeTrackingList<FrontDoorRulesEngineData>(), extendedProperties ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new FrontDoorData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                friendlyName,
+                routingRules ?? new ChangeTrackingList<RoutingRuleData>(),
+                loadBalancingSettings ?? new ChangeTrackingList<FrontDoorLoadBalancingSettingsData>(),
+                healthProbeSettings ?? new ChangeTrackingList<FrontDoorHealthProbeSettingsData>(),
+                backendPools ?? new ChangeTrackingList<FrontDoorBackendPool>(),
+                frontendEndpoints ?? new ChangeTrackingList<FrontendEndpointData>(),
+                backendPoolsSettings,
+                enabledState,
+                resourceState,
+                provisioningState,
+                cname,
+                frontdoorId,
+                rulesEngines ?? new ChangeTrackingList<FrontDoorRulesEngineData>(),
+                extendedProperties ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorData>.Write(ModelReaderWriterOptions options)

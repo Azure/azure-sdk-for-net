@@ -85,8 +85,8 @@ namespace Azure.ResourceManager.Redis.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<DateTimeOffset> timestamp = default;
+            string name = default;
+            DateTimeOffset? timestamp = default;
             IReadOnlyDictionary<string, string> upsellNotification = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Redis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RedisUpgradeNotification(name.Value, Optional.ToNullable(timestamp), upsellNotification ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new RedisUpgradeNotification(name, timestamp, upsellNotification ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RedisUpgradeNotification>.Write(ModelReaderWriterOptions options)

@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> errorCode = default;
-            Optional<string> errorMessage = default;
-            Optional<string> possibleCauses = default;
-            Optional<string> recommendedAction = default;
+            string errorCode = default;
+            string errorMessage = default;
+            string possibleCauses = default;
+            string recommendedAction = default;
             IReadOnlyDictionary<string, string> errorMessageParameters = default;
             IReadOnlyDictionary<string, string> errorTags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -170,7 +170,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageRcmLastAgentUpgradeErrorDetails(errorCode.Value, errorMessage.Value, possibleCauses.Value, recommendedAction.Value, errorMessageParameters ?? new ChangeTrackingDictionary<string, string>(), errorTags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new InMageRcmLastAgentUpgradeErrorDetails(
+                errorCode,
+                errorMessage,
+                possibleCauses,
+                recommendedAction,
+                errorMessageParameters ?? new ChangeTrackingDictionary<string, string>(),
+                errorTags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InMageRcmLastAgentUpgradeErrorDetails>.Write(ModelReaderWriterOptions options)

@@ -161,22 +161,22 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
             IDictionary<string, string> tags = default;
-            Optional<WritableSubResource> virtualWan = default;
-            Optional<DeviceProperties> deviceProperties = default;
-            Optional<string> ipAddress = default;
-            Optional<string> siteKey = default;
-            Optional<AddressSpace> addressSpace = default;
-            Optional<BgpSettings> bgpProperties = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<bool> isSecuritySite = default;
+            WritableSubResource virtualWan = default;
+            DeviceProperties deviceProperties = default;
+            string ipAddress = default;
+            string siteKey = default;
+            AddressSpace addressSpace = default;
+            BgpSettings bgpProperties = default;
+            NetworkProvisioningState? provisioningState = default;
+            bool? isSecuritySite = default;
             IList<VpnSiteLinkData> vpnSiteLinks = default;
-            Optional<O365PolicyProperties> o365Policy = default;
+            O365PolicyProperties o365Policy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -341,7 +341,24 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VpnSiteData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, Optional.ToNullable(etag), virtualWan, deviceProperties.Value, ipAddress.Value, siteKey.Value, addressSpace.Value, bgpProperties.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(isSecuritySite), vpnSiteLinks ?? new ChangeTrackingList<VpnSiteLinkData>(), o365Policy.Value);
+            return new VpnSiteData(
+                id,
+                name,
+                type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                etag,
+                virtualWan,
+                deviceProperties,
+                ipAddress,
+                siteKey,
+                addressSpace,
+                bgpProperties,
+                provisioningState,
+                isSecuritySite,
+                vpnSiteLinks ?? new ChangeTrackingList<VpnSiteLinkData>(),
+                o365Policy);
         }
 
         BinaryData IPersistableModel<VpnSiteData>.Write(ModelReaderWriterOptions options)

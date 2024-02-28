@@ -43,7 +43,24 @@ namespace Azure.ResourceManager.LargeInstance.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new LargeInstanceData(id, name, resourceType, systemData, hardwareProfile, storageProfile, osProfile, networkProfile, azureLargeInstanceId, powerState, proximityPlacementGroup, hwRevision, partnerNodeId, provisioningState, tags, location, serializedAdditionalRawData: null);
+            return new LargeInstanceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                hardwareProfile,
+                storageProfile,
+                osProfile,
+                networkProfile,
+                azureLargeInstanceId,
+                powerState,
+                proximityPlacementGroup,
+                hwRevision,
+                partnerNodeId,
+                provisioningState,
+                tags,
+                location,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LargeInstanceHardwareProfile"/>. </summary>
@@ -127,7 +144,16 @@ namespace Azure.ResourceManager.LargeInstance.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new LargeStorageInstanceData(id, name, resourceType, systemData, azureLargeStorageInstanceUniqueIdentifier, storageProperties, tags, location, serializedAdditionalRawData: null);
+            return new LargeStorageInstanceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                azureLargeStorageInstanceUniqueIdentifier,
+                storageProperties,
+                tags,
+                location,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LargeInstanceStorageProperties"/>. </summary>
@@ -141,7 +167,15 @@ namespace Azure.ResourceManager.LargeInstance.Models
         /// <returns> A new <see cref="Models.LargeInstanceStorageProperties"/> instance for mocking. </returns>
         public static LargeInstanceStorageProperties LargeInstanceStorageProperties(LargeInstanceProvisioningState? provisioningState = null, string offeringType = null, string storageType = null, string generation = null, LargeInstanceHardwareTypeName? hardwareType = null, string workloadType = null, LargeInstanceStorageBillingProperties storageBillingProperties = null)
         {
-            return new LargeInstanceStorageProperties(provisioningState, offeringType, storageType, generation, hardwareType, workloadType, storageBillingProperties, serializedAdditionalRawData: null);
+            return new LargeInstanceStorageProperties(
+                provisioningState,
+                offeringType,
+                storageType,
+                generation,
+                hardwareType,
+                workloadType,
+                storageBillingProperties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LargeInstanceStorageBillingProperties"/>. </summary>
@@ -168,7 +202,17 @@ namespace Azure.ResourceManager.LargeInstance.Models
         {
             operations ??= new List<LargeInstanceOperationStatusResult>();
 
-            return new LargeInstanceOperationStatusResult(id, resourceId, name, status, percentComplete, startOn, endOn, operations?.ToList(), error, serializedAdditionalRawData: null);
+            return new LargeInstanceOperationStatusResult(
+                id,
+                resourceId,
+                name,
+                status,
+                percentComplete,
+                startOn,
+                endOn,
+                operations?.ToList(),
+                error,
+                serializedAdditionalRawData: null);
         }
     }
 }

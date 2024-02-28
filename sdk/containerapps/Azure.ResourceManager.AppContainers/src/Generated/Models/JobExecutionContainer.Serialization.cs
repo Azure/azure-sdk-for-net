@@ -109,12 +109,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> image = default;
-            Optional<string> name = default;
+            string image = default;
+            string name = default;
             IList<string> command = default;
             IList<string> args = default;
             IList<ContainerAppEnvironmentVariable> env = default;
-            Optional<AppContainerResources> resources = default;
+            AppContainerResources resources = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -186,7 +186,14 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JobExecutionContainer(image.Value, name.Value, command ?? new ChangeTrackingList<string>(), args ?? new ChangeTrackingList<string>(), env ?? new ChangeTrackingList<ContainerAppEnvironmentVariable>(), resources.Value, serializedAdditionalRawData);
+            return new JobExecutionContainer(
+                image,
+                name,
+                command ?? new ChangeTrackingList<string>(),
+                args ?? new ChangeTrackingList<string>(),
+                env ?? new ChangeTrackingList<ContainerAppEnvironmentVariable>(),
+                resources,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<JobExecutionContainer>.Write(ModelReaderWriterOptions options)

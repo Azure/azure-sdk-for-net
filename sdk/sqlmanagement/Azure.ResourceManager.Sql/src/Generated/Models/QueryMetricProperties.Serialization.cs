@@ -109,15 +109,15 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> displayName = default;
-            Optional<QueryMetricUnitType> unit = default;
-            Optional<double> value = default;
-            Optional<double> min = default;
-            Optional<double> max = default;
-            Optional<double> avg = default;
-            Optional<double> sum = default;
-            Optional<double> stdev = default;
+            string name = default;
+            string displayName = default;
+            QueryMetricUnitType? unit = default;
+            double? value = default;
+            double? min = default;
+            double? max = default;
+            double? avg = default;
+            double? sum = default;
+            double? stdev = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -201,7 +201,17 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QueryMetricProperties(name.Value, displayName.Value, Optional.ToNullable(unit), Optional.ToNullable(value), Optional.ToNullable(min), Optional.ToNullable(max), Optional.ToNullable(avg), Optional.ToNullable(sum), Optional.ToNullable(stdev), serializedAdditionalRawData);
+            return new QueryMetricProperties(
+                name,
+                displayName,
+                unit,
+                value,
+                min,
+                max,
+                avg,
+                sum,
+                stdev,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QueryMetricProperties>.Write(ModelReaderWriterOptions options)

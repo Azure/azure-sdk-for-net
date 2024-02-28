@@ -116,17 +116,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> sourceResourceId = default;
-            Optional<DateTimeOffset> lastUpdatedTime = default;
-            Optional<WorkloadContainerExtendedInfo> extendedInfo = default;
-            Optional<BackupWorkloadType> workloadType = default;
-            Optional<WorkloadOperationType> operationType = default;
-            Optional<string> friendlyName = default;
-            Optional<BackupManagementType> backupManagementType = default;
-            Optional<string> registrationStatus = default;
-            Optional<string> healthStatus = default;
+            ResourceIdentifier sourceResourceId = default;
+            DateTimeOffset? lastUpdatedTime = default;
+            WorkloadContainerExtendedInfo extendedInfo = default;
+            BackupWorkloadType? workloadType = default;
+            WorkloadOperationType? operationType = default;
+            string friendlyName = default;
+            BackupManagementType? backupManagementType = default;
+            string registrationStatus = default;
+            string healthStatus = default;
             ProtectableContainerType containerType = default;
-            Optional<string> protectableObjectType = default;
+            string protectableObjectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -216,7 +216,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlAvailabilityGroupWorkloadProtectionContainer(friendlyName.Value, Optional.ToNullable(backupManagementType), registrationStatus.Value, healthStatus.Value, containerType, protectableObjectType.Value, serializedAdditionalRawData, sourceResourceId.Value, Optional.ToNullable(lastUpdatedTime), extendedInfo.Value, Optional.ToNullable(workloadType), Optional.ToNullable(operationType));
+            return new SqlAvailabilityGroupWorkloadProtectionContainer(
+                friendlyName,
+                backupManagementType,
+                registrationStatus,
+                healthStatus,
+                containerType,
+                protectableObjectType,
+                serializedAdditionalRawData,
+                sourceResourceId,
+                lastUpdatedTime,
+                extendedInfo,
+                workloadType,
+                operationType);
         }
 
         BinaryData IPersistableModel<SqlAvailabilityGroupWorkloadProtectionContainer>.Write(ModelReaderWriterOptions options)

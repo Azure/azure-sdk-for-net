@@ -98,12 +98,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<WorkspaceConnectionAccessKey> credentials = default;
+            WorkspaceConnectionAccessKey credentials = default;
             MachineLearningConnectionAuthType authType = default;
-            Optional<MachineLearningConnectionCategory> category = default;
-            Optional<DateTimeOffset> expiryTime = default;
-            Optional<BinaryData> metadata = default;
-            Optional<string> target = default;
+            MachineLearningConnectionCategory? category = default;
+            DateTimeOffset? expiryTime = default;
+            BinaryData metadata = default;
+            string target = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AccessKeyAuthTypeWorkspaceConnectionProperties(authType, Optional.ToNullable(category), Optional.ToNullable(expiryTime), metadata.Value, target.Value, serializedAdditionalRawData, credentials.Value);
+            return new AccessKeyAuthTypeWorkspaceConnectionProperties(
+                authType,
+                category,
+                expiryTime,
+                metadata,
+                target,
+                serializedAdditionalRawData,
+                credentials);
         }
 
         BinaryData IPersistableModel<AccessKeyAuthTypeWorkspaceConnectionProperties>.Write(ModelReaderWriterOptions options)

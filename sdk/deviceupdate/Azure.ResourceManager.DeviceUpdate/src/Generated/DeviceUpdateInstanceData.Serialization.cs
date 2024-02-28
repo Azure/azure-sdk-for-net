@@ -137,12 +137,12 @@ namespace Azure.ResourceManager.DeviceUpdate
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DeviceUpdateProvisioningState> provisioningState = default;
-            Optional<string> accountName = default;
+            SystemData systemData = default;
+            DeviceUpdateProvisioningState? provisioningState = default;
+            string accountName = default;
             IList<DeviceUpdateIotHubSettings> iotHubs = default;
-            Optional<bool> enableDiagnostics = default;
-            Optional<DiagnosticStorageProperties> diagnosticStorageProperties = default;
+            bool? enableDiagnostics = default;
+            DiagnosticStorageProperties diagnosticStorageProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -254,7 +254,19 @@ namespace Azure.ResourceManager.DeviceUpdate
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeviceUpdateInstanceData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(provisioningState), accountName.Value, iotHubs ?? new ChangeTrackingList<DeviceUpdateIotHubSettings>(), Optional.ToNullable(enableDiagnostics), diagnosticStorageProperties.Value, serializedAdditionalRawData);
+            return new DeviceUpdateInstanceData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                provisioningState,
+                accountName,
+                iotHubs ?? new ChangeTrackingList<DeviceUpdateIotHubSettings>(),
+                enableDiagnostics,
+                diagnosticStorageProperties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeviceUpdateInstanceData>.Write(ModelReaderWriterOptions options)

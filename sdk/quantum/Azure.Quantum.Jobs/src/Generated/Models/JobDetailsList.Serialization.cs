@@ -20,8 +20,8 @@ namespace Azure.Quantum.Jobs.Models
                 return null;
             }
             IReadOnlyList<JobDetails> value = default;
-            Optional<long> count = default;
-            Optional<string> nextLink = default;
+            long? count = default;
+            string nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -53,7 +53,7 @@ namespace Azure.Quantum.Jobs.Models
                     continue;
                 }
             }
-            return new JobDetailsList(value ?? new ChangeTrackingList<JobDetails>(), Optional.ToNullable(count), nextLink.Value);
+            return new JobDetailsList(value ?? new ChangeTrackingList<JobDetails>(), count, nextLink);
         }
     }
 }

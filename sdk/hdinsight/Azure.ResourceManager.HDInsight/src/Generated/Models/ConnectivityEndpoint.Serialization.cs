@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> protocol = default;
-            Optional<string> location = default;
-            Optional<int> port = default;
-            Optional<IPAddress> privateIPAddress = default;
+            string name = default;
+            string protocol = default;
+            string location = default;
+            int? port = default;
+            IPAddress privateIPAddress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,7 +138,13 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectivityEndpoint(name.Value, protocol.Value, location.Value, Optional.ToNullable(port), privateIPAddress.Value, serializedAdditionalRawData);
+            return new ConnectivityEndpoint(
+                name,
+                protocol,
+                location,
+                port,
+                privateIPAddress,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectivityEndpoint>.Write(ModelReaderWriterOptions options)

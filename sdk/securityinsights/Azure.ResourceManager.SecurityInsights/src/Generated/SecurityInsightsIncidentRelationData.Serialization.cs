@@ -114,15 +114,15 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> relatedResourceId = default;
-            Optional<string> relatedResourceName = default;
-            Optional<ResourceType> relatedResourceType = default;
-            Optional<string> relatedResourceKind = default;
+            SystemData systemData = default;
+            ResourceIdentifier relatedResourceId = default;
+            string relatedResourceName = default;
+            ResourceType? relatedResourceType = default;
+            string relatedResourceKind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -206,7 +206,17 @@ namespace Azure.ResourceManager.SecurityInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsIncidentRelationData(id, name, type, systemData.Value, relatedResourceId.Value, relatedResourceName.Value, Optional.ToNullable(relatedResourceType), relatedResourceKind.Value, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new SecurityInsightsIncidentRelationData(
+                id,
+                name,
+                type,
+                systemData,
+                relatedResourceId,
+                relatedResourceName,
+                relatedResourceType,
+                relatedResourceKind,
+                etag,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityInsightsIncidentRelationData>.Write(ModelReaderWriterOptions options)

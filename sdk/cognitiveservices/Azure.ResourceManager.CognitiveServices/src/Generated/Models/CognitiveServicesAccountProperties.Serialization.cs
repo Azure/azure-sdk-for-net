@@ -231,33 +231,33 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<ServiceAccountProvisioningState> provisioningState = default;
-            Optional<string> endpoint = default;
+            ServiceAccountProvisioningState? provisioningState = default;
+            string endpoint = default;
             IReadOnlyList<CognitiveServicesSkuCapability> capabilities = default;
-            Optional<bool> isMigrated = default;
-            Optional<string> migrationToken = default;
-            Optional<CognitiveServicesSkuChangeInfo> skuChangeInfo = default;
-            Optional<string> customSubDomainName = default;
-            Optional<CognitiveServicesNetworkRuleSet> networkAcls = default;
-            Optional<ServiceAccountEncryptionProperties> encryption = default;
+            bool? isMigrated = default;
+            string migrationToken = default;
+            CognitiveServicesSkuChangeInfo skuChangeInfo = default;
+            string customSubDomainName = default;
+            CognitiveServicesNetworkRuleSet networkAcls = default;
+            ServiceAccountEncryptionProperties encryption = default;
             IList<ServiceAccountUserOwnedStorage> userOwnedStorage = default;
             IReadOnlyList<CognitiveServicesPrivateEndpointConnectionData> privateEndpointConnections = default;
-            Optional<ServiceAccountPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<ServiceAccountApiProperties> apiProperties = default;
-            Optional<DateTimeOffset> dateCreated = default;
-            Optional<ServiceAccountCallRateLimit> callRateLimit = default;
-            Optional<bool> dynamicThrottlingEnabled = default;
-            Optional<ServiceAccountQuotaLimit> quotaLimit = default;
-            Optional<bool> restrictOutboundNetworkAccess = default;
+            ServiceAccountPublicNetworkAccess? publicNetworkAccess = default;
+            ServiceAccountApiProperties apiProperties = default;
+            DateTimeOffset? dateCreated = default;
+            ServiceAccountCallRateLimit callRateLimit = default;
+            bool? dynamicThrottlingEnabled = default;
+            ServiceAccountQuotaLimit quotaLimit = default;
+            bool? restrictOutboundNetworkAccess = default;
             IList<string> allowedFqdnList = default;
-            Optional<bool> disableLocalAuth = default;
+            bool? disableLocalAuth = default;
             IReadOnlyDictionary<string, string> endpoints = default;
-            Optional<bool> restore = default;
-            Optional<DateTimeOffset> deletionDate = default;
-            Optional<string> scheduledPurgeDate = default;
-            Optional<CognitiveServicesMultiRegionSettings> locations = default;
+            bool? restore = default;
+            DateTimeOffset? deletionDate = default;
+            string scheduledPurgeDate = default;
+            CognitiveServicesMultiRegionSettings locations = default;
             IReadOnlyList<CommitmentPlanAssociation> commitmentPlanAssociations = default;
-            Optional<AbusePenalty> abusePenalty = default;
+            AbusePenalty abusePenalty = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -525,7 +525,35 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CognitiveServicesAccountProperties(Optional.ToNullable(provisioningState), endpoint.Value, capabilities ?? new ChangeTrackingList<CognitiveServicesSkuCapability>(), Optional.ToNullable(isMigrated), migrationToken.Value, skuChangeInfo.Value, customSubDomainName.Value, networkAcls.Value, encryption.Value, userOwnedStorage ?? new ChangeTrackingList<ServiceAccountUserOwnedStorage>(), privateEndpointConnections ?? new ChangeTrackingList<CognitiveServicesPrivateEndpointConnectionData>(), Optional.ToNullable(publicNetworkAccess), apiProperties.Value, Optional.ToNullable(dateCreated), callRateLimit.Value, Optional.ToNullable(dynamicThrottlingEnabled), quotaLimit.Value, Optional.ToNullable(restrictOutboundNetworkAccess), allowedFqdnList ?? new ChangeTrackingList<string>(), Optional.ToNullable(disableLocalAuth), endpoints ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(restore), Optional.ToNullable(deletionDate), scheduledPurgeDate.Value, locations.Value, commitmentPlanAssociations ?? new ChangeTrackingList<CommitmentPlanAssociation>(), abusePenalty.Value, serializedAdditionalRawData);
+            return new CognitiveServicesAccountProperties(
+                provisioningState,
+                endpoint,
+                capabilities ?? new ChangeTrackingList<CognitiveServicesSkuCapability>(),
+                isMigrated,
+                migrationToken,
+                skuChangeInfo,
+                customSubDomainName,
+                networkAcls,
+                encryption,
+                userOwnedStorage ?? new ChangeTrackingList<ServiceAccountUserOwnedStorage>(),
+                privateEndpointConnections ?? new ChangeTrackingList<CognitiveServicesPrivateEndpointConnectionData>(),
+                publicNetworkAccess,
+                apiProperties,
+                dateCreated,
+                callRateLimit,
+                dynamicThrottlingEnabled,
+                quotaLimit,
+                restrictOutboundNetworkAccess,
+                allowedFqdnList ?? new ChangeTrackingList<string>(),
+                disableLocalAuth,
+                endpoints ?? new ChangeTrackingDictionary<string, string>(),
+                restore,
+                deletionDate,
+                scheduledPurgeDate,
+                locations,
+                commitmentPlanAssociations ?? new ChangeTrackingList<CommitmentPlanAssociation>(),
+                abusePenalty,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CognitiveServicesAccountProperties>.Write(ModelReaderWriterOptions options)

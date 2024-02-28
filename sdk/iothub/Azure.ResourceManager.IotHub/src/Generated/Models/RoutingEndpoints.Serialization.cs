@@ -199,7 +199,13 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoutingEndpoints(serviceBusQueues ?? new ChangeTrackingList<RoutingServiceBusQueueEndpointProperties>(), serviceBusTopics ?? new ChangeTrackingList<RoutingServiceBusTopicEndpointProperties>(), eventHubs ?? new ChangeTrackingList<RoutingEventHubProperties>(), storageContainers ?? new ChangeTrackingList<RoutingStorageContainerProperties>(), cosmosDBSqlContainers ?? new ChangeTrackingList<RoutingCosmosDBSqlApiProperties>(), serializedAdditionalRawData);
+            return new RoutingEndpoints(
+                serviceBusQueues ?? new ChangeTrackingList<RoutingServiceBusQueueEndpointProperties>(),
+                serviceBusTopics ?? new ChangeTrackingList<RoutingServiceBusTopicEndpointProperties>(),
+                eventHubs ?? new ChangeTrackingList<RoutingEventHubProperties>(),
+                storageContainers ?? new ChangeTrackingList<RoutingStorageContainerProperties>(),
+                cosmosDBSqlContainers ?? new ChangeTrackingList<RoutingCosmosDBSqlApiProperties>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoutingEndpoints>.Write(ModelReaderWriterOptions options)

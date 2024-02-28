@@ -121,21 +121,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
             IDictionary<string, ParameterSpecification> parameters = default;
             IList<object> annotations = default;
             object server = default;
             object systemNumber = default;
             object clientId = default;
-            Optional<object> language = default;
-            Optional<object> systemId = default;
-            Optional<object> userName = default;
-            Optional<SecretBase> password = default;
-            Optional<object> messageServer = default;
-            Optional<object> messageServerService = default;
-            Optional<object> logonGroup = default;
-            Optional<object> encryptedCredential = default;
+            object language = default;
+            object systemId = default;
+            object userName = default;
+            SecretBase password = default;
+            object messageServer = default;
+            object messageServerService = default;
+            object logonGroup = default;
+            object encryptedCredential = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -296,7 +296,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SapOpenHubLinkedService(type, connectVia.Value, description.Value, parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(), annotations ?? new ChangeTrackingList<object>(), additionalProperties, server, systemNumber, clientId, language.Value, systemId.Value, userName.Value, password.Value, messageServer.Value, messageServerService.Value, logonGroup.Value, encryptedCredential.Value);
+            return new SapOpenHubLinkedService(
+                type,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                server,
+                systemNumber,
+                clientId,
+                language,
+                systemId,
+                userName,
+                password,
+                messageServer,
+                messageServerService,
+                logonGroup,
+                encryptedCredential);
         }
 
         internal partial class SapOpenHubLinkedServiceConverter : JsonConverter<SapOpenHubLinkedService>

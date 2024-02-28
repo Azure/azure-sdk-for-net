@@ -159,15 +159,15 @@ namespace Azure.ResourceManager.StoragePool
             {
                 return null;
             }
-            Optional<StoragePoolSku> sku = default;
-            Optional<string> managedBy = default;
+            StoragePoolSku sku = default;
+            string managedBy = default;
             IReadOnlyList<string> managedByExtended = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             DiskPoolIscsiTargetProvisioningState provisioningState = default;
             IList<string> availabilityZones = default;
             StoragePoolOperationalStatus status = default;
@@ -320,7 +320,23 @@ namespace Azure.ResourceManager.StoragePool
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiskPoolData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, sku.Value, managedBy.Value, managedByExtended ?? new ChangeTrackingList<string>(), provisioningState, availabilityZones, status, disks ?? new ChangeTrackingList<WritableSubResource>(), subnetId, additionalCapabilities ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new DiskPoolData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku,
+                managedBy,
+                managedByExtended ?? new ChangeTrackingList<string>(),
+                provisioningState,
+                availabilityZones,
+                status,
+                disks ?? new ChangeTrackingList<WritableSubResource>(),
+                subnetId,
+                additionalCapabilities ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiskPoolData>.Write(ModelReaderWriterOptions options)

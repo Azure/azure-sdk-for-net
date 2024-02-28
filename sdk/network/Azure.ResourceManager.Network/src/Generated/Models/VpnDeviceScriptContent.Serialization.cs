@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> vendor = default;
-            Optional<string> deviceFamily = default;
-            Optional<string> firmwareVersion = default;
+            string vendor = default;
+            string deviceFamily = default;
+            string firmwareVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VpnDeviceScriptContent(vendor.Value, deviceFamily.Value, firmwareVersion.Value, serializedAdditionalRawData);
+            return new VpnDeviceScriptContent(vendor, deviceFamily, firmwareVersion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VpnDeviceScriptContent>.Write(ModelReaderWriterOptions options)

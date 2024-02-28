@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             IDictionary<string, string> columns = default;
-            Optional<string> dataContext = default;
+            string dataContext = default;
             MonitoringInputDataType inputDataType = default;
             JobInputType jobInputType = default;
             Uri uri = default;
@@ -155,7 +155,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FixedInputData(columns ?? new ChangeTrackingDictionary<string, string>(), dataContext.Value, inputDataType, jobInputType, uri, serializedAdditionalRawData);
+            return new FixedInputData(
+                columns ?? new ChangeTrackingDictionary<string, string>(),
+                dataContext,
+                inputDataType,
+                jobInputType,
+                uri,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FixedInputData>.Write(ModelReaderWriterOptions options)

@@ -108,10 +108,10 @@ namespace Azure.ResourceManager.Synapse
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IPAddress> endIPAddress = default;
-            Optional<SynapseProvisioningState> provisioningState = default;
-            Optional<IPAddress> startIPAddress = default;
+            SystemData systemData = default;
+            IPAddress endIPAddress = default;
+            SynapseProvisioningState? provisioningState = default;
+            IPAddress startIPAddress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -185,7 +185,15 @@ namespace Azure.ResourceManager.Synapse
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseIPFirewallRuleInfoData(id, name, type, systemData.Value, endIPAddress.Value, Optional.ToNullable(provisioningState), startIPAddress.Value, serializedAdditionalRawData);
+            return new SynapseIPFirewallRuleInfoData(
+                id,
+                name,
+                type,
+                systemData,
+                endIPAddress,
+                provisioningState,
+                startIPAddress,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseIPFirewallRuleInfoData>.Write(ModelReaderWriterOptions options)

@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.DataShare.Models
             {
                 return null;
             }
-            Optional<string> activationCode = default;
-            Optional<DateTimeOffset> activationExpirationDate = default;
-            Optional<string> email = default;
-            Optional<DataShareEmailRegistrationStatus> registrationStatus = default;
-            Optional<Guid> tenantId = default;
+            string activationCode = default;
+            DateTimeOffset? activationExpirationDate = default;
+            string email = default;
+            DataShareEmailRegistrationStatus? registrationStatus = default;
+            Guid? tenantId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataShareEmailRegistration(activationCode.Value, Optional.ToNullable(activationExpirationDate), email.Value, Optional.ToNullable(registrationStatus), Optional.ToNullable(tenantId), serializedAdditionalRawData);
+            return new DataShareEmailRegistration(
+                activationCode,
+                activationExpirationDate,
+                email,
+                registrationStatus,
+                tenantId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataShareEmailRegistration>.Write(ModelReaderWriterOptions options)

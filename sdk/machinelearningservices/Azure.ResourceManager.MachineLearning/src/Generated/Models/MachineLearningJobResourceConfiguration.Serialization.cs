@@ -157,12 +157,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> dockerArgs = default;
-            Optional<string> shmSize = default;
-            Optional<int> instanceCount = default;
-            Optional<string> instanceType = default;
+            string dockerArgs = default;
+            string shmSize = default;
+            int? instanceCount = default;
+            string instanceType = default;
             IList<string> locations = default;
-            Optional<int?> maxInstanceCount = default;
+            int? maxInstanceCount = default;
             IDictionary<string, BinaryData> properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -255,7 +255,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningJobResourceConfiguration(Optional.ToNullable(instanceCount), instanceType.Value, locations ?? new ChangeTrackingList<string>(), Optional.ToNullable(maxInstanceCount), properties ?? new ChangeTrackingDictionary<string, BinaryData>(), serializedAdditionalRawData, dockerArgs.Value, shmSize.Value);
+            return new MachineLearningJobResourceConfiguration(
+                instanceCount,
+                instanceType,
+                locations ?? new ChangeTrackingList<string>(),
+                maxInstanceCount,
+                properties ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                serializedAdditionalRawData,
+                dockerArgs,
+                shmSize);
         }
 
         BinaryData IPersistableModel<MachineLearningJobResourceConfiguration>.Write(ModelReaderWriterOptions options)

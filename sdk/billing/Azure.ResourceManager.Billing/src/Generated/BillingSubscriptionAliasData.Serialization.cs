@@ -296,45 +296,45 @@ namespace Azure.ResourceManager.Billing
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<BillingSubscriptionAutoRenewState> autoRenew = default;
-            Optional<string> beneficiaryTenantId = default;
-            Optional<string> billingFrequency = default;
-            Optional<ResourceIdentifier> billingProfileId = default;
+            SystemData systemData = default;
+            BillingSubscriptionAutoRenewState? autoRenew = default;
+            string beneficiaryTenantId = default;
+            string billingFrequency = default;
+            ResourceIdentifier billingProfileId = default;
             IReadOnlyDictionary<string, string> billingPolicies = default;
-            Optional<string> billingProfileDisplayName = default;
-            Optional<string> billingProfileName = default;
-            Optional<string> consumptionCostCenter = default;
-            Optional<string> customerId = default;
-            Optional<string> customerDisplayName = default;
-            Optional<string> displayName = default;
-            Optional<string> enrollmentAccountId = default;
-            Optional<string> enrollmentAccountDisplayName = default;
-            Optional<ResourceIdentifier> invoiceSectionId = default;
-            Optional<string> invoiceSectionDisplayName = default;
-            Optional<string> invoiceSectionName = default;
-            Optional<BillingAmount> lastMonthCharges = default;
-            Optional<BillingAmount> monthToDateCharges = default;
-            Optional<NextBillingCycleDetails> nextBillingCycleDetails = default;
-            Optional<string> offerId = default;
-            Optional<string> productCategory = default;
-            Optional<string> productType = default;
-            Optional<string> productTypeId = default;
-            Optional<DateTimeOffset> purchaseDate = default;
-            Optional<long> quantity = default;
-            Optional<CreatedSubscriptionReseller> reseller = default;
-            Optional<SubscriptionRenewalTermDetails> renewalTermDetails = default;
-            Optional<string> skuDescription = default;
-            Optional<string> skuId = default;
-            Optional<BillingSubscriptionStatus> status = default;
-            Optional<string> subscriptionId = default;
+            string billingProfileDisplayName = default;
+            string billingProfileName = default;
+            string consumptionCostCenter = default;
+            string customerId = default;
+            string customerDisplayName = default;
+            string displayName = default;
+            string enrollmentAccountId = default;
+            string enrollmentAccountDisplayName = default;
+            ResourceIdentifier invoiceSectionId = default;
+            string invoiceSectionDisplayName = default;
+            string invoiceSectionName = default;
+            BillingAmount lastMonthCharges = default;
+            BillingAmount monthToDateCharges = default;
+            NextBillingCycleDetails nextBillingCycleDetails = default;
+            string offerId = default;
+            string productCategory = default;
+            string productType = default;
+            string productTypeId = default;
+            DateTimeOffset? purchaseDate = default;
+            long? quantity = default;
+            CreatedSubscriptionReseller reseller = default;
+            SubscriptionRenewalTermDetails renewalTermDetails = default;
+            string skuDescription = default;
+            string skuId = default;
+            BillingSubscriptionStatus? status = default;
+            string subscriptionId = default;
             IReadOnlyList<string> suspensionReasons = default;
-            Optional<TimeSpan> termDuration = default;
-            Optional<DateTimeOffset> termStartDate = default;
-            Optional<DateTimeOffset> termEndDate = default;
-            Optional<ResourceIdentifier> billingSubscriptionId = default;
-            Optional<SubscriptionEnrollmentAccountStatus> subscriptionEnrollmentAccountStatus = default;
-            Optional<DateTimeOffset> enrollmentAccountStartDate = default;
+            TimeSpan? termDuration = default;
+            DateTimeOffset? termStartDate = default;
+            DateTimeOffset? termEndDate = default;
+            ResourceIdentifier billingSubscriptionId = default;
+            SubscriptionEnrollmentAccountStatus? subscriptionEnrollmentAccountStatus = default;
+            DateTimeOffset? enrollmentAccountStartDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -669,7 +669,50 @@ namespace Azure.ResourceManager.Billing
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BillingSubscriptionAliasData(id, name, type, systemData.Value, Optional.ToNullable(autoRenew), beneficiaryTenantId.Value, billingFrequency.Value, billingProfileId.Value, billingPolicies ?? new ChangeTrackingDictionary<string, string>(), billingProfileDisplayName.Value, billingProfileName.Value, consumptionCostCenter.Value, customerId.Value, customerDisplayName.Value, displayName.Value, enrollmentAccountId.Value, enrollmentAccountDisplayName.Value, invoiceSectionId.Value, invoiceSectionDisplayName.Value, invoiceSectionName.Value, lastMonthCharges.Value, monthToDateCharges.Value, nextBillingCycleDetails.Value, offerId.Value, productCategory.Value, productType.Value, productTypeId.Value, Optional.ToNullable(purchaseDate), Optional.ToNullable(quantity), reseller.Value, renewalTermDetails.Value, skuDescription.Value, skuId.Value, Optional.ToNullable(status), subscriptionId.Value, suspensionReasons ?? new ChangeTrackingList<string>(), Optional.ToNullable(termDuration), Optional.ToNullable(termStartDate), Optional.ToNullable(termEndDate), Optional.ToNullable(subscriptionEnrollmentAccountStatus), Optional.ToNullable(enrollmentAccountStartDate), billingSubscriptionId.Value, serializedAdditionalRawData);
+            return new BillingSubscriptionAliasData(
+                id,
+                name,
+                type,
+                systemData,
+                autoRenew,
+                beneficiaryTenantId,
+                billingFrequency,
+                billingProfileId,
+                billingPolicies ?? new ChangeTrackingDictionary<string, string>(),
+                billingProfileDisplayName,
+                billingProfileName,
+                consumptionCostCenter,
+                customerId,
+                customerDisplayName,
+                displayName,
+                enrollmentAccountId,
+                enrollmentAccountDisplayName,
+                invoiceSectionId,
+                invoiceSectionDisplayName,
+                invoiceSectionName,
+                lastMonthCharges,
+                monthToDateCharges,
+                nextBillingCycleDetails,
+                offerId,
+                productCategory,
+                productType,
+                productTypeId,
+                purchaseDate,
+                quantity,
+                reseller,
+                renewalTermDetails,
+                skuDescription,
+                skuId,
+                status,
+                subscriptionId,
+                suspensionReasons ?? new ChangeTrackingList<string>(),
+                termDuration,
+                termStartDate,
+                termEndDate,
+                subscriptionEnrollmentAccountStatus,
+                enrollmentAccountStartDate,
+                billingSubscriptionId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BillingSubscriptionAliasData>.Write(ModelReaderWriterOptions options)

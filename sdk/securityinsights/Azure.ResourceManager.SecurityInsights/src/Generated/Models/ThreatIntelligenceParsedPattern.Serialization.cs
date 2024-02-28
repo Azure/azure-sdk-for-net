@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<string> patternTypeKey = default;
+            string patternTypeKey = default;
             IList<ThreatIntelligenceParsedPatternTypeValue> patternTypeValues = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ThreatIntelligenceParsedPattern(patternTypeKey.Value, patternTypeValues ?? new ChangeTrackingList<ThreatIntelligenceParsedPatternTypeValue>(), serializedAdditionalRawData);
+            return new ThreatIntelligenceParsedPattern(patternTypeKey, patternTypeValues ?? new ChangeTrackingList<ThreatIntelligenceParsedPatternTypeValue>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ThreatIntelligenceParsedPattern>.Write(ModelReaderWriterOptions options)

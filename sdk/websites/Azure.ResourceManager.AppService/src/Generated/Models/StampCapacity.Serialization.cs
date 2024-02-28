@@ -119,17 +119,17 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<long> availableCapacity = default;
-            Optional<long> totalCapacity = default;
-            Optional<string> unit = default;
-            Optional<ComputeModeOption> computeMode = default;
-            Optional<WorkerSizeOption> workerSize = default;
-            Optional<int> workerSizeId = default;
-            Optional<bool> excludeFromCapacityAllocation = default;
-            Optional<bool> isApplicableForAllComputeModes = default;
-            Optional<string> siteMode = default;
-            Optional<bool> isLinux = default;
+            string name = default;
+            long? availableCapacity = default;
+            long? totalCapacity = default;
+            string unit = default;
+            ComputeModeOption? computeMode = default;
+            WorkerSizeOption? workerSize = default;
+            int? workerSizeId = default;
+            bool? excludeFromCapacityAllocation = default;
+            bool? isApplicableForAllComputeModes = default;
+            string siteMode = default;
+            bool? isLinux = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -227,7 +227,19 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StampCapacity(name.Value, Optional.ToNullable(availableCapacity), Optional.ToNullable(totalCapacity), unit.Value, Optional.ToNullable(computeMode), Optional.ToNullable(workerSize), Optional.ToNullable(workerSizeId), Optional.ToNullable(excludeFromCapacityAllocation), Optional.ToNullable(isApplicableForAllComputeModes), siteMode.Value, Optional.ToNullable(isLinux), serializedAdditionalRawData);
+            return new StampCapacity(
+                name,
+                availableCapacity,
+                totalCapacity,
+                unit,
+                computeMode,
+                workerSize,
+                workerSizeId,
+                excludeFromCapacityAllocation,
+                isApplicableForAllComputeModes,
+                siteMode,
+                isLinux,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StampCapacity>.Write(ModelReaderWriterOptions options)

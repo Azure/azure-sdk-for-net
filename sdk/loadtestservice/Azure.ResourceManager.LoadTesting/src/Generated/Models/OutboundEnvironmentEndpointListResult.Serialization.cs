@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 return null;
             }
             IReadOnlyList<LoadTestingOutboundEnvironmentEndpoint> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OutboundEnvironmentEndpointListResult(value ?? new ChangeTrackingList<LoadTestingOutboundEnvironmentEndpoint>(), nextLink.Value, serializedAdditionalRawData);
+            return new OutboundEnvironmentEndpointListResult(value ?? new ChangeTrackingList<LoadTestingOutboundEnvironmentEndpoint>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OutboundEnvironmentEndpointListResult>.Write(ModelReaderWriterOptions options)

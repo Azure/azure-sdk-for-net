@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> accessRulesVersion = default;
+            string name = default;
+            string accessRulesVersion = default;
             IList<NetworkSecurityPerimeterProfileAccessRule> accessRules = default;
-            Optional<string> diagnosticSettingsVersion = default;
+            string diagnosticSettingsVersion = default;
             IList<string> enabledLogCategories = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -157,7 +157,13 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkSecurityPerimeterConfigurationProfile(name.Value, accessRulesVersion.Value, accessRules ?? new ChangeTrackingList<NetworkSecurityPerimeterProfileAccessRule>(), diagnosticSettingsVersion.Value, enabledLogCategories ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new NetworkSecurityPerimeterConfigurationProfile(
+                name,
+                accessRulesVersion,
+                accessRules ?? new ChangeTrackingList<NetworkSecurityPerimeterProfileAccessRule>(),
+                diagnosticSettingsVersion,
+                enabledLogCategories ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkSecurityPerimeterConfigurationProfile>.Write(ModelReaderWriterOptions options)

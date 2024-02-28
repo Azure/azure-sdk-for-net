@@ -104,14 +104,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<long> rxBytes = default;
-            Optional<long> rxPackets = default;
-            Optional<long> rxErrors = default;
-            Optional<long> rxDropped = default;
-            Optional<long> txBytes = default;
-            Optional<long> txPackets = default;
-            Optional<long> txErrors = default;
-            Optional<long> txDropped = default;
+            long? rxBytes = default;
+            long? rxPackets = default;
+            long? rxErrors = default;
+            long? rxDropped = default;
+            long? txBytes = default;
+            long? txPackets = default;
+            long? txErrors = default;
+            long? txDropped = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -194,7 +194,16 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerNetworkInterfaceStatistics(Optional.ToNullable(rxBytes), Optional.ToNullable(rxPackets), Optional.ToNullable(rxErrors), Optional.ToNullable(rxDropped), Optional.ToNullable(txBytes), Optional.ToNullable(txPackets), Optional.ToNullable(txErrors), Optional.ToNullable(txDropped), serializedAdditionalRawData);
+            return new ContainerNetworkInterfaceStatistics(
+                rxBytes,
+                rxPackets,
+                rxErrors,
+                rxDropped,
+                txBytes,
+                txPackets,
+                txErrors,
+                txDropped,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerNetworkInterfaceStatistics>.Write(ModelReaderWriterOptions options)

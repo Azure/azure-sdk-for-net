@@ -162,16 +162,16 @@ namespace Azure.ResourceManager.CosmosDB
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<CosmosDBAccountCreateMode> createMode = default;
-            Optional<MongoClusterRestoreParameters> restoreParameters = default;
-            Optional<string> administratorLogin = default;
-            Optional<string> administratorLoginPassword = default;
-            Optional<string> serverVersion = default;
-            Optional<string> connectionString = default;
-            Optional<string> earliestRestoreTime = default;
-            Optional<CosmosDBProvisioningState> provisioningState = default;
-            Optional<MongoClusterStatus> clusterStatus = default;
+            SystemData systemData = default;
+            CosmosDBAccountCreateMode? createMode = default;
+            MongoClusterRestoreParameters restoreParameters = default;
+            string administratorLogin = default;
+            string administratorLoginPassword = default;
+            string serverVersion = default;
+            string connectionString = default;
+            string earliestRestoreTime = default;
+            CosmosDBProvisioningState? provisioningState = default;
+            MongoClusterStatus? clusterStatus = default;
             IList<NodeGroupSpec> nodeGroupSpecs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -313,7 +313,24 @@ namespace Azure.ResourceManager.CosmosDB
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MongoClusterData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(createMode), restoreParameters.Value, administratorLogin.Value, administratorLoginPassword.Value, serverVersion.Value, connectionString.Value, earliestRestoreTime.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(clusterStatus), nodeGroupSpecs ?? new ChangeTrackingList<NodeGroupSpec>(), serializedAdditionalRawData);
+            return new MongoClusterData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                createMode,
+                restoreParameters,
+                administratorLogin,
+                administratorLoginPassword,
+                serverVersion,
+                connectionString,
+                earliestRestoreTime,
+                provisioningState,
+                clusterStatus,
+                nodeGroupSpecs ?? new ChangeTrackingList<NodeGroupSpec>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MongoClusterData>.Write(ModelReaderWriterOptions options)

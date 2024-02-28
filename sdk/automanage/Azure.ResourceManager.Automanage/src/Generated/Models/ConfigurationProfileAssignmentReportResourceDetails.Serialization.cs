@@ -96,12 +96,12 @@ namespace Azure.ResourceManager.Automanage.Models
             {
                 return null;
             }
-            Optional<string> status = default;
-            Optional<ResponseError> error = default;
+            string status = default;
+            ResponseError error = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,7 +150,14 @@ namespace Azure.ResourceManager.Automanage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConfigurationProfileAssignmentReportResourceDetails(id, name, type, systemData.Value, status.Value, error.Value, serializedAdditionalRawData);
+            return new ConfigurationProfileAssignmentReportResourceDetails(
+                id,
+                name,
+                type,
+                systemData,
+                status,
+                error,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConfigurationProfileAssignmentReportResourceDetails>.Write(ModelReaderWriterOptions options)

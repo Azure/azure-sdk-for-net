@@ -119,14 +119,14 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<Guid> sessionId = default;
-            Optional<PurchasePrice> netPayable = default;
-            Optional<PurchasePrice> refundsTotal = default;
-            Optional<PurchasePrice> purchasesTotal = default;
+            Guid? sessionId = default;
+            PurchasePrice netPayable = default;
+            PurchasePrice refundsTotal = default;
+            PurchasePrice purchasesTotal = default;
             IReadOnlyList<ReservationToPurchaseCalculateExchange> reservationsToPurchase = default;
             IReadOnlyList<SavingsPlanToPurchaseCalculateExchange> savingsPlansToPurchase = default;
             IReadOnlyList<ReservationToExchange> reservationsToExchange = default;
-            Optional<ExchangePolicyErrors> policyResult = default;
+            ExchangePolicyErrors policyResult = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -224,7 +224,16 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CalculateExchangeResultProperties(Optional.ToNullable(sessionId), netPayable.Value, refundsTotal.Value, purchasesTotal.Value, reservationsToPurchase ?? new ChangeTrackingList<ReservationToPurchaseCalculateExchange>(), savingsPlansToPurchase ?? new ChangeTrackingList<SavingsPlanToPurchaseCalculateExchange>(), reservationsToExchange ?? new ChangeTrackingList<ReservationToExchange>(), policyResult.Value, serializedAdditionalRawData);
+            return new CalculateExchangeResultProperties(
+                sessionId,
+                netPayable,
+                refundsTotal,
+                purchasesTotal,
+                reservationsToPurchase ?? new ChangeTrackingList<ReservationToPurchaseCalculateExchange>(),
+                savingsPlansToPurchase ?? new ChangeTrackingList<SavingsPlanToPurchaseCalculateExchange>(),
+                reservationsToExchange ?? new ChangeTrackingList<ReservationToExchange>(),
+                policyResult,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CalculateExchangeResultProperties>.Write(ModelReaderWriterOptions options)

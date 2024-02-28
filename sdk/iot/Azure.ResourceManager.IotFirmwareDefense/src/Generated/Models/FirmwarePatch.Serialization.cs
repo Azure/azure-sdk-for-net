@@ -136,15 +136,15 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            Optional<string> fileName = default;
-            Optional<string> vendor = default;
-            Optional<string> model = default;
-            Optional<string> version = default;
-            Optional<string> description = default;
-            Optional<long?> fileSize = default;
-            Optional<Status> status = default;
+            string fileName = default;
+            string vendor = default;
+            string model = default;
+            string version = default;
+            string description = default;
+            long? fileSize = default;
+            Status? status = default;
             IList<BinaryData> statusMessages = default;
-            Optional<ProvisioningState> provisioningState = default;
+            ProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -241,7 +241,17 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirmwarePatch(fileName.Value, vendor.Value, model.Value, version.Value, description.Value, Optional.ToNullable(fileSize), Optional.ToNullable(status), statusMessages ?? new ChangeTrackingList<BinaryData>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new FirmwarePatch(
+                fileName,
+                vendor,
+                model,
+                version,
+                description,
+                fileSize,
+                status,
+                statusMessages ?? new ChangeTrackingList<BinaryData>(),
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirmwarePatch>.Write(ModelReaderWriterOptions options)

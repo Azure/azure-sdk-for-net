@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Sql.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IList<SqlSynapseLinkWorkspaceInfo> workspaces = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -163,7 +163,13 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlSynapseLinkWorkspace(id, name, type, systemData.Value, workspaces ?? new ChangeTrackingList<SqlSynapseLinkWorkspaceInfo>(), serializedAdditionalRawData);
+            return new SqlSynapseLinkWorkspace(
+                id,
+                name,
+                type,
+                systemData,
+                workspaces ?? new ChangeTrackingList<SqlSynapseLinkWorkspaceInfo>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlSynapseLinkWorkspace>.Write(ModelReaderWriterOptions options)

@@ -144,20 +144,20 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<string> adapterId = default;
-            Optional<DataBoxEdgeNetworkAdapterPosition> adapterPosition = default;
-            Optional<int> index = default;
-            Optional<Guid> nodeId = default;
-            Optional<string> networkAdapterName = default;
-            Optional<string> label = default;
-            Optional<string> macAddress = default;
-            Optional<long> linkSpeed = default;
-            Optional<DataBoxEdgeNetworkAdapterStatus> status = default;
-            Optional<DataBoxEdgeNetworkAdapterRdmaStatus> rdmaStatus = default;
-            Optional<DataBoxEdgeNetworkAdapterDhcpStatus> dhcpStatus = default;
-            Optional<DataBoxEdgeIPv4Config> ipv4Configuration = default;
-            Optional<DataBoxEdgeIPv6Config> ipv6Configuration = default;
-            Optional<string> ipv6LinkLocalAddress = default;
+            string adapterId = default;
+            DataBoxEdgeNetworkAdapterPosition adapterPosition = default;
+            int? index = default;
+            Guid? nodeId = default;
+            string networkAdapterName = default;
+            string label = default;
+            string macAddress = default;
+            long? linkSpeed = default;
+            DataBoxEdgeNetworkAdapterStatus? status = default;
+            DataBoxEdgeNetworkAdapterRdmaStatus? rdmaStatus = default;
+            DataBoxEdgeNetworkAdapterDhcpStatus? dhcpStatus = default;
+            DataBoxEdgeIPv4Config ipv4Configuration = default;
+            DataBoxEdgeIPv6Config ipv6Configuration = default;
+            string ipv6LinkLocalAddress = default;
             IReadOnlyList<string> dnsServers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -289,7 +289,23 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeNetworkAdapter(adapterId.Value, adapterPosition.Value, Optional.ToNullable(index), Optional.ToNullable(nodeId), networkAdapterName.Value, label.Value, macAddress.Value, Optional.ToNullable(linkSpeed), Optional.ToNullable(status), Optional.ToNullable(rdmaStatus), Optional.ToNullable(dhcpStatus), ipv4Configuration.Value, ipv6Configuration.Value, ipv6LinkLocalAddress.Value, dnsServers ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new DataBoxEdgeNetworkAdapter(
+                adapterId,
+                adapterPosition,
+                index,
+                nodeId,
+                networkAdapterName,
+                label,
+                macAddress,
+                linkSpeed,
+                status,
+                rdmaStatus,
+                dhcpStatus,
+                ipv4Configuration,
+                ipv6Configuration,
+                ipv6LinkLocalAddress,
+                dnsServers ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeNetworkAdapter>.Write(ModelReaderWriterOptions options)

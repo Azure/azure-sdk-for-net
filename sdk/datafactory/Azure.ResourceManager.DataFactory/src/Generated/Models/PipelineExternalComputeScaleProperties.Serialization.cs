@@ -76,9 +76,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<int> timeToLive = default;
-            Optional<int> numberOfPipelineNodes = default;
-            Optional<int> numberOfExternalNodes = default;
+            int? timeToLive = default;
+            int? numberOfPipelineNodes = default;
+            int? numberOfExternalNodes = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new PipelineExternalComputeScaleProperties(Optional.ToNullable(timeToLive), Optional.ToNullable(numberOfPipelineNodes), Optional.ToNullable(numberOfExternalNodes), additionalProperties);
+            return new PipelineExternalComputeScaleProperties(timeToLive, numberOfPipelineNodes, numberOfExternalNodes, additionalProperties);
         }
 
         BinaryData IPersistableModel<PipelineExternalComputeScaleProperties>.Write(ModelReaderWriterOptions options)

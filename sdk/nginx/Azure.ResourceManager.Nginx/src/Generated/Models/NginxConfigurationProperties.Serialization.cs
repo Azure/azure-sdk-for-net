@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.Nginx.Models
             {
                 return null;
             }
-            Optional<NginxProvisioningState> provisioningState = default;
+            NginxProvisioningState? provisioningState = default;
             IList<NginxConfigurationFile> files = default;
             IList<NginxConfigurationFile> protectedFiles = default;
-            Optional<NginxConfigurationPackage> package = default;
-            Optional<string> rootFile = default;
+            NginxConfigurationPackage package = default;
+            string rootFile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,7 +165,13 @@ namespace Azure.ResourceManager.Nginx.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NginxConfigurationProperties(Optional.ToNullable(provisioningState), files ?? new ChangeTrackingList<NginxConfigurationFile>(), protectedFiles ?? new ChangeTrackingList<NginxConfigurationFile>(), package.Value, rootFile.Value, serializedAdditionalRawData);
+            return new NginxConfigurationProperties(
+                provisioningState,
+                files ?? new ChangeTrackingList<NginxConfigurationFile>(),
+                protectedFiles ?? new ChangeTrackingList<NginxConfigurationFile>(),
+                package,
+                rootFile,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NginxConfigurationProperties>.Write(ModelReaderWriterOptions options)

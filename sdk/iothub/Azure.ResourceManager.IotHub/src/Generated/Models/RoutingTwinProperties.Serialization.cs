@@ -88,8 +88,8 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<BinaryData> desired = default;
-            Optional<BinaryData> reported = default;
+            BinaryData desired = default;
+            BinaryData reported = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoutingTwinProperties(desired.Value, reported.Value, serializedAdditionalRawData);
+            return new RoutingTwinProperties(desired, reported, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoutingTwinProperties>.Write(ModelReaderWriterOptions options)

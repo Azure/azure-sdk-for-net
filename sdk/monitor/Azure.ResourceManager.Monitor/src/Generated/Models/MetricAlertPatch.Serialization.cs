@@ -154,19 +154,19 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<string> description = default;
-            Optional<int> severity = default;
-            Optional<bool> enabled = default;
+            string description = default;
+            int? severity = default;
+            bool? enabled = default;
             IList<string> scopes = default;
-            Optional<TimeSpan> evaluationFrequency = default;
-            Optional<TimeSpan> windowSize = default;
-            Optional<ResourceType> targetResourceType = default;
-            Optional<AzureLocation> targetResourceRegion = default;
-            Optional<MetricAlertCriteria> criteria = default;
-            Optional<bool> autoMitigate = default;
+            TimeSpan? evaluationFrequency = default;
+            TimeSpan? windowSize = default;
+            ResourceType? targetResourceType = default;
+            AzureLocation? targetResourceRegion = default;
+            MetricAlertCriteria criteria = default;
+            bool? autoMitigate = default;
             IList<MetricAlertAction> actions = default;
-            Optional<DateTimeOffset> lastUpdatedTime = default;
-            Optional<bool> isMigrated = default;
+            DateTimeOffset? lastUpdatedTime = default;
+            bool? isMigrated = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -326,7 +326,22 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MetricAlertPatch(tags ?? new ChangeTrackingDictionary<string, string>(), description.Value, Optional.ToNullable(severity), Optional.ToNullable(enabled), scopes ?? new ChangeTrackingList<string>(), Optional.ToNullable(evaluationFrequency), Optional.ToNullable(windowSize), Optional.ToNullable(targetResourceType), Optional.ToNullable(targetResourceRegion), criteria.Value, Optional.ToNullable(autoMitigate), actions ?? new ChangeTrackingList<MetricAlertAction>(), Optional.ToNullable(lastUpdatedTime), Optional.ToNullable(isMigrated), serializedAdditionalRawData);
+            return new MetricAlertPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                description,
+                severity,
+                enabled,
+                scopes ?? new ChangeTrackingList<string>(),
+                evaluationFrequency,
+                windowSize,
+                targetResourceType,
+                targetResourceRegion,
+                criteria,
+                autoMitigate,
+                actions ?? new ChangeTrackingList<MetricAlertAction>(),
+                lastUpdatedTime,
+                isMigrated,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MetricAlertPatch>.Write(ModelReaderWriterOptions options)

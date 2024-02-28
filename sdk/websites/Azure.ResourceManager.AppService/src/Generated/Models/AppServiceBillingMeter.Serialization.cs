@@ -123,17 +123,17 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> meterId = default;
-            Optional<AzureLocation> billingLocation = default;
-            Optional<string> shortName = default;
-            Optional<string> friendlyName = default;
-            Optional<string> osType = default;
-            Optional<double> multiplier = default;
+            SystemData systemData = default;
+            Guid? meterId = default;
+            AzureLocation? billingLocation = default;
+            string shortName = default;
+            string friendlyName = default;
+            string osType = default;
+            double? multiplier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -227,7 +227,19 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceBillingMeter(id, name, type, systemData.Value, Optional.ToNullable(meterId), Optional.ToNullable(billingLocation), shortName.Value, friendlyName.Value, osType.Value, Optional.ToNullable(multiplier), kind.Value, serializedAdditionalRawData);
+            return new AppServiceBillingMeter(
+                id,
+                name,
+                type,
+                systemData,
+                meterId,
+                billingLocation,
+                shortName,
+                friendlyName,
+                osType,
+                multiplier,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceBillingMeter>.Write(ModelReaderWriterOptions options)

@@ -124,16 +124,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> eventCode = default;
-            Optional<string> description = default;
-            Optional<string> eventType = default;
-            Optional<string> affectedObjectFriendlyName = default;
-            Optional<string> affectedObjectCorrelationId = default;
-            Optional<string> severity = default;
-            Optional<DateTimeOffset> timeOfOccurrence = default;
-            Optional<ResourceIdentifier> fabricId = default;
-            Optional<SiteRecoveryEventProviderSpecificDetails> providerSpecificDetails = default;
-            Optional<SiteRecoveryEventSpecificDetails> eventSpecificDetails = default;
+            string eventCode = default;
+            string description = default;
+            string eventType = default;
+            string affectedObjectFriendlyName = default;
+            string affectedObjectCorrelationId = default;
+            string severity = default;
+            DateTimeOffset? timeOfOccurrence = default;
+            ResourceIdentifier fabricId = default;
+            SiteRecoveryEventProviderSpecificDetails providerSpecificDetails = default;
+            SiteRecoveryEventSpecificDetails eventSpecificDetails = default;
             IReadOnlyList<SiteRecoveryHealthError> healthErrors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -225,7 +225,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryEventProperties(eventCode.Value, description.Value, eventType.Value, affectedObjectFriendlyName.Value, affectedObjectCorrelationId.Value, severity.Value, Optional.ToNullable(timeOfOccurrence), fabricId.Value, providerSpecificDetails.Value, eventSpecificDetails.Value, healthErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>(), serializedAdditionalRawData);
+            return new SiteRecoveryEventProperties(
+                eventCode,
+                description,
+                eventType,
+                affectedObjectFriendlyName,
+                affectedObjectCorrelationId,
+                severity,
+                timeOfOccurrence,
+                fabricId,
+                providerSpecificDetails,
+                eventSpecificDetails,
+                healthErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryEventProperties>.Write(ModelReaderWriterOptions options)

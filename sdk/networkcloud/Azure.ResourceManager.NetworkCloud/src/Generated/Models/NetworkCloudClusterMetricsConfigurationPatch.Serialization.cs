@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<long> collectionInterval = default;
+            long? collectionInterval = default;
             IList<string> enabledMetrics = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudClusterMetricsConfigurationPatch(tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(collectionInterval), enabledMetrics ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new NetworkCloudClusterMetricsConfigurationPatch(tags ?? new ChangeTrackingDictionary<string, string>(), collectionInterval, enabledMetrics ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudClusterMetricsConfigurationPatch>.Write(ModelReaderWriterOptions options)

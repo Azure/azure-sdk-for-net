@@ -123,9 +123,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> lastModifiedUtc = default;
-            Optional<string> version = default;
+            SystemData systemData = default;
+            DateTimeOffset? lastModifiedUtc = default;
+            string version = default;
             IDictionary<string, SensitivityLabel> labels = default;
             IDictionary<string, SecurityInformationTypeInfo> informationTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -216,7 +216,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InformationProtectionPolicy(id, name, type, systemData.Value, Optional.ToNullable(lastModifiedUtc), version.Value, labels ?? new ChangeTrackingDictionary<string, SensitivityLabel>(), informationTypes ?? new ChangeTrackingDictionary<string, SecurityInformationTypeInfo>(), serializedAdditionalRawData);
+            return new InformationProtectionPolicy(
+                id,
+                name,
+                type,
+                systemData,
+                lastModifiedUtc,
+                version,
+                labels ?? new ChangeTrackingDictionary<string, SensitivityLabel>(),
+                informationTypes ?? new ChangeTrackingDictionary<string, SecurityInformationTypeInfo>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InformationProtectionPolicy>.Write(ModelReaderWriterOptions options)

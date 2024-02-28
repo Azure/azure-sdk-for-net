@@ -190,26 +190,26 @@ namespace Azure.ResourceManager.Consumption.Models
                 return null;
             }
             ReservationRecommendationKind kind = default;
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             IReadOnlyDictionary<string, string> tags = default;
-            Optional<AzureLocation> location = default;
-            Optional<string> sku = default;
+            AzureLocation? location = default;
+            string sku = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> lookBackPeriod = default;
-            Optional<float> instanceFlexibilityRatio = default;
-            Optional<string> instanceFlexibilityGroup = default;
-            Optional<string> normalizedSize = default;
-            Optional<float> recommendedQuantityNormalized = default;
-            Optional<Guid> meterId = default;
-            Optional<string> term = default;
-            Optional<decimal> costWithNoReservedInstances = default;
-            Optional<decimal> recommendedQuantity = default;
-            Optional<decimal> totalCostWithReservedInstances = default;
-            Optional<decimal> netSavings = default;
-            Optional<DateTimeOffset> firstUsageDate = default;
+            SystemData systemData = default;
+            string lookBackPeriod = default;
+            float? instanceFlexibilityRatio = default;
+            string instanceFlexibilityGroup = default;
+            string normalizedSize = default;
+            float? recommendedQuantityNormalized = default;
+            Guid? meterId = default;
+            string term = default;
+            decimal? costWithNoReservedInstances = default;
+            decimal? recommendedQuantity = default;
+            decimal? totalCostWithReservedInstances = default;
+            decimal? netSavings = default;
+            DateTimeOffset? firstUsageDate = default;
             string scope = default;
             IReadOnlyList<ConsumptionSkuProperty> skuProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -411,7 +411,31 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionLegacyReservationRecommendation(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(location), sku.Value, serializedAdditionalRawData, lookBackPeriod.Value, Optional.ToNullable(instanceFlexibilityRatio), instanceFlexibilityGroup.Value, normalizedSize.Value, Optional.ToNullable(recommendedQuantityNormalized), Optional.ToNullable(meterId), term.Value, Optional.ToNullable(costWithNoReservedInstances), Optional.ToNullable(recommendedQuantity), Optional.ToNullable(totalCostWithReservedInstances), Optional.ToNullable(netSavings), Optional.ToNullable(firstUsageDate), scope, skuProperties ?? new ChangeTrackingList<ConsumptionSkuProperty>());
+            return new ConsumptionLegacyReservationRecommendation(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                etag,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku,
+                serializedAdditionalRawData,
+                lookBackPeriod,
+                instanceFlexibilityRatio,
+                instanceFlexibilityGroup,
+                normalizedSize,
+                recommendedQuantityNormalized,
+                meterId,
+                term,
+                costWithNoReservedInstances,
+                recommendedQuantity,
+                totalCostWithReservedInstances,
+                netSavings,
+                firstUsageDate,
+                scope,
+                skuProperties ?? new ChangeTrackingList<ConsumptionSkuProperty>());
         }
 
         BinaryData IPersistableModel<ConsumptionLegacyReservationRecommendation>.Write(ModelReaderWriterOptions options)

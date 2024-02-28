@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
+            ResourceIdentifier id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink(id.Value, serializedAdditionalRawData);
+            return new EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink(id, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink>.Write(ModelReaderWriterOptions options)

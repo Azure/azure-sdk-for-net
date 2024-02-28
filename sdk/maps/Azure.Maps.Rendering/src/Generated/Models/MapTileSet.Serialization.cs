@@ -19,19 +19,19 @@ namespace Azure.Maps.Rendering
             {
                 return null;
             }
-            Optional<string> tilejson = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<string> version = default;
-            Optional<string> attribution = default;
-            Optional<string> template = default;
-            Optional<string> legend = default;
-            Optional<string> scheme = default;
+            string tilejson = default;
+            string name = default;
+            string description = default;
+            string version = default;
+            string attribution = default;
+            string template = default;
+            string legend = default;
+            string scheme = default;
             IReadOnlyList<string> tiles = default;
             IReadOnlyList<string> grids = default;
             IReadOnlyList<string> data = default;
-            Optional<int> minzoom = default;
-            Optional<int> maxzoom = default;
+            int? minzoom = default;
+            int? maxzoom = default;
             IReadOnlyList<float> bounds = default;
             IReadOnlyList<float> center = default;
             foreach (var property in element.EnumerateObject())
@@ -165,7 +165,22 @@ namespace Azure.Maps.Rendering
                     continue;
                 }
             }
-            return new MapTileSet(tilejson.Value, name.Value, description.Value, version.Value, attribution.Value, template.Value, legend.Value, scheme.Value, tiles ?? new ChangeTrackingList<string>(), grids ?? new ChangeTrackingList<string>(), data ?? new ChangeTrackingList<string>(), Optional.ToNullable(minzoom), Optional.ToNullable(maxzoom), bounds ?? new ChangeTrackingList<float>(), center ?? new ChangeTrackingList<float>());
+            return new MapTileSet(
+                tilejson,
+                name,
+                description,
+                version,
+                attribution,
+                template,
+                legend,
+                scheme,
+                tiles ?? new ChangeTrackingList<string>(),
+                grids ?? new ChangeTrackingList<string>(),
+                data ?? new ChangeTrackingList<string>(),
+                minzoom,
+                maxzoom,
+                bounds ?? new ChangeTrackingList<float>(),
+                center ?? new ChangeTrackingList<float>());
         }
     }
 }

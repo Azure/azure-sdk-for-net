@@ -98,12 +98,12 @@ namespace Azure.ResourceManager.Synapse
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> minimalTlsVersion = default;
+            SystemData systemData = default;
+            string minimalTlsVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.Synapse
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseDedicatedSqlMinimalTlsSettingData(id, name, type, systemData.Value, Optional.ToNullable(location), minimalTlsVersion.Value, serializedAdditionalRawData);
+            return new SynapseDedicatedSqlMinimalTlsSettingData(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                minimalTlsVersion,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseDedicatedSqlMinimalTlsSettingData>.Write(ModelReaderWriterOptions options)

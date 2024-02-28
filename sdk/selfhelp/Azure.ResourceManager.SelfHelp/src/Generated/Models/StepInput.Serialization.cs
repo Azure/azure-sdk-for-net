@@ -114,14 +114,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            Optional<string> questionId = default;
-            Optional<string> questionType = default;
-            Optional<string> questionContent = default;
-            Optional<QuestionContentType> questionContentType = default;
-            Optional<string> responseHint = default;
-            Optional<string> recommendedOption = default;
-            Optional<string> selectedOptionValue = default;
-            Optional<ResponseValidationProperties> responseValidationProperties = default;
+            string questionId = default;
+            string questionType = default;
+            string questionContent = default;
+            QuestionContentType? questionContentType = default;
+            string responseHint = default;
+            string recommendedOption = default;
+            string selectedOptionValue = default;
+            ResponseValidationProperties responseValidationProperties = default;
             IReadOnlyList<ResponseConfig> responseOptions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -195,7 +195,17 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StepInput(questionId.Value, questionType.Value, questionContent.Value, Optional.ToNullable(questionContentType), responseHint.Value, recommendedOption.Value, selectedOptionValue.Value, responseValidationProperties.Value, responseOptions ?? new ChangeTrackingList<ResponseConfig>(), serializedAdditionalRawData);
+            return new StepInput(
+                questionId,
+                questionType,
+                questionContent,
+                questionContentType,
+                responseHint,
+                recommendedOption,
+                selectedOptionValue,
+                responseValidationProperties,
+                responseOptions ?? new ChangeTrackingList<ResponseConfig>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StepInput>.Write(ModelReaderWriterOptions options)

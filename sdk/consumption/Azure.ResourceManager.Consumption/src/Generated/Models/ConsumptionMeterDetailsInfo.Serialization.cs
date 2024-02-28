@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<string> meterName = default;
-            Optional<string> meterCategory = default;
-            Optional<string> meterSubCategory = default;
-            Optional<string> unitOfMeasure = default;
-            Optional<string> serviceFamily = default;
+            string meterName = default;
+            string meterCategory = default;
+            string meterSubCategory = default;
+            string unitOfMeasure = default;
+            string serviceFamily = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,13 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionMeterDetailsInfo(meterName.Value, meterCategory.Value, meterSubCategory.Value, unitOfMeasure.Value, serviceFamily.Value, serializedAdditionalRawData);
+            return new ConsumptionMeterDetailsInfo(
+                meterName,
+                meterCategory,
+                meterSubCategory,
+                unitOfMeasure,
+                serviceFamily,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumptionMeterDetailsInfo>.Write(ModelReaderWriterOptions options)

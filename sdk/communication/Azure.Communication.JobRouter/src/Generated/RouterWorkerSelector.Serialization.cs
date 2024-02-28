@@ -103,11 +103,11 @@ namespace Azure.Communication.JobRouter
             }
             string key = default;
             LabelOperator labelOperator = default;
-            Optional<BinaryData> value = default;
-            Optional<TimeSpan> expiresAfterSeconds = default;
-            Optional<bool> expedite = default;
-            Optional<RouterWorkerSelectorStatus> status = default;
-            Optional<DateTimeOffset> expiresAt = default;
+            BinaryData value = default;
+            TimeSpan? expiresAfterSeconds = default;
+            bool? expedite = default;
+            RouterWorkerSelectorStatus? status = default;
+            DateTimeOffset? expiresAt = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -169,7 +169,15 @@ namespace Azure.Communication.JobRouter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RouterWorkerSelector(key, labelOperator, value.Value, Optional.ToNullable(expiresAfterSeconds), Optional.ToNullable(expedite), Optional.ToNullable(status), Optional.ToNullable(expiresAt), serializedAdditionalRawData);
+            return new RouterWorkerSelector(
+                key,
+                labelOperator,
+                value,
+                expiresAfterSeconds,
+                expedite,
+                status,
+                expiresAt,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RouterWorkerSelector>.Write(ModelReaderWriterOptions options)

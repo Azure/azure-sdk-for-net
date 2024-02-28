@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<MediaJobErrorCode> code = default;
-            Optional<string> message = default;
-            Optional<MediaJobErrorCategory> category = default;
-            Optional<MediaJobRetry> retry = default;
+            MediaJobErrorCode? code = default;
+            string message = default;
+            MediaJobErrorCategory? category = default;
+            MediaJobRetry? retry = default;
             IReadOnlyList<MediaJobErrorDetail> details = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -155,7 +155,13 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MediaJobError(Optional.ToNullable(code), message.Value, Optional.ToNullable(category), Optional.ToNullable(retry), details ?? new ChangeTrackingList<MediaJobErrorDetail>(), serializedAdditionalRawData);
+            return new MediaJobError(
+                code,
+                message,
+                category,
+                retry,
+                details ?? new ChangeTrackingList<MediaJobErrorDetail>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MediaJobError>.Write(ModelReaderWriterOptions options)

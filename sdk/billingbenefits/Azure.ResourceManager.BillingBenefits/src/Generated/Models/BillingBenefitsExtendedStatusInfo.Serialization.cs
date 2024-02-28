@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             {
                 return null;
             }
-            Optional<string> statusCode = default;
-            Optional<string> message = default;
+            string statusCode = default;
+            string message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BillingBenefitsExtendedStatusInfo(statusCode.Value, message.Value, serializedAdditionalRawData);
+            return new BillingBenefitsExtendedStatusInfo(statusCode, message, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BillingBenefitsExtendedStatusInfo>.Write(ModelReaderWriterOptions options)

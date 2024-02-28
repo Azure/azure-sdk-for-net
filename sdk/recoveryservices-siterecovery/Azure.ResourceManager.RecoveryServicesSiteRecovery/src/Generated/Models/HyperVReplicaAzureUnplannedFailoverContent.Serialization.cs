@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> primaryKekCertificatePfx = default;
-            Optional<string> secondaryKekCertificatePfx = default;
-            Optional<ResourceIdentifier> recoveryPointId = default;
+            string primaryKekCertificatePfx = default;
+            string secondaryKekCertificatePfx = default;
+            ResourceIdentifier recoveryPointId = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HyperVReplicaAzureUnplannedFailoverContent(instanceType, serializedAdditionalRawData, primaryKekCertificatePfx.Value, secondaryKekCertificatePfx.Value, recoveryPointId.Value);
+            return new HyperVReplicaAzureUnplannedFailoverContent(instanceType, serializedAdditionalRawData, primaryKekCertificatePfx, secondaryKekCertificatePfx, recoveryPointId);
         }
 
         BinaryData IPersistableModel<HyperVReplicaAzureUnplannedFailoverContent>.Write(ModelReaderWriterOptions options)

@@ -138,20 +138,20 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> status = default;
-            Optional<string> message = default;
-            Optional<string> author = default;
-            Optional<string> deployer = default;
-            Optional<string> authorEmail = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<bool> active = default;
-            Optional<string> details = default;
+            SystemData systemData = default;
+            int? status = default;
+            string message = default;
+            string author = default;
+            string deployer = default;
+            string authorEmail = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            bool? active = default;
+            string details = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -264,7 +264,22 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebAppDeploymentData(id, name, type, systemData.Value, Optional.ToNullable(status), message.Value, author.Value, deployer.Value, authorEmail.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(active), details.Value, kind.Value, serializedAdditionalRawData);
+            return new WebAppDeploymentData(
+                id,
+                name,
+                type,
+                systemData,
+                status,
+                message,
+                author,
+                deployer,
+                authorEmail,
+                startTime,
+                endTime,
+                active,
+                details,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebAppDeploymentData>.Write(ModelReaderWriterOptions options)

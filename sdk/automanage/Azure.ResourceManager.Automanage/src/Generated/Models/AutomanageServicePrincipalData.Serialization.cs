@@ -101,9 +101,9 @@ namespace Azure.ResourceManager.Automanage.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> servicePrincipalId = default;
-            Optional<bool> authorizationSet = default;
+            SystemData systemData = default;
+            string servicePrincipalId = default;
+            bool? authorizationSet = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.Automanage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomanageServicePrincipalData(id, name, type, systemData.Value, servicePrincipalId.Value, Optional.ToNullable(authorizationSet), serializedAdditionalRawData);
+            return new AutomanageServicePrincipalData(
+                id,
+                name,
+                type,
+                systemData,
+                servicePrincipalId,
+                authorizationSet,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomanageServicePrincipalData>.Write(ModelReaderWriterOptions options)

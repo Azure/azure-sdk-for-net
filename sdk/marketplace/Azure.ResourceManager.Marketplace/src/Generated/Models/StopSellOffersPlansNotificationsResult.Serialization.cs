@@ -114,13 +114,13 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<string> offerId = default;
-            Optional<string> displayName = default;
-            Optional<bool> isEntire = default;
-            Optional<long> messageCode = default;
-            Optional<Uri> icon = default;
+            string offerId = default;
+            string displayName = default;
+            bool? isEntire = default;
+            long? messageCode = default;
+            Uri icon = default;
             IReadOnlyList<PlanNotificationDetails> plans = default;
-            Optional<bool> publicContext = default;
+            bool? publicContext = default;
             IReadOnlyList<string> subscriptionsIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -206,7 +206,16 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StopSellOffersPlansNotificationsResult(offerId.Value, displayName.Value, Optional.ToNullable(isEntire), Optional.ToNullable(messageCode), icon.Value, plans ?? new ChangeTrackingList<PlanNotificationDetails>(), Optional.ToNullable(publicContext), subscriptionsIds ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new StopSellOffersPlansNotificationsResult(
+                offerId,
+                displayName,
+                isEntire,
+                messageCode,
+                icon,
+                plans ?? new ChangeTrackingList<PlanNotificationDetails>(),
+                publicContext,
+                subscriptionsIds ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StopSellOffersPlansNotificationsResult>.Write(ModelReaderWriterOptions options)

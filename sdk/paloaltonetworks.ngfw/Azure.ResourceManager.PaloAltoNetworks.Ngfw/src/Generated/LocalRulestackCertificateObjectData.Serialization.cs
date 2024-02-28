@@ -120,13 +120,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> certificateSignerResourceId = default;
+            SystemData systemData = default;
+            string certificateSignerResourceId = default;
             FirewallBooleanType certificateSelfSigned = default;
-            Optional<string> auditComment = default;
-            Optional<string> description = default;
-            Optional<ETag> etag = default;
-            Optional<FirewallProvisioningState> provisioningState = default;
+            string auditComment = default;
+            string description = default;
+            ETag? etag = default;
+            FirewallProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -211,7 +211,18 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LocalRulestackCertificateObjectData(id, name, type, systemData.Value, certificateSignerResourceId.Value, certificateSelfSigned, auditComment.Value, description.Value, Optional.ToNullable(etag), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new LocalRulestackCertificateObjectData(
+                id,
+                name,
+                type,
+                systemData,
+                certificateSignerResourceId,
+                certificateSelfSigned,
+                auditComment,
+                description,
+                etag,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LocalRulestackCertificateObjectData>.Write(ModelReaderWriterOptions options)

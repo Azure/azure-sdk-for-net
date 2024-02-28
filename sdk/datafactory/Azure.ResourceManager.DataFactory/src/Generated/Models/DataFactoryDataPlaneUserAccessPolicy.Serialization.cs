@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<string> permissions = default;
-            Optional<string> accessResourcePath = default;
-            Optional<string> profileName = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> expireTime = default;
+            string permissions = default;
+            string accessResourcePath = default;
+            string profileName = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? expireTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataFactoryDataPlaneUserAccessPolicy(permissions.Value, accessResourcePath.Value, profileName.Value, Optional.ToNullable(startTime), Optional.ToNullable(expireTime), serializedAdditionalRawData);
+            return new DataFactoryDataPlaneUserAccessPolicy(
+                permissions,
+                accessResourcePath,
+                profileName,
+                startTime,
+                expireTime,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataFactoryDataPlaneUserAccessPolicy>.Write(ModelReaderWriterOptions options)

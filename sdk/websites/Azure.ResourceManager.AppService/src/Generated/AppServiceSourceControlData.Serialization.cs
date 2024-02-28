@@ -113,15 +113,15 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> token = default;
-            Optional<string> tokenSecret = default;
-            Optional<string> refreshToken = default;
-            Optional<DateTimeOffset> expirationTime = default;
+            SystemData systemData = default;
+            string token = default;
+            string tokenSecret = default;
+            string refreshToken = default;
+            DateTimeOffset? expirationTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -197,7 +197,17 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceSourceControlData(id, name, type, systemData.Value, token.Value, tokenSecret.Value, refreshToken.Value, Optional.ToNullable(expirationTime), kind.Value, serializedAdditionalRawData);
+            return new AppServiceSourceControlData(
+                id,
+                name,
+                type,
+                systemData,
+                token,
+                tokenSecret,
+                refreshToken,
+                expirationTime,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceSourceControlData>.Write(ModelReaderWriterOptions options)

@@ -90,8 +90,8 @@ namespace Azure.ResourceManager.PostgreSql.Models
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<PostgreSqlSku> sku = default;
+            ManagedServiceIdentity identity = default;
+            PostgreSqlSku sku = default;
             PostgreSqlServerPropertiesForCreate properties = default;
             AzureLocation location = default;
             IDictionary<string, string> tags = default;
@@ -147,7 +147,13 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlServerCreateOrUpdateContent(identity, sku.Value, properties, location, tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new PostgreSqlServerCreateOrUpdateContent(
+                identity,
+                sku,
+                properties,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlServerCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

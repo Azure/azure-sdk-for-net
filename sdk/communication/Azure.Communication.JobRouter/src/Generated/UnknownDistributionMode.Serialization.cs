@@ -76,9 +76,9 @@ namespace Azure.Communication.JobRouter
             {
                 return null;
             }
-            Optional<int> minConcurrentOffers = default;
-            Optional<int> maxConcurrentOffers = default;
-            Optional<bool> bypassSelectors = default;
+            int minConcurrentOffers = default;
+            int maxConcurrentOffers = default;
+            bool? bypassSelectors = default;
             DistributionModeKind kind = "Unknown";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -122,7 +122,7 @@ namespace Azure.Communication.JobRouter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownDistributionMode(minConcurrentOffers, maxConcurrentOffers, Optional.ToNullable(bypassSelectors), kind, serializedAdditionalRawData);
+            return new UnknownDistributionMode(minConcurrentOffers, maxConcurrentOffers, bypassSelectors, kind, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DistributionMode>.Write(ModelReaderWriterOptions options)

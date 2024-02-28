@@ -118,16 +118,16 @@ namespace Azure.ResourceManager.Relay
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> createdAt = default;
-            Optional<DateTimeOffset> updatedAt = default;
-            Optional<int> listenerCount = default;
-            Optional<bool> requiresClientAuthorization = default;
-            Optional<string> userMetadata = default;
+            SystemData systemData = default;
+            DateTimeOffset? createdAt = default;
+            DateTimeOffset? updatedAt = default;
+            int? listenerCount = default;
+            bool? requiresClientAuthorization = default;
+            string userMetadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -224,7 +224,18 @@ namespace Azure.ResourceManager.Relay
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RelayHybridConnectionData(id, name, type, systemData.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), Optional.ToNullable(listenerCount), Optional.ToNullable(requiresClientAuthorization), userMetadata.Value, Optional.ToNullable(location), serializedAdditionalRawData);
+            return new RelayHybridConnectionData(
+                id,
+                name,
+                type,
+                systemData,
+                createdAt,
+                updatedAt,
+                listenerCount,
+                requiresClientAuthorization,
+                userMetadata,
+                location,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RelayHybridConnectionData>.Write(ModelReaderWriterOptions options)

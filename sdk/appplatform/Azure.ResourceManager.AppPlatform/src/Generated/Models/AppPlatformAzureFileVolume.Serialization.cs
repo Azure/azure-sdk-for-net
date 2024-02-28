@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             string shareName = default;
             UnderlyingResourceType type = default;
             string mountPath = default;
-            Optional<bool> readOnly = default;
+            bool? readOnly = default;
             IList<string> mountOptions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -138,7 +138,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformAzureFileVolume(type, mountPath, Optional.ToNullable(readOnly), mountOptions ?? new ChangeTrackingList<string>(), serializedAdditionalRawData, shareName);
+            return new AppPlatformAzureFileVolume(
+                type,
+                mountPath,
+                readOnly,
+                mountOptions ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData,
+                shareName);
         }
 
         BinaryData IPersistableModel<AppPlatformAzureFileVolume>.Write(ModelReaderWriterOptions options)

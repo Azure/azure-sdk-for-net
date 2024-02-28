@@ -80,9 +80,9 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 return null;
             }
-            Optional<WritableSubResource> attachedDataNetwork = default;
-            Optional<WritableSubResource> slice = default;
-            Optional<SimStaticIPPropertiesStaticIP> staticIP = default;
+            WritableSubResource attachedDataNetwork = default;
+            WritableSubResource slice = default;
+            SimStaticIPPropertiesStaticIP staticIP = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SimStaticIPProperties(attachedDataNetwork, slice, staticIP.Value, serializedAdditionalRawData);
+            return new SimStaticIPProperties(attachedDataNetwork, slice, staticIP, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SimStaticIPProperties>.Write(ModelReaderWriterOptions options)

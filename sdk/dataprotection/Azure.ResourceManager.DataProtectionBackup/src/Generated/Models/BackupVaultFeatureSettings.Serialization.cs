@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<CrossSubscriptionRestoreSettings> crossSubscriptionRestoreSettings = default;
-            Optional<CrossRegionRestoreSettings> crossRegionRestoreSettings = default;
+            CrossSubscriptionRestoreSettings crossSubscriptionRestoreSettings = default;
+            CrossRegionRestoreSettings crossRegionRestoreSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupVaultFeatureSettings(crossSubscriptionRestoreSettings.Value, crossRegionRestoreSettings.Value, serializedAdditionalRawData);
+            return new BackupVaultFeatureSettings(crossSubscriptionRestoreSettings, crossRegionRestoreSettings, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupVaultFeatureSettings>.Write(ModelReaderWriterOptions options)

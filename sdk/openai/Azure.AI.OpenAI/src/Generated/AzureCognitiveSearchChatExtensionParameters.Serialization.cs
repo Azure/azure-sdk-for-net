@@ -134,21 +134,21 @@ namespace Azure.AI.OpenAI
             {
                 return null;
             }
-            Optional<OnYourDataAuthenticationOptions> authentication = default;
-            Optional<int> topNDocuments = default;
-            Optional<bool> inScope = default;
-            Optional<int> strictness = default;
-            Optional<string> roleInformation = default;
+            OnYourDataAuthenticationOptions authentication = default;
+            int? topNDocuments = default;
+            bool? inScope = default;
+            int? strictness = default;
+            string roleInformation = default;
             Uri endpoint = default;
             string indexName = default;
-            Optional<string> key = default;
-            Optional<AzureCognitiveSearchIndexFieldMappingOptions> fieldsMapping = default;
-            Optional<AzureCognitiveSearchQueryType> queryType = default;
-            Optional<string> semanticConfiguration = default;
-            Optional<string> filter = default;
-            Optional<Uri> embeddingEndpoint = default;
-            Optional<string> embeddingKey = default;
-            Optional<OnYourDataVectorizationSource> embeddingDependency = default;
+            string key = default;
+            AzureCognitiveSearchIndexFieldMappingOptions fieldsMapping = default;
+            AzureCognitiveSearchQueryType? queryType = default;
+            string semanticConfiguration = default;
+            string filter = default;
+            Uri embeddingEndpoint = default;
+            string embeddingKey = default;
+            OnYourDataVectorizationSource embeddingDependency = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -266,7 +266,23 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureCognitiveSearchChatExtensionParameters(authentication.Value, Optional.ToNullable(topNDocuments), Optional.ToNullable(inScope), Optional.ToNullable(strictness), roleInformation.Value, endpoint, indexName, key.Value, fieldsMapping.Value, Optional.ToNullable(queryType), semanticConfiguration.Value, filter.Value, embeddingEndpoint.Value, embeddingKey.Value, embeddingDependency.Value, serializedAdditionalRawData);
+            return new AzureCognitiveSearchChatExtensionParameters(
+                authentication,
+                topNDocuments,
+                inScope,
+                strictness,
+                roleInformation,
+                endpoint,
+                indexName,
+                key,
+                fieldsMapping,
+                queryType,
+                semanticConfiguration,
+                filter,
+                embeddingEndpoint,
+                embeddingKey,
+                embeddingDependency,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureCognitiveSearchChatExtensionParameters>.Write(ModelReaderWriterOptions options)

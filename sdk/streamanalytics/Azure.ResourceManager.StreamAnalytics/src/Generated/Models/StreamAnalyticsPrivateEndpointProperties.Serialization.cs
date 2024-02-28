@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> createdDate = default;
+            DateTimeOffset? createdDate = default;
             IList<StreamAnalyticsPrivateLinkServiceConnection> manualPrivateLinkServiceConnections = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamAnalyticsPrivateEndpointProperties(Optional.ToNullable(createdDate), manualPrivateLinkServiceConnections ?? new ChangeTrackingList<StreamAnalyticsPrivateLinkServiceConnection>(), serializedAdditionalRawData);
+            return new StreamAnalyticsPrivateEndpointProperties(createdDate, manualPrivateLinkServiceConnections ?? new ChangeTrackingList<StreamAnalyticsPrivateLinkServiceConnection>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamAnalyticsPrivateEndpointProperties>.Write(ModelReaderWriterOptions options)

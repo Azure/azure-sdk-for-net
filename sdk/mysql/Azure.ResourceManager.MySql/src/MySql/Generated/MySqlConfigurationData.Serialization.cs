@@ -121,13 +121,13 @@ namespace Azure.ResourceManager.MySql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> value = default;
-            Optional<string> description = default;
-            Optional<string> defaultValue = default;
-            Optional<string> dataType = default;
-            Optional<string> allowedValues = default;
-            Optional<string> source = default;
+            SystemData systemData = default;
+            string value = default;
+            string description = default;
+            string defaultValue = default;
+            string dataType = default;
+            string allowedValues = default;
+            string source = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -204,7 +204,18 @@ namespace Azure.ResourceManager.MySql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlConfigurationData(id, name, type, systemData.Value, value.Value, description.Value, defaultValue.Value, dataType.Value, allowedValues.Value, source.Value, serializedAdditionalRawData);
+            return new MySqlConfigurationData(
+                id,
+                name,
+                type,
+                systemData,
+                value,
+                description,
+                defaultValue,
+                dataType,
+                allowedValues,
+                source,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlConfigurationData>.Write(ModelReaderWriterOptions options)

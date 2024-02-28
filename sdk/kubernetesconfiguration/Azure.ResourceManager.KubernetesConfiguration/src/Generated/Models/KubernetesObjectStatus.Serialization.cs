@@ -125,13 +125,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> @namespace = default;
-            Optional<string> kind = default;
-            Optional<KubernetesFluxComplianceState> complianceState = default;
-            Optional<KubernetesObjectReference> appliedBy = default;
+            string name = default;
+            string @namespace = default;
+            string kind = default;
+            KubernetesFluxComplianceState? complianceState = default;
+            KubernetesObjectReference appliedBy = default;
             IReadOnlyList<KubernetesObjectStatusCondition> statusConditions = default;
-            Optional<HelmReleaseProperties> helmReleaseProperties = default;
+            HelmReleaseProperties helmReleaseProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -201,7 +201,15 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesObjectStatus(name.Value, @namespace.Value, kind.Value, Optional.ToNullable(complianceState), appliedBy.Value, statusConditions ?? new ChangeTrackingList<KubernetesObjectStatusCondition>(), helmReleaseProperties.Value, serializedAdditionalRawData);
+            return new KubernetesObjectStatus(
+                name,
+                @namespace,
+                kind,
+                complianceState,
+                appliedBy,
+                statusConditions ?? new ChangeTrackingList<KubernetesObjectStatusCondition>(),
+                helmReleaseProperties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesObjectStatus>.Write(ModelReaderWriterOptions options)

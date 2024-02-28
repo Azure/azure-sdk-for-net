@@ -114,13 +114,13 @@ namespace Azure.ResourceManager.EventHubs
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<bool> isEnabled = default;
-            Optional<string> clientAppGroupIdentifier = default;
+            SystemData systemData = default;
+            bool? isEnabled = default;
+            string clientAppGroupIdentifier = default;
             IList<EventHubsApplicationGroupPolicy> policies = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -205,7 +205,16 @@ namespace Azure.ResourceManager.EventHubs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventHubsApplicationGroupData(id, name, type, systemData.Value, Optional.ToNullable(isEnabled), clientAppGroupIdentifier.Value, policies ?? new ChangeTrackingList<EventHubsApplicationGroupPolicy>(), Optional.ToNullable(location), serializedAdditionalRawData);
+            return new EventHubsApplicationGroupData(
+                id,
+                name,
+                type,
+                systemData,
+                isEnabled,
+                clientAppGroupIdentifier,
+                policies ?? new ChangeTrackingList<EventHubsApplicationGroupPolicy>(),
+                location,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventHubsApplicationGroupData>.Write(ModelReaderWriterOptions options)

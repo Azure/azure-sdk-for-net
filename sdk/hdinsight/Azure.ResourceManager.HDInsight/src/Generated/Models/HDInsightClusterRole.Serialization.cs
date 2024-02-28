@@ -129,17 +129,17 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<int> minInstanceCount = default;
-            Optional<int> targetInstanceCount = default;
-            Optional<string> vmGroupName = default;
-            Optional<HDInsightAutoScaleConfiguration> autoScale = default;
-            Optional<HardwareProfile> hardwareProfile = default;
-            Optional<OSProfile> osProfile = default;
-            Optional<HDInsightVirtualNetworkProfile> virtualNetworkProfile = default;
+            string name = default;
+            int? minInstanceCount = default;
+            int? targetInstanceCount = default;
+            string vmGroupName = default;
+            HDInsightAutoScaleConfiguration autoScale = default;
+            HardwareProfile hardwareProfile = default;
+            OSProfile osProfile = default;
+            HDInsightVirtualNetworkProfile virtualNetworkProfile = default;
             IList<HDInsightClusterDataDiskGroup> dataDisksGroups = default;
             IList<ScriptAction> scriptActions = default;
-            Optional<bool> encryptDataDisks = default;
+            bool? encryptDataDisks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -251,7 +251,19 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightClusterRole(name.Value, Optional.ToNullable(minInstanceCount), Optional.ToNullable(targetInstanceCount), vmGroupName.Value, autoScale.Value, hardwareProfile.Value, osProfile.Value, virtualNetworkProfile.Value, dataDisksGroups ?? new ChangeTrackingList<HDInsightClusterDataDiskGroup>(), scriptActions ?? new ChangeTrackingList<ScriptAction>(), Optional.ToNullable(encryptDataDisks), serializedAdditionalRawData);
+            return new HDInsightClusterRole(
+                name,
+                minInstanceCount,
+                targetInstanceCount,
+                vmGroupName,
+                autoScale,
+                hardwareProfile,
+                osProfile,
+                virtualNetworkProfile,
+                dataDisksGroups ?? new ChangeTrackingList<HDInsightClusterDataDiskGroup>(),
+                scriptActions ?? new ChangeTrackingList<ScriptAction>(),
+                encryptDataDisks,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightClusterRole>.Write(ModelReaderWriterOptions options)

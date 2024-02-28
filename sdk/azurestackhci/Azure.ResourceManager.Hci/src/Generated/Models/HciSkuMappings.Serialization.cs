@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<string> catalogPlanId = default;
-            Optional<string> marketplaceSkuId = default;
+            string catalogPlanId = default;
+            string marketplaceSkuId = default;
             IList<string> marketplaceSkuVersions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HciSkuMappings(catalogPlanId.Value, marketplaceSkuId.Value, marketplaceSkuVersions ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new HciSkuMappings(catalogPlanId, marketplaceSkuId, marketplaceSkuVersions ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HciSkuMappings>.Write(ModelReaderWriterOptions options)

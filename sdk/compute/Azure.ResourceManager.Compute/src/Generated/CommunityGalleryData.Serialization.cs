@@ -112,13 +112,13 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<AzureLocation> location = default;
-            Optional<ResourceType> type = default;
-            Optional<string> disclaimer = default;
+            string name = default;
+            AzureLocation? location = default;
+            ResourceType? type = default;
+            string disclaimer = default;
             IReadOnlyDictionary<string, string> artifactTags = default;
-            Optional<CommunityGalleryMetadata> communityMetadata = default;
-            Optional<string> uniqueId = default;
+            CommunityGalleryMetadata communityMetadata = default;
+            string uniqueId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -209,7 +209,15 @@ namespace Azure.ResourceManager.Compute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CommunityGalleryData(name.Value, Optional.ToNullable(location), Optional.ToNullable(type), uniqueId.Value, serializedAdditionalRawData, disclaimer.Value, artifactTags ?? new ChangeTrackingDictionary<string, string>(), communityMetadata.Value);
+            return new CommunityGalleryData(
+                name,
+                location,
+                type,
+                uniqueId,
+                serializedAdditionalRawData,
+                disclaimer,
+                artifactTags ?? new ChangeTrackingDictionary<string, string>(),
+                communityMetadata);
         }
 
         BinaryData IPersistableModel<CommunityGalleryData>.Write(ModelReaderWriterOptions options)

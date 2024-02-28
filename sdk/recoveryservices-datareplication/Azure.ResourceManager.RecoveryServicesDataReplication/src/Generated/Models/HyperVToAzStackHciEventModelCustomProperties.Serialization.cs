@@ -91,11 +91,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 return null;
             }
-            Optional<string> eventSourceFriendlyName = default;
-            Optional<string> protectedItemFriendlyName = default;
-            Optional<string> sourceApplianceName = default;
-            Optional<string> targetApplianceName = default;
-            Optional<string> serverType = default;
+            string eventSourceFriendlyName = default;
+            string protectedItemFriendlyName = default;
+            string sourceApplianceName = default;
+            string targetApplianceName = default;
+            string serverType = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -137,7 +137,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HyperVToAzStackHciEventModelCustomProperties(instanceType, serializedAdditionalRawData, eventSourceFriendlyName.Value, protectedItemFriendlyName.Value, sourceApplianceName.Value, targetApplianceName.Value, serverType.Value);
+            return new HyperVToAzStackHciEventModelCustomProperties(
+                instanceType,
+                serializedAdditionalRawData,
+                eventSourceFriendlyName,
+                protectedItemFriendlyName,
+                sourceApplianceName,
+                targetApplianceName,
+                serverType);
         }
 
         BinaryData IPersistableModel<HyperVToAzStackHciEventModelCustomProperties>.Write(ModelReaderWriterOptions options)

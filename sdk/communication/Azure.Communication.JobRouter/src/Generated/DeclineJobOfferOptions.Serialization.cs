@@ -70,7 +70,7 @@ namespace Azure.Communication.JobRouter
             {
                 return null;
             }
-            Optional<DateTimeOffset> retryOfferAt = default;
+            DateTimeOffset? retryOfferAt = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -90,7 +90,7 @@ namespace Azure.Communication.JobRouter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeclineJobOfferOptions(Optional.ToNullable(retryOfferAt), serializedAdditionalRawData);
+            return new DeclineJobOfferOptions(retryOfferAt, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeclineJobOfferOptions>.Write(ModelReaderWriterOptions options)

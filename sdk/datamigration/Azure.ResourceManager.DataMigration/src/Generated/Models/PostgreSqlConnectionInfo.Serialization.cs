@@ -121,18 +121,18 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             string serverName = default;
-            Optional<string> dataSource = default;
-            Optional<string> serverVersion = default;
-            Optional<string> databaseName = default;
+            string dataSource = default;
+            string serverVersion = default;
+            string databaseName = default;
             int port = default;
-            Optional<bool> encryptConnection = default;
-            Optional<bool> trustServerCertificate = default;
-            Optional<string> additionalSettings = default;
-            Optional<string> serverBrandVersion = default;
-            Optional<AuthenticationType> authentication = default;
+            bool? encryptConnection = default;
+            bool? trustServerCertificate = default;
+            string additionalSettings = default;
+            string serverBrandVersion = default;
+            AuthenticationType? authentication = default;
             string type = default;
-            Optional<string> userName = default;
-            Optional<string> password = default;
+            string userName = default;
+            string password = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -220,7 +220,21 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlConnectionInfo(type, userName.Value, password.Value, serializedAdditionalRawData, serverName, dataSource.Value, serverVersion.Value, databaseName.Value, port, Optional.ToNullable(encryptConnection), Optional.ToNullable(trustServerCertificate), additionalSettings.Value, serverBrandVersion.Value, Optional.ToNullable(authentication));
+            return new PostgreSqlConnectionInfo(
+                type,
+                userName,
+                password,
+                serializedAdditionalRawData,
+                serverName,
+                dataSource,
+                serverVersion,
+                databaseName,
+                port,
+                encryptConnection,
+                trustServerCertificate,
+                additionalSettings,
+                serverBrandVersion,
+                authentication);
         }
 
         BinaryData IPersistableModel<PostgreSqlConnectionInfo>.Write(ModelReaderWriterOptions options)

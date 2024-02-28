@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.Sql.Models
                 return null;
             }
             string name = default;
-            Optional<string> tier = default;
-            Optional<string> size = default;
-            Optional<string> family = default;
-            Optional<int> capacity = default;
+            string tier = default;
+            string size = default;
+            string family = default;
+            int? capacity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,13 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlSku(name, tier.Value, size.Value, family.Value, Optional.ToNullable(capacity), serializedAdditionalRawData);
+            return new SqlSku(
+                name,
+                tier,
+                size,
+                family,
+                capacity,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlSku>.Write(ModelReaderWriterOptions options)

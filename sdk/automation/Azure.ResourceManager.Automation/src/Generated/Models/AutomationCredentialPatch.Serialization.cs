@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> userName = default;
-            Optional<string> password = default;
-            Optional<string> description = default;
+            string name = default;
+            string userName = default;
+            string password = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationCredentialPatch(name.Value, userName.Value, password.Value, description.Value, serializedAdditionalRawData);
+            return new AutomationCredentialPatch(name, userName, password, description, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationCredentialPatch>.Write(ModelReaderWriterOptions options)

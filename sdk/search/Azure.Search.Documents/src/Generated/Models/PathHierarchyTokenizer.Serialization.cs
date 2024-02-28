@@ -53,11 +53,11 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<char> delimiter = default;
-            Optional<char> replacement = default;
-            Optional<int> maxTokenLength = default;
-            Optional<bool> reverse = default;
-            Optional<int> skip = default;
+            char? delimiter = default;
+            char? replacement = default;
+            int? maxTokenLength = default;
+            bool? reverse = default;
+            int? skip = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,14 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new PathHierarchyTokenizer(odataType, name, Optional.ToNullable(delimiter), Optional.ToNullable(replacement), Optional.ToNullable(maxTokenLength), Optional.ToNullable(reverse), Optional.ToNullable(skip));
+            return new PathHierarchyTokenizer(
+                odataType,
+                name,
+                delimiter,
+                replacement,
+                maxTokenLength,
+                reverse,
+                skip);
         }
     }
 }

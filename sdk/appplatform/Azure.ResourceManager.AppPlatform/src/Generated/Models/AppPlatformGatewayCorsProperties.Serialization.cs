@@ -117,8 +117,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             IList<string> allowedOrigins = default;
             IList<string> allowedMethods = default;
             IList<string> allowedHeaders = default;
-            Optional<int> maxAge = default;
-            Optional<bool> allowCredentials = default;
+            int? maxAge = default;
+            bool? allowCredentials = default;
             IList<string> exposedHeaders = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -204,7 +204,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformGatewayCorsProperties(allowedOrigins ?? new ChangeTrackingList<string>(), allowedMethods ?? new ChangeTrackingList<string>(), allowedHeaders ?? new ChangeTrackingList<string>(), Optional.ToNullable(maxAge), Optional.ToNullable(allowCredentials), exposedHeaders ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new AppPlatformGatewayCorsProperties(
+                allowedOrigins ?? new ChangeTrackingList<string>(),
+                allowedMethods ?? new ChangeTrackingList<string>(),
+                allowedHeaders ?? new ChangeTrackingList<string>(),
+                maxAge,
+                allowCredentials,
+                exposedHeaders ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformGatewayCorsProperties>.Write(ModelReaderWriterOptions options)

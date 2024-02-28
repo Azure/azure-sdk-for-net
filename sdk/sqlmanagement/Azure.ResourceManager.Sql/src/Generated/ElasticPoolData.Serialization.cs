@@ -167,25 +167,25 @@ namespace Azure.ResourceManager.Sql
             {
                 return null;
             }
-            Optional<SqlSku> sku = default;
-            Optional<string> kind = default;
+            SqlSku sku = default;
+            string kind = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ElasticPoolState> state = default;
-            Optional<DateTimeOffset> creationDate = default;
-            Optional<long> maxSizeBytes = default;
-            Optional<double> minCapacity = default;
-            Optional<ElasticPoolPerDatabaseSettings> perDatabaseSettings = default;
-            Optional<bool> zoneRedundant = default;
-            Optional<ElasticPoolLicenseType> licenseType = default;
-            Optional<ResourceIdentifier> maintenanceConfigurationId = default;
-            Optional<int> highAvailabilityReplicaCount = default;
-            Optional<SqlAlwaysEncryptedEnclaveType> preferredEnclaveType = default;
-            Optional<SqlAvailabilityZoneType> availabilityZone = default;
+            SystemData systemData = default;
+            ElasticPoolState? state = default;
+            DateTimeOffset? creationDate = default;
+            long? maxSizeBytes = default;
+            double? minCapacity = default;
+            ElasticPoolPerDatabaseSettings perDatabaseSettings = default;
+            bool? zoneRedundant = default;
+            ElasticPoolLicenseType? licenseType = default;
+            ResourceIdentifier maintenanceConfigurationId = default;
+            int? highAvailabilityReplicaCount = default;
+            SqlAlwaysEncryptedEnclaveType? preferredEnclaveType = default;
+            SqlAvailabilityZoneType? availabilityZone = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -364,7 +364,27 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ElasticPoolData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, sku.Value, kind.Value, Optional.ToNullable(state), Optional.ToNullable(creationDate), Optional.ToNullable(maxSizeBytes), Optional.ToNullable(minCapacity), perDatabaseSettings.Value, Optional.ToNullable(zoneRedundant), Optional.ToNullable(licenseType), maintenanceConfigurationId.Value, Optional.ToNullable(highAvailabilityReplicaCount), Optional.ToNullable(preferredEnclaveType), Optional.ToNullable(availabilityZone), serializedAdditionalRawData);
+            return new ElasticPoolData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku,
+                kind,
+                state,
+                creationDate,
+                maxSizeBytes,
+                minCapacity,
+                perDatabaseSettings,
+                zoneRedundant,
+                licenseType,
+                maintenanceConfigurationId,
+                highAvailabilityReplicaCount,
+                preferredEnclaveType,
+                availabilityZone,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticPoolData>.Write(ModelReaderWriterOptions options)

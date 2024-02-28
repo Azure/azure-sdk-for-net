@@ -233,25 +233,25 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryLinkedServiceReference> linkedServiceName = default;
-            Optional<PipelineActivityPolicy> policy = default;
+            DataFactoryLinkedServiceReference linkedServiceName = default;
+            PipelineActivityPolicy policy = default;
             string name = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<PipelineActivityState> state = default;
-            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
+            string description = default;
+            PipelineActivityState? state = default;
+            ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
             IList<PipelineActivityDependency> dependsOn = default;
             IList<PipelineActivityUserProperty> userProperties = default;
             IList<DataFactoryLinkedServiceReference> storageLinkedServices = default;
             IList<BinaryData> arguments = default;
-            Optional<HDInsightActivityDebugInfoOptionSetting> getDebugInfo = default;
+            HDInsightActivityDebugInfoOptionSetting? getDebugInfo = default;
             DataFactoryElement<string> mapper = default;
             DataFactoryElement<string> reducer = default;
             DataFactoryElement<string> input = default;
             DataFactoryElement<string> output = default;
             IList<BinaryData> filePaths = default;
-            Optional<DataFactoryLinkedServiceReference> fileLinkedService = default;
-            Optional<DataFactoryElement<string>> combiner = default;
+            DataFactoryLinkedServiceReference fileLinkedService = default;
+            DataFactoryElement<string> combiner = default;
             IList<BinaryData> commandEnvironment = default;
             IDictionary<string, BinaryData> defines = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -493,7 +493,29 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new HDInsightStreamingActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(), userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(), additionalProperties, linkedServiceName, policy.Value, storageLinkedServices ?? new ChangeTrackingList<DataFactoryLinkedServiceReference>(), arguments ?? new ChangeTrackingList<BinaryData>(), Optional.ToNullable(getDebugInfo), mapper, reducer, input, output, filePaths, fileLinkedService, combiner.Value, commandEnvironment ?? new ChangeTrackingList<BinaryData>(), defines ?? new ChangeTrackingDictionary<string, BinaryData>());
+            return new HDInsightStreamingActivity(
+                name,
+                type,
+                description,
+                state,
+                onInactiveMarkAs,
+                dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(),
+                additionalProperties,
+                linkedServiceName,
+                policy,
+                storageLinkedServices ?? new ChangeTrackingList<DataFactoryLinkedServiceReference>(),
+                arguments ?? new ChangeTrackingList<BinaryData>(),
+                getDebugInfo,
+                mapper,
+                reducer,
+                input,
+                output,
+                filePaths,
+                fileLinkedService,
+                combiner,
+                commandEnvironment ?? new ChangeTrackingList<BinaryData>(),
+                defines ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
         BinaryData IPersistableModel<HDInsightStreamingActivity>.Write(ModelReaderWriterOptions options)

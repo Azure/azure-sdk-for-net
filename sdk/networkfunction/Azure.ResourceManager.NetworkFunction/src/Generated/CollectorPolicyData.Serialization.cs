@@ -128,16 +128,16 @@ namespace Azure.ResourceManager.NetworkFunction
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IngestionPolicyPropertiesFormat> ingestionPolicy = default;
+            SystemData systemData = default;
+            IngestionPolicyPropertiesFormat ingestionPolicy = default;
             IList<EmissionPoliciesPropertiesFormat> emissionPolicies = default;
-            Optional<CollectorProvisioningState> provisioningState = default;
+            CollectorProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -244,7 +244,18 @@ namespace Azure.ResourceManager.NetworkFunction
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CollectorPolicyData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(etag), ingestionPolicy.Value, emissionPolicies ?? new ChangeTrackingList<EmissionPoliciesPropertiesFormat>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new CollectorPolicyData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                etag,
+                ingestionPolicy,
+                emissionPolicies ?? new ChangeTrackingList<EmissionPoliciesPropertiesFormat>(),
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CollectorPolicyData>.Write(ModelReaderWriterOptions options)

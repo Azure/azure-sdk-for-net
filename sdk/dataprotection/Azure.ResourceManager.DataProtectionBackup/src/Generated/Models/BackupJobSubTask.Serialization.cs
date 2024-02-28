@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             IReadOnlyDictionary<string, string> additionalDetails = default;
             int taskId = default;
             string taskName = default;
-            Optional<string> taskProgress = default;
+            string taskProgress = default;
             string taskStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -135,7 +135,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupJobSubTask(additionalDetails ?? new ChangeTrackingDictionary<string, string>(), taskId, taskName, taskProgress.Value, taskStatus, serializedAdditionalRawData);
+            return new BackupJobSubTask(
+                additionalDetails ?? new ChangeTrackingDictionary<string, string>(),
+                taskId,
+                taskName,
+                taskProgress,
+                taskStatus,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupJobSubTask>.Write(ModelReaderWriterOptions options)

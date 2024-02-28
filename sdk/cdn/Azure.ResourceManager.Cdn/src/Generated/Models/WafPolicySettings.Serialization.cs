@@ -110,11 +110,11 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<PolicyEnabledState> enabledState = default;
-            Optional<PolicyMode> mode = default;
-            Optional<Uri> defaultRedirectUri = default;
-            Optional<PolicySettingsDefaultCustomBlockResponseStatusCode?> defaultCustomBlockResponseStatusCode = default;
-            Optional<BinaryData> defaultCustomBlockResponseBody = default;
+            PolicyEnabledState? enabledState = default;
+            PolicyMode? mode = default;
+            Uri defaultRedirectUri = default;
+            PolicySettingsDefaultCustomBlockResponseStatusCode? defaultCustomBlockResponseStatusCode = default;
+            BinaryData defaultCustomBlockResponseBody = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -172,7 +172,13 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WafPolicySettings(Optional.ToNullable(enabledState), Optional.ToNullable(mode), defaultRedirectUri.Value, Optional.ToNullable(defaultCustomBlockResponseStatusCode), defaultCustomBlockResponseBody.Value, serializedAdditionalRawData);
+            return new WafPolicySettings(
+                enabledState,
+                mode,
+                defaultRedirectUri,
+                defaultCustomBlockResponseStatusCode,
+                defaultCustomBlockResponseBody,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WafPolicySettings>.Write(ModelReaderWriterOptions options)

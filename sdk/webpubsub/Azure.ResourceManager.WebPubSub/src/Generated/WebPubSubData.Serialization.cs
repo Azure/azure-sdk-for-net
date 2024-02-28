@@ -202,30 +202,30 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 return null;
             }
-            Optional<BillingInfoSku> sku = default;
-            Optional<ManagedServiceIdentity> identity = default;
+            BillingInfoSku sku = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<WebPubSubProvisioningState> provisioningState = default;
-            Optional<string> externalIP = default;
-            Optional<string> hostName = default;
-            Optional<int> publicPort = default;
-            Optional<int> serverPort = default;
-            Optional<string> version = default;
+            SystemData systemData = default;
+            WebPubSubProvisioningState? provisioningState = default;
+            string externalIP = default;
+            string hostName = default;
+            int? publicPort = default;
+            int? serverPort = default;
+            string version = default;
             IReadOnlyList<WebPubSubPrivateEndpointConnectionData> privateEndpointConnections = default;
             IReadOnlyList<WebPubSubSharedPrivateLinkData> sharedPrivateLinkResources = default;
-            Optional<WebPubSubTlsSettings> tls = default;
-            Optional<string> hostNamePrefix = default;
-            Optional<LiveTraceConfiguration> liveTraceConfiguration = default;
-            Optional<ResourceLogConfiguration> resourceLogConfiguration = default;
-            Optional<WebPubSubNetworkAcls> networkAcls = default;
-            Optional<string> publicNetworkAccess = default;
-            Optional<bool> disableLocalAuth = default;
-            Optional<bool> disableAadAuth = default;
+            WebPubSubTlsSettings tls = default;
+            string hostNamePrefix = default;
+            LiveTraceConfiguration liveTraceConfiguration = default;
+            ResourceLogConfiguration resourceLogConfiguration = default;
+            WebPubSubNetworkAcls networkAcls = default;
+            string publicNetworkAccess = default;
+            bool? disableLocalAuth = default;
+            bool? disableAadAuth = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -443,7 +443,32 @@ namespace Azure.ResourceManager.WebPubSub
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebPubSubData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, sku.Value, identity, Optional.ToNullable(provisioningState), externalIP.Value, hostName.Value, Optional.ToNullable(publicPort), Optional.ToNullable(serverPort), version.Value, privateEndpointConnections ?? new ChangeTrackingList<WebPubSubPrivateEndpointConnectionData>(), sharedPrivateLinkResources ?? new ChangeTrackingList<WebPubSubSharedPrivateLinkData>(), tls.Value, hostNamePrefix.Value, liveTraceConfiguration.Value, resourceLogConfiguration.Value, networkAcls.Value, publicNetworkAccess.Value, Optional.ToNullable(disableLocalAuth), Optional.ToNullable(disableAadAuth), serializedAdditionalRawData);
+            return new WebPubSubData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku,
+                identity,
+                provisioningState,
+                externalIP,
+                hostName,
+                publicPort,
+                serverPort,
+                version,
+                privateEndpointConnections ?? new ChangeTrackingList<WebPubSubPrivateEndpointConnectionData>(),
+                sharedPrivateLinkResources ?? new ChangeTrackingList<WebPubSubSharedPrivateLinkData>(),
+                tls,
+                hostNamePrefix,
+                liveTraceConfiguration,
+                resourceLogConfiguration,
+                networkAcls,
+                publicNetworkAccess,
+                disableLocalAuth,
+                disableAadAuth,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebPubSubData>.Write(ModelReaderWriterOptions options)

@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<string> intervalStartTime = default;
-            Optional<QueryTimeGrainType> intervalType = default;
-            Optional<long> executionCount = default;
+            string intervalStartTime = default;
+            QueryTimeGrainType? intervalType = default;
+            long? executionCount = default;
             IList<QueryMetricProperties> metrics = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QueryMetricInterval(intervalStartTime.Value, Optional.ToNullable(intervalType), Optional.ToNullable(executionCount), metrics ?? new ChangeTrackingList<QueryMetricProperties>(), serializedAdditionalRawData);
+            return new QueryMetricInterval(intervalStartTime, intervalType, executionCount, metrics ?? new ChangeTrackingList<QueryMetricProperties>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QueryMetricInterval>.Write(ModelReaderWriterOptions options)

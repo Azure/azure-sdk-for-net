@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 return null;
             }
             IReadOnlyList<PostgreSqlMigrationData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlMigrationResourceListResult(value ?? new ChangeTrackingList<PostgreSqlMigrationData>(), nextLink.Value, serializedAdditionalRawData);
+            return new PostgreSqlMigrationResourceListResult(value ?? new ChangeTrackingList<PostgreSqlMigrationData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlMigrationResourceListResult>.Write(ModelReaderWriterOptions options)

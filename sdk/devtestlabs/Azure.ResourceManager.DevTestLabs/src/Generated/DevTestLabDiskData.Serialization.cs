@@ -162,18 +162,18 @@ namespace Azure.ResourceManager.DevTestLabs
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DevTestLabStorageType> diskType = default;
-            Optional<int> diskSizeGiB = default;
-            Optional<ResourceIdentifier> leasedByLabVmId = default;
-            Optional<string> diskBlobName = default;
-            Optional<Uri> diskUri = default;
-            Optional<string> storageAccountId = default;
-            Optional<DateTimeOffset> createdDate = default;
-            Optional<string> hostCaching = default;
-            Optional<ResourceIdentifier> managedDiskId = default;
-            Optional<string> provisioningState = default;
-            Optional<Guid> uniqueIdentifier = default;
+            SystemData systemData = default;
+            DevTestLabStorageType? diskType = default;
+            int? diskSizeGiB = default;
+            ResourceIdentifier leasedByLabVmId = default;
+            string diskBlobName = default;
+            Uri diskUri = default;
+            string storageAccountId = default;
+            DateTimeOffset? createdDate = default;
+            string hostCaching = default;
+            ResourceIdentifier managedDiskId = default;
+            string provisioningState = default;
+            Guid? uniqueIdentifier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -322,7 +322,25 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabDiskData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(diskType), Optional.ToNullable(diskSizeGiB), leasedByLabVmId.Value, diskBlobName.Value, diskUri.Value, storageAccountId.Value, Optional.ToNullable(createdDate), hostCaching.Value, managedDiskId.Value, provisioningState.Value, Optional.ToNullable(uniqueIdentifier), serializedAdditionalRawData);
+            return new DevTestLabDiskData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                diskType,
+                diskSizeGiB,
+                leasedByLabVmId,
+                diskBlobName,
+                diskUri,
+                storageAccountId,
+                createdDate,
+                hostCaching,
+                managedDiskId,
+                provisioningState,
+                uniqueIdentifier,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabDiskData>.Write(ModelReaderWriterOptions options)

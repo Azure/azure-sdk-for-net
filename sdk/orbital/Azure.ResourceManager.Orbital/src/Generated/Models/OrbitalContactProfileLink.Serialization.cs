@@ -90,8 +90,8 @@ namespace Azure.ResourceManager.Orbital.Models
             string name = default;
             OrbitalLinkPolarization polarization = default;
             OrbitalLinkDirection direction = default;
-            Optional<float> gainOverTemperature = default;
-            Optional<float> eirpdBW = default;
+            float? gainOverTemperature = default;
+            float? eirpdBW = default;
             IList<OrbitalContactProfileLinkChannel> channels = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -146,7 +146,14 @@ namespace Azure.ResourceManager.Orbital.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OrbitalContactProfileLink(name, polarization, direction, Optional.ToNullable(gainOverTemperature), Optional.ToNullable(eirpdBW), channels, serializedAdditionalRawData);
+            return new OrbitalContactProfileLink(
+                name,
+                polarization,
+                direction,
+                gainOverTemperature,
+                eirpdBW,
+                channels,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OrbitalContactProfileLink>.Write(ModelReaderWriterOptions options)

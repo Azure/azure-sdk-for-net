@@ -179,24 +179,24 @@ namespace Azure.AI.DocumentIntelligence
                 return null;
             }
             DocumentFieldType type = default;
-            Optional<string> valueString = default;
-            Optional<DateTimeOffset> valueDate = default;
-            Optional<TimeSpan> valueTime = default;
-            Optional<string> valuePhoneNumber = default;
-            Optional<double> valueNumber = default;
-            Optional<long> valueInteger = default;
-            Optional<DocumentSelectionMarkState> valueSelectionMark = default;
-            Optional<DocumentSignatureType> valueSignature = default;
-            Optional<string> valueCountryRegion = default;
+            string valueString = default;
+            DateTimeOffset? valueDate = default;
+            TimeSpan? valueTime = default;
+            string valuePhoneNumber = default;
+            double? valueNumber = default;
+            long? valueInteger = default;
+            DocumentSelectionMarkState? valueSelectionMark = default;
+            DocumentSignatureType? valueSignature = default;
+            string valueCountryRegion = default;
             IReadOnlyList<DocumentField> valueArray = default;
             IReadOnlyDictionary<string, DocumentField> valueObject = default;
-            Optional<CurrencyValue> valueCurrency = default;
-            Optional<AddressValue> valueAddress = default;
-            Optional<bool> valueBoolean = default;
-            Optional<string> content = default;
+            CurrencyValue valueCurrency = default;
+            AddressValue valueAddress = default;
+            bool? valueBoolean = default;
+            string content = default;
             IReadOnlyList<BoundingRegion> boundingRegions = default;
             IReadOnlyList<DocumentSpan> spans = default;
-            Optional<float> confidence = default;
+            float? confidence = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -378,7 +378,27 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DocumentField(type, valueString.Value, Optional.ToNullable(valueDate), Optional.ToNullable(valueTime), valuePhoneNumber.Value, Optional.ToNullable(valueNumber), Optional.ToNullable(valueInteger), Optional.ToNullable(valueSelectionMark), Optional.ToNullable(valueSignature), valueCountryRegion.Value, valueArray ?? new ChangeTrackingList<DocumentField>(), valueObject ?? new ChangeTrackingDictionary<string, DocumentField>(), valueCurrency.Value, valueAddress.Value, Optional.ToNullable(valueBoolean), content.Value, boundingRegions ?? new ChangeTrackingList<BoundingRegion>(), spans ?? new ChangeTrackingList<DocumentSpan>(), Optional.ToNullable(confidence), serializedAdditionalRawData);
+            return new DocumentField(
+                type,
+                valueString,
+                valueDate,
+                valueTime,
+                valuePhoneNumber,
+                valueNumber,
+                valueInteger,
+                valueSelectionMark,
+                valueSignature,
+                valueCountryRegion,
+                valueArray ?? new ChangeTrackingList<DocumentField>(),
+                valueObject ?? new ChangeTrackingDictionary<string, DocumentField>(),
+                valueCurrency,
+                valueAddress,
+                valueBoolean,
+                content,
+                boundingRegions ?? new ChangeTrackingList<BoundingRegion>(),
+                spans ?? new ChangeTrackingList<DocumentSpan>(),
+                confidence,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DocumentField>.Write(ModelReaderWriterOptions options)

@@ -147,10 +147,10 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<string> fullyQualifiedArmId = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<NetworkSecurityPerimeterProfileAccessRuleDirection> direction = default;
+            string fullyQualifiedArmId = default;
+            string name = default;
+            string type = default;
+            NetworkSecurityPerimeterProfileAccessRuleDirection? direction = default;
             IList<string> addressPrefixes = default;
             IList<string> subscriptions = default;
             IList<NetworkSecurityPerimeterInfo> networkSecurityPerimeters = default;
@@ -287,7 +287,18 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkSecurityPerimeterProfileAccessRule(fullyQualifiedArmId.Value, name.Value, type.Value, Optional.ToNullable(direction), addressPrefixes ?? new ChangeTrackingList<string>(), subscriptions ?? new ChangeTrackingList<string>(), networkSecurityPerimeters ?? new ChangeTrackingList<NetworkSecurityPerimeterInfo>(), fullyQualifiedDomainNames ?? new ChangeTrackingList<string>(), emailAddresses ?? new ChangeTrackingList<string>(), phoneNumbers ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new NetworkSecurityPerimeterProfileAccessRule(
+                fullyQualifiedArmId,
+                name,
+                type,
+                direction,
+                addressPrefixes ?? new ChangeTrackingList<string>(),
+                subscriptions ?? new ChangeTrackingList<string>(),
+                networkSecurityPerimeters ?? new ChangeTrackingList<NetworkSecurityPerimeterInfo>(),
+                fullyQualifiedDomainNames ?? new ChangeTrackingList<string>(),
+                emailAddresses ?? new ChangeTrackingList<string>(),
+                phoneNumbers ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkSecurityPerimeterProfileAccessRule>.Write(ModelReaderWriterOptions options)

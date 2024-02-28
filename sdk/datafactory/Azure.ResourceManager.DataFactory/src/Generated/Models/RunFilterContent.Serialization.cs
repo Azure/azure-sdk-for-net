@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<string> continuationToken = default;
+            string continuationToken = default;
             DateTimeOffset lastUpdatedAfter = default;
             DateTimeOffset lastUpdatedBefore = default;
             IList<RunQueryFilter> filters = default;
@@ -151,7 +151,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RunFilterContent(continuationToken.Value, lastUpdatedAfter, lastUpdatedBefore, filters ?? new ChangeTrackingList<RunQueryFilter>(), orderBy ?? new ChangeTrackingList<RunQueryOrderBy>(), serializedAdditionalRawData);
+            return new RunFilterContent(
+                continuationToken,
+                lastUpdatedAfter,
+                lastUpdatedBefore,
+                filters ?? new ChangeTrackingList<RunQueryFilter>(),
+                orderBy ?? new ChangeTrackingList<RunQueryOrderBy>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RunFilterContent>.Write(ModelReaderWriterOptions options)

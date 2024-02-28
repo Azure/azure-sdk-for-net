@@ -118,18 +118,18 @@ namespace Azure.ResourceManager.IotHub.Models
                 return null;
             }
             string name = default;
-            Optional<string> id = default;
-            Optional<string> subscriptionId = default;
-            Optional<string> resourceGroup = default;
+            string id = default;
+            string subscriptionId = default;
+            string resourceGroup = default;
             Uri endpointUri = default;
-            Optional<IotHubAuthenticationType> authenticationType = default;
-            Optional<ManagedIdentity> identity = default;
-            Optional<string> primaryKey = default;
-            Optional<string> secondaryKey = default;
+            IotHubAuthenticationType? authenticationType = default;
+            ManagedIdentity identity = default;
+            string primaryKey = default;
+            string secondaryKey = default;
             string databaseName = default;
             string containerName = default;
-            Optional<string> partitionKeyName = default;
-            Optional<string> partitionKeyTemplate = default;
+            string partitionKeyName = default;
+            string partitionKeyTemplate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -213,7 +213,21 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoutingCosmosDBSqlApiProperties(name, id.Value, subscriptionId.Value, resourceGroup.Value, endpointUri, Optional.ToNullable(authenticationType), identity.Value, primaryKey.Value, secondaryKey.Value, databaseName, containerName, partitionKeyName.Value, partitionKeyTemplate.Value, serializedAdditionalRawData);
+            return new RoutingCosmosDBSqlApiProperties(
+                name,
+                id,
+                subscriptionId,
+                resourceGroup,
+                endpointUri,
+                authenticationType,
+                identity,
+                primaryKey,
+                secondaryKey,
+                databaseName,
+                containerName,
+                partitionKeyName,
+                partitionKeyTemplate,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoutingCosmosDBSqlApiProperties>.Write(ModelReaderWriterOptions options)

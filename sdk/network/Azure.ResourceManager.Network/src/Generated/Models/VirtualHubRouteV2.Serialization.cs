@@ -94,9 +94,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> destinationType = default;
+            string destinationType = default;
             IList<string> destinations = default;
-            Optional<string> nextHopType = default;
+            string nextHopType = default;
             IList<string> nextHops = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualHubRouteV2(destinationType.Value, destinations ?? new ChangeTrackingList<string>(), nextHopType.Value, nextHops ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new VirtualHubRouteV2(destinationType, destinations ?? new ChangeTrackingList<string>(), nextHopType, nextHops ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualHubRouteV2>.Write(ModelReaderWriterOptions options)

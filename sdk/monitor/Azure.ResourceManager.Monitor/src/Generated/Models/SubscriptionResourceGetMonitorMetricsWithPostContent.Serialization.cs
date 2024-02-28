@@ -124,18 +124,18 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<TimeSpan> timespan = default;
-            Optional<TimeSpan> interval = default;
-            Optional<string> metricNames = default;
-            Optional<string> aggregation = default;
-            Optional<string> filter = default;
-            Optional<int> top = default;
-            Optional<string> orderBy = default;
-            Optional<string> rollUpBy = default;
-            Optional<MonitorMetricResultType> resultType = default;
-            Optional<string> metricNamespace = default;
-            Optional<bool> autoAdjustTimegrain = default;
-            Optional<bool> validateDimensions = default;
+            TimeSpan? timespan = default;
+            TimeSpan? interval = default;
+            string metricNames = default;
+            string aggregation = default;
+            string filter = default;
+            int? top = default;
+            string orderBy = default;
+            string rollUpBy = default;
+            MonitorMetricResultType? resultType = default;
+            string metricNamespace = default;
+            bool? autoAdjustTimegrain = default;
+            bool? validateDimensions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -230,7 +230,20 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubscriptionResourceGetMonitorMetricsWithPostContent(Optional.ToNullable(timespan), Optional.ToNullable(interval), metricNames.Value, aggregation.Value, filter.Value, Optional.ToNullable(top), orderBy.Value, rollUpBy.Value, Optional.ToNullable(resultType), metricNamespace.Value, Optional.ToNullable(autoAdjustTimegrain), Optional.ToNullable(validateDimensions), serializedAdditionalRawData);
+            return new SubscriptionResourceGetMonitorMetricsWithPostContent(
+                timespan,
+                interval,
+                metricNames,
+                aggregation,
+                filter,
+                top,
+                orderBy,
+                rollUpBy,
+                resultType,
+                metricNamespace,
+                autoAdjustTimegrain,
+                validateDimensions,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubscriptionResourceGetMonitorMetricsWithPostContent>.Write(ModelReaderWriterOptions options)

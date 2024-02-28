@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<string> width = default;
-            Optional<string> height = default;
-            Optional<string> label = default;
+            string width = default;
+            string height = default;
+            string label = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PngLayer(width.Value, height.Value, label.Value, serializedAdditionalRawData);
+            return new PngLayer(width, height, label, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PngLayer>.Write(ModelReaderWriterOptions options)

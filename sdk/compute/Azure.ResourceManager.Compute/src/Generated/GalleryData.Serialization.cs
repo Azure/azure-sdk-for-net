@@ -137,13 +137,13 @@ namespace Azure.ResourceManager.Compute
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<GalleryIdentifier> identifier = default;
-            Optional<GalleryProvisioningState> provisioningState = default;
-            Optional<SharingProfile> sharingProfile = default;
-            Optional<SoftDeletePolicy> softDeletePolicy = default;
-            Optional<SharingStatus> sharingStatus = default;
+            SystemData systemData = default;
+            string description = default;
+            GalleryIdentifier identifier = default;
+            GalleryProvisioningState? provisioningState = default;
+            SharingProfile sharingProfile = default;
+            SoftDeletePolicy softDeletePolicy = default;
+            SharingStatus sharingStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -259,7 +259,20 @@ namespace Azure.ResourceManager.Compute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GalleryData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, description.Value, identifier.Value, Optional.ToNullable(provisioningState), sharingProfile.Value, softDeletePolicy.Value, sharingStatus.Value, serializedAdditionalRawData);
+            return new GalleryData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                description,
+                identifier,
+                provisioningState,
+                sharingProfile,
+                softDeletePolicy,
+                sharingStatus,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GalleryData>.Write(ModelReaderWriterOptions options)

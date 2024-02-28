@@ -87,9 +87,9 @@ namespace Azure.ResourceManager.Resources.Models
                 return null;
             }
             bool jitAccessEnabled = default;
-            Optional<JitApprovalMode> jitApprovalMode = default;
+            JitApprovalMode? jitApprovalMode = default;
             IList<JitApprover> jitApprovers = default;
-            Optional<TimeSpan> maximumJitAccessDuration = default;
+            TimeSpan? maximumJitAccessDuration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmApplicationJitAccessPolicy(jitAccessEnabled, Optional.ToNullable(jitApprovalMode), jitApprovers ?? new ChangeTrackingList<JitApprover>(), Optional.ToNullable(maximumJitAccessDuration), serializedAdditionalRawData);
+            return new ArmApplicationJitAccessPolicy(jitAccessEnabled, jitApprovalMode, jitApprovers ?? new ChangeTrackingList<JitApprover>(), maximumJitAccessDuration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArmApplicationJitAccessPolicy>.Write(ModelReaderWriterOptions options)

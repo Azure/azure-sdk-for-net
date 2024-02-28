@@ -178,7 +178,7 @@ namespace Azure.AI.DocumentIntelligence
             string apiVersion = default;
             string modelId = default;
             StringIndexType stringIndexType = default;
-            Optional<ContentFormat> contentFormat = default;
+            ContentFormat? contentFormat = default;
             string content = default;
             IReadOnlyList<DocumentPage> pages = default;
             IReadOnlyList<DocumentParagraph> paragraphs = default;
@@ -365,7 +365,23 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AnalyzeResult(apiVersion, modelId, stringIndexType, Optional.ToNullable(contentFormat), content, pages, paragraphs ?? new ChangeTrackingList<DocumentParagraph>(), tables ?? new ChangeTrackingList<DocumentTable>(), figures ?? new ChangeTrackingList<DocumentFigure>(), lists ?? new ChangeTrackingList<DocumentList>(), sections ?? new ChangeTrackingList<DocumentSection>(), keyValuePairs ?? new ChangeTrackingList<DocumentKeyValuePair>(), styles ?? new ChangeTrackingList<DocumentStyle>(), languages ?? new ChangeTrackingList<DocumentLanguage>(), documents ?? new ChangeTrackingList<AnalyzedDocument>(), serializedAdditionalRawData);
+            return new AnalyzeResult(
+                apiVersion,
+                modelId,
+                stringIndexType,
+                contentFormat,
+                content,
+                pages,
+                paragraphs ?? new ChangeTrackingList<DocumentParagraph>(),
+                tables ?? new ChangeTrackingList<DocumentTable>(),
+                figures ?? new ChangeTrackingList<DocumentFigure>(),
+                lists ?? new ChangeTrackingList<DocumentList>(),
+                sections ?? new ChangeTrackingList<DocumentSection>(),
+                keyValuePairs ?? new ChangeTrackingList<DocumentKeyValuePair>(),
+                styles ?? new ChangeTrackingList<DocumentStyle>(),
+                languages ?? new ChangeTrackingList<DocumentLanguage>(),
+                documents ?? new ChangeTrackingList<AnalyzedDocument>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AnalyzeResult>.Write(ModelReaderWriterOptions options)

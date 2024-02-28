@@ -115,10 +115,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 return null;
             }
             IReadOnlyList<ComputeVmInstanceViewStatus> statuses = default;
-            Optional<string> osType = default;
-            Optional<string> vmSize = default;
-            Optional<string> networkInterfaceId = default;
-            Optional<string> osDiskId = default;
+            string osType = default;
+            string vmSize = default;
+            string networkInterfaceId = default;
+            string osDiskId = default;
             IReadOnlyList<string> dataDiskIds = default;
             IReadOnlyList<ComputeDataDisk> dataDisks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -193,7 +193,15 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComputeVmProperties(statuses ?? new ChangeTrackingList<ComputeVmInstanceViewStatus>(), osType.Value, vmSize.Value, networkInterfaceId.Value, osDiskId.Value, dataDiskIds ?? new ChangeTrackingList<string>(), dataDisks ?? new ChangeTrackingList<ComputeDataDisk>(), serializedAdditionalRawData);
+            return new ComputeVmProperties(
+                statuses ?? new ChangeTrackingList<ComputeVmInstanceViewStatus>(),
+                osType,
+                vmSize,
+                networkInterfaceId,
+                osDiskId,
+                dataDiskIds ?? new ChangeTrackingList<string>(),
+                dataDisks ?? new ChangeTrackingList<ComputeDataDisk>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComputeVmProperties>.Write(ModelReaderWriterOptions options)

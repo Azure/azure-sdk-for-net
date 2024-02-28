@@ -114,10 +114,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<ResourceType> resourceType = default;
-            Optional<string> name = default;
-            Optional<string> tier = default;
-            Optional<AppPlatformSkuCapacity> capacity = default;
+            ResourceType? resourceType = default;
+            string name = default;
+            string tier = default;
+            AppPlatformSkuCapacity capacity = default;
             IReadOnlyList<AzureLocation> locations = default;
             IReadOnlyList<AppPlatformSkuLocationInfo> locationInfo = default;
             IReadOnlyList<AppPlatformSkuRestrictions> restrictions = default;
@@ -201,7 +201,15 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailableAppPlatformSku(Optional.ToNullable(resourceType), name.Value, tier.Value, capacity.Value, locations ?? new ChangeTrackingList<AzureLocation>(), locationInfo ?? new ChangeTrackingList<AppPlatformSkuLocationInfo>(), restrictions ?? new ChangeTrackingList<AppPlatformSkuRestrictions>(), serializedAdditionalRawData);
+            return new AvailableAppPlatformSku(
+                resourceType,
+                name,
+                tier,
+                capacity,
+                locations ?? new ChangeTrackingList<AzureLocation>(),
+                locationInfo ?? new ChangeTrackingList<AppPlatformSkuLocationInfo>(),
+                restrictions ?? new ChangeTrackingList<AppPlatformSkuRestrictions>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailableAppPlatformSku>.Write(ModelReaderWriterOptions options)

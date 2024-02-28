@@ -22,17 +22,17 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<int> priority = default;
+            int? priority = default;
             IReadOnlyList<AcsRouterWorkerSelector> expiredAttachedWorkerSelectors = default;
             IReadOnlyList<AcsRouterWorkerSelector> expiredRequestedWorkerSelectors = default;
-            Optional<DateTimeOffset> scheduledOn = default;
-            Optional<string> failureReason = default;
-            Optional<string> queueId = default;
+            DateTimeOffset? scheduledOn = default;
+            string failureReason = default;
+            string queueId = default;
             IReadOnlyDictionary<string, string> labels = default;
             IReadOnlyDictionary<string, string> tags = default;
-            Optional<string> jobId = default;
-            Optional<string> channelReference = default;
-            Optional<string> channelId = default;
+            string jobId = default;
+            string channelReference = default;
+            string channelId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("priority"u8))
@@ -135,7 +135,18 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsRouterJobSchedulingFailedEventData(jobId.Value, channelReference.Value, channelId.Value, queueId.Value, labels ?? new ChangeTrackingDictionary<string, string>(), tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(priority), expiredAttachedWorkerSelectors ?? new ChangeTrackingList<AcsRouterWorkerSelector>(), expiredRequestedWorkerSelectors ?? new ChangeTrackingList<AcsRouterWorkerSelector>(), Optional.ToNullable(scheduledOn), failureReason.Value);
+            return new AcsRouterJobSchedulingFailedEventData(
+                jobId,
+                channelReference,
+                channelId,
+                queueId,
+                labels ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                priority,
+                expiredAttachedWorkerSelectors ?? new ChangeTrackingList<AcsRouterWorkerSelector>(),
+                expiredRequestedWorkerSelectors ?? new ChangeTrackingList<AcsRouterWorkerSelector>(),
+                scheduledOn,
+                failureReason);
         }
 
         internal partial class AcsRouterJobSchedulingFailedEventDataConverter : JsonConverter<AcsRouterJobSchedulingFailedEventData>

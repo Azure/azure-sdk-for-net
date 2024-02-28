@@ -114,13 +114,13 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<string> clusterName = default;
-            Optional<Guid> clusterId = default;
-            Optional<string> clusterVersion = default;
+            string clusterName = default;
+            Guid? clusterId = default;
+            string clusterVersion = default;
             IReadOnlyList<HciClusterNode> nodes = default;
-            Optional<DateTimeOffset> lastUpdated = default;
-            Optional<ImdsAttestationState> imdsAttestation = default;
-            Optional<HciClusterDiagnosticLevel> diagnosticLevel = default;
+            DateTimeOffset? lastUpdated = default;
+            ImdsAttestationState? imdsAttestation = default;
+            HciClusterDiagnosticLevel? diagnosticLevel = default;
             IReadOnlyList<string> supportedCapabilities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -206,7 +206,16 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HciClusterReportedProperties(clusterName.Value, Optional.ToNullable(clusterId), clusterVersion.Value, nodes ?? new ChangeTrackingList<HciClusterNode>(), Optional.ToNullable(lastUpdated), Optional.ToNullable(imdsAttestation), Optional.ToNullable(diagnosticLevel), supportedCapabilities ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new HciClusterReportedProperties(
+                clusterName,
+                clusterId,
+                clusterVersion,
+                nodes ?? new ChangeTrackingList<HciClusterNode>(),
+                lastUpdated,
+                imdsAttestation,
+                diagnosticLevel,
+                supportedCapabilities ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HciClusterReportedProperties>.Write(ModelReaderWriterOptions options)

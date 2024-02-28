@@ -101,12 +101,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<double> sizeMB = default;
+            string name = default;
+            double? sizeMB = default;
             IReadOnlyList<DatabaseFileInfo> databaseFiles = default;
-            Optional<DatabaseCompatLevel> compatibilityLevel = default;
-            Optional<DatabaseState> databaseState = default;
-            Optional<string> id = default;
+            DatabaseCompatLevel? compatibilityLevel = default;
+            DatabaseState? databaseState = default;
+            string id = default;
             string resultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -174,7 +174,15 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectToSourceSqlServerTaskOutputDatabaseLevel(id.Value, resultType, serializedAdditionalRawData, name.Value, Optional.ToNullable(sizeMB), databaseFiles ?? new ChangeTrackingList<DatabaseFileInfo>(), Optional.ToNullable(compatibilityLevel), Optional.ToNullable(databaseState));
+            return new ConnectToSourceSqlServerTaskOutputDatabaseLevel(
+                id,
+                resultType,
+                serializedAdditionalRawData,
+                name,
+                sizeMB,
+                databaseFiles ?? new ChangeTrackingList<DatabaseFileInfo>(),
+                compatibilityLevel,
+                databaseState);
         }
 
         BinaryData IPersistableModel<ConnectToSourceSqlServerTaskOutputDatabaseLevel>.Write(ModelReaderWriterOptions options)

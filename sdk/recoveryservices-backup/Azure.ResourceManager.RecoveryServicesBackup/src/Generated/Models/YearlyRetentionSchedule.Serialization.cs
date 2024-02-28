@@ -104,12 +104,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<RetentionScheduleFormat> retentionScheduleFormatType = default;
+            RetentionScheduleFormat? retentionScheduleFormatType = default;
             IList<BackupMonthOfYear> monthsOfYear = default;
-            Optional<DailyRetentionFormat> retentionScheduleDaily = default;
-            Optional<WeeklyRetentionFormat> retentionScheduleWeekly = default;
+            DailyRetentionFormat retentionScheduleDaily = default;
+            WeeklyRetentionFormat retentionScheduleWeekly = default;
             IList<DateTimeOffset> retentionTimes = default;
-            Optional<RetentionDuration> retentionDuration = default;
+            RetentionDuration retentionDuration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -184,7 +184,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new YearlyRetentionSchedule(Optional.ToNullable(retentionScheduleFormatType), monthsOfYear ?? new ChangeTrackingList<BackupMonthOfYear>(), retentionScheduleDaily.Value, retentionScheduleWeekly.Value, retentionTimes ?? new ChangeTrackingList<DateTimeOffset>(), retentionDuration.Value, serializedAdditionalRawData);
+            return new YearlyRetentionSchedule(
+                retentionScheduleFormatType,
+                monthsOfYear ?? new ChangeTrackingList<BackupMonthOfYear>(),
+                retentionScheduleDaily,
+                retentionScheduleWeekly,
+                retentionTimes ?? new ChangeTrackingList<DateTimeOffset>(),
+                retentionDuration,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<YearlyRetentionSchedule>.Write(ModelReaderWriterOptions options)

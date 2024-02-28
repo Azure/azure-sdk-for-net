@@ -112,9 +112,9 @@ namespace Azure.ResourceManager.Storage.Models
                 return null;
             }
             StorageSkuName name = default;
-            Optional<StorageSkuTier> tier = default;
-            Optional<string> resourceType = default;
-            Optional<StorageKind> kind = default;
+            StorageSkuTier? tier = default;
+            string resourceType = default;
+            StorageKind? kind = default;
             IReadOnlyList<string> locations = default;
             IReadOnlyList<StorageSkuCapability> capabilities = default;
             IReadOnlyList<StorageSkuRestriction> restrictions = default;
@@ -198,7 +198,15 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageSkuInformation(name, Optional.ToNullable(tier), resourceType.Value, Optional.ToNullable(kind), locations ?? new ChangeTrackingList<string>(), capabilities ?? new ChangeTrackingList<StorageSkuCapability>(), restrictions ?? new ChangeTrackingList<StorageSkuRestriction>(), serializedAdditionalRawData);
+            return new StorageSkuInformation(
+                name,
+                tier,
+                resourceType,
+                kind,
+                locations ?? new ChangeTrackingList<string>(),
+                capabilities ?? new ChangeTrackingList<StorageSkuCapability>(),
+                restrictions ?? new ChangeTrackingList<StorageSkuRestriction>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageSkuInformation>.Write(ModelReaderWriterOptions options)

@@ -29,7 +29,7 @@ namespace Azure.IoT.Hub.Service.Models
             {
                 return null;
             }
-            Optional<bool> iotEdge = default;
+            bool? iotEdge = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("iotEdge"u8))
@@ -42,7 +42,7 @@ namespace Azure.IoT.Hub.Service.Models
                     continue;
                 }
             }
-            return new DeviceCapabilities(Optional.ToNullable(iotEdge));
+            return new DeviceCapabilities(iotEdge);
         }
     }
 }

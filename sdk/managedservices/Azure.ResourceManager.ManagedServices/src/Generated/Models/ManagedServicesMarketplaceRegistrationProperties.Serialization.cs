@@ -101,9 +101,9 @@ namespace Azure.ResourceManager.ManagedServices.Models
             Guid managedByTenantId = default;
             IReadOnlyList<ManagedServicesAuthorization> authorizations = default;
             IReadOnlyList<ManagedServicesEligibleAuthorization> eligibleAuthorizations = default;
-            Optional<string> offerDisplayName = default;
-            Optional<string> publisherDisplayName = default;
-            Optional<string> planDisplayName = default;
+            string offerDisplayName = default;
+            string publisherDisplayName = default;
+            string planDisplayName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -158,7 +158,14 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedServicesMarketplaceRegistrationProperties(managedByTenantId, authorizations, eligibleAuthorizations ?? new ChangeTrackingList<ManagedServicesEligibleAuthorization>(), offerDisplayName.Value, publisherDisplayName.Value, planDisplayName.Value, serializedAdditionalRawData);
+            return new ManagedServicesMarketplaceRegistrationProperties(
+                managedByTenantId,
+                authorizations,
+                eligibleAuthorizations ?? new ChangeTrackingList<ManagedServicesEligibleAuthorization>(),
+                offerDisplayName,
+                publisherDisplayName,
+                planDisplayName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedServicesMarketplaceRegistrationProperties>.Write(ModelReaderWriterOptions options)

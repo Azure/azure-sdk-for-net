@@ -122,23 +122,23 @@ namespace Azure.IoT.Hub.Service.Models
             {
                 return null;
             }
-            Optional<string> deviceId = default;
-            Optional<string> moduleId = default;
+            string deviceId = default;
+            string moduleId = default;
             IDictionary<string, object> tags = default;
-            Optional<TwinProperties> properties = default;
-            Optional<string> etag = default;
-            Optional<long> version = default;
-            Optional<string> deviceEtag = default;
-            Optional<TwinStatus> status = default;
-            Optional<string> statusReason = default;
-            Optional<DateTimeOffset> statusUpdateTime = default;
-            Optional<TwinConnectionState> connectionState = default;
-            Optional<DateTimeOffset> lastActivityTime = default;
-            Optional<int> cloudToDeviceMessageCount = default;
-            Optional<TwinAuthenticationType> authenticationType = default;
-            Optional<X509Thumbprint> x509Thumbprint = default;
-            Optional<DeviceCapabilities> capabilities = default;
-            Optional<string> deviceScope = default;
+            TwinProperties properties = default;
+            string etag = default;
+            long? version = default;
+            string deviceEtag = default;
+            TwinStatus? status = default;
+            string statusReason = default;
+            DateTimeOffset? statusUpdateTime = default;
+            TwinConnectionState? connectionState = default;
+            DateTimeOffset? lastActivityTime = default;
+            int? cloudToDeviceMessageCount = default;
+            TwinAuthenticationType? authenticationType = default;
+            X509Thumbprint x509Thumbprint = default;
+            DeviceCapabilities capabilities = default;
+            string deviceScope = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deviceId"u8))
@@ -283,7 +283,24 @@ namespace Azure.IoT.Hub.Service.Models
                     continue;
                 }
             }
-            return new TwinData(deviceId.Value, moduleId.Value, tags ?? new ChangeTrackingDictionary<string, object>(), properties.Value, etag.Value, Optional.ToNullable(version), deviceEtag.Value, Optional.ToNullable(status), statusReason.Value, Optional.ToNullable(statusUpdateTime), Optional.ToNullable(connectionState), Optional.ToNullable(lastActivityTime), Optional.ToNullable(cloudToDeviceMessageCount), Optional.ToNullable(authenticationType), x509Thumbprint.Value, capabilities.Value, deviceScope.Value);
+            return new TwinData(
+                deviceId,
+                moduleId,
+                tags ?? new ChangeTrackingDictionary<string, object>(),
+                properties,
+                etag,
+                version,
+                deviceEtag,
+                status,
+                statusReason,
+                statusUpdateTime,
+                connectionState,
+                lastActivityTime,
+                cloudToDeviceMessageCount,
+                authenticationType,
+                x509Thumbprint,
+                capabilities,
+                deviceScope);
         }
     }
 }

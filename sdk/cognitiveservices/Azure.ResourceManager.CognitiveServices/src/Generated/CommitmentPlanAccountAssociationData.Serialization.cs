@@ -99,12 +99,12 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> accountId = default;
+            SystemData systemData = default;
+            string accountId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,7 +165,14 @@ namespace Azure.ResourceManager.CognitiveServices
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CommitmentPlanAccountAssociationData(id, name, type, systemData.Value, Optional.ToNullable(etag), accountId.Value, serializedAdditionalRawData);
+            return new CommitmentPlanAccountAssociationData(
+                id,
+                name,
+                type,
+                systemData,
+                etag,
+                accountId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CommitmentPlanAccountAssociationData>.Write(ModelReaderWriterOptions options)

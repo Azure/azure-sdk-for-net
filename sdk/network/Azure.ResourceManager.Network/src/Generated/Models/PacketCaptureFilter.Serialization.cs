@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<PcProtocol> protocol = default;
-            Optional<string> localIPAddress = default;
-            Optional<string> remoteIPAddress = default;
-            Optional<string> localPort = default;
-            Optional<string> remotePort = default;
+            PcProtocol? protocol = default;
+            string localIPAddress = default;
+            string remoteIPAddress = default;
+            string localPort = default;
+            string remotePort = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PacketCaptureFilter(Optional.ToNullable(protocol), localIPAddress.Value, remoteIPAddress.Value, localPort.Value, remotePort.Value, serializedAdditionalRawData);
+            return new PacketCaptureFilter(
+                protocol,
+                localIPAddress,
+                remoteIPAddress,
+                localPort,
+                remotePort,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PacketCaptureFilter>.Write(ModelReaderWriterOptions options)

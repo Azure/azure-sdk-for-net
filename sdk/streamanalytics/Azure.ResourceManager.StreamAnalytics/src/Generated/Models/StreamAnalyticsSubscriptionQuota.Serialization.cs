@@ -92,11 +92,11 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<int> maxCount = default;
-            Optional<int> currentCount = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            int? maxCount = default;
+            int? currentCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,7 +160,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamAnalyticsSubscriptionQuota(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(maxCount), Optional.ToNullable(currentCount));
+            return new StreamAnalyticsSubscriptionQuota(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                maxCount,
+                currentCount);
         }
 
         BinaryData IPersistableModel<StreamAnalyticsSubscriptionQuota>.Write(ModelReaderWriterOptions options)

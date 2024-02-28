@@ -112,11 +112,11 @@ namespace Azure.ResourceManager.Redis
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<AccessPolicyAssignmentProvisioningState> provisioningState = default;
-            Optional<Guid> objectId = default;
-            Optional<string> objectIdAlias = default;
-            Optional<string> accessPolicyName = default;
+            SystemData systemData = default;
+            AccessPolicyAssignmentProvisioningState? provisioningState = default;
+            Guid? objectId = default;
+            string objectIdAlias = default;
+            string accessPolicyName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -191,7 +191,16 @@ namespace Azure.ResourceManager.Redis
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RedisCacheAccessPolicyAssignmentData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(objectId), objectIdAlias.Value, accessPolicyName.Value, serializedAdditionalRawData);
+            return new RedisCacheAccessPolicyAssignmentData(
+                id,
+                name,
+                type,
+                systemData,
+                provisioningState,
+                objectId,
+                objectIdAlias,
+                accessPolicyName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RedisCacheAccessPolicyAssignmentData>.Write(ModelReaderWriterOptions options)

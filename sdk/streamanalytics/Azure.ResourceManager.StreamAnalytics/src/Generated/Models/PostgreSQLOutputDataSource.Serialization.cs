@@ -105,13 +105,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             string type = default;
-            Optional<string> server = default;
-            Optional<string> database = default;
-            Optional<string> table = default;
-            Optional<string> user = default;
-            Optional<string> password = default;
-            Optional<int> maxWriterCount = default;
-            Optional<StreamAnalyticsAuthenticationMode> authenticationMode = default;
+            string server = default;
+            string database = default;
+            string table = default;
+            string user = default;
+            string password = default;
+            int? maxWriterCount = default;
+            StreamAnalyticsAuthenticationMode? authenticationMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -182,7 +182,16 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSQLOutputDataSource(type, serializedAdditionalRawData, server.Value, database.Value, table.Value, user.Value, password.Value, Optional.ToNullable(maxWriterCount), Optional.ToNullable(authenticationMode));
+            return new PostgreSQLOutputDataSource(
+                type,
+                serializedAdditionalRawData,
+                server,
+                database,
+                table,
+                user,
+                password,
+                maxWriterCount,
+                authenticationMode);
         }
 
         BinaryData IPersistableModel<PostgreSQLOutputDataSource>.Write(ModelReaderWriterOptions options)

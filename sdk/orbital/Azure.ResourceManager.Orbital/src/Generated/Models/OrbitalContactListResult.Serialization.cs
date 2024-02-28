@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Orbital.Models
                 return null;
             }
             IReadOnlyList<OrbitalContactData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Orbital.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OrbitalContactListResult(value ?? new ChangeTrackingList<OrbitalContactData>(), nextLink.Value, serializedAdditionalRawData);
+            return new OrbitalContactListResult(value ?? new ChangeTrackingList<OrbitalContactData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OrbitalContactListResult>.Write(ModelReaderWriterOptions options)

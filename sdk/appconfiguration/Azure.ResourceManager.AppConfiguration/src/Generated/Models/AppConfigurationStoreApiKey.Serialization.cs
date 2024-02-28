@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> value = default;
-            Optional<string> connectionString = default;
-            Optional<DateTimeOffset> lastModified = default;
-            Optional<bool> readOnly = default;
+            string id = default;
+            string name = default;
+            string value = default;
+            string connectionString = default;
+            DateTimeOffset? lastModified = default;
+            bool? readOnly = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -148,7 +148,14 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppConfigurationStoreApiKey(id.Value, name.Value, value.Value, connectionString.Value, Optional.ToNullable(lastModified), Optional.ToNullable(readOnly), serializedAdditionalRawData);
+            return new AppConfigurationStoreApiKey(
+                id,
+                name,
+                value,
+                connectionString,
+                lastModified,
+                readOnly,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppConfigurationStoreApiKey>.Write(ModelReaderWriterOptions options)

@@ -159,24 +159,24 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> address = default;
-            Optional<CassandraNodeState> state = default;
-            Optional<string> status = default;
-            Optional<string> cassandraProcessStatus = default;
-            Optional<string> load = default;
+            string address = default;
+            CassandraNodeState? state = default;
+            string status = default;
+            string cassandraProcessStatus = default;
+            string load = default;
             IReadOnlyList<string> tokens = default;
-            Optional<int> size = default;
-            Optional<Guid> hostId = default;
-            Optional<string> rack = default;
-            Optional<string> timestamp = default;
-            Optional<long> diskUsedKB = default;
-            Optional<long> diskFreeKB = default;
-            Optional<long> memoryUsedKB = default;
-            Optional<long> memoryBuffersAndCachedKB = default;
-            Optional<long> memoryFreeKB = default;
-            Optional<long> memoryTotalKB = default;
-            Optional<double> cpuUsage = default;
-            Optional<bool> isLatestModel = default;
+            int? size = default;
+            Guid? hostId = default;
+            string rack = default;
+            string timestamp = default;
+            long? diskUsedKB = default;
+            long? diskFreeKB = default;
+            long? memoryUsedKB = default;
+            long? memoryBuffersAndCachedKB = default;
+            long? memoryFreeKB = default;
+            long? memoryTotalKB = default;
+            double? cpuUsage = default;
+            bool? isLatestModel = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -330,7 +330,26 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CassandraClusterDataCenterNodeItem(address.Value, Optional.ToNullable(state), status.Value, cassandraProcessStatus.Value, load.Value, tokens ?? new ChangeTrackingList<string>(), Optional.ToNullable(size), Optional.ToNullable(hostId), rack.Value, timestamp.Value, Optional.ToNullable(diskUsedKB), Optional.ToNullable(diskFreeKB), Optional.ToNullable(memoryUsedKB), Optional.ToNullable(memoryBuffersAndCachedKB), Optional.ToNullable(memoryFreeKB), Optional.ToNullable(memoryTotalKB), Optional.ToNullable(cpuUsage), Optional.ToNullable(isLatestModel), serializedAdditionalRawData);
+            return new CassandraClusterDataCenterNodeItem(
+                address,
+                state,
+                status,
+                cassandraProcessStatus,
+                load,
+                tokens ?? new ChangeTrackingList<string>(),
+                size,
+                hostId,
+                rack,
+                timestamp,
+                diskUsedKB,
+                diskFreeKB,
+                memoryUsedKB,
+                memoryBuffersAndCachedKB,
+                memoryFreeKB,
+                memoryTotalKB,
+                cpuUsage,
+                isLatestModel,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CassandraClusterDataCenterNodeItem>.Write(ModelReaderWriterOptions options)

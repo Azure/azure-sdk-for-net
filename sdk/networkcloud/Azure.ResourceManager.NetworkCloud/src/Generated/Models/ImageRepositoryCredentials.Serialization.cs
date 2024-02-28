@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<string> password = default;
+            string password = default;
             string registryUrl = default;
             string username = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ImageRepositoryCredentials(password.Value, registryUrl, username, serializedAdditionalRawData);
+            return new ImageRepositoryCredentials(password, registryUrl, username, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ImageRepositoryCredentials>.Write(ModelReaderWriterOptions options)

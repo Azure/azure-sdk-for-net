@@ -148,7 +148,13 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataTransferDetailsValidationContent(validationType, serializedAdditionalRawData, dataExportDetails ?? new ChangeTrackingList<DataExportDetails>(), dataImportDetails ?? new ChangeTrackingList<DataImportDetails>(), deviceType, transferType);
+            return new DataTransferDetailsValidationContent(
+                validationType,
+                serializedAdditionalRawData,
+                dataExportDetails ?? new ChangeTrackingList<DataExportDetails>(),
+                dataImportDetails ?? new ChangeTrackingList<DataImportDetails>(),
+                deviceType,
+                transferType);
         }
 
         BinaryData IPersistableModel<DataTransferDetailsValidationContent>.Write(ModelReaderWriterOptions options)

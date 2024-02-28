@@ -178,24 +178,24 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
             IDictionary<string, EntityParameterSpecification> parameters = default;
             IList<BinaryData> annotations = default;
             DataFactoryElement<string> url = default;
-            Optional<ODataAuthenticationType> authenticationType = default;
-            Optional<DataFactoryElement<string>> userName = default;
-            Optional<DataFactorySecretBaseDefinition> password = default;
-            Optional<DataFactoryElement<IDictionary<string, string>>> authHeaders = default;
-            Optional<DataFactoryElement<string>> tenant = default;
-            Optional<DataFactoryElement<string>> servicePrincipalId = default;
-            Optional<DataFactoryElement<string>> azureCloudType = default;
-            Optional<DataFactoryElement<string>> aadResourceId = default;
-            Optional<ODataAadServicePrincipalCredentialType> aadServicePrincipalCredentialType = default;
-            Optional<DataFactorySecretBaseDefinition> servicePrincipalKey = default;
-            Optional<DataFactorySecretBaseDefinition> servicePrincipalEmbeddedCert = default;
-            Optional<DataFactorySecretBaseDefinition> servicePrincipalEmbeddedCertPassword = default;
-            Optional<string> encryptedCredential = default;
+            ODataAuthenticationType? authenticationType = default;
+            DataFactoryElement<string> userName = default;
+            DataFactorySecretBaseDefinition password = default;
+            DataFactoryElement<IDictionary<string, string>> authHeaders = default;
+            DataFactoryElement<string> tenant = default;
+            DataFactoryElement<string> servicePrincipalId = default;
+            DataFactoryElement<string> azureCloudType = default;
+            DataFactoryElement<string> aadResourceId = default;
+            ODataAadServicePrincipalCredentialType? aadServicePrincipalCredentialType = default;
+            DataFactorySecretBaseDefinition servicePrincipalKey = default;
+            DataFactorySecretBaseDefinition servicePrincipalEmbeddedCert = default;
+            DataFactorySecretBaseDefinition servicePrincipalEmbeddedCertPassword = default;
+            string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -387,7 +387,27 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ODataLinkedService(type, connectVia.Value, description.Value, parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, url, Optional.ToNullable(authenticationType), userName.Value, password, authHeaders.Value, tenant.Value, servicePrincipalId.Value, azureCloudType.Value, aadResourceId.Value, Optional.ToNullable(aadServicePrincipalCredentialType), servicePrincipalKey, servicePrincipalEmbeddedCert, servicePrincipalEmbeddedCertPassword, encryptedCredential.Value);
+            return new ODataLinkedService(
+                type,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                url,
+                authenticationType,
+                userName,
+                password,
+                authHeaders,
+                tenant,
+                servicePrincipalId,
+                azureCloudType,
+                aadResourceId,
+                aadServicePrincipalCredentialType,
+                servicePrincipalKey,
+                servicePrincipalEmbeddedCert,
+                servicePrincipalEmbeddedCertPassword,
+                encryptedCredential);
         }
 
         BinaryData IPersistableModel<ODataLinkedService>.Write(ModelReaderWriterOptions options)

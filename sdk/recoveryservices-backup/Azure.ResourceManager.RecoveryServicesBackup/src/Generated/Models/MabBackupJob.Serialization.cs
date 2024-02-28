@@ -146,20 +146,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<TimeSpan> duration = default;
+            TimeSpan? duration = default;
             IList<JobSupportedAction> actionsInfo = default;
-            Optional<string> mabServerName = default;
-            Optional<MabServerType> mabServerType = default;
-            Optional<BackupWorkloadType> workloadType = default;
+            string mabServerName = default;
+            MabServerType? mabServerType = default;
+            BackupWorkloadType? workloadType = default;
             IList<MabErrorInfo> errorDetails = default;
-            Optional<MabBackupJobExtendedInfo> extendedInfo = default;
-            Optional<string> entityFriendlyName = default;
-            Optional<BackupManagementType> backupManagementType = default;
-            Optional<string> operation = default;
-            Optional<string> status = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<string> activityId = default;
+            MabBackupJobExtendedInfo extendedInfo = default;
+            string entityFriendlyName = default;
+            BackupManagementType? backupManagementType = default;
+            string operation = default;
+            string status = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            string activityId = default;
             string jobType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -292,7 +292,23 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MabBackupJob(entityFriendlyName.Value, Optional.ToNullable(backupManagementType), operation.Value, status.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), activityId.Value, jobType, serializedAdditionalRawData, Optional.ToNullable(duration), actionsInfo ?? new ChangeTrackingList<JobSupportedAction>(), mabServerName.Value, Optional.ToNullable(mabServerType), Optional.ToNullable(workloadType), errorDetails ?? new ChangeTrackingList<MabErrorInfo>(), extendedInfo.Value);
+            return new MabBackupJob(
+                entityFriendlyName,
+                backupManagementType,
+                operation,
+                status,
+                startTime,
+                endTime,
+                activityId,
+                jobType,
+                serializedAdditionalRawData,
+                duration,
+                actionsInfo ?? new ChangeTrackingList<JobSupportedAction>(),
+                mabServerName,
+                mabServerType,
+                workloadType,
+                errorDetails ?? new ChangeTrackingList<MabErrorInfo>(),
+                extendedInfo);
         }
 
         BinaryData IPersistableModel<MabBackupJob>.Write(ModelReaderWriterOptions options)

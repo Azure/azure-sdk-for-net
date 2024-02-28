@@ -25,12 +25,12 @@ namespace Azure.Communication.Chat
             ChatMessageType type = default;
             string sequenceId = default;
             string version = default;
-            Optional<ChatMessageContentInternal> content = default;
-            Optional<string> senderDisplayName = default;
+            ChatMessageContentInternal content = default;
+            string senderDisplayName = default;
             DateTimeOffset createdOn = default;
-            Optional<CommunicationIdentifierModel> senderCommunicationIdentifier = default;
-            Optional<DateTimeOffset> deletedOn = default;
-            Optional<DateTimeOffset> editedOn = default;
+            CommunicationIdentifierModel senderCommunicationIdentifier = default;
+            DateTimeOffset? deletedOn = default;
+            DateTimeOffset? editedOn = default;
             IReadOnlyDictionary<string, string> metadata = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -115,7 +115,18 @@ namespace Azure.Communication.Chat
                     continue;
                 }
             }
-            return new ChatMessageInternal(id, type, sequenceId, version, content.Value, senderDisplayName.Value, createdOn, senderCommunicationIdentifier.Value, Optional.ToNullable(deletedOn), Optional.ToNullable(editedOn), metadata ?? new ChangeTrackingDictionary<string, string>());
+            return new ChatMessageInternal(
+                id,
+                type,
+                sequenceId,
+                version,
+                content,
+                senderDisplayName,
+                createdOn,
+                senderCommunicationIdentifier,
+                deletedOn,
+                editedOn,
+                metadata ?? new ChangeTrackingDictionary<string, string>());
         }
     }
 }

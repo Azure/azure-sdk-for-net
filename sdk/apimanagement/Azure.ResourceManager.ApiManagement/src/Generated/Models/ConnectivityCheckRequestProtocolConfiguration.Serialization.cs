@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<ConnectivityCheckRequestHttpConfiguration> httpConfiguration = default;
+            ConnectivityCheckRequestHttpConfiguration httpConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectivityCheckRequestProtocolConfiguration(httpConfiguration.Value, serializedAdditionalRawData);
+            return new ConnectivityCheckRequestProtocolConfiguration(httpConfiguration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectivityCheckRequestProtocolConfiguration>.Write(ModelReaderWriterOptions options)

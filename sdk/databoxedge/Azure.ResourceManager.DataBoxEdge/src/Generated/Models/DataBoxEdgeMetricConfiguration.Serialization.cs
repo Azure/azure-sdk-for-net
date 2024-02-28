@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 return null;
             }
             ResourceIdentifier resourceId = default;
-            Optional<string> mdmAccount = default;
-            Optional<string> metricNameSpace = default;
+            string mdmAccount = default;
+            string metricNameSpace = default;
             IList<DataBoxEdgeMetricCounterSet> counterSets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeMetricConfiguration(resourceId, mdmAccount.Value, metricNameSpace.Value, counterSets, serializedAdditionalRawData);
+            return new DataBoxEdgeMetricConfiguration(resourceId, mdmAccount, metricNameSpace, counterSets, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeMetricConfiguration>.Write(ModelReaderWriterOptions options)

@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 return null;
             }
-            Optional<NaptState> enabled = default;
-            Optional<MobileNetworkPortRange> portRange = default;
-            Optional<MobileNetworkPortReuseHoldTimes> portReuseHoldTime = default;
-            Optional<int> pinholeLimits = default;
-            Optional<PinholeTimeouts> pinholeTimeouts = default;
+            NaptState? enabled = default;
+            MobileNetworkPortRange portRange = default;
+            MobileNetworkPortReuseHoldTimes portReuseHoldTime = default;
+            int? pinholeLimits = default;
+            PinholeTimeouts pinholeTimeouts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NaptConfiguration(Optional.ToNullable(enabled), portRange.Value, portReuseHoldTime.Value, Optional.ToNullable(pinholeLimits), pinholeTimeouts.Value, serializedAdditionalRawData);
+            return new NaptConfiguration(
+                enabled,
+                portRange,
+                portReuseHoldTime,
+                pinholeLimits,
+                pinholeTimeouts,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NaptConfiguration>.Write(ModelReaderWriterOptions options)

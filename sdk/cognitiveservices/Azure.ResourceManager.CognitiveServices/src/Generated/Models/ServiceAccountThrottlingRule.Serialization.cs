@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<string> key = default;
-            Optional<float> renewalPeriod = default;
-            Optional<float> count = default;
-            Optional<float> minCount = default;
-            Optional<bool> dynamicThrottlingEnabled = default;
+            string key = default;
+            float? renewalPeriod = default;
+            float? count = default;
+            float? minCount = default;
+            bool? dynamicThrottlingEnabled = default;
             IReadOnlyList<ServiceAccountThrottlingMatchPattern> matchPatterns = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -170,7 +170,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceAccountThrottlingRule(key.Value, Optional.ToNullable(renewalPeriod), Optional.ToNullable(count), Optional.ToNullable(minCount), Optional.ToNullable(dynamicThrottlingEnabled), matchPatterns ?? new ChangeTrackingList<ServiceAccountThrottlingMatchPattern>(), serializedAdditionalRawData);
+            return new ServiceAccountThrottlingRule(
+                key,
+                renewalPeriod,
+                count,
+                minCount,
+                dynamicThrottlingEnabled,
+                matchPatterns ?? new ChangeTrackingList<ServiceAccountThrottlingMatchPattern>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceAccountThrottlingRule>.Write(ModelReaderWriterOptions options)

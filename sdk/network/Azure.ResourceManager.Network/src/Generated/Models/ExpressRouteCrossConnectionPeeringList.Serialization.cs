@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             IReadOnlyList<ExpressRouteCrossConnectionPeeringData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExpressRouteCrossConnectionPeeringList(value ?? new ChangeTrackingList<ExpressRouteCrossConnectionPeeringData>(), nextLink.Value, serializedAdditionalRawData);
+            return new ExpressRouteCrossConnectionPeeringList(value ?? new ChangeTrackingList<ExpressRouteCrossConnectionPeeringData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExpressRouteCrossConnectionPeeringList>.Write(ModelReaderWriterOptions options)

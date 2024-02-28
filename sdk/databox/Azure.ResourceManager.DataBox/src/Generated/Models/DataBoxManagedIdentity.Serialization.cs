@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<string> type = default;
-            Optional<DataBoxUserAssignedIdentity> userAssigned = default;
+            string type = default;
+            DataBoxUserAssignedIdentity userAssigned = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxManagedIdentity(type.Value, userAssigned.Value, serializedAdditionalRawData);
+            return new DataBoxManagedIdentity(type, userAssigned, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxManagedIdentity>.Write(ModelReaderWriterOptions options)

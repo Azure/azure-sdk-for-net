@@ -367,30 +367,30 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<AutologgerSettings> autologgerSettings = default;
-            Optional<ResourceIdentifier> codeId = default;
+            AutologgerSettings autologgerSettings = default;
+            ResourceIdentifier codeId = default;
             string command = default;
-            Optional<MachineLearningDistributionConfiguration> distribution = default;
+            MachineLearningDistributionConfiguration distribution = default;
             ResourceIdentifier environmentId = default;
             IDictionary<string, string> environmentVariables = default;
             IDictionary<string, MachineLearningJobInput> inputs = default;
-            Optional<MachineLearningCommandJobLimits> limits = default;
+            MachineLearningCommandJobLimits limits = default;
             IDictionary<string, MachineLearningJobOutput> outputs = default;
-            Optional<BinaryData> parameters = default;
-            Optional<JobQueueSettings> queueSettings = default;
-            Optional<MachineLearningJobResourceConfiguration> resources = default;
-            Optional<ResourceIdentifier> componentId = default;
-            Optional<ResourceIdentifier> computeId = default;
-            Optional<string> displayName = default;
-            Optional<string> experimentName = default;
-            Optional<MachineLearningIdentityConfiguration> identity = default;
-            Optional<bool> isArchived = default;
+            BinaryData parameters = default;
+            JobQueueSettings queueSettings = default;
+            MachineLearningJobResourceConfiguration resources = default;
+            ResourceIdentifier componentId = default;
+            ResourceIdentifier computeId = default;
+            string displayName = default;
+            string experimentName = default;
+            MachineLearningIdentityConfiguration identity = default;
+            bool? isArchived = default;
             JobType jobType = default;
-            Optional<NotificationSetting> notificationSetting = default;
+            NotificationSetting notificationSetting = default;
             IDictionary<string, SecretConfiguration> secretsConfiguration = default;
             IDictionary<string, MachineLearningJobService> services = default;
-            Optional<MachineLearningJobStatus> status = default;
-            Optional<string> description = default;
+            MachineLearningJobStatus? status = default;
+            string description = default;
             IDictionary<string, string> properties = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -675,7 +675,34 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningCommandJob(description.Value, properties ?? new ChangeTrackingDictionary<string, string>(), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, componentId.Value, computeId.Value, displayName.Value, experimentName.Value, identity.Value, Optional.ToNullable(isArchived), jobType, notificationSetting.Value, secretsConfiguration ?? new ChangeTrackingDictionary<string, SecretConfiguration>(), services ?? new ChangeTrackingDictionary<string, MachineLearningJobService>(), Optional.ToNullable(status), autologgerSettings.Value, codeId.Value, command, distribution.Value, environmentId, environmentVariables ?? new ChangeTrackingDictionary<string, string>(), inputs ?? new ChangeTrackingDictionary<string, MachineLearningJobInput>(), limits.Value, outputs ?? new ChangeTrackingDictionary<string, MachineLearningJobOutput>(), parameters.Value, queueSettings.Value, resources.Value);
+            return new MachineLearningCommandJob(
+                description,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                componentId,
+                computeId,
+                displayName,
+                experimentName,
+                identity,
+                isArchived,
+                jobType,
+                notificationSetting,
+                secretsConfiguration ?? new ChangeTrackingDictionary<string, SecretConfiguration>(),
+                services ?? new ChangeTrackingDictionary<string, MachineLearningJobService>(),
+                status,
+                autologgerSettings,
+                codeId,
+                command,
+                distribution,
+                environmentId,
+                environmentVariables ?? new ChangeTrackingDictionary<string, string>(),
+                inputs ?? new ChangeTrackingDictionary<string, MachineLearningJobInput>(),
+                limits,
+                outputs ?? new ChangeTrackingDictionary<string, MachineLearningJobOutput>(),
+                parameters,
+                queueSettings,
+                resources);
         }
 
         BinaryData IPersistableModel<MachineLearningCommandJob>.Write(ModelReaderWriterOptions options)

@@ -160,14 +160,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 return null;
             }
-            Optional<Uri> url = default;
-            Optional<long?> timeoutInSeconds = default;
-            Optional<long?> syncIntervalInSeconds = default;
-            Optional<KubernetesGitRepositoryRef> repositoryRef = default;
-            Optional<string> sshKnownHosts = default;
-            Optional<string> httpsUser = default;
-            Optional<string> httpsCACert = default;
-            Optional<string> localAuthRef = default;
+            Uri url = default;
+            long? timeoutInSeconds = default;
+            long? syncIntervalInSeconds = default;
+            KubernetesGitRepositoryRef repositoryRef = default;
+            string sshKnownHosts = default;
+            string httpsUser = default;
+            string httpsCACert = default;
+            string localAuthRef = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -258,7 +258,16 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesGitRepositoryUpdateContent(url.Value, Optional.ToNullable(timeoutInSeconds), Optional.ToNullable(syncIntervalInSeconds), repositoryRef.Value, sshKnownHosts.Value, httpsUser.Value, httpsCACert.Value, localAuthRef.Value, serializedAdditionalRawData);
+            return new KubernetesGitRepositoryUpdateContent(
+                url,
+                timeoutInSeconds,
+                syncIntervalInSeconds,
+                repositoryRef,
+                sshKnownHosts,
+                httpsUser,
+                httpsCACert,
+                localAuthRef,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesGitRepositoryUpdateContent>.Write(ModelReaderWriterOptions options)

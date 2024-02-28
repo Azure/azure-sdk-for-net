@@ -104,13 +104,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<string> description = default;
+            string description = default;
             IList<object> annotations = default;
-            Optional<DataFlowFolder> folder = default;
+            DataFlowFolder folder = default;
             IList<DataFlowSource> sources = default;
             IList<DataFlowSink> sinks = default;
             IList<Transformation> transformations = default;
-            Optional<string> script = default;
+            string script = default;
             IList<string> scriptLines = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -228,7 +228,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new Flowlet(type, description.Value, annotations ?? new ChangeTrackingList<object>(), folder.Value, sources ?? new ChangeTrackingList<DataFlowSource>(), sinks ?? new ChangeTrackingList<DataFlowSink>(), transformations ?? new ChangeTrackingList<Transformation>(), script.Value, scriptLines ?? new ChangeTrackingList<string>());
+            return new Flowlet(
+                type,
+                description,
+                annotations ?? new ChangeTrackingList<object>(),
+                folder,
+                sources ?? new ChangeTrackingList<DataFlowSource>(),
+                sinks ?? new ChangeTrackingList<DataFlowSink>(),
+                transformations ?? new ChangeTrackingList<Transformation>(),
+                script,
+                scriptLines ?? new ChangeTrackingList<string>());
         }
 
         internal partial class FlowletConverter : JsonConverter<Flowlet>

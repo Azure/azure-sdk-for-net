@@ -259,29 +259,29 @@ namespace Azure.ResourceManager.Batch
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<AzureLocation> location = default;
+            ManagedServiceIdentity identity = default;
+            AzureLocation? location = default;
             IDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> accountEndpoint = default;
-            Optional<string> nodeManagementEndpoint = default;
-            Optional<BatchProvisioningState> provisioningState = default;
-            Optional<BatchAccountPoolAllocationMode> poolAllocationMode = default;
-            Optional<BatchKeyVaultReference> keyVaultReference = default;
-            Optional<BatchPublicNetworkAccess?> publicNetworkAccess = default;
-            Optional<BatchNetworkProfile> networkProfile = default;
+            SystemData systemData = default;
+            string accountEndpoint = default;
+            string nodeManagementEndpoint = default;
+            BatchProvisioningState? provisioningState = default;
+            BatchAccountPoolAllocationMode? poolAllocationMode = default;
+            BatchKeyVaultReference keyVaultReference = default;
+            BatchPublicNetworkAccess? publicNetworkAccess = default;
+            BatchNetworkProfile networkProfile = default;
             IReadOnlyList<BatchPrivateEndpointConnectionData> privateEndpointConnections = default;
-            Optional<BatchAccountAutoStorageConfiguration> autoStorage = default;
-            Optional<BatchAccountEncryptionConfiguration> encryption = default;
-            Optional<int?> dedicatedCoreQuota = default;
-            Optional<int?> lowPriorityCoreQuota = default;
+            BatchAccountAutoStorageConfiguration autoStorage = default;
+            BatchAccountEncryptionConfiguration encryption = default;
+            int? dedicatedCoreQuota = default;
+            int? lowPriorityCoreQuota = default;
             IReadOnlyList<BatchVmFamilyCoreQuota> dedicatedCoreQuotaPerVmFamily = default;
-            Optional<bool> dedicatedCoreQuotaPerVmFamilyEnforced = default;
-            Optional<int> poolQuota = default;
-            Optional<int> activeJobAndJobScheduleQuota = default;
+            bool? dedicatedCoreQuotaPerVmFamilyEnforced = default;
+            int? poolQuota = default;
+            int? activeJobAndJobScheduleQuota = default;
             IReadOnlyList<BatchAuthenticationMode> allowedAuthenticationModes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -528,7 +528,32 @@ namespace Azure.ResourceManager.Batch
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchAccountData(id, name, type, systemData.Value, identity, accountEndpoint.Value, nodeManagementEndpoint.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(poolAllocationMode), keyVaultReference.Value, Optional.ToNullable(publicNetworkAccess), networkProfile.Value, privateEndpointConnections ?? new ChangeTrackingList<BatchPrivateEndpointConnectionData>(), autoStorage.Value, encryption.Value, Optional.ToNullable(dedicatedCoreQuota), Optional.ToNullable(lowPriorityCoreQuota), dedicatedCoreQuotaPerVmFamily ?? new ChangeTrackingList<BatchVmFamilyCoreQuota>(), Optional.ToNullable(dedicatedCoreQuotaPerVmFamilyEnforced), Optional.ToNullable(poolQuota), Optional.ToNullable(activeJobAndJobScheduleQuota), allowedAuthenticationModes ?? new ChangeTrackingList<BatchAuthenticationMode>(), Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new BatchAccountData(
+                id,
+                name,
+                type,
+                systemData,
+                identity,
+                accountEndpoint,
+                nodeManagementEndpoint,
+                provisioningState,
+                poolAllocationMode,
+                keyVaultReference,
+                publicNetworkAccess,
+                networkProfile,
+                privateEndpointConnections ?? new ChangeTrackingList<BatchPrivateEndpointConnectionData>(),
+                autoStorage,
+                encryption,
+                dedicatedCoreQuota,
+                lowPriorityCoreQuota,
+                dedicatedCoreQuotaPerVmFamily ?? new ChangeTrackingList<BatchVmFamilyCoreQuota>(),
+                dedicatedCoreQuotaPerVmFamilyEnforced,
+                poolQuota,
+                activeJobAndJobScheduleQuota,
+                allowedAuthenticationModes ?? new ChangeTrackingList<BatchAuthenticationMode>(),
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchAccountData>.Write(ModelReaderWriterOptions options)

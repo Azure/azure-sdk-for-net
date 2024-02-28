@@ -123,16 +123,16 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<string> kind = default;
+            AzureLocation? location = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayText = default;
-            Optional<string> value = default;
+            SystemData systemData = default;
+            string displayText = default;
+            string value = default;
             IReadOnlyList<WebAppMajorVersion> majorVersions = default;
-            Optional<StackPreferredOS> preferredOS = default;
+            StackPreferredOS? preferredOS = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -226,7 +226,18 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebAppStack(id, name, type, systemData.Value, Optional.ToNullable(location), displayText.Value, value.Value, majorVersions ?? new ChangeTrackingList<WebAppMajorVersion>(), Optional.ToNullable(preferredOS), kind.Value, serializedAdditionalRawData);
+            return new WebAppStack(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                displayText,
+                value,
+                majorVersions ?? new ChangeTrackingList<WebAppMajorVersion>(),
+                preferredOS,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebAppStack>.Write(ModelReaderWriterOptions options)

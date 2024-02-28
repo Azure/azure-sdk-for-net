@@ -110,10 +110,10 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<string> vmName = default;
-            Optional<string> hostName = default;
+            string vmName = default;
+            string hostName = default;
             IList<NetworkInterfaceResourceNames> networkInterfaces = default;
-            Optional<string> osDiskName = default;
+            string osDiskName = default;
             IDictionary<string, IList<string>> dataDiskNames = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -180,7 +180,13 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineResourceNames(vmName.Value, hostName.Value, networkInterfaces ?? new ChangeTrackingList<NetworkInterfaceResourceNames>(), osDiskName.Value, dataDiskNames ?? new ChangeTrackingDictionary<string, IList<string>>(), serializedAdditionalRawData);
+            return new VirtualMachineResourceNames(
+                vmName,
+                hostName,
+                networkInterfaces ?? new ChangeTrackingList<NetworkInterfaceResourceNames>(),
+                osDiskName,
+                dataDiskNames ?? new ChangeTrackingDictionary<string, IList<string>>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineResourceNames>.Write(ModelReaderWriterOptions options)

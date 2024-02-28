@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -16,14 +15,8 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> Initializes a new instance of <see cref="ListIndexersResult"/>. </summary>
         /// <param name="indexers"> The indexers in the Search service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="indexers"/> is null. </exception>
         internal ListIndexersResult(IEnumerable<SearchIndexer> indexers)
         {
-            if (indexers == null)
-            {
-                throw new ArgumentNullException(nameof(indexers));
-            }
-
             Indexers = indexers.ToList();
         }
 

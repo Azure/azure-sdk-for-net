@@ -287,7 +287,12 @@ namespace Azure.AI.OpenAI
     }
     public partial class AzureCosmosDBFieldMappingOptions : System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.AzureCosmosDBFieldMappingOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.AzureCosmosDBFieldMappingOptions>
     {
-        public AzureCosmosDBFieldMappingOptions(System.Collections.Generic.IEnumerable<string> vectorFieldNames) { }
+        public AzureCosmosDBFieldMappingOptions(System.Collections.Generic.IEnumerable<string> contentFieldNames, System.Collections.Generic.IEnumerable<string> vectorFieldNames) { }
+        public System.Collections.Generic.IList<string> ContentFieldNames { get { throw null; } }
+        public string ContentFieldSeparator { get { throw null; } set { } }
+        public string FilepathFieldName { get { throw null; } set { } }
+        public string TitleFieldName { get { throw null; } set { } }
+        public string UrlFieldName { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> VectorFieldNames { get { throw null; } }
         Azure.AI.OpenAI.AzureCosmosDBFieldMappingOptions System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.AzureCosmosDBFieldMappingOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.AzureCosmosDBFieldMappingOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -396,9 +401,11 @@ namespace Azure.AI.OpenAI
         public static Azure.AI.OpenAI.Embeddings Embeddings(System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.EmbeddingItem> data = null, Azure.AI.OpenAI.EmbeddingsUsage usage = null) { throw null; }
         public static Azure.AI.OpenAI.EmbeddingsUsage EmbeddingsUsage(int promptTokens = 0, int totalTokens = 0) { throw null; }
         public static Azure.AI.OpenAI.ImageGenerationData ImageGenerationData(System.Uri url = null, string base64Data = null, string revisedPrompt = null) { throw null; }
+        public static Azure.AI.OpenAI.OnYourDataAccessTokenAuthenticationOptions OnYourDataAccessTokenAuthenticationOptions(string accessToken = null) { throw null; }
         public static Azure.AI.OpenAI.OnYourDataApiKeyAuthenticationOptions OnYourDataApiKeyAuthenticationOptions(string key = null) { throw null; }
         public static Azure.AI.OpenAI.OnYourDataConnectionStringAuthenticationOptions OnYourDataConnectionStringAuthenticationOptions(string connectionString = null) { throw null; }
         public static Azure.AI.OpenAI.OnYourDataDeploymentNameVectorizationSource OnYourDataDeploymentNameVectorizationSource(string deploymentName = null) { throw null; }
+        public static Azure.AI.OpenAI.OnYourDataEncodedApiKeyAuthenticationOptions OnYourDataEncodedApiKeyAuthenticationOptions(string encodedApiKey = null) { throw null; }
         public static Azure.AI.OpenAI.OnYourDataEndpointVectorizationSource OnYourDataEndpointVectorizationSource(System.Uri endpoint = null, Azure.AI.OpenAI.OnYourDataAuthenticationOptions authentication = null) { throw null; }
         public static Azure.AI.OpenAI.OnYourDataKeyAndKeyIdAuthenticationOptions OnYourDataKeyAndKeyIdAuthenticationOptions(string key = null, string keyId = null) { throw null; }
         public static Azure.AI.OpenAI.OnYourDataModelIdVectorizationSource OnYourDataModelIdVectorizationSource(string modelId = null) { throw null; }
@@ -1146,6 +1153,16 @@ namespace Azure.AI.OpenAI
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.MaxTokensFinishDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.MaxTokensFinishDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class OnYourDataAccessTokenAuthenticationOptions : Azure.AI.OpenAI.OnYourDataAuthenticationOptions, System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.OnYourDataAccessTokenAuthenticationOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.OnYourDataAccessTokenAuthenticationOptions>
+    {
+        public OnYourDataAccessTokenAuthenticationOptions(string accessToken) { }
+        public string AccessToken { get { throw null; } }
+        Azure.AI.OpenAI.OnYourDataAccessTokenAuthenticationOptions System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.OnYourDataAccessTokenAuthenticationOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.OnYourDataAccessTokenAuthenticationOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.OpenAI.OnYourDataAccessTokenAuthenticationOptions System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.OnYourDataAccessTokenAuthenticationOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.OnYourDataAccessTokenAuthenticationOptions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.OnYourDataAccessTokenAuthenticationOptions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class OnYourDataApiKeyAuthenticationOptions : Azure.AI.OpenAI.OnYourDataAuthenticationOptions, System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.OnYourDataApiKeyAuthenticationOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.OnYourDataApiKeyAuthenticationOptions>
     {
         public OnYourDataApiKeyAuthenticationOptions(string key) { }
@@ -1184,6 +1201,16 @@ namespace Azure.AI.OpenAI
         Azure.AI.OpenAI.OnYourDataDeploymentNameVectorizationSource System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.OnYourDataDeploymentNameVectorizationSource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.OnYourDataDeploymentNameVectorizationSource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.OnYourDataDeploymentNameVectorizationSource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class OnYourDataEncodedApiKeyAuthenticationOptions : Azure.AI.OpenAI.OnYourDataAuthenticationOptions, System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.OnYourDataEncodedApiKeyAuthenticationOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.OnYourDataEncodedApiKeyAuthenticationOptions>
+    {
+        public OnYourDataEncodedApiKeyAuthenticationOptions(string encodedApiKey) { }
+        public string EncodedApiKey { get { throw null; } }
+        Azure.AI.OpenAI.OnYourDataEncodedApiKeyAuthenticationOptions System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.OnYourDataEncodedApiKeyAuthenticationOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.OnYourDataEncodedApiKeyAuthenticationOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.OpenAI.OnYourDataEncodedApiKeyAuthenticationOptions System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.OnYourDataEncodedApiKeyAuthenticationOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.OnYourDataEncodedApiKeyAuthenticationOptions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.OnYourDataEncodedApiKeyAuthenticationOptions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class OnYourDataEndpointVectorizationSource : Azure.AI.OpenAI.OnYourDataVectorizationSource, System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.OnYourDataEndpointVectorizationSource>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.OnYourDataEndpointVectorizationSource>
     {
@@ -1297,7 +1324,7 @@ namespace Azure.AI.OpenAI
         public string RoleInformation { get { throw null; } set { } }
         public bool? ShouldRestrictResultScope { get { throw null; } set { } }
         public int? Strictness { get { throw null; } set { } }
-        public Azure.AI.OpenAI.OnYourDataVectorizationSource VectorizationSource { get { throw null; } set { } }
+        public Azure.AI.OpenAI.OnYourDataVectorizationSource VectorizationSource { get { throw null; } }
         Azure.AI.OpenAI.PineconeChatExtensionConfiguration System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.PineconeChatExtensionConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.PineconeChatExtensionConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.PineconeChatExtensionConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.PineconeChatExtensionConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1306,14 +1333,12 @@ namespace Azure.AI.OpenAI
     }
     public partial class PineconeFieldMappingOptions : System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.PineconeFieldMappingOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.PineconeFieldMappingOptions>
     {
-        public PineconeFieldMappingOptions() { }
+        public PineconeFieldMappingOptions(System.Collections.Generic.IEnumerable<string> contentFieldNames) { }
         public System.Collections.Generic.IList<string> ContentFieldNames { get { throw null; } }
         public string ContentFieldSeparator { get { throw null; } set { } }
         public string FilepathFieldName { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> ImageVectorFieldNames { get { throw null; } }
         public string TitleFieldName { get { throw null; } set { } }
         public string UrlFieldName { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> VectorFieldNames { get { throw null; } }
         Azure.AI.OpenAI.PineconeFieldMappingOptions System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.PineconeFieldMappingOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.PineconeFieldMappingOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.PineconeFieldMappingOptions System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.PineconeFieldMappingOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

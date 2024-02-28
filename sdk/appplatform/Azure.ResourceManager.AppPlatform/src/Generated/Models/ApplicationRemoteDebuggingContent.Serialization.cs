@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<int> port = default;
+            int? port = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationRemoteDebuggingContent(Optional.ToNullable(port), serializedAdditionalRawData);
+            return new ApplicationRemoteDebuggingContent(port, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationRemoteDebuggingContent>.Write(ModelReaderWriterOptions options)

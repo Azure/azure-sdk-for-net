@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.PostgreSql
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<PostgreSqlServerKeyType> serverKeyType = default;
-            Optional<Uri> uri = default;
-            Optional<DateTimeOffset> creationDate = default;
+            SystemData systemData = default;
+            PostgreSqlServerKeyType? serverKeyType = default;
+            Uri uri = default;
+            DateTimeOffset? creationDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -195,7 +195,16 @@ namespace Azure.ResourceManager.PostgreSql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlServerKeyData(id, name, type, systemData.Value, kind.Value, Optional.ToNullable(serverKeyType), uri.Value, Optional.ToNullable(creationDate), serializedAdditionalRawData);
+            return new PostgreSqlServerKeyData(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                serverKeyType,
+                uri,
+                creationDate,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlServerKeyData>.Write(ModelReaderWriterOptions options)

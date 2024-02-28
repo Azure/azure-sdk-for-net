@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> publisherUri = default;
-            Optional<string> publisherContact = default;
-            Optional<string> eula = default;
-            Optional<string> publicNamePrefix = default;
-            Optional<bool> communityGalleryEnabled = default;
+            string publisherUri = default;
+            string publisherContact = default;
+            string eula = default;
+            string publicNamePrefix = default;
+            bool? communityGalleryEnabled = default;
             IReadOnlyList<string> publicNames = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -158,7 +158,14 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CommunityGalleryInfo(publisherUri.Value, publisherContact.Value, eula.Value, publicNamePrefix.Value, Optional.ToNullable(communityGalleryEnabled), publicNames ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new CommunityGalleryInfo(
+                publisherUri,
+                publisherContact,
+                eula,
+                publicNamePrefix,
+                communityGalleryEnabled,
+                publicNames ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CommunityGalleryInfo>.Write(ModelReaderWriterOptions options)

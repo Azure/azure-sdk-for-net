@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> codeId = default;
+            ResourceIdentifier codeId = default;
             string scoringScript = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningCodeConfiguration(codeId.Value, scoringScript, serializedAdditionalRawData);
+            return new MachineLearningCodeConfiguration(codeId, scoringScript, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningCodeConfiguration>.Write(ModelReaderWriterOptions options)

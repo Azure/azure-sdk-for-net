@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.Quantum.Models
             {
                 return null;
             }
-            Optional<string> providerId = default;
-            Optional<string> providerSku = default;
-            Optional<Uri> instanceUri = default;
-            Optional<string> applicationName = default;
-            Optional<Status> provisioningState = default;
-            Optional<string> resourceUsageId = default;
+            string providerId = default;
+            string providerSku = default;
+            Uri instanceUri = default;
+            string applicationName = default;
+            Status? provisioningState = default;
+            string resourceUsageId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -148,7 +148,14 @@ namespace Azure.ResourceManager.Quantum.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new Provider(providerId.Value, providerSku.Value, instanceUri.Value, applicationName.Value, Optional.ToNullable(provisioningState), resourceUsageId.Value, serializedAdditionalRawData);
+            return new Provider(
+                providerId,
+                providerSku,
+                instanceUri,
+                applicationName,
+                provisioningState,
+                resourceUsageId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<Provider>.Write(ModelReaderWriterOptions options)

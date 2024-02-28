@@ -127,10 +127,10 @@ namespace Azure.ResourceManager.CosmosDB
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> roleName = default;
-            Optional<MongoDBRoleDefinitionType> type0 = default;
-            Optional<string> databaseName = default;
+            SystemData systemData = default;
+            string roleName = default;
+            MongoDBRoleDefinitionType? type0 = default;
+            string databaseName = default;
             IList<MongoDBPrivilege> privileges = default;
             IList<MongoDBRole> roles = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -222,7 +222,17 @@ namespace Azure.ResourceManager.CosmosDB
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MongoDBRoleDefinitionData(id, name, type, systemData.Value, roleName.Value, Optional.ToNullable(type0), databaseName.Value, privileges ?? new ChangeTrackingList<MongoDBPrivilege>(), roles ?? new ChangeTrackingList<MongoDBRole>(), serializedAdditionalRawData);
+            return new MongoDBRoleDefinitionData(
+                id,
+                name,
+                type,
+                systemData,
+                roleName,
+                type0,
+                databaseName,
+                privileges ?? new ChangeTrackingList<MongoDBPrivilege>(),
+                roles ?? new ChangeTrackingList<MongoDBRole>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MongoDBRoleDefinitionData>.Write(ModelReaderWriterOptions options)

@@ -114,16 +114,16 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> runtimeVersion = default;
-            Optional<bool> remoteDebuggingSupported = default;
-            Optional<AppInsightsWebAppStackSettings> appInsightsSettings = default;
-            Optional<GitHubActionWebAppStackSettings> gitHubActionSettings = default;
-            Optional<bool> isPreview = default;
-            Optional<bool> isDeprecated = default;
-            Optional<bool> isHidden = default;
-            Optional<DateTimeOffset> endOfLifeDate = default;
-            Optional<bool> isAutoUpdate = default;
-            Optional<bool> isEarlyAccess = default;
+            string runtimeVersion = default;
+            bool? remoteDebuggingSupported = default;
+            AppInsightsWebAppStackSettings appInsightsSettings = default;
+            GitHubActionWebAppStackSettings gitHubActionSettings = default;
+            bool? isPreview = default;
+            bool? isDeprecated = default;
+            bool? isHidden = default;
+            DateTimeOffset? endOfLifeDate = default;
+            bool? isAutoUpdate = default;
+            bool? isEarlyAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -220,7 +220,18 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebAppRuntimeSettings(runtimeVersion.Value, Optional.ToNullable(remoteDebuggingSupported), appInsightsSettings.Value, gitHubActionSettings.Value, Optional.ToNullable(isPreview), Optional.ToNullable(isDeprecated), Optional.ToNullable(isHidden), Optional.ToNullable(endOfLifeDate), Optional.ToNullable(isAutoUpdate), Optional.ToNullable(isEarlyAccess), serializedAdditionalRawData);
+            return new WebAppRuntimeSettings(
+                runtimeVersion,
+                remoteDebuggingSupported,
+                appInsightsSettings,
+                gitHubActionSettings,
+                isPreview,
+                isDeprecated,
+                isHidden,
+                endOfLifeDate,
+                isAutoUpdate,
+                isEarlyAccess,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebAppRuntimeSettings>.Write(ModelReaderWriterOptions options)

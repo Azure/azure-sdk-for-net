@@ -139,21 +139,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> diskId = default;
-            Optional<string> diskName = default;
-            Optional<SiteRecoveryDiskAccountType> diskType = default;
-            Optional<string> diskPath = default;
-            Optional<string> isOSDisk = default;
-            Optional<long> capacityInBytes = default;
-            Optional<ResourceIdentifier> logStorageAccountId = default;
-            Optional<string> logStorageAccountSasSecretName = default;
-            Optional<ResourceIdentifier> diskEncryptionSetId = default;
-            Optional<string> seedManagedDiskId = default;
-            Optional<Uri> seedBlobUri = default;
-            Optional<string> targetManagedDiskId = default;
-            Optional<Uri> targetBlobUri = default;
-            Optional<string> targetDiskName = default;
-            Optional<GatewayOperationDetails> gatewayOperationDetails = default;
+            string diskId = default;
+            string diskName = default;
+            SiteRecoveryDiskAccountType? diskType = default;
+            string diskPath = default;
+            string isOSDisk = default;
+            long? capacityInBytes = default;
+            ResourceIdentifier logStorageAccountId = default;
+            string logStorageAccountSasSecretName = default;
+            ResourceIdentifier diskEncryptionSetId = default;
+            string seedManagedDiskId = default;
+            Uri seedBlobUri = default;
+            string targetManagedDiskId = default;
+            Uri targetBlobUri = default;
+            string targetDiskName = default;
+            GatewayOperationDetails gatewayOperationDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -267,7 +267,23 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareCbtProtectedDiskDetails(diskId.Value, diskName.Value, Optional.ToNullable(diskType), diskPath.Value, isOSDisk.Value, Optional.ToNullable(capacityInBytes), logStorageAccountId.Value, logStorageAccountSasSecretName.Value, diskEncryptionSetId.Value, seedManagedDiskId.Value, seedBlobUri.Value, targetManagedDiskId.Value, targetBlobUri.Value, targetDiskName.Value, gatewayOperationDetails.Value, serializedAdditionalRawData);
+            return new VMwareCbtProtectedDiskDetails(
+                diskId,
+                diskName,
+                diskType,
+                diskPath,
+                isOSDisk,
+                capacityInBytes,
+                logStorageAccountId,
+                logStorageAccountSasSecretName,
+                diskEncryptionSetId,
+                seedManagedDiskId,
+                seedBlobUri,
+                targetManagedDiskId,
+                targetBlobUri,
+                targetDiskName,
+                gatewayOperationDetails,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VMwareCbtProtectedDiskDetails>.Write(ModelReaderWriterOptions options)

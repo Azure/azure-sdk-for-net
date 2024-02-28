@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<DataProtectionBackupCrossSubscriptionRestoreState> state = default;
+            DataProtectionBackupCrossSubscriptionRestoreState? state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CrossSubscriptionRestoreSettings(Optional.ToNullable(state), serializedAdditionalRawData);
+            return new CrossSubscriptionRestoreSettings(state, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CrossSubscriptionRestoreSettings>.Write(ModelReaderWriterOptions options)

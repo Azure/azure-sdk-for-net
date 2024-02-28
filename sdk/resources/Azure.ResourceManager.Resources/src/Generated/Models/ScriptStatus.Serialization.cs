@@ -95,12 +95,12 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<string> containerInstanceId = default;
-            Optional<string> storageAccountId = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<DateTimeOffset> expirationTime = default;
-            Optional<ResponseError> error = default;
+            string containerInstanceId = default;
+            string storageAccountId = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            DateTimeOffset? expirationTime = default;
+            ResponseError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,7 +157,14 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScriptStatus(containerInstanceId.Value, storageAccountId.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(expirationTime), error.Value, serializedAdditionalRawData);
+            return new ScriptStatus(
+                containerInstanceId,
+                storageAccountId,
+                startTime,
+                endTime,
+                expirationTime,
+                error,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScriptStatus>.Write(ModelReaderWriterOptions options)

@@ -106,8 +106,8 @@ namespace Azure.ResourceManager.ContainerService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ContainerServiceTrustedAccessRoleBindingProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            ContainerServiceTrustedAccessRoleBindingProvisioningState? provisioningState = default;
             ResourceIdentifier sourceResourceId = default;
             IList<string> roles = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -180,7 +180,15 @@ namespace Azure.ResourceManager.ContainerService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerServiceTrustedAccessRoleBindingData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), sourceResourceId, roles, serializedAdditionalRawData);
+            return new ContainerServiceTrustedAccessRoleBindingData(
+                id,
+                name,
+                type,
+                systemData,
+                provisioningState,
+                sourceResourceId,
+                roles,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerServiceTrustedAccessRoleBindingData>.Write(ModelReaderWriterOptions options)

@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.Analysis.Models
                 return null;
             }
             string name = default;
-            Optional<AnalysisSkuTier> tier = default;
-            Optional<int> capacity = default;
+            AnalysisSkuTier? tier = default;
+            int? capacity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Analysis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AnalysisResourceSku(name, Optional.ToNullable(tier), Optional.ToNullable(capacity), serializedAdditionalRawData);
+            return new AnalysisResourceSku(name, tier, capacity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AnalysisResourceSku>.Write(ModelReaderWriterOptions options)

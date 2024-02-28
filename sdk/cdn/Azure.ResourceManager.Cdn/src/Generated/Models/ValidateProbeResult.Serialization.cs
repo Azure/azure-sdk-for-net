@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<bool> isValid = default;
-            Optional<string> errorCode = default;
-            Optional<string> message = default;
+            bool? isValid = default;
+            string errorCode = default;
+            string message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ValidateProbeResult(Optional.ToNullable(isValid), errorCode.Value, message.Value, serializedAdditionalRawData);
+            return new ValidateProbeResult(isValid, errorCode, message, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ValidateProbeResult>.Write(ModelReaderWriterOptions options)

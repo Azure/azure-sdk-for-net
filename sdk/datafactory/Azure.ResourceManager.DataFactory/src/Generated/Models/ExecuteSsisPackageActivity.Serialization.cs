@@ -220,27 +220,27 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryLinkedServiceReference> linkedServiceName = default;
-            Optional<PipelineActivityPolicy> policy = default;
+            DataFactoryLinkedServiceReference linkedServiceName = default;
+            PipelineActivityPolicy policy = default;
             string name = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<PipelineActivityState> state = default;
-            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
+            string description = default;
+            PipelineActivityState? state = default;
+            ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
             IList<PipelineActivityDependency> dependsOn = default;
             IList<PipelineActivityUserProperty> userProperties = default;
             SsisPackageLocation packageLocation = default;
-            Optional<DataFactoryElement<string>> runtime = default;
-            Optional<DataFactoryElement<string>> loggingLevel = default;
-            Optional<DataFactoryElement<string>> environmentPath = default;
-            Optional<SsisExecutionCredential> executionCredential = default;
+            DataFactoryElement<string> runtime = default;
+            DataFactoryElement<string> loggingLevel = default;
+            DataFactoryElement<string> environmentPath = default;
+            SsisExecutionCredential executionCredential = default;
             IntegrationRuntimeReference connectVia = default;
             IDictionary<string, SsisExecutionParameter> projectParameters = default;
             IDictionary<string, SsisExecutionParameter> packageParameters = default;
             IDictionary<string, IDictionary<string, SsisExecutionParameter>> projectConnectionManagers = default;
             IDictionary<string, IDictionary<string, SsisExecutionParameter>> packageConnectionManagers = default;
             IDictionary<string, SsisPropertyOverride> propertyOverrides = default;
-            Optional<SsisLogLocation> logLocation = default;
+            SsisLogLocation logLocation = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -488,7 +488,29 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ExecuteSsisPackageActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(), userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(), additionalProperties, linkedServiceName, policy.Value, packageLocation, runtime.Value, loggingLevel.Value, environmentPath.Value, executionCredential.Value, connectVia, projectParameters ?? new ChangeTrackingDictionary<string, SsisExecutionParameter>(), packageParameters ?? new ChangeTrackingDictionary<string, SsisExecutionParameter>(), projectConnectionManagers ?? new ChangeTrackingDictionary<string, IDictionary<string, SsisExecutionParameter>>(), packageConnectionManagers ?? new ChangeTrackingDictionary<string, IDictionary<string, SsisExecutionParameter>>(), propertyOverrides ?? new ChangeTrackingDictionary<string, SsisPropertyOverride>(), logLocation.Value);
+            return new ExecuteSsisPackageActivity(
+                name,
+                type,
+                description,
+                state,
+                onInactiveMarkAs,
+                dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(),
+                additionalProperties,
+                linkedServiceName,
+                policy,
+                packageLocation,
+                runtime,
+                loggingLevel,
+                environmentPath,
+                executionCredential,
+                connectVia,
+                projectParameters ?? new ChangeTrackingDictionary<string, SsisExecutionParameter>(),
+                packageParameters ?? new ChangeTrackingDictionary<string, SsisExecutionParameter>(),
+                projectConnectionManagers ?? new ChangeTrackingDictionary<string, IDictionary<string, SsisExecutionParameter>>(),
+                packageConnectionManagers ?? new ChangeTrackingDictionary<string, IDictionary<string, SsisExecutionParameter>>(),
+                propertyOverrides ?? new ChangeTrackingDictionary<string, SsisPropertyOverride>(),
+                logLocation);
         }
 
         BinaryData IPersistableModel<ExecuteSsisPackageActivity>.Write(ModelReaderWriterOptions options)

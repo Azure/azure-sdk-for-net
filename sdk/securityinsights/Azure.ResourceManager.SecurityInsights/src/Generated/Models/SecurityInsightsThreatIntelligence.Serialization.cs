@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<double> confidence = default;
-            Optional<string> providerName = default;
-            Optional<string> reportLink = default;
-            Optional<string> threatDescription = default;
-            Optional<string> threatName = default;
-            Optional<string> threatType = default;
+            double? confidence = default;
+            string providerName = default;
+            string reportLink = default;
+            string threatDescription = default;
+            string threatName = default;
+            string threatType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,7 +144,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsThreatIntelligence(Optional.ToNullable(confidence), providerName.Value, reportLink.Value, threatDescription.Value, threatName.Value, threatType.Value, serializedAdditionalRawData);
+            return new SecurityInsightsThreatIntelligence(
+                confidence,
+                providerName,
+                reportLink,
+                threatDescription,
+                threatName,
+                threatType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityInsightsThreatIntelligence>.Write(ModelReaderWriterOptions options)

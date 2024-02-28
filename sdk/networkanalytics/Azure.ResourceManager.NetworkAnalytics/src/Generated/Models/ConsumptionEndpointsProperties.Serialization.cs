@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             {
                 return null;
             }
-            Optional<Uri> ingestionUrl = default;
-            Optional<ResourceIdentifier> ingestionResourceId = default;
-            Optional<Uri> fileAccessUrl = default;
-            Optional<ResourceIdentifier> fileAccessResourceId = default;
-            Optional<Uri> queryUrl = default;
-            Optional<ResourceIdentifier> queryResourceId = default;
+            Uri ingestionUrl = default;
+            ResourceIdentifier ingestionResourceId = default;
+            Uri fileAccessUrl = default;
+            ResourceIdentifier fileAccessResourceId = default;
+            Uri queryUrl = default;
+            ResourceIdentifier queryResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionEndpointsProperties(ingestionUrl.Value, ingestionResourceId.Value, fileAccessUrl.Value, fileAccessResourceId.Value, queryUrl.Value, queryResourceId.Value, serializedAdditionalRawData);
+            return new ConsumptionEndpointsProperties(
+                ingestionUrl,
+                ingestionResourceId,
+                fileAccessUrl,
+                fileAccessResourceId,
+                queryUrl,
+                queryResourceId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumptionEndpointsProperties>.Write(ModelReaderWriterOptions options)

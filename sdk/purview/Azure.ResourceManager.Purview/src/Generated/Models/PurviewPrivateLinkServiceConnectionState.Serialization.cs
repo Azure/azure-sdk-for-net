@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Purview.Models
             {
                 return null;
             }
-            Optional<string> actionsRequired = default;
-            Optional<string> description = default;
-            Optional<PurviewPrivateLinkServiceStatus> status = default;
+            string actionsRequired = default;
+            string description = default;
+            PurviewPrivateLinkServiceStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Purview.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PurviewPrivateLinkServiceConnectionState(actionsRequired.Value, description.Value, Optional.ToNullable(status), serializedAdditionalRawData);
+            return new PurviewPrivateLinkServiceConnectionState(actionsRequired, description, status, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PurviewPrivateLinkServiceConnectionState>.Write(ModelReaderWriterOptions options)

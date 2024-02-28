@@ -145,20 +145,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 return null;
             }
             IReadOnlyList<SiteRecoveryInnerHealthError> innerHealthErrors = default;
-            Optional<string> errorSource = default;
-            Optional<string> errorType = default;
-            Optional<string> errorLevel = default;
-            Optional<string> errorCategory = default;
-            Optional<string> errorCode = default;
-            Optional<string> summaryMessage = default;
-            Optional<string> errorMessage = default;
-            Optional<string> possibleCauses = default;
-            Optional<string> recommendedAction = default;
-            Optional<DateTimeOffset> creationTimeUtc = default;
-            Optional<string> recoveryProviderErrorMessage = default;
-            Optional<string> entityId = default;
-            Optional<string> errorId = default;
-            Optional<HealthErrorCustomerResolvability> customerResolvability = default;
+            string errorSource = default;
+            string errorType = default;
+            string errorLevel = default;
+            string errorCategory = default;
+            string errorCode = default;
+            string summaryMessage = default;
+            string errorMessage = default;
+            string possibleCauses = default;
+            string recommendedAction = default;
+            DateTimeOffset? creationTimeUtc = default;
+            string recoveryProviderErrorMessage = default;
+            string entityId = default;
+            string errorId = default;
+            HealthErrorCustomerResolvability? customerResolvability = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -261,7 +261,23 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryHealthError(innerHealthErrors ?? new ChangeTrackingList<SiteRecoveryInnerHealthError>(), errorSource.Value, errorType.Value, errorLevel.Value, errorCategory.Value, errorCode.Value, summaryMessage.Value, errorMessage.Value, possibleCauses.Value, recommendedAction.Value, Optional.ToNullable(creationTimeUtc), recoveryProviderErrorMessage.Value, entityId.Value, errorId.Value, Optional.ToNullable(customerResolvability), serializedAdditionalRawData);
+            return new SiteRecoveryHealthError(
+                innerHealthErrors ?? new ChangeTrackingList<SiteRecoveryInnerHealthError>(),
+                errorSource,
+                errorType,
+                errorLevel,
+                errorCategory,
+                errorCode,
+                summaryMessage,
+                errorMessage,
+                possibleCauses,
+                recommendedAction,
+                creationTimeUtc,
+                recoveryProviderErrorMessage,
+                entityId,
+                errorId,
+                customerResolvability,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryHealthError>.Write(ModelReaderWriterOptions options)

@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> diskId = default;
-            Optional<string> seedManagedDiskId = default;
-            Optional<string> replicaDiskType = default;
-            Optional<ResourceIdentifier> diskEncryptionSetId = default;
-            Optional<string> targetDiskName = default;
+            string diskId = default;
+            string seedManagedDiskId = default;
+            string replicaDiskType = default;
+            ResourceIdentifier diskEncryptionSetId = default;
+            string targetDiskName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageAzureV2ManagedDiskDetails(diskId.Value, seedManagedDiskId.Value, replicaDiskType.Value, diskEncryptionSetId.Value, targetDiskName.Value, serializedAdditionalRawData);
+            return new InMageAzureV2ManagedDiskDetails(
+                diskId,
+                seedManagedDiskId,
+                replicaDiskType,
+                diskEncryptionSetId,
+                targetDiskName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InMageAzureV2ManagedDiskDetails>.Write(ModelReaderWriterOptions options)

@@ -153,11 +153,11 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<HealthReportResourceDetails> resourceDetails = default;
-            Optional<EnvironmentDetails> environmentDetails = default;
-            Optional<HealthDataClassification> healthDataClassification = default;
-            Optional<HealthReportStatus> status = default;
+            SystemData systemData = default;
+            HealthReportResourceDetails resourceDetails = default;
+            EnvironmentDetails environmentDetails = default;
+            HealthDataClassification healthDataClassification = default;
+            HealthReportStatus status = default;
             IList<string> affectedDefendersPlans = default;
             IList<string> affectedDefendersSubPlans = default;
             IReadOnlyDictionary<string, string> reportAdditionalData = default;
@@ -300,7 +300,20 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityHealthReportData(id, name, type, systemData.Value, resourceDetails.Value, environmentDetails.Value, healthDataClassification.Value, status.Value, affectedDefendersPlans ?? new ChangeTrackingList<string>(), affectedDefendersSubPlans ?? new ChangeTrackingList<string>(), reportAdditionalData ?? new ChangeTrackingDictionary<string, string>(), issues ?? new ChangeTrackingList<SecurityHealthReportIssue>(), serializedAdditionalRawData);
+            return new SecurityHealthReportData(
+                id,
+                name,
+                type,
+                systemData,
+                resourceDetails,
+                environmentDetails,
+                healthDataClassification,
+                status,
+                affectedDefendersPlans ?? new ChangeTrackingList<string>(),
+                affectedDefendersSubPlans ?? new ChangeTrackingList<string>(),
+                reportAdditionalData ?? new ChangeTrackingDictionary<string, string>(),
+                issues ?? new ChangeTrackingList<SecurityHealthReportIssue>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityHealthReportData>.Write(ModelReaderWriterOptions options)

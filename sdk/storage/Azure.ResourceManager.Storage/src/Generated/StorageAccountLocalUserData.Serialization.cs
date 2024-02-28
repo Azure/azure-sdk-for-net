@@ -137,14 +137,14 @@ namespace Azure.ResourceManager.Storage
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IList<StoragePermissionScope> permissionScopes = default;
-            Optional<string> homeDirectory = default;
+            string homeDirectory = default;
             IList<StorageSshPublicKey> sshAuthorizedKeys = default;
-            Optional<string> sid = default;
-            Optional<bool> hasSharedKey = default;
-            Optional<bool> hasSshKey = default;
-            Optional<bool> hasSshPassword = default;
+            string sid = default;
+            bool? hasSharedKey = default;
+            bool? hasSshKey = default;
+            bool? hasSshPassword = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -256,7 +256,19 @@ namespace Azure.ResourceManager.Storage
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageAccountLocalUserData(id, name, type, systemData.Value, permissionScopes ?? new ChangeTrackingList<StoragePermissionScope>(), homeDirectory.Value, sshAuthorizedKeys ?? new ChangeTrackingList<StorageSshPublicKey>(), sid.Value, Optional.ToNullable(hasSharedKey), Optional.ToNullable(hasSshKey), Optional.ToNullable(hasSshPassword), serializedAdditionalRawData);
+            return new StorageAccountLocalUserData(
+                id,
+                name,
+                type,
+                systemData,
+                permissionScopes ?? new ChangeTrackingList<StoragePermissionScope>(),
+                homeDirectory,
+                sshAuthorizedKeys ?? new ChangeTrackingList<StorageSshPublicKey>(),
+                sid,
+                hasSharedKey,
+                hasSshKey,
+                hasSshPassword,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageAccountLocalUserData>.Write(ModelReaderWriterOptions options)

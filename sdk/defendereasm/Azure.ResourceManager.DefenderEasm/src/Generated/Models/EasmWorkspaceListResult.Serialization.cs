@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IReadOnlyList<EasmWorkspaceData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EasmWorkspaceListResult(nextLink.Value, value ?? new ChangeTrackingList<EasmWorkspaceData>(), serializedAdditionalRawData);
+            return new EasmWorkspaceListResult(nextLink, value ?? new ChangeTrackingList<EasmWorkspaceData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EasmWorkspaceListResult>.Write(ModelReaderWriterOptions options)

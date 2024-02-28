@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Optional<PolicyEnabledState> enabledState = default;
-            Optional<FrontDoorWebApplicationFirewallPolicyMode> mode = default;
-            Optional<Uri> redirectUrl = default;
-            Optional<int> customBlockResponseStatusCode = default;
-            Optional<string> customBlockResponseBody = default;
-            Optional<PolicyRequestBodyCheck> requestBodyCheck = default;
+            PolicyEnabledState? enabledState = default;
+            FrontDoorWebApplicationFirewallPolicyMode? mode = default;
+            Uri redirectUrl = default;
+            int? customBlockResponseStatusCode = default;
+            string customBlockResponseBody = default;
+            PolicyRequestBodyCheck? requestBodyCheck = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorWebApplicationFirewallPolicySettings(Optional.ToNullable(enabledState), Optional.ToNullable(mode), redirectUrl.Value, Optional.ToNullable(customBlockResponseStatusCode), customBlockResponseBody.Value, Optional.ToNullable(requestBodyCheck), serializedAdditionalRawData);
+            return new FrontDoorWebApplicationFirewallPolicySettings(
+                enabledState,
+                mode,
+                redirectUrl,
+                customBlockResponseStatusCode,
+                customBlockResponseBody,
+                requestBodyCheck,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorWebApplicationFirewallPolicySettings>.Write(ModelReaderWriterOptions options)

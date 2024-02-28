@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.Chaos
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> status = default;
-            Optional<DateTimeOffset> startedAt = default;
-            Optional<DateTimeOffset> stoppedAt = default;
+            SystemData systemData = default;
+            string status = default;
+            DateTimeOffset? startedAt = default;
+            DateTimeOffset? stoppedAt = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,7 +179,15 @@ namespace Azure.ResourceManager.Chaos
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ChaosExperimentExecutionData(id, name, type, systemData.Value, status.Value, Optional.ToNullable(startedAt), Optional.ToNullable(stoppedAt), serializedAdditionalRawData);
+            return new ChaosExperimentExecutionData(
+                id,
+                name,
+                type,
+                systemData,
+                status,
+                startedAt,
+                stoppedAt,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ChaosExperimentExecutionData>.Write(ModelReaderWriterOptions options)

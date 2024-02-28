@@ -119,16 +119,16 @@ namespace Azure.ResourceManager.EventHubs
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<EventHubsDisasterRecoveryProvisioningState> provisioningState = default;
-            Optional<string> partnerNamespace = default;
-            Optional<string> alternateName = default;
-            Optional<EventHubsDisasterRecoveryRole> role = default;
-            Optional<long> pendingReplicationOperationsCount = default;
+            SystemData systemData = default;
+            EventHubsDisasterRecoveryProvisioningState? provisioningState = default;
+            string partnerNamespace = default;
+            string alternateName = default;
+            EventHubsDisasterRecoveryRole? role = default;
+            long? pendingReplicationOperationsCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -221,7 +221,18 @@ namespace Azure.ResourceManager.EventHubs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventHubsDisasterRecoveryData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), partnerNamespace.Value, alternateName.Value, Optional.ToNullable(role), Optional.ToNullable(pendingReplicationOperationsCount), Optional.ToNullable(location), serializedAdditionalRawData);
+            return new EventHubsDisasterRecoveryData(
+                id,
+                name,
+                type,
+                systemData,
+                provisioningState,
+                partnerNamespace,
+                alternateName,
+                role,
+                pendingReplicationOperationsCount,
+                location,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventHubsDisasterRecoveryData>.Write(ModelReaderWriterOptions options)

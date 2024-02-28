@@ -149,14 +149,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<BatchEndpointDefaults> defaults = default;
-            Optional<MachineLearningEndpointProvisioningState> provisioningState = default;
+            BatchEndpointDefaults defaults = default;
+            MachineLearningEndpointProvisioningState? provisioningState = default;
             MachineLearningEndpointAuthMode authMode = default;
-            Optional<string> description = default;
-            Optional<MachineLearningEndpointAuthKeys> keys = default;
+            string description = default;
+            MachineLearningEndpointAuthKeys keys = default;
             IDictionary<string, string> properties = default;
-            Optional<Uri> scoringUri = default;
-            Optional<Uri> swaggerUri = default;
+            Uri scoringUri = default;
+            Uri swaggerUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -246,7 +246,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningBatchEndpointProperties(authMode, description.Value, keys.Value, properties ?? new ChangeTrackingDictionary<string, string>(), scoringUri.Value, swaggerUri.Value, serializedAdditionalRawData, defaults.Value, Optional.ToNullable(provisioningState));
+            return new MachineLearningBatchEndpointProperties(
+                authMode,
+                description,
+                keys,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                scoringUri,
+                swaggerUri,
+                serializedAdditionalRawData,
+                defaults,
+                provisioningState);
         }
 
         BinaryData IPersistableModel<MachineLearningBatchEndpointProperties>.Write(ModelReaderWriterOptions options)

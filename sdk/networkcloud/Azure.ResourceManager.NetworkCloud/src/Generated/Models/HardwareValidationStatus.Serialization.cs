@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> lastValidationTime = default;
-            Optional<BareMetalMachineHardwareValidationResult> result = default;
+            DateTimeOffset? lastValidationTime = default;
+            BareMetalMachineHardwareValidationResult? result = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HardwareValidationStatus(Optional.ToNullable(lastValidationTime), Optional.ToNullable(result), serializedAdditionalRawData);
+            return new HardwareValidationStatus(lastValidationTime, result, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HardwareValidationStatus>.Write(ModelReaderWriterOptions options)

@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             string name = default;
             ConnectivityStatusType status = default;
-            Optional<string> error = default;
+            string error = default;
             DateTimeOffset lastUpdated = default;
             DateTimeOffset lastStatusChange = default;
             string resourceType = default;
@@ -133,7 +133,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectivityStatusContract(name, status, error.Value, lastUpdated, lastStatusChange, resourceType, isOptional, serializedAdditionalRawData);
+            return new ConnectivityStatusContract(
+                name,
+                status,
+                error,
+                lastUpdated,
+                lastStatusChange,
+                resourceType,
+                isOptional,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectivityStatusContract>.Write(ModelReaderWriterOptions options)

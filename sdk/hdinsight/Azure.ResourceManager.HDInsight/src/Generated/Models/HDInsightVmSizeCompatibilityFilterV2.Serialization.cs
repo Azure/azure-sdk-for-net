@@ -139,15 +139,15 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<HDInsightFilterMode> filterMode = default;
+            HDInsightFilterMode? filterMode = default;
             IReadOnlyList<string> regions = default;
             IReadOnlyList<string> clusterFlavors = default;
             IReadOnlyList<string> nodeTypes = default;
             IReadOnlyList<string> clusterVersions = default;
             IReadOnlyList<HDInsightOSType> osType = default;
             IReadOnlyList<string> vmSizes = default;
-            Optional<string> espApplied = default;
-            Optional<string> computeIsolationSupported = default;
+            string espApplied = default;
+            string computeIsolationSupported = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -261,7 +261,17 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightVmSizeCompatibilityFilterV2(Optional.ToNullable(filterMode), regions ?? new ChangeTrackingList<string>(), clusterFlavors ?? new ChangeTrackingList<string>(), nodeTypes ?? new ChangeTrackingList<string>(), clusterVersions ?? new ChangeTrackingList<string>(), osType ?? new ChangeTrackingList<HDInsightOSType>(), vmSizes ?? new ChangeTrackingList<string>(), espApplied.Value, computeIsolationSupported.Value, serializedAdditionalRawData);
+            return new HDInsightVmSizeCompatibilityFilterV2(
+                filterMode,
+                regions ?? new ChangeTrackingList<string>(),
+                clusterFlavors ?? new ChangeTrackingList<string>(),
+                nodeTypes ?? new ChangeTrackingList<string>(),
+                clusterVersions ?? new ChangeTrackingList<string>(),
+                osType ?? new ChangeTrackingList<HDInsightOSType>(),
+                vmSizes ?? new ChangeTrackingList<string>(),
+                espApplied,
+                computeIsolationSupported,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightVmSizeCompatibilityFilterV2>.Write(ModelReaderWriterOptions options)

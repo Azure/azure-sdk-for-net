@@ -133,14 +133,14 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SecurityCenterResourceDetails> resourceDetails = default;
-            Optional<string> displayName = default;
+            SystemData systemData = default;
+            SecurityCenterResourceDetails resourceDetails = default;
+            string displayName = default;
             IDictionary<string, string> additionalData = default;
-            Optional<AssessmentLinks> links = default;
-            Optional<SecurityAssessmentMetadataProperties> metadata = default;
-            Optional<SecurityAssessmentPartner> partnersData = default;
-            Optional<SecurityAssessmentStatusResult> status = default;
+            AssessmentLinks links = default;
+            SecurityAssessmentMetadataProperties metadata = default;
+            SecurityAssessmentPartner partnersData = default;
+            SecurityAssessmentStatusResult status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -251,7 +251,19 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityAssessmentData(id, name, type, systemData.Value, resourceDetails.Value, displayName.Value, additionalData ?? new ChangeTrackingDictionary<string, string>(), links.Value, metadata.Value, partnersData.Value, status.Value, serializedAdditionalRawData);
+            return new SecurityAssessmentData(
+                id,
+                name,
+                type,
+                systemData,
+                resourceDetails,
+                displayName,
+                additionalData ?? new ChangeTrackingDictionary<string, string>(),
+                links,
+                metadata,
+                partnersData,
+                status,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityAssessmentData>.Write(ModelReaderWriterOptions options)

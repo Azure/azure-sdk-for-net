@@ -156,20 +156,20 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
             ProductDetails productDetails = default;
             OrderItemType orderItemType = default;
-            Optional<EdgeOrderStageDetails> currentStage = default;
+            EdgeOrderStageDetails currentStage = default;
             IReadOnlyList<EdgeOrderStageDetails> orderItemStageHistory = default;
-            Optional<OrderItemPreferences> preferences = default;
-            Optional<ForwardShippingDetails> forwardShippingDetails = default;
-            Optional<ReverseShippingDetails> reverseShippingDetails = default;
+            OrderItemPreferences preferences = default;
+            ForwardShippingDetails forwardShippingDetails = default;
+            ReverseShippingDetails reverseShippingDetails = default;
             IList<string> notificationEmailList = default;
-            Optional<string> cancellationReason = default;
-            Optional<OrderItemCancellationStatus> cancellationStatus = default;
-            Optional<EdgeOrderActionStatus> deletionStatus = default;
-            Optional<string> returnReason = default;
-            Optional<OrderItemReturnStatus> returnStatus = default;
-            Optional<ResourceProviderDetails> managementRPDetails = default;
+            string cancellationReason = default;
+            OrderItemCancellationStatus? cancellationStatus = default;
+            EdgeOrderActionStatus? deletionStatus = default;
+            string returnReason = default;
+            OrderItemReturnStatus? returnStatus = default;
+            ResourceProviderDetails managementRPDetails = default;
             IReadOnlyList<ResourceProviderDetails> managementRPDetailsList = default;
-            Optional<ResponseError> error = default;
+            ResponseError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -323,7 +323,24 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeOrderItemDetails(productDetails, orderItemType, currentStage.Value, orderItemStageHistory ?? new ChangeTrackingList<EdgeOrderStageDetails>(), preferences.Value, forwardShippingDetails.Value, reverseShippingDetails.Value, notificationEmailList ?? new ChangeTrackingList<string>(), cancellationReason.Value, Optional.ToNullable(cancellationStatus), Optional.ToNullable(deletionStatus), returnReason.Value, Optional.ToNullable(returnStatus), managementRPDetails.Value, managementRPDetailsList ?? new ChangeTrackingList<ResourceProviderDetails>(), error.Value, serializedAdditionalRawData);
+            return new EdgeOrderItemDetails(
+                productDetails,
+                orderItemType,
+                currentStage,
+                orderItemStageHistory ?? new ChangeTrackingList<EdgeOrderStageDetails>(),
+                preferences,
+                forwardShippingDetails,
+                reverseShippingDetails,
+                notificationEmailList ?? new ChangeTrackingList<string>(),
+                cancellationReason,
+                cancellationStatus,
+                deletionStatus,
+                returnReason,
+                returnStatus,
+                managementRPDetails,
+                managementRPDetailsList ?? new ChangeTrackingList<ResourceProviderDetails>(),
+                error,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeOrderItemDetails>.Write(ModelReaderWriterOptions options)

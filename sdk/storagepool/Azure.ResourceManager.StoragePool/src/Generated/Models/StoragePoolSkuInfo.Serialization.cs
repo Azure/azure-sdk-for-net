@@ -109,12 +109,12 @@ namespace Azure.ResourceManager.StoragePool.Models
             {
                 return null;
             }
-            Optional<string> apiVersion = default;
-            Optional<string> resourceType = default;
+            string apiVersion = default;
+            string resourceType = default;
             IReadOnlyList<StoragePoolSkuCapability> capabilities = default;
-            Optional<StoragePoolSkuLocationInfo> locationInfo = default;
-            Optional<string> name = default;
-            Optional<string> tier = default;
+            StoragePoolSkuLocationInfo locationInfo = default;
+            string name = default;
+            string tier = default;
             IReadOnlyList<StoragePoolSkuRestrictions> restrictions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -183,7 +183,15 @@ namespace Azure.ResourceManager.StoragePool.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StoragePoolSkuInfo(apiVersion.Value, resourceType.Value, capabilities ?? new ChangeTrackingList<StoragePoolSkuCapability>(), locationInfo.Value, name.Value, tier.Value, restrictions ?? new ChangeTrackingList<StoragePoolSkuRestrictions>(), serializedAdditionalRawData);
+            return new StoragePoolSkuInfo(
+                apiVersion,
+                resourceType,
+                capabilities ?? new ChangeTrackingList<StoragePoolSkuCapability>(),
+                locationInfo,
+                name,
+                tier,
+                restrictions ?? new ChangeTrackingList<StoragePoolSkuRestrictions>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StoragePoolSkuInfo>.Write(ModelReaderWriterOptions options)

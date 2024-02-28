@@ -85,8 +85,8 @@ namespace Azure.ResourceManager.Consumption.Models
                 return null;
             }
             IList<BudgetFilterProperties> and = default;
-            Optional<BudgetComparisonExpression> dimensions = default;
-            Optional<BudgetComparisonExpression> tags = default;
+            BudgetComparisonExpression dimensions = default;
+            BudgetComparisonExpression tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionBudgetFilter(and ?? new ChangeTrackingList<BudgetFilterProperties>(), dimensions.Value, tags.Value, serializedAdditionalRawData);
+            return new ConsumptionBudgetFilter(and ?? new ChangeTrackingList<BudgetFilterProperties>(), dimensions, tags, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumptionBudgetFilter>.Write(ModelReaderWriterOptions options)

@@ -129,18 +129,18 @@ namespace Azure.ResourceManager.Synapse
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> name0 = default;
-            Optional<string> path = default;
-            Optional<string> containerName = default;
-            Optional<DateTimeOffset> uploadedTimestamp = default;
-            Optional<string> type0 = default;
-            Optional<string> provisioningStatus = default;
-            Optional<string> creatorId = default;
+            SystemData systemData = default;
+            string name0 = default;
+            string path = default;
+            string containerName = default;
+            DateTimeOffset? uploadedTimestamp = default;
+            string type0 = default;
+            string provisioningStatus = default;
+            string creatorId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -235,7 +235,20 @@ namespace Azure.ResourceManager.Synapse
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseLibraryData(id, name, type, systemData.Value, name0.Value, path.Value, containerName.Value, Optional.ToNullable(uploadedTimestamp), type0.Value, provisioningStatus.Value, creatorId.Value, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new SynapseLibraryData(
+                id,
+                name,
+                type,
+                systemData,
+                name0,
+                path,
+                containerName,
+                uploadedTimestamp,
+                type0,
+                provisioningStatus,
+                creatorId,
+                etag,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseLibraryData>.Write(ModelReaderWriterOptions options)

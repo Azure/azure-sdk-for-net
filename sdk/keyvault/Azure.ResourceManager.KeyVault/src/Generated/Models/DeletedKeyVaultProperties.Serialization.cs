@@ -100,12 +100,12 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> vaultId = default;
-            Optional<AzureLocation> location = default;
-            Optional<DateTimeOffset> deletionDate = default;
-            Optional<DateTimeOffset> scheduledPurgeDate = default;
+            ResourceIdentifier vaultId = default;
+            AzureLocation? location = default;
+            DateTimeOffset? deletionDate = default;
+            DateTimeOffset? scheduledPurgeDate = default;
             IReadOnlyDictionary<string, string> tags = default;
-            Optional<bool> purgeProtectionEnabled = default;
+            bool? purgeProtectionEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -175,7 +175,14 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeletedKeyVaultProperties(vaultId.Value, Optional.ToNullable(location), Optional.ToNullable(deletionDate), Optional.ToNullable(scheduledPurgeDate), tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(purgeProtectionEnabled), serializedAdditionalRawData);
+            return new DeletedKeyVaultProperties(
+                vaultId,
+                location,
+                deletionDate,
+                scheduledPurgeDate,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                purgeProtectionEnabled,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeletedKeyVaultProperties>.Write(ModelReaderWriterOptions options)

@@ -114,15 +114,15 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Optional<string> partition = default;
-            Optional<string> replicaGroup = default;
-            Optional<string> requestId = default;
-            Optional<Uri> azureFileShareUri = default;
-            Optional<string> status = default;
-            Optional<Uri> sourceAzureFileShareUri = default;
-            Optional<string> backupMetadataPropertyBag = default;
+            string partition = default;
+            string replicaGroup = default;
+            string requestId = default;
+            Uri azureFileShareUri = default;
+            string status = default;
+            Uri sourceAzureFileShareUri = default;
+            string backupMetadataPropertyBag = default;
             IList<RestoreFileSpec> restoreFileSpec = default;
-            Optional<int> pauseWaitForSyncDrainTimePeriodInSeconds = default;
+            int? pauseWaitForSyncDrainTimePeriodInSeconds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -199,7 +199,17 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PreRestoreContent(partition.Value, replicaGroup.Value, requestId.Value, azureFileShareUri.Value, status.Value, sourceAzureFileShareUri.Value, backupMetadataPropertyBag.Value, restoreFileSpec ?? new ChangeTrackingList<RestoreFileSpec>(), Optional.ToNullable(pauseWaitForSyncDrainTimePeriodInSeconds), serializedAdditionalRawData);
+            return new PreRestoreContent(
+                partition,
+                replicaGroup,
+                requestId,
+                azureFileShareUri,
+                status,
+                sourceAzureFileShareUri,
+                backupMetadataPropertyBag,
+                restoreFileSpec ?? new ChangeTrackingList<RestoreFileSpec>(),
+                pauseWaitForSyncDrainTimePeriodInSeconds,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PreRestoreContent>.Write(ModelReaderWriterOptions options)

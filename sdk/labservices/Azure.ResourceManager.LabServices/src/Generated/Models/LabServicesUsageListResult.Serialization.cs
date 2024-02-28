@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 return null;
             }
             IReadOnlyList<LabServicesUsage> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabServicesUsageListResult(value ?? new ChangeTrackingList<LabServicesUsage>(), nextLink.Value, serializedAdditionalRawData);
+            return new LabServicesUsageListResult(value ?? new ChangeTrackingList<LabServicesUsage>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabServicesUsageListResult>.Write(ModelReaderWriterOptions options)

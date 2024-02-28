@@ -133,13 +133,13 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
+            SystemData systemData = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
             IList<AbnormalTimePeriod> abnormalTimePeriods = default;
             IList<AnalysisDetectorEvidences> payload = default;
             IList<DetectorDefinition> nonCorrelatedDetectors = default;
@@ -254,7 +254,18 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiagnosticAnalysis(id, name, type, systemData.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), abnormalTimePeriods ?? new ChangeTrackingList<AbnormalTimePeriod>(), payload ?? new ChangeTrackingList<AnalysisDetectorEvidences>(), nonCorrelatedDetectors ?? new ChangeTrackingList<DetectorDefinition>(), kind.Value, serializedAdditionalRawData);
+            return new DiagnosticAnalysis(
+                id,
+                name,
+                type,
+                systemData,
+                startTime,
+                endTime,
+                abnormalTimePeriods ?? new ChangeTrackingList<AbnormalTimePeriod>(),
+                payload ?? new ChangeTrackingList<AnalysisDetectorEvidences>(),
+                nonCorrelatedDetectors ?? new ChangeTrackingList<DetectorDefinition>(),
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiagnosticAnalysis>.Write(ModelReaderWriterOptions options)

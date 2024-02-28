@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<string> syncAgentKey = default;
+            string syncAgentKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SyncAgentKeyProperties(syncAgentKey.Value, serializedAdditionalRawData);
+            return new SyncAgentKeyProperties(syncAgentKey, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SyncAgentKeyProperties>.Write(ModelReaderWriterOptions options)

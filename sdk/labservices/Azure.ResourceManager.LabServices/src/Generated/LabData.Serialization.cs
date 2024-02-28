@@ -162,18 +162,18 @@ namespace Azure.ResourceManager.LabServices
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<LabAutoShutdownProfile> autoShutdownProfile = default;
-            Optional<LabConnectionProfile> connectionProfile = default;
-            Optional<LabVirtualMachineProfile> virtualMachineProfile = default;
-            Optional<LabSecurityProfile> securityProfile = default;
-            Optional<LabRosterProfile> rosterProfile = default;
-            Optional<ResourceIdentifier> labPlanId = default;
-            Optional<string> title = default;
-            Optional<string> description = default;
-            Optional<LabServicesProvisioningState> provisioningState = default;
-            Optional<LabNetworkProfile> networkProfile = default;
-            Optional<LabState> state = default;
+            SystemData systemData = default;
+            LabAutoShutdownProfile autoShutdownProfile = default;
+            LabConnectionProfile connectionProfile = default;
+            LabVirtualMachineProfile virtualMachineProfile = default;
+            LabSecurityProfile securityProfile = default;
+            LabRosterProfile rosterProfile = default;
+            ResourceIdentifier labPlanId = default;
+            string title = default;
+            string description = default;
+            LabServicesProvisioningState? provisioningState = default;
+            LabNetworkProfile networkProfile = default;
+            LabState? state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -330,7 +330,25 @@ namespace Azure.ResourceManager.LabServices
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, autoShutdownProfile.Value, connectionProfile.Value, virtualMachineProfile.Value, securityProfile.Value, rosterProfile.Value, labPlanId.Value, title.Value, description.Value, Optional.ToNullable(provisioningState), networkProfile.Value, Optional.ToNullable(state), serializedAdditionalRawData);
+            return new LabData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                autoShutdownProfile,
+                connectionProfile,
+                virtualMachineProfile,
+                securityProfile,
+                rosterProfile,
+                labPlanId,
+                title,
+                description,
+                provisioningState,
+                networkProfile,
+                state,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabData>.Write(ModelReaderWriterOptions options)

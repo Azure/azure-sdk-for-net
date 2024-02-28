@@ -102,11 +102,11 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<string> ruleSetName = default;
-            Optional<int> order = default;
+            string ruleSetName = default;
+            int? order = default;
             IList<DeliveryRuleCondition> conditions = default;
             IList<DeliveryRuleAction> actions = default;
-            Optional<MatchProcessingBehavior> matchProcessingBehavior = default;
+            MatchProcessingBehavior? matchProcessingBehavior = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -180,7 +180,13 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorRulePatch(ruleSetName.Value, Optional.ToNullable(order), conditions ?? new ChangeTrackingList<DeliveryRuleCondition>(), actions ?? new ChangeTrackingList<DeliveryRuleAction>(), Optional.ToNullable(matchProcessingBehavior), serializedAdditionalRawData);
+            return new FrontDoorRulePatch(
+                ruleSetName,
+                order,
+                conditions ?? new ChangeTrackingList<DeliveryRuleCondition>(),
+                actions ?? new ChangeTrackingList<DeliveryRuleAction>(),
+                matchProcessingBehavior,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorRulePatch>.Write(ModelReaderWriterOptions options)

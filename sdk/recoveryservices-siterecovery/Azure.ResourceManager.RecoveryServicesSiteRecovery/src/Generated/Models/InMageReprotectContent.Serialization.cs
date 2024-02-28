@@ -102,9 +102,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string masterTargetId = default;
             Guid processServerId = default;
             string retentionDrive = default;
-            Optional<string> runAsAccountId = default;
-            Optional<string> datastoreName = default;
-            Optional<InMageDiskExclusionContent> diskExclusionContent = default;
+            string runAsAccountId = default;
+            string datastoreName = default;
+            InMageDiskExclusionContent diskExclusionContent = default;
             string profileId = default;
             IList<string> disksToInclude = default;
             string instanceType = default;
@@ -176,7 +176,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageReprotectContent(instanceType, serializedAdditionalRawData, masterTargetId, processServerId, retentionDrive, runAsAccountId.Value, datastoreName.Value, diskExclusionContent.Value, profileId, disksToInclude ?? new ChangeTrackingList<string>());
+            return new InMageReprotectContent(
+                instanceType,
+                serializedAdditionalRawData,
+                masterTargetId,
+                processServerId,
+                retentionDrive,
+                runAsAccountId,
+                datastoreName,
+                diskExclusionContent,
+                profileId,
+                disksToInclude ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<InMageReprotectContent>.Write(ModelReaderWriterOptions options)

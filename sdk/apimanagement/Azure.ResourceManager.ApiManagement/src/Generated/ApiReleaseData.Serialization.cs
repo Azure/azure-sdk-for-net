@@ -111,11 +111,11 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> apiId = default;
-            Optional<DateTimeOffset> createdDateTime = default;
-            Optional<DateTimeOffset> updatedDateTime = default;
-            Optional<string> notes = default;
+            SystemData systemData = default;
+            ResourceIdentifier apiId = default;
+            DateTimeOffset? createdDateTime = default;
+            DateTimeOffset? updatedDateTime = default;
+            string notes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -194,7 +194,16 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiReleaseData(id, name, type, systemData.Value, apiId.Value, Optional.ToNullable(createdDateTime), Optional.ToNullable(updatedDateTime), notes.Value, serializedAdditionalRawData);
+            return new ApiReleaseData(
+                id,
+                name,
+                type,
+                systemData,
+                apiId,
+                createdDateTime,
+                updatedDateTime,
+                notes,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiReleaseData>.Write(ModelReaderWriterOptions options)

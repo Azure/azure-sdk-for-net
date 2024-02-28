@@ -201,25 +201,25 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ExtendedLocation> extendedLocation = default;
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
+            ExtendedLocation extendedLocation = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
             IDictionary<string, string> tags = default;
-            Optional<AddressSpace> addressSpace = default;
-            Optional<DhcpOptions> dhcpOptions = default;
-            Optional<int> flowTimeoutInMinutes = default;
+            AddressSpace addressSpace = default;
+            DhcpOptions dhcpOptions = default;
+            int? flowTimeoutInMinutes = default;
             IList<SubnetData> subnets = default;
             IList<VirtualNetworkPeeringData> virtualNetworkPeerings = default;
-            Optional<Guid> resourceGuid = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<bool> enableDdosProtection = default;
-            Optional<bool> enableVmProtection = default;
-            Optional<WritableSubResource> ddosProtectionPlan = default;
-            Optional<VirtualNetworkBgpCommunities> bgpCommunities = default;
-            Optional<VirtualNetworkEncryption> encryption = default;
+            Guid? resourceGuid = default;
+            NetworkProvisioningState? provisioningState = default;
+            bool? enableDdosProtection = default;
+            bool? enableVmProtection = default;
+            WritableSubResource ddosProtectionPlan = default;
+            VirtualNetworkBgpCommunities bgpCommunities = default;
+            VirtualNetworkEncryption encryption = default;
             IList<WritableSubResource> ipAllocations = default;
             IReadOnlyList<FlowLogData> flowLogs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -454,7 +454,29 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualNetworkData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, extendedLocation, Optional.ToNullable(etag), addressSpace.Value, dhcpOptions.Value, Optional.ToNullable(flowTimeoutInMinutes), subnets ?? new ChangeTrackingList<SubnetData>(), virtualNetworkPeerings ?? new ChangeTrackingList<VirtualNetworkPeeringData>(), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), Optional.ToNullable(enableDdosProtection), Optional.ToNullable(enableVmProtection), ddosProtectionPlan, bgpCommunities.Value, encryption.Value, ipAllocations ?? new ChangeTrackingList<WritableSubResource>(), flowLogs ?? new ChangeTrackingList<FlowLogData>());
+            return new VirtualNetworkData(
+                id,
+                name,
+                type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                extendedLocation,
+                etag,
+                addressSpace,
+                dhcpOptions,
+                flowTimeoutInMinutes,
+                subnets ?? new ChangeTrackingList<SubnetData>(),
+                virtualNetworkPeerings ?? new ChangeTrackingList<VirtualNetworkPeeringData>(),
+                resourceGuid,
+                provisioningState,
+                enableDdosProtection,
+                enableVmProtection,
+                ddosProtectionPlan,
+                bgpCommunities,
+                encryption,
+                ipAllocations ?? new ChangeTrackingList<WritableSubResource>(),
+                flowLogs ?? new ChangeTrackingList<FlowLogData>());
         }
 
         BinaryData IPersistableModel<VirtualNetworkData>.Write(ModelReaderWriterOptions options)

@@ -119,13 +119,13 @@ namespace Azure.ResourceManager.DataBoxEdge
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<DataBoxEdgeStorageAccountStatus> storageAccountStatus = default;
+            SystemData systemData = default;
+            string description = default;
+            DataBoxEdgeStorageAccountStatus? storageAccountStatus = default;
             DataBoxEdgeDataPolicy dataPolicy = default;
-            Optional<ResourceIdentifier> storageAccountCredentialId = default;
-            Optional<string> blobEndpoint = default;
-            Optional<int> containerCount = default;
+            ResourceIdentifier storageAccountCredentialId = default;
+            string blobEndpoint = default;
+            int? containerCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -214,7 +214,18 @@ namespace Azure.ResourceManager.DataBoxEdge
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeStorageAccountData(id, name, type, systemData.Value, description.Value, Optional.ToNullable(storageAccountStatus), dataPolicy, storageAccountCredentialId.Value, blobEndpoint.Value, Optional.ToNullable(containerCount), serializedAdditionalRawData);
+            return new DataBoxEdgeStorageAccountData(
+                id,
+                name,
+                type,
+                systemData,
+                description,
+                storageAccountStatus,
+                dataPolicy,
+                storageAccountCredentialId,
+                blobEndpoint,
+                containerCount,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeStorageAccountData>.Write(ModelReaderWriterOptions options)

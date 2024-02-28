@@ -138,12 +138,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             IList<string> command = default;
             IList<ContainerPort> ports = default;
             IList<ContainerEnvironmentVariable> environmentVariables = default;
-            Optional<ContainerInstanceView> instanceView = default;
+            ContainerInstanceView instanceView = default;
             ContainerResourceRequirements resources = default;
             IList<ContainerVolumeMount> volumeMounts = default;
-            Optional<ContainerProbe> livenessProbe = default;
-            Optional<ContainerProbe> readinessProbe = default;
-            Optional<ContainerSecurityContextDefinition> securityContext = default;
+            ContainerProbe livenessProbe = default;
+            ContainerProbe readinessProbe = default;
+            ContainerSecurityContextDefinition securityContext = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -273,7 +273,19 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerInstanceContainer(name, image, command ?? new ChangeTrackingList<string>(), ports ?? new ChangeTrackingList<ContainerPort>(), environmentVariables ?? new ChangeTrackingList<ContainerEnvironmentVariable>(), instanceView.Value, resources, volumeMounts ?? new ChangeTrackingList<ContainerVolumeMount>(), livenessProbe.Value, readinessProbe.Value, securityContext.Value, serializedAdditionalRawData);
+            return new ContainerInstanceContainer(
+                name,
+                image,
+                command ?? new ChangeTrackingList<string>(),
+                ports ?? new ChangeTrackingList<ContainerPort>(),
+                environmentVariables ?? new ChangeTrackingList<ContainerEnvironmentVariable>(),
+                instanceView,
+                resources,
+                volumeMounts ?? new ChangeTrackingList<ContainerVolumeMount>(),
+                livenessProbe,
+                readinessProbe,
+                securityContext,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerInstanceContainer>.Write(ModelReaderWriterOptions options)

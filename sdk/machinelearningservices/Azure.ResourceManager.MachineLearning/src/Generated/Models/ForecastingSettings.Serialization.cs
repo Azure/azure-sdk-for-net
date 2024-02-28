@@ -200,20 +200,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> countryOrRegionForHolidays = default;
-            Optional<int?> cvStepSize = default;
-            Optional<MachineLearningFeatureLag> featureLags = default;
+            string countryOrRegionForHolidays = default;
+            int? cvStepSize = default;
+            MachineLearningFeatureLag? featureLags = default;
             IList<string> featuresUnknownAtForecastTime = default;
-            Optional<ForecastHorizon> forecastHorizon = default;
-            Optional<string> frequency = default;
-            Optional<ForecastingSeasonality> seasonality = default;
-            Optional<MachineLearningShortSeriesHandlingConfiguration> shortSeriesHandlingConfig = default;
-            Optional<TargetAggregationFunction> targetAggregateFunction = default;
-            Optional<TargetLags> targetLags = default;
-            Optional<TargetRollingWindowSize> targetRollingWindowSize = default;
-            Optional<string> timeColumnName = default;
+            ForecastHorizon forecastHorizon = default;
+            string frequency = default;
+            ForecastingSeasonality seasonality = default;
+            MachineLearningShortSeriesHandlingConfiguration? shortSeriesHandlingConfig = default;
+            TargetAggregationFunction? targetAggregateFunction = default;
+            TargetLags targetLags = default;
+            TargetRollingWindowSize targetRollingWindowSize = default;
+            string timeColumnName = default;
             IList<string> timeSeriesIdColumnNames = default;
-            Optional<MachineLearningUseStl> useStl = default;
+            MachineLearningUseStl? useStl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -368,7 +368,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ForecastingSettings(countryOrRegionForHolidays.Value, Optional.ToNullable(cvStepSize), Optional.ToNullable(featureLags), featuresUnknownAtForecastTime ?? new ChangeTrackingList<string>(), forecastHorizon.Value, frequency.Value, seasonality.Value, Optional.ToNullable(shortSeriesHandlingConfig), Optional.ToNullable(targetAggregateFunction), targetLags.Value, targetRollingWindowSize.Value, timeColumnName.Value, timeSeriesIdColumnNames ?? new ChangeTrackingList<string>(), Optional.ToNullable(useStl), serializedAdditionalRawData);
+            return new ForecastingSettings(
+                countryOrRegionForHolidays,
+                cvStepSize,
+                featureLags,
+                featuresUnknownAtForecastTime ?? new ChangeTrackingList<string>(),
+                forecastHorizon,
+                frequency,
+                seasonality,
+                shortSeriesHandlingConfig,
+                targetAggregateFunction,
+                targetLags,
+                targetRollingWindowSize,
+                timeColumnName,
+                timeSeriesIdColumnNames ?? new ChangeTrackingList<string>(),
+                useStl,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ForecastingSettings>.Write(ModelReaderWriterOptions options)

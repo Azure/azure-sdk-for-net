@@ -392,58 +392,58 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 return null;
             }
-            Optional<NodeTypeSku> sku = default;
+            NodeTypeSku sku = default;
             IDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<bool> isPrimary = default;
-            Optional<int> vmInstanceCount = default;
-            Optional<int> dataDiskSizeGB = default;
-            Optional<ServiceFabricManagedDataDiskType> dataDiskType = default;
-            Optional<string> dataDiskLetter = default;
+            SystemData systemData = default;
+            bool? isPrimary = default;
+            int? vmInstanceCount = default;
+            int? dataDiskSizeGB = default;
+            ServiceFabricManagedDataDiskType? dataDiskType = default;
+            string dataDiskLetter = default;
             IDictionary<string, string> placementProperties = default;
             IDictionary<string, string> capacities = default;
-            Optional<EndpointRangeDescription> applicationPorts = default;
-            Optional<EndpointRangeDescription> ephemeralPorts = default;
-            Optional<string> vmSize = default;
-            Optional<string> vmImagePublisher = default;
-            Optional<string> vmImageOffer = default;
-            Optional<string> vmImageSku = default;
-            Optional<string> vmImageVersion = default;
+            EndpointRangeDescription applicationPorts = default;
+            EndpointRangeDescription ephemeralPorts = default;
+            string vmSize = default;
+            string vmImagePublisher = default;
+            string vmImageOffer = default;
+            string vmImageSku = default;
+            string vmImageVersion = default;
             IList<NodeTypeVaultSecretGroup> vmSecrets = default;
             IList<NodeTypeVmssExtension> vmExtensions = default;
-            Optional<VmManagedIdentity> vmManagedIdentity = default;
-            Optional<bool> isStateless = default;
-            Optional<bool> multiplePlacementGroups = default;
+            VmManagedIdentity vmManagedIdentity = default;
+            bool? isStateless = default;
+            bool? multiplePlacementGroups = default;
             IList<NodeTypeFrontendConfiguration> frontendConfigurations = default;
             IList<ServiceFabricManagedNetworkSecurityRule> networkSecurityRules = default;
             IList<NodeTypeVmssDataDisk> additionalDataDisks = default;
-            Optional<bool> enableEncryptionAtHost = default;
-            Optional<ServiceFabricManagedResourceProvisioningState> provisioningState = default;
-            Optional<bool> enableAcceleratedNetworking = default;
-            Optional<bool> useDefaultPublicLoadBalancer = default;
-            Optional<bool> useTempDataDisk = default;
-            Optional<bool> enableOverProvisioning = default;
+            bool? enableEncryptionAtHost = default;
+            ServiceFabricManagedResourceProvisioningState? provisioningState = default;
+            bool? enableAcceleratedNetworking = default;
+            bool? useDefaultPublicLoadBalancer = default;
+            bool? useTempDataDisk = default;
+            bool? enableOverProvisioning = default;
             IList<string> zones = default;
-            Optional<bool> isSpotVm = default;
-            Optional<string> hostGroupId = default;
-            Optional<bool> useEphemeralOSDisk = default;
-            Optional<string> spotRestoreTimeout = default;
-            Optional<SpotNodeVmEvictionPolicyType> evictionPolicy = default;
-            Optional<ResourceIdentifier> vmImageResourceId = default;
-            Optional<ResourceIdentifier> subnetId = default;
+            bool? isSpotVm = default;
+            string hostGroupId = default;
+            bool? useEphemeralOSDisk = default;
+            string spotRestoreTimeout = default;
+            SpotNodeVmEvictionPolicyType? evictionPolicy = default;
+            ResourceIdentifier vmImageResourceId = default;
+            ResourceIdentifier subnetId = default;
             IList<VmSetupAction> vmSetupActions = default;
-            Optional<ServiceFabricManagedClusterSecurityType> securityType = default;
-            Optional<bool> secureBootEnabled = default;
-            Optional<bool> enableNodePublicIP = default;
-            Optional<bool> enableNodePublicIPv6 = default;
-            Optional<ResourceIdentifier> vmSharedGalleryImageId = default;
-            Optional<ResourceIdentifier> natGatewayId = default;
-            Optional<VmImagePlan> vmImagePlan = default;
-            Optional<ResourceIdentifier> serviceArtifactReferenceId = default;
-            Optional<ResourceIdentifier> dscpConfigurationId = default;
+            ServiceFabricManagedClusterSecurityType? securityType = default;
+            bool? secureBootEnabled = default;
+            bool? enableNodePublicIP = default;
+            bool? enableNodePublicIPv6 = default;
+            ResourceIdentifier vmSharedGalleryImageId = default;
+            ResourceIdentifier natGatewayId = default;
+            VmImagePlan vmImagePlan = default;
+            ResourceIdentifier serviceArtifactReferenceId = default;
+            ResourceIdentifier dscpConfigurationId = default;
             IList<AdditionalNetworkInterfaceConfiguration> additionalNetworkInterfaceConfigurations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -955,7 +955,61 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceFabricManagedNodeTypeData(id, name, type, systemData.Value, sku.Value, Optional.ToNullable(isPrimary), Optional.ToNullable(vmInstanceCount), Optional.ToNullable(dataDiskSizeGB), Optional.ToNullable(dataDiskType), dataDiskLetter.Value, placementProperties ?? new ChangeTrackingDictionary<string, string>(), capacities ?? new ChangeTrackingDictionary<string, string>(), applicationPorts.Value, ephemeralPorts.Value, vmSize.Value, vmImagePublisher.Value, vmImageOffer.Value, vmImageSku.Value, vmImageVersion.Value, vmSecrets ?? new ChangeTrackingList<NodeTypeVaultSecretGroup>(), vmExtensions ?? new ChangeTrackingList<NodeTypeVmssExtension>(), vmManagedIdentity.Value, Optional.ToNullable(isStateless), Optional.ToNullable(multiplePlacementGroups), frontendConfigurations ?? new ChangeTrackingList<NodeTypeFrontendConfiguration>(), networkSecurityRules ?? new ChangeTrackingList<ServiceFabricManagedNetworkSecurityRule>(), additionalDataDisks ?? new ChangeTrackingList<NodeTypeVmssDataDisk>(), Optional.ToNullable(enableEncryptionAtHost), Optional.ToNullable(provisioningState), Optional.ToNullable(enableAcceleratedNetworking), Optional.ToNullable(useDefaultPublicLoadBalancer), Optional.ToNullable(useTempDataDisk), Optional.ToNullable(enableOverProvisioning), zones ?? new ChangeTrackingList<string>(), Optional.ToNullable(isSpotVm), hostGroupId.Value, Optional.ToNullable(useEphemeralOSDisk), spotRestoreTimeout.Value, Optional.ToNullable(evictionPolicy), vmImageResourceId.Value, subnetId.Value, vmSetupActions ?? new ChangeTrackingList<VmSetupAction>(), Optional.ToNullable(securityType), Optional.ToNullable(secureBootEnabled), Optional.ToNullable(enableNodePublicIP), Optional.ToNullable(enableNodePublicIPv6), vmSharedGalleryImageId.Value, natGatewayId.Value, vmImagePlan.Value, serviceArtifactReferenceId.Value, dscpConfigurationId.Value, additionalNetworkInterfaceConfigurations ?? new ChangeTrackingList<AdditionalNetworkInterfaceConfiguration>(), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new ServiceFabricManagedNodeTypeData(
+                id,
+                name,
+                type,
+                systemData,
+                sku,
+                isPrimary,
+                vmInstanceCount,
+                dataDiskSizeGB,
+                dataDiskType,
+                dataDiskLetter,
+                placementProperties ?? new ChangeTrackingDictionary<string, string>(),
+                capacities ?? new ChangeTrackingDictionary<string, string>(),
+                applicationPorts,
+                ephemeralPorts,
+                vmSize,
+                vmImagePublisher,
+                vmImageOffer,
+                vmImageSku,
+                vmImageVersion,
+                vmSecrets ?? new ChangeTrackingList<NodeTypeVaultSecretGroup>(),
+                vmExtensions ?? new ChangeTrackingList<NodeTypeVmssExtension>(),
+                vmManagedIdentity,
+                isStateless,
+                multiplePlacementGroups,
+                frontendConfigurations ?? new ChangeTrackingList<NodeTypeFrontendConfiguration>(),
+                networkSecurityRules ?? new ChangeTrackingList<ServiceFabricManagedNetworkSecurityRule>(),
+                additionalDataDisks ?? new ChangeTrackingList<NodeTypeVmssDataDisk>(),
+                enableEncryptionAtHost,
+                provisioningState,
+                enableAcceleratedNetworking,
+                useDefaultPublicLoadBalancer,
+                useTempDataDisk,
+                enableOverProvisioning,
+                zones ?? new ChangeTrackingList<string>(),
+                isSpotVm,
+                hostGroupId,
+                useEphemeralOSDisk,
+                spotRestoreTimeout,
+                evictionPolicy,
+                vmImageResourceId,
+                subnetId,
+                vmSetupActions ?? new ChangeTrackingList<VmSetupAction>(),
+                securityType,
+                secureBootEnabled,
+                enableNodePublicIP,
+                enableNodePublicIPv6,
+                vmSharedGalleryImageId,
+                natGatewayId,
+                vmImagePlan,
+                serviceArtifactReferenceId,
+                dscpConfigurationId,
+                additionalNetworkInterfaceConfigurations ?? new ChangeTrackingList<AdditionalNetworkInterfaceConfiguration>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceFabricManagedNodeTypeData>.Write(ModelReaderWriterOptions options)

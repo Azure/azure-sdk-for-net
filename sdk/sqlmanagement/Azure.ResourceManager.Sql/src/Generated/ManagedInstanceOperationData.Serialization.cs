@@ -167,22 +167,22 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> managedInstanceName = default;
-            Optional<string> operation = default;
-            Optional<string> operationFriendlyName = default;
-            Optional<int> percentComplete = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<ManagementOperationState> state = default;
-            Optional<int> errorCode = default;
-            Optional<string> errorDescription = default;
-            Optional<int> errorSeverity = default;
-            Optional<bool> isUserError = default;
-            Optional<DateTimeOffset> estimatedCompletionTime = default;
-            Optional<string> description = default;
-            Optional<bool> isCancellable = default;
-            Optional<ManagedInstanceOperationParametersPair> operationParameters = default;
-            Optional<ManagedInstanceOperationSteps> operationSteps = default;
+            SystemData systemData = default;
+            string managedInstanceName = default;
+            string operation = default;
+            string operationFriendlyName = default;
+            int? percentComplete = default;
+            DateTimeOffset? startTime = default;
+            ManagementOperationState? state = default;
+            int? errorCode = default;
+            string errorDescription = default;
+            int? errorSeverity = default;
+            bool? isUserError = default;
+            DateTimeOffset? estimatedCompletionTime = default;
+            string description = default;
+            bool? isCancellable = default;
+            ManagedInstanceOperationParametersPair operationParameters = default;
+            ManagedInstanceOperationSteps operationSteps = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -344,7 +344,27 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedInstanceOperationData(id, name, type, systemData.Value, managedInstanceName.Value, operation.Value, operationFriendlyName.Value, Optional.ToNullable(percentComplete), Optional.ToNullable(startTime), Optional.ToNullable(state), Optional.ToNullable(errorCode), errorDescription.Value, Optional.ToNullable(errorSeverity), Optional.ToNullable(isUserError), Optional.ToNullable(estimatedCompletionTime), description.Value, Optional.ToNullable(isCancellable), operationParameters.Value, operationSteps.Value, serializedAdditionalRawData);
+            return new ManagedInstanceOperationData(
+                id,
+                name,
+                type,
+                systemData,
+                managedInstanceName,
+                operation,
+                operationFriendlyName,
+                percentComplete,
+                startTime,
+                state,
+                errorCode,
+                errorDescription,
+                errorSeverity,
+                isUserError,
+                estimatedCompletionTime,
+                description,
+                isCancellable,
+                operationParameters,
+                operationSteps,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedInstanceOperationData>.Write(ModelReaderWriterOptions options)

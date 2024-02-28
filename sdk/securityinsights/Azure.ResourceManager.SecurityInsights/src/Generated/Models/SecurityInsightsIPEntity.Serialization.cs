@@ -143,11 +143,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IReadOnlyDictionary<string, BinaryData> additionalData = default;
-            Optional<string> friendlyName = default;
-            Optional<IPAddress> address = default;
-            Optional<SecurityInsightsIPEntityGeoLocation> location = default;
+            string friendlyName = default;
+            IPAddress address = default;
+            SecurityInsightsIPEntityGeoLocation location = default;
             IReadOnlyList<SecurityInsightsThreatIntelligence> threatIntelligence = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -258,7 +258,18 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsIPEntity(id, name, type, systemData.Value, kind, serializedAdditionalRawData, additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(), friendlyName.Value, address.Value, location.Value, threatIntelligence ?? new ChangeTrackingList<SecurityInsightsThreatIntelligence>());
+            return new SecurityInsightsIPEntity(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                serializedAdditionalRawData,
+                additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                friendlyName,
+                address,
+                location,
+                threatIntelligence ?? new ChangeTrackingList<SecurityInsightsThreatIntelligence>());
         }
 
         BinaryData IPersistableModel<SecurityInsightsIPEntity>.Write(ModelReaderWriterOptions options)

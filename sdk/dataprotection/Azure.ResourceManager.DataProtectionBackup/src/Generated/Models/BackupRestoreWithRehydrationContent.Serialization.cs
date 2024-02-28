@@ -92,8 +92,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             string objectType = default;
             RestoreTargetInfoBase restoreTargetInfo = default;
             SourceDataStoreType sourceDataStoreType = default;
-            Optional<ResourceIdentifier> sourceResourceId = default;
-            Optional<DataProtectionIdentityDetails> identityDetails = default;
+            ResourceIdentifier sourceResourceId = default;
+            DataProtectionIdentityDetails identityDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -152,7 +152,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupRestoreWithRehydrationContent(objectType, restoreTargetInfo, sourceDataStoreType, sourceResourceId.Value, identityDetails.Value, serializedAdditionalRawData, recoveryPointId, rehydrationPriority, rehydrationRetentionDuration);
+            return new BackupRestoreWithRehydrationContent(
+                objectType,
+                restoreTargetInfo,
+                sourceDataStoreType,
+                sourceResourceId,
+                identityDetails,
+                serializedAdditionalRawData,
+                recoveryPointId,
+                rehydrationPriority,
+                rehydrationRetentionDuration);
         }
 
         BinaryData IPersistableModel<BackupRestoreWithRehydrationContent>.Write(ModelReaderWriterOptions options)

@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IReadOnlyList<AgentPoolAvailableVersion> agentPoolVersions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -163,7 +163,13 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AgentPoolAvailableVersions(id, name, type, systemData.Value, agentPoolVersions ?? new ChangeTrackingList<AgentPoolAvailableVersion>(), serializedAdditionalRawData);
+            return new AgentPoolAvailableVersions(
+                id,
+                name,
+                type,
+                systemData,
+                agentPoolVersions ?? new ChangeTrackingList<AgentPoolAvailableVersion>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AgentPoolAvailableVersions>.Write(ModelReaderWriterOptions options)

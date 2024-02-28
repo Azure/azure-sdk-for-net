@@ -267,39 +267,39 @@ namespace Azure.ResourceManager.ResourceHealth
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceHealthEventTypeValue> eventType = default;
-            Optional<EventSubTypeValue> eventSubType = default;
-            Optional<ResourceHealthEventSourceValue> eventSource = default;
-            Optional<ResourceHealthEventStatusValue> status = default;
-            Optional<string> title = default;
-            Optional<string> summary = default;
-            Optional<string> header = default;
-            Optional<ResourceHealthEventInsightLevelValue> level = default;
-            Optional<ResourceHealthEventLevelValue> eventLevel = default;
-            Optional<string> externalIncidentId = default;
-            Optional<string> reason = default;
-            Optional<ResourceHealthEventArticle> article = default;
+            SystemData systemData = default;
+            ResourceHealthEventTypeValue? eventType = default;
+            EventSubTypeValue? eventSubType = default;
+            ResourceHealthEventSourceValue? eventSource = default;
+            ResourceHealthEventStatusValue? status = default;
+            string title = default;
+            string summary = default;
+            string header = default;
+            ResourceHealthEventInsightLevelValue? level = default;
+            ResourceHealthEventLevelValue? eventLevel = default;
+            string externalIncidentId = default;
+            string reason = default;
+            ResourceHealthEventArticle article = default;
             IReadOnlyList<ResourceHealthEventLink> links = default;
-            Optional<DateTimeOffset> impactStartTime = default;
-            Optional<DateTimeOffset> impactMitigationTime = default;
+            DateTimeOffset? impactStartTime = default;
+            DateTimeOffset? impactMitigationTime = default;
             IReadOnlyList<ResourceHealthEventImpact> impact = default;
-            Optional<ResourceHealthEventRecommendedActions> recommendedActions = default;
+            ResourceHealthEventRecommendedActions recommendedActions = default;
             IReadOnlyList<ResourceHealthEventFaq> faqs = default;
-            Optional<bool> isHIR = default;
-            Optional<bool> enableMicrosoftSupport = default;
-            Optional<string> description = default;
-            Optional<bool> platformInitiated = default;
-            Optional<bool> enableChatWithUs = default;
-            Optional<int> priority = default;
-            Optional<DateTimeOffset> lastUpdateTime = default;
-            Optional<string> hirStage = default;
-            Optional<ResourceHealthEventAdditionalInformation> additionalInformation = default;
-            Optional<int> duration = default;
-            Optional<string> impactType = default;
-            Optional<string> maintenanceId = default;
-            Optional<string> maintenanceType = default;
-            Optional<string> argQuery = default;
+            bool? isHIR = default;
+            bool? enableMicrosoftSupport = default;
+            string description = default;
+            bool? platformInitiated = default;
+            bool? enableChatWithUs = default;
+            int? priority = default;
+            DateTimeOffset? lastUpdateTime = default;
+            string hirStage = default;
+            ResourceHealthEventAdditionalInformation additionalInformation = default;
+            int? duration = default;
+            string impactType = default;
+            string maintenanceId = default;
+            string maintenanceType = default;
+            string argQuery = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -605,7 +605,44 @@ namespace Azure.ResourceManager.ResourceHealth
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceHealthEventData(id, name, type, systemData.Value, Optional.ToNullable(eventType), Optional.ToNullable(eventSubType), Optional.ToNullable(eventSource), Optional.ToNullable(status), title.Value, summary.Value, header.Value, Optional.ToNullable(level), Optional.ToNullable(eventLevel), externalIncidentId.Value, reason.Value, article.Value, links ?? new ChangeTrackingList<ResourceHealthEventLink>(), Optional.ToNullable(impactStartTime), Optional.ToNullable(impactMitigationTime), impact ?? new ChangeTrackingList<ResourceHealthEventImpact>(), recommendedActions.Value, faqs ?? new ChangeTrackingList<ResourceHealthEventFaq>(), Optional.ToNullable(isHIR), Optional.ToNullable(enableMicrosoftSupport), description.Value, Optional.ToNullable(platformInitiated), Optional.ToNullable(enableChatWithUs), Optional.ToNullable(priority), Optional.ToNullable(lastUpdateTime), hirStage.Value, additionalInformation.Value, Optional.ToNullable(duration), impactType.Value, maintenanceId.Value, maintenanceType.Value, argQuery.Value, serializedAdditionalRawData);
+            return new ResourceHealthEventData(
+                id,
+                name,
+                type,
+                systemData,
+                eventType,
+                eventSubType,
+                eventSource,
+                status,
+                title,
+                summary,
+                header,
+                level,
+                eventLevel,
+                externalIncidentId,
+                reason,
+                article,
+                links ?? new ChangeTrackingList<ResourceHealthEventLink>(),
+                impactStartTime,
+                impactMitigationTime,
+                impact ?? new ChangeTrackingList<ResourceHealthEventImpact>(),
+                recommendedActions,
+                faqs ?? new ChangeTrackingList<ResourceHealthEventFaq>(),
+                isHIR,
+                enableMicrosoftSupport,
+                description,
+                platformInitiated,
+                enableChatWithUs,
+                priority,
+                lastUpdateTime,
+                hirStage,
+                additionalInformation,
+                duration,
+                impactType,
+                maintenanceId,
+                maintenanceType,
+                argQuery,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceHealthEventData>.Write(ModelReaderWriterOptions options)

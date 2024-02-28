@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 return null;
             }
-            Optional<string> resourceName = default;
-            Optional<ResourceType> resourceType = default;
-            Optional<bool> isZoneResilient = default;
+            string resourceName = default;
+            ResourceType? resourceType = default;
+            bool? isZoneResilient = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceAzStatus(resourceName.Value, Optional.ToNullable(resourceType), Optional.ToNullable(isZoneResilient), serializedAdditionalRawData);
+            return new ResourceAzStatus(resourceName, resourceType, isZoneResilient, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceAzStatus>.Write(ModelReaderWriterOptions options)

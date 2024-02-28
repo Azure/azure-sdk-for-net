@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<BackupUsagesUnit> unit = default;
-            Optional<string> quotaPeriod = default;
-            Optional<DateTimeOffset> nextResetTime = default;
-            Optional<long> currentValue = default;
-            Optional<long> limit = default;
-            Optional<BackupNameInfo> name = default;
+            BackupUsagesUnit? unit = default;
+            string quotaPeriod = default;
+            DateTimeOffset? nextResetTime = default;
+            long? currentValue = default;
+            long? limit = default;
+            BackupNameInfo name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupManagementUsage(Optional.ToNullable(unit), quotaPeriod.Value, Optional.ToNullable(nextResetTime), Optional.ToNullable(currentValue), Optional.ToNullable(limit), name.Value, serializedAdditionalRawData);
+            return new BackupManagementUsage(
+                unit,
+                quotaPeriod,
+                nextResetTime,
+                currentValue,
+                limit,
+                name,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupManagementUsage>.Write(ModelReaderWriterOptions options)

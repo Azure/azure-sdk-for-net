@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> resolutionStatus = default;
-            Optional<MoverResourceResolutionType> resolutionType = default;
-            Optional<MoverDependencyType> dependencyType = default;
-            Optional<ManualResolutionProperties> manualResolution = default;
-            Optional<AutomaticResolutionProperties> automaticResolution = default;
-            Optional<string> isOptional = default;
+            ResourceIdentifier id = default;
+            string resolutionStatus = default;
+            MoverResourceResolutionType? resolutionType = default;
+            MoverDependencyType? dependencyType = default;
+            ManualResolutionProperties manualResolution = default;
+            AutomaticResolutionProperties automaticResolution = default;
+            string isOptional = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -171,7 +171,15 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MoverResourceDependency(id.Value, resolutionStatus.Value, Optional.ToNullable(resolutionType), Optional.ToNullable(dependencyType), manualResolution.Value, automaticResolution.Value, isOptional.Value, serializedAdditionalRawData);
+            return new MoverResourceDependency(
+                id,
+                resolutionStatus,
+                resolutionType,
+                dependencyType,
+                manualResolution,
+                automaticResolution,
+                isOptional,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MoverResourceDependency>.Write(ModelReaderWriterOptions options)

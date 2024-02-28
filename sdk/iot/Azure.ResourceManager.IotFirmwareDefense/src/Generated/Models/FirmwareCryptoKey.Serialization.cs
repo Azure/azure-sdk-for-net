@@ -170,14 +170,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            Optional<string> firmwareCryptoKeyId = default;
-            Optional<string> keyType = default;
-            Optional<long?> keySize = default;
-            Optional<string> keyAlgorithm = default;
+            string firmwareCryptoKeyId = default;
+            string keyType = default;
+            long? keySize = default;
+            string keyAlgorithm = default;
             IReadOnlyList<string> usage = default;
             IReadOnlyList<string> filePaths = default;
-            Optional<PairedKey> pairedKey = default;
-            Optional<IsShortKeySize?> isShortKeySize = default;
+            PairedKey pairedKey = default;
+            IsShortKeySize? isShortKeySize = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -276,7 +276,16 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirmwareCryptoKey(firmwareCryptoKeyId.Value, keyType.Value, Optional.ToNullable(keySize), keyAlgorithm.Value, usage ?? new ChangeTrackingList<string>(), filePaths ?? new ChangeTrackingList<string>(), pairedKey.Value, Optional.ToNullable(isShortKeySize), serializedAdditionalRawData);
+            return new FirmwareCryptoKey(
+                firmwareCryptoKeyId,
+                keyType,
+                keySize,
+                keyAlgorithm,
+                usage ?? new ChangeTrackingList<string>(),
+                filePaths ?? new ChangeTrackingList<string>(),
+                pairedKey,
+                isShortKeySize,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirmwareCryptoKey>.Write(ModelReaderWriterOptions options)

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Sql.Models
                 return null;
             }
             IReadOnlyList<SqlServerAzureADOnlyAuthenticationData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureADOnlyAuthListResult(value ?? new ChangeTrackingList<SqlServerAzureADOnlyAuthenticationData>(), nextLink.Value, serializedAdditionalRawData);
+            return new AzureADOnlyAuthListResult(value ?? new ChangeTrackingList<SqlServerAzureADOnlyAuthenticationData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureADOnlyAuthListResult>.Write(ModelReaderWriterOptions options)

@@ -142,15 +142,15 @@ namespace Azure.ResourceManager.ResourceHealth
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceType> targetResourceType = default;
-            Optional<ResourceIdentifier> targetResourceId = default;
-            Optional<string> targetRegion = default;
-            Optional<string> resourceName = default;
-            Optional<string> resourceGroup = default;
-            Optional<string> status = default;
-            Optional<string> maintenanceStartTime = default;
-            Optional<string> maintenanceEndTime = default;
+            SystemData systemData = default;
+            ResourceType? targetResourceType = default;
+            ResourceIdentifier targetResourceId = default;
+            string targetRegion = default;
+            string resourceName = default;
+            string resourceGroup = default;
+            string status = default;
+            string maintenanceStartTime = default;
+            string maintenanceEndTime = default;
             IReadOnlyList<ResourceHealthKeyValueItem> info = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -260,7 +260,21 @@ namespace Azure.ResourceManager.ResourceHealth
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceHealthEventImpactedResourceData(id, name, type, systemData.Value, Optional.ToNullable(targetResourceType), targetResourceId.Value, targetRegion.Value, resourceName.Value, resourceGroup.Value, status.Value, maintenanceStartTime.Value, maintenanceEndTime.Value, info ?? new ChangeTrackingList<ResourceHealthKeyValueItem>(), serializedAdditionalRawData);
+            return new ResourceHealthEventImpactedResourceData(
+                id,
+                name,
+                type,
+                systemData,
+                targetResourceType,
+                targetResourceId,
+                targetRegion,
+                resourceName,
+                resourceGroup,
+                status,
+                maintenanceStartTime,
+                maintenanceEndTime,
+                info ?? new ChangeTrackingList<ResourceHealthKeyValueItem>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceHealthEventImpactedResourceData>.Write(ModelReaderWriterOptions options)

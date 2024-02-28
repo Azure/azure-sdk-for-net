@@ -112,11 +112,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<PostgreSqlFlexibleServerPrincipalType> principalType = default;
-            Optional<string> principalName = default;
-            Optional<Guid> objectId = default;
-            Optional<Guid> tenantId = default;
+            SystemData systemData = default;
+            PostgreSqlFlexibleServerPrincipalType? principalType = default;
+            string principalName = default;
+            Guid? objectId = default;
+            Guid? tenantId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -195,7 +195,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlFlexibleServerActiveDirectoryAdministratorData(id, name, type, systemData.Value, Optional.ToNullable(principalType), principalName.Value, Optional.ToNullable(objectId), Optional.ToNullable(tenantId), serializedAdditionalRawData);
+            return new PostgreSqlFlexibleServerActiveDirectoryAdministratorData(
+                id,
+                name,
+                type,
+                systemData,
+                principalType,
+                principalName,
+                objectId,
+                tenantId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlFlexibleServerActiveDirectoryAdministratorData>.Write(ModelReaderWriterOptions options)

@@ -107,14 +107,14 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<Uri> repoUrl = default;
-            Optional<string> branch = default;
-            Optional<string> folderPath = default;
-            Optional<bool> autoSync = default;
-            Optional<bool> publishRunbook = default;
-            Optional<SourceControlSourceType> sourceType = default;
-            Optional<SourceControlSecurityTokenProperties> securityToken = default;
-            Optional<string> description = default;
+            Uri repoUrl = default;
+            string branch = default;
+            string folderPath = default;
+            bool? autoSync = default;
+            bool? publishRunbook = default;
+            SourceControlSourceType? sourceType = default;
+            SourceControlSecurityTokenProperties securityToken = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -197,7 +197,16 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationSourceControlCreateOrUpdateContent(repoUrl.Value, branch.Value, folderPath.Value, Optional.ToNullable(autoSync), Optional.ToNullable(publishRunbook), Optional.ToNullable(sourceType), securityToken.Value, description.Value, serializedAdditionalRawData);
+            return new AutomationSourceControlCreateOrUpdateContent(
+                repoUrl,
+                branch,
+                folderPath,
+                autoSync,
+                publishRunbook,
+                sourceType,
+                securityToken,
+                description,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationSourceControlCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

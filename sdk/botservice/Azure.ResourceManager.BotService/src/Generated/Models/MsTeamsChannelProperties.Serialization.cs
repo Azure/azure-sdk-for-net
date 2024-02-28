@@ -98,12 +98,12 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Optional<bool> enableCalling = default;
-            Optional<string> callingWebhook = default;
+            bool? enableCalling = default;
+            string callingWebhook = default;
             bool isEnabled = default;
-            Optional<string> incomingCallRoute = default;
-            Optional<string> deploymentEnvironment = default;
-            Optional<bool?> acceptedTerms = default;
+            string incomingCallRoute = default;
+            string deploymentEnvironment = default;
+            bool? acceptedTerms = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -153,7 +153,14 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MsTeamsChannelProperties(Optional.ToNullable(enableCalling), callingWebhook.Value, isEnabled, incomingCallRoute.Value, deploymentEnvironment.Value, Optional.ToNullable(acceptedTerms), serializedAdditionalRawData);
+            return new MsTeamsChannelProperties(
+                enableCalling,
+                callingWebhook,
+                isEnabled,
+                incomingCallRoute,
+                deploymentEnvironment,
+                acceptedTerms,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MsTeamsChannelProperties>.Write(ModelReaderWriterOptions options)

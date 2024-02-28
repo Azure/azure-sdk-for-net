@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             int priority = default;
             RulesEngineAction action = default;
             IList<RulesEngineMatchCondition> matchConditions = default;
-            Optional<MatchProcessingBehavior?> matchProcessingBehavior = default;
+            MatchProcessingBehavior? matchProcessingBehavior = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -154,7 +154,13 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RulesEngineRule(name, priority, action, matchConditions ?? new ChangeTrackingList<RulesEngineMatchCondition>(), Optional.ToNullable(matchProcessingBehavior), serializedAdditionalRawData);
+            return new RulesEngineRule(
+                name,
+                priority,
+                action,
+                matchConditions ?? new ChangeTrackingList<RulesEngineMatchCondition>(),
+                matchProcessingBehavior,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RulesEngineRule>.Write(ModelReaderWriterOptions options)

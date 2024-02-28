@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
             string referenceName = default;
             KeyVaultObjectType type = default;
-            Optional<string> version = default;
+            string version = default;
             string keyVaultObjectName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterSecretReference(referenceName, type, version.Value, keyVaultObjectName, serializedAdditionalRawData);
+            return new ClusterSecretReference(referenceName, type, version, keyVaultObjectName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterSecretReference>.Write(ModelReaderWriterOptions options)

@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<int> canonicalProfileId = default;
+            int? canonicalProfileId = default;
             IReadOnlyList<CanonicalProfileDefinitionPropertiesItem> properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CanonicalProfileDefinition(Optional.ToNullable(canonicalProfileId), properties ?? new ChangeTrackingList<CanonicalProfileDefinitionPropertiesItem>(), serializedAdditionalRawData);
+            return new CanonicalProfileDefinition(canonicalProfileId, properties ?? new ChangeTrackingList<CanonicalProfileDefinitionPropertiesItem>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CanonicalProfileDefinition>.Write(ModelReaderWriterOptions options)

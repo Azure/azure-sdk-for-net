@@ -160,23 +160,23 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             IReadOnlyDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> reservationOrderId = default;
-            Optional<string> instanceFlexibilityRatio = default;
-            Optional<string> instanceFlexibilityGroup = default;
-            Optional<string> reservationId = default;
-            Optional<string> skuName = default;
-            Optional<decimal> reservedHours = default;
-            Optional<DateTimeOffset> usageDate = default;
-            Optional<decimal> usedHours = default;
-            Optional<ResourceIdentifier> instanceId = default;
-            Optional<decimal> totalReservedQuantity = default;
-            Optional<string> kind = default;
+            SystemData systemData = default;
+            string reservationOrderId = default;
+            string instanceFlexibilityRatio = default;
+            string instanceFlexibilityGroup = default;
+            string reservationId = default;
+            string skuName = default;
+            decimal? reservedHours = default;
+            DateTimeOffset? usageDate = default;
+            decimal? usedHours = default;
+            ResourceIdentifier instanceId = default;
+            decimal? totalReservedQuantity = default;
+            string kind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -321,7 +321,25 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionReservationDetail(id, name, type, systemData.Value, reservationOrderId.Value, instanceFlexibilityRatio.Value, instanceFlexibilityGroup.Value, reservationId.Value, skuName.Value, Optional.ToNullable(reservedHours), Optional.ToNullable(usageDate), Optional.ToNullable(usedHours), instanceId.Value, Optional.ToNullable(totalReservedQuantity), kind.Value, Optional.ToNullable(etag), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new ConsumptionReservationDetail(
+                id,
+                name,
+                type,
+                systemData,
+                reservationOrderId,
+                instanceFlexibilityRatio,
+                instanceFlexibilityGroup,
+                reservationId,
+                skuName,
+                reservedHours,
+                usageDate,
+                usedHours,
+                instanceId,
+                totalReservedQuantity,
+                kind,
+                etag,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumptionReservationDetail>.Write(ModelReaderWriterOptions options)

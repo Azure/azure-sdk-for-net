@@ -86,11 +86,11 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> resourceId = default;
+            ResourceIdentifier resourceId = default;
             string container = default;
-            Optional<string> rootFolderPath = default;
-            Optional<string> sasToken = default;
-            Optional<string> storageAccount = default;
+            string rootFolderPath = default;
+            string sasToken = default;
+            string storageAccount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,13 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExportDeliveryDestination(resourceId.Value, container, rootFolderPath.Value, sasToken.Value, storageAccount.Value, serializedAdditionalRawData);
+            return new ExportDeliveryDestination(
+                resourceId,
+                container,
+                rootFolderPath,
+                sasToken,
+                storageAccount,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExportDeliveryDestination>.Write(ModelReaderWriterOptions options)

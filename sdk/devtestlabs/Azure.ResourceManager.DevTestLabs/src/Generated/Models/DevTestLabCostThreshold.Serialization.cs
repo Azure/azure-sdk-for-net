@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<string> thresholdId = default;
-            Optional<PercentageCostThresholdProperties> percentageThreshold = default;
-            Optional<DevTestLabCostThresholdStatus> displayOnChart = default;
-            Optional<DevTestLabCostThresholdStatus> sendNotificationWhenExceeded = default;
-            Optional<string> notificationSent = default;
+            string thresholdId = default;
+            PercentageCostThresholdProperties percentageThreshold = default;
+            DevTestLabCostThresholdStatus? displayOnChart = default;
+            DevTestLabCostThresholdStatus? sendNotificationWhenExceeded = default;
+            string notificationSent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabCostThreshold(thresholdId.Value, percentageThreshold.Value, Optional.ToNullable(displayOnChart), Optional.ToNullable(sendNotificationWhenExceeded), notificationSent.Value, serializedAdditionalRawData);
+            return new DevTestLabCostThreshold(
+                thresholdId,
+                percentageThreshold,
+                displayOnChart,
+                sendNotificationWhenExceeded,
+                notificationSent,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabCostThreshold>.Write(ModelReaderWriterOptions options)

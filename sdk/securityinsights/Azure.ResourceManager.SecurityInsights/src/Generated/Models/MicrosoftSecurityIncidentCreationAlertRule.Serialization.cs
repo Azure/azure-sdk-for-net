@@ -157,20 +157,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 return null;
             }
             AlertRuleKind kind = default;
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IList<string> displayNamesFilter = default;
             IList<string> displayNamesExcludeFilter = default;
-            Optional<MicrosoftSecurityProductName> productFilter = default;
+            MicrosoftSecurityProductName? productFilter = default;
             IList<SecurityInsightsAlertSeverity> severitiesFilter = default;
-            Optional<string> alertRuleTemplateName = default;
-            Optional<string> description = default;
-            Optional<string> displayName = default;
-            Optional<bool> enabled = default;
-            Optional<DateTimeOffset> lastModifiedUtc = default;
+            string alertRuleTemplateName = default;
+            string description = default;
+            string displayName = default;
+            bool? enabled = default;
+            DateTimeOffset? lastModifiedUtc = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -315,7 +315,23 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MicrosoftSecurityIncidentCreationAlertRule(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), serializedAdditionalRawData, displayNamesFilter ?? new ChangeTrackingList<string>(), displayNamesExcludeFilter ?? new ChangeTrackingList<string>(), Optional.ToNullable(productFilter), severitiesFilter ?? new ChangeTrackingList<SecurityInsightsAlertSeverity>(), alertRuleTemplateName.Value, description.Value, displayName.Value, Optional.ToNullable(enabled), Optional.ToNullable(lastModifiedUtc));
+            return new MicrosoftSecurityIncidentCreationAlertRule(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                etag,
+                serializedAdditionalRawData,
+                displayNamesFilter ?? new ChangeTrackingList<string>(),
+                displayNamesExcludeFilter ?? new ChangeTrackingList<string>(),
+                productFilter,
+                severitiesFilter ?? new ChangeTrackingList<SecurityInsightsAlertSeverity>(),
+                alertRuleTemplateName,
+                description,
+                displayName,
+                enabled,
+                lastModifiedUtc);
         }
 
         BinaryData IPersistableModel<MicrosoftSecurityIncidentCreationAlertRule>.Write(ModelReaderWriterOptions options)

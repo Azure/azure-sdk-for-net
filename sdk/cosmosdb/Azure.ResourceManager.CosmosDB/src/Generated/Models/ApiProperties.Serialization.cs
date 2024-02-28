@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<CosmosDBServerVersion> serverVersion = default;
+            CosmosDBServerVersion? serverVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiProperties(Optional.ToNullable(serverVersion), serializedAdditionalRawData);
+            return new ApiProperties(serverVersion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiProperties>.Write(ModelReaderWriterOptions options)

@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            Optional<DatadogAgreementProperties> properties = default;
+            DatadogAgreementProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,7 +138,13 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatadogAgreementResourceProperties(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new DatadogAgreementResourceProperties(
+                id,
+                name,
+                type,
+                systemData,
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatadogAgreementResourceProperties>.Write(ModelReaderWriterOptions options)

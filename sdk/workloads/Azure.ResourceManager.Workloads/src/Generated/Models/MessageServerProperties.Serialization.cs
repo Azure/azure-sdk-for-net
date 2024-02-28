@@ -127,13 +127,13 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<long?> msPort = default;
-            Optional<long?> internalMsPort = default;
-            Optional<long?> httpPort = default;
-            Optional<long?> httpsPort = default;
-            Optional<string> hostname = default;
-            Optional<string> ipAddress = default;
-            Optional<SapHealthState> health = default;
+            long? msPort = default;
+            long? internalMsPort = default;
+            long? httpPort = default;
+            long? httpsPort = default;
+            string hostname = default;
+            string ipAddress = default;
+            SapHealthState? health = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -203,7 +203,15 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MessageServerProperties(Optional.ToNullable(msPort), Optional.ToNullable(internalMsPort), Optional.ToNullable(httpPort), Optional.ToNullable(httpsPort), hostname.Value, ipAddress.Value, Optional.ToNullable(health), serializedAdditionalRawData);
+            return new MessageServerProperties(
+                msPort,
+                internalMsPort,
+                httpPort,
+                httpsPort,
+                hostname,
+                ipAddress,
+                health,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MessageServerProperties>.Write(ModelReaderWriterOptions options)

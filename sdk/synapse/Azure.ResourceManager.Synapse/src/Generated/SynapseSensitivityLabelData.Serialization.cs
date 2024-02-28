@@ -139,20 +139,20 @@ namespace Azure.ResourceManager.Synapse
             {
                 return null;
             }
-            Optional<string> managedBy = default;
+            string managedBy = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> schemaName = default;
-            Optional<string> tableName = default;
-            Optional<string> columnName = default;
-            Optional<string> labelName = default;
-            Optional<Guid> labelId = default;
-            Optional<string> informationType = default;
-            Optional<Guid> informationTypeId = default;
-            Optional<bool> isDisabled = default;
-            Optional<SynapseSensitivityLabelRank> rank = default;
+            SystemData systemData = default;
+            string schemaName = default;
+            string tableName = default;
+            string columnName = default;
+            string labelName = default;
+            Guid? labelId = default;
+            string informationType = default;
+            Guid? informationTypeId = default;
+            bool? isDisabled = default;
+            SynapseSensitivityLabelRank? rank = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -265,7 +265,22 @@ namespace Azure.ResourceManager.Synapse
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseSensitivityLabelData(id, name, type, systemData.Value, managedBy.Value, schemaName.Value, tableName.Value, columnName.Value, labelName.Value, Optional.ToNullable(labelId), informationType.Value, Optional.ToNullable(informationTypeId), Optional.ToNullable(isDisabled), Optional.ToNullable(rank), serializedAdditionalRawData);
+            return new SynapseSensitivityLabelData(
+                id,
+                name,
+                type,
+                systemData,
+                managedBy,
+                schemaName,
+                tableName,
+                columnName,
+                labelName,
+                labelId,
+                informationType,
+                informationTypeId,
+                isDisabled,
+                rank,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseSensitivityLabelData>.Write(ModelReaderWriterOptions options)

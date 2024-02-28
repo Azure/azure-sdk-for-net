@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<EdgeUsageDataCollectionPolicy> usageDataCollectionPolicy = default;
+            EdgeUsageDataCollectionPolicy usageDataCollectionPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MediaServicesEdgePolicies(usageDataCollectionPolicy.Value, serializedAdditionalRawData);
+            return new MediaServicesEdgePolicies(usageDataCollectionPolicy, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MediaServicesEdgePolicies>.Write(ModelReaderWriterOptions options)

@@ -106,15 +106,15 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<Guid> id = default;
-            Optional<string> connectionString = default;
-            Optional<string> endpointUri = default;
-            Optional<string> entityPath = default;
-            Optional<IotHubAuthenticationType> authenticationType = default;
-            Optional<ManagedIdentity> identity = default;
+            Guid? id = default;
+            string connectionString = default;
+            string endpointUri = default;
+            string entityPath = default;
+            IotHubAuthenticationType? authenticationType = default;
+            ManagedIdentity identity = default;
             string name = default;
-            Optional<string> subscriptionId = default;
-            Optional<string> resourceGroup = default;
+            string subscriptionId = default;
+            string resourceGroup = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -182,7 +182,17 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoutingServiceBusQueueEndpointProperties(Optional.ToNullable(id), connectionString.Value, endpointUri.Value, entityPath.Value, Optional.ToNullable(authenticationType), identity.Value, name, subscriptionId.Value, resourceGroup.Value, serializedAdditionalRawData);
+            return new RoutingServiceBusQueueEndpointProperties(
+                id,
+                connectionString,
+                endpointUri,
+                entityPath,
+                authenticationType,
+                identity,
+                name,
+                subscriptionId,
+                resourceGroup,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoutingServiceBusQueueEndpointProperties>.Write(ModelReaderWriterOptions options)

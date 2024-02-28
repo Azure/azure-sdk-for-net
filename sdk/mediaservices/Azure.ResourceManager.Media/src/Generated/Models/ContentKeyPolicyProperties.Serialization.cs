@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<Guid> policyId = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<DateTimeOffset> lastModified = default;
-            Optional<string> description = default;
+            Guid? policyId = default;
+            DateTimeOffset? created = default;
+            DateTimeOffset? lastModified = default;
+            string description = default;
             IReadOnlyList<ContentKeyPolicyOption> options0 = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -148,7 +148,13 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContentKeyPolicyProperties(Optional.ToNullable(policyId), Optional.ToNullable(created), Optional.ToNullable(lastModified), description.Value, options0, serializedAdditionalRawData);
+            return new ContentKeyPolicyProperties(
+                policyId,
+                created,
+                lastModified,
+                description,
+                options0,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContentKeyPolicyProperties>.Write(ModelReaderWriterOptions options)

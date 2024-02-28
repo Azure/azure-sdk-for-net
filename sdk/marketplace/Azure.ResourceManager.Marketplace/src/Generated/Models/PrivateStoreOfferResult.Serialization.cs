@@ -141,15 +141,15 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<string> uniqueOfferId = default;
-            Optional<string> offerDisplayName = default;
-            Optional<string> publisherDisplayName = default;
-            Optional<ETag> eTag = default;
-            Optional<Guid> privateStoreId = default;
-            Optional<DateTimeOffset> createdAt = default;
-            Optional<DateTimeOffset> modifiedAt = default;
+            string uniqueOfferId = default;
+            string offerDisplayName = default;
+            string publisherDisplayName = default;
+            ETag? eTag = default;
+            Guid? privateStoreId = default;
+            DateTimeOffset? createdAt = default;
+            DateTimeOffset? modifiedAt = default;
             IReadOnlyList<string> specificPlanIdsLimitation = default;
-            Optional<bool> updateSuppressedDueIdempotence = default;
+            bool? updateSuppressedDueIdempotence = default;
             IReadOnlyDictionary<string, Uri> iconFileUris = default;
             IReadOnlyList<PrivateStorePlan> plans = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -271,7 +271,19 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateStoreOfferResult(uniqueOfferId.Value, offerDisplayName.Value, publisherDisplayName.Value, Optional.ToNullable(eTag), Optional.ToNullable(privateStoreId), Optional.ToNullable(createdAt), Optional.ToNullable(modifiedAt), specificPlanIdsLimitation ?? new ChangeTrackingList<string>(), Optional.ToNullable(updateSuppressedDueIdempotence), iconFileUris ?? new ChangeTrackingDictionary<string, Uri>(), plans ?? new ChangeTrackingList<PrivateStorePlan>(), serializedAdditionalRawData);
+            return new PrivateStoreOfferResult(
+                uniqueOfferId,
+                offerDisplayName,
+                publisherDisplayName,
+                eTag,
+                privateStoreId,
+                createdAt,
+                modifiedAt,
+                specificPlanIdsLimitation ?? new ChangeTrackingList<string>(),
+                updateSuppressedDueIdempotence,
+                iconFileUris ?? new ChangeTrackingDictionary<string, Uri>(),
+                plans ?? new ChangeTrackingList<PrivateStorePlan>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateStoreOfferResult>.Write(ModelReaderWriterOptions options)

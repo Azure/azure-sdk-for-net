@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -18,13 +17,13 @@ namespace Azure.Communication.CallAutomation
             {
                 return null;
             }
-            Optional<ResultInformation> resultInformation = default;
-            Optional<int> sequenceId = default;
-            Optional<DtmfTone> tone = default;
-            Optional<string> operationContext = default;
-            Optional<string> callConnectionId = default;
-            Optional<string> serverCallId = default;
-            Optional<string> correlationId = default;
+            ResultInformation resultInformation = default;
+            int? sequenceId = default;
+            DtmfTone? tone = default;
+            string operationContext = default;
+            string callConnectionId = default;
+            string serverCallId = default;
+            string correlationId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resultInformation"u8))
@@ -75,7 +74,14 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new ContinuousDtmfRecognitionToneReceived(resultInformation.Value, Optional.ToNullable(sequenceId), Optional.ToNullable(tone), operationContext.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value);
+            return new ContinuousDtmfRecognitionToneReceived(
+                resultInformation,
+                sequenceId,
+                tone,
+                operationContext,
+                callConnectionId,
+                serverCallId,
+                correlationId);
         }
     }
 }

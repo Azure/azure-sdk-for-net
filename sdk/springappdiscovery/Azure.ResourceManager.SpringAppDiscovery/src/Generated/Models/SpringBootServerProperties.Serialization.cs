@@ -117,14 +117,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             {
                 return null;
             }
-            Optional<int> port = default;
+            int? port = default;
             string server = default;
             IList<IPAddress> fqdnAndIPAddressList = default;
-            Optional<ResourceIdentifier> machineArmId = default;
-            Optional<int> totalApps = default;
-            Optional<int> springBootApps = default;
+            ResourceIdentifier machineArmId = default;
+            int? totalApps = default;
+            int? springBootApps = default;
             IList<SpringBootSiteError> errors = default;
-            Optional<SpringAppDiscoveryProvisioningState> provisioningState = default;
+            SpringAppDiscoveryProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -220,7 +220,16 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SpringBootServerProperties(Optional.ToNullable(port), server, fqdnAndIPAddressList ?? new ChangeTrackingList<IPAddress>(), machineArmId.Value, Optional.ToNullable(totalApps), Optional.ToNullable(springBootApps), errors ?? new ChangeTrackingList<SpringBootSiteError>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new SpringBootServerProperties(
+                port,
+                server,
+                fqdnAndIPAddressList ?? new ChangeTrackingList<IPAddress>(),
+                machineArmId,
+                totalApps,
+                springBootApps,
+                errors ?? new ChangeTrackingList<SpringBootSiteError>(),
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SpringBootServerProperties>.Write(ModelReaderWriterOptions options)

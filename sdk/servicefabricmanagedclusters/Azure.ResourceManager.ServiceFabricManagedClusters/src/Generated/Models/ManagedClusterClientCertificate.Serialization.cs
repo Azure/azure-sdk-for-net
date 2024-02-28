@@ -96,9 +96,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 return null;
             }
             bool isAdmin = default;
-            Optional<BinaryData> thumbprint = default;
-            Optional<string> commonName = default;
-            Optional<BinaryData> issuerThumbprint = default;
+            BinaryData thumbprint = default;
+            string commonName = default;
+            BinaryData issuerThumbprint = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterClientCertificate(isAdmin, thumbprint.Value, commonName.Value, issuerThumbprint.Value, serializedAdditionalRawData);
+            return new ManagedClusterClientCertificate(isAdmin, thumbprint, commonName, issuerThumbprint, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterClientCertificate>.Write(ModelReaderWriterOptions options)

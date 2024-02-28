@@ -106,14 +106,14 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<ArmDeploymentScriptManagedIdentity> identity = default;
+            ArmDeploymentScriptManagedIdentity identity = default;
             AzureLocation location = default;
             IDictionary<string, string> tags = default;
             ScriptType kind = "Unknown";
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -181,7 +181,16 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownArmDeploymentScript(id, name, type, systemData.Value, identity.Value, location, tags ?? new ChangeTrackingDictionary<string, string>(), kind, serializedAdditionalRawData);
+            return new UnknownArmDeploymentScript(
+                id,
+                name,
+                type,
+                systemData,
+                identity,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArmDeploymentScriptData>.Write(ModelReaderWriterOptions options)

@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<string> description = default;
-            Optional<string> externalId = default;
-            Optional<string> sourceName = default;
-            Optional<Uri> url = default;
+            string description = default;
+            string externalId = default;
+            string sourceName = default;
+            Uri url = default;
             IDictionary<string, string> hashes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -148,7 +148,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ThreatIntelligenceExternalReference(description.Value, externalId.Value, sourceName.Value, url.Value, hashes ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new ThreatIntelligenceExternalReference(
+                description,
+                externalId,
+                sourceName,
+                url,
+                hashes ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ThreatIntelligenceExternalReference>.Write(ModelReaderWriterOptions options)

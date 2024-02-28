@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             {
                 return null;
             }
-            Optional<DataLakeStoreUsageUnit> unit = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<int> currentValue = default;
-            Optional<int> limit = default;
-            Optional<DataLakeStoreUsageName> name = default;
+            DataLakeStoreUsageUnit? unit = default;
+            ResourceIdentifier id = default;
+            int? currentValue = default;
+            int? limit = default;
+            DataLakeStoreUsageName name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataLakeStoreUsage(Optional.ToNullable(unit), id.Value, Optional.ToNullable(currentValue), Optional.ToNullable(limit), name.Value, serializedAdditionalRawData);
+            return new DataLakeStoreUsage(
+                unit,
+                id,
+                currentValue,
+                limit,
+                name,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataLakeStoreUsage>.Write(ModelReaderWriterOptions options)

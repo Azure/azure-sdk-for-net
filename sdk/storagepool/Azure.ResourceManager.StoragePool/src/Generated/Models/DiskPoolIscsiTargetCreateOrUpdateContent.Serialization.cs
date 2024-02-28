@@ -130,14 +130,14 @@ namespace Azure.ResourceManager.StoragePool.Models
             {
                 return null;
             }
-            Optional<string> managedBy = default;
+            string managedBy = default;
             IList<string> managedByExtended = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             DiskPoolIscsiTargetAclMode aclMode = default;
-            Optional<string> targetIqn = default;
+            string targetIqn = default;
             IList<DiskPoolIscsiTargetPortalGroupAcl> staticAcls = default;
             IList<ManagedDiskIscsiLun> luns = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -243,7 +243,18 @@ namespace Azure.ResourceManager.StoragePool.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiskPoolIscsiTargetCreateOrUpdateContent(id, name, type, systemData.Value, managedBy.Value, managedByExtended ?? new ChangeTrackingList<string>(), aclMode, targetIqn.Value, staticAcls ?? new ChangeTrackingList<DiskPoolIscsiTargetPortalGroupAcl>(), luns ?? new ChangeTrackingList<ManagedDiskIscsiLun>(), serializedAdditionalRawData);
+            return new DiskPoolIscsiTargetCreateOrUpdateContent(
+                id,
+                name,
+                type,
+                systemData,
+                managedBy,
+                managedByExtended ?? new ChangeTrackingList<string>(),
+                aclMode,
+                targetIqn,
+                staticAcls ?? new ChangeTrackingList<DiskPoolIscsiTargetPortalGroupAcl>(),
+                luns ?? new ChangeTrackingList<ManagedDiskIscsiLun>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiskPoolIscsiTargetCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

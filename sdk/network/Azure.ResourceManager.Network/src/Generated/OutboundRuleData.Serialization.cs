@@ -130,17 +130,17 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<int> allocatedOutboundPorts = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            int? allocatedOutboundPorts = default;
             IList<WritableSubResource> frontendIPConfigurations = default;
-            Optional<WritableSubResource> backendAddressPool = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<LoadBalancerOutboundRuleProtocol> protocol = default;
-            Optional<bool> enableTcpReset = default;
-            Optional<int> idleTimeoutInMinutes = default;
+            WritableSubResource backendAddressPool = default;
+            NetworkProvisioningState? provisioningState = default;
+            LoadBalancerOutboundRuleProtocol? protocol = default;
+            bool? enableTcpReset = default;
+            int? idleTimeoutInMinutes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -263,7 +263,19 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OutboundRuleData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(allocatedOutboundPorts), frontendIPConfigurations ?? new ChangeTrackingList<WritableSubResource>(), backendAddressPool, Optional.ToNullable(provisioningState), Optional.ToNullable(protocol), Optional.ToNullable(enableTcpReset), Optional.ToNullable(idleTimeoutInMinutes));
+            return new OutboundRuleData(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                etag,
+                allocatedOutboundPorts,
+                frontendIPConfigurations ?? new ChangeTrackingList<WritableSubResource>(),
+                backendAddressPool,
+                provisioningState,
+                protocol,
+                enableTcpReset,
+                idleTimeoutInMinutes);
         }
 
         BinaryData IPersistableModel<OutboundRuleData>.Write(ModelReaderWriterOptions options)

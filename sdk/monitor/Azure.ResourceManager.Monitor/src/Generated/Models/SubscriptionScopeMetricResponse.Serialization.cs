@@ -93,11 +93,11 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<int> cost = default;
+            int? cost = default;
             string timespan = default;
-            Optional<TimeSpan> interval = default;
-            Optional<string> @namespace = default;
-            Optional<string> resourceregion = default;
+            TimeSpan? interval = default;
+            string @namespace = default;
+            string resourceregion = default;
             IReadOnlyList<SubscriptionMonitorMetric> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -152,7 +152,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubscriptionScopeMetricResponse(Optional.ToNullable(cost), timespan, Optional.ToNullable(interval), @namespace.Value, resourceregion.Value, value, serializedAdditionalRawData);
+            return new SubscriptionScopeMetricResponse(
+                cost,
+                timespan,
+                interval,
+                @namespace,
+                resourceregion,
+                value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubscriptionScopeMetricResponse>.Write(ModelReaderWriterOptions options)

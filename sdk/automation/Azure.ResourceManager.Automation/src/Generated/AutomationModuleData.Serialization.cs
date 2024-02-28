@@ -163,24 +163,24 @@ namespace Azure.ResourceManager.Automation
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<bool> isGlobal = default;
-            Optional<string> version = default;
-            Optional<long> sizeInBytes = default;
-            Optional<int> activityCount = default;
-            Optional<ModuleProvisioningState> provisioningState = default;
-            Optional<AutomationContentLink> contentLink = default;
-            Optional<AutomationModuleErrorInfo> error = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<string> description = default;
-            Optional<bool> isComposite = default;
+            SystemData systemData = default;
+            bool? isGlobal = default;
+            string version = default;
+            long? sizeInBytes = default;
+            int? activityCount = default;
+            ModuleProvisioningState? provisioningState = default;
+            AutomationContentLink contentLink = default;
+            AutomationModuleErrorInfo error = default;
+            DateTimeOffset? creationTime = default;
+            DateTimeOffset? lastModifiedTime = default;
+            string description = default;
+            bool? isComposite = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -346,7 +346,26 @@ namespace Azure.ResourceManager.Automation
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationModuleData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(etag), Optional.ToNullable(isGlobal), version.Value, Optional.ToNullable(sizeInBytes), Optional.ToNullable(activityCount), Optional.ToNullable(provisioningState), contentLink.Value, error.Value, Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), description.Value, Optional.ToNullable(isComposite), serializedAdditionalRawData);
+            return new AutomationModuleData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                etag,
+                isGlobal,
+                version,
+                sizeInBytes,
+                activityCount,
+                provisioningState,
+                contentLink,
+                error,
+                creationTime,
+                lastModifiedTime,
+                description,
+                isComposite,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationModuleData>.Write(ModelReaderWriterOptions options)

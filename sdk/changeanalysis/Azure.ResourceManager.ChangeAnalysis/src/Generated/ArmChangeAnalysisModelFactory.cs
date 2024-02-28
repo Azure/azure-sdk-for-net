@@ -25,7 +25,13 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
         /// <returns> A new <see cref="Models.DetectedChangeData"/> instance for mocking. </returns>
         public static DetectedChangeData DetectedChangeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ChangeProperties properties = null)
         {
-            return new DetectedChangeData(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
+            return new DetectedChangeData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ChangeProperties"/>. </summary>
@@ -43,7 +49,13 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
             initiatedByList ??= new List<string>();
             propertyChanges ??= new List<PropertyChange>();
 
-            return new ChangeProperties(resourceId, changeDetectedOn, initiatedByList?.ToList(), changeType, propertyChanges?.ToList(), serializedAdditionalRawData: null);
+            return new ChangeProperties(
+                resourceId,
+                changeDetectedOn,
+                initiatedByList?.ToList(),
+                changeType,
+                propertyChanges?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PropertyChange"/>. </summary>
@@ -59,7 +71,17 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
         /// <returns> A new <see cref="Models.PropertyChange"/> instance for mocking. </returns>
         public static PropertyChange PropertyChange(ChangeType? changeType = null, ChangeCategory? changeCategory = null, string jsonPath = null, string displayName = null, PropertyChangeLevel? level = null, string description = null, string oldValue = null, string newValue = null, bool? isDataMasked = null)
         {
-            return new PropertyChange(changeType, changeCategory, jsonPath, displayName, level, description, oldValue, newValue, isDataMasked, serializedAdditionalRawData: null);
+            return new PropertyChange(
+                changeType,
+                changeCategory,
+                jsonPath,
+                displayName,
+                level,
+                description,
+                oldValue,
+                newValue,
+                isDataMasked,
+                serializedAdditionalRawData: null);
         }
     }
 }

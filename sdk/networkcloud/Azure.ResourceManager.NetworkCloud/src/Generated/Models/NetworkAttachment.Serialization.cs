@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             string attachedNetworkId = default;
-            Optional<DefaultGateway> defaultGateway = default;
+            DefaultGateway? defaultGateway = default;
             VirtualMachineIPAllocationMethod ipAllocationMethod = default;
-            Optional<string> ipv4Address = default;
-            Optional<string> ipv6Address = default;
-            Optional<string> macAddress = default;
-            Optional<string> networkAttachmentName = default;
+            string ipv4Address = default;
+            string ipv6Address = default;
+            string macAddress = default;
+            string networkAttachmentName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,15 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkAttachment(attachedNetworkId, Optional.ToNullable(defaultGateway), ipAllocationMethod, ipv4Address.Value, ipv6Address.Value, macAddress.Value, networkAttachmentName.Value, serializedAdditionalRawData);
+            return new NetworkAttachment(
+                attachedNetworkId,
+                defaultGateway,
+                ipAllocationMethod,
+                ipv4Address,
+                ipv6Address,
+                macAddress,
+                networkAttachmentName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkAttachment>.Write(ModelReaderWriterOptions options)

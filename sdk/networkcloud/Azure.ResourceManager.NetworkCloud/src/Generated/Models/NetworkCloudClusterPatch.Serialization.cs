@@ -109,10 +109,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<NetworkCloudRackDefinition> aggregatorOrSingleRackDefinition = default;
-            Optional<string> clusterLocation = default;
-            Optional<ServicePrincipalInformation> clusterServicePrincipal = default;
-            Optional<ValidationThreshold> computeDeploymentThreshold = default;
+            NetworkCloudRackDefinition aggregatorOrSingleRackDefinition = default;
+            string clusterLocation = default;
+            ServicePrincipalInformation clusterServicePrincipal = default;
+            ValidationThreshold computeDeploymentThreshold = default;
             IList<NetworkCloudRackDefinition> computeRackDefinitions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -196,7 +196,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudClusterPatch(tags ?? new ChangeTrackingDictionary<string, string>(), aggregatorOrSingleRackDefinition.Value, clusterLocation.Value, clusterServicePrincipal.Value, computeDeploymentThreshold.Value, computeRackDefinitions ?? new ChangeTrackingList<NetworkCloudRackDefinition>(), serializedAdditionalRawData);
+            return new NetworkCloudClusterPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                aggregatorOrSingleRackDefinition,
+                clusterLocation,
+                clusterServicePrincipal,
+                computeDeploymentThreshold,
+                computeRackDefinitions ?? new ChangeTrackingList<NetworkCloudRackDefinition>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudClusterPatch>.Write(ModelReaderWriterOptions options)

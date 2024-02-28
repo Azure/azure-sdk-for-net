@@ -115,7 +115,13 @@ namespace Azure.AI.OpenAI.Assistants
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MessageTextFilePathAnnotation(type, text, startIndex, endIndex, serializedAdditionalRawData, filePath);
+            return new MessageTextFilePathAnnotation(
+                type,
+                text,
+                startIndex,
+                endIndex,
+                serializedAdditionalRawData,
+                filePath);
         }
 
         BinaryData IPersistableModel<MessageTextFilePathAnnotation>.Write(ModelReaderWriterOptions options)

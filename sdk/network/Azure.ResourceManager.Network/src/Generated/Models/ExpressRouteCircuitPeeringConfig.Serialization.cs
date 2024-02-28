@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.Network.Models
             }
             IList<string> advertisedPublicPrefixes = default;
             IList<string> advertisedCommunities = default;
-            Optional<ExpressRouteCircuitPeeringAdvertisedPublicPrefixState> advertisedPublicPrefixesState = default;
-            Optional<int> legacyMode = default;
-            Optional<int> customerASN = default;
-            Optional<string> routingRegistryName = default;
+            ExpressRouteCircuitPeeringAdvertisedPublicPrefixState? advertisedPublicPrefixesState = default;
+            int? legacyMode = default;
+            int? customerASN = default;
+            string routingRegistryName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -180,7 +180,14 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExpressRouteCircuitPeeringConfig(advertisedPublicPrefixes ?? new ChangeTrackingList<string>(), advertisedCommunities ?? new ChangeTrackingList<string>(), Optional.ToNullable(advertisedPublicPrefixesState), Optional.ToNullable(legacyMode), Optional.ToNullable(customerASN), routingRegistryName.Value, serializedAdditionalRawData);
+            return new ExpressRouteCircuitPeeringConfig(
+                advertisedPublicPrefixes ?? new ChangeTrackingList<string>(),
+                advertisedCommunities ?? new ChangeTrackingList<string>(),
+                advertisedPublicPrefixesState,
+                legacyMode,
+                customerASN,
+                routingRegistryName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExpressRouteCircuitPeeringConfig>.Write(ModelReaderWriterOptions options)

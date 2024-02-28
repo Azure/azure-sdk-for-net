@@ -109,9 +109,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> targetServerVersion = default;
-            Optional<string> targetServerBrandVersion = default;
+            string id = default;
+            string targetServerVersion = default;
+            string targetServerBrandVersion = default;
             IReadOnlyList<string> logins = default;
             IReadOnlyList<string> agentJobs = default;
             IReadOnlyList<ReportableException> validationErrors = default;
@@ -182,7 +182,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectToTargetSqlMITaskOutput(id.Value, targetServerVersion.Value, targetServerBrandVersion.Value, logins ?? new ChangeTrackingList<string>(), agentJobs ?? new ChangeTrackingList<string>(), validationErrors ?? new ChangeTrackingList<ReportableException>(), serializedAdditionalRawData);
+            return new ConnectToTargetSqlMITaskOutput(
+                id,
+                targetServerVersion,
+                targetServerBrandVersion,
+                logins ?? new ChangeTrackingList<string>(),
+                agentJobs ?? new ChangeTrackingList<string>(),
+                validationErrors ?? new ChangeTrackingList<ReportableException>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectToTargetSqlMITaskOutput>.Write(ModelReaderWriterOptions options)

@@ -109,15 +109,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<double> clusterFreeMemoryMb = default;
-            Optional<double> clusterUsedMemoryMb = default;
-            Optional<double> clusterFailoverMemoryMb = default;
-            Optional<double> clusterFragmentationMemoryMb = default;
-            Optional<double> clusterHyperVReserveMemoryMb = default;
-            Optional<double> clusterInfraVmMemoryMb = default;
-            Optional<double> clusterTotalMemoryMb = default;
-            Optional<double> clusterNonFailoverVmMb = default;
-            Optional<double> clusterMemoryUsedByVmsMb = default;
+            double? clusterFreeMemoryMb = default;
+            double? clusterUsedMemoryMb = default;
+            double? clusterFailoverMemoryMb = default;
+            double? clusterFragmentationMemoryMb = default;
+            double? clusterHyperVReserveMemoryMb = default;
+            double? clusterInfraVmMemoryMb = default;
+            double? clusterTotalMemoryMb = default;
+            double? clusterNonFailoverVmMb = default;
+            double? clusterMemoryUsedByVmsMb = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -209,7 +209,17 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeClusterMemoryCapacity(Optional.ToNullable(clusterFreeMemoryMb), Optional.ToNullable(clusterUsedMemoryMb), Optional.ToNullable(clusterFailoverMemoryMb), Optional.ToNullable(clusterFragmentationMemoryMb), Optional.ToNullable(clusterHyperVReserveMemoryMb), Optional.ToNullable(clusterInfraVmMemoryMb), Optional.ToNullable(clusterTotalMemoryMb), Optional.ToNullable(clusterNonFailoverVmMb), Optional.ToNullable(clusterMemoryUsedByVmsMb), serializedAdditionalRawData);
+            return new EdgeClusterMemoryCapacity(
+                clusterFreeMemoryMb,
+                clusterUsedMemoryMb,
+                clusterFailoverMemoryMb,
+                clusterFragmentationMemoryMb,
+                clusterHyperVReserveMemoryMb,
+                clusterInfraVmMemoryMb,
+                clusterTotalMemoryMb,
+                clusterNonFailoverVmMb,
+                clusterMemoryUsedByVmsMb,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeClusterMemoryCapacity>.Write(ModelReaderWriterOptions options)

@@ -109,15 +109,15 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             {
                 return null;
             }
-            Optional<string> computerName = default;
-            Optional<string> adminUsername = default;
-            Optional<string> adminPassword = default;
-            Optional<string> guestId = default;
-            Optional<VMwareOSType> osType = default;
-            Optional<string> osSku = default;
-            Optional<string> toolsRunningStatus = default;
-            Optional<string> toolsVersionStatus = default;
-            Optional<string> toolsVersion = default;
+            string computerName = default;
+            string adminUsername = default;
+            string adminPassword = default;
+            string guestId = default;
+            VMwareOSType? osType = default;
+            string osSku = default;
+            string toolsRunningStatus = default;
+            string toolsVersionStatus = default;
+            string toolsVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -177,7 +177,17 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OSProfileForVmInstance(computerName.Value, adminUsername.Value, adminPassword.Value, guestId.Value, Optional.ToNullable(osType), osSku.Value, toolsRunningStatus.Value, toolsVersionStatus.Value, toolsVersion.Value, serializedAdditionalRawData);
+            return new OSProfileForVmInstance(
+                computerName,
+                adminUsername,
+                adminPassword,
+                guestId,
+                osType,
+                osSku,
+                toolsRunningStatus,
+                toolsVersionStatus,
+                toolsVersion,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OSProfileForVmInstance>.Write(ModelReaderWriterOptions options)

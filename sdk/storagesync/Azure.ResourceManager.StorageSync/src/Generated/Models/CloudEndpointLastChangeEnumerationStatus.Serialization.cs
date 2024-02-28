@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> startedTimestamp = default;
-            Optional<DateTimeOffset> completedTimestamp = default;
-            Optional<long> namespaceFilesCount = default;
-            Optional<long> namespaceDirectoriesCount = default;
-            Optional<long> namespaceSizeBytes = default;
-            Optional<DateTimeOffset> nextRunTimestamp = default;
+            DateTimeOffset? startedTimestamp = default;
+            DateTimeOffset? completedTimestamp = default;
+            long? namespaceFilesCount = default;
+            long? namespaceDirectoriesCount = default;
+            long? namespaceSizeBytes = default;
+            DateTimeOffset? nextRunTimestamp = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudEndpointLastChangeEnumerationStatus(Optional.ToNullable(startedTimestamp), Optional.ToNullable(completedTimestamp), Optional.ToNullable(namespaceFilesCount), Optional.ToNullable(namespaceDirectoriesCount), Optional.ToNullable(namespaceSizeBytes), Optional.ToNullable(nextRunTimestamp), serializedAdditionalRawData);
+            return new CloudEndpointLastChangeEnumerationStatus(
+                startedTimestamp,
+                completedTimestamp,
+                namespaceFilesCount,
+                namespaceDirectoriesCount,
+                namespaceSizeBytes,
+                nextRunTimestamp,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudEndpointLastChangeEnumerationStatus>.Write(ModelReaderWriterOptions options)

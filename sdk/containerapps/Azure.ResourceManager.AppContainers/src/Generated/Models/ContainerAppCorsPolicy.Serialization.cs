@@ -115,8 +115,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             IList<string> allowedMethods = default;
             IList<string> allowedHeaders = default;
             IList<string> exposeHeaders = default;
-            Optional<int> maxAge = default;
-            Optional<bool> allowCredentials = default;
+            int? maxAge = default;
+            bool? allowCredentials = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -197,7 +197,14 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppCorsPolicy(allowedOrigins, allowedMethods ?? new ChangeTrackingList<string>(), allowedHeaders ?? new ChangeTrackingList<string>(), exposeHeaders ?? new ChangeTrackingList<string>(), Optional.ToNullable(maxAge), Optional.ToNullable(allowCredentials), serializedAdditionalRawData);
+            return new ContainerAppCorsPolicy(
+                allowedOrigins,
+                allowedMethods ?? new ChangeTrackingList<string>(),
+                allowedHeaders ?? new ChangeTrackingList<string>(),
+                exposeHeaders ?? new ChangeTrackingList<string>(),
+                maxAge,
+                allowCredentials,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppCorsPolicy>.Write(ModelReaderWriterOptions options)

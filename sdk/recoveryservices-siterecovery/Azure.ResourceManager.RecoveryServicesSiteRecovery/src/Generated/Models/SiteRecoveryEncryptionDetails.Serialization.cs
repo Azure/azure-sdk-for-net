@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> kekState = default;
-            Optional<string> kekCertThumbprint = default;
-            Optional<DateTimeOffset> kekCertExpireOn = default;
+            string kekState = default;
+            string kekCertThumbprint = default;
+            DateTimeOffset? kekCertExpireOn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryEncryptionDetails(kekState.Value, kekCertThumbprint.Value, Optional.ToNullable(kekCertExpireOn), serializedAdditionalRawData);
+            return new SiteRecoveryEncryptionDetails(kekState, kekCertThumbprint, kekCertExpireOn, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryEncryptionDetails>.Write(ModelReaderWriterOptions options)

@@ -98,11 +98,11 @@ namespace Azure.ResourceManager.DataBox.Models
                 return null;
             }
             IReadOnlyList<DataBoxDiskSecret> diskSecrets = default;
-            Optional<string> passKey = default;
-            Optional<bool> isPasskeyUserDefined = default;
+            string passKey = default;
+            bool? isPasskeyUserDefined = default;
             DataBoxOrderType jobSecretsType = default;
-            Optional<DataCenterAccessSecurityCode> dcAccessSecurityCode = default;
-            Optional<ResponseError> error = default;
+            DataCenterAccessSecurityCode dcAccessSecurityCode = default;
+            ResponseError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxDiskJobSecrets(jobSecretsType, dcAccessSecurityCode.Value, error.Value, serializedAdditionalRawData, diskSecrets ?? new ChangeTrackingList<DataBoxDiskSecret>(), passKey.Value, Optional.ToNullable(isPasskeyUserDefined));
+            return new DataBoxDiskJobSecrets(
+                jobSecretsType,
+                dcAccessSecurityCode,
+                error,
+                serializedAdditionalRawData,
+                diskSecrets ?? new ChangeTrackingList<DataBoxDiskSecret>(),
+                passKey,
+                isPasskeyUserDefined);
         }
 
         BinaryData IPersistableModel<DataBoxDiskJobSecrets>.Write(ModelReaderWriterOptions options)

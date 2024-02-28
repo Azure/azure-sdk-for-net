@@ -107,8 +107,8 @@ namespace Azure.ResourceManager.Compute.Models
             IList<VmGuestPatchClassificationForWindows> classificationsToInclude = default;
             IList<string> kbNumbersToInclude = default;
             IList<string> kbNumbersToExclude = default;
-            Optional<bool> excludeKbsRequiringReboot = default;
-            Optional<DateTimeOffset> maxPatchPublishDate = default;
+            bool? excludeKbsRequiringReboot = default;
+            DateTimeOffset? maxPatchPublishDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,7 +179,13 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WindowsParameters(classificationsToInclude ?? new ChangeTrackingList<VmGuestPatchClassificationForWindows>(), kbNumbersToInclude ?? new ChangeTrackingList<string>(), kbNumbersToExclude ?? new ChangeTrackingList<string>(), Optional.ToNullable(excludeKbsRequiringReboot), Optional.ToNullable(maxPatchPublishDate), serializedAdditionalRawData);
+            return new WindowsParameters(
+                classificationsToInclude ?? new ChangeTrackingList<VmGuestPatchClassificationForWindows>(),
+                kbNumbersToInclude ?? new ChangeTrackingList<string>(),
+                kbNumbersToExclude ?? new ChangeTrackingList<string>(),
+                excludeKbsRequiringReboot,
+                maxPatchPublishDate,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WindowsParameters>.Write(ModelReaderWriterOptions options)

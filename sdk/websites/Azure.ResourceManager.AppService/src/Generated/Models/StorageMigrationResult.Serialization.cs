@@ -98,12 +98,12 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> operationId = default;
+            SystemData systemData = default;
+            string operationId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageMigrationResult(id, name, type, systemData.Value, operationId.Value, kind.Value, serializedAdditionalRawData);
+            return new StorageMigrationResult(
+                id,
+                name,
+                type,
+                systemData,
+                operationId,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageMigrationResult>.Write(ModelReaderWriterOptions options)

@@ -164,22 +164,22 @@ namespace Azure.ResourceManager.DataShare
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> dataSetCount = default;
-            Optional<string> description = default;
-            Optional<DateTimeOffset> expirationDate = default;
+            SystemData systemData = default;
+            int? dataSetCount = default;
+            string description = default;
+            DateTimeOffset? expirationDate = default;
             Guid invitationId = default;
-            Optional<DataShareInvitationStatus> invitationStatus = default;
-            Optional<AzureLocation> location = default;
-            Optional<string> providerEmail = default;
-            Optional<string> providerName = default;
-            Optional<string> providerTenantName = default;
-            Optional<DateTimeOffset> respondedAt = default;
-            Optional<DateTimeOffset> sentAt = default;
-            Optional<string> shareName = default;
-            Optional<string> termsOfUse = default;
-            Optional<string> userEmail = default;
-            Optional<string> userName = default;
+            DataShareInvitationStatus? invitationStatus = default;
+            AzureLocation? location = default;
+            string providerEmail = default;
+            string providerName = default;
+            string providerTenantName = default;
+            DateTimeOffset? respondedAt = default;
+            DateTimeOffset? sentAt = default;
+            string shareName = default;
+            string termsOfUse = default;
+            string userEmail = default;
+            string userName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -325,7 +325,27 @@ namespace Azure.ResourceManager.DataShare
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataShareConsumerInvitationData(id, name, type, systemData.Value, Optional.ToNullable(dataSetCount), description.Value, Optional.ToNullable(expirationDate), invitationId, Optional.ToNullable(invitationStatus), Optional.ToNullable(location), providerEmail.Value, providerName.Value, providerTenantName.Value, Optional.ToNullable(respondedAt), Optional.ToNullable(sentAt), shareName.Value, termsOfUse.Value, userEmail.Value, userName.Value, serializedAdditionalRawData);
+            return new DataShareConsumerInvitationData(
+                id,
+                name,
+                type,
+                systemData,
+                dataSetCount,
+                description,
+                expirationDate,
+                invitationId,
+                invitationStatus,
+                location,
+                providerEmail,
+                providerName,
+                providerTenantName,
+                respondedAt,
+                sentAt,
+                shareName,
+                termsOfUse,
+                userEmail,
+                userName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataShareConsumerInvitationData>.Write(ModelReaderWriterOptions options)

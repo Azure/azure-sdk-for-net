@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 return null;
             }
             IReadOnlyList<MySqlFlexibleServerLogFile> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlFlexibleServerLogFileListResult(value ?? new ChangeTrackingList<MySqlFlexibleServerLogFile>(), nextLink.Value, serializedAdditionalRawData);
+            return new MySqlFlexibleServerLogFileListResult(value ?? new ChangeTrackingList<MySqlFlexibleServerLogFile>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlFlexibleServerLogFileListResult>.Write(ModelReaderWriterOptions options)

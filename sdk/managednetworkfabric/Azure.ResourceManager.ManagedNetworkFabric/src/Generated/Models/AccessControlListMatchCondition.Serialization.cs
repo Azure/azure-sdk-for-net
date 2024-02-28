@@ -144,10 +144,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             IList<string> ipLengths = default;
             IList<string> ttlValues = default;
             IList<string> dscpMarkings = default;
-            Optional<AccessControlListPortCondition> portCondition = default;
+            AccessControlListPortCondition portCondition = default;
             IList<string> protocolTypes = default;
-            Optional<VlanMatchCondition> vlanMatchCondition = default;
-            Optional<IPMatchCondition> ipCondition = default;
+            VlanMatchCondition vlanMatchCondition = default;
+            IPMatchCondition ipCondition = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -269,7 +269,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AccessControlListMatchCondition(protocolTypes ?? new ChangeTrackingList<string>(), vlanMatchCondition.Value, ipCondition.Value, serializedAdditionalRawData, etherTypes ?? new ChangeTrackingList<string>(), fragments ?? new ChangeTrackingList<string>(), ipLengths ?? new ChangeTrackingList<string>(), ttlValues ?? new ChangeTrackingList<string>(), dscpMarkings ?? new ChangeTrackingList<string>(), portCondition.Value);
+            return new AccessControlListMatchCondition(
+                protocolTypes ?? new ChangeTrackingList<string>(),
+                vlanMatchCondition,
+                ipCondition,
+                serializedAdditionalRawData,
+                etherTypes ?? new ChangeTrackingList<string>(),
+                fragments ?? new ChangeTrackingList<string>(),
+                ipLengths ?? new ChangeTrackingList<string>(),
+                ttlValues ?? new ChangeTrackingList<string>(),
+                dscpMarkings ?? new ChangeTrackingList<string>(),
+                portCondition);
         }
 
         BinaryData IPersistableModel<AccessControlListMatchCondition>.Write(ModelReaderWriterOptions options)

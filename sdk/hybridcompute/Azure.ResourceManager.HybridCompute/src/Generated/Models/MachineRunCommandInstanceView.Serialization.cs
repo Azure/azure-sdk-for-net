@@ -109,13 +109,13 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<HybridComputeExecutionState> executionState = default;
-            Optional<string> executionMessage = default;
-            Optional<int> exitCode = default;
-            Optional<string> output = default;
-            Optional<string> error = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
+            HybridComputeExecutionState? executionState = default;
+            string executionMessage = default;
+            int? exitCode = default;
+            string output = default;
+            string error = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
             IReadOnlyList<ExtensionsResourceStatus> statuses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -192,7 +192,16 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineRunCommandInstanceView(Optional.ToNullable(executionState), executionMessage.Value, Optional.ToNullable(exitCode), output.Value, error.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), statuses ?? new ChangeTrackingList<ExtensionsResourceStatus>(), serializedAdditionalRawData);
+            return new MachineRunCommandInstanceView(
+                executionState,
+                executionMessage,
+                exitCode,
+                output,
+                error,
+                startTime,
+                endTime,
+                statuses ?? new ChangeTrackingList<ExtensionsResourceStatus>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineRunCommandInstanceView>.Write(ModelReaderWriterOptions options)

@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Optional<string> name = default;
+            string name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Peering.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PeeringServiceSku(name.Value, serializedAdditionalRawData);
+            return new PeeringServiceSku(name, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PeeringServiceSku>.Write(ModelReaderWriterOptions options)

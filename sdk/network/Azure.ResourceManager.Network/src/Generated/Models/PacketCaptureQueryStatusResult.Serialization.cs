@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> id = default;
-            Optional<DateTimeOffset> captureStartTime = default;
-            Optional<PcStatus> packetCaptureStatus = default;
-            Optional<string> stopReason = default;
+            string name = default;
+            string id = default;
+            DateTimeOffset? captureStartTime = default;
+            PcStatus? packetCaptureStatus = default;
+            string stopReason = default;
             IReadOnlyList<PcError> packetCaptureError = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -162,7 +162,14 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PacketCaptureQueryStatusResult(name.Value, id.Value, Optional.ToNullable(captureStartTime), Optional.ToNullable(packetCaptureStatus), stopReason.Value, packetCaptureError ?? new ChangeTrackingList<PcError>(), serializedAdditionalRawData);
+            return new PacketCaptureQueryStatusResult(
+                name,
+                id,
+                captureStartTime,
+                packetCaptureStatus,
+                stopReason,
+                packetCaptureError ?? new ChangeTrackingList<PcError>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PacketCaptureQueryStatusResult>.Write(ModelReaderWriterOptions options)

@@ -108,12 +108,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> calculatedDateTime = default;
+            SystemData systemData = default;
+            DateTimeOffset? calculatedDateTime = default;
             IReadOnlyList<TopologySingleResource> topologyResources = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -193,7 +193,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityTopologyResource(id, name, type, systemData.Value, Optional.ToNullable(calculatedDateTime), topologyResources ?? new ChangeTrackingList<TopologySingleResource>(), Optional.ToNullable(location), serializedAdditionalRawData);
+            return new SecurityTopologyResource(
+                id,
+                name,
+                type,
+                systemData,
+                calculatedDateTime,
+                topologyResources ?? new ChangeTrackingList<TopologySingleResource>(),
+                location,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityTopologyResource>.Write(ModelReaderWriterOptions options)

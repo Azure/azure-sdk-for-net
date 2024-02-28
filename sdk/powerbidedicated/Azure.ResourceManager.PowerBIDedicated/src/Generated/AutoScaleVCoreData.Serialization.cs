@@ -119,15 +119,15 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 return null;
             }
             AutoScaleVCoreSku sku = default;
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
+            string id = default;
+            string name = default;
+            string type = default;
             AzureLocation location = default;
             IDictionary<string, string> tags = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> capacityLimit = default;
-            Optional<string> capacityObjectId = default;
-            Optional<VCoreProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            int? capacityLimit = default;
+            string capacityObjectId = default;
+            VCoreProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -221,7 +221,18 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutoScaleVCoreData(id.Value, name.Value, type.Value, location, tags ?? new ChangeTrackingDictionary<string, string>(), systemData.Value, serializedAdditionalRawData, sku, Optional.ToNullable(capacityLimit), capacityObjectId.Value, Optional.ToNullable(provisioningState));
+            return new AutoScaleVCoreData(
+                id,
+                name,
+                type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                systemData,
+                serializedAdditionalRawData,
+                sku,
+                capacityLimit,
+                capacityObjectId,
+                provisioningState);
         }
 
         BinaryData IPersistableModel<AutoScaleVCoreData>.Write(ModelReaderWriterOptions options)

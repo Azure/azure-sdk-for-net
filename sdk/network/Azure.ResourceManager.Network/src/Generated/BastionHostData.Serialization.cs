@@ -187,25 +187,25 @@ namespace Azure.ResourceManager.Network
                 return null;
             }
             IList<string> zones = default;
-            Optional<ETag> etag = default;
-            Optional<NetworkSku> sku = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
+            ETag? etag = default;
+            NetworkSku sku = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
             IDictionary<string, string> tags = default;
             IList<BastionHostIPConfiguration> ipConfigurations = default;
-            Optional<string> dnsName = default;
-            Optional<WritableSubResource> virtualNetwork = default;
-            Optional<BastionHostPropertiesFormatNetworkAcls> networkAcls = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<int> scaleUnits = default;
-            Optional<bool> disableCopyPaste = default;
-            Optional<bool> enableFileCopy = default;
-            Optional<bool> enableIPConnect = default;
-            Optional<bool> enableShareableLink = default;
-            Optional<bool> enableTunneling = default;
-            Optional<bool> enableKerberos = default;
+            string dnsName = default;
+            WritableSubResource virtualNetwork = default;
+            BastionHostPropertiesFormatNetworkAcls networkAcls = default;
+            NetworkProvisioningState? provisioningState = default;
+            int? scaleUnits = default;
+            bool? disableCopyPaste = default;
+            bool? enableFileCopy = default;
+            bool? enableIPConnect = default;
+            bool? enableShareableLink = default;
+            bool? enableTunneling = default;
+            bool? enableKerberos = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -415,7 +415,28 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BastionHostData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, zones ?? new ChangeTrackingList<string>(), Optional.ToNullable(etag), sku.Value, ipConfigurations ?? new ChangeTrackingList<BastionHostIPConfiguration>(), dnsName.Value, virtualNetwork, networkAcls.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(scaleUnits), Optional.ToNullable(disableCopyPaste), Optional.ToNullable(enableFileCopy), Optional.ToNullable(enableIPConnect), Optional.ToNullable(enableShareableLink), Optional.ToNullable(enableTunneling), Optional.ToNullable(enableKerberos));
+            return new BastionHostData(
+                id,
+                name,
+                type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                zones ?? new ChangeTrackingList<string>(),
+                etag,
+                sku,
+                ipConfigurations ?? new ChangeTrackingList<BastionHostIPConfiguration>(),
+                dnsName,
+                virtualNetwork,
+                networkAcls,
+                provisioningState,
+                scaleUnits,
+                disableCopyPaste,
+                enableFileCopy,
+                enableIPConnect,
+                enableShareableLink,
+                enableTunneling,
+                enableKerberos);
         }
 
         BinaryData IPersistableModel<BastionHostData>.Write(ModelReaderWriterOptions options)

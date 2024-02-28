@@ -116,11 +116,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> preprocessingComponentId = default;
+            string preprocessingComponentId = default;
             TimeSpan windowOffset = default;
             TimeSpan windowSize = default;
             IDictionary<string, string> columns = default;
-            Optional<string> dataContext = default;
+            string dataContext = default;
             MonitoringInputDataType inputDataType = default;
             JobInputType jobInputType = default;
             Uri uri = default;
@@ -194,7 +194,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrailingInputData(columns ?? new ChangeTrackingDictionary<string, string>(), dataContext.Value, inputDataType, jobInputType, uri, serializedAdditionalRawData, preprocessingComponentId.Value, windowOffset, windowSize);
+            return new TrailingInputData(
+                columns ?? new ChangeTrackingDictionary<string, string>(),
+                dataContext,
+                inputDataType,
+                jobInputType,
+                uri,
+                serializedAdditionalRawData,
+                preprocessingComponentId,
+                windowOffset,
+                windowSize);
         }
 
         BinaryData IPersistableModel<TrailingInputData>.Write(ModelReaderWriterOptions options)

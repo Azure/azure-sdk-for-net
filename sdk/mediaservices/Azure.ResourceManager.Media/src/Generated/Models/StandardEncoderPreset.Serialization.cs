@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Media.Models
                 return null;
             }
             IDictionary<string, string> experimentalOptions = default;
-            Optional<FilteringOperations> filters = default;
+            FilteringOperations filters = default;
             IList<MediaCodecBase> codecs = default;
             IList<MediaFormatBase> formats = default;
             string odataType = default;
@@ -159,7 +159,13 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StandardEncoderPreset(odataType, serializedAdditionalRawData, experimentalOptions ?? new ChangeTrackingDictionary<string, string>(), filters.Value, codecs, formats);
+            return new StandardEncoderPreset(
+                odataType,
+                serializedAdditionalRawData,
+                experimentalOptions ?? new ChangeTrackingDictionary<string, string>(),
+                filters,
+                codecs,
+                formats);
         }
 
         BinaryData IPersistableModel<StandardEncoderPreset>.Write(ModelReaderWriterOptions options)

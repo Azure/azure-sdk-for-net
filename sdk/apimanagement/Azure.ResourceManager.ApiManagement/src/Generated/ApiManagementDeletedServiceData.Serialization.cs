@@ -108,14 +108,14 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> serviceId = default;
-            Optional<DateTimeOffset> scheduledPurgeDate = default;
-            Optional<DateTimeOffset> deletionDate = default;
+            SystemData systemData = default;
+            ResourceIdentifier serviceId = default;
+            DateTimeOffset? scheduledPurgeDate = default;
+            DateTimeOffset? deletionDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -198,7 +198,16 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementDeletedServiceData(id, name, type, systemData.Value, Optional.ToNullable(location), serviceId.Value, Optional.ToNullable(scheduledPurgeDate), Optional.ToNullable(deletionDate), serializedAdditionalRawData);
+            return new ApiManagementDeletedServiceData(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                serviceId,
+                scheduledPurgeDate,
+                deletionDate,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementDeletedServiceData>.Write(ModelReaderWriterOptions options)
