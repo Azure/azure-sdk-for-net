@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.Models
             {
                 return null;
             }
-            Optional<Guid> principalId = default;
-            Optional<Guid> tenantId = default;
+            Guid? principalId = default;
+            Guid? tenantId = default;
             SystemAssignedServiceIdentityType type = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Models
                     continue;
                 }
             }
-            return new SystemAssignedServiceIdentity(Optional.ToNullable(principalId), Optional.ToNullable(tenantId), type);
+            return new SystemAssignedServiceIdentity(principalId, tenantId, type);
         }
 
         BinaryData IPersistableModel<SystemAssignedServiceIdentity>.Write(ModelReaderWriterOptions options)

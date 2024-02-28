@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> symbolicName = default;
-            Optional<Guid> uuid = default;
-            Optional<string> capacity = default;
-            Optional<string> freeSpace = default;
-            Optional<string> type = default;
+            string symbolicName = default;
+            Guid? uuid = default;
+            string capacity = default;
+            string freeSpace = default;
+            string type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,11 +134,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SiteRecoveryDataStore(
-                symbolicName.Value,
-                Optional.ToNullable(uuid),
-                capacity.Value,
-                freeSpace.Value,
-                type.Value,
+                symbolicName,
+                uuid,
+                capacity,
+                freeSpace,
+                type,
                 serializedAdditionalRawData);
         }
 

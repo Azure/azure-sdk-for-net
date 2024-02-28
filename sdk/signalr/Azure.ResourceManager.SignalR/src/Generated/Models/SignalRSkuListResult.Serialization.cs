@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 return null;
             }
             IReadOnlyList<SignalRSku> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SignalRSkuListResult(value ?? new ChangeTrackingList<SignalRSku>(), nextLink.Value, serializedAdditionalRawData);
+            return new SignalRSkuListResult(value ?? new ChangeTrackingList<SignalRSku>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SignalRSkuListResult>.Write(ModelReaderWriterOptions options)

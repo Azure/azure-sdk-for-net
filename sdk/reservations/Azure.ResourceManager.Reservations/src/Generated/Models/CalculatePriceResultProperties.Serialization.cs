@@ -124,16 +124,16 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<CalculatePriceResultPropertiesBillingCurrencyTotal> billingCurrencyTotal = default;
-            Optional<double> netTotal = default;
-            Optional<double> taxTotal = default;
-            Optional<double> grandTotal = default;
-            Optional<bool> isTaxIncluded = default;
-            Optional<bool> isBillingPartnerManaged = default;
-            Optional<Guid> reservationOrderId = default;
-            Optional<string> skuTitle = default;
-            Optional<string> skuDescription = default;
-            Optional<CalculatePriceResultPropertiesPricingCurrencyTotal> pricingCurrencyTotal = default;
+            CalculatePriceResultPropertiesBillingCurrencyTotal billingCurrencyTotal = default;
+            double? netTotal = default;
+            double? taxTotal = default;
+            double? grandTotal = default;
+            bool? isTaxIncluded = default;
+            bool? isBillingPartnerManaged = default;
+            Guid? reservationOrderId = default;
+            string skuTitle = default;
+            string skuDescription = default;
+            CalculatePriceResultPropertiesPricingCurrencyTotal pricingCurrencyTotal = default;
             IReadOnlyList<PaymentDetail> paymentSchedule = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -242,16 +242,16 @@ namespace Azure.ResourceManager.Reservations.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new CalculatePriceResultProperties(
-                billingCurrencyTotal.Value,
-                Optional.ToNullable(netTotal),
-                Optional.ToNullable(taxTotal),
-                Optional.ToNullable(grandTotal),
-                Optional.ToNullable(isTaxIncluded),
-                Optional.ToNullable(isBillingPartnerManaged),
-                Optional.ToNullable(reservationOrderId),
-                skuTitle.Value,
-                skuDescription.Value,
-                pricingCurrencyTotal.Value,
+                billingCurrencyTotal,
+                netTotal,
+                taxTotal,
+                grandTotal,
+                isTaxIncluded,
+                isBillingPartnerManaged,
+                reservationOrderId,
+                skuTitle,
+                skuDescription,
+                pricingCurrencyTotal,
                 paymentSchedule ?? new ChangeTrackingList<PaymentDetail>(),
                 serializedAdditionalRawData);
         }

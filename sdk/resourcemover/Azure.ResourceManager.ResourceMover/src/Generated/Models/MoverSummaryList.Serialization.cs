@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<string> fieldName = default;
+            string fieldName = default;
             IReadOnlyList<MoverSummaryItemInfo> summary = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MoverSummaryList(fieldName.Value, summary ?? new ChangeTrackingList<MoverSummaryItemInfo>(), serializedAdditionalRawData);
+            return new MoverSummaryList(fieldName, summary ?? new ChangeTrackingList<MoverSummaryItemInfo>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MoverSummaryList>.Write(ModelReaderWriterOptions options)

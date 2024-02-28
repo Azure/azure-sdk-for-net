@@ -98,9 +98,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     case "RecoveryPlanShutdownGroupTaskDetails": return RecoveryPlanShutdownGroupTaskDetails.DeserializeRecoveryPlanShutdownGroupTaskDetails(element, options);
                 }
             }
-            Optional<string> name = default;
-            Optional<string> groupId = default;
-            Optional<string> rpGroupType = default;
+            string name = default;
+            string groupId = default;
+            string rpGroupType = default;
             string instanceType = "RecoveryPlanGroupTaskDetails";
             IReadOnlyList<AsrTask> childTasks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -151,9 +151,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 instanceType,
                 childTasks ?? new ChangeTrackingList<AsrTask>(),
                 serializedAdditionalRawData,
-                name.Value,
-                groupId.Value,
-                rpGroupType.Value);
+                name,
+                groupId,
+                rpGroupType);
         }
 
         BinaryData IPersistableModel<RecoveryPlanGroupTaskDetails>.Write(ModelReaderWriterOptions options)

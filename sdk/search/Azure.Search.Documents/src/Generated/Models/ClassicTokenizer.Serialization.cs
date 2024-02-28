@@ -33,7 +33,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<int> maxTokenLength = default;
+            int? maxTokenLength = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -58,7 +58,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new ClassicTokenizer(odataType, name, Optional.ToNullable(maxTokenLength));
+            return new ClassicTokenizer(odataType, name, maxTokenLength);
         }
     }
 }

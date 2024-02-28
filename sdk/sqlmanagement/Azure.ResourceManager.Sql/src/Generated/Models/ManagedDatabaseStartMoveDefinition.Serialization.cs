@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Sql.Models
                 return null;
             }
             ResourceIdentifier destinationManagedDatabaseId = default;
-            Optional<ManagedDatabaseMoveOperationMode> operationMode = default;
+            ManagedDatabaseMoveOperationMode? operationMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedDatabaseStartMoveDefinition(destinationManagedDatabaseId, Optional.ToNullable(operationMode), serializedAdditionalRawData);
+            return new ManagedDatabaseStartMoveDefinition(destinationManagedDatabaseId, operationMode, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedDatabaseStartMoveDefinition>.Write(ModelReaderWriterOptions options)

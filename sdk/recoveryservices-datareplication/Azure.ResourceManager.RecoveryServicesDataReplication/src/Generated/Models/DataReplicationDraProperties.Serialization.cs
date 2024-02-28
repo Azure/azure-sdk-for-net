@@ -109,15 +109,15 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 return null;
             }
-            Optional<string> correlationId = default;
+            string correlationId = default;
             string machineId = default;
             string machineName = default;
             DataReplicationIdentity authenticationIdentity = default;
             DataReplicationIdentity resourceAccessIdentity = default;
-            Optional<bool> isResponsive = default;
-            Optional<DateTimeOffset> lastHeartbeat = default;
-            Optional<string> versionNumber = default;
-            Optional<DataReplicationProvisioningState> provisioningState = default;
+            bool? isResponsive = default;
+            DateTimeOffset? lastHeartbeat = default;
+            string versionNumber = default;
+            DataReplicationProvisioningState? provisioningState = default;
             IReadOnlyList<DataReplicationHealthErrorInfo> healthErrors = default;
             DraModelCustomProperties customProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -207,15 +207,15 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DataReplicationDraProperties(
-                correlationId.Value,
+                correlationId,
                 machineId,
                 machineName,
                 authenticationIdentity,
                 resourceAccessIdentity,
-                Optional.ToNullable(isResponsive),
-                Optional.ToNullable(lastHeartbeat),
-                versionNumber.Value,
-                Optional.ToNullable(provisioningState),
+                isResponsive,
+                lastHeartbeat,
+                versionNumber,
+                provisioningState,
                 healthErrors ?? new ChangeTrackingList<DataReplicationHealthErrorInfo>(),
                 customProperties,
                 serializedAdditionalRawData);

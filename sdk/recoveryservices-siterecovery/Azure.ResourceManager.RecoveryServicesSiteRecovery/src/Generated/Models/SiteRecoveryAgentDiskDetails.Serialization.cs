@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> diskId = default;
-            Optional<string> diskName = default;
-            Optional<string> isOSDisk = default;
-            Optional<long> capacityInBytes = default;
-            Optional<int> lunId = default;
+            string diskId = default;
+            string diskName = default;
+            string isOSDisk = default;
+            long? capacityInBytes = default;
+            int? lunId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,11 +138,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SiteRecoveryAgentDiskDetails(
-                diskId.Value,
-                diskName.Value,
-                isOSDisk.Value,
-                Optional.ToNullable(capacityInBytes),
-                Optional.ToNullable(lunId),
+                diskId,
+                diskName,
+                isOSDisk,
+                capacityInBytes,
+                lunId,
                 serializedAdditionalRawData);
         }
 

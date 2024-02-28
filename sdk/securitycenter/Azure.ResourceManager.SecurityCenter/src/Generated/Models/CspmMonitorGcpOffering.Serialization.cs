@@ -76,9 +76,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<CspmMonitorGcpOfferingNativeCloudConnection> nativeCloudConnection = default;
+            CspmMonitorGcpOfferingNativeCloudConnection nativeCloudConnection = default;
             OfferingType offeringType = default;
-            Optional<string> description = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CspmMonitorGcpOffering(offeringType, description.Value, serializedAdditionalRawData, nativeCloudConnection.Value);
+            return new CspmMonitorGcpOffering(offeringType, description, serializedAdditionalRawData, nativeCloudConnection);
         }
 
         BinaryData IPersistableModel<CspmMonitorGcpOffering>.Write(ModelReaderWriterOptions options)

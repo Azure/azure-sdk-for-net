@@ -121,15 +121,15 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 return null;
             }
-            Optional<string> kind = default;
-            Optional<AzureLocation> location = default;
+            string kind = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IList<JitNetworkAccessPolicyVirtualMachine> virtualMachines = default;
             IList<JitNetworkAccessRequestInfo> requests = default;
-            Optional<string> provisioningState = default;
+            string provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -223,12 +223,12 @@ namespace Azure.ResourceManager.SecurityCenter
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 virtualMachines,
                 requests ?? new ChangeTrackingList<JitNetworkAccessRequestInfo>(),
-                provisioningState.Value,
-                kind.Value,
-                Optional.ToNullable(location),
+                provisioningState,
+                kind,
+                location,
                 serializedAdditionalRawData);
         }
 

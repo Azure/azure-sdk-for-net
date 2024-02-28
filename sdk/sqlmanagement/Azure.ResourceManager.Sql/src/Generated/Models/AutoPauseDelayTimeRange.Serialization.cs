@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<int> minValue = default;
-            Optional<int> maxValue = default;
-            Optional<int> stepSize = default;
-            Optional<int> @default = default;
-            Optional<PauseDelayTimeUnit> unit = default;
-            Optional<int> doNotPauseValue = default;
+            int? minValue = default;
+            int? maxValue = default;
+            int? stepSize = default;
+            int? @default = default;
+            PauseDelayTimeUnit? unit = default;
+            int? doNotPauseValue = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,12 +165,12 @@ namespace Azure.ResourceManager.Sql.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AutoPauseDelayTimeRange(
-                Optional.ToNullable(minValue),
-                Optional.ToNullable(maxValue),
-                Optional.ToNullable(stepSize),
-                Optional.ToNullable(@default),
-                Optional.ToNullable(unit),
-                Optional.ToNullable(doNotPauseValue),
+                minValue,
+                maxValue,
+                stepSize,
+                @default,
+                unit,
+                doNotPauseValue,
                 serializedAdditionalRawData);
         }
 

@@ -225,28 +225,28 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> masterTargetId = default;
-            Optional<Guid> processServerId = default;
-            Optional<ResourceIdentifier> storageAccountId = default;
-            Optional<string> runAsAccountId = default;
-            Optional<string> multiVmGroupId = default;
-            Optional<string> multiVmGroupName = default;
+            string masterTargetId = default;
+            Guid? processServerId = default;
+            ResourceIdentifier storageAccountId = default;
+            string runAsAccountId = default;
+            string multiVmGroupId = default;
+            string multiVmGroupName = default;
             IList<InMageAzureV2DiskDetails> disksToInclude = default;
-            Optional<ResourceIdentifier> targetAzureNetworkId = default;
-            Optional<ResourceIdentifier> targetAzureSubnetId = default;
-            Optional<string> enableRdpOnTargetOption = default;
-            Optional<string> targetAzureVmName = default;
-            Optional<ResourceIdentifier> logStorageAccountId = default;
-            Optional<ResourceIdentifier> targetAzureV1ResourceGroupId = default;
-            Optional<ResourceIdentifier> targetAzureV2ResourceGroupId = default;
-            Optional<SiteRecoveryDiskAccountType> diskType = default;
-            Optional<ResourceIdentifier> targetAvailabilitySetId = default;
-            Optional<string> targetAvailabilityZone = default;
-            Optional<ResourceIdentifier> targetProximityPlacementGroupId = default;
-            Optional<SiteRecoveryLicenseType> licenseType = default;
-            Optional<SiteRecoverySqlServerLicenseType> sqlServerLicenseType = default;
-            Optional<string> targetVmSize = default;
-            Optional<ResourceIdentifier> diskEncryptionSetId = default;
+            ResourceIdentifier targetAzureNetworkId = default;
+            ResourceIdentifier targetAzureSubnetId = default;
+            string enableRdpOnTargetOption = default;
+            string targetAzureVmName = default;
+            ResourceIdentifier logStorageAccountId = default;
+            ResourceIdentifier targetAzureV1ResourceGroupId = default;
+            ResourceIdentifier targetAzureV2ResourceGroupId = default;
+            SiteRecoveryDiskAccountType? diskType = default;
+            ResourceIdentifier targetAvailabilitySetId = default;
+            string targetAvailabilityZone = default;
+            ResourceIdentifier targetProximityPlacementGroupId = default;
+            SiteRecoveryLicenseType? licenseType = default;
+            SiteRecoverySqlServerLicenseType? sqlServerLicenseType = default;
+            string targetVmSize = default;
+            ResourceIdentifier diskEncryptionSetId = default;
             IDictionary<string, string> targetVmTags = default;
             IDictionary<string, string> seedManagedDiskTags = default;
             IDictionary<string, string> targetManagedDiskTags = default;
@@ -497,28 +497,28 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMageAzureV2EnableProtectionContent(
                 instanceType,
                 serializedAdditionalRawData,
-                masterTargetId.Value,
-                Optional.ToNullable(processServerId),
-                storageAccountId.Value,
-                runAsAccountId.Value,
-                multiVmGroupId.Value,
-                multiVmGroupName.Value,
+                masterTargetId,
+                processServerId,
+                storageAccountId,
+                runAsAccountId,
+                multiVmGroupId,
+                multiVmGroupName,
                 disksToInclude ?? new ChangeTrackingList<InMageAzureV2DiskDetails>(),
-                targetAzureNetworkId.Value,
-                targetAzureSubnetId.Value,
-                enableRdpOnTargetOption.Value,
-                targetAzureVmName.Value,
-                logStorageAccountId.Value,
-                targetAzureV1ResourceGroupId.Value,
-                targetAzureV2ResourceGroupId.Value,
-                Optional.ToNullable(diskType),
-                targetAvailabilitySetId.Value,
-                targetAvailabilityZone.Value,
-                targetProximityPlacementGroupId.Value,
-                Optional.ToNullable(licenseType),
-                Optional.ToNullable(sqlServerLicenseType),
-                targetVmSize.Value,
-                diskEncryptionSetId.Value,
+                targetAzureNetworkId,
+                targetAzureSubnetId,
+                enableRdpOnTargetOption,
+                targetAzureVmName,
+                logStorageAccountId,
+                targetAzureV1ResourceGroupId,
+                targetAzureV2ResourceGroupId,
+                diskType,
+                targetAvailabilitySetId,
+                targetAvailabilityZone,
+                targetProximityPlacementGroupId,
+                licenseType,
+                sqlServerLicenseType,
+                targetVmSize,
+                diskEncryptionSetId,
                 targetVmTags ?? new ChangeTrackingDictionary<string, string>(),
                 seedManagedDiskTags ?? new ChangeTrackingDictionary<string, string>(),
                 targetManagedDiskTags ?? new ChangeTrackingDictionary<string, string>(),

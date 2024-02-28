@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
             string policyDefinitionId = default;
             IDictionary<string, ArmPolicyParameterValue> parameters = default;
-            Optional<string> policyDefinitionReferenceId = default;
+            string policyDefinitionReferenceId = default;
             IList<string> groupNames = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicyDefinitionReference(policyDefinitionId, parameters ?? new ChangeTrackingDictionary<string, ArmPolicyParameterValue>(), policyDefinitionReferenceId.Value, groupNames ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new PolicyDefinitionReference(policyDefinitionId, parameters ?? new ChangeTrackingDictionary<string, ArmPolicyParameterValue>(), policyDefinitionReferenceId, groupNames ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicyDefinitionReference>.Write(ModelReaderWriterOptions options)

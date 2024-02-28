@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             ResourceIdentifier azStackHciSiteId = default;
             IReadOnlyList<string> applianceName = default;
             AzStackHciClusterProperties cluster = default;
-            Optional<ResourceIdentifier> fabricResourceId = default;
-            Optional<string> fabricContainerId = default;
+            ResourceIdentifier fabricResourceId = default;
+            string fabricContainerId = default;
             ResourceIdentifier migrationSolutionId = default;
-            Optional<Uri> migrationHubUri = default;
+            Uri migrationHubUri = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -178,10 +178,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 azStackHciSiteId,
                 applianceName ?? new ChangeTrackingList<string>(),
                 cluster,
-                fabricResourceId.Value,
-                fabricContainerId.Value,
+                fabricResourceId,
+                fabricContainerId,
                 migrationSolutionId,
-                migrationHubUri.Value);
+                migrationHubUri);
         }
 
         BinaryData IPersistableModel<AzStackHciFabricModelCustomProperties>.Write(ModelReaderWriterOptions options)

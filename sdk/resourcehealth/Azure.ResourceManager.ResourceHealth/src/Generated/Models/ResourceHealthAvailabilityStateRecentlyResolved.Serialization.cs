@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> unavailableOccuredTime = default;
-            Optional<DateTimeOffset> resolvedTime = default;
-            Optional<string> unavailableSummary = default;
+            DateTimeOffset? unavailableOccuredTime = default;
+            DateTimeOffset? resolvedTime = default;
+            string unavailableSummary = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceHealthAvailabilityStateRecentlyResolved(Optional.ToNullable(unavailableOccuredTime), Optional.ToNullable(resolvedTime), unavailableSummary.Value, serializedAdditionalRawData);
+            return new ResourceHealthAvailabilityStateRecentlyResolved(unavailableOccuredTime, resolvedTime, unavailableSummary, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceHealthAvailabilityStateRecentlyResolved>.Write(ModelReaderWriterOptions options)

@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<DataConnectorDataTypeCommon> discoveryLogs = default;
-            Optional<DataConnectorDataTypeCommon> alerts = default;
+            DataConnectorDataTypeCommon discoveryLogs = default;
+            DataConnectorDataTypeCommon alerts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new McasDataConnectorDataTypes(alerts.Value, serializedAdditionalRawData, discoveryLogs.Value);
+            return new McasDataConnectorDataTypes(alerts, serializedAdditionalRawData, discoveryLogs);
         }
 
         BinaryData IPersistableModel<McasDataConnectorDataTypes>.Write(ModelReaderWriterOptions options)

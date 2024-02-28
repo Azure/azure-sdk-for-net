@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<int> errorCode = default;
-            Optional<string> errorString = default;
+            int? errorCode = default;
+            string errorString = default;
             IList<string> recommendations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageErrorInfo(Optional.ToNullable(errorCode), errorString.Value, recommendations ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new StorageErrorInfo(errorCode, errorString, recommendations ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageErrorInfo>.Write(ModelReaderWriterOptions options)

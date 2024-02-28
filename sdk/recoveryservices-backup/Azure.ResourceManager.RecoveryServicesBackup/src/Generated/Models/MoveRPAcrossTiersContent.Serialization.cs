@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<string> objectType = default;
-            Optional<RecoveryPointTierType> sourceTierType = default;
-            Optional<RecoveryPointTierType> targetTierType = default;
+            string objectType = default;
+            RecoveryPointTierType? sourceTierType = default;
+            RecoveryPointTierType? targetTierType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MoveRPAcrossTiersContent(objectType.Value, Optional.ToNullable(sourceTierType), Optional.ToNullable(targetTierType), serializedAdditionalRawData);
+            return new MoveRPAcrossTiersContent(objectType, sourceTierType, targetTierType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MoveRPAcrossTiersContent>.Write(ModelReaderWriterOptions options)

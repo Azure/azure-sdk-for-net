@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> enableAgentAutoUpgrade = default;
+            string enableAgentAutoUpgrade = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageRcmProtectionContainerMappingDetails(instanceType, serializedAdditionalRawData, enableAgentAutoUpgrade.Value);
+            return new InMageRcmProtectionContainerMappingDetails(instanceType, serializedAdditionalRawData, enableAgentAutoUpgrade);
         }
 
         BinaryData IPersistableModel<InMageRcmProtectionContainerMappingDetails>.Write(ModelReaderWriterOptions options)

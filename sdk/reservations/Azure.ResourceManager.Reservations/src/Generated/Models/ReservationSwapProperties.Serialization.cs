@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<string> swapSource = default;
-            Optional<string> swapDestination = default;
+            string swapSource = default;
+            string swapDestination = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReservationSwapProperties(swapSource.Value, swapDestination.Value, serializedAdditionalRawData);
+            return new ReservationSwapProperties(swapSource, swapDestination, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReservationSwapProperties>.Write(ModelReaderWriterOptions options)

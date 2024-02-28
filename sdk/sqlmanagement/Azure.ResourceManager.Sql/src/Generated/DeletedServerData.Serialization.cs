@@ -111,11 +111,11 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> version = default;
-            Optional<DateTimeOffset> deletionTime = default;
-            Optional<ResourceIdentifier> originalId = default;
-            Optional<string> fullyQualifiedDomainName = default;
+            SystemData systemData = default;
+            string version = default;
+            DateTimeOffset? deletionTime = default;
+            ResourceIdentifier originalId = default;
+            string fullyQualifiedDomainName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -194,11 +194,11 @@ namespace Azure.ResourceManager.Sql
                 id,
                 name,
                 type,
-                systemData.Value,
-                version.Value,
-                Optional.ToNullable(deletionTime),
-                originalId.Value,
-                fullyQualifiedDomainName.Value,
+                systemData,
+                version,
+                deletionTime,
+                originalId,
+                fullyQualifiedDomainName,
                 serializedAdditionalRawData);
         }
 

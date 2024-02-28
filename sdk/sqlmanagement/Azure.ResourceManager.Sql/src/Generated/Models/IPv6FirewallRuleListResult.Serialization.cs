@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Sql.Models
                 return null;
             }
             IReadOnlyList<IPv6FirewallRuleData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IPv6FirewallRuleListResult(value ?? new ChangeTrackingList<IPv6FirewallRuleData>(), nextLink.Value, serializedAdditionalRawData);
+            return new IPv6FirewallRuleListResult(value ?? new ChangeTrackingList<IPv6FirewallRuleData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IPv6FirewallRuleListResult>.Write(ModelReaderWriterOptions options)

@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> deviceId = default;
-            Optional<long> alertsCount = default;
-            Optional<string> lastOccurrence = default;
+            string deviceId = default;
+            long? alertsCount = default;
+            string lastOccurrence = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotSecurityAggregatedAlertTopDevice(deviceId.Value, Optional.ToNullable(alertsCount), lastOccurrence.Value, serializedAdditionalRawData);
+            return new IotSecurityAggregatedAlertTopDevice(deviceId, alertsCount, lastOccurrence, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotSecurityAggregatedAlertTopDevice>.Write(ModelReaderWriterOptions options)

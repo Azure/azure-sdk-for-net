@@ -88,13 +88,13 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<ImageAnalysisSkillLanguage?> defaultLanguageCode = default;
+            ImageAnalysisSkillLanguage? defaultLanguageCode = default;
             IList<VisualFeature> visualFeatures = default;
             IList<ImageDetail> details = default;
             string odataType = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<string> context = default;
+            string name = default;
+            string description = default;
+            string context = default;
             IList<InputFieldMappingEntry> inputs = default;
             IList<OutputFieldMappingEntry> outputs = default;
             foreach (var property in element.EnumerateObject())
@@ -180,12 +180,12 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             return new ImageAnalysisSkill(
                 odataType,
-                name.Value,
-                description.Value,
-                context.Value,
+                name,
+                description,
+                context,
                 inputs,
                 outputs,
-                Optional.ToNullable(defaultLanguageCode),
+                defaultLanguageCode,
                 visualFeatures ?? new ChangeTrackingList<VisualFeature>(),
                 details ?? new ChangeTrackingList<ImageDetail>());
         }

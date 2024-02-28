@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 return null;
             }
             OfferingType offeringType = default;
-            Optional<string> description = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DefenderForDevOpsGithubOffering(offeringType, description.Value, serializedAdditionalRawData);
+            return new DefenderForDevOpsGithubOffering(offeringType, description, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DefenderForDevOpsGithubOffering>.Write(ModelReaderWriterOptions options)

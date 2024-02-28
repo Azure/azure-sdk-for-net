@@ -141,21 +141,21 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 return null;
             }
             ResourceIdentifier vmwareFabricArmId = default;
-            Optional<ResourceIdentifier> vmwareSiteId = default;
+            ResourceIdentifier vmwareSiteId = default;
             ResourceIdentifier azStackHciFabricArmId = default;
-            Optional<ResourceIdentifier> azStackHciSiteId = default;
-            Optional<ResourceIdentifier> storageAccountId = default;
-            Optional<string> storageAccountSasSecretName = default;
-            Optional<Uri> asrServiceUri = default;
-            Optional<Uri> rcmServiceUri = default;
-            Optional<Uri> gatewayServiceUri = default;
-            Optional<string> sourceGatewayServiceId = default;
-            Optional<string> targetGatewayServiceId = default;
-            Optional<string> sourceStorageContainerName = default;
-            Optional<string> targetStorageContainerName = default;
-            Optional<string> resourceLocation = default;
-            Optional<string> subscriptionId = default;
-            Optional<string> resourceGroup = default;
+            ResourceIdentifier azStackHciSiteId = default;
+            ResourceIdentifier storageAccountId = default;
+            string storageAccountSasSecretName = default;
+            Uri asrServiceUri = default;
+            Uri rcmServiceUri = default;
+            Uri gatewayServiceUri = default;
+            string sourceGatewayServiceId = default;
+            string targetGatewayServiceId = default;
+            string sourceStorageContainerName = default;
+            string targetStorageContainerName = default;
+            string resourceLocation = default;
+            string subscriptionId = default;
+            string resourceGroup = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -280,21 +280,21 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 instanceType,
                 serializedAdditionalRawData,
                 vmwareFabricArmId,
-                vmwareSiteId.Value,
+                vmwareSiteId,
                 azStackHciFabricArmId,
-                azStackHciSiteId.Value,
-                storageAccountId.Value,
-                storageAccountSasSecretName.Value,
-                asrServiceUri.Value,
-                rcmServiceUri.Value,
-                gatewayServiceUri.Value,
-                sourceGatewayServiceId.Value,
-                targetGatewayServiceId.Value,
-                sourceStorageContainerName.Value,
-                targetStorageContainerName.Value,
-                resourceLocation.Value,
-                subscriptionId.Value,
-                resourceGroup.Value);
+                azStackHciSiteId,
+                storageAccountId,
+                storageAccountSasSecretName,
+                asrServiceUri,
+                rcmServiceUri,
+                gatewayServiceUri,
+                sourceGatewayServiceId,
+                targetGatewayServiceId,
+                sourceStorageContainerName,
+                targetStorageContainerName,
+                resourceLocation,
+                subscriptionId,
+                resourceGroup);
         }
 
         BinaryData IPersistableModel<VMwareToAzStackHciReplicationExtensionModelCustomProperties>.Write(ModelReaderWriterOptions options)

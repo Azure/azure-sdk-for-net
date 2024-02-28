@@ -136,15 +136,15 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             IDictionary<string, string> capacities = default;
             int clientConnectionEndpointPort = default;
             int httpGatewayEndpointPort = default;
-            Optional<ClusterDurabilityLevel> durabilityLevel = default;
-            Optional<ClusterEndpointRangeDescription> applicationPorts = default;
-            Optional<ClusterEndpointRangeDescription> ephemeralPorts = default;
+            ClusterDurabilityLevel? durabilityLevel = default;
+            ClusterEndpointRangeDescription applicationPorts = default;
+            ClusterEndpointRangeDescription ephemeralPorts = default;
             bool isPrimary = default;
             int vmInstanceCount = default;
-            Optional<int> reverseProxyEndpointPort = default;
-            Optional<bool> isStateless = default;
-            Optional<bool> multipleAvailabilityZones = default;
-            Optional<int> httpGatewayTokenAuthEndpointPort = default;
+            int? reverseProxyEndpointPort = default;
+            bool? isStateless = default;
+            bool? multipleAvailabilityZones = default;
+            int? httpGatewayTokenAuthEndpointPort = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -277,15 +277,15 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 capacities ?? new ChangeTrackingDictionary<string, string>(),
                 clientConnectionEndpointPort,
                 httpGatewayEndpointPort,
-                Optional.ToNullable(durabilityLevel),
-                applicationPorts.Value,
-                ephemeralPorts.Value,
+                durabilityLevel,
+                applicationPorts,
+                ephemeralPorts,
                 isPrimary,
                 vmInstanceCount,
-                Optional.ToNullable(reverseProxyEndpointPort),
-                Optional.ToNullable(isStateless),
-                Optional.ToNullable(multipleAvailabilityZones),
-                Optional.ToNullable(httpGatewayTokenAuthEndpointPort),
+                reverseProxyEndpointPort,
+                isStateless,
+                multipleAvailabilityZones,
+                httpGatewayTokenAuthEndpointPort,
                 serializedAdditionalRawData);
         }
 

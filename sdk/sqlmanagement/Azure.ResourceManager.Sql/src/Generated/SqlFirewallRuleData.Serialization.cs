@@ -92,11 +92,11 @@ namespace Azure.ResourceManager.Sql
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<string> startIPAddress = default;
-            Optional<string> endIPAddress = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            string startIPAddress = default;
+            string endIPAddress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -153,12 +153,12 @@ namespace Azure.ResourceManager.Sql
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SqlFirewallRuleData(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
+                id,
+                name,
+                type,
                 serializedAdditionalRawData,
-                startIPAddress.Value,
-                endIPAddress.Value);
+                startIPAddress,
+                endIPAddress);
         }
 
         BinaryData IPersistableModel<SqlFirewallRuleData>.Write(ModelReaderWriterOptions options)

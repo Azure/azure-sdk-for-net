@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 return null;
             }
             IReadOnlyList<SignalRCustomDomainData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SignalRCustomDomainListResult(value ?? new ChangeTrackingList<SignalRCustomDomainData>(), nextLink.Value, serializedAdditionalRawData);
+            return new SignalRCustomDomainListResult(value ?? new ChangeTrackingList<SignalRCustomDomainData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SignalRCustomDomainListResult>.Write(ModelReaderWriterOptions options)

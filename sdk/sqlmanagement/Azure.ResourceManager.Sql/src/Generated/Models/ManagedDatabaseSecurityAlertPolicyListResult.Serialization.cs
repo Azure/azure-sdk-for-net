@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Sql.Models
                 return null;
             }
             IReadOnlyList<ManagedDatabaseSecurityAlertPolicyData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedDatabaseSecurityAlertPolicyListResult(value ?? new ChangeTrackingList<ManagedDatabaseSecurityAlertPolicyData>(), nextLink.Value, serializedAdditionalRawData);
+            return new ManagedDatabaseSecurityAlertPolicyListResult(value ?? new ChangeTrackingList<ManagedDatabaseSecurityAlertPolicyData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedDatabaseSecurityAlertPolicyListResult>.Write(ModelReaderWriterOptions options)

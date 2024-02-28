@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 return null;
             }
             IReadOnlyList<ServiceBusAuthorizationRuleData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SBAuthorizationRuleListResult(value ?? new ChangeTrackingList<ServiceBusAuthorizationRuleData>(), nextLink.Value, serializedAdditionalRawData);
+            return new SBAuthorizationRuleListResult(value ?? new ChangeTrackingList<ServiceBusAuthorizationRuleData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SBAuthorizationRuleListResult>.Write(ModelReaderWriterOptions options)

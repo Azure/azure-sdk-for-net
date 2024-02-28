@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.ServiceBus.Models
             {
                 return null;
             }
-            Optional<string> clientId = default;
-            Optional<bool> isDurable = default;
-            Optional<bool> isShared = default;
+            string clientId = default;
+            bool? isDurable = default;
+            bool? isShared = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceBusClientAffineProperties(clientId.Value, Optional.ToNullable(isDurable), Optional.ToNullable(isShared), serializedAdditionalRawData);
+            return new ServiceBusClientAffineProperties(clientId, isDurable, isShared, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceBusClientAffineProperties>.Write(ModelReaderWriterOptions options)
