@@ -43,6 +43,11 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             writer.WritePropertyName("remoteVolumeResourceId"u8);
             writer.WriteStringValue(RemoteVolumeResourceId);
+            if (RemotePath != null)
+            {
+                writer.WritePropertyName("remotePath"u8);
+                writer.WriteObjectValue(RemotePath);
+            }
             if (RemoteVolumeRegion != null)
             {
                 writer.WritePropertyName("remoteVolumeRegion"u8);
@@ -90,6 +95,7 @@ namespace Azure.ResourceManager.NetApp.Models
             NetAppEndpointType? endpointType = default;
             NetAppReplicationSchedule? replicationSchedule = default;
             ResourceIdentifier remoteVolumeResourceId = default;
+            RemotePath remotePath = default;
             string remoteVolumeRegion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -123,6 +129,15 @@ namespace Azure.ResourceManager.NetApp.Models
                     remoteVolumeResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("remotePath"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    remotePath = RemotePath.DeserializeRemotePath(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("remoteVolumeRegion"u8))
                 {
                     remoteVolumeRegion = property.Value.GetString();
@@ -140,6 +155,8 @@ namespace Azure.ResourceManager.NetApp.Models
                 replicationSchedule,
                 remoteVolumeResourceId,
                 remoteVolumeRegion,
+                remotePath,
+                remoteVolumeRegion.Value,
                 serializedAdditionalRawData);
         }
 

@@ -51,11 +51,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 writer.WriteEndArray();
             }
-            if (DeploymentSpecId != null)
-            {
-                writer.WritePropertyName("deploymentSpecId"u8);
-                writer.WriteStringValue(DeploymentSpecId);
-            }
             if (options.Format != "W" && VolumesCount.HasValue)
             {
                 writer.WritePropertyName("volumesCount"u8);
@@ -103,8 +98,7 @@ namespace Azure.ResourceManager.NetApp.Models
             NetAppApplicationType? applicationType = default;
             string applicationIdentifier = default;
             IList<NetAppVolumePlacementRule> globalPlacementRules = default;
-            string deploymentSpecId = default;
-            long? volumesCount = default;
+            long volumesCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -142,11 +136,6 @@ namespace Azure.ResourceManager.NetApp.Models
                     globalPlacementRules = array;
                     continue;
                 }
-                if (property.NameEquals("deploymentSpecId"u8))
-                {
-                    deploymentSpecId = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("volumesCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -167,7 +156,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 applicationType,
                 applicationIdentifier,
                 globalPlacementRules ?? new ChangeTrackingList<NetAppVolumePlacementRule>(),
-                deploymentSpecId,
                 volumesCount,
                 serializedAdditionalRawData);
         }
