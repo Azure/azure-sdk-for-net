@@ -8,8 +8,11 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Authorization.Models;
 using Azure.ResourceManager.Models;
 
@@ -212,7 +215,7 @@ namespace Azure.ResourceManager.Authorization
                             List<DenyAssignmentPermission> array = new List<DenyAssignmentPermission>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DenyAssignmentPermission.DeserializeDenyAssignmentPermission(item, options));
+                                array.Add(DenyAssignmentPermission.DeserializeDenyAssignmentPermission(item));
                             }
                             permissions = array;
                             continue;
@@ -240,7 +243,7 @@ namespace Azure.ResourceManager.Authorization
                             List<RoleManagementPrincipal> array = new List<RoleManagementPrincipal>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RoleManagementPrincipal.DeserializeRoleManagementPrincipal(item, options));
+                                array.Add(RoleManagementPrincipal.DeserializeRoleManagementPrincipal(item));
                             }
                             principals = array;
                             continue;
@@ -254,7 +257,7 @@ namespace Azure.ResourceManager.Authorization
                             List<RoleManagementPrincipal> array = new List<RoleManagementPrincipal>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RoleManagementPrincipal.DeserializeRoleManagementPrincipal(item, options));
+                                array.Add(RoleManagementPrincipal.DeserializeRoleManagementPrincipal(item));
                             }
                             excludePrincipals = array;
                             continue;
@@ -280,6 +283,278 @@ namespace Azure.ResourceManager.Authorization
             return new DenyAssignmentData(id, name, type, systemData.Value, denyAssignmentName.Value, description.Value, Optional.ToList(permissions), scope.Value, Optional.ToNullable(doNotApplyToChildScopes), Optional.ToList(principals), Optional.ToList(excludePrincipals), Optional.ToNullable(isSystemProtected), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (Optional.IsDefined(SystemData) || hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DenyAssignmentName), out propertyOverride);
+            if (Optional.IsDefined(DenyAssignmentName) || hasPropertyOverride)
+            {
+                builder.Append("    denyAssignmentName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (DenyAssignmentName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DenyAssignmentName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DenyAssignmentName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Description), out propertyOverride);
+            if (Optional.IsDefined(Description) || hasPropertyOverride)
+            {
+                builder.Append("    description: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Description.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Description}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Description}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Permissions), out propertyOverride);
+            if (Optional.IsCollectionDefined(Permissions) || hasPropertyOverride)
+            {
+                if (Permissions.Any() || hasPropertyOverride)
+                {
+                    builder.Append("    permissions: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in Permissions)
+                        {
+                            AppendChildObject(builder, item, options, 6, true, "    permissions: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Scope), out propertyOverride);
+            if (Optional.IsDefined(Scope) || hasPropertyOverride)
+            {
+                builder.Append("    scope: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Scope.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Scope}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Scope}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsAppliedToChildScopes), out propertyOverride);
+            if (Optional.IsDefined(IsAppliedToChildScopes) || hasPropertyOverride)
+            {
+                builder.Append("    doNotApplyToChildScopes: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsAppliedToChildScopes.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Principals), out propertyOverride);
+            if (Optional.IsCollectionDefined(Principals) || hasPropertyOverride)
+            {
+                if (Principals.Any() || hasPropertyOverride)
+                {
+                    builder.Append("    principals: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in Principals)
+                        {
+                            AppendChildObject(builder, item, options, 6, true, "    principals: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExcludePrincipals), out propertyOverride);
+            if (Optional.IsCollectionDefined(ExcludePrincipals) || hasPropertyOverride)
+            {
+                if (ExcludePrincipals.Any() || hasPropertyOverride)
+                {
+                    builder.Append("    excludePrincipals: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in ExcludePrincipals)
+                        {
+                            AppendChildObject(builder, item, options, 6, true, "    excludePrincipals: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsSystemProtected), out propertyOverride);
+            if (Optional.IsDefined(IsSystemProtected) || hasPropertyOverride)
+            {
+                builder.Append("    isSystemProtected: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsSystemProtected.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
+        {
+            string indent = new string(' ', spaces);
+            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
+            int length = stringBuilder.Length;
+            bool inMultilineString = false;
+
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($"{line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+            if (stringBuilder.Length == length + emptyObjectLength)
+            {
+                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
+            }
+        }
+
         BinaryData IPersistableModel<DenyAssignmentData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DenyAssignmentData>)this).GetFormatFromOptions(options) : options.Format;
@@ -288,6 +563,8 @@ namespace Azure.ResourceManager.Authorization
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DenyAssignmentData)} does not support '{options.Format}' format.");
             }
@@ -304,6 +581,8 @@ namespace Azure.ResourceManager.Authorization
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDenyAssignmentData(document.RootElement, options);
                     }
+                case "bicep":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DenyAssignmentData)} does not support '{options.Format}' format.");
             }

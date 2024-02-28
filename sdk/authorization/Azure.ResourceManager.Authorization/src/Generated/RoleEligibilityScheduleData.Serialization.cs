@@ -8,8 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Authorization.Models;
 using Azure.ResourceManager.Models;
 
@@ -325,7 +327,7 @@ namespace Azure.ResourceManager.Authorization
                             {
                                 continue;
                             }
-                            expandedProperties = RoleManagementExpandedProperties.DeserializeRoleManagementExpandedProperties(property0.Value, options);
+                            expandedProperties = RoleManagementExpandedProperties.DeserializeRoleManagementExpandedProperties(property0.Value);
                             continue;
                         }
                     }
@@ -340,6 +342,340 @@ namespace Azure.ResourceManager.Authorization
             return new RoleEligibilityScheduleData(id, name, type, systemData.Value, scope.Value, roleDefinitionId.Value, Optional.ToNullable(principalId), Optional.ToNullable(principalType), roleEligibilityScheduleRequestId.Value, Optional.ToNullable(memberType), Optional.ToNullable(status), Optional.ToNullable(startDateTime), Optional.ToNullable(endDateTime), condition.Value, conditionVersion.Value, Optional.ToNullable(createdOn), Optional.ToNullable(updatedOn), expandedProperties.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (Optional.IsDefined(SystemData) || hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Scope), out propertyOverride);
+            if (Optional.IsDefined(Scope) || hasPropertyOverride)
+            {
+                builder.Append("    scope: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Scope.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Scope}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Scope}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RoleDefinitionId), out propertyOverride);
+            if (Optional.IsDefined(RoleDefinitionId) || hasPropertyOverride)
+            {
+                builder.Append("    roleDefinitionId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{RoleDefinitionId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrincipalId), out propertyOverride);
+            if (Optional.IsDefined(PrincipalId) || hasPropertyOverride)
+            {
+                builder.Append("    principalId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{PrincipalId.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrincipalType), out propertyOverride);
+            if (Optional.IsDefined(PrincipalType) || hasPropertyOverride)
+            {
+                builder.Append("    principalType: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{PrincipalType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RoleEligibilityScheduleRequestId), out propertyOverride);
+            if (Optional.IsDefined(RoleEligibilityScheduleRequestId) || hasPropertyOverride)
+            {
+                builder.Append("    roleEligibilityScheduleRequestId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{RoleEligibilityScheduleRequestId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MemberType), out propertyOverride);
+            if (Optional.IsDefined(MemberType) || hasPropertyOverride)
+            {
+                builder.Append("    memberType: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{MemberType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
+            if (Optional.IsDefined(Status) || hasPropertyOverride)
+            {
+                builder.Append("    status: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Status.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartOn), out propertyOverride);
+            if (Optional.IsDefined(StartOn) || hasPropertyOverride)
+            {
+                builder.Append("    startDateTime: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(StartOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndOn), out propertyOverride);
+            if (Optional.IsDefined(EndOn) || hasPropertyOverride)
+            {
+                builder.Append("    endDateTime: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(EndOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Condition), out propertyOverride);
+            if (Optional.IsDefined(Condition) || hasPropertyOverride)
+            {
+                builder.Append("    condition: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Condition.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Condition}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Condition}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConditionVersion), out propertyOverride);
+            if (Optional.IsDefined(ConditionVersion) || hasPropertyOverride)
+            {
+                builder.Append("    conditionVersion: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (ConditionVersion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ConditionVersion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ConditionVersion}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CreatedOn), out propertyOverride);
+            if (Optional.IsDefined(CreatedOn) || hasPropertyOverride)
+            {
+                builder.Append("    createdOn: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(CreatedOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UpdatedOn), out propertyOverride);
+            if (Optional.IsDefined(UpdatedOn) || hasPropertyOverride)
+            {
+                builder.Append("    updatedOn: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(UpdatedOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExpandedProperties), out propertyOverride);
+            if (Optional.IsDefined(ExpandedProperties) || hasPropertyOverride)
+            {
+                builder.Append("    expandedProperties: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    AppendChildObject(builder, ExpandedProperties, options, 4, false, "    expandedProperties: ");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
+        {
+            string indent = new string(' ', spaces);
+            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
+            int length = stringBuilder.Length;
+            bool inMultilineString = false;
+
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($"{line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+            if (stringBuilder.Length == length + emptyObjectLength)
+            {
+                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
+            }
+        }
+
         BinaryData IPersistableModel<RoleEligibilityScheduleData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RoleEligibilityScheduleData>)this).GetFormatFromOptions(options) : options.Format;
@@ -348,6 +684,8 @@ namespace Azure.ResourceManager.Authorization
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(RoleEligibilityScheduleData)} does not support '{options.Format}' format.");
             }
@@ -364,6 +702,8 @@ namespace Azure.ResourceManager.Authorization
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeRoleEligibilityScheduleData(document.RootElement, options);
                     }
+                case "bicep":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(RoleEligibilityScheduleData)} does not support '{options.Format}' format.");
             }
