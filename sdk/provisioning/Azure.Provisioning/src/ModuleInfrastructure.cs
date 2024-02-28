@@ -157,7 +157,7 @@ namespace Azure.Provisioning
             {
                 foreach (var child in resourceTree[resource])
                 {
-                    if (child is not ResourceGroup || (child is ResourceGroup && child.Id.Name != "resourceGroup()"))
+                    if (child is not ResourceGroup || (child is ResourceGroup && child.Id.Name != ResourceGroup.AnonymousResourceGroupName))
                     {
                         return true;
                     }

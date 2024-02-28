@@ -15,6 +15,7 @@ namespace Azure.Provisioning.ResourceManager
     public class ResourceGroup : Resource<ResourceGroupData>
     {
         internal static readonly ResourceType ResourceType = "Microsoft.Resources/resourceGroups";
+        internal const string AnonymousResourceGroupName = "resourceGroup()";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ResourceGroup"/>.
@@ -48,7 +49,7 @@ namespace Azure.Provisioning.ResourceManager
         protected override string GetAzureName(IConstruct scope, string resourceName)
         {
             // we can't use IsAnonymous here because this is called from the Resource constructor (before IsAnonymous is set)
-            return resourceName == "resourceGroup()" ? resourceName : base.GetAzureName(scope, resourceName);
+            return resourceName == AnonymousResourceGroupName ? resourceName : base.GetAzureName(scope, resourceName);
         }
     }
 }
