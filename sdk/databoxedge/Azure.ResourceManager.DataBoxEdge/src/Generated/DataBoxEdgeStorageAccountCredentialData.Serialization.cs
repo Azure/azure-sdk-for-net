@@ -123,15 +123,15 @@ namespace Azure.ResourceManager.DataBoxEdge
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             string @alias = default;
-            Optional<string> userName = default;
-            Optional<AsymmetricEncryptedSecret> accountKey = default;
-            Optional<string> connectionString = default;
+            string userName = default;
+            AsymmetricEncryptedSecret accountKey = default;
+            string connectionString = default;
             DataBoxEdgeStorageAccountSslStatus sslStatus = default;
-            Optional<string> blobDomainName = default;
+            string blobDomainName = default;
             DataBoxEdgeStorageAccountType accountType = default;
-            Optional<ResourceIdentifier> storageAccountId = default;
+            ResourceIdentifier storageAccountId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -230,15 +230,15 @@ namespace Azure.ResourceManager.DataBoxEdge
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 @alias,
-                userName.Value,
-                accountKey.Value,
-                connectionString.Value,
+                userName,
+                accountKey,
+                connectionString,
                 sslStatus,
-                blobDomainName.Value,
+                blobDomainName,
                 accountType,
-                storageAccountId.Value,
+                storageAccountId,
                 serializedAdditionalRawData);
         }
 

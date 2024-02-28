@@ -131,12 +131,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> assetName = default;
-            Optional<string> assetVersion = default;
-            Optional<AutoDeleteSetting> autoDeleteSetting = default;
-            Optional<MachineLearningOutputDeliveryMode> mode = default;
-            Optional<Uri> uri = default;
-            Optional<string> description = default;
+            string assetName = default;
+            string assetVersion = default;
+            AutoDeleteSetting autoDeleteSetting = default;
+            MachineLearningOutputDeliveryMode? mode = default;
+            Uri uri = default;
+            string description = default;
             JobOutputType jobOutputType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -213,14 +213,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MachineLearningCustomModelJobOutput(
-                description.Value,
+                description,
                 jobOutputType,
                 serializedAdditionalRawData,
-                assetName.Value,
-                assetVersion.Value,
-                autoDeleteSetting.Value,
-                Optional.ToNullable(mode),
-                uri.Value);
+                assetName,
+                assetVersion,
+                autoDeleteSetting,
+                mode,
+                uri);
         }
 
         BinaryData IPersistableModel<MachineLearningCustomModelJobOutput>.Write(ModelReaderWriterOptions options)

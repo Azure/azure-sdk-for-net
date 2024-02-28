@@ -116,14 +116,14 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             string name = default;
-            Optional<ComputePublicIPAddressSku> sku = default;
-            Optional<int> idleTimeoutInMinutes = default;
-            Optional<ComputeDeleteOption> deleteOption = default;
-            Optional<VirtualMachinePublicIPAddressDnsSettingsConfiguration> dnsSettings = default;
+            ComputePublicIPAddressSku sku = default;
+            int? idleTimeoutInMinutes = default;
+            ComputeDeleteOption? deleteOption = default;
+            VirtualMachinePublicIPAddressDnsSettingsConfiguration dnsSettings = default;
             IList<VirtualMachineIPTag> ipTags = default;
-            Optional<WritableSubResource> publicIPPrefix = default;
-            Optional<IPVersion> publicIPAddressVersion = default;
-            Optional<PublicIPAllocationMethod> publicIPAllocationMethod = default;
+            WritableSubResource publicIPPrefix = default;
+            IPVersion? publicIPAddressVersion = default;
+            PublicIPAllocationMethod? publicIPAllocationMethod = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -230,14 +230,14 @@ namespace Azure.ResourceManager.Compute.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new VirtualMachinePublicIPAddressConfiguration(
                 name,
-                sku.Value,
-                Optional.ToNullable(idleTimeoutInMinutes),
-                Optional.ToNullable(deleteOption),
-                dnsSettings.Value,
+                sku,
+                idleTimeoutInMinutes,
+                deleteOption,
+                dnsSettings,
                 ipTags ?? new ChangeTrackingList<VirtualMachineIPTag>(),
                 publicIPPrefix,
-                Optional.ToNullable(publicIPAddressVersion),
-                Optional.ToNullable(publicIPAllocationMethod),
+                publicIPAddressVersion,
+                publicIPAllocationMethod,
                 serializedAdditionalRawData);
         }
 

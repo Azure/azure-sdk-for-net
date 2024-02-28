@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             IReadOnlyList<DataFactoryTriggerRun> value = default;
-            Optional<string> continuationToken = default;
+            string continuationToken = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataFactoryTriggerRunsQueryResult(value, continuationToken.Value, serializedAdditionalRawData);
+            return new DataFactoryTriggerRunsQueryResult(value, continuationToken, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataFactoryTriggerRunsQueryResult>.Write(ModelReaderWriterOptions options)

@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<BatchAccountFixedScaleSettings> fixedScale = default;
-            Optional<BatchAccountAutoScaleSettings> autoScale = default;
+            BatchAccountFixedScaleSettings fixedScale = default;
+            BatchAccountAutoScaleSettings autoScale = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchAccountPoolScaleSettings(fixedScale.Value, autoScale.Value, serializedAdditionalRawData);
+            return new BatchAccountPoolScaleSettings(fixedScale, autoScale, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchAccountPoolScaleSettings>.Write(ModelReaderWriterOptions options)

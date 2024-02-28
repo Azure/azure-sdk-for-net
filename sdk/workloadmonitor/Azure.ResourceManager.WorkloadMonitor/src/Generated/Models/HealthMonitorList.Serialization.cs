@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.WorkloadMonitor.Models
                 return null;
             }
             IReadOnlyList<HealthMonitorData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.WorkloadMonitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HealthMonitorList(value ?? new ChangeTrackingList<HealthMonitorData>(), nextLink.Value, serializedAdditionalRawData);
+            return new HealthMonitorList(value ?? new ChangeTrackingList<HealthMonitorData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HealthMonitorList>.Write(ModelReaderWriterOptions options)

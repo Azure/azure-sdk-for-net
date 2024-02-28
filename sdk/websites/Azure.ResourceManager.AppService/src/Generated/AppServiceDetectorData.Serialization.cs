@@ -129,16 +129,16 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DetectorInfo> metadata = default;
+            SystemData systemData = default;
+            DetectorInfo metadata = default;
             IList<DiagnosticDataset> dataset = default;
-            Optional<AppServiceStatusInfo> status = default;
+            AppServiceStatusInfo status = default;
             IList<DataProviderMetadata> dataProvidersMetadata = default;
-            Optional<QueryUtterancesResults> suggestedUtterances = default;
+            QueryUtterancesResults suggestedUtterances = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -249,13 +249,13 @@ namespace Azure.ResourceManager.AppService
                 id,
                 name,
                 type,
-                systemData.Value,
-                metadata.Value,
+                systemData,
+                metadata,
                 dataset ?? new ChangeTrackingList<DiagnosticDataset>(),
-                status.Value,
+                status,
                 dataProvidersMetadata ?? new ChangeTrackingList<DataProviderMetadata>(),
-                suggestedUtterances.Value,
-                kind.Value,
+                suggestedUtterances,
+                kind,
                 serializedAdditionalRawData);
         }
 

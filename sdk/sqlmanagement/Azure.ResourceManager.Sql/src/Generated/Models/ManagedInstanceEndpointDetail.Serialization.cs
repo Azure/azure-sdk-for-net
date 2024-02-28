@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<int> port = default;
+            int? port = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedInstanceEndpointDetail(Optional.ToNullable(port), serializedAdditionalRawData);
+            return new ManagedInstanceEndpointDetail(port, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedInstanceEndpointDetail>.Write(ModelReaderWriterOptions options)

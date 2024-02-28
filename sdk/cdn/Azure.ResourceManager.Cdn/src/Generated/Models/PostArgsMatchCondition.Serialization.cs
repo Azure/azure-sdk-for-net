@@ -99,9 +99,9 @@ namespace Azure.ResourceManager.Cdn.Models
                 return null;
             }
             PostArgsMatchConditionType typeName = default;
-            Optional<string> selector = default;
+            string selector = default;
             PostArgsOperator @operator = default;
-            Optional<bool> negateCondition = default;
+            bool? negateCondition = default;
             IList<string> matchValues = default;
             IList<PreTransformCategory> transforms = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -168,9 +168,9 @@ namespace Azure.ResourceManager.Cdn.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new PostArgsMatchCondition(
                 typeName,
-                selector.Value,
+                selector,
                 @operator,
-                Optional.ToNullable(negateCondition),
+                negateCondition,
                 matchValues ?? new ChangeTrackingList<string>(),
                 transforms ?? new ChangeTrackingList<PreTransformCategory>(),
                 serializedAdditionalRawData);

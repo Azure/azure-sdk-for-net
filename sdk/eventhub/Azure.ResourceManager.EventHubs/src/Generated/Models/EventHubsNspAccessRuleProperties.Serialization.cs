@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 return null;
             }
-            Optional<EventHubsNspAccessRuleDirection> direction = default;
+            EventHubsNspAccessRuleDirection? direction = default;
             IReadOnlyList<string> addressPrefixes = default;
             IReadOnlyList<SubResource> subscriptions = default;
             IReadOnlyList<EventHubsNetworkSecurityPerimeter> networkSecurityPerimeters = default;
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new EventHubsNspAccessRuleProperties(
-                Optional.ToNullable(direction),
+                direction,
                 addressPrefixes ?? new ChangeTrackingList<string>(),
                 subscriptions ?? new ChangeTrackingList<SubResource>(),
                 networkSecurityPerimeters ?? new ChangeTrackingList<EventHubsNetworkSecurityPerimeter>(),

@@ -87,8 +87,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             TimeSpan timeWindowSize = default;
             int minThreshold = default;
             int maxThreshold = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
+            string displayName = default;
+            string description = default;
             bool isEnabled = default;
             string ruleType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -137,8 +137,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new HttpD2CMessagesNotInAllowedRange(
-                displayName.Value,
-                description.Value,
+                displayName,
+                description,
                 isEnabled,
                 ruleType,
                 serializedAdditionalRawData,

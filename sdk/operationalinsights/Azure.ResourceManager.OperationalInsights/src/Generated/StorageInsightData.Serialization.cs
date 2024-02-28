@@ -136,16 +136,16 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 return null;
             }
-            Optional<ETag> eTag = default;
+            ETag? eTag = default;
             IDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IList<string> containers = default;
             IList<string> tables = default;
-            Optional<OperationalInsightsStorageAccount> storageAccount = default;
-            Optional<StorageInsightStatus> status = default;
+            OperationalInsightsStorageAccount storageAccount = default;
+            StorageInsightStatus status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -265,13 +265,13 @@ namespace Azure.ResourceManager.OperationalInsights
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(eTag),
+                systemData,
+                eTag,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 containers ?? new ChangeTrackingList<string>(),
                 tables ?? new ChangeTrackingList<string>(),
-                storageAccount.Value,
-                status.Value,
+                storageAccount,
+                status,
                 serializedAdditionalRawData);
         }
 

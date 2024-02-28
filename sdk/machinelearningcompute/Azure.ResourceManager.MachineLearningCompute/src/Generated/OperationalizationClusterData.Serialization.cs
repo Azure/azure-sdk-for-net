@@ -167,18 +167,18 @@ namespace Azure.ResourceManager.MachineLearningCompute
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<DateTimeOffset> createdOn = default;
-            Optional<DateTimeOffset> modifiedOn = default;
-            Optional<OperationStatus> provisioningState = default;
+            SystemData systemData = default;
+            string description = default;
+            DateTimeOffset? createdOn = default;
+            DateTimeOffset? modifiedOn = default;
+            OperationStatus? provisioningState = default;
             IReadOnlyList<ErrorResponseWrapper> provisioningErrors = default;
-            Optional<ClusterType> clusterType = default;
-            Optional<StorageAccountProperties> storageAccount = default;
-            Optional<ContainerRegistryProperties> containerRegistry = default;
-            Optional<AcsClusterProperties> containerService = default;
-            Optional<AppInsightsProperties> appInsights = default;
-            Optional<GlobalServiceConfiguration> globalServiceConfiguration = default;
+            ClusterType? clusterType = default;
+            StorageAccountProperties storageAccount = default;
+            ContainerRegistryProperties containerRegistry = default;
+            AcsClusterProperties containerService = default;
+            AppInsightsProperties appInsights = default;
+            GlobalServiceConfiguration globalServiceConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -348,20 +348,20 @@ namespace Azure.ResourceManager.MachineLearningCompute
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                description.Value,
-                Optional.ToNullable(createdOn),
-                Optional.ToNullable(modifiedOn),
-                Optional.ToNullable(provisioningState),
+                description,
+                createdOn,
+                modifiedOn,
+                provisioningState,
                 provisioningErrors ?? new ChangeTrackingList<ErrorResponseWrapper>(),
-                Optional.ToNullable(clusterType),
-                storageAccount.Value,
-                containerRegistry.Value,
-                containerService.Value,
-                appInsights.Value,
-                globalServiceConfiguration.Value,
+                clusterType,
+                storageAccount,
+                containerRegistry,
+                containerService,
+                appInsights,
+                globalServiceConfiguration,
                 serializedAdditionalRawData);
         }
 

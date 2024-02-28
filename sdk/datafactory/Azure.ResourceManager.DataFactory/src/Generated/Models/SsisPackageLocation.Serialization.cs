@@ -123,15 +123,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryElement<string>> packagePath = default;
-            Optional<SsisPackageLocationType> type = default;
-            Optional<DataFactorySecretBaseDefinition> packagePassword = default;
-            Optional<SsisAccessCredential> accessCredential = default;
-            Optional<DataFactoryElement<string>> configurationPath = default;
-            Optional<SsisAccessCredential> configurationAccessCredential = default;
-            Optional<string> packageName = default;
-            Optional<DataFactoryElement<string>> packageContent = default;
-            Optional<string> packageLastModifiedDate = default;
+            DataFactoryElement<string> packagePath = default;
+            SsisPackageLocationType? type = default;
+            DataFactorySecretBaseDefinition packagePassword = default;
+            SsisAccessCredential accessCredential = default;
+            DataFactoryElement<string> configurationPath = default;
+            SsisAccessCredential configurationAccessCredential = default;
+            string packageName = default;
+            DataFactoryElement<string> packageContent = default;
+            string packageLastModifiedDate = default;
             IList<SsisChildPackage> childPackages = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -243,15 +243,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SsisPackageLocation(
-                packagePath.Value,
-                Optional.ToNullable(type),
+                packagePath,
+                type,
                 packagePassword,
-                accessCredential.Value,
-                configurationPath.Value,
-                configurationAccessCredential.Value,
-                packageName.Value,
-                packageContent.Value,
-                packageLastModifiedDate.Value,
+                accessCredential,
+                configurationPath,
+                configurationAccessCredential,
+                packageName,
+                packageContent,
+                packageLastModifiedDate,
                 childPackages ?? new ChangeTrackingList<SsisChildPackage>(),
                 serializedAdditionalRawData);
         }

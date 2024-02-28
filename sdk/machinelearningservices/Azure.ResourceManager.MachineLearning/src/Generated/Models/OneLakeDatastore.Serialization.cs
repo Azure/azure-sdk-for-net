@@ -155,14 +155,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             OneLakeArtifact artifact = default;
-            Optional<string> endpoint = default;
+            string endpoint = default;
             string oneLakeWorkspaceName = default;
-            Optional<MachineLearningServiceDataAccessAuthIdentity> serviceDataAccessAuthIdentity = default;
+            MachineLearningServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity = default;
             MachineLearningDatastoreCredentials credentials = default;
             DatastoreType datastoreType = default;
-            Optional<IntellectualProperty> intellectualProperty = default;
-            Optional<bool> isDefault = default;
-            Optional<string> description = default;
+            IntellectualProperty intellectualProperty = default;
+            bool? isDefault = default;
+            string description = default;
             IDictionary<string, string> properties = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -274,18 +274,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new OneLakeDatastore(
-                description.Value,
+                description,
                 properties ?? new ChangeTrackingDictionary<string, string>(),
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
                 credentials,
                 datastoreType,
-                intellectualProperty.Value,
-                Optional.ToNullable(isDefault),
+                intellectualProperty,
+                isDefault,
                 artifact,
-                endpoint.Value,
+                endpoint,
                 oneLakeWorkspaceName,
-                Optional.ToNullable(serviceDataAccessAuthIdentity));
+                serviceDataAccessAuthIdentity);
         }
 
         BinaryData IPersistableModel<OneLakeDatastore>.Write(ModelReaderWriterOptions options)

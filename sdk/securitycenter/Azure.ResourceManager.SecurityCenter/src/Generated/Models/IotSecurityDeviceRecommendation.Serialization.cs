@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> recommendationDisplayName = default;
-            Optional<ReportedSeverity> reportedSeverity = default;
-            Optional<long> devicesCount = default;
+            string recommendationDisplayName = default;
+            ReportedSeverity? reportedSeverity = default;
+            long? devicesCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotSecurityDeviceRecommendation(recommendationDisplayName.Value, Optional.ToNullable(reportedSeverity), Optional.ToNullable(devicesCount), serializedAdditionalRawData);
+            return new IotSecurityDeviceRecommendation(recommendationDisplayName, reportedSeverity, devicesCount, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotSecurityDeviceRecommendation>.Write(ModelReaderWriterOptions options)

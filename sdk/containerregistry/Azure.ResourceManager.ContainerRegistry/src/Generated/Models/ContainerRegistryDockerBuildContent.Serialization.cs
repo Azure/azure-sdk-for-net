@@ -141,20 +141,20 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 return null;
             }
             IList<string> imageNames = default;
-            Optional<bool> isPushEnabled = default;
-            Optional<bool> noCache = default;
+            bool? isPushEnabled = default;
+            bool? noCache = default;
             string dockerFilePath = default;
-            Optional<string> target = default;
+            string target = default;
             IList<ContainerRegistryRunArgument> arguments = default;
-            Optional<int> timeout = default;
+            int? timeout = default;
             ContainerRegistryPlatformProperties platform = default;
-            Optional<ContainerRegistryAgentProperties> agentConfiguration = default;
-            Optional<string> sourceLocation = default;
-            Optional<ContainerRegistryCredentials> credentials = default;
+            ContainerRegistryAgentProperties agentConfiguration = default;
+            string sourceLocation = default;
+            ContainerRegistryCredentials credentials = default;
             string type = default;
-            Optional<bool> isArchiveEnabled = default;
-            Optional<string> agentPoolName = default;
-            Optional<string> logTemplate = default;
+            bool? isArchiveEnabled = default;
+            string agentPoolName = default;
+            string logTemplate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -284,21 +284,21 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ContainerRegistryDockerBuildContent(
                 type,
-                Optional.ToNullable(isArchiveEnabled),
-                agentPoolName.Value,
-                logTemplate.Value,
+                isArchiveEnabled,
+                agentPoolName,
+                logTemplate,
                 serializedAdditionalRawData,
                 imageNames ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(isPushEnabled),
-                Optional.ToNullable(noCache),
+                isPushEnabled,
+                noCache,
                 dockerFilePath,
-                target.Value,
+                target,
                 arguments ?? new ChangeTrackingList<ContainerRegistryRunArgument>(),
-                Optional.ToNullable(timeout),
+                timeout,
                 platform,
-                agentConfiguration.Value,
-                sourceLocation.Value,
-                credentials.Value);
+                agentConfiguration,
+                sourceLocation,
+                credentials);
         }
 
         BinaryData IPersistableModel<ContainerRegistryDockerBuildContent>.Write(ModelReaderWriterOptions options)

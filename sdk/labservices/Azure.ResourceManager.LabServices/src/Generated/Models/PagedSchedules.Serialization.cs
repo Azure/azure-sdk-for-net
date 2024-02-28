@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 return null;
             }
             IReadOnlyList<LabServicesScheduleData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PagedSchedules(value ?? new ChangeTrackingList<LabServicesScheduleData>(), nextLink.Value, serializedAdditionalRawData);
+            return new PagedSchedules(value ?? new ChangeTrackingList<LabServicesScheduleData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PagedSchedules>.Write(ModelReaderWriterOptions options)

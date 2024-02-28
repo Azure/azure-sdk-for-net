@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<string> ruleGroupName = default;
-            Optional<string> description = default;
+            string ruleGroupName = default;
+            string description = default;
             IReadOnlyList<ManagedRuleDefinition> rules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedRuleGroupDefinition(ruleGroupName.Value, description.Value, rules ?? new ChangeTrackingList<ManagedRuleDefinition>(), serializedAdditionalRawData);
+            return new ManagedRuleGroupDefinition(ruleGroupName, description, rules ?? new ChangeTrackingList<ManagedRuleDefinition>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedRuleGroupDefinition>.Write(ModelReaderWriterOptions options)

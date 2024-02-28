@@ -122,10 +122,10 @@ namespace Azure.ResourceManager.VoiceServices
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<VoiceServicesProvisioningState> provisioningState = default;
-            Optional<string> phoneNumber = default;
-            Optional<VoiceServicesTestLinePurpose> purpose = default;
+            SystemData systemData = default;
+            VoiceServicesProvisioningState? provisioningState = default;
+            string phoneNumber = default;
+            VoiceServicesTestLinePurpose? purpose = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -218,12 +218,12 @@ namespace Azure.ResourceManager.VoiceServices
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                Optional.ToNullable(provisioningState),
-                phoneNumber.Value,
-                Optional.ToNullable(purpose),
+                provisioningState,
+                phoneNumber,
+                purpose,
                 serializedAdditionalRawData);
         }
 

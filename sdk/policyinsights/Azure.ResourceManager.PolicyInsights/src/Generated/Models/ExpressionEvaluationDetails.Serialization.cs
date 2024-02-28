@@ -113,13 +113,13 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<string> result = default;
-            Optional<string> expression = default;
-            Optional<string> expressionKind = default;
-            Optional<string> path = default;
-            Optional<BinaryData> expressionValue = default;
-            Optional<BinaryData> targetValue = default;
-            Optional<string> @operator = default;
+            string result = default;
+            string expression = default;
+            string expressionKind = default;
+            string path = default;
+            BinaryData expressionValue = default;
+            BinaryData targetValue = default;
+            string @operator = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -174,13 +174,13 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ExpressionEvaluationDetails(
-                result.Value,
-                expression.Value,
-                expressionKind.Value,
-                path.Value,
-                expressionValue.Value,
-                targetValue.Value,
-                @operator.Value,
+                result,
+                expression,
+                expressionKind,
+                path,
+                expressionValue,
+                targetValue,
+                @operator,
                 serializedAdditionalRawData);
         }
 

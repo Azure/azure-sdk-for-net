@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<DevTestLabNotificationChannelEventType> eventName = default;
-            Optional<string> jsonPayload = default;
+            DevTestLabNotificationChannelEventType? eventName = default;
+            string jsonPayload = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabNotificationChannelNotifyContent(Optional.ToNullable(eventName), jsonPayload.Value, serializedAdditionalRawData);
+            return new DevTestLabNotificationChannelNotifyContent(eventName, jsonPayload, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabNotificationChannelNotifyContent>.Write(ModelReaderWriterOptions options)

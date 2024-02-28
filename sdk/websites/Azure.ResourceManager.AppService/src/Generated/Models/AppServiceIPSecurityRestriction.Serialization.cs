@@ -135,16 +135,16 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> ipAddress = default;
-            Optional<string> subnetMask = default;
-            Optional<ResourceIdentifier> vnetSubnetResourceId = default;
-            Optional<int> vnetTrafficTag = default;
-            Optional<int> subnetTrafficTag = default;
-            Optional<string> action = default;
-            Optional<AppServiceIPFilterTag> tag = default;
-            Optional<int> priority = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
+            string ipAddress = default;
+            string subnetMask = default;
+            ResourceIdentifier vnetSubnetResourceId = default;
+            int? vnetTrafficTag = default;
+            int? subnetTrafficTag = default;
+            string action = default;
+            AppServiceIPFilterTag? tag = default;
+            int? priority = default;
+            string name = default;
+            string description = default;
             IDictionary<string, IList<string>> headers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -253,16 +253,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AppServiceIPSecurityRestriction(
-                ipAddress.Value,
-                subnetMask.Value,
-                vnetSubnetResourceId.Value,
-                Optional.ToNullable(vnetTrafficTag),
-                Optional.ToNullable(subnetTrafficTag),
-                action.Value,
-                Optional.ToNullable(tag),
-                Optional.ToNullable(priority),
-                name.Value,
-                description.Value,
+                ipAddress,
+                subnetMask,
+                vnetSubnetResourceId,
+                vnetTrafficTag,
+                subnetTrafficTag,
+                action,
+                tag,
+                priority,
+                name,
+                description,
                 headers ?? new ChangeTrackingDictionary<string, IList<string>>(),
                 serializedAdditionalRawData);
         }

@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<string> @namespace = default;
+            string @namespace = default;
             IReadOnlyList<ProviderResourceType> resourceTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TenantResourceProvider(@namespace.Value, resourceTypes ?? new ChangeTrackingList<ProviderResourceType>(), serializedAdditionalRawData);
+            return new TenantResourceProvider(@namespace, resourceTypes ?? new ChangeTrackingList<ProviderResourceType>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TenantResourceProvider>.Write(ModelReaderWriterOptions options)

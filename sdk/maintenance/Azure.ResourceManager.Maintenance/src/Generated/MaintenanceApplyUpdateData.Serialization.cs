@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.Maintenance
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<MaintenanceUpdateStatus> status = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<DateTimeOffset> lastUpdateTime = default;
+            SystemData systemData = default;
+            MaintenanceUpdateStatus? status = default;
+            ResourceIdentifier resourceId = default;
+            DateTimeOffset? lastUpdateTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -188,10 +188,10 @@ namespace Azure.ResourceManager.Maintenance
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(status),
-                resourceId.Value,
-                Optional.ToNullable(lastUpdateTime),
+                systemData,
+                status,
+                resourceId,
+                lastUpdateTime,
                 serializedAdditionalRawData);
         }
 

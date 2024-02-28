@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<int> scheduleFrequencyInMins = default;
+            int? scheduleFrequencyInMins = default;
             string schedulePolicyType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogSchedulePolicy(schedulePolicyType, serializedAdditionalRawData, Optional.ToNullable(scheduleFrequencyInMins));
+            return new LogSchedulePolicy(schedulePolicyType, serializedAdditionalRawData, scheduleFrequencyInMins);
         }
 
         BinaryData IPersistableModel<LogSchedulePolicy>.Write(ModelReaderWriterOptions options)

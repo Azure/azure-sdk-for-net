@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<WebAppRuntimeSettings> linuxRuntimeSettings = default;
-            Optional<WebAppRuntimeSettings> windowsRuntimeSettings = default;
-            Optional<LinuxJavaContainerSettings> linuxContainerSettings = default;
-            Optional<WindowsJavaContainerSettings> windowsContainerSettings = default;
+            WebAppRuntimeSettings linuxRuntimeSettings = default;
+            WebAppRuntimeSettings windowsRuntimeSettings = default;
+            LinuxJavaContainerSettings linuxContainerSettings = default;
+            WindowsJavaContainerSettings windowsContainerSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebAppRuntimes(linuxRuntimeSettings.Value, windowsRuntimeSettings.Value, linuxContainerSettings.Value, windowsContainerSettings.Value, serializedAdditionalRawData);
+            return new WebAppRuntimes(linuxRuntimeSettings, windowsRuntimeSettings, linuxContainerSettings, windowsContainerSettings, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebAppRuntimes>.Write(ModelReaderWriterOptions options)

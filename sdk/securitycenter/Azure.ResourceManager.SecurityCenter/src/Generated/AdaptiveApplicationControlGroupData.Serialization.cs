@@ -149,17 +149,17 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<AdaptiveApplicationControlEnforcementMode> enforcementMode = default;
-            Optional<SecurityCenterFileProtectionMode> protectionMode = default;
-            Optional<SecurityCenterConfigurationStatus> configurationStatus = default;
-            Optional<RecommendationStatus> recommendationStatus = default;
+            SystemData systemData = default;
+            AdaptiveApplicationControlEnforcementMode? enforcementMode = default;
+            SecurityCenterFileProtectionMode protectionMode = default;
+            SecurityCenterConfigurationStatus? configurationStatus = default;
+            RecommendationStatus? recommendationStatus = default;
             IReadOnlyList<AdaptiveApplicationControlIssueSummary> issues = default;
-            Optional<AdaptiveApplicationControlGroupSourceSystem> sourceSystem = default;
+            AdaptiveApplicationControlGroupSourceSystem? sourceSystem = default;
             IList<VmRecommendation> vmRecommendations = default;
             IList<PathRecommendation> pathRecommendations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -308,16 +308,16 @@ namespace Azure.ResourceManager.SecurityCenter
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(enforcementMode),
-                protectionMode.Value,
-                Optional.ToNullable(configurationStatus),
-                Optional.ToNullable(recommendationStatus),
+                systemData,
+                enforcementMode,
+                protectionMode,
+                configurationStatus,
+                recommendationStatus,
                 issues ?? new ChangeTrackingList<AdaptiveApplicationControlIssueSummary>(),
-                Optional.ToNullable(sourceSystem),
+                sourceSystem,
                 vmRecommendations ?? new ChangeTrackingList<VmRecommendation>(),
                 pathRecommendations ?? new ChangeTrackingList<PathRecommendation>(),
-                Optional.ToNullable(location),
+                location,
                 serializedAdditionalRawData);
         }
 

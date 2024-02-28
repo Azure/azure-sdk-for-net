@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Sql.Models
                 return null;
             }
             IReadOnlyList<InstancePoolUsage> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InstancePoolUsageListResult(value ?? new ChangeTrackingList<InstancePoolUsage>(), nextLink.Value, serializedAdditionalRawData);
+            return new InstancePoolUsageListResult(value ?? new ChangeTrackingList<InstancePoolUsage>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InstancePoolUsageListResult>.Write(ModelReaderWriterOptions options)

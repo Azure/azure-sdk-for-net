@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> sqlVmInstanceId = default;
-            Optional<AvailabilityGroupReplicaRole> role = default;
-            Optional<AvailabilityGroupReplicaCommitMode> commit = default;
-            Optional<AvailabilityGroupReplicaFailoverMode> failover = default;
-            Optional<ReadableSecondaryMode> readableSecondary = default;
+            ResourceIdentifier sqlVmInstanceId = default;
+            AvailabilityGroupReplicaRole? role = default;
+            AvailabilityGroupReplicaCommitMode? commit = default;
+            AvailabilityGroupReplicaFailoverMode? failover = default;
+            ReadableSecondaryMode? readableSecondary = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,11 +150,11 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AvailabilityGroupReplica(
-                sqlVmInstanceId.Value,
-                Optional.ToNullable(role),
-                Optional.ToNullable(commit),
-                Optional.ToNullable(failover),
-                Optional.ToNullable(readableSecondary),
+                sqlVmInstanceId,
+                role,
+                commit,
+                failover,
+                readableSecondary,
                 serializedAdditionalRawData);
         }
 

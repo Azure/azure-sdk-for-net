@@ -35,7 +35,7 @@ namespace Azure.Communication.MediaComposition
             }
             string call = default;
             MediaInputType kind = default;
-            Optional<string> placeholderImageUri = default;
+            string placeholderImageUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("call"u8))
@@ -54,7 +54,7 @@ namespace Azure.Communication.MediaComposition
                     continue;
                 }
             }
-            return new ScreenShare(kind, placeholderImageUri.Value, call);
+            return new ScreenShare(kind, placeholderImageUri, call);
         }
     }
 }

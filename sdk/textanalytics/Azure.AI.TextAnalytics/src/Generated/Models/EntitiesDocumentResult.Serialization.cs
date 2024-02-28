@@ -50,7 +50,7 @@ namespace Azure.AI.TextAnalytics.Models
             IList<Entity> entities = default;
             string id = default;
             IList<DocumentWarning> warnings = default;
-            Optional<TextDocumentStatistics> statistics = default;
+            TextDocumentStatistics? statistics = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("entities"u8))
@@ -88,7 +88,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new EntitiesDocumentResult(id, warnings, Optional.ToNullable(statistics), entities);
+            return new EntitiesDocumentResult(id, warnings, statistics, entities);
         }
     }
 }

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 return null;
             }
             IReadOnlyList<PrivateStoreOfferResult> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QueryOffers(value ?? new ChangeTrackingList<PrivateStoreOfferResult>(), nextLink.Value, serializedAdditionalRawData);
+            return new QueryOffers(value ?? new ChangeTrackingList<PrivateStoreOfferResult>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QueryOffers>.Write(ModelReaderWriterOptions options)

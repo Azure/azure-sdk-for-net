@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 return null;
             }
             IReadOnlyList<SnapshotResourceData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SnapshotResourceList(value ?? new ChangeTrackingList<SnapshotResourceData>(), nextLink.Value, serializedAdditionalRawData);
+            return new SnapshotResourceList(value ?? new ChangeTrackingList<SnapshotResourceData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SnapshotResourceList>.Write(ModelReaderWriterOptions options)

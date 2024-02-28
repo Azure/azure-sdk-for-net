@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<string> metricName = default;
-            Optional<int> metricValue = default;
+            string metricName = default;
+            int? metricValue = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ThreatIntelligenceMetricEntity(metricName.Value, Optional.ToNullable(metricValue), serializedAdditionalRawData);
+            return new ThreatIntelligenceMetricEntity(metricName, metricValue, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ThreatIntelligenceMetricEntity>.Write(ModelReaderWriterOptions options)

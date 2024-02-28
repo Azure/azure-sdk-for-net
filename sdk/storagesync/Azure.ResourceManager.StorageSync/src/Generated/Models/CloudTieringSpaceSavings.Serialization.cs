@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> lastUpdatedTimestamp = default;
-            Optional<long> volumeSizeBytes = default;
-            Optional<long> totalSizeCloudBytes = default;
-            Optional<long> cachedSizeBytes = default;
-            Optional<int> spaceSavingsPercent = default;
-            Optional<long> spaceSavingsBytes = default;
+            DateTimeOffset? lastUpdatedTimestamp = default;
+            long? volumeSizeBytes = default;
+            long? totalSizeCloudBytes = default;
+            long? cachedSizeBytes = default;
+            int? spaceSavingsPercent = default;
+            long? spaceSavingsBytes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,12 +165,12 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new CloudTieringSpaceSavings(
-                Optional.ToNullable(lastUpdatedTimestamp),
-                Optional.ToNullable(volumeSizeBytes),
-                Optional.ToNullable(totalSizeCloudBytes),
-                Optional.ToNullable(cachedSizeBytes),
-                Optional.ToNullable(spaceSavingsPercent),
-                Optional.ToNullable(spaceSavingsBytes),
+                lastUpdatedTimestamp,
+                volumeSizeBytes,
+                totalSizeCloudBytes,
+                cachedSizeBytes,
+                spaceSavingsPercent,
+                spaceSavingsBytes,
                 serializedAdditionalRawData);
         }
 

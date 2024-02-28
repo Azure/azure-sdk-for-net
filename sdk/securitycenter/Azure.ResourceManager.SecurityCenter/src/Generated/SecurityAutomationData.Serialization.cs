@@ -153,16 +153,16 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 return null;
             }
-            Optional<string> kind = default;
-            Optional<ETag> etag = default;
+            string kind = default;
+            ETag? etag = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<bool> isEnabled = default;
+            SystemData systemData = default;
+            string description = default;
+            bool? isEnabled = default;
             IList<SecurityAutomationScope> scopes = default;
             IList<SecurityAutomationSource> sources = default;
             IList<SecurityAutomationAction> actions = default;
@@ -305,16 +305,16 @@ namespace Azure.ResourceManager.SecurityCenter
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                description.Value,
-                Optional.ToNullable(isEnabled),
+                description,
+                isEnabled,
                 scopes ?? new ChangeTrackingList<SecurityAutomationScope>(),
                 sources ?? new ChangeTrackingList<SecurityAutomationSource>(),
                 actions ?? new ChangeTrackingList<SecurityAutomationAction>(),
-                kind.Value,
-                Optional.ToNullable(etag),
+                kind,
+                etag,
                 serializedAdditionalRawData);
         }
 

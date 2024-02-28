@@ -300,29 +300,29 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> vmSize = default;
-            Optional<ResourceId> subnet = default;
-            Optional<MachineLearningApplicationSharingPolicy> applicationSharingPolicy = default;
-            Optional<ComputeInstanceAutologgerSettings> autologgerSettings = default;
-            Optional<MachineLearningComputeInstanceSshSettings> sshSettings = default;
+            string vmSize = default;
+            ResourceId subnet = default;
+            MachineLearningApplicationSharingPolicy? applicationSharingPolicy = default;
+            ComputeInstanceAutologgerSettings autologgerSettings = default;
+            MachineLearningComputeInstanceSshSettings sshSettings = default;
             IList<CustomService> customServices = default;
-            Optional<ImageMetadata> osImageMetadata = default;
-            Optional<MachineLearningComputeInstanceConnectivityEndpoints> connectivityEndpoints = default;
+            ImageMetadata osImageMetadata = default;
+            MachineLearningComputeInstanceConnectivityEndpoints connectivityEndpoints = default;
             IReadOnlyList<MachineLearningComputeInstanceApplication> applications = default;
-            Optional<MachineLearningComputeInstanceCreatedBy> createdBy = default;
+            MachineLearningComputeInstanceCreatedBy createdBy = default;
             IReadOnlyList<MachineLearningError> errors = default;
-            Optional<MachineLearningComputeInstanceState> state = default;
-            Optional<MachineLearningComputeInstanceAuthorizationType?> computeInstanceAuthorizationType = default;
-            Optional<PersonalComputeInstanceSettings> personalComputeInstanceSettings = default;
-            Optional<SetupScripts> setupScripts = default;
-            Optional<MachineLearningComputeInstanceLastOperation> lastOperation = default;
-            Optional<ComputeSchedules> schedules = default;
-            Optional<string> idleTimeBeforeShutdown = default;
-            Optional<bool?> enableNodePublicIP = default;
+            MachineLearningComputeInstanceState? state = default;
+            MachineLearningComputeInstanceAuthorizationType? computeInstanceAuthorizationType = default;
+            PersonalComputeInstanceSettings personalComputeInstanceSettings = default;
+            SetupScripts setupScripts = default;
+            MachineLearningComputeInstanceLastOperation lastOperation = default;
+            ComputeSchedules schedules = default;
+            string idleTimeBeforeShutdown = default;
+            bool? enableNodePublicIP = default;
             IReadOnlyList<MachineLearningComputeInstanceContainer> containers = default;
             IReadOnlyList<MachineLearningComputeInstanceDataDisk> dataDisks = default;
             IReadOnlyList<MachineLearningComputeInstanceDataMount> dataMounts = default;
-            Optional<ComputeInstanceVersion> versions = default;
+            ComputeInstanceVersion versions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -576,29 +576,29 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MachineLearningComputeInstanceProperties(
-                vmSize.Value,
-                subnet.Value,
-                Optional.ToNullable(applicationSharingPolicy),
-                autologgerSettings.Value,
-                sshSettings.Value,
+                vmSize,
+                subnet,
+                applicationSharingPolicy,
+                autologgerSettings,
+                sshSettings,
                 customServices ?? new ChangeTrackingList<CustomService>(),
-                osImageMetadata.Value,
-                connectivityEndpoints.Value,
+                osImageMetadata,
+                connectivityEndpoints,
                 applications ?? new ChangeTrackingList<MachineLearningComputeInstanceApplication>(),
-                createdBy.Value,
+                createdBy,
                 errors ?? new ChangeTrackingList<MachineLearningError>(),
-                Optional.ToNullable(state),
-                Optional.ToNullable(computeInstanceAuthorizationType),
-                personalComputeInstanceSettings.Value,
-                setupScripts.Value,
-                lastOperation.Value,
-                schedules.Value,
-                idleTimeBeforeShutdown.Value,
-                Optional.ToNullable(enableNodePublicIP),
+                state,
+                computeInstanceAuthorizationType,
+                personalComputeInstanceSettings,
+                setupScripts,
+                lastOperation,
+                schedules,
+                idleTimeBeforeShutdown,
+                enableNodePublicIP,
                 containers ?? new ChangeTrackingList<MachineLearningComputeInstanceContainer>(),
                 dataDisks ?? new ChangeTrackingList<MachineLearningComputeInstanceDataDisk>(),
                 dataMounts ?? new ChangeTrackingList<MachineLearningComputeInstanceDataMount>(),
-                versions.Value,
+                versions,
                 serializedAdditionalRawData);
         }
 

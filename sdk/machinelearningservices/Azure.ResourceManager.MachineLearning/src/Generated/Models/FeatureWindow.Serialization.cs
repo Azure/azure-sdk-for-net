@@ -88,8 +88,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset?> featureWindowEnd = default;
-            Optional<DateTimeOffset?> featureWindowStart = default;
+            DateTimeOffset? featureWindowEnd = default;
+            DateTimeOffset? featureWindowStart = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FeatureWindow(Optional.ToNullable(featureWindowEnd), Optional.ToNullable(featureWindowStart), serializedAdditionalRawData);
+            return new FeatureWindow(featureWindowEnd, featureWindowStart, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FeatureWindow>.Write(ModelReaderWriterOptions options)

@@ -158,17 +158,17 @@ namespace Azure.ResourceManager.Automation
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> lastSeen = default;
-            Optional<DateTimeOffset> registrationTime = default;
-            Optional<string> ip = default;
-            Optional<string> accountId = default;
-            Optional<string> status = default;
-            Optional<string> nodeId = default;
-            Optional<ETag> etag = default;
-            Optional<int> totalCount = default;
+            SystemData systemData = default;
+            DateTimeOffset? lastSeen = default;
+            DateTimeOffset? registrationTime = default;
+            string ip = default;
+            string accountId = default;
+            string status = default;
+            string nodeId = default;
+            ETag? etag = default;
+            int? totalCount = default;
             IList<DscNodeExtensionHandlerAssociationProperty> extensionHandler = default;
-            Optional<string> name0 = default;
+            string name0 = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -311,17 +311,17 @@ namespace Azure.ResourceManager.Automation
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(lastSeen),
-                Optional.ToNullable(registrationTime),
-                ip.Value,
-                accountId.Value,
-                status.Value,
-                nodeId.Value,
-                Optional.ToNullable(etag),
-                Optional.ToNullable(totalCount),
+                systemData,
+                lastSeen,
+                registrationTime,
+                ip,
+                accountId,
+                status,
+                nodeId,
+                etag,
+                totalCount,
                 extensionHandler ?? new ChangeTrackingList<DscNodeExtensionHandlerAssociationProperty>(),
-                name0.Value,
+                name0,
                 serializedAdditionalRawData);
         }
 

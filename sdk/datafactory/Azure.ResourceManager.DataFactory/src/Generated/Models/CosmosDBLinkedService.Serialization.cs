@@ -171,22 +171,22 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
             IDictionary<string, EntityParameterSpecification> parameters = default;
             IList<BinaryData> annotations = default;
-            Optional<DataFactoryElement<string>> connectionString = default;
-            Optional<DataFactoryElement<string>> accountEndpoint = default;
-            Optional<DataFactoryElement<string>> database = default;
-            Optional<DataFactorySecretBaseDefinition> accountKey = default;
-            Optional<DataFactoryElement<string>> servicePrincipalId = default;
-            Optional<DataFactoryElement<string>> servicePrincipalCredentialType = default;
-            Optional<DataFactorySecretBaseDefinition> servicePrincipalCredential = default;
-            Optional<DataFactoryElement<string>> tenant = default;
-            Optional<DataFactoryElement<string>> azureCloudType = default;
-            Optional<CosmosDBConnectionMode> connectionMode = default;
-            Optional<string> encryptedCredential = default;
-            Optional<DataFactoryCredentialReference> credential = default;
+            DataFactoryElement<string> connectionString = default;
+            DataFactoryElement<string> accountEndpoint = default;
+            DataFactoryElement<string> database = default;
+            DataFactorySecretBaseDefinition accountKey = default;
+            DataFactoryElement<string> servicePrincipalId = default;
+            DataFactoryElement<string> servicePrincipalCredentialType = default;
+            DataFactorySecretBaseDefinition servicePrincipalCredential = default;
+            DataFactoryElement<string> tenant = default;
+            DataFactoryElement<string> azureCloudType = default;
+            CosmosDBConnectionMode? connectionMode = default;
+            string encryptedCredential = default;
+            DataFactoryCredentialReference credential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -366,23 +366,23 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new CosmosDBLinkedService(
                 type,
-                connectVia.Value,
-                description.Value,
+                connectVia,
+                description,
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 annotations ?? new ChangeTrackingList<BinaryData>(),
                 additionalProperties,
-                connectionString.Value,
-                accountEndpoint.Value,
-                database.Value,
+                connectionString,
+                accountEndpoint,
+                database,
                 accountKey,
-                servicePrincipalId.Value,
-                servicePrincipalCredentialType.Value,
+                servicePrincipalId,
+                servicePrincipalCredentialType,
                 servicePrincipalCredential,
-                tenant.Value,
-                azureCloudType.Value,
-                Optional.ToNullable(connectionMode),
-                encryptedCredential.Value,
-                credential.Value);
+                tenant,
+                azureCloudType,
+                connectionMode,
+                encryptedCredential,
+                credential);
         }
 
         BinaryData IPersistableModel<CosmosDBLinkedService>.Write(ModelReaderWriterOptions options)

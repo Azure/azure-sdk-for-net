@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<string> domainName = default;
+            string domainName = default;
             IReadOnlyList<ManagedInstanceEndpointDetail> endpointDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedInstanceEndpointDependency(domainName.Value, endpointDetails ?? new ChangeTrackingList<ManagedInstanceEndpointDetail>(), serializedAdditionalRawData);
+            return new ManagedInstanceEndpointDependency(domainName, endpointDetails ?? new ChangeTrackingList<ManagedInstanceEndpointDetail>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedInstanceEndpointDependency>.Write(ModelReaderWriterOptions options)

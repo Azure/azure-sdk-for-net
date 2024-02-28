@@ -114,10 +114,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<int> numaNodeIndex = default;
-            Optional<long> totalMemoryInMb = default;
-            Optional<int> logicalCoreCountPerCore = default;
-            Optional<long> effectiveAvailableMemoryInMb = default;
+            int? numaNodeIndex = default;
+            long? totalMemoryInMb = default;
+            int? logicalCoreCountPerCore = default;
+            long? effectiveAvailableMemoryInMb = default;
             IList<int> freeVCpuIndexesForHpn = default;
             IList<int> vCpuIndexesForHpn = default;
             IList<int> vCpuIndexesForRoot = default;
@@ -210,10 +210,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new NumaNodeInfo(
-                Optional.ToNullable(numaNodeIndex),
-                Optional.ToNullable(totalMemoryInMb),
-                Optional.ToNullable(logicalCoreCountPerCore),
-                Optional.ToNullable(effectiveAvailableMemoryInMb),
+                numaNodeIndex,
+                totalMemoryInMb,
+                logicalCoreCountPerCore,
+                effectiveAvailableMemoryInMb,
                 freeVCpuIndexesForHpn ?? new ChangeTrackingList<int>(),
                 vCpuIndexesForHpn ?? new ChangeTrackingList<int>(),
                 vCpuIndexesForRoot ?? new ChangeTrackingList<int>(),

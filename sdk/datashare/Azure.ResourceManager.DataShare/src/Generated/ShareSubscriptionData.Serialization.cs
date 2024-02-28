@@ -161,22 +161,22 @@ namespace Azure.ResourceManager.DataShare
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> createdAt = default;
-            Optional<DateTimeOffset> expirationDate = default;
+            SystemData systemData = default;
+            DateTimeOffset? createdAt = default;
+            DateTimeOffset? expirationDate = default;
             Guid invitationId = default;
-            Optional<string> providerEmail = default;
-            Optional<string> providerName = default;
-            Optional<string> providerTenantName = default;
-            Optional<DataShareProvisioningState> provisioningState = default;
-            Optional<string> shareDescription = default;
-            Optional<DataShareKind> shareKind = default;
-            Optional<string> shareName = default;
-            Optional<ShareSubscriptionStatus> shareSubscriptionStatus = default;
-            Optional<string> shareTerms = default;
+            string providerEmail = default;
+            string providerName = default;
+            string providerTenantName = default;
+            DataShareProvisioningState? provisioningState = default;
+            string shareDescription = default;
+            DataShareKind? shareKind = default;
+            string shareName = default;
+            ShareSubscriptionStatus? shareSubscriptionStatus = default;
+            string shareTerms = default;
             AzureLocation sourceShareLocation = default;
-            Optional<string> userEmail = default;
-            Optional<string> userName = default;
+            string userEmail = default;
+            string userName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -322,22 +322,22 @@ namespace Azure.ResourceManager.DataShare
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(createdAt),
-                Optional.ToNullable(expirationDate),
+                systemData,
+                createdAt,
+                expirationDate,
                 invitationId,
-                providerEmail.Value,
-                providerName.Value,
-                providerTenantName.Value,
-                Optional.ToNullable(provisioningState),
-                shareDescription.Value,
-                Optional.ToNullable(shareKind),
-                shareName.Value,
-                Optional.ToNullable(shareSubscriptionStatus),
-                shareTerms.Value,
+                providerEmail,
+                providerName,
+                providerTenantName,
+                provisioningState,
+                shareDescription,
+                shareKind,
+                shareName,
+                shareSubscriptionStatus,
+                shareTerms,
                 sourceShareLocation,
-                userEmail.Value,
-                userName.Value,
+                userEmail,
+                userName,
                 serializedAdditionalRawData);
         }
 

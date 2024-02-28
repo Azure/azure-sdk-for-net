@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            Optional<string> stepId = default;
+            string stepId = default;
             IList<TroubleshooterResult> responses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContinueRequestBody(stepId.Value, responses ?? new ChangeTrackingList<TroubleshooterResult>(), serializedAdditionalRawData);
+            return new ContinueRequestBody(stepId, responses ?? new ChangeTrackingList<TroubleshooterResult>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContinueRequestBody>.Write(ModelReaderWriterOptions options)

@@ -96,12 +96,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<ConnectionStateProperties> connectionState = default;
+            ConnectionStateProperties connectionState = default;
             IList<string> fqdns = default;
-            Optional<string> groupId = default;
-            Optional<bool> isReserved = default;
-            Optional<ResourceIdentifier> privateLinkResourceId = default;
-            Optional<string> provisioningState = default;
+            string groupId = default;
+            bool? isReserved = default;
+            ResourceIdentifier privateLinkResourceId = default;
+            string provisioningState = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -161,12 +161,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new DataFactoryPrivateEndpointProperties(
-                connectionState.Value,
+                connectionState,
                 fqdns ?? new ChangeTrackingList<string>(),
-                groupId.Value,
-                Optional.ToNullable(isReserved),
-                privateLinkResourceId.Value,
-                provisioningState.Value,
+                groupId,
+                isReserved,
+                privateLinkResourceId,
+                provisioningState,
                 additionalProperties);
         }
 

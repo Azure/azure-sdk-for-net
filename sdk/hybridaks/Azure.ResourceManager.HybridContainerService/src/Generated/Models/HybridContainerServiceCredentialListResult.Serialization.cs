@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<HybridContainerServiceResourceProvisioningState> status = default;
-            Optional<HybridContainerServiceCredentialListError> error = default;
-            Optional<ListCredentialResponseProperties> properties = default;
+            string id = default;
+            string name = default;
+            ResourceIdentifier resourceId = default;
+            HybridContainerServiceResourceProvisioningState? status = default;
+            HybridContainerServiceCredentialListError error = default;
+            ListCredentialResponseProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,12 +157,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new HybridContainerServiceCredentialListResult(
-                id.Value,
-                name.Value,
-                resourceId.Value,
-                Optional.ToNullable(status),
-                error.Value,
-                properties.Value,
+                id,
+                name,
+                resourceId,
+                status,
+                error,
+                properties,
                 serializedAdditionalRawData);
         }
 

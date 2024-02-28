@@ -113,14 +113,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<WritableSubResource> virtualNetwork = default;
-            Optional<WritableSubResource> subnet = default;
-            Optional<string> ipAddress = default;
-            Optional<WritableSubResource> networkInterfaceIPConfiguration = default;
-            Optional<WritableSubResource> loadBalancerFrontendIPConfiguration = default;
+            string name = default;
+            WritableSubResource virtualNetwork = default;
+            WritableSubResource subnet = default;
+            string ipAddress = default;
+            WritableSubResource networkInterfaceIPConfiguration = default;
+            WritableSubResource loadBalancerFrontendIPConfiguration = default;
             IReadOnlyList<NatRulePortMapping> inboundNatRulesPortMapping = default;
-            Optional<LoadBalancerBackendAddressAdminState> adminState = default;
+            LoadBalancerBackendAddressAdminState? adminState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -213,14 +213,14 @@ namespace Azure.ResourceManager.Network.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new LoadBalancerBackendAddress(
-                name.Value,
+                name,
                 virtualNetwork,
                 subnet,
-                ipAddress.Value,
+                ipAddress,
                 networkInterfaceIPConfiguration,
                 loadBalancerFrontendIPConfiguration,
                 inboundNatRulesPortMapping ?? new ChangeTrackingList<NatRulePortMapping>(),
-                Optional.ToNullable(adminState),
+                adminState,
                 serializedAdditionalRawData);
         }
 

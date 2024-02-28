@@ -152,18 +152,18 @@ namespace Azure.ResourceManager.EventGrid
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> topic = default;
-            Optional<EventSubscriptionProvisioningState> provisioningState = default;
-            Optional<EventSubscriptionDestination> destination = default;
-            Optional<DeliveryWithResourceIdentity> deliveryWithResourceIdentity = default;
-            Optional<EventSubscriptionFilter> filter = default;
+            SystemData systemData = default;
+            string topic = default;
+            EventSubscriptionProvisioningState? provisioningState = default;
+            EventSubscriptionDestination destination = default;
+            DeliveryWithResourceIdentity deliveryWithResourceIdentity = default;
+            EventSubscriptionFilter filter = default;
             IList<string> labels = default;
-            Optional<DateTimeOffset> expirationTimeUtc = default;
-            Optional<EventDeliverySchema> eventDeliverySchema = default;
-            Optional<EventSubscriptionRetryPolicy> retryPolicy = default;
-            Optional<DeadLetterDestination> deadLetterDestination = default;
-            Optional<DeadLetterWithResourceIdentity> deadLetterWithResourceIdentity = default;
+            DateTimeOffset? expirationTimeUtc = default;
+            EventDeliverySchema? eventDeliverySchema = default;
+            EventSubscriptionRetryPolicy retryPolicy = default;
+            DeadLetterDestination deadLetterDestination = default;
+            DeadLetterWithResourceIdentity deadLetterWithResourceIdentity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -314,18 +314,18 @@ namespace Azure.ResourceManager.EventGrid
                 id,
                 name,
                 type,
-                systemData.Value,
-                topic.Value,
-                Optional.ToNullable(provisioningState),
-                destination.Value,
-                deliveryWithResourceIdentity.Value,
-                filter.Value,
+                systemData,
+                topic,
+                provisioningState,
+                destination,
+                deliveryWithResourceIdentity,
+                filter,
                 labels ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(expirationTimeUtc),
-                Optional.ToNullable(eventDeliverySchema),
-                retryPolicy.Value,
-                deadLetterDestination.Value,
-                deadLetterWithResourceIdentity.Value,
+                expirationTimeUtc,
+                eventDeliverySchema,
+                retryPolicy,
+                deadLetterDestination,
+                deadLetterWithResourceIdentity,
                 serializedAdditionalRawData);
         }
 

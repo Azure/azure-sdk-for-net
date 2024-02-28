@@ -94,11 +94,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> containerName = default;
-            Optional<Guid> sourceProcessServerId = default;
-            Optional<Guid> targetProcessServerId = default;
+            string containerName = default;
+            Guid? sourceProcessServerId = default;
+            Guid? targetProcessServerId = default;
             IList<string> vmsToMigrate = default;
-            Optional<string> updateType = default;
+            string updateType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -152,11 +152,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new FailoverProcessServerProperties(
-                containerName.Value,
-                Optional.ToNullable(sourceProcessServerId),
-                Optional.ToNullable(targetProcessServerId),
+                containerName,
+                sourceProcessServerId,
+                targetProcessServerId,
                 vmsToMigrate ?? new ChangeTrackingList<string>(),
-                updateType.Value,
+                updateType,
                 serializedAdditionalRawData);
         }
 

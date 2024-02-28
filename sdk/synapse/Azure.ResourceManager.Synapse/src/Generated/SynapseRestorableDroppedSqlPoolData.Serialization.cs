@@ -133,19 +133,19 @@ namespace Azure.ResourceManager.Synapse
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> databaseName = default;
-            Optional<string> edition = default;
-            Optional<string> maxSizeBytes = default;
-            Optional<string> serviceLevelObjective = default;
-            Optional<string> elasticPoolName = default;
-            Optional<DateTimeOffset> creationDate = default;
-            Optional<DateTimeOffset> deletionDate = default;
-            Optional<DateTimeOffset> earliestRestoreDate = default;
+            SystemData systemData = default;
+            string databaseName = default;
+            string edition = default;
+            string maxSizeBytes = default;
+            string serviceLevelObjective = default;
+            string elasticPoolName = default;
+            DateTimeOffset? creationDate = default;
+            DateTimeOffset? deletionDate = default;
+            DateTimeOffset? earliestRestoreDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -257,16 +257,16 @@ namespace Azure.ResourceManager.Synapse
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(location),
-                databaseName.Value,
-                edition.Value,
-                maxSizeBytes.Value,
-                serviceLevelObjective.Value,
-                elasticPoolName.Value,
-                Optional.ToNullable(creationDate),
-                Optional.ToNullable(deletionDate),
-                Optional.ToNullable(earliestRestoreDate),
+                systemData,
+                location,
+                databaseName,
+                edition,
+                maxSizeBytes,
+                serviceLevelObjective,
+                elasticPoolName,
+                creationDate,
+                deletionDate,
+                earliestRestoreDate,
                 serializedAdditionalRawData);
         }
 

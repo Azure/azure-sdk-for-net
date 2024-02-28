@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<string> resourceType = default;
+            string resourceType = default;
             IReadOnlyList<ResourceTypeAlias> aliases = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceTypeAliases(resourceType.Value, aliases ?? new ChangeTrackingList<ResourceTypeAlias>(), serializedAdditionalRawData);
+            return new ResourceTypeAliases(resourceType, aliases ?? new ChangeTrackingList<ResourceTypeAlias>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceTypeAliases>.Write(ModelReaderWriterOptions options)

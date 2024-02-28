@@ -123,11 +123,11 @@ namespace Azure.ResourceManager.Automation
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> jobScheduleId = default;
-            Optional<ScheduleAssociationProperty> schedule = default;
-            Optional<RunbookAssociationProperty> runbook = default;
-            Optional<string> runOn = default;
+            SystemData systemData = default;
+            Guid? jobScheduleId = default;
+            ScheduleAssociationProperty schedule = default;
+            RunbookAssociationProperty runbook = default;
+            string runOn = default;
             IReadOnlyDictionary<string, string> parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -225,11 +225,11 @@ namespace Azure.ResourceManager.Automation
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(jobScheduleId),
-                schedule.Value,
-                runbook.Value,
-                runOn.Value,
+                systemData,
+                jobScheduleId,
+                schedule,
+                runbook,
+                runOn,
                 parameters ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }

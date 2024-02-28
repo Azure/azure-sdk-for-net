@@ -95,11 +95,11 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             UriRedirectActionType typeName = default;
             RedirectType redirectType = default;
-            Optional<DestinationProtocol> destinationProtocol = default;
-            Optional<string> customPath = default;
-            Optional<string> customHostname = default;
-            Optional<string> customQueryString = default;
-            Optional<string> customFragment = default;
+            DestinationProtocol? destinationProtocol = default;
+            string customPath = default;
+            string customHostname = default;
+            string customQueryString = default;
+            string customFragment = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -152,11 +152,11 @@ namespace Azure.ResourceManager.Cdn.Models
             return new UriRedirectActionProperties(
                 typeName,
                 redirectType,
-                Optional.ToNullable(destinationProtocol),
-                customPath.Value,
-                customHostname.Value,
-                customQueryString.Value,
-                customFragment.Value,
+                destinationProtocol,
+                customPath,
+                customHostname,
+                customQueryString,
+                customFragment,
                 serializedAdditionalRawData);
         }
 

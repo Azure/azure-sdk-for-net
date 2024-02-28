@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<string> name = default;
+            string name = default;
             DeliveryAttributeMappingType type = "Unknown";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownDeliveryAttributeMapping(name.Value, type, serializedAdditionalRawData);
+            return new UnknownDeliveryAttributeMapping(name, type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeliveryAttributeMapping>.Write(ModelReaderWriterOptions options)

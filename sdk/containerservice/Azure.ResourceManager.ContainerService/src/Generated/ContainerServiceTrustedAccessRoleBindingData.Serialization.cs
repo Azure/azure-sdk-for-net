@@ -106,8 +106,8 @@ namespace Azure.ResourceManager.ContainerService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ContainerServiceTrustedAccessRoleBindingProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            ContainerServiceTrustedAccessRoleBindingProvisioningState? provisioningState = default;
             ResourceIdentifier sourceResourceId = default;
             IList<string> roles = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -184,8 +184,8 @@ namespace Azure.ResourceManager.ContainerService
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(provisioningState),
+                systemData,
+                provisioningState,
                 sourceResourceId,
                 roles,
                 serializedAdditionalRawData);

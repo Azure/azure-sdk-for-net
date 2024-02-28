@@ -80,12 +80,12 @@ namespace Azure.ResourceManager.Models
             {
                 return null;
             }
-            Optional<string> createdBy = default;
-            Optional<CreatedByType> createdByType = default;
-            Optional<DateTimeOffset> createdAt = default;
-            Optional<string> lastModifiedBy = default;
-            Optional<CreatedByType> lastModifiedByType = default;
-            Optional<DateTimeOffset> lastModifiedAt = default;
+            string createdBy = default;
+            CreatedByType? createdByType = default;
+            DateTimeOffset? createdAt = default;
+            string lastModifiedBy = default;
+            CreatedByType? lastModifiedByType = default;
+            DateTimeOffset? lastModifiedAt = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("createdBy"u8))
@@ -136,12 +136,12 @@ namespace Azure.ResourceManager.Models
                 }
             }
             return new SystemData(
-                createdBy.Value,
-                Optional.ToNullable(createdByType),
-                Optional.ToNullable(createdAt),
-                lastModifiedBy.Value,
-                Optional.ToNullable(lastModifiedByType),
-                Optional.ToNullable(lastModifiedAt));
+                createdBy,
+                createdByType,
+                createdAt,
+                lastModifiedBy,
+                lastModifiedByType,
+                lastModifiedAt);
         }
 
         BinaryData IPersistableModel<SystemData>.Write(ModelReaderWriterOptions options)

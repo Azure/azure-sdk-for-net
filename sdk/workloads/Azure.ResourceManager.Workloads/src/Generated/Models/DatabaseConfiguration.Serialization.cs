@@ -80,11 +80,11 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<SapDatabaseType> databaseType = default;
+            SapDatabaseType? databaseType = default;
             ResourceIdentifier subnetId = default;
             SapVirtualMachineConfiguration virtualMachineConfiguration = default;
             long instanceCount = default;
-            Optional<DiskConfiguration> diskConfiguration = default;
+            DiskConfiguration diskConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,11 +129,11 @@ namespace Azure.ResourceManager.Workloads.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DatabaseConfiguration(
-                Optional.ToNullable(databaseType),
+                databaseType,
                 subnetId,
                 virtualMachineConfiguration,
                 instanceCount,
-                diskConfiguration.Value,
+                diskConfiguration,
                 serializedAdditionalRawData);
         }
 

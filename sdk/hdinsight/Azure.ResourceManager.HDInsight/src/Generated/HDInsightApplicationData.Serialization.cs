@@ -108,13 +108,13 @@ namespace Azure.ResourceManager.HDInsight
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             IDictionary<string, string> tags = default;
-            Optional<HDInsightApplicationProperties> properties = default;
+            HDInsightApplicationProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -185,10 +185,10 @@ namespace Azure.ResourceManager.HDInsight
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(etag),
+                systemData,
+                etag,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                properties.Value,
+                properties,
                 serializedAdditionalRawData);
         }
 

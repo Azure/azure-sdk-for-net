@@ -172,25 +172,25 @@ namespace Azure.ResourceManager.StorageCache
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<StorageCacheSkuName> sku = default;
+            ManagedServiceIdentity identity = default;
+            StorageCacheSkuName sku = default;
             IList<string> zones = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<float> storageCapacityTiB = default;
-            Optional<AmlFileSystemHealth> health = default;
-            Optional<AmlFileSystemProvisioningStateType> provisioningState = default;
-            Optional<string> filesystemSubnet = default;
-            Optional<AmlFileSystemClientInfo> clientInfo = default;
-            Optional<int> throughputProvisionedMBps = default;
-            Optional<AmlFileSystemEncryptionSettings> encryptionSettings = default;
-            Optional<AmlFileSystemPropertiesMaintenanceWindow> maintenanceWindow = default;
-            Optional<AmlFileSystemPropertiesHsm> hsm = default;
-            Optional<AmlFileSystemRootSquashSettings> rootSquashSettings = default;
+            SystemData systemData = default;
+            float? storageCapacityTiB = default;
+            AmlFileSystemHealth health = default;
+            AmlFileSystemProvisioningStateType? provisioningState = default;
+            string filesystemSubnet = default;
+            AmlFileSystemClientInfo clientInfo = default;
+            int? throughputProvisionedMBps = default;
+            AmlFileSystemEncryptionSettings encryptionSettings = default;
+            AmlFileSystemPropertiesMaintenanceWindow maintenanceWindow = default;
+            AmlFileSystemPropertiesHsm hsm = default;
+            AmlFileSystemRootSquashSettings rootSquashSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -378,22 +378,22 @@ namespace Azure.ResourceManager.StorageCache
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 identity,
-                sku.Value,
+                sku,
                 zones ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(storageCapacityTiB),
-                health.Value,
-                Optional.ToNullable(provisioningState),
-                filesystemSubnet.Value,
-                clientInfo.Value,
-                Optional.ToNullable(throughputProvisionedMBps),
-                encryptionSettings.Value,
-                maintenanceWindow.Value,
-                hsm.Value,
-                rootSquashSettings.Value,
+                storageCapacityTiB,
+                health,
+                provisioningState,
+                filesystemSubnet,
+                clientInfo,
+                throughputProvisionedMBps,
+                encryptionSettings,
+                maintenanceWindow,
+                hsm,
+                rootSquashSettings,
                 serializedAdditionalRawData);
         }
 

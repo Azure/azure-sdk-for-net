@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IReadOnlyList<CognitiveServicesAccountDeploymentData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CognitiveServicesAccountDeploymentListResult(nextLink.Value, value ?? new ChangeTrackingList<CognitiveServicesAccountDeploymentData>(), serializedAdditionalRawData);
+            return new CognitiveServicesAccountDeploymentListResult(nextLink, value ?? new ChangeTrackingList<CognitiveServicesAccountDeploymentData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CognitiveServicesAccountDeploymentListResult>.Write(ModelReaderWriterOptions options)

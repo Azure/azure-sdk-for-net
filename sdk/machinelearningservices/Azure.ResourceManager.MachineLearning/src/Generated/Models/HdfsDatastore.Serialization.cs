@@ -152,14 +152,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> hdfsServerCertificate = default;
+            string hdfsServerCertificate = default;
             string nameNodeAddress = default;
-            Optional<string> protocol = default;
+            string protocol = default;
             MachineLearningDatastoreCredentials credentials = default;
             DatastoreType datastoreType = default;
-            Optional<IntellectualProperty> intellectualProperty = default;
-            Optional<bool> isDefault = default;
-            Optional<string> description = default;
+            IntellectualProperty intellectualProperty = default;
+            bool? isDefault = default;
+            string description = default;
             IDictionary<string, string> properties = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -262,17 +262,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new HdfsDatastore(
-                description.Value,
+                description,
                 properties ?? new ChangeTrackingDictionary<string, string>(),
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
                 credentials,
                 datastoreType,
-                intellectualProperty.Value,
-                Optional.ToNullable(isDefault),
-                hdfsServerCertificate.Value,
+                intellectualProperty,
+                isDefault,
+                hdfsServerCertificate,
                 nameNodeAddress,
-                protocol.Value);
+                protocol);
         }
 
         BinaryData IPersistableModel<HdfsDatastore>.Write(ModelReaderWriterOptions options)

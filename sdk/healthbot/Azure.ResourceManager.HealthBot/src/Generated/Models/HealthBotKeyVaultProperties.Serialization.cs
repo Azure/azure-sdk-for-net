@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.HealthBot.Models
                 return null;
             }
             string keyName = default;
-            Optional<string> keyVersion = default;
+            string keyVersion = default;
             Uri keyVaultUri = default;
-            Optional<string> userIdentity = default;
+            string userIdentity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.HealthBot.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HealthBotKeyVaultProperties(keyName, keyVersion.Value, keyVaultUri, userIdentity.Value, serializedAdditionalRawData);
+            return new HealthBotKeyVaultProperties(keyName, keyVersion, keyVaultUri, userIdentity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HealthBotKeyVaultProperties>.Write(ModelReaderWriterOptions options)

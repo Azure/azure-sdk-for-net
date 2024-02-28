@@ -268,23 +268,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<ForecastingSettings> forecastingSettings = default;
-            Optional<ForecastingPrimaryMetric> primaryMetric = default;
-            Optional<ForecastingTrainingSettings> trainingSettings = default;
+            ForecastingSettings forecastingSettings = default;
+            ForecastingPrimaryMetric? primaryMetric = default;
+            ForecastingTrainingSettings trainingSettings = default;
             IList<string> cvSplitColumnNames = default;
-            Optional<TableVerticalFeaturizationSettings> featurizationSettings = default;
-            Optional<TableFixedParameters> fixedParameters = default;
-            Optional<TableVerticalLimitSettings> limitSettings = default;
-            Optional<NCrossValidations> nCrossValidations = default;
+            TableVerticalFeaturizationSettings featurizationSettings = default;
+            TableFixedParameters fixedParameters = default;
+            TableVerticalLimitSettings limitSettings = default;
+            NCrossValidations nCrossValidations = default;
             IList<TableParameterSubspace> searchSpace = default;
-            Optional<TableSweepSettings> sweepSettings = default;
-            Optional<MachineLearningTableJobInput> testData = default;
-            Optional<double?> testDataSize = default;
-            Optional<MachineLearningTableJobInput> validationData = default;
-            Optional<double?> validationDataSize = default;
-            Optional<string> weightColumnName = default;
-            Optional<MachineLearningLogVerbosity> logVerbosity = default;
-            Optional<string> targetColumnName = default;
+            TableSweepSettings sweepSettings = default;
+            MachineLearningTableJobInput testData = default;
+            double? testDataSize = default;
+            MachineLearningTableJobInput validationData = default;
+            double? validationDataSize = default;
+            string weightColumnName = default;
+            MachineLearningLogVerbosity? logVerbosity = default;
+            string targetColumnName = default;
             TaskType taskType = default;
             MachineLearningTableJobInput trainingData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -486,26 +486,26 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MachineLearningForecasting(
-                Optional.ToNullable(logVerbosity),
-                targetColumnName.Value,
+                logVerbosity,
+                targetColumnName,
                 taskType,
                 trainingData,
                 serializedAdditionalRawData,
-                forecastingSettings.Value,
-                Optional.ToNullable(primaryMetric),
-                trainingSettings.Value,
+                forecastingSettings,
+                primaryMetric,
+                trainingSettings,
                 cvSplitColumnNames ?? new ChangeTrackingList<string>(),
-                featurizationSettings.Value,
-                fixedParameters.Value,
-                limitSettings.Value,
-                nCrossValidations.Value,
+                featurizationSettings,
+                fixedParameters,
+                limitSettings,
+                nCrossValidations,
                 searchSpace ?? new ChangeTrackingList<TableParameterSubspace>(),
-                sweepSettings.Value,
-                testData.Value,
-                Optional.ToNullable(testDataSize),
-                validationData.Value,
-                Optional.ToNullable(validationDataSize),
-                weightColumnName.Value);
+                sweepSettings,
+                testData,
+                testDataSize,
+                validationData,
+                validationDataSize,
+                weightColumnName);
         }
 
         BinaryData IPersistableModel<MachineLearningForecasting>.Write(ModelReaderWriterOptions options)

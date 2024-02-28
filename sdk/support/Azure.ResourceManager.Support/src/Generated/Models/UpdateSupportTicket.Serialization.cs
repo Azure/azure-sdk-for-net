@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.Support.Models
             {
                 return null;
             }
-            Optional<SupportSeverityLevel> severity = default;
-            Optional<SupportTicketStatus> status = default;
-            Optional<SupportContactProfileContent> contactDetails = default;
-            Optional<AdvancedDiagnosticConsent> advancedDiagnosticConsent = default;
+            SupportSeverityLevel? severity = default;
+            SupportTicketStatus? status = default;
+            SupportContactProfileContent contactDetails = default;
+            AdvancedDiagnosticConsent? advancedDiagnosticConsent = default;
             IList<SecondaryConsent> secondaryConsent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -160,10 +160,10 @@ namespace Azure.ResourceManager.Support.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new UpdateSupportTicket(
-                Optional.ToNullable(severity),
-                Optional.ToNullable(status),
-                contactDetails.Value,
-                Optional.ToNullable(advancedDiagnosticConsent),
+                severity,
+                status,
+                contactDetails,
+                advancedDiagnosticConsent,
                 secondaryConsent ?? new ChangeTrackingList<SecondaryConsent>(),
                 serializedAdditionalRawData);
         }

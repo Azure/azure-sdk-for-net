@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Resources.Models
                 return null;
             }
             string message = default;
-            Optional<string> policyDefinitionReferenceId = default;
+            string policyDefinitionReferenceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NonComplianceMessage(message, policyDefinitionReferenceId.Value, serializedAdditionalRawData);
+            return new NonComplianceMessage(message, policyDefinitionReferenceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NonComplianceMessage>.Write(ModelReaderWriterOptions options)

@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 return null;
             }
-            Optional<TimeSpan> upgradeReplicaSetCheckTimeout = default;
-            Optional<bool> forceRestart = default;
-            Optional<ArmRollingUpgradeMonitoringPolicy> rollingUpgradeMonitoringPolicy = default;
-            Optional<ArmApplicationHealthPolicy> applicationHealthPolicy = default;
-            Optional<ApplicationRollingUpgradeMode> upgradeMode = default;
-            Optional<bool> recreateApplication = default;
+            TimeSpan? upgradeReplicaSetCheckTimeout = default;
+            bool? forceRestart = default;
+            ArmRollingUpgradeMonitoringPolicy rollingUpgradeMonitoringPolicy = default;
+            ArmApplicationHealthPolicy applicationHealthPolicy = default;
+            ApplicationRollingUpgradeMode? upgradeMode = default;
+            bool? recreateApplication = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,12 +165,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ApplicationUpgradePolicy(
-                Optional.ToNullable(upgradeReplicaSetCheckTimeout),
-                Optional.ToNullable(forceRestart),
-                rollingUpgradeMonitoringPolicy.Value,
-                applicationHealthPolicy.Value,
-                Optional.ToNullable(upgradeMode),
-                Optional.ToNullable(recreateApplication),
+                upgradeReplicaSetCheckTimeout,
+                forceRestart,
+                rollingUpgradeMonitoringPolicy,
+                applicationHealthPolicy,
+                upgradeMode,
+                recreateApplication,
                 serializedAdditionalRawData);
         }
 

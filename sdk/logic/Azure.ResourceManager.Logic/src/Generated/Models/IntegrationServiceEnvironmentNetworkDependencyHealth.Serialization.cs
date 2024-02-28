@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<IntegrationServiceErrorInfo> error = default;
-            Optional<IntegrationServiceEnvironmentNetworkDependencyHealthState> state = default;
+            IntegrationServiceErrorInfo error = default;
+            IntegrationServiceEnvironmentNetworkDependencyHealthState? state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationServiceEnvironmentNetworkDependencyHealth(error.Value, Optional.ToNullable(state), serializedAdditionalRawData);
+            return new IntegrationServiceEnvironmentNetworkDependencyHealth(error, state, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationServiceEnvironmentNetworkDependencyHealth>.Write(ModelReaderWriterOptions options)

@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<string> status = default;
-            Optional<int> instanceCount = default;
+            string status = default;
+            int? instanceCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScriptActionExecutionSummary(status.Value, Optional.ToNullable(instanceCount), serializedAdditionalRawData);
+            return new ScriptActionExecutionSummary(status, instanceCount, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScriptActionExecutionSummary>.Write(ModelReaderWriterOptions options)

@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 return null;
             }
-            Optional<string> ingestionKey = default;
+            string ingestionKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NewRelicObservabilityVmExtensionPayload(ingestionKey.Value, serializedAdditionalRawData);
+            return new NewRelicObservabilityVmExtensionPayload(ingestionKey, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NewRelicObservabilityVmExtensionPayload>.Write(ModelReaderWriterOptions options)

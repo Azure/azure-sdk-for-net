@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<NetworkSecurityPerimeterConfigurationIssueType> issueType = default;
-            Optional<NetworkSecurityPerimeterConfigurationIssueSeverity> severity = default;
-            Optional<string> description = default;
+            string name = default;
+            NetworkSecurityPerimeterConfigurationIssueType? issueType = default;
+            NetworkSecurityPerimeterConfigurationIssueSeverity? severity = default;
+            string description = default;
             IList<string> suggestedResourceIds = default;
             IList<string> suggestedAccessRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -192,10 +192,10 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new NetworkSecurityPerimeterConfigurationIssues(
-                name.Value,
-                Optional.ToNullable(issueType),
-                Optional.ToNullable(severity),
-                description.Value,
+                name,
+                issueType,
+                severity,
+                description,
                 suggestedResourceIds ?? new ChangeTrackingList<string>(),
                 suggestedAccessRules ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);

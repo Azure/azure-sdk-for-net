@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<PrivateEndpointConnectionRequestProperties> properties = default;
+            ResourceIdentifier id = default;
+            PrivateEndpointConnectionRequestProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementPrivateEndpointConnectionCreateOrUpdateContent(id.Value, properties.Value, serializedAdditionalRawData);
+            return new ApiManagementPrivateEndpointConnectionCreateOrUpdateContent(id, properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementPrivateEndpointConnectionCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

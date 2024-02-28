@@ -111,9 +111,9 @@ namespace Azure.ResourceManager.Advisor.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<bool> exclude = default;
-            Optional<CpuThreshold> lowCpuThreshold = default;
+            SystemData systemData = default;
+            bool? exclude = default;
+            CpuThreshold? lowCpuThreshold = default;
             IList<DigestConfig> digests = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -197,9 +197,9 @@ namespace Azure.ResourceManager.Advisor.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(exclude),
-                Optional.ToNullable(lowCpuThreshold),
+                systemData,
+                exclude,
+                lowCpuThreshold,
                 digests ?? new ChangeTrackingList<DigestConfig>(),
                 serializedAdditionalRawData);
         }

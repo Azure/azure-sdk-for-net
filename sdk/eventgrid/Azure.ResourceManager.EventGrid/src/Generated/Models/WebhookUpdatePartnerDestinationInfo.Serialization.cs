@@ -85,9 +85,9 @@ namespace Azure.ResourceManager.EventGrid.Models
                 return null;
             }
             PartnerEndpointType endpointType = default;
-            Optional<Uri> endpointUri = default;
-            Optional<Uri> endpointBaseUri = default;
-            Optional<PartnerClientAuthentication> clientAuthentication = default;
+            Uri endpointUri = default;
+            Uri endpointBaseUri = default;
+            PartnerClientAuthentication clientAuthentication = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebhookUpdatePartnerDestinationInfo(endpointType, serializedAdditionalRawData, endpointUri.Value, endpointBaseUri.Value, clientAuthentication.Value);
+            return new WebhookUpdatePartnerDestinationInfo(endpointType, serializedAdditionalRawData, endpointUri, endpointBaseUri, clientAuthentication);
         }
 
         BinaryData IPersistableModel<WebhookUpdatePartnerDestinationInfo>.Write(ModelReaderWriterOptions options)

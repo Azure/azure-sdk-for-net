@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<float> countOfDowngrades = default;
-            Optional<float> countOfUpgradesAfterDowngrades = default;
-            Optional<DateTimeOffset> lastChangeDate = default;
+            float? countOfDowngrades = default;
+            float? countOfUpgradesAfterDowngrades = default;
+            DateTimeOffset? lastChangeDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CognitiveServicesSkuChangeInfo(Optional.ToNullable(countOfDowngrades), Optional.ToNullable(countOfUpgradesAfterDowngrades), Optional.ToNullable(lastChangeDate), serializedAdditionalRawData);
+            return new CognitiveServicesSkuChangeInfo(countOfDowngrades, countOfUpgradesAfterDowngrades, lastChangeDate, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CognitiveServicesSkuChangeInfo>.Write(ModelReaderWriterOptions options)

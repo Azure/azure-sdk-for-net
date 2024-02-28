@@ -102,12 +102,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> virtualMachineSize = default;
-            Optional<int> sshPort = default;
-            Optional<int> notebookServerPort = default;
-            Optional<IPAddress> address = default;
-            Optional<MachineLearningVmSshCredentials> administratorAccount = default;
-            Optional<bool> isNotebookInstanceCompute = default;
+            string virtualMachineSize = default;
+            int? sshPort = default;
+            int? notebookServerPort = default;
+            IPAddress address = default;
+            MachineLearningVmSshCredentials administratorAccount = default;
+            bool? isNotebookInstanceCompute = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -170,12 +170,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MachineLearningVirtualMachineProperties(
-                virtualMachineSize.Value,
-                Optional.ToNullable(sshPort),
-                Optional.ToNullable(notebookServerPort),
-                address.Value,
-                administratorAccount.Value,
-                Optional.ToNullable(isNotebookInstanceCompute),
+                virtualMachineSize,
+                sshPort,
+                notebookServerPort,
+                address,
+                administratorAccount,
+                isNotebookInstanceCompute,
                 serializedAdditionalRawData);
         }
 

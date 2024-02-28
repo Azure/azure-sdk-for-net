@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.EnergyServices.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> provisioningState = default;
+            string name = default;
+            string provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataPartition(name.Value, provisioningState.Value, serializedAdditionalRawData);
+            return new DataPartition(name, provisioningState, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataPartition>.Write(ModelReaderWriterOptions options)

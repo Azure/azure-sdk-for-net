@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             IList<string> authorizedIPRanges = default;
-            Optional<bool> enablePrivateCluster = default;
-            Optional<string> privateDnsZone = default;
-            Optional<bool> enablePrivateClusterPublicFQDN = default;
-            Optional<bool> disableRunCommand = default;
+            bool? enablePrivateCluster = default;
+            string privateDnsZone = default;
+            bool? enablePrivateClusterPublicFQDN = default;
+            bool? disableRunCommand = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,10 +157,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ManagedClusterApiServerAccessProfile(
                 authorizedIPRanges ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(enablePrivateCluster),
-                privateDnsZone.Value,
-                Optional.ToNullable(enablePrivateClusterPublicFQDN),
-                Optional.ToNullable(disableRunCommand),
+                enablePrivateCluster,
+                privateDnsZone,
+                enablePrivateClusterPublicFQDN,
+                disableRunCommand,
                 serializedAdditionalRawData);
         }
 

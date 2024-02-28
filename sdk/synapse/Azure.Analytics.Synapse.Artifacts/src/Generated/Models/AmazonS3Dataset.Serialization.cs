@@ -124,21 +124,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<string> description = default;
-            Optional<object> structure = default;
-            Optional<object> schema = default;
+            string description = default;
+            object structure = default;
+            object schema = default;
             LinkedServiceReference linkedServiceName = default;
             IDictionary<string, ParameterSpecification> parameters = default;
             IList<object> annotations = default;
-            Optional<DatasetFolder> folder = default;
+            DatasetFolder folder = default;
             object bucketName = default;
-            Optional<object> key = default;
-            Optional<object> prefix = default;
-            Optional<object> version = default;
-            Optional<object> modifiedDatetimeStart = default;
-            Optional<object> modifiedDatetimeEnd = default;
-            Optional<DatasetStorageFormat> format = default;
-            Optional<DatasetCompression> compression = default;
+            object key = default;
+            object prefix = default;
+            object version = default;
+            object modifiedDatetimeStart = default;
+            object modifiedDatetimeEnd = default;
+            DatasetStorageFormat format = default;
+            DatasetCompression compression = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -305,22 +305,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new AmazonS3Dataset(
                 type,
-                description.Value,
-                structure.Value,
-                schema.Value,
+                description,
+                structure,
+                schema,
                 linkedServiceName,
                 parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
                 annotations ?? new ChangeTrackingList<object>(),
-                folder.Value,
+                folder,
                 additionalProperties,
                 bucketName,
-                key.Value,
-                prefix.Value,
-                version.Value,
-                modifiedDatetimeStart.Value,
-                modifiedDatetimeEnd.Value,
-                format.Value,
-                compression.Value);
+                key,
+                prefix,
+                version,
+                modifiedDatetimeStart,
+                modifiedDatetimeEnd,
+                format,
+                compression);
         }
 
         internal partial class AmazonS3DatasetConverter : JsonConverter<AmazonS3Dataset>

@@ -92,11 +92,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> description = default;
-            Optional<string> versionQueryName = default;
-            Optional<string> versionHeaderName = default;
-            Optional<string> displayName = default;
-            Optional<VersioningScheme> versioningScheme = default;
+            string description = default;
+            string versionQueryName = default;
+            string versionHeaderName = default;
+            string displayName = default;
+            VersioningScheme? versioningScheme = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,11 +149,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ApiVersionSetPatch(
-                description.Value,
-                versionQueryName.Value,
-                versionHeaderName.Value,
-                displayName.Value,
-                Optional.ToNullable(versioningScheme),
+                description,
+                versionQueryName,
+                versionHeaderName,
+                displayName,
+                versioningScheme,
                 serializedAdditionalRawData);
         }
 

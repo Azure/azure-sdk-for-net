@@ -109,9 +109,9 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<Uri> queryResultsUri = default;
-            Optional<int> nonCompliantResources = default;
-            Optional<int> nonCompliantPolicies = default;
+            Uri queryResultsUri = default;
+            int? nonCompliantResources = default;
+            int? nonCompliantPolicies = default;
             IReadOnlyList<ComplianceDetail> resourceDetails = default;
             IReadOnlyList<ComplianceDetail> policyDetails = default;
             IReadOnlyList<ComplianceDetail> policyGroupDetails = default;
@@ -195,9 +195,9 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new PolicySummaryResults(
-                queryResultsUri.Value,
-                Optional.ToNullable(nonCompliantResources),
-                Optional.ToNullable(nonCompliantPolicies),
+                queryResultsUri,
+                nonCompliantResources,
+                nonCompliantPolicies,
                 resourceDetails ?? new ChangeTrackingList<ComplianceDetail>(),
                 policyDetails ?? new ChangeTrackingList<ComplianceDetail>(),
                 policyGroupDetails ?? new ChangeTrackingList<ComplianceDetail>(),

@@ -123,15 +123,15 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
+            ManagedServiceIdentity identity = default;
             IList<string> tags = default;
-            Optional<LabConnectionProfile> defaultConnectionProfile = default;
-            Optional<LabAutoShutdownProfile> defaultAutoShutdownProfile = default;
-            Optional<LabPlanNetworkProfile> defaultNetworkProfile = default;
+            LabConnectionProfile defaultConnectionProfile = default;
+            LabAutoShutdownProfile defaultAutoShutdownProfile = default;
+            LabPlanNetworkProfile defaultNetworkProfile = default;
             IList<AzureLocation> allowedRegions = default;
-            Optional<ResourceIdentifier> sharedGalleryId = default;
-            Optional<LabPlanSupportInfo> supportInfo = default;
-            Optional<Uri> linkedLmsInstance = default;
+            ResourceIdentifier sharedGalleryId = default;
+            LabPlanSupportInfo supportInfo = default;
+            Uri linkedLmsInstance = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -249,13 +249,13 @@ namespace Azure.ResourceManager.LabServices.Models
                 tags ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData,
                 identity,
-                defaultConnectionProfile.Value,
-                defaultAutoShutdownProfile.Value,
-                defaultNetworkProfile.Value,
+                defaultConnectionProfile,
+                defaultAutoShutdownProfile,
+                defaultNetworkProfile,
                 allowedRegions ?? new ChangeTrackingList<AzureLocation>(),
-                sharedGalleryId.Value,
-                supportInfo.Value,
-                linkedLmsInstance.Value);
+                sharedGalleryId,
+                supportInfo,
+                linkedLmsInstance);
         }
 
         BinaryData IPersistableModel<LabPlanPatch>.Write(ModelReaderWriterOptions options)

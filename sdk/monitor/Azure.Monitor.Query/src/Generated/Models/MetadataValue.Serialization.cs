@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
@@ -18,8 +17,8 @@ namespace Azure.Monitor.Query.Models
             {
                 return null;
             }
-            Optional<LocalizableString> name = default;
-            Optional<string> value = default;
+            LocalizableString name = default;
+            string value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -37,7 +36,7 @@ namespace Azure.Monitor.Query.Models
                     continue;
                 }
             }
-            return new MetadataValue(name.Value, value.Value);
+            return new MetadataValue(name, value);
         }
     }
 }

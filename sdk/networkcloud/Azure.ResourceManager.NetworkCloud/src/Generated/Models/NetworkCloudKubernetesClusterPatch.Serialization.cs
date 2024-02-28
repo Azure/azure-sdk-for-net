@@ -89,8 +89,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<ControlPlaneNodePatchConfiguration> controlPlaneNodeConfiguration = default;
-            Optional<string> kubernetesVersion = default;
+            ControlPlaneNodePatchConfiguration controlPlaneNodeConfiguration = default;
+            string kubernetesVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudKubernetesClusterPatch(tags ?? new ChangeTrackingDictionary<string, string>(), controlPlaneNodeConfiguration.Value, kubernetesVersion.Value, serializedAdditionalRawData);
+            return new NetworkCloudKubernetesClusterPatch(tags ?? new ChangeTrackingDictionary<string, string>(), controlPlaneNodeConfiguration, kubernetesVersion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudKubernetesClusterPatch>.Write(ModelReaderWriterOptions options)

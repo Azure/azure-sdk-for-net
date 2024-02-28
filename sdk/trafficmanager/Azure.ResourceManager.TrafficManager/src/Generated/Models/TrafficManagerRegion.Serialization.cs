@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.TrafficManager.Models
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<string> name = default;
+            string code = default;
+            string name = default;
             IList<TrafficManagerRegion> regions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrafficManagerRegion(code.Value, name.Value, regions ?? new ChangeTrackingList<TrafficManagerRegion>(), serializedAdditionalRawData);
+            return new TrafficManagerRegion(code, name, regions ?? new ChangeTrackingList<TrafficManagerRegion>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrafficManagerRegion>.Write(ModelReaderWriterOptions options)

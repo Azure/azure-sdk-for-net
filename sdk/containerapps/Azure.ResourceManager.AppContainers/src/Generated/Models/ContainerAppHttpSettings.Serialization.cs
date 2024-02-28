@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<bool> requireHttps = default;
-            Optional<HttpSettingsRoutes> routes = default;
-            Optional<ContainerAppForwardProxy> forwardProxy = default;
+            bool? requireHttps = default;
+            HttpSettingsRoutes routes = default;
+            ContainerAppForwardProxy forwardProxy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppHttpSettings(Optional.ToNullable(requireHttps), routes.Value, forwardProxy.Value, serializedAdditionalRawData);
+            return new ContainerAppHttpSettings(requireHttps, routes, forwardProxy, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppHttpSettings>.Write(ModelReaderWriterOptions options)

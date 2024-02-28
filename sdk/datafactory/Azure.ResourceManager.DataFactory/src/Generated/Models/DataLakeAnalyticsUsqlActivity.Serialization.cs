@@ -161,22 +161,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryLinkedServiceReference> linkedServiceName = default;
-            Optional<PipelineActivityPolicy> policy = default;
+            DataFactoryLinkedServiceReference linkedServiceName = default;
+            PipelineActivityPolicy policy = default;
             string name = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<PipelineActivityState> state = default;
-            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
+            string description = default;
+            PipelineActivityState? state = default;
+            ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
             IList<PipelineActivityDependency> dependsOn = default;
             IList<PipelineActivityUserProperty> userProperties = default;
             DataFactoryElement<string> scriptPath = default;
             DataFactoryLinkedServiceReference scriptLinkedService = default;
-            Optional<DataFactoryElement<int>> degreeOfParallelism = default;
-            Optional<DataFactoryElement<int>> priority = default;
+            DataFactoryElement<int> degreeOfParallelism = default;
+            DataFactoryElement<int> priority = default;
             IDictionary<string, BinaryData> parameters = default;
-            Optional<DataFactoryElement<string>> runtimeVersion = default;
-            Optional<DataFactoryElement<string>> compilationMode = default;
+            DataFactoryElement<string> runtimeVersion = default;
+            DataFactoryElement<string> compilationMode = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -345,21 +345,21 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new DataLakeAnalyticsUsqlActivity(
                 name,
                 type,
-                description.Value,
-                Optional.ToNullable(state),
-                Optional.ToNullable(onInactiveMarkAs),
+                description,
+                state,
+                onInactiveMarkAs,
                 dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(),
                 userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(),
                 additionalProperties,
                 linkedServiceName,
-                policy.Value,
+                policy,
                 scriptPath,
                 scriptLinkedService,
-                degreeOfParallelism.Value,
-                priority.Value,
+                degreeOfParallelism,
+                priority,
                 parameters ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                runtimeVersion.Value,
-                compilationMode.Value);
+                runtimeVersion,
+                compilationMode);
         }
 
         BinaryData IPersistableModel<DataLakeAnalyticsUsqlActivity>.Write(ModelReaderWriterOptions options)

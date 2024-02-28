@@ -112,9 +112,9 @@ namespace Azure.ResourceManager.Avs
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<TimeSpan> timeout = default;
+            SystemData systemData = default;
+            string description = default;
+            TimeSpan? timeout = default;
             IReadOnlyList<ScriptParameter> parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -194,9 +194,9 @@ namespace Azure.ResourceManager.Avs
                 id,
                 name,
                 type,
-                systemData.Value,
-                description.Value,
-                Optional.ToNullable(timeout),
+                systemData,
+                description,
+                timeout,
                 parameters ?? new ChangeTrackingList<ScriptParameter>(),
                 serializedAdditionalRawData);
         }

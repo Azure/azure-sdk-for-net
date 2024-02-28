@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<string> currencyCode = default;
-            Optional<double> amount = default;
+            string currencyCode = default;
+            double? amount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PurchasePrice(currencyCode.Value, Optional.ToNullable(amount), serializedAdditionalRawData);
+            return new PurchasePrice(currencyCode, amount, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PurchasePrice>.Write(ModelReaderWriterOptions options)

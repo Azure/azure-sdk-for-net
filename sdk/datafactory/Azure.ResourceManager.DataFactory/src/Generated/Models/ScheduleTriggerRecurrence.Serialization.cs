@@ -91,12 +91,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryRecurrenceFrequency> frequency = default;
-            Optional<int> interval = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<string> timeZone = default;
-            Optional<DataFactoryRecurrenceSchedule> schedule = default;
+            DataFactoryRecurrenceFrequency? frequency = default;
+            int? interval = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            string timeZone = default;
+            DataFactoryRecurrenceSchedule schedule = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -155,12 +155,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new ScheduleTriggerRecurrence(
-                Optional.ToNullable(frequency),
-                Optional.ToNullable(interval),
-                Optional.ToNullable(startTime),
-                Optional.ToNullable(endTime),
-                timeZone.Value,
-                schedule.Value,
+                frequency,
+                interval,
+                startTime,
+                endTime,
+                timeZone,
+                schedule,
                 additionalProperties);
         }
 

@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> serviceProviderName = default;
-            Optional<string> peeringLocation = default;
-            Optional<int> bandwidthInMbps = default;
+            string serviceProviderName = default;
+            string peeringLocation = default;
+            int? bandwidthInMbps = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExpressRouteCircuitServiceProviderProperties(serviceProviderName.Value, peeringLocation.Value, Optional.ToNullable(bandwidthInMbps), serializedAdditionalRawData);
+            return new ExpressRouteCircuitServiceProviderProperties(serviceProviderName, peeringLocation, bandwidthInMbps, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExpressRouteCircuitServiceProviderProperties>.Write(ModelReaderWriterOptions options)

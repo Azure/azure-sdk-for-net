@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<AppPlatformConfigurationServiceGitValidateResult> gitPropertyValidationResult = default;
+            AppPlatformConfigurationServiceGitValidateResult gitPropertyValidationResult = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformConfigurationServiceSettingsValidateResult(gitPropertyValidationResult.Value, serializedAdditionalRawData);
+            return new AppPlatformConfigurationServiceSettingsValidateResult(gitPropertyValidationResult, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformConfigurationServiceSettingsValidateResult>.Write(ModelReaderWriterOptions options)

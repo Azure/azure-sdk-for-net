@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<ContainerRegistryEncryptionStatus> status = default;
-            Optional<ContainerRegistryKeyVaultProperties> keyVaultProperties = default;
+            ContainerRegistryEncryptionStatus? status = default;
+            ContainerRegistryKeyVaultProperties keyVaultProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryEncryption(Optional.ToNullable(status), keyVaultProperties.Value, serializedAdditionalRawData);
+            return new ContainerRegistryEncryption(status, keyVaultProperties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryEncryption>.Write(ModelReaderWriterOptions options)

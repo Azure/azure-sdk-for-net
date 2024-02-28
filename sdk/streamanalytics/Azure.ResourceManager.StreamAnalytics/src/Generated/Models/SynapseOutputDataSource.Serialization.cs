@@ -100,12 +100,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             string type = default;
-            Optional<string> server = default;
-            Optional<string> database = default;
-            Optional<string> table = default;
-            Optional<string> user = default;
-            Optional<string> password = default;
-            Optional<StreamAnalyticsAuthenticationMode> authenticationMode = default;
+            string server = default;
+            string database = default;
+            string table = default;
+            string user = default;
+            string password = default;
+            StreamAnalyticsAuthenticationMode? authenticationMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -170,12 +170,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             return new SynapseOutputDataSource(
                 type,
                 serializedAdditionalRawData,
-                server.Value,
-                database.Value,
-                table.Value,
-                user.Value,
-                password.Value,
-                Optional.ToNullable(authenticationMode));
+                server,
+                database,
+                table,
+                user,
+                password,
+                authenticationMode);
         }
 
         BinaryData IPersistableModel<SynapseOutputDataSource>.Write(ModelReaderWriterOptions options)

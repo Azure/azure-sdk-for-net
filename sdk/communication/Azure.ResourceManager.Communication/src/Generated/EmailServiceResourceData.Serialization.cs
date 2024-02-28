@@ -117,9 +117,9 @@ namespace Azure.ResourceManager.Communication
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<EmailServicesProvisioningState> provisioningState = default;
-            Optional<string> dataLocation = default;
+            SystemData systemData = default;
+            EmailServicesProvisioningState? provisioningState = default;
+            string dataLocation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -203,11 +203,11 @@ namespace Azure.ResourceManager.Communication
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                Optional.ToNullable(provisioningState),
-                dataLocation.Value,
+                provisioningState,
+                dataLocation,
                 serializedAdditionalRawData);
         }
 

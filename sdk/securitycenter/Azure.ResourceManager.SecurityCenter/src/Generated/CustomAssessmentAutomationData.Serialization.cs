@@ -127,14 +127,14 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> compressedQuery = default;
-            Optional<CustomAssessmentAutomationSupportedCloud> supportedCloud = default;
-            Optional<CustomAssessmentSeverity> severity = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<string> remediationDescription = default;
-            Optional<string> assessmentKey = default;
+            SystemData systemData = default;
+            string compressedQuery = default;
+            CustomAssessmentAutomationSupportedCloud? supportedCloud = default;
+            CustomAssessmentSeverity? severity = default;
+            string displayName = default;
+            string description = default;
+            string remediationDescription = default;
+            string assessmentKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -228,14 +228,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 id,
                 name,
                 type,
-                systemData.Value,
-                compressedQuery.Value,
-                Optional.ToNullable(supportedCloud),
-                Optional.ToNullable(severity),
-                displayName.Value,
-                description.Value,
-                remediationDescription.Value,
-                assessmentKey.Value,
+                systemData,
+                compressedQuery,
+                supportedCloud,
+                severity,
+                displayName,
+                description,
+                remediationDescription,
+                assessmentKey,
                 serializedAdditionalRawData);
         }
 

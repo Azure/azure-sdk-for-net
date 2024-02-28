@@ -154,22 +154,22 @@ namespace Azure.ResourceManager.NetApp
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> poolId = default;
+            SystemData systemData = default;
+            Guid? poolId = default;
             long size = default;
             NetAppFileServiceLevel serviceLevel = default;
-            Optional<string> provisioningState = default;
-            Optional<float> totalThroughputMibps = default;
-            Optional<float> utilizedThroughputMibps = default;
-            Optional<CapacityPoolQosType> qosType = default;
-            Optional<bool> coolAccess = default;
-            Optional<CapacityPoolEncryptionType?> encryptionType = default;
+            string provisioningState = default;
+            float? totalThroughputMibps = default;
+            float? utilizedThroughputMibps = default;
+            CapacityPoolQosType? qosType = default;
+            bool? coolAccess = default;
+            CapacityPoolEncryptionType? encryptionType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -318,19 +318,19 @@ namespace Azure.ResourceManager.NetApp
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                Optional.ToNullable(etag),
-                Optional.ToNullable(poolId),
+                etag,
+                poolId,
                 size,
                 serviceLevel,
-                provisioningState.Value,
-                Optional.ToNullable(totalThroughputMibps),
-                Optional.ToNullable(utilizedThroughputMibps),
-                Optional.ToNullable(qosType),
-                Optional.ToNullable(coolAccess),
-                Optional.ToNullable(encryptionType),
+                provisioningState,
+                totalThroughputMibps,
+                utilizedThroughputMibps,
+                qosType,
+                coolAccess,
+                encryptionType,
                 serializedAdditionalRawData);
         }
 

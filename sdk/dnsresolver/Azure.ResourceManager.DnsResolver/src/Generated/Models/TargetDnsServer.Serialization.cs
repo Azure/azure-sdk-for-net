@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 return null;
             }
             IPAddress ipAddress = default;
-            Optional<int> port = default;
+            int? port = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TargetDnsServer(ipAddress, Optional.ToNullable(port), serializedAdditionalRawData);
+            return new TargetDnsServer(ipAddress, port, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TargetDnsServer>.Write(ModelReaderWriterOptions options)

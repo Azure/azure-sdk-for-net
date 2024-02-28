@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -18,10 +17,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> clientRequestId = default;
-            Optional<string> clientIpAddress = default;
-            Optional<string> method = default;
-            Optional<string> url = default;
+            string clientRequestId = default;
+            string clientIpAddress = default;
+            string method = default;
+            string url = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clientRequestId"u8))
@@ -45,7 +44,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new ResourceHttpRequest(clientRequestId.Value, clientIpAddress.Value, method.Value, url.Value);
+            return new ResourceHttpRequest(clientRequestId, clientIpAddress, method, url);
         }
     }
 }

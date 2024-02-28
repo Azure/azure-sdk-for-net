@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> remoteVolumeResourceId = default;
+            ResourceIdentifier remoteVolumeResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppVolumeAuthorizeReplicationContent(remoteVolumeResourceId.Value, serializedAdditionalRawData);
+            return new NetAppVolumeAuthorizeReplicationContent(remoteVolumeResourceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppVolumeAuthorizeReplicationContent>.Write(ModelReaderWriterOptions options)

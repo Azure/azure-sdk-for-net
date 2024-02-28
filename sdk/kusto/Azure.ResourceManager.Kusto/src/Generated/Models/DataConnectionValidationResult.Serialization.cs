@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Optional<string> errorMessage = default;
+            string errorMessage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataConnectionValidationResult(errorMessage.Value, serializedAdditionalRawData);
+            return new DataConnectionValidationResult(errorMessage, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataConnectionValidationResult>.Write(ModelReaderWriterOptions options)

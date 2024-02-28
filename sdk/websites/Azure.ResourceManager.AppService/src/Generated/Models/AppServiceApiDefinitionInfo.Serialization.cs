@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<Uri> url = default;
+            Uri url = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceApiDefinitionInfo(url.Value, serializedAdditionalRawData);
+            return new AppServiceApiDefinitionInfo(url, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceApiDefinitionInfo>.Write(ModelReaderWriterOptions options)

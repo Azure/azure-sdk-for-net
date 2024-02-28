@@ -112,15 +112,15 @@ namespace Azure.ResourceManager.LargeInstance.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<string> name = default;
+            ResourceIdentifier id = default;
+            ResourceIdentifier resourceId = default;
+            string name = default;
             string status = default;
-            Optional<float> percentComplete = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
+            float? percentComplete = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
             IReadOnlyList<LargeInstanceOperationStatusResult> operations = default;
-            Optional<ResponseError> error = default;
+            ResponseError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -210,15 +210,15 @@ namespace Azure.ResourceManager.LargeInstance.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new LargeInstanceOperationStatusResult(
-                id.Value,
-                resourceId.Value,
-                name.Value,
+                id,
+                resourceId,
+                name,
                 status,
-                Optional.ToNullable(percentComplete),
-                Optional.ToNullable(startTime),
-                Optional.ToNullable(endTime),
+                percentComplete,
+                startTime,
+                endTime,
                 operations ?? new ChangeTrackingList<LargeInstanceOperationStatusResult>(),
-                error.Value,
+                error,
                 serializedAdditionalRawData);
         }
 

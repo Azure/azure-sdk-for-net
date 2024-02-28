@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<string> publicKey = default;
-            Optional<string> privateKey = default;
+            string publicKey = default;
+            string privateKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SapSshKeyPair(publicKey.Value, privateKey.Value, serializedAdditionalRawData);
+            return new SapSshKeyPair(publicKey, privateKey, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SapSshKeyPair>.Write(ModelReaderWriterOptions options)

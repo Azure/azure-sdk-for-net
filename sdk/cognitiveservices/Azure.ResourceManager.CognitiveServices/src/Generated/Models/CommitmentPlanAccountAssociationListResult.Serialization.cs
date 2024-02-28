@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IReadOnlyList<CommitmentPlanAccountAssociationData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CommitmentPlanAccountAssociationListResult(nextLink.Value, value ?? new ChangeTrackingList<CommitmentPlanAccountAssociationData>(), serializedAdditionalRawData);
+            return new CommitmentPlanAccountAssociationListResult(nextLink, value ?? new ChangeTrackingList<CommitmentPlanAccountAssociationData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CommitmentPlanAccountAssociationListResult>.Write(ModelReaderWriterOptions options)

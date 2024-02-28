@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<string> annotation = default;
+            string annotation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AnnotationResourceProperties(annotation.Value, serializedAdditionalRawData);
+            return new AnnotationResourceProperties(annotation, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AnnotationResourceProperties>.Write(ModelReaderWriterOptions options)

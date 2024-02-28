@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 return null;
             }
             ResourceIdentifier taskId = default;
-            Optional<ContainerRegistryOverrideTaskStepProperties> overrideTaskStepProperties = default;
+            ContainerRegistryOverrideTaskStepProperties overrideTaskStepProperties = default;
             string type = default;
-            Optional<bool> isArchiveEnabled = default;
-            Optional<string> agentPoolName = default;
-            Optional<string> logTemplate = default;
+            bool? isArchiveEnabled = default;
+            string agentPoolName = default;
+            string logTemplate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,12 +144,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ContainerRegistryTaskRunContent(
                 type,
-                Optional.ToNullable(isArchiveEnabled),
-                agentPoolName.Value,
-                logTemplate.Value,
+                isArchiveEnabled,
+                agentPoolName,
+                logTemplate,
                 serializedAdditionalRawData,
                 taskId,
-                overrideTaskStepProperties.Value);
+                overrideTaskStepProperties);
         }
 
         BinaryData IPersistableModel<ContainerRegistryTaskRunContent>.Write(ModelReaderWriterOptions options)

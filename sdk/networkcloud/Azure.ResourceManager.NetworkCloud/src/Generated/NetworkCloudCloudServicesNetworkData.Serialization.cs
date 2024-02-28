@@ -205,17 +205,17 @@ namespace Azure.ResourceManager.NetworkCloud
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IList<EgressEndpoint> additionalEgressEndpoints = default;
             IReadOnlyList<ResourceIdentifier> associatedResourceIds = default;
-            Optional<ResourceIdentifier> clusterId = default;
-            Optional<CloudServicesNetworkDetailedStatus> detailedStatus = default;
-            Optional<string> detailedStatusMessage = default;
-            Optional<CloudServicesNetworkEnableDefaultEgressEndpoint> enableDefaultEgressEndpoints = default;
+            ResourceIdentifier clusterId = default;
+            CloudServicesNetworkDetailedStatus? detailedStatus = default;
+            string detailedStatusMessage = default;
+            CloudServicesNetworkEnableDefaultEgressEndpoint? enableDefaultEgressEndpoints = default;
             IReadOnlyList<EgressEndpoint> enabledEgressEndpoints = default;
             IReadOnlyList<ResourceIdentifier> hybridAksClustersAssociatedIds = default;
-            Optional<string> interfaceName = default;
-            Optional<CloudServicesNetworkProvisioningState> provisioningState = default;
+            string interfaceName = default;
+            CloudServicesNetworkProvisioningState? provisioningState = default;
             IReadOnlyList<ResourceIdentifier> virtualMachinesAssociatedIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -428,20 +428,20 @@ namespace Azure.ResourceManager.NetworkCloud
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 extendedLocation,
                 additionalEgressEndpoints ?? new ChangeTrackingList<EgressEndpoint>(),
                 associatedResourceIds ?? new ChangeTrackingList<ResourceIdentifier>(),
-                clusterId.Value,
-                Optional.ToNullable(detailedStatus),
-                detailedStatusMessage.Value,
-                Optional.ToNullable(enableDefaultEgressEndpoints),
+                clusterId,
+                detailedStatus,
+                detailedStatusMessage,
+                enableDefaultEgressEndpoints,
                 enabledEgressEndpoints ?? new ChangeTrackingList<EgressEndpoint>(),
                 hybridAksClustersAssociatedIds ?? new ChangeTrackingList<ResourceIdentifier>(),
-                interfaceName.Value,
-                Optional.ToNullable(provisioningState),
+                interfaceName,
+                provisioningState,
                 virtualMachinesAssociatedIds ?? new ChangeTrackingList<ResourceIdentifier>(),
                 serializedAdditionalRawData);
         }

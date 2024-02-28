@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<GlobalRulestackUpdateProperties> properties = default;
+            AzureLocation? location = default;
+            ManagedServiceIdentity identity = default;
+            GlobalRulestackUpdateProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GlobalRulestackPatch(Optional.ToNullable(location), identity, properties.Value, serializedAdditionalRawData);
+            return new GlobalRulestackPatch(location, identity, properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GlobalRulestackPatch>.Write(ModelReaderWriterOptions options)

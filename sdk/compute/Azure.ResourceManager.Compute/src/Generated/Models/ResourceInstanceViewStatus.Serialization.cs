@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<string> displayStatus = default;
-            Optional<string> message = default;
-            Optional<DateTimeOffset> time = default;
-            Optional<ComputeStatusLevelType> level = default;
+            string code = default;
+            string displayStatus = default;
+            string message = default;
+            DateTimeOffset? time = default;
+            ComputeStatusLevelType? level = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,11 +138,11 @@ namespace Azure.ResourceManager.Compute.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ResourceInstanceViewStatus(
-                code.Value,
-                displayStatus.Value,
-                message.Value,
-                Optional.ToNullable(time),
-                Optional.ToNullable(level),
+                code,
+                displayStatus,
+                message,
+                time,
+                level,
                 serializedAdditionalRawData);
         }
 

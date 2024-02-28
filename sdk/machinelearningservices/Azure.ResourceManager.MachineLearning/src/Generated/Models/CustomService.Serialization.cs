@@ -114,10 +114,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<ImageSetting> image = default;
+            string name = default;
+            ImageSetting image = default;
             IDictionary<string, EnvironmentVariable> environmentVariables = default;
-            Optional<DockerSetting> docker = default;
+            DockerSetting docker = default;
             IList<ContainerEndpoint> endpoints = default;
             IList<VolumeDefinition> volumes = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -194,10 +194,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new CustomService(
-                name.Value,
-                image.Value,
+                name,
+                image,
                 environmentVariables ?? new ChangeTrackingDictionary<string, EnvironmentVariable>(),
-                docker.Value,
+                docker,
                 endpoints ?? new ChangeTrackingList<ContainerEndpoint>(),
                 volumes ?? new ChangeTrackingList<VolumeDefinition>(),
                 additionalProperties);

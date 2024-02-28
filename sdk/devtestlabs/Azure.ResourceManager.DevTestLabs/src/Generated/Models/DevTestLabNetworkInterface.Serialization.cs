@@ -109,15 +109,15 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> virtualNetworkId = default;
-            Optional<ResourceIdentifier> subnetId = default;
-            Optional<ResourceIdentifier> publicIPAddressId = default;
-            Optional<string> publicIPAddress = default;
-            Optional<string> privateIPAddress = default;
-            Optional<string> dnsName = default;
-            Optional<string> rdpAuthority = default;
-            Optional<string> sshAuthority = default;
-            Optional<SharedPublicIPAddressConfiguration> sharedPublicIPAddressConfiguration = default;
+            ResourceIdentifier virtualNetworkId = default;
+            ResourceIdentifier subnetId = default;
+            ResourceIdentifier publicIPAddressId = default;
+            string publicIPAddress = default;
+            string privateIPAddress = default;
+            string dnsName = default;
+            string rdpAuthority = default;
+            string sshAuthority = default;
+            SharedPublicIPAddressConfiguration sharedPublicIPAddressConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -190,15 +190,15 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DevTestLabNetworkInterface(
-                virtualNetworkId.Value,
-                subnetId.Value,
-                publicIPAddressId.Value,
-                publicIPAddress.Value,
-                privateIPAddress.Value,
-                dnsName.Value,
-                rdpAuthority.Value,
-                sshAuthority.Value,
-                sharedPublicIPAddressConfiguration.Value,
+                virtualNetworkId,
+                subnetId,
+                publicIPAddressId,
+                publicIPAddress,
+                privateIPAddress,
+                dnsName,
+                rdpAuthority,
+                sshAuthority,
+                sharedPublicIPAddressConfiguration,
                 serializedAdditionalRawData);
         }
 

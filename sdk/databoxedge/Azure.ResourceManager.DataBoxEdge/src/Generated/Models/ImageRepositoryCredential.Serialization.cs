@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
             Uri imageRepositoryUrl = default;
             string userName = default;
-            Optional<AsymmetricEncryptedSecret> password = default;
+            AsymmetricEncryptedSecret password = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ImageRepositoryCredential(imageRepositoryUrl, userName, password.Value, serializedAdditionalRawData);
+            return new ImageRepositoryCredential(imageRepositoryUrl, userName, password, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ImageRepositoryCredential>.Write(ModelReaderWriterOptions options)

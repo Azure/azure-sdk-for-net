@@ -111,14 +111,14 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> jobCategory = default;
-            Optional<bool> isEnabled = default;
-            Optional<string> jobOwner = default;
-            Optional<DateTimeOffset> lastExecutedOn = default;
+            string name = default;
+            string jobCategory = default;
+            bool? isEnabled = default;
+            string jobOwner = default;
+            DateTimeOffset? lastExecutedOn = default;
             IReadOnlyList<ReportableException> validationErrors = default;
-            Optional<MigrationEligibilityInfo> migrationEligibility = default;
-            Optional<string> id = default;
+            MigrationEligibilityInfo migrationEligibility = default;
+            string id = default;
             string resultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -197,16 +197,16 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ConnectToSourceSqlServerTaskOutputAgentJobLevel(
-                id.Value,
+                id,
                 resultType,
                 serializedAdditionalRawData,
-                name.Value,
-                jobCategory.Value,
-                Optional.ToNullable(isEnabled),
-                jobOwner.Value,
-                Optional.ToNullable(lastExecutedOn),
+                name,
+                jobCategory,
+                isEnabled,
+                jobOwner,
+                lastExecutedOn,
                 validationErrors ?? new ChangeTrackingList<ReportableException>(),
-                migrationEligibility.Value);
+                migrationEligibility);
         }
 
         BinaryData IPersistableModel<ConnectToSourceSqlServerTaskOutputAgentJobLevel>.Write(ModelReaderWriterOptions options)

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 return null;
             }
             IReadOnlyList<DataLakeAnalyticsSasTokenInformation> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataLakeAnalyticsSasTokenInformationListResult(value ?? new ChangeTrackingList<DataLakeAnalyticsSasTokenInformation>(), nextLink.Value, serializedAdditionalRawData);
+            return new DataLakeAnalyticsSasTokenInformationListResult(value ?? new ChangeTrackingList<DataLakeAnalyticsSasTokenInformation>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataLakeAnalyticsSasTokenInformationListResult>.Write(ModelReaderWriterOptions options)

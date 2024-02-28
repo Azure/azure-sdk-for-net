@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 return null;
             }
             IReadOnlyList<RecoveryServicesVaultData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecoveryServicesVaultListResult(value ?? new ChangeTrackingList<RecoveryServicesVaultData>(), nextLink.Value, serializedAdditionalRawData);
+            return new RecoveryServicesVaultListResult(value ?? new ChangeTrackingList<RecoveryServicesVaultData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecoveryServicesVaultListResult>.Write(ModelReaderWriterOptions options)

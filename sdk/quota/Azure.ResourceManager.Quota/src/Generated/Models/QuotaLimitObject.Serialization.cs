@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Quota.Models
                 return null;
             }
             int value = default;
-            Optional<QuotaLimitType> limitType = default;
+            QuotaLimitType? limitType = default;
             LimitType limitObjectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Quota.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QuotaLimitObject(limitObjectType, serializedAdditionalRawData, value, Optional.ToNullable(limitType));
+            return new QuotaLimitObject(limitObjectType, serializedAdditionalRawData, value, limitType);
         }
 
         BinaryData IPersistableModel<QuotaLimitObject>.Write(ModelReaderWriterOptions options)

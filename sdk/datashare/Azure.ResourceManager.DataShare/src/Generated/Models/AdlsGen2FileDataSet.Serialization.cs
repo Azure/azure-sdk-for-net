@@ -109,8 +109,8 @@ namespace Azure.ResourceManager.DataShare.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> dataSetId = default;
+            SystemData systemData = default;
+            Guid? dataSetId = default;
             string filePath = default;
             string fileSystem = default;
             string resourceGroup = default;
@@ -205,10 +205,10 @@ namespace Azure.ResourceManager.DataShare.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 kind,
                 serializedAdditionalRawData,
-                Optional.ToNullable(dataSetId),
+                dataSetId,
                 filePath,
                 fileSystem,
                 resourceGroup,

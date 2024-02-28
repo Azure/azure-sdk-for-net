@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.Purview.Models
             {
                 return null;
             }
-            Optional<PurviewAccountProvisioningState> accountProvisioningState = default;
-            Optional<ResponseError> errorDetails = default;
+            PurviewAccountProvisioningState? accountProvisioningState = default;
+            ResponseError errorDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Purview.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PurviewAccountStatus(Optional.ToNullable(accountProvisioningState), errorDetails.Value, serializedAdditionalRawData);
+            return new PurviewAccountStatus(accountProvisioningState, errorDetails, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PurviewAccountStatus>.Write(ModelReaderWriterOptions options)

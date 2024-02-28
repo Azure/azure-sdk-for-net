@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 return null;
             }
             BinaryData thumbprint = default;
-            Optional<string> thumbprintSecondary = default;
-            Optional<ClusterCertificateStoreName> x509StoreName = default;
+            string thumbprintSecondary = default;
+            ClusterCertificateStoreName? x509StoreName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterCertificateDescription(thumbprint, thumbprintSecondary.Value, Optional.ToNullable(x509StoreName), serializedAdditionalRawData);
+            return new ClusterCertificateDescription(thumbprint, thumbprintSecondary, x509StoreName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterCertificateDescription>.Write(ModelReaderWriterOptions options)

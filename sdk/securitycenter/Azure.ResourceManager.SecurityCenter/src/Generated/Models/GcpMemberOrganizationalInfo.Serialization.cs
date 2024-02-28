@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> parentHierarchyId = default;
-            Optional<string> managementProjectNumber = default;
+            string parentHierarchyId = default;
+            string managementProjectNumber = default;
             OrganizationMembershipType organizationMembershipType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GcpMemberOrganizationalInfo(organizationMembershipType, serializedAdditionalRawData, parentHierarchyId.Value, managementProjectNumber.Value);
+            return new GcpMemberOrganizationalInfo(organizationMembershipType, serializedAdditionalRawData, parentHierarchyId, managementProjectNumber);
         }
 
         BinaryData IPersistableModel<GcpMemberOrganizationalInfo>.Write(ModelReaderWriterOptions options)

@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> clientId = default;
-            Optional<string> clientSecret = default;
-            Optional<Guid> tenantId = default;
-            Optional<string> kind = default;
-            Optional<string> subscriptionId = default;
+            string clientId = default;
+            string clientSecret = default;
+            Guid? tenantId = default;
+            string kind = default;
+            string subscriptionId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,11 +134,11 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ContainerAppCredentials(
-                clientId.Value,
-                clientSecret.Value,
-                Optional.ToNullable(tenantId),
-                kind.Value,
-                subscriptionId.Value,
+                clientId,
+                clientSecret,
+                tenantId,
+                kind,
+                subscriptionId,
                 serializedAdditionalRawData);
         }
 

@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             {
                 return null;
             }
-            Optional<SqlWorkloadType> sqlWorkloadType = default;
+            SqlWorkloadType? sqlWorkloadType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlWorkloadTypeUpdateSettings(Optional.ToNullable(sqlWorkloadType), serializedAdditionalRawData);
+            return new SqlWorkloadTypeUpdateSettings(sqlWorkloadType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlWorkloadTypeUpdateSettings>.Write(ModelReaderWriterOptions options)

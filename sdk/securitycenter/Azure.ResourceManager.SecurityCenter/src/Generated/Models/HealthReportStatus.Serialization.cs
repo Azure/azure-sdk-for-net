@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<HealthReportStatusName> code = default;
-            Optional<string> reason = default;
-            Optional<DateTimeOffset> lastScannedDate = default;
-            Optional<DateTimeOffset> statusChangeDate = default;
-            Optional<DateTimeOffset> firstEvaluationDate = default;
+            HealthReportStatusName? code = default;
+            string reason = default;
+            DateTimeOffset? lastScannedDate = default;
+            DateTimeOffset? statusChangeDate = default;
+            DateTimeOffset? firstEvaluationDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,11 +146,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new HealthReportStatus(
-                Optional.ToNullable(code),
-                reason.Value,
-                Optional.ToNullable(lastScannedDate),
-                Optional.ToNullable(statusChangeDate),
-                Optional.ToNullable(firstEvaluationDate),
+                code,
+                reason,
+                lastScannedDate,
+                statusChangeDate,
+                firstEvaluationDate,
                 serializedAdditionalRawData);
         }
 

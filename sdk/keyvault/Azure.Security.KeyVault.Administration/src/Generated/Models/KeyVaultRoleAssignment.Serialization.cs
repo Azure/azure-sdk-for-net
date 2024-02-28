@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration
 {
@@ -18,10 +17,10 @@ namespace Azure.Security.KeyVault.Administration
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<KeyVaultRoleAssignmentProperties> properties = default;
+            string id = default;
+            string name = default;
+            string type = default;
+            KeyVaultRoleAssignmentProperties properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -49,7 +48,7 @@ namespace Azure.Security.KeyVault.Administration
                     continue;
                 }
             }
-            return new KeyVaultRoleAssignment(id.Value, name.Value, type.Value, properties.Value);
+            return new KeyVaultRoleAssignment(id, name, type, properties);
         }
     }
 }

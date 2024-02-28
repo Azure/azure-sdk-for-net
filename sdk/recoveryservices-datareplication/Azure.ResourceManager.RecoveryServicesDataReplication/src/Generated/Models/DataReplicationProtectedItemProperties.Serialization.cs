@@ -212,31 +212,31 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
             string policyName = default;
             string replicationExtensionName = default;
-            Optional<string> correlationId = default;
-            Optional<DataReplicationProvisioningState> provisioningState = default;
-            Optional<DataReplicationProtectionState> protectionState = default;
-            Optional<string> protectionStateDescription = default;
-            Optional<DataReplicationTestFailoverState> testFailoverState = default;
-            Optional<string> testFailoverStateDescription = default;
-            Optional<DataReplicationResynchronizationState> resynchronizationState = default;
-            Optional<string> fabricObjectId = default;
-            Optional<string> fabricObjectName = default;
-            Optional<string> sourceFabricProviderId = default;
-            Optional<string> targetFabricProviderId = default;
-            Optional<string> fabricId = default;
-            Optional<string> targetFabricId = default;
-            Optional<string> draId = default;
-            Optional<string> targetDraId = default;
-            Optional<bool> resyncRequired = default;
-            Optional<DateTimeOffset> lastSuccessfulPlannedFailoverTime = default;
-            Optional<DateTimeOffset> lastSuccessfulUnplannedFailoverTime = default;
-            Optional<DateTimeOffset> lastSuccessfulTestFailoverTime = default;
-            Optional<ProtectedItemJobProperties> currentJob = default;
+            string correlationId = default;
+            DataReplicationProvisioningState? provisioningState = default;
+            DataReplicationProtectionState? protectionState = default;
+            string protectionStateDescription = default;
+            DataReplicationTestFailoverState? testFailoverState = default;
+            string testFailoverStateDescription = default;
+            DataReplicationResynchronizationState? resynchronizationState = default;
+            string fabricObjectId = default;
+            string fabricObjectName = default;
+            string sourceFabricProviderId = default;
+            string targetFabricProviderId = default;
+            string fabricId = default;
+            string targetFabricId = default;
+            string draId = default;
+            string targetDraId = default;
+            bool? resyncRequired = default;
+            DateTimeOffset? lastSuccessfulPlannedFailoverTime = default;
+            DateTimeOffset? lastSuccessfulUnplannedFailoverTime = default;
+            DateTimeOffset? lastSuccessfulTestFailoverTime = default;
+            ProtectedItemJobProperties currentJob = default;
             IReadOnlyList<string> allowedJobs = default;
-            Optional<ProtectedItemJobProperties> lastFailedEnableProtectionJob = default;
-            Optional<ProtectedItemJobProperties> lastFailedPlannedFailoverJob = default;
-            Optional<ProtectedItemJobProperties> lastTestFailoverJob = default;
-            Optional<DataReplicationHealthStatus> replicationHealth = default;
+            ProtectedItemJobProperties lastFailedEnableProtectionJob = default;
+            ProtectedItemJobProperties lastFailedPlannedFailoverJob = default;
+            ProtectedItemJobProperties lastTestFailoverJob = default;
+            DataReplicationHealthStatus? replicationHealth = default;
             IReadOnlyList<DataReplicationHealthErrorInfo> healthErrors = default;
             ProtectedItemModelCustomProperties customProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -467,31 +467,31 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             return new DataReplicationProtectedItemProperties(
                 policyName,
                 replicationExtensionName,
-                correlationId.Value,
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(protectionState),
-                protectionStateDescription.Value,
-                Optional.ToNullable(testFailoverState),
-                testFailoverStateDescription.Value,
-                Optional.ToNullable(resynchronizationState),
-                fabricObjectId.Value,
-                fabricObjectName.Value,
-                sourceFabricProviderId.Value,
-                targetFabricProviderId.Value,
-                fabricId.Value,
-                targetFabricId.Value,
-                draId.Value,
-                targetDraId.Value,
-                Optional.ToNullable(resyncRequired),
-                Optional.ToNullable(lastSuccessfulPlannedFailoverTime),
-                Optional.ToNullable(lastSuccessfulUnplannedFailoverTime),
-                Optional.ToNullable(lastSuccessfulTestFailoverTime),
-                currentJob.Value,
+                correlationId,
+                provisioningState,
+                protectionState,
+                protectionStateDescription,
+                testFailoverState,
+                testFailoverStateDescription,
+                resynchronizationState,
+                fabricObjectId,
+                fabricObjectName,
+                sourceFabricProviderId,
+                targetFabricProviderId,
+                fabricId,
+                targetFabricId,
+                draId,
+                targetDraId,
+                resyncRequired,
+                lastSuccessfulPlannedFailoverTime,
+                lastSuccessfulUnplannedFailoverTime,
+                lastSuccessfulTestFailoverTime,
+                currentJob,
                 allowedJobs ?? new ChangeTrackingList<string>(),
-                lastFailedEnableProtectionJob.Value,
-                lastFailedPlannedFailoverJob.Value,
-                lastTestFailoverJob.Value,
-                Optional.ToNullable(replicationHealth),
+                lastFailedEnableProtectionJob,
+                lastFailedPlannedFailoverJob,
+                lastTestFailoverJob,
+                replicationHealth,
                 healthErrors ?? new ChangeTrackingList<DataReplicationHealthErrorInfo>(),
                 customProperties,
                 serializedAdditionalRawData);

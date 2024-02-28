@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> containerName = default;
-            Optional<string> fabricName = default;
-            Optional<string> remoteContainerName = default;
-            Optional<string> remoteFabricName = default;
+            string containerName = default;
+            string fabricName = default;
+            string remoteContainerName = default;
+            string remoteFabricName = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -129,10 +129,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new HyperVReplicaBaseEventDetails(
                 instanceType,
                 serializedAdditionalRawData,
-                containerName.Value,
-                fabricName.Value,
-                remoteContainerName.Value,
-                remoteFabricName.Value);
+                containerName,
+                fabricName,
+                remoteContainerName,
+                remoteFabricName);
         }
 
         BinaryData IPersistableModel<HyperVReplicaBaseEventDetails>.Write(ModelReaderWriterOptions options)

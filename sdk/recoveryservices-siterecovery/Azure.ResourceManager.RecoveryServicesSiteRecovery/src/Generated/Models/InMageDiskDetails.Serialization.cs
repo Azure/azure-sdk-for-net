@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> diskId = default;
-            Optional<string> diskName = default;
-            Optional<string> diskSizeInMB = default;
-            Optional<string> diskType = default;
-            Optional<string> diskConfiguration = default;
+            string diskId = default;
+            string diskName = default;
+            string diskSizeInMB = default;
+            string diskType = default;
+            string diskConfiguration = default;
             IReadOnlyList<SiteRecoveryDiskVolumeDetails> volumeList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -155,11 +155,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new InMageDiskDetails(
-                diskId.Value,
-                diskName.Value,
-                diskSizeInMB.Value,
-                diskType.Value,
-                diskConfiguration.Value,
+                diskId,
+                diskName,
+                diskSizeInMB,
+                diskType,
+                diskConfiguration,
                 volumeList ?? new ChangeTrackingList<SiteRecoveryDiskVolumeDetails>(),
                 serializedAdditionalRawData);
         }

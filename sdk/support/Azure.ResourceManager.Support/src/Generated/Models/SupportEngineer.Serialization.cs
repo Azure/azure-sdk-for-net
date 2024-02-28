@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Support.Models
             {
                 return null;
             }
-            Optional<string> emailAddress = default;
+            string emailAddress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Support.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SupportEngineer(emailAddress.Value, serializedAdditionalRawData);
+            return new SupportEngineer(emailAddress, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SupportEngineer>.Write(ModelReaderWriterOptions options)

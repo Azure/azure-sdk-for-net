@@ -19,8 +19,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             {
                 return null;
             }
-            Optional<string> description = default;
-            Optional<DocumentBuildMode> buildMode = default;
+            string description = default;
+            DocumentBuildMode? buildMode = default;
             IReadOnlyDictionary<string, DocumentFieldSchema> fieldSchema = default;
             IReadOnlyDictionary<string, float> fieldConfidence = default;
             foreach (var property in element.EnumerateObject())
@@ -64,7 +64,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new DocumentTypeDetails(description.Value, Optional.ToNullable(buildMode), fieldSchema, fieldConfidence ?? new ChangeTrackingDictionary<string, float>());
+            return new DocumentTypeDetails(description, buildMode, fieldSchema, fieldConfidence ?? new ChangeTrackingDictionary<string, float>());
         }
     }
 }

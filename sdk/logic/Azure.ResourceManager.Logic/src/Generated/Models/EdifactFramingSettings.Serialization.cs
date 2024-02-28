@@ -92,8 +92,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<string> serviceCodeListDirectoryVersion = default;
-            Optional<string> characterEncoding = default;
+            string serviceCodeListDirectoryVersion = default;
+            string characterEncoding = default;
             int protocolVersion = default;
             int dataElementSeparator = default;
             int componentSeparator = default;
@@ -169,8 +169,8 @@ namespace Azure.ResourceManager.Logic.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new EdifactFramingSettings(
-                serviceCodeListDirectoryVersion.Value,
-                characterEncoding.Value,
+                serviceCodeListDirectoryVersion,
+                characterEncoding,
                 protocolVersion,
                 dataElementSeparator,
                 componentSeparator,

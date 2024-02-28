@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<string> original = default;
-            Optional<string> desired = default;
+            string original = default;
+            string desired = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AuthorizationActionMapping(original.Value, desired.Value, serializedAdditionalRawData);
+            return new AuthorizationActionMapping(original, desired, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AuthorizationActionMapping>.Write(ModelReaderWriterOptions options)

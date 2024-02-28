@@ -113,15 +113,15 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> localLogErrors = default;
-            Optional<string> masterLogErrors = default;
-            Optional<string> localLogErrorsMaxLength = default;
-            Optional<string> masterLogErrorsMaxLength = default;
+            SystemData systemData = default;
+            string localLogErrors = default;
+            string masterLogErrors = default;
+            string localLogErrorsMaxLength = default;
+            string masterLogErrorsMaxLength = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -197,12 +197,12 @@ namespace Azure.ResourceManager.AppService.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                localLogErrors.Value,
-                masterLogErrors.Value,
-                localLogErrorsMaxLength.Value,
-                masterLogErrorsMaxLength.Value,
-                kind.Value,
+                systemData,
+                localLogErrors,
+                masterLogErrors,
+                localLogErrorsMaxLength,
+                masterLogErrorsMaxLength,
+                kind,
                 serializedAdditionalRawData);
         }
 
