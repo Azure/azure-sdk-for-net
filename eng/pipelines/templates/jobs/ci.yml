@@ -45,8 +45,6 @@ parameters:
   - name: LimitForPullRequest
     type: boolean
     default: false
-  - name: OSName
-    type: string
 
 jobs:
   - job: Build
