@@ -85,9 +85,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             ConnectivityCheckRequestSource source = default;
             ConnectivityCheckRequestDestination destination = default;
-            Optional<PreferredIPVersion> preferredIPVersion = default;
-            Optional<ConnectivityCheckProtocol> protocol = default;
-            Optional<ConnectivityCheckRequestProtocolConfiguration> protocolConfiguration = default;
+            PreferredIPVersion? preferredIPVersion = default;
+            ConnectivityCheckProtocol? protocol = default;
+            ConnectivityCheckRequestProtocolConfiguration protocolConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,9 +138,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             return new ConnectivityCheckContent(
                 source,
                 destination,
-                Optional.ToNullable(preferredIPVersion),
-                Optional.ToNullable(protocol),
-                protocolConfiguration.Value,
+                preferredIPVersion,
+                protocol,
+                protocolConfiguration,
                 serializedAdditionalRawData);
         }
 

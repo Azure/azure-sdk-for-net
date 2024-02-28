@@ -21,9 +21,9 @@ namespace Azure.AI.Language.QuestionAnswering
             }
             ErrorCode code = default;
             string message = default;
-            Optional<string> target = default;
+            string target = default;
             IReadOnlyList<Error> details = default;
-            Optional<InnerErrorModel> innererror = default;
+            InnerErrorModel innererror = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -65,7 +65,7 @@ namespace Azure.AI.Language.QuestionAnswering
                     continue;
                 }
             }
-            return new Error(code, message, target.Value, details ?? new ChangeTrackingList<Error>(), innererror.Value);
+            return new Error(code, message, target, details ?? new ChangeTrackingList<Error>(), innererror);
         }
     }
 }

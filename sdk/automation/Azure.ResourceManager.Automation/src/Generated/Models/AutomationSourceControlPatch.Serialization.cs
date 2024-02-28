@@ -97,12 +97,12 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> branch = default;
-            Optional<string> folderPath = default;
-            Optional<bool> autoSync = default;
-            Optional<bool> publishRunbook = default;
-            Optional<SourceControlSecurityTokenProperties> securityToken = default;
-            Optional<string> description = default;
+            string branch = default;
+            string folderPath = default;
+            bool? autoSync = default;
+            bool? publishRunbook = default;
+            SourceControlSecurityTokenProperties securityToken = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -168,12 +168,12 @@ namespace Azure.ResourceManager.Automation.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AutomationSourceControlPatch(
-                branch.Value,
-                folderPath.Value,
-                Optional.ToNullable(autoSync),
-                Optional.ToNullable(publishRunbook),
-                securityToken.Value,
-                description.Value,
+                branch,
+                folderPath,
+                autoSync,
+                publishRunbook,
+                securityToken,
+                description,
                 serializedAdditionalRawData);
         }
 

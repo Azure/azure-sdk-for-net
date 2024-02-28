@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<int> port = default;
+            int? port = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchEndpointDetail(Optional.ToNullable(port), serializedAdditionalRawData);
+            return new BatchEndpointDetail(port, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchEndpointDetail>.Write(ModelReaderWriterOptions options)

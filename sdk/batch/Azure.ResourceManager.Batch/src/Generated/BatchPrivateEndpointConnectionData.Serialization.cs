@@ -121,15 +121,15 @@ namespace Azure.ResourceManager.Batch
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<BatchPrivateEndpointConnectionProvisioningState> provisioningState = default;
-            Optional<SubResource> privateEndpoint = default;
+            SystemData systemData = default;
+            BatchPrivateEndpointConnectionProvisioningState? provisioningState = default;
+            SubResource privateEndpoint = default;
             IReadOnlyList<string> groupIds = default;
-            Optional<BatchPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
+            BatchPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -230,12 +230,12 @@ namespace Azure.ResourceManager.Batch
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(provisioningState),
+                systemData,
+                provisioningState,
                 privateEndpoint,
                 groupIds ?? new ChangeTrackingList<string>(),
-                privateLinkServiceConnectionState.Value,
-                Optional.ToNullable(etag),
+                privateLinkServiceConnectionState,
+                etag,
                 serializedAdditionalRawData);
         }
 

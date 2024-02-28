@@ -76,9 +76,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<AppPlatformCustomContainer> customContainer = default;
+            AppPlatformCustomContainer customContainer = default;
             string type = default;
-            Optional<string> version = default;
+            string version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformCustomContainerUserSourceInfo(type, version.Value, serializedAdditionalRawData, customContainer.Value);
+            return new AppPlatformCustomContainerUserSourceInfo(type, version, serializedAdditionalRawData, customContainer);
         }
 
         BinaryData IPersistableModel<AppPlatformCustomContainerUserSourceInfo>.Write(ModelReaderWriterOptions options)

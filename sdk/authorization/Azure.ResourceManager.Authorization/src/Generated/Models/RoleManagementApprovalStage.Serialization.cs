@@ -104,11 +104,11 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            Optional<int> approvalStageTimeOutInDays = default;
-            Optional<bool> isApproverJustificationRequired = default;
-            Optional<int> escalationTimeInMinutes = default;
+            int? approvalStageTimeOutInDays = default;
+            bool? isApproverJustificationRequired = default;
+            int? escalationTimeInMinutes = default;
             IList<RoleManagementUserInfo> primaryApprovers = default;
-            Optional<bool> isEscalationEnabled = default;
+            bool? isEscalationEnabled = default;
             IList<RoleManagementUserInfo> escalationApprovers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -185,11 +185,11 @@ namespace Azure.ResourceManager.Authorization.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new RoleManagementApprovalStage(
-                Optional.ToNullable(approvalStageTimeOutInDays),
-                Optional.ToNullable(isApproverJustificationRequired),
-                Optional.ToNullable(escalationTimeInMinutes),
+                approvalStageTimeOutInDays,
+                isApproverJustificationRequired,
+                escalationTimeInMinutes,
                 primaryApprovers ?? new ChangeTrackingList<RoleManagementUserInfo>(),
-                Optional.ToNullable(isEscalationEnabled),
+                isEscalationEnabled,
                 escalationApprovers ?? new ChangeTrackingList<RoleManagementUserInfo>(),
                 serializedAdditionalRawData);
         }

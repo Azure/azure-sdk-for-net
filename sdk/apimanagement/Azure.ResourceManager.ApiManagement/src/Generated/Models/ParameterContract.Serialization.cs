@@ -115,13 +115,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 return null;
             }
             string name = default;
-            Optional<string> description = default;
+            string description = default;
             string type = default;
-            Optional<string> defaultValue = default;
-            Optional<bool> required = default;
+            string defaultValue = default;
+            bool? required = default;
             IList<string> values = default;
-            Optional<string> schemaId = default;
-            Optional<string> typeName = default;
+            string schemaId = default;
+            string typeName = default;
             IDictionary<string, ParameterExampleContract> examples = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -202,13 +202,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ParameterContract(
                 name,
-                description.Value,
+                description,
                 type,
-                defaultValue.Value,
-                Optional.ToNullable(required),
+                defaultValue,
+                required,
                 values ?? new ChangeTrackingList<string>(),
-                schemaId.Value,
-                typeName.Value,
+                schemaId,
+                typeName,
                 examples ?? new ChangeTrackingDictionary<string, ParameterExampleContract>(),
                 serializedAdditionalRawData);
         }

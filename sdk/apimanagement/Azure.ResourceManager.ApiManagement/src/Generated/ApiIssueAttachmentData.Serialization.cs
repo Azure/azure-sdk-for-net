@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> title = default;
-            Optional<string> contentFormat = default;
-            Optional<string> content = default;
+            SystemData systemData = default;
+            string title = default;
+            string contentFormat = default;
+            string content = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -175,10 +175,10 @@ namespace Azure.ResourceManager.ApiManagement
                 id,
                 name,
                 type,
-                systemData.Value,
-                title.Value,
-                contentFormat.Value,
-                content.Value,
+                systemData,
+                title,
+                contentFormat,
+                content,
                 serializedAdditionalRawData);
         }
 

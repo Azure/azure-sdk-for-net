@@ -116,12 +116,12 @@ namespace Azure.ResourceManager.Chaos
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> publisher = default;
-            Optional<string> targetType = default;
-            Optional<string> description = default;
-            Optional<string> parametersSchema = default;
-            Optional<string> urn = default;
+            SystemData systemData = default;
+            string publisher = default;
+            string targetType = default;
+            string description = default;
+            string parametersSchema = default;
+            string urn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -197,12 +197,12 @@ namespace Azure.ResourceManager.Chaos
                 id,
                 name,
                 type,
-                systemData.Value,
-                publisher.Value,
-                targetType.Value,
-                description.Value,
-                parametersSchema.Value,
-                urn.Value,
+                systemData,
+                publisher,
+                targetType,
+                description,
+                parametersSchema,
+                urn,
                 serializedAdditionalRawData);
         }
 

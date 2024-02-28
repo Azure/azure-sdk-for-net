@@ -122,16 +122,16 @@ namespace Azure.ResourceManager.ArcScVmm
             {
                 return null;
             }
-            Optional<ExtendedLocation> extendedLocation = default;
+            ExtendedLocation extendedLocation = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> availabilitySetName = default;
-            Optional<string> vmmServerId = default;
-            Optional<string> provisioningState = default;
+            SystemData systemData = default;
+            string availabilitySetName = default;
+            string vmmServerId = default;
+            string provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -225,13 +225,13 @@ namespace Azure.ResourceManager.ArcScVmm
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 extendedLocation,
-                availabilitySetName.Value,
-                vmmServerId.Value,
-                provisioningState.Value,
+                availabilitySetName,
+                vmmServerId,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

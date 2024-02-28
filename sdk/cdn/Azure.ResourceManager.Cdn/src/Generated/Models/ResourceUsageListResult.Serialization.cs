@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 return null;
             }
             IReadOnlyList<CdnUsage> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceUsageListResult(value ?? new ChangeTrackingList<CdnUsage>(), nextLink.Value, serializedAdditionalRawData);
+            return new ResourceUsageListResult(value ?? new ChangeTrackingList<CdnUsage>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceUsageListResult>.Write(ModelReaderWriterOptions options)

@@ -131,15 +131,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> branch = default;
-            Optional<string> commitId = default;
-            Optional<bool> isExport = default;
-            Optional<bool> isSynced = default;
-            Optional<bool> isGitEnabled = default;
-            Optional<DateTimeOffset> syncDate = default;
-            Optional<DateTimeOffset> configurationChangeDate = default;
-            Optional<string> lastOperationId = default;
+            SystemData systemData = default;
+            string branch = default;
+            string commitId = default;
+            bool? isExport = default;
+            bool? isSynced = default;
+            bool? isGitEnabled = default;
+            DateTimeOffset? syncDate = default;
+            DateTimeOffset? configurationChangeDate = default;
+            string lastOperationId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -250,15 +250,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                branch.Value,
-                commitId.Value,
-                Optional.ToNullable(isExport),
-                Optional.ToNullable(isSynced),
-                Optional.ToNullable(isGitEnabled),
-                Optional.ToNullable(syncDate),
-                Optional.ToNullable(configurationChangeDate),
-                lastOperationId.Value,
+                systemData,
+                branch,
+                commitId,
+                isExport,
+                isSynced,
+                isGitEnabled,
+                syncDate,
+                configurationChangeDate,
+                lastOperationId,
                 serializedAdditionalRawData);
         }
 

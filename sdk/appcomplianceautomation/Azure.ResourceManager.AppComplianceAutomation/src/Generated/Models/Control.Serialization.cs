@@ -109,13 +109,13 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 return null;
             }
-            Optional<string> controlId = default;
-            Optional<string> controlShortName = default;
-            Optional<string> controlFullName = default;
-            Optional<ControlType> controlType = default;
-            Optional<string> controlDescription = default;
-            Optional<string> controlDescriptionHyperLink = default;
-            Optional<ControlStatus> controlStatus = default;
+            string controlId = default;
+            string controlShortName = default;
+            string controlFullName = default;
+            ControlType? controlType = default;
+            string controlDescription = default;
+            string controlDescriptionHyperLink = default;
+            ControlStatus? controlStatus = default;
             IReadOnlyList<Assessment> assessments = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -185,13 +185,13 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new Control(
-                controlId.Value,
-                controlShortName.Value,
-                controlFullName.Value,
-                Optional.ToNullable(controlType),
-                controlDescription.Value,
-                controlDescriptionHyperLink.Value,
-                Optional.ToNullable(controlStatus),
+                controlId,
+                controlShortName,
+                controlFullName,
+                controlType,
+                controlDescription,
+                controlDescriptionHyperLink,
+                controlStatus,
                 assessments ?? new ChangeTrackingList<Assessment>(),
                 serializedAdditionalRawData);
         }
