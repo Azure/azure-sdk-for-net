@@ -17,17 +17,6 @@ namespace Azure.Provisioning.ResourceManager
         internal static readonly ResourceType ResourceType = "Microsoft.Resources/resourceGroups";
 
         /// <summary>
-        /// Whether the resource group is anonymous.
-        /// </summary>
-        internal bool IsAnonymous { get; }
-
-        internal ResourceGroup(IConstruct scope, string? name = "rg", string version = "2023-07-01", AzureLocation? location = default, bool isAnonymous = false, Subscription? parent = default)
-            : this(scope, isAnonymous ? "resourceGroup()" : name, version, location, parent)
-        {
-            IsAnonymous = isAnonymous;
-        }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="ResourceGroup"/>.
         /// </summary>
         /// <param name="scope">The scope the resourceGroup belongs to.</param>

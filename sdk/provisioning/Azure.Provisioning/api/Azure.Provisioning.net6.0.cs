@@ -54,7 +54,7 @@ namespace Azure.Provisioning
     }
     public abstract partial class Infrastructure : Azure.Provisioning.Construct
     {
-        public Infrastructure(Azure.Provisioning.ConstructScope constructScope = Azure.Provisioning.ConstructScope.Subscription, System.Guid? tenantId = default(System.Guid?), System.Guid? subscriptionId = default(System.Guid?), string? envName = null) : base (default(Azure.Provisioning.IConstruct), default(string), default(Azure.Provisioning.ConstructScope), default(System.Guid?), default(System.Guid?), default(string), default(Azure.Provisioning.ResourceManager.ResourceGroup)) { }
+        public Infrastructure(Azure.Provisioning.ConstructScope constructScope = Azure.Provisioning.ConstructScope.Subscription, System.Guid? tenantId = default(System.Guid?), System.Guid? subscriptionId = default(System.Guid?), string? envName = null, bool useAnonymousResourceGroup = false) : base (default(Azure.Provisioning.IConstruct), default(string), default(Azure.Provisioning.ConstructScope), default(System.Guid?), default(System.Guid?), default(string), default(Azure.Provisioning.ResourceManager.ResourceGroup)) { }
         public void Build(string? outputPath = null) { }
     }
     public partial class Output

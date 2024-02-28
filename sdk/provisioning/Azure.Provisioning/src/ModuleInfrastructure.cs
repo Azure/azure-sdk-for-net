@@ -52,7 +52,7 @@ namespace Azure.Provisioning
 
         private Dictionary<Resource, List<Resource>> BuildResourceTree()
         {
-            var resources = _infrastructure.GetResources(true).ToList();
+            var resources = _infrastructure.GetResources(true);
             Dictionary<Resource, List<Resource>> resourceTree = new();
             HashSet<Resource> visited = new();
             foreach (var resource in resources)
@@ -157,7 +157,7 @@ namespace Azure.Provisioning
             {
                 foreach (var child in resourceTree[resource])
                 {
-                    if (child is not ResourceGroup || child is ResourceGroup { IsAnonymous: false })
+                    if (child is not ResourceGroup || (child is ResourceGroup && child.Id.Name != "resourceGroup()"))
                     {
                         return true;
                     }
