@@ -156,7 +156,14 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationalInsightsUsageMetric(name.Value, unit.Value, Optional.ToNullable(currentValue), Optional.ToNullable(limit), Optional.ToNullable(nextResetTime), quotaPeriod.Value, serializedAdditionalRawData);
+            return new OperationalInsightsUsageMetric(
+                name.Value,
+                unit.Value,
+                Optional.ToNullable(currentValue),
+                Optional.ToNullable(limit),
+                Optional.ToNullable(nextResetTime),
+                quotaPeriod.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationalInsightsUsageMetric>.Write(ModelReaderWriterOptions options)

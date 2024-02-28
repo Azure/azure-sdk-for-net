@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.EventGrid
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExtensionTopicData(id, name, type, systemData.Value, description.Value, systemTopic.Value, serializedAdditionalRawData);
+            return new ExtensionTopicData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                description.Value,
+                systemTopic.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExtensionTopicData>.Write(ModelReaderWriterOptions options)

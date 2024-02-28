@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecommendedActionMetricInfo(metricName.Value, unit.Value, timeGrain.Value, Optional.ToNullable(startTime), Optional.ToNullable(value), serializedAdditionalRawData);
+            return new RecommendedActionMetricInfo(
+                metricName.Value,
+                unit.Value,
+                timeGrain.Value,
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(value),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecommendedActionMetricInfo>.Write(ModelReaderWriterOptions options)

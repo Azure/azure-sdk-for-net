@@ -344,7 +344,26 @@ namespace Azure.ResourceManager.SecurityInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsBookmarkData(id, name, type, systemData.Value, Optional.ToNullable(created), createdBy.Value, displayName.Value, labels ?? new ChangeTrackingList<string>(), notes.Value, query.Value, queryResult.Value, Optional.ToNullable(updated), updatedBy.Value, Optional.ToNullable(eventTime), Optional.ToNullable(queryStartTime), Optional.ToNullable(queryEndTime), incidentInfo.Value, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new SecurityInsightsBookmarkData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(created),
+                createdBy.Value,
+                displayName.Value,
+                labels ?? new ChangeTrackingList<string>(),
+                notes.Value,
+                query.Value,
+                queryResult.Value,
+                Optional.ToNullable(updated),
+                updatedBy.Value,
+                Optional.ToNullable(eventTime),
+                Optional.ToNullable(queryStartTime),
+                Optional.ToNullable(queryEndTime),
+                incidentInfo.Value,
+                Optional.ToNullable(etag),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityInsightsBookmarkData>.Write(ModelReaderWriterOptions options)

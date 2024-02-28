@@ -135,7 +135,13 @@ namespace Azure.ResourceManager.Redis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RedisLinkedServerWithPropertyCreateOrUpdateContent(linkedRedisCacheId, linkedRedisCacheLocation, serverRole, geoReplicatedPrimaryHostName.Value, primaryHostName.Value, serializedAdditionalRawData);
+            return new RedisLinkedServerWithPropertyCreateOrUpdateContent(
+                linkedRedisCacheId,
+                linkedRedisCacheLocation,
+                serverRole,
+                geoReplicatedPrimaryHostName.Value,
+                primaryHostName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RedisLinkedServerWithPropertyCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

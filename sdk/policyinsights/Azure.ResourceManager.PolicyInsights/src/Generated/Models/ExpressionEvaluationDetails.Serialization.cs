@@ -173,7 +173,15 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExpressionEvaluationDetails(result.Value, expression.Value, expressionKind.Value, path.Value, expressionValue.Value, targetValue.Value, @operator.Value, serializedAdditionalRawData);
+            return new ExpressionEvaluationDetails(
+                result.Value,
+                expression.Value,
+                expressionKind.Value,
+                path.Value,
+                expressionValue.Value,
+                targetValue.Value,
+                @operator.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExpressionEvaluationDetails>.Write(ModelReaderWriterOptions options)

@@ -139,7 +139,13 @@ namespace Azure.ResourceManager.AppContainers
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppConnectedEnvironmentStorageData(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new ContainerAppConnectedEnvironmentStorageData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppConnectedEnvironmentStorageData>.Write(ModelReaderWriterOptions options)

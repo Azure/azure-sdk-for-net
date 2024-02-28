@@ -228,7 +228,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AmazonRdsForSqlServerSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, queryTimeout.Value, additionalColumns.Value, sqlReaderQuery.Value, sqlReaderStoredProcedureName.Value, storedProcedureParameters.Value, isolationLevel.Value, produceAdditionalTypes.Value, partitionOption.Value, partitionSettings.Value);
+            return new AmazonRdsForSqlServerSource(
+                type,
+                sourceRetryCount.Value,
+                sourceRetryWait.Value,
+                maxConcurrentConnections.Value,
+                additionalProperties,
+                queryTimeout.Value,
+                additionalColumns.Value,
+                sqlReaderQuery.Value,
+                sqlReaderStoredProcedureName.Value,
+                storedProcedureParameters.Value,
+                isolationLevel.Value,
+                produceAdditionalTypes.Value,
+                partitionOption.Value,
+                partitionSettings.Value);
         }
 
         internal partial class AmazonRdsForSqlServerSourceConverter : JsonConverter<AmazonRdsForSqlServerSource>

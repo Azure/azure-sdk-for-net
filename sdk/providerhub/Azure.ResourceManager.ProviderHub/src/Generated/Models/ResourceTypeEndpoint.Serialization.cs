@@ -219,7 +219,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceTypeEndpoint(Optional.ToNullable(enabled), apiVersions ?? new ChangeTrackingList<string>(), locations ?? new ChangeTrackingList<AzureLocation>(), requiredFeatures ?? new ChangeTrackingList<string>(), featuresRule.Value, extensions ?? new ChangeTrackingList<ResourceTypeExtension>(), Optional.ToNullable(timeout), serializedAdditionalRawData);
+            return new ResourceTypeEndpoint(
+                Optional.ToNullable(enabled),
+                apiVersions ?? new ChangeTrackingList<string>(),
+                locations ?? new ChangeTrackingList<AzureLocation>(),
+                requiredFeatures ?? new ChangeTrackingList<string>(),
+                featuresRule.Value,
+                extensions ?? new ChangeTrackingList<ResourceTypeExtension>(),
+                Optional.ToNullable(timeout),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceTypeEndpoint>.Write(ModelReaderWriterOptions options)

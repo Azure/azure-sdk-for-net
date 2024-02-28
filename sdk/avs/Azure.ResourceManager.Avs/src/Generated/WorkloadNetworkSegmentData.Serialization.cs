@@ -246,7 +246,19 @@ namespace Azure.ResourceManager.Avs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadNetworkSegmentData(id, name, type, systemData.Value, displayName.Value, connectedGateway.Value, subnet.Value, portVif ?? new ChangeTrackingList<WorkloadNetworkSegmentPortVif>(), Optional.ToNullable(status), Optional.ToNullable(provisioningState), Optional.ToNullable(revision), serializedAdditionalRawData);
+            return new WorkloadNetworkSegmentData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                displayName.Value,
+                connectedGateway.Value,
+                subnet.Value,
+                portVif ?? new ChangeTrackingList<WorkloadNetworkSegmentPortVif>(),
+                Optional.ToNullable(status),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(revision),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkloadNetworkSegmentData>.Write(ModelReaderWriterOptions options)

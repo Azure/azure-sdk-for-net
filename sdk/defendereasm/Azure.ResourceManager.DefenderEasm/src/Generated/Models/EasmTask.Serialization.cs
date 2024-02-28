@@ -241,7 +241,20 @@ namespace Azure.ResourceManager.DefenderEasm.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EasmTask(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), startedAt.Value, completedAt.Value, lastPolledAt.Value, state.Value, phase.Value, reason.Value, metadata.Value, serializedAdditionalRawData);
+            return new EasmTask(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(provisioningState),
+                startedAt.Value,
+                completedAt.Value,
+                lastPolledAt.Value,
+                state.Value,
+                phase.Value,
+                reason.Value,
+                metadata.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EasmTask>.Write(ModelReaderWriterOptions options)

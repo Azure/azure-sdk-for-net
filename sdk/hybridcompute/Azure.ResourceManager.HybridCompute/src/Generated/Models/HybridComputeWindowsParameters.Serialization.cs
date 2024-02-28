@@ -179,7 +179,13 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridComputeWindowsParameters(classificationsToInclude ?? new ChangeTrackingList<VmGuestPatchClassificationWindow>(), kbNumbersToInclude ?? new ChangeTrackingList<string>(), kbNumbersToExclude ?? new ChangeTrackingList<string>(), Optional.ToNullable(excludeKbsRequiringReboot), Optional.ToNullable(maxPatchPublishDate), serializedAdditionalRawData);
+            return new HybridComputeWindowsParameters(
+                classificationsToInclude ?? new ChangeTrackingList<VmGuestPatchClassificationWindow>(),
+                kbNumbersToInclude ?? new ChangeTrackingList<string>(),
+                kbNumbersToExclude ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(excludeKbsRequiringReboot),
+                Optional.ToNullable(maxPatchPublishDate),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridComputeWindowsParameters>.Write(ModelReaderWriterOptions options)

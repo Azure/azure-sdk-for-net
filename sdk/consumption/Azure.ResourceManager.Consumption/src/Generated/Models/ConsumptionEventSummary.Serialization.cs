@@ -460,7 +460,35 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionEventSummary(id, name, type, systemData.Value, Optional.ToNullable(transactionDate), description.Value, newCredit.Value, adjustments.Value, creditExpired.Value, charges.Value, closedBalance.Value, Optional.ToNullable(eventType), invoiceNumber.Value, billingProfileId.Value, billingProfileDisplayName.Value, lotId.Value, lotSource.Value, canceledCredit.Value, creditCurrency.Value, billingCurrency.Value, reseller.Value, creditExpiredInBillingCurrency.Value, newCreditInBillingCurrency.Value, adjustmentsInBillingCurrency.Value, chargesInBillingCurrency.Value, closedBalanceInBillingCurrency.Value, Optional.ToNullable(eTag), serializedAdditionalRawData);
+            return new ConsumptionEventSummary(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(transactionDate),
+                description.Value,
+                newCredit.Value,
+                adjustments.Value,
+                creditExpired.Value,
+                charges.Value,
+                closedBalance.Value,
+                Optional.ToNullable(eventType),
+                invoiceNumber.Value,
+                billingProfileId.Value,
+                billingProfileDisplayName.Value,
+                lotId.Value,
+                lotSource.Value,
+                canceledCredit.Value,
+                creditCurrency.Value,
+                billingCurrency.Value,
+                reseller.Value,
+                creditExpiredInBillingCurrency.Value,
+                newCreditInBillingCurrency.Value,
+                adjustmentsInBillingCurrency.Value,
+                chargesInBillingCurrency.Value,
+                closedBalanceInBillingCurrency.Value,
+                Optional.ToNullable(eTag),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumptionEventSummary>.Write(ModelReaderWriterOptions options)

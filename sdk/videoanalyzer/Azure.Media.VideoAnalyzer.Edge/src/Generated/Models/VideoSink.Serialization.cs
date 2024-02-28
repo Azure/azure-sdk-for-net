@@ -116,7 +116,15 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new VideoSink(type, name, inputs, videoName, videoCreationProperties.Value, videoPublishingOptions.Value, localMediaCachePath, localMediaCacheMaximumSizeMiB);
+            return new VideoSink(
+                type,
+                name,
+                inputs,
+                videoName,
+                videoCreationProperties.Value,
+                videoPublishingOptions.Value,
+                localMediaCachePath,
+                localMediaCacheMaximumSizeMiB);
         }
     }
 }

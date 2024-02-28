@@ -137,7 +137,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageRcmFailbackEventDetails(instanceType, serializedAdditionalRawData, protectedItemName.Value, vmName.Value, applianceName.Value, serverType.Value, componentDisplayName.Value);
+            return new InMageRcmFailbackEventDetails(
+                instanceType,
+                serializedAdditionalRawData,
+                protectedItemName.Value,
+                vmName.Value,
+                applianceName.Value,
+                serverType.Value,
+                componentDisplayName.Value);
         }
 
         BinaryData IPersistableModel<InMageRcmFailbackEventDetails>.Write(ModelReaderWriterOptions options)

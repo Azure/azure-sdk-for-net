@@ -157,7 +157,15 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScriptActionProfile(type, name, url, parameters.Value, services, Optional.ToNullable(timeoutInMinutes), Optional.ToNullable(shouldPersist), serializedAdditionalRawData);
+            return new ScriptActionProfile(
+                type,
+                name,
+                url,
+                parameters.Value,
+                services,
+                Optional.ToNullable(timeoutInMinutes),
+                Optional.ToNullable(shouldPersist),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScriptActionProfile>.Write(ModelReaderWriterOptions options)

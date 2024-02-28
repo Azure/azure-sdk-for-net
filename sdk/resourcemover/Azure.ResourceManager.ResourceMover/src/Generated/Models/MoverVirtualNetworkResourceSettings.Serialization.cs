@@ -260,7 +260,16 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MoverVirtualNetworkResourceSettings(resourceType, targetResourceName.Value, targetResourceGroupName.Value, serializedAdditionalRawData, tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(enableDdosProtection), addressSpace ?? new ChangeTrackingList<string>(), dnsServers ?? new ChangeTrackingList<string>(), subnets ?? new ChangeTrackingList<SubnetResourceSettings>());
+            return new MoverVirtualNetworkResourceSettings(
+                resourceType,
+                targetResourceName.Value,
+                targetResourceGroupName.Value,
+                serializedAdditionalRawData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(enableDdosProtection),
+                addressSpace ?? new ChangeTrackingList<string>(),
+                dnsServers ?? new ChangeTrackingList<string>(),
+                subnets ?? new ChangeTrackingList<SubnetResourceSettings>());
         }
 
         BinaryData IPersistableModel<MoverVirtualNetworkResourceSettings>.Write(ModelReaderWriterOptions options)

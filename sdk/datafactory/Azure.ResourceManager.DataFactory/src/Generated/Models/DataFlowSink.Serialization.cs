@@ -169,7 +169,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataFlowSink(name, description.Value, dataset.Value, linkedService, flowlet.Value, serializedAdditionalRawData, schemaLinkedService, rejectedDataLinkedService);
+            return new DataFlowSink(
+                name,
+                description.Value,
+                dataset.Value,
+                linkedService,
+                flowlet.Value,
+                serializedAdditionalRawData,
+                schemaLinkedService,
+                rejectedDataLinkedService);
         }
 
         BinaryData IPersistableModel<DataFlowSink>.Write(ModelReaderWriterOptions options)

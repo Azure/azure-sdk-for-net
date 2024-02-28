@@ -261,7 +261,21 @@ namespace Azure.ResourceManager.MySql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlWaitStatisticData(id, name, type, systemData.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), eventName.Value, eventTypeName.Value, Optional.ToNullable(queryId), databaseName.Value, Optional.ToNullable(userId), Optional.ToNullable(count), Optional.ToNullable(totalTimeInMs), serializedAdditionalRawData);
+            return new MySqlWaitStatisticData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                eventName.Value,
+                eventTypeName.Value,
+                Optional.ToNullable(queryId),
+                databaseName.Value,
+                Optional.ToNullable(userId),
+                Optional.ToNullable(count),
+                Optional.ToNullable(totalTimeInMs),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlWaitStatisticData>.Write(ModelReaderWriterOptions options)

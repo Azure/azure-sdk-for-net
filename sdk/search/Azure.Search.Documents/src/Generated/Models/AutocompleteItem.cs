@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.Search.Documents.Models
 {
     /// <summary> The result of Autocomplete requests. </summary>
@@ -15,18 +13,8 @@ namespace Azure.Search.Documents.Models
         /// <summary> Initializes a new instance of <see cref="AutocompleteItem"/>. </summary>
         /// <param name="text"> The completed term. </param>
         /// <param name="queryPlusText"> The query along with the completed term. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="queryPlusText"/> is null. </exception>
         internal AutocompleteItem(string text, string queryPlusText)
         {
-            if (text == null)
-            {
-                throw new ArgumentNullException(nameof(text));
-            }
-            if (queryPlusText == null)
-            {
-                throw new ArgumentNullException(nameof(queryPlusText));
-            }
-
             Text = text;
             QueryPlusText = queryPlusText;
         }

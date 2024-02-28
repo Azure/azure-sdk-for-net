@@ -319,7 +319,23 @@ namespace Azure.ResourceManager.DataMigration
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProjectData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(etag), Optional.ToNullable(sourcePlatform), azureAuthenticationInfo.Value, Optional.ToNullable(targetPlatform), Optional.ToNullable(creationTime), sourceConnectionInfo.Value, targetConnectionInfo.Value, databasesInfo ?? new ChangeTrackingList<DatabaseInfo>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new ProjectData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                Optional.ToNullable(etag),
+                Optional.ToNullable(sourcePlatform),
+                azureAuthenticationInfo.Value,
+                Optional.ToNullable(targetPlatform),
+                Optional.ToNullable(creationTime),
+                sourceConnectionInfo.Value,
+                targetConnectionInfo.Value,
+                databasesInfo ?? new ChangeTrackingList<DatabaseInfo>(),
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProjectData>.Write(ModelReaderWriterOptions options)

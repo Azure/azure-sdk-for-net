@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlServerJobSchedule(Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(type), Optional.ToNullable(enabled), Optional.ToNullable(interval), serializedAdditionalRawData);
+            return new SqlServerJobSchedule(
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                Optional.ToNullable(type),
+                Optional.ToNullable(enabled),
+                Optional.ToNullable(interval),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlServerJobSchedule>.Write(ModelReaderWriterOptions options)

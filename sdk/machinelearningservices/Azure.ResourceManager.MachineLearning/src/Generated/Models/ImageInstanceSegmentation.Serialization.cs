@@ -276,7 +276,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ImageInstanceSegmentation(Optional.ToNullable(logVerbosity), targetColumnName.Value, taskType, trainingData, serializedAdditionalRawData, Optional.ToNullable(primaryMetric), modelSettings.Value, searchSpace ?? new ChangeTrackingList<ImageModelDistributionSettingsObjectDetection>(), limitSettings, sweepSettings.Value, validationData.Value, Optional.ToNullable(validationDataSize));
+            return new ImageInstanceSegmentation(
+                Optional.ToNullable(logVerbosity),
+                targetColumnName.Value,
+                taskType,
+                trainingData,
+                serializedAdditionalRawData,
+                Optional.ToNullable(primaryMetric),
+                modelSettings.Value,
+                searchSpace ?? new ChangeTrackingList<ImageModelDistributionSettingsObjectDetection>(),
+                limitSettings,
+                sweepSettings.Value,
+                validationData.Value,
+                Optional.ToNullable(validationDataSize));
         }
 
         BinaryData IPersistableModel<ImageInstanceSegmentation>.Write(ModelReaderWriterOptions options)

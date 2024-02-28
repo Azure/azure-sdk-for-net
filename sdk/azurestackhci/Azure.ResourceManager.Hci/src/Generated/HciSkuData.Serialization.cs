@@ -219,7 +219,18 @@ namespace Azure.ResourceManager.Hci
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HciSkuData(id, name, type, systemData.Value, provisioningState.Value, publisherId.Value, offerId.Value, content.Value, contentVersion.Value, skuMappings ?? new ChangeTrackingList<HciSkuMappings>(), serializedAdditionalRawData);
+            return new HciSkuData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                provisioningState.Value,
+                publisherId.Value,
+                offerId.Value,
+                content.Value,
+                contentVersion.Value,
+                skuMappings ?? new ChangeTrackingList<HciSkuMappings>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HciSkuData>.Write(ModelReaderWriterOptions options)

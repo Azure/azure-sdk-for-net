@@ -114,7 +114,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataReplicationIdentity(tenantId, applicationId, objectId, audience, aadAuthority, serializedAdditionalRawData);
+            return new DataReplicationIdentity(
+                tenantId,
+                applicationId,
+                objectId,
+                audience,
+                aadAuthority,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataReplicationIdentity>.Write(ModelReaderWriterOptions options)

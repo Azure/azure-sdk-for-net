@@ -245,7 +245,18 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceDetectorData(id, name, type, systemData.Value, metadata.Value, dataset ?? new ChangeTrackingList<DiagnosticDataset>(), status.Value, dataProvidersMetadata ?? new ChangeTrackingList<DataProviderMetadata>(), suggestedUtterances.Value, kind.Value, serializedAdditionalRawData);
+            return new AppServiceDetectorData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                metadata.Value,
+                dataset ?? new ChangeTrackingList<DiagnosticDataset>(),
+                status.Value,
+                dataProvidersMetadata ?? new ChangeTrackingList<DataProviderMetadata>(),
+                suggestedUtterances.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceDetectorData>.Write(ModelReaderWriterOptions options)

@@ -145,7 +145,13 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageSyncGroupCreateOrUpdateContent(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new StorageSyncGroupCreateOrUpdateContent(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageSyncGroupCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

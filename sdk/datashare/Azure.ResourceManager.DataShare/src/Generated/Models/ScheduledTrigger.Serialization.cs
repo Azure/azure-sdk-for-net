@@ -233,7 +233,20 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScheduledTrigger(id, name, type, systemData.Value, kind, serializedAdditionalRawData, Optional.ToNullable(createdAt), Optional.ToNullable(provisioningState), recurrenceInterval, Optional.ToNullable(synchronizationMode), synchronizationTime, Optional.ToNullable(triggerStatus), userName.Value);
+            return new ScheduledTrigger(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData,
+                Optional.ToNullable(createdAt),
+                Optional.ToNullable(provisioningState),
+                recurrenceInterval,
+                Optional.ToNullable(synchronizationMode),
+                synchronizationTime,
+                Optional.ToNullable(triggerStatus),
+                userName.Value);
         }
 
         BinaryData IPersistableModel<ScheduledTrigger>.Write(ModelReaderWriterOptions options)

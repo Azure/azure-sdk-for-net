@@ -154,7 +154,13 @@ namespace Azure.ResourceManager.Storage
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QueueServiceData(id, name, type, systemData.Value, cors.Value, serializedAdditionalRawData);
+            return new QueueServiceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                cors.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QueueServiceData>.Write(ModelReaderWriterOptions options)

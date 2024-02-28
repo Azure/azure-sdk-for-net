@@ -192,7 +192,17 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseWorkspaceSqlPoolTableDataSetMapping(id, name, type, systemData.Value, kind, serializedAdditionalRawData, dataSetId, Optional.ToNullable(dataSetMappingStatus), Optional.ToNullable(provisioningState), synapseWorkspaceSqlPoolTableResourceId);
+            return new SynapseWorkspaceSqlPoolTableDataSetMapping(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData,
+                dataSetId,
+                Optional.ToNullable(dataSetMappingStatus),
+                Optional.ToNullable(provisioningState),
+                synapseWorkspaceSqlPoolTableResourceId);
         }
 
         BinaryData IPersistableModel<SynapseWorkspaceSqlPoolTableDataSetMapping>.Write(ModelReaderWriterOptions options)

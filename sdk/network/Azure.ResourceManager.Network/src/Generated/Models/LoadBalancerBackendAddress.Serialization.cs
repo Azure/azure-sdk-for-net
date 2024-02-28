@@ -212,7 +212,16 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LoadBalancerBackendAddress(name.Value, virtualNetwork, subnet, ipAddress.Value, networkInterfaceIPConfiguration, loadBalancerFrontendIPConfiguration, inboundNatRulesPortMapping ?? new ChangeTrackingList<NatRulePortMapping>(), Optional.ToNullable(adminState), serializedAdditionalRawData);
+            return new LoadBalancerBackendAddress(
+                name.Value,
+                virtualNetwork,
+                subnet,
+                ipAddress.Value,
+                networkInterfaceIPConfiguration,
+                loadBalancerFrontendIPConfiguration,
+                inboundNatRulesPortMapping ?? new ChangeTrackingList<NatRulePortMapping>(),
+                Optional.ToNullable(adminState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LoadBalancerBackendAddress>.Write(ModelReaderWriterOptions options)

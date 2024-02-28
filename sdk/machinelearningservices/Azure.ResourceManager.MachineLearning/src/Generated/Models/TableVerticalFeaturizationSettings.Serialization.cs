@@ -250,7 +250,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TableVerticalFeaturizationSettings(datasetLanguage.Value, serializedAdditionalRawData, blockedTransformers ?? new ChangeTrackingList<BlockedTransformer>(), columnNameAndTypes ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(enableDnnFeaturization), Optional.ToNullable(mode), transformerParams ?? new ChangeTrackingDictionary<string, IList<ColumnTransformer>>());
+            return new TableVerticalFeaturizationSettings(
+                datasetLanguage.Value,
+                serializedAdditionalRawData,
+                blockedTransformers ?? new ChangeTrackingList<BlockedTransformer>(),
+                columnNameAndTypes ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(enableDnnFeaturization),
+                Optional.ToNullable(mode),
+                transformerParams ?? new ChangeTrackingDictionary<string, IList<ColumnTransformer>>());
         }
 
         BinaryData IPersistableModel<TableVerticalFeaturizationSettings>.Write(ModelReaderWriterOptions options)

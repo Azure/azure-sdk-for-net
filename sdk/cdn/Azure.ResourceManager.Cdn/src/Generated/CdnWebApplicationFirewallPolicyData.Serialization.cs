@@ -313,7 +313,23 @@ namespace Azure.ResourceManager.Cdn
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CdnWebApplicationFirewallPolicyData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(etag), sku, policySettings.Value, rateLimitRules.Value, customRules.Value, managedRules.Value, endpointLinks ?? new ChangeTrackingList<SubResource>(), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceState), serializedAdditionalRawData);
+            return new CdnWebApplicationFirewallPolicyData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                Optional.ToNullable(etag),
+                sku,
+                policySettings.Value,
+                rateLimitRules.Value,
+                customRules.Value,
+                managedRules.Value,
+                endpointLinks ?? new ChangeTrackingList<SubResource>(),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(resourceState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CdnWebApplicationFirewallPolicyData>.Write(ModelReaderWriterOptions options)

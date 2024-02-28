@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformGatewayApiMetadataProperties(title.Value, description.Value, documentation.Value, version.Value, serverUri.Value, serializedAdditionalRawData);
+            return new AppPlatformGatewayApiMetadataProperties(
+                title.Value,
+                description.Value,
+                documentation.Value,
+                version.Value,
+                serverUri.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformGatewayApiMetadataProperties>.Write(ModelReaderWriterOptions options)

@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineCaptureResult(id.Value, serializedAdditionalRawData, schema.Value, contentVersion.Value, parameters.Value, resources ?? new ChangeTrackingList<BinaryData>());
+            return new VirtualMachineCaptureResult(
+                id.Value,
+                serializedAdditionalRawData,
+                schema.Value,
+                contentVersion.Value,
+                parameters.Value,
+                resources ?? new ChangeTrackingList<BinaryData>());
         }
 
         BinaryData IPersistableModel<VirtualMachineCaptureResult>.Write(ModelReaderWriterOptions options)

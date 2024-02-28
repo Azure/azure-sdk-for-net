@@ -368,7 +368,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ForecastingSettings(countryOrRegionForHolidays.Value, Optional.ToNullable(cvStepSize), Optional.ToNullable(featureLags), featuresUnknownAtForecastTime ?? new ChangeTrackingList<string>(), forecastHorizon.Value, frequency.Value, seasonality.Value, Optional.ToNullable(shortSeriesHandlingConfig), Optional.ToNullable(targetAggregateFunction), targetLags.Value, targetRollingWindowSize.Value, timeColumnName.Value, timeSeriesIdColumnNames ?? new ChangeTrackingList<string>(), Optional.ToNullable(useStl), serializedAdditionalRawData);
+            return new ForecastingSettings(
+                countryOrRegionForHolidays.Value,
+                Optional.ToNullable(cvStepSize),
+                Optional.ToNullable(featureLags),
+                featuresUnknownAtForecastTime ?? new ChangeTrackingList<string>(),
+                forecastHorizon.Value,
+                frequency.Value,
+                seasonality.Value,
+                Optional.ToNullable(shortSeriesHandlingConfig),
+                Optional.ToNullable(targetAggregateFunction),
+                targetLags.Value,
+                targetRollingWindowSize.Value,
+                timeColumnName.Value,
+                timeSeriesIdColumnNames ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(useStl),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ForecastingSettings>.Write(ModelReaderWriterOptions options)

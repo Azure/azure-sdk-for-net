@@ -227,7 +227,20 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateMySqlAzureDBForMySqlOfflineTaskOutputTableLevel(id.Value, resultType, serializedAdditionalRawData, objectName.Value, Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), Optional.ToNullable(state), statusMessage.Value, Optional.ToNullable(itemsCount), Optional.ToNullable(itemsCompletedCount), errorPrefix.Value, resultPrefix.Value, Optional.ToNullable(lastStorageUpdate));
+            return new MigrateMySqlAzureDBForMySqlOfflineTaskOutputTableLevel(
+                id.Value,
+                resultType,
+                serializedAdditionalRawData,
+                objectName.Value,
+                Optional.ToNullable(startedOn),
+                Optional.ToNullable(endedOn),
+                Optional.ToNullable(state),
+                statusMessage.Value,
+                Optional.ToNullable(itemsCount),
+                Optional.ToNullable(itemsCompletedCount),
+                errorPrefix.Value,
+                resultPrefix.Value,
+                Optional.ToNullable(lastStorageUpdate));
         }
 
         BinaryData IPersistableModel<MigrateMySqlAzureDBForMySqlOfflineTaskOutputTableLevel>.Write(ModelReaderWriterOptions options)

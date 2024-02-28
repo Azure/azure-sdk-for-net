@@ -322,7 +322,26 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FunctionEnvelopeData(id, name, type, systemData.Value, functionAppId.Value, scriptRootPathHref.Value, scriptHref.Value, configHref.Value, testDataHref.Value, secretsFileHref.Value, href.Value, config.Value, files ?? new ChangeTrackingDictionary<string, string>(), testData.Value, invokeUrlTemplate.Value, language.Value, Optional.ToNullable(isDisabled), kind.Value, serializedAdditionalRawData);
+            return new FunctionEnvelopeData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                functionAppId.Value,
+                scriptRootPathHref.Value,
+                scriptHref.Value,
+                configHref.Value,
+                testDataHref.Value,
+                secretsFileHref.Value,
+                href.Value,
+                config.Value,
+                files ?? new ChangeTrackingDictionary<string, string>(),
+                testData.Value,
+                invokeUrlTemplate.Value,
+                language.Value,
+                Optional.ToNullable(isDisabled),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FunctionEnvelopeData>.Write(ModelReaderWriterOptions options)

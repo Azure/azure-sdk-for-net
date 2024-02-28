@@ -193,7 +193,16 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationalInsightsManagementGroup(Optional.ToNullable(serverCount), Optional.ToNullable(isGateway), name.Value, id.Value, Optional.ToNullable(created), Optional.ToNullable(dataReceived), version.Value, sku.Value, serializedAdditionalRawData);
+            return new OperationalInsightsManagementGroup(
+                Optional.ToNullable(serverCount),
+                Optional.ToNullable(isGateway),
+                name.Value,
+                id.Value,
+                Optional.ToNullable(created),
+                Optional.ToNullable(dataReceived),
+                version.Value,
+                sku.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationalInsightsManagementGroup>.Write(ModelReaderWriterOptions options)

@@ -273,7 +273,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OneLakeDatastore(description.Value, properties ?? new ChangeTrackingDictionary<string, string>(), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, credentials, datastoreType, intellectualProperty.Value, Optional.ToNullable(isDefault), artifact, endpoint.Value, oneLakeWorkspaceName, Optional.ToNullable(serviceDataAccessAuthIdentity));
+            return new OneLakeDatastore(
+                description.Value,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                credentials,
+                datastoreType,
+                intellectualProperty.Value,
+                Optional.ToNullable(isDefault),
+                artifact,
+                endpoint.Value,
+                oneLakeWorkspaceName,
+                Optional.ToNullable(serviceDataAccessAuthIdentity));
         }
 
         BinaryData IPersistableModel<OneLakeDatastore>.Write(ModelReaderWriterOptions options)

@@ -210,7 +210,17 @@ namespace Azure.ResourceManager.DevCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ImageVersionData(id, name, type, systemData.Value, name0.Value, Optional.ToNullable(publishedDate), Optional.ToNullable(excludeFromLatest), Optional.ToNullable(osDiskImageSizeInGb), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new ImageVersionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                name0.Value,
+                Optional.ToNullable(publishedDate),
+                Optional.ToNullable(excludeFromLatest),
+                Optional.ToNullable(osDiskImageSizeInGb),
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ImageVersionData>.Write(ModelReaderWriterOptions options)

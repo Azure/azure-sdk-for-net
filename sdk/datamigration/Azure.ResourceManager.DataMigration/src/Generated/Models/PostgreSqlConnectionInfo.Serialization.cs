@@ -220,7 +220,21 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlConnectionInfo(type, userName.Value, password.Value, serializedAdditionalRawData, serverName, dataSource.Value, serverVersion.Value, databaseName.Value, port, Optional.ToNullable(encryptConnection), Optional.ToNullable(trustServerCertificate), additionalSettings.Value, serverBrandVersion.Value, Optional.ToNullable(authentication));
+            return new PostgreSqlConnectionInfo(
+                type,
+                userName.Value,
+                password.Value,
+                serializedAdditionalRawData,
+                serverName,
+                dataSource.Value,
+                serverVersion.Value,
+                databaseName.Value,
+                port,
+                Optional.ToNullable(encryptConnection),
+                Optional.ToNullable(trustServerCertificate),
+                additionalSettings.Value,
+                serverBrandVersion.Value,
+                Optional.ToNullable(authentication));
         }
 
         BinaryData IPersistableModel<PostgreSqlConnectionInfo>.Write(ModelReaderWriterOptions options)

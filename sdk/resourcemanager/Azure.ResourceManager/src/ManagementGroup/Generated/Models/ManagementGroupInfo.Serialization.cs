@@ -229,7 +229,15 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagementGroupInfo(Optional.ToNullable(version), Optional.ToNullable(updatedTime), updatedBy.Value, parent.Value, path ?? new ChangeTrackingList<ManagementGroupPathElement>(), managementGroupAncestors ?? new ChangeTrackingList<string>(), managementGroupAncestorsChain ?? new ChangeTrackingList<ManagementGroupPathElement>(), serializedAdditionalRawData);
+            return new ManagementGroupInfo(
+                Optional.ToNullable(version),
+                Optional.ToNullable(updatedTime),
+                updatedBy.Value,
+                parent.Value,
+                path ?? new ChangeTrackingList<ManagementGroupPathElement>(),
+                managementGroupAncestors ?? new ChangeTrackingList<string>(),
+                managementGroupAncestorsChain ?? new ChangeTrackingList<ManagementGroupPathElement>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagementGroupInfo>.Write(ModelReaderWriterOptions options)

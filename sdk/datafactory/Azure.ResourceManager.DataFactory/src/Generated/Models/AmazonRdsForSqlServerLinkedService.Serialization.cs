@@ -252,7 +252,18 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AmazonRdsForSqlServerLinkedService(type, connectVia.Value, description.Value, parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, connectionString, userName.Value, password, encryptedCredential.Value, alwaysEncryptedSettings.Value);
+            return new AmazonRdsForSqlServerLinkedService(
+                type,
+                connectVia.Value,
+                description.Value,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                connectionString,
+                userName.Value,
+                password,
+                encryptedCredential.Value,
+                alwaysEncryptedSettings.Value);
         }
 
         BinaryData IPersistableModel<AmazonRdsForSqlServerLinkedService>.Write(ModelReaderWriterOptions options)

@@ -143,7 +143,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ThresholdRuleCondition(odataType, dataSource.Value, serializedAdditionalRawData, @operator, threshold, Optional.ToNullable(windowSize), Optional.ToNullable(timeAggregation));
+            return new ThresholdRuleCondition(
+                odataType,
+                dataSource.Value,
+                serializedAdditionalRawData,
+                @operator,
+                threshold,
+                Optional.ToNullable(windowSize),
+                Optional.ToNullable(timeAggregation));
         }
 
         BinaryData IPersistableModel<ThresholdRuleCondition>.Write(ModelReaderWriterOptions options)

@@ -338,7 +338,25 @@ namespace Azure.ResourceManager.Hci
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualHardDiskData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, extendedLocation.Value, Optional.ToNullable(blockSizeBytes), Optional.ToNullable(diskSizeGB), Optional.ToNullable(@dynamic), Optional.ToNullable(logicalSectorBytes), Optional.ToNullable(physicalSectorBytes), Optional.ToNullable(hyperVGeneration), Optional.ToNullable(diskFileFormat), Optional.ToNullable(provisioningState), containerId.Value, status.Value, serializedAdditionalRawData);
+            return new VirtualHardDiskData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation.Value,
+                Optional.ToNullable(blockSizeBytes),
+                Optional.ToNullable(diskSizeGB),
+                Optional.ToNullable(@dynamic),
+                Optional.ToNullable(logicalSectorBytes),
+                Optional.ToNullable(physicalSectorBytes),
+                Optional.ToNullable(hyperVGeneration),
+                Optional.ToNullable(diskFileFormat),
+                Optional.ToNullable(provisioningState),
+                containerId.Value,
+                status.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualHardDiskData>.Write(ModelReaderWriterOptions options)

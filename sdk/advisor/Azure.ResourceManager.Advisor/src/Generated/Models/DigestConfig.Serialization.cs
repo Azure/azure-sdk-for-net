@@ -162,7 +162,14 @@ namespace Azure.ResourceManager.Advisor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DigestConfig(name.Value, actionGroupResourceId.Value, Optional.ToNullable(frequency), categories ?? new ChangeTrackingList<Category>(), language.Value, Optional.ToNullable(state), serializedAdditionalRawData);
+            return new DigestConfig(
+                name.Value,
+                actionGroupResourceId.Value,
+                Optional.ToNullable(frequency),
+                categories ?? new ChangeTrackingList<Category>(),
+                language.Value,
+                Optional.ToNullable(state),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DigestConfig>.Write(ModelReaderWriterOptions options)

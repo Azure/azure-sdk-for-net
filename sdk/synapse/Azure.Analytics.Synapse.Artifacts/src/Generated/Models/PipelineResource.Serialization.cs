@@ -272,7 +272,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new PipelineResource(id.Value, name.Value, type.Value, etag.Value, description.Value, activities ?? new ChangeTrackingList<Activity>(), parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(), variables ?? new ChangeTrackingDictionary<string, VariableSpecification>(), Optional.ToNullable(concurrency), annotations ?? new ChangeTrackingList<object>(), runDimensions ?? new ChangeTrackingDictionary<string, object>(), folder.Value, additionalProperties);
+            return new PipelineResource(
+                id.Value,
+                name.Value,
+                type.Value,
+                etag.Value,
+                description.Value,
+                activities ?? new ChangeTrackingList<Activity>(),
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                variables ?? new ChangeTrackingDictionary<string, VariableSpecification>(),
+                Optional.ToNullable(concurrency),
+                annotations ?? new ChangeTrackingList<object>(),
+                runDimensions ?? new ChangeTrackingDictionary<string, object>(),
+                folder.Value,
+                additionalProperties);
         }
 
         internal partial class PipelineResourceConverter : JsonConverter<PipelineResource>

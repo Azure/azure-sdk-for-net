@@ -220,7 +220,18 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmDeploymentOperationProperties(Optional.ToNullable(provisioningOperation), provisioningState.Value, Optional.ToNullable(timestamp), Optional.ToNullable(duration), serviceRequestId.Value, statusCode.Value, statusMessage.Value, targetResource.Value, request.Value, response.Value, serializedAdditionalRawData);
+            return new ArmDeploymentOperationProperties(
+                Optional.ToNullable(provisioningOperation),
+                provisioningState.Value,
+                Optional.ToNullable(timestamp),
+                Optional.ToNullable(duration),
+                serviceRequestId.Value,
+                statusCode.Value,
+                statusMessage.Value,
+                targetResource.Value,
+                request.Value,
+                response.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArmDeploymentOperationProperties>.Write(ModelReaderWriterOptions options)

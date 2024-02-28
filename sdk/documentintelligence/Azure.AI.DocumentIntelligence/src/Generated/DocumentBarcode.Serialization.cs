@@ -132,7 +132,13 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DocumentBarcode(kind, value, polygon ?? new ChangeTrackingList<float>(), span, confidence, serializedAdditionalRawData);
+            return new DocumentBarcode(
+                kind,
+                value,
+                polygon ?? new ChangeTrackingList<float>(),
+                span,
+                confidence,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DocumentBarcode>.Write(ModelReaderWriterOptions options)

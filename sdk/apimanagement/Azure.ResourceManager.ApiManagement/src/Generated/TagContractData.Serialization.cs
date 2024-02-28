@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TagContractData(id, name, type, systemData.Value, displayName.Value, serializedAdditionalRawData);
+            return new TagContractData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                displayName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TagContractData>.Write(ModelReaderWriterOptions options)

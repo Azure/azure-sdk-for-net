@@ -232,7 +232,19 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityAlertsSuppressionRuleData(id, name, type, systemData.Value, alertType.Value, Optional.ToNullable(lastModifiedUtc), Optional.ToNullable(expirationDateUtc), reason.Value, Optional.ToNullable(state), comment.Value, suppressionAlertsScope.Value, serializedAdditionalRawData);
+            return new SecurityAlertsSuppressionRuleData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                alertType.Value,
+                Optional.ToNullable(lastModifiedUtc),
+                Optional.ToNullable(expirationDateUtc),
+                reason.Value,
+                Optional.ToNullable(state),
+                comment.Value,
+                suppressionAlertsScope.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityAlertsSuppressionRuleData>.Write(ModelReaderWriterOptions options)

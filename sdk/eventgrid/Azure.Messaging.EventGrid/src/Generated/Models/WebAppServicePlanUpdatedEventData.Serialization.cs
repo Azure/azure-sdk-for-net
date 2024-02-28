@@ -80,7 +80,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new WebAppServicePlanUpdatedEventData(appServicePlanEventTypeDetail.Value, sku.Value, name.Value, clientRequestId.Value, correlationRequestId.Value, requestId.Value, address.Value, verb.Value);
+            return new WebAppServicePlanUpdatedEventData(
+                appServicePlanEventTypeDetail.Value,
+                sku.Value,
+                name.Value,
+                clientRequestId.Value,
+                correlationRequestId.Value,
+                requestId.Value,
+                address.Value,
+                verb.Value);
         }
 
         internal partial class WebAppServicePlanUpdatedEventDataConverter : JsonConverter<WebAppServicePlanUpdatedEventData>

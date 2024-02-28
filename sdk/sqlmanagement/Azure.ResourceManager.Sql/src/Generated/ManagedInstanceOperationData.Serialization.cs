@@ -344,7 +344,27 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedInstanceOperationData(id, name, type, systemData.Value, managedInstanceName.Value, operation.Value, operationFriendlyName.Value, Optional.ToNullable(percentComplete), Optional.ToNullable(startTime), Optional.ToNullable(state), Optional.ToNullable(errorCode), errorDescription.Value, Optional.ToNullable(errorSeverity), Optional.ToNullable(isUserError), Optional.ToNullable(estimatedCompletionTime), description.Value, Optional.ToNullable(isCancellable), operationParameters.Value, operationSteps.Value, serializedAdditionalRawData);
+            return new ManagedInstanceOperationData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                managedInstanceName.Value,
+                operation.Value,
+                operationFriendlyName.Value,
+                Optional.ToNullable(percentComplete),
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(state),
+                Optional.ToNullable(errorCode),
+                errorDescription.Value,
+                Optional.ToNullable(errorSeverity),
+                Optional.ToNullable(isUserError),
+                Optional.ToNullable(estimatedCompletionTime),
+                description.Value,
+                Optional.ToNullable(isCancellable),
+                operationParameters.Value,
+                operationSteps.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedInstanceOperationData>.Write(ModelReaderWriterOptions options)

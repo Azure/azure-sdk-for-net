@@ -163,7 +163,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeDeviceNetworkSettings(id, name, type, systemData.Value, networkAdapters ?? new ChangeTrackingList<DataBoxEdgeNetworkAdapter>(), serializedAdditionalRawData);
+            return new DataBoxEdgeDeviceNetworkSettings(
+                id,
+                name,
+                type,
+                systemData.Value,
+                networkAdapters ?? new ChangeTrackingList<DataBoxEdgeNetworkAdapter>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeDeviceNetworkSettings>.Write(ModelReaderWriterOptions options)

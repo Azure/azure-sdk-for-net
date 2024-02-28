@@ -166,7 +166,14 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkSiblingSet(networkSiblingSetId.Value, subnetId.Value, networkSiblingSetStateId.Value, Optional.ToNullable(networkFeatures), Optional.ToNullable(provisioningState), nicInfoList ?? new ChangeTrackingList<NicInfo>(), serializedAdditionalRawData);
+            return new NetworkSiblingSet(
+                networkSiblingSetId.Value,
+                subnetId.Value,
+                networkSiblingSetStateId.Value,
+                Optional.ToNullable(networkFeatures),
+                Optional.ToNullable(provisioningState),
+                nicInfoList ?? new ChangeTrackingList<NicInfo>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkSiblingSet>.Write(ModelReaderWriterOptions options)

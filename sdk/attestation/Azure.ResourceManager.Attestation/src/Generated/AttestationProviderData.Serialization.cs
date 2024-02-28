@@ -254,7 +254,19 @@ namespace Azure.ResourceManager.Attestation
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AttestationProviderData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, trustModel.Value, Optional.ToNullable(status), attestUri.Value, Optional.ToNullable(publicNetworkAccess), privateEndpointConnections ?? new ChangeTrackingList<AttestationPrivateEndpointConnectionData>(), serializedAdditionalRawData);
+            return new AttestationProviderData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                trustModel.Value,
+                Optional.ToNullable(status),
+                attestUri.Value,
+                Optional.ToNullable(publicNetworkAccess),
+                privateEndpointConnections ?? new ChangeTrackingList<AttestationPrivateEndpointConnectionData>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AttestationProviderData>.Write(ModelReaderWriterOptions options)

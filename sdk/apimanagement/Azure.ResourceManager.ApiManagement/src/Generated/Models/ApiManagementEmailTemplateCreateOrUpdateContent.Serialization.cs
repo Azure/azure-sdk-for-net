@@ -158,7 +158,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementEmailTemplateCreateOrUpdateContent(subject.Value, title.Value, description.Value, body.Value, parameters ?? new ChangeTrackingList<EmailTemplateParametersContractProperties>(), serializedAdditionalRawData);
+            return new ApiManagementEmailTemplateCreateOrUpdateContent(
+                subject.Value,
+                title.Value,
+                description.Value,
+                body.Value,
+                parameters ?? new ChangeTrackingList<EmailTemplateParametersContractProperties>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementEmailTemplateCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

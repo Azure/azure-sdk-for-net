@@ -377,7 +377,28 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScalingPlanData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, objectId.Value, description.Value, friendlyName.Value, timeZone, Optional.ToNullable(hostPoolType), exclusionTag.Value, schedules ?? new ChangeTrackingList<ScalingSchedule>(), hostPoolReferences ?? new ChangeTrackingList<ScalingHostPoolReference>(), managedBy.Value, kind.Value, Optional.ToNullable(etag), identity, sku.Value, plan, serializedAdditionalRawData);
+            return new ScalingPlanData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                objectId.Value,
+                description.Value,
+                friendlyName.Value,
+                timeZone,
+                Optional.ToNullable(hostPoolType),
+                exclusionTag.Value,
+                schedules ?? new ChangeTrackingList<ScalingSchedule>(),
+                hostPoolReferences ?? new ChangeTrackingList<ScalingHostPoolReference>(),
+                managedBy.Value,
+                kind.Value,
+                Optional.ToNullable(etag),
+                identity,
+                sku.Value,
+                plan,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScalingPlanData>.Write(ModelReaderWriterOptions options)

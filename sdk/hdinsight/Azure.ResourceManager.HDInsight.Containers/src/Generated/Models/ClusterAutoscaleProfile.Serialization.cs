@@ -142,7 +142,13 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterAutoscaleProfile(enabled, Optional.ToNullable(gracefulDecommissionTimeout), Optional.ToNullable(autoscaleType), scheduleBasedConfig.Value, loadBasedConfig.Value, serializedAdditionalRawData);
+            return new ClusterAutoscaleProfile(
+                enabled,
+                Optional.ToNullable(gracefulDecommissionTimeout),
+                Optional.ToNullable(autoscaleType),
+                scheduleBasedConfig.Value,
+                loadBasedConfig.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterAutoscaleProfile>.Write(ModelReaderWriterOptions options)

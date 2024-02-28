@@ -100,7 +100,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new RunNotebookSnapshot(exitValue.Value, id, notebook, sessionOptions.Value, Optional.ToNullable(honorSessionTimeToLive), sessionId.Value, sparkPool.Value, parameters ?? new ChangeTrackingDictionary<string, RunNotebookParameter>(), notebookContent.Value);
+            return new RunNotebookSnapshot(
+                exitValue.Value,
+                id,
+                notebook,
+                sessionOptions.Value,
+                Optional.ToNullable(honorSessionTimeToLive),
+                sessionId.Value,
+                sparkPool.Value,
+                parameters ?? new ChangeTrackingDictionary<string, RunNotebookParameter>(),
+                notebookContent.Value);
         }
 
         internal partial class RunNotebookSnapshotConverter : JsonConverter<RunNotebookSnapshot>

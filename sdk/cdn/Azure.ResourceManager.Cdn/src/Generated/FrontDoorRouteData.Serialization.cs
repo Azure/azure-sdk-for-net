@@ -390,7 +390,26 @@ namespace Azure.ResourceManager.Cdn
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorRouteData(id, name, type, systemData.Value, endpointName.Value, customDomains ?? new ChangeTrackingList<FrontDoorActivatedResourceInfo>(), originGroup, originPath.Value, ruleSets ?? new ChangeTrackingList<WritableSubResource>(), supportedProtocols ?? new ChangeTrackingList<FrontDoorEndpointProtocol>(), patternsToMatch ?? new ChangeTrackingList<string>(), cacheConfiguration.Value, Optional.ToNullable(forwardingProtocol), Optional.ToNullable(linkToDefaultDomain), Optional.ToNullable(httpsRedirect), Optional.ToNullable(enabledState), Optional.ToNullable(provisioningState), Optional.ToNullable(deploymentStatus), serializedAdditionalRawData);
+            return new FrontDoorRouteData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                endpointName.Value,
+                customDomains ?? new ChangeTrackingList<FrontDoorActivatedResourceInfo>(),
+                originGroup,
+                originPath.Value,
+                ruleSets ?? new ChangeTrackingList<WritableSubResource>(),
+                supportedProtocols ?? new ChangeTrackingList<FrontDoorEndpointProtocol>(),
+                patternsToMatch ?? new ChangeTrackingList<string>(),
+                cacheConfiguration.Value,
+                Optional.ToNullable(forwardingProtocol),
+                Optional.ToNullable(linkToDefaultDomain),
+                Optional.ToNullable(httpsRedirect),
+                Optional.ToNullable(enabledState),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(deploymentStatus),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorRouteData>.Write(ModelReaderWriterOptions options)

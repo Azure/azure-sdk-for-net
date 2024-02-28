@@ -273,7 +273,23 @@ namespace Azure.ResourceManager.NetApp
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppBackupData(id, name, type, systemData.Value, backupId.Value, Optional.ToNullable(creationDate), provisioningState.Value, Optional.ToNullable(size), label.Value, Optional.ToNullable(backupType), failureReason.Value, volumeResourceId, Optional.ToNullable(useExistingSnapshot), snapshotName.Value, backupPolicyResourceId.Value, serializedAdditionalRawData);
+            return new NetAppBackupData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                backupId.Value,
+                Optional.ToNullable(creationDate),
+                provisioningState.Value,
+                Optional.ToNullable(size),
+                label.Value,
+                Optional.ToNullable(backupType),
+                failureReason.Value,
+                volumeResourceId,
+                Optional.ToNullable(useExistingSnapshot),
+                snapshotName.Value,
+                backupPolicyResourceId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppBackupData>.Write(ModelReaderWriterOptions options)

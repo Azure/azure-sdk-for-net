@@ -468,7 +468,35 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlFlexibleServerData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, sku.Value, identity.Value, administratorLogin.Value, administratorLoginPassword.Value, Optional.ToNullable(version), minorVersion.Value, Optional.ToNullable(state), fullyQualifiedDomainName.Value, storage.Value, authConfig.Value, dataEncryption.Value, backup.Value, network.Value, highAvailability.Value, maintenanceWindow.Value, sourceServerResourceId.Value, Optional.ToNullable(pointInTimeUTC), availabilityZone.Value, Optional.ToNullable(replicationRole), Optional.ToNullable(replicaCapacity), Optional.ToNullable(createMode), serializedAdditionalRawData);
+            return new PostgreSqlFlexibleServerData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku.Value,
+                identity.Value,
+                administratorLogin.Value,
+                administratorLoginPassword.Value,
+                Optional.ToNullable(version),
+                minorVersion.Value,
+                Optional.ToNullable(state),
+                fullyQualifiedDomainName.Value,
+                storage.Value,
+                authConfig.Value,
+                dataEncryption.Value,
+                backup.Value,
+                network.Value,
+                highAvailability.Value,
+                maintenanceWindow.Value,
+                sourceServerResourceId.Value,
+                Optional.ToNullable(pointInTimeUTC),
+                availabilityZone.Value,
+                Optional.ToNullable(replicationRole),
+                Optional.ToNullable(replicaCapacity),
+                Optional.ToNullable(createMode),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlFlexibleServerData>.Write(ModelReaderWriterOptions options)

@@ -411,7 +411,31 @@ namespace Azure.ResourceManager.DataBox
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxJobData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, transferType, Optional.ToNullable(isCancellable), Optional.ToNullable(isDeletable), Optional.ToNullable(isShippingAddressEditable), Optional.ToNullable(reverseShippingDetailsUpdate), Optional.ToNullable(reverseTransportPreferenceUpdate), Optional.ToNullable(isPrepareToShipEnabled), Optional.ToNullable(status), Optional.ToNullable(startTime), error.Value, details.Value, cancellationReason.Value, Optional.ToNullable(deliveryType), deliveryInfo.Value, Optional.ToNullable(isCancellableWithoutFee), sku, identity, serializedAdditionalRawData);
+            return new DataBoxJobData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                transferType,
+                Optional.ToNullable(isCancellable),
+                Optional.ToNullable(isDeletable),
+                Optional.ToNullable(isShippingAddressEditable),
+                Optional.ToNullable(reverseShippingDetailsUpdate),
+                Optional.ToNullable(reverseTransportPreferenceUpdate),
+                Optional.ToNullable(isPrepareToShipEnabled),
+                Optional.ToNullable(status),
+                Optional.ToNullable(startTime),
+                error.Value,
+                details.Value,
+                cancellationReason.Value,
+                Optional.ToNullable(deliveryType),
+                deliveryInfo.Value,
+                Optional.ToNullable(isCancellableWithoutFee),
+                sku,
+                identity,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxJobData>.Write(ModelReaderWriterOptions options)

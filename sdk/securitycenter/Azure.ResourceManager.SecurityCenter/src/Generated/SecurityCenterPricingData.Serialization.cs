@@ -260,7 +260,19 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityCenterPricingData(id, name, type, systemData.Value, Optional.ToNullable(pricingTier), subPlan.Value, Optional.ToNullable(freeTrialRemainingTime), Optional.ToNullable(enablementTime), Optional.ToNullable(deprecated), replacedBy ?? new ChangeTrackingList<string>(), extensions ?? new ChangeTrackingList<PlanExtension>(), serializedAdditionalRawData);
+            return new SecurityCenterPricingData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(pricingTier),
+                subPlan.Value,
+                Optional.ToNullable(freeTrialRemainingTime),
+                Optional.ToNullable(enablementTime),
+                Optional.ToNullable(deprecated),
+                replacedBy ?? new ChangeTrackingList<string>(),
+                extensions ?? new ChangeTrackingList<PlanExtension>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityCenterPricingData>.Write(ModelReaderWriterOptions options)

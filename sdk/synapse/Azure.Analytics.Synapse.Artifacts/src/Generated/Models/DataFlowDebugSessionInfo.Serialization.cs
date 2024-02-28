@@ -95,7 +95,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataFlowDebugSessionInfo(dataFlowName.Value, computeType.Value, Optional.ToNullable(coreCount), Optional.ToNullable(nodeCount), integrationRuntimeName.Value, sessionId.Value, startTime.Value, Optional.ToNullable(timeToLiveInMinutes), lastActivityTime.Value, additionalProperties);
+            return new DataFlowDebugSessionInfo(
+                dataFlowName.Value,
+                computeType.Value,
+                Optional.ToNullable(coreCount),
+                Optional.ToNullable(nodeCount),
+                integrationRuntimeName.Value,
+                sessionId.Value,
+                startTime.Value,
+                Optional.ToNullable(timeToLiveInMinutes),
+                lastActivityTime.Value,
+                additionalProperties);
         }
 
         internal partial class DataFlowDebugSessionInfoConverter : JsonConverter<DataFlowDebugSessionInfo>

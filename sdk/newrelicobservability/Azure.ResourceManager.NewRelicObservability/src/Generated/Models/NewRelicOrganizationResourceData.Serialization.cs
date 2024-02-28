@@ -175,7 +175,15 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NewRelicOrganizationResourceData(id, name, type, systemData.Value, organizationId.Value, organizationName.Value, Optional.ToNullable(billingSource), serializedAdditionalRawData);
+            return new NewRelicOrganizationResourceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                organizationId.Value,
+                organizationName.Value,
+                Optional.ToNullable(billingSource),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NewRelicOrganizationResourceData>.Write(ModelReaderWriterOptions options)

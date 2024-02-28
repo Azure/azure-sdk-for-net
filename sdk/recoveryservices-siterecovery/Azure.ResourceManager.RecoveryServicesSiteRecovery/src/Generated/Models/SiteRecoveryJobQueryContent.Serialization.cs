@@ -174,7 +174,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryJobQueryContent(startTime.Value, endTime.Value, fabricId.Value, affectedObjectTypes.Value, jobStatus.Value, Optional.ToNullable(jobOutputType), jobName.Value, Optional.ToNullable(timezoneOffset), serializedAdditionalRawData);
+            return new SiteRecoveryJobQueryContent(
+                startTime.Value,
+                endTime.Value,
+                fabricId.Value,
+                affectedObjectTypes.Value,
+                jobStatus.Value,
+                Optional.ToNullable(jobOutputType),
+                jobName.Value,
+                Optional.ToNullable(timezoneOffset),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryJobQueryContent>.Write(ModelReaderWriterOptions options)

@@ -162,7 +162,16 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RulestackSecurityServices(vulnerabilityProfile.Value, antiSpywareProfile.Value, antiVirusProfile.Value, urlFilteringProfile.Value, fileBlockingProfile.Value, dnsSubscription.Value, outboundUnTrustCertificate.Value, outboundTrustCertificate.Value, serializedAdditionalRawData);
+            return new RulestackSecurityServices(
+                vulnerabilityProfile.Value,
+                antiSpywareProfile.Value,
+                antiVirusProfile.Value,
+                urlFilteringProfile.Value,
+                fileBlockingProfile.Value,
+                dnsSubscription.Value,
+                outboundUnTrustCertificate.Value,
+                outboundTrustCertificate.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RulestackSecurityServices>.Write(ModelReaderWriterOptions options)

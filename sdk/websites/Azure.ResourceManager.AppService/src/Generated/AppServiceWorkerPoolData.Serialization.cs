@@ -246,7 +246,19 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceWorkerPoolData(id, name, type, systemData.Value, sku.Value, Optional.ToNullable(workerSizeId), Optional.ToNullable(computeMode), workerSize.Value, Optional.ToNullable(workerCount), instanceNames ?? new ChangeTrackingList<string>(), kind.Value, serializedAdditionalRawData);
+            return new AppServiceWorkerPoolData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                sku.Value,
+                Optional.ToNullable(workerSizeId),
+                Optional.ToNullable(computeMode),
+                workerSize.Value,
+                Optional.ToNullable(workerCount),
+                instanceNames ?? new ChangeTrackingList<string>(),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceWorkerPoolData>.Write(ModelReaderWriterOptions options)

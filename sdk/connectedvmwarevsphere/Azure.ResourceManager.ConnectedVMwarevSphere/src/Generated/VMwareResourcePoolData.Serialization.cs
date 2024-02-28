@@ -498,7 +498,36 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareResourcePoolData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, extendedLocation, kind.Value, uuid.Value, vCenterId.Value, moRefId.Value, inventoryItemId.Value, moName.Value, cpuSharesLevel.Value, Optional.ToNullable(cpuReservationMHz), Optional.ToNullable(cpuLimitMHz), memSharesLevel.Value, Optional.ToNullable(memReservationMB), Optional.ToNullable(memLimitMB), Optional.ToNullable(memOverallUsageGB), Optional.ToNullable(memCapacityGB), Optional.ToNullable(cpuOverallUsageMHz), Optional.ToNullable(cpuCapacityMHz), customResourceName.Value, datastoreIds ?? new ChangeTrackingList<string>(), networkIds ?? new ChangeTrackingList<string>(), statuses ?? new ChangeTrackingList<VMwareResourceStatus>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new VMwareResourcePoolData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation,
+                kind.Value,
+                uuid.Value,
+                vCenterId.Value,
+                moRefId.Value,
+                inventoryItemId.Value,
+                moName.Value,
+                cpuSharesLevel.Value,
+                Optional.ToNullable(cpuReservationMHz),
+                Optional.ToNullable(cpuLimitMHz),
+                memSharesLevel.Value,
+                Optional.ToNullable(memReservationMB),
+                Optional.ToNullable(memLimitMB),
+                Optional.ToNullable(memOverallUsageGB),
+                Optional.ToNullable(memCapacityGB),
+                Optional.ToNullable(cpuOverallUsageMHz),
+                Optional.ToNullable(cpuCapacityMHz),
+                customResourceName.Value,
+                datastoreIds ?? new ChangeTrackingList<string>(),
+                networkIds ?? new ChangeTrackingList<string>(),
+                statuses ?? new ChangeTrackingList<VMwareResourceStatus>(),
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VMwareResourcePoolData>.Write(ModelReaderWriterOptions options)

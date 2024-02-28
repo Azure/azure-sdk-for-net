@@ -24,7 +24,13 @@ namespace Azure.Communication.JobRouter
         /// <returns> A new <see cref="JobRouter.DistributionPolicy"/> instance for mocking. </returns>
         public static DistributionPolicy DistributionPolicy(ETag eTag = default, string id = null, string name = null, TimeSpan? offerExpiresAfter = null, DistributionMode mode = null)
         {
-            return new DistributionPolicy(eTag, id, name, offerExpiresAfter, mode, serializedAdditionalRawData: null);
+            return new DistributionPolicy(
+                eTag,
+                id,
+                name,
+                offerExpiresAfter,
+                mode,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="JobRouter.ClassificationPolicy"/>. </summary>
@@ -41,7 +47,15 @@ namespace Azure.Communication.JobRouter
             queueSelectorAttachments ??= new List<QueueSelectorAttachment>();
             workerSelectorAttachments ??= new List<WorkerSelectorAttachment>();
 
-            return new ClassificationPolicy(eTag, id, name, fallbackQueueId, queueSelectorAttachments?.ToList(), prioritizationRule, workerSelectorAttachments?.ToList(), serializedAdditionalRawData: null);
+            return new ClassificationPolicy(
+                eTag,
+                id,
+                name,
+                fallbackQueueId,
+                queueSelectorAttachments?.ToList(),
+                prioritizationRule,
+                workerSelectorAttachments?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="JobRouter.ExceptionPolicy"/>. </summary>
@@ -87,7 +101,13 @@ namespace Azure.Communication.JobRouter
         /// <returns> A new <see cref="JobRouter.RouterJobAssignment"/> instance for mocking. </returns>
         public static RouterJobAssignment RouterJobAssignment(string assignmentId = null, string workerId = null, DateTimeOffset assignedAt = default, DateTimeOffset? completedAt = null, DateTimeOffset? closedAt = null)
         {
-            return new RouterJobAssignment(assignmentId, workerId, assignedAt, completedAt, closedAt, serializedAdditionalRawData: null);
+            return new RouterJobAssignment(
+                assignmentId,
+                workerId,
+                assignedAt,
+                completedAt,
+                closedAt,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="JobRouter.RouterJobNote"/>. </summary>
@@ -108,7 +128,13 @@ namespace Azure.Communication.JobRouter
         /// <returns> A new <see cref="JobRouter.RouterJobPositionDetails"/> instance for mocking. </returns>
         public static RouterJobPositionDetails RouterJobPositionDetails(string jobId = null, int position = default, string queueId = null, int queueLength = default, TimeSpan estimatedWaitTime = default)
         {
-            return new RouterJobPositionDetails(jobId, position, queueId, queueLength, estimatedWaitTime, serializedAdditionalRawData: null);
+            return new RouterJobPositionDetails(
+                jobId,
+                position,
+                queueId,
+                queueLength,
+                estimatedWaitTime,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="JobRouter.UnassignJobResult"/>. </summary>
@@ -162,7 +188,13 @@ namespace Azure.Communication.JobRouter
         /// <returns> A new <see cref="JobRouter.RouterJobOffer"/> instance for mocking. </returns>
         public static RouterJobOffer RouterJobOffer(string offerId = null, string jobId = null, int capacityCost = default, DateTimeOffset? offeredAt = null, DateTimeOffset? expiresAt = null)
         {
-            return new RouterJobOffer(offerId, jobId, capacityCost, offeredAt, expiresAt, serializedAdditionalRawData: null);
+            return new RouterJobOffer(
+                offerId,
+                jobId,
+                capacityCost,
+                offeredAt,
+                expiresAt,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="JobRouter.RouterWorkerAssignment"/>. </summary>
@@ -235,7 +267,13 @@ namespace Azure.Communication.JobRouter
         {
             workerSelectors ??= new List<RouterWorkerSelector>();
 
-            return new ManualReclassifyExceptionAction(id, ExceptionActionKind.ManualReclassify, serializedAdditionalRawData: null, queueId, priority, workerSelectors?.ToList());
+            return new ManualReclassifyExceptionAction(
+                id,
+                ExceptionActionKind.ManualReclassify,
+                serializedAdditionalRawData: null,
+                queueId,
+                priority,
+                workerSelectors?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="JobRouter.PassThroughQueueSelectorAttachment"/>. </summary>

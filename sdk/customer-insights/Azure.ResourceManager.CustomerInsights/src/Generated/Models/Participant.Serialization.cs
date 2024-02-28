@@ -171,7 +171,14 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new Participant(profileTypeName, participantPropertyReferences, participantName, displayName ?? new ChangeTrackingDictionary<string, string>(), description ?? new ChangeTrackingDictionary<string, string>(), role.Value, serializedAdditionalRawData);
+            return new Participant(
+                profileTypeName,
+                participantPropertyReferences,
+                participantName,
+                displayName ?? new ChangeTrackingDictionary<string, string>(),
+                description ?? new ChangeTrackingDictionary<string, string>(),
+                role.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<Participant>.Write(ModelReaderWriterOptions options)

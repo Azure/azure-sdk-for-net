@@ -211,7 +211,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CognitiveServicesAccountDeploymentProperties(Optional.ToNullable(provisioningState), model.Value, scaleSettings.Value, capabilities ?? new ChangeTrackingDictionary<string, string>(), raiPolicyName.Value, callRateLimit.Value, rateLimits ?? new ChangeTrackingList<ServiceAccountThrottlingRule>(), Optional.ToNullable(versionUpgradeOption), serializedAdditionalRawData);
+            return new CognitiveServicesAccountDeploymentProperties(
+                Optional.ToNullable(provisioningState),
+                model.Value,
+                scaleSettings.Value,
+                capabilities ?? new ChangeTrackingDictionary<string, string>(),
+                raiPolicyName.Value,
+                callRateLimit.Value,
+                rateLimits ?? new ChangeTrackingList<ServiceAccountThrottlingRule>(),
+                Optional.ToNullable(versionUpgradeOption),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CognitiveServicesAccountDeploymentProperties>.Write(ModelReaderWriterOptions options)

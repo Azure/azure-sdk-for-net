@@ -161,7 +161,13 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectToSourceNonSqlTaskOutput(id.Value, sourceServerBrandVersion.Value, serverProperties.Value, databases ?? new ChangeTrackingList<string>(), validationErrors ?? new ChangeTrackingList<ReportableException>(), serializedAdditionalRawData);
+            return new ConnectToSourceNonSqlTaskOutput(
+                id.Value,
+                sourceServerBrandVersion.Value,
+                serverProperties.Value,
+                databases ?? new ChangeTrackingList<string>(),
+                validationErrors ?? new ChangeTrackingList<ReportableException>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectToSourceNonSqlTaskOutput>.Write(ModelReaderWriterOptions options)

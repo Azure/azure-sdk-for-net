@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutoScaleConfiguration(Optional.ToNullable(status), Optional.ToNullable(minReplicas), Optional.ToNullable(maxReplicas), Optional.ToNullable(targetUtilization), Optional.ToNullable(refreshPeriodInSeconds), serializedAdditionalRawData);
+            return new AutoScaleConfiguration(
+                Optional.ToNullable(status),
+                Optional.ToNullable(minReplicas),
+                Optional.ToNullable(maxReplicas),
+                Optional.ToNullable(targetUtilization),
+                Optional.ToNullable(refreshPeriodInSeconds),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutoScaleConfiguration>.Write(ModelReaderWriterOptions options)

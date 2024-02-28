@@ -188,7 +188,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryFabricProperties(friendlyName.Value, encryptionDetails.Value, rolloverEncryptionDetails.Value, internalIdentifier.Value, bcdrState.Value, customDetails.Value, healthErrorDetails ?? new ChangeTrackingList<SiteRecoveryHealthError>(), health.Value, serializedAdditionalRawData);
+            return new SiteRecoveryFabricProperties(
+                friendlyName.Value,
+                encryptionDetails.Value,
+                rolloverEncryptionDetails.Value,
+                internalIdentifier.Value,
+                bcdrState.Value,
+                customDetails.Value,
+                healthErrorDetails ?? new ChangeTrackingList<SiteRecoveryHealthError>(),
+                health.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryFabricProperties>.Write(ModelReaderWriterOptions options)

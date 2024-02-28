@@ -172,7 +172,14 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VpnClientRevokedCertificate(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), thumbprint.Value, Optional.ToNullable(provisioningState));
+            return new VpnClientRevokedCertificate(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                thumbprint.Value,
+                Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<VpnClientRevokedCertificate>.Write(ModelReaderWriterOptions options)

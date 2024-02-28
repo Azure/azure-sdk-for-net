@@ -534,7 +534,28 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutoMLJob(description.Value, properties ?? new ChangeTrackingDictionary<string, string>(), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, componentId.Value, computeId.Value, displayName.Value, experimentName.Value, identity.Value, Optional.ToNullable(isArchived), jobType, notificationSetting.Value, secretsConfiguration ?? new ChangeTrackingDictionary<string, SecretConfiguration>(), services ?? new ChangeTrackingDictionary<string, MachineLearningJobService>(), Optional.ToNullable(status), environmentId.Value, environmentVariables ?? new ChangeTrackingDictionary<string, string>(), outputs ?? new ChangeTrackingDictionary<string, MachineLearningJobOutput>(), queueSettings.Value, resources.Value, taskDetails);
+            return new AutoMLJob(
+                description.Value,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                componentId.Value,
+                computeId.Value,
+                displayName.Value,
+                experimentName.Value,
+                identity.Value,
+                Optional.ToNullable(isArchived),
+                jobType,
+                notificationSetting.Value,
+                secretsConfiguration ?? new ChangeTrackingDictionary<string, SecretConfiguration>(),
+                services ?? new ChangeTrackingDictionary<string, MachineLearningJobService>(),
+                Optional.ToNullable(status),
+                environmentId.Value,
+                environmentVariables ?? new ChangeTrackingDictionary<string, string>(),
+                outputs ?? new ChangeTrackingDictionary<string, MachineLearningJobOutput>(),
+                queueSettings.Value,
+                resources.Value,
+                taskDetails);
         }
 
         BinaryData IPersistableModel<AutoMLJob>.Write(ModelReaderWriterOptions options)

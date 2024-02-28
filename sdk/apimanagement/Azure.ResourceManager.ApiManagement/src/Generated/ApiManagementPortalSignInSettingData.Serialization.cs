@@ -153,7 +153,13 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementPortalSignInSettingData(id, name, type, systemData.Value, Optional.ToNullable(enabled), serializedAdditionalRawData);
+            return new ApiManagementPortalSignInSettingData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(enabled),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementPortalSignInSettingData>.Write(ModelReaderWriterOptions options)

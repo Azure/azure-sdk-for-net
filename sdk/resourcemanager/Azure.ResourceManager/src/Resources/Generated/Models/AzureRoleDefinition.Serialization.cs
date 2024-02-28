@@ -161,7 +161,13 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureRoleDefinition(id.Value, name.Value, Optional.ToNullable(isServiceRole), permissions ?? new ChangeTrackingList<Permission>(), scopes ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new AzureRoleDefinition(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(isServiceRole),
+                permissions ?? new ChangeTrackingList<Permission>(),
+                scopes ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureRoleDefinition>.Write(ModelReaderWriterOptions options)

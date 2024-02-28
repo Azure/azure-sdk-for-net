@@ -344,7 +344,26 @@ namespace Azure.ResourceManager.BillingBenefits
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BillingBenefitsSavingsPlanOrderData(id, name, type, systemData.Value, sku, displayName.Value, Optional.ToNullable(provisioningState), billingScopeId.Value, billingProfileId.Value, customerId.Value, billingAccountId.Value, Optional.ToNullable(term), Optional.ToNullable(billingPlan), Optional.ToNullable(expiryDateTime), Optional.ToNullable(benefitStartTime), planInformation.Value, savingsPlans ?? new ChangeTrackingList<string>(), extendedStatusInfo.Value, serializedAdditionalRawData);
+            return new BillingBenefitsSavingsPlanOrderData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                sku,
+                displayName.Value,
+                Optional.ToNullable(provisioningState),
+                billingScopeId.Value,
+                billingProfileId.Value,
+                customerId.Value,
+                billingAccountId.Value,
+                Optional.ToNullable(term),
+                Optional.ToNullable(billingPlan),
+                Optional.ToNullable(expiryDateTime),
+                Optional.ToNullable(benefitStartTime),
+                planInformation.Value,
+                savingsPlans ?? new ChangeTrackingList<string>(),
+                extendedStatusInfo.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BillingBenefitsSavingsPlanOrderData>.Write(ModelReaderWriterOptions options)

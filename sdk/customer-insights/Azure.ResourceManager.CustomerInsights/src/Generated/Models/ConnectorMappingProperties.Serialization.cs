@@ -161,7 +161,16 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectorMappingProperties(folderPath.Value, fileFilter.Value, Optional.ToNullable(hasHeader), errorManagement, format, availability, structure, completeOperation, serializedAdditionalRawData);
+            return new ConnectorMappingProperties(
+                folderPath.Value,
+                fileFilter.Value,
+                Optional.ToNullable(hasHeader),
+                errorManagement,
+                format,
+                availability,
+                structure,
+                completeOperation,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectorMappingProperties>.Write(ModelReaderWriterOptions options)

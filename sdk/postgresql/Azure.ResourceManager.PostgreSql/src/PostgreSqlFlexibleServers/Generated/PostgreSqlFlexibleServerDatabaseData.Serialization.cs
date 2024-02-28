@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlFlexibleServerDatabaseData(id, name, type, systemData.Value, charset.Value, collation.Value, serializedAdditionalRawData);
+            return new PostgreSqlFlexibleServerDatabaseData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                charset.Value,
+                collation.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlFlexibleServerDatabaseData>.Write(ModelReaderWriterOptions options)

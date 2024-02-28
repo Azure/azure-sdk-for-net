@@ -176,7 +176,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebActivityAuthentication(type.Value, pfx, username.Value, password, resource.Value, userTenant.Value, credential.Value, serializedAdditionalRawData);
+            return new WebActivityAuthentication(
+                type.Value,
+                pfx,
+                username.Value,
+                password,
+                resource.Value,
+                userTenant.Value,
+                credential.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebActivityAuthentication>.Write(ModelReaderWriterOptions options)

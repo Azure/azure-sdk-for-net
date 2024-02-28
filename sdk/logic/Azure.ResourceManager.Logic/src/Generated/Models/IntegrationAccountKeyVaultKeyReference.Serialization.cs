@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationAccountKeyVaultKeyReference(keyName, keyVersion.Value, id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData);
+            return new IntegrationAccountKeyVaultKeyReference(
+                keyName,
+                keyVersion.Value,
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationAccountKeyVaultKeyReference>.Write(ModelReaderWriterOptions options)

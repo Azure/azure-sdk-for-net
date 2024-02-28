@@ -271,7 +271,26 @@ namespace Azure.Quantum.Jobs.Models
                     continue;
                 }
             }
-            return new JobDetails(id.Value, name.Value, containerUri, inputDataUri.Value, inputDataFormat, inputParams.Value, providerId, target, metadata ?? new ChangeTrackingDictionary<string, string>(), outputDataUri.Value, outputDataFormat.Value, Optional.ToNullable(status), Optional.ToNullable(creationTime), Optional.ToNullable(beginExecutionTime), Optional.ToNullable(endExecutionTime), Optional.ToNullable(cancellationTime), costEstimate.Value, errorData.Value, tags ?? new ChangeTrackingList<string>());
+            return new JobDetails(
+                id.Value,
+                name.Value,
+                containerUri,
+                inputDataUri.Value,
+                inputDataFormat,
+                inputParams.Value,
+                providerId,
+                target,
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                outputDataUri.Value,
+                outputDataFormat.Value,
+                Optional.ToNullable(status),
+                Optional.ToNullable(creationTime),
+                Optional.ToNullable(beginExecutionTime),
+                Optional.ToNullable(endExecutionTime),
+                Optional.ToNullable(cancellationTime),
+                costEstimate.Value,
+                errorData.Value,
+                tags ?? new ChangeTrackingList<string>());
         }
     }
 }

@@ -194,7 +194,16 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServerEndpointSyncActivityStatus(Optional.ToNullable(timestamp), Optional.ToNullable(perItemErrorCount), Optional.ToNullable(appliedItemCount), Optional.ToNullable(totalItemCount), Optional.ToNullable(appliedBytes), Optional.ToNullable(totalBytes), Optional.ToNullable(syncMode), Optional.ToNullable(sessionMinutesRemaining), serializedAdditionalRawData);
+            return new ServerEndpointSyncActivityStatus(
+                Optional.ToNullable(timestamp),
+                Optional.ToNullable(perItemErrorCount),
+                Optional.ToNullable(appliedItemCount),
+                Optional.ToNullable(totalItemCount),
+                Optional.ToNullable(appliedBytes),
+                Optional.ToNullable(totalBytes),
+                Optional.ToNullable(syncMode),
+                Optional.ToNullable(sessionMinutesRemaining),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServerEndpointSyncActivityStatus>.Write(ModelReaderWriterOptions options)

@@ -69,7 +69,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new MapsGeofenceGeometry(deviceId.Value, Optional.ToNullable(distance), geometryId.Value, Optional.ToNullable(nearestLat), Optional.ToNullable(nearestLon), udId.Value);
+            return new MapsGeofenceGeometry(
+                deviceId.Value,
+                Optional.ToNullable(distance),
+                geometryId.Value,
+                Optional.ToNullable(nearestLat),
+                Optional.ToNullable(nearestLon),
+                udId.Value);
         }
     }
 }

@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PresentationTimeRange(Optional.ToNullable(startTimestamp), Optional.ToNullable(endTimestamp), Optional.ToNullable(presentationWindowDuration), Optional.ToNullable(liveBackoffDuration), Optional.ToNullable(timescale), Optional.ToNullable(forceEndTimestamp), serializedAdditionalRawData);
+            return new PresentationTimeRange(
+                Optional.ToNullable(startTimestamp),
+                Optional.ToNullable(endTimestamp),
+                Optional.ToNullable(presentationWindowDuration),
+                Optional.ToNullable(liveBackoffDuration),
+                Optional.ToNullable(timescale),
+                Optional.ToNullable(forceEndTimestamp),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PresentationTimeRange>.Write(ModelReaderWriterOptions options)

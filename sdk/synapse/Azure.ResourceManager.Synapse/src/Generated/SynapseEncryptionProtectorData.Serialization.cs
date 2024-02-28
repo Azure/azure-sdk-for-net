@@ -239,7 +239,19 @@ namespace Azure.ResourceManager.Synapse
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseEncryptionProtectorData(id, name, type, systemData.Value, kind.Value, Optional.ToNullable(location), subregion.Value, serverKeyName.Value, Optional.ToNullable(serverKeyType), uri.Value, thumbprint.Value, serializedAdditionalRawData);
+            return new SynapseEncryptionProtectorData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind.Value,
+                Optional.ToNullable(location),
+                subregion.Value,
+                serverKeyName.Value,
+                Optional.ToNullable(serverKeyType),
+                uri.Value,
+                thumbprint.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseEncryptionProtectorData>.Write(ModelReaderWriterOptions options)

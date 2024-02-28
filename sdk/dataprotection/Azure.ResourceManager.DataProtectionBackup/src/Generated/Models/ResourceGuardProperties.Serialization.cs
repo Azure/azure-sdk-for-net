@@ -165,7 +165,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceGuardProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(allowAutoApprovals), resourceGuardOperations ?? new ChangeTrackingList<ResourceGuardOperationDetails>(), vaultCriticalOperationExclusionList ?? new ChangeTrackingList<string>(), description.Value, serializedAdditionalRawData);
+            return new ResourceGuardProperties(
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(allowAutoApprovals),
+                resourceGuardOperations ?? new ChangeTrackingList<ResourceGuardOperationDetails>(),
+                vaultCriticalOperationExclusionList ?? new ChangeTrackingList<string>(),
+                description.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceGuardProperties>.Write(ModelReaderWriterOptions options)

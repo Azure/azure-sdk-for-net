@@ -148,7 +148,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ThroughputSettingsResourceInfo(Optional.ToNullable(throughput), autoscaleSettings.Value, minimumThroughput.Value, offerReplacePending.Value, instantMaximumThroughput.Value, softAllowedMaximumThroughput.Value, serializedAdditionalRawData);
+            return new ThroughputSettingsResourceInfo(
+                Optional.ToNullable(throughput),
+                autoscaleSettings.Value,
+                minimumThroughput.Value,
+                offerReplacePending.Value,
+                instantMaximumThroughput.Value,
+                softAllowedMaximumThroughput.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ThroughputSettingsResourceInfo>.Write(ModelReaderWriterOptions options)

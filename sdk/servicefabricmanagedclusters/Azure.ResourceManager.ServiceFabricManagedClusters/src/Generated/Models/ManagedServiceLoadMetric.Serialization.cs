@@ -142,7 +142,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedServiceLoadMetric(name, Optional.ToNullable(weight), Optional.ToNullable(primaryDefaultLoad), Optional.ToNullable(secondaryDefaultLoad), Optional.ToNullable(defaultLoad), serializedAdditionalRawData);
+            return new ManagedServiceLoadMetric(
+                name,
+                Optional.ToNullable(weight),
+                Optional.ToNullable(primaryDefaultLoad),
+                Optional.ToNullable(secondaryDefaultLoad),
+                Optional.ToNullable(defaultLoad),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedServiceLoadMetric>.Write(ModelReaderWriterOptions options)

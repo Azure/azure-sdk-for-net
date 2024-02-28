@@ -236,7 +236,20 @@ namespace Azure.ResourceManager.ArcScVmm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScVmmVirtualNetworkData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, extendedLocation, inventoryItemId.Value, uuid.Value, vmmServerId.Value, networkName.Value, provisioningState.Value, serializedAdditionalRawData);
+            return new ScVmmVirtualNetworkData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation,
+                inventoryItemId.Value,
+                uuid.Value,
+                vmmServerId.Value,
+                networkName.Value,
+                provisioningState.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScVmmVirtualNetworkData>.Write(ModelReaderWriterOptions options)

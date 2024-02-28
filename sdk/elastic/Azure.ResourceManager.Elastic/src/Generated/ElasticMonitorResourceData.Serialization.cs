@@ -203,7 +203,17 @@ namespace Azure.ResourceManager.Elastic
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ElasticMonitorResourceData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, sku.Value, properties.Value, identity, serializedAdditionalRawData);
+            return new ElasticMonitorResourceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku.Value,
+                properties.Value,
+                identity,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticMonitorResourceData>.Write(ModelReaderWriterOptions options)

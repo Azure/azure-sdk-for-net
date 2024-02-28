@@ -278,7 +278,17 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataFactoryFlowletProperties(type, description.Value, annotations ?? new ChangeTrackingList<BinaryData>(), folder.Value, serializedAdditionalRawData, sources ?? new ChangeTrackingList<DataFlowSource>(), sinks ?? new ChangeTrackingList<DataFlowSink>(), transformations ?? new ChangeTrackingList<DataFlowTransformation>(), script.Value, scriptLines ?? new ChangeTrackingList<string>());
+            return new DataFactoryFlowletProperties(
+                type,
+                description.Value,
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                folder.Value,
+                serializedAdditionalRawData,
+                sources ?? new ChangeTrackingList<DataFlowSource>(),
+                sinks ?? new ChangeTrackingList<DataFlowSink>(),
+                transformations ?? new ChangeTrackingList<DataFlowTransformation>(),
+                script.Value,
+                scriptLines ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<DataFactoryFlowletProperties>.Write(ModelReaderWriterOptions options)

@@ -174,7 +174,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningSweepJobLimits(jobLimitsType, Optional.ToNullable(timeout), serializedAdditionalRawData, Optional.ToNullable(maxConcurrentTrials), Optional.ToNullable(maxTotalTrials), Optional.ToNullable(trialTimeout));
+            return new MachineLearningSweepJobLimits(
+                jobLimitsType,
+                Optional.ToNullable(timeout),
+                serializedAdditionalRawData,
+                Optional.ToNullable(maxConcurrentTrials),
+                Optional.ToNullable(maxTotalTrials),
+                Optional.ToNullable(trialTimeout));
         }
 
         BinaryData IPersistableModel<MachineLearningSweepJobLimits>.Write(ModelReaderWriterOptions options)

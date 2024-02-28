@@ -242,7 +242,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SalesforceLinkedService(type, connectVia.Value, description.Value, parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(), annotations ?? new ChangeTrackingList<object>(), additionalProperties, environmentUrl.Value, username.Value, password.Value, securityToken.Value, apiVersion.Value, encryptedCredential.Value);
+            return new SalesforceLinkedService(
+                type,
+                connectVia.Value,
+                description.Value,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                environmentUrl.Value,
+                username.Value,
+                password.Value,
+                securityToken.Value,
+                apiVersion.Value,
+                encryptedCredential.Value);
         }
 
         internal partial class SalesforceLinkedServiceConverter : JsonConverter<SalesforceLinkedService>

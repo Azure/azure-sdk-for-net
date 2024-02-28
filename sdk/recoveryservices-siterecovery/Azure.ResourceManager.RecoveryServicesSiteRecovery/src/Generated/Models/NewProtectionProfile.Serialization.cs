@@ -143,7 +143,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NewProtectionProfile(resourceType, serializedAdditionalRawData, policyName, Optional.ToNullable(recoveryPointHistory), Optional.ToNullable(crashConsistentFrequencyInMinutes), Optional.ToNullable(appConsistentFrequencyInMinutes), multiVmSyncStatus);
+            return new NewProtectionProfile(
+                resourceType,
+                serializedAdditionalRawData,
+                policyName,
+                Optional.ToNullable(recoveryPointHistory),
+                Optional.ToNullable(crashConsistentFrequencyInMinutes),
+                Optional.ToNullable(appConsistentFrequencyInMinutes),
+                multiVmSyncStatus);
         }
 
         BinaryData IPersistableModel<NewProtectionProfile>.Write(ModelReaderWriterOptions options)

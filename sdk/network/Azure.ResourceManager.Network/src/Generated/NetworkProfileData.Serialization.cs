@@ -268,7 +268,18 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkProfileData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, Optional.ToNullable(etag), containerNetworkInterfaces ?? new ChangeTrackingList<ContainerNetworkInterface>(), containerNetworkInterfaceConfigurations ?? new ChangeTrackingList<ContainerNetworkInterfaceConfiguration>(), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState));
+            return new NetworkProfileData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                Optional.ToNullable(location),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                containerNetworkInterfaces ?? new ChangeTrackingList<ContainerNetworkInterface>(),
+                containerNetworkInterfaceConfigurations ?? new ChangeTrackingList<ContainerNetworkInterfaceConfiguration>(),
+                Optional.ToNullable(resourceGuid),
+                Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<NetworkProfileData>.Write(ModelReaderWriterOptions options)

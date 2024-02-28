@@ -149,7 +149,15 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UriRedirectActionProperties(typeName, redirectType, Optional.ToNullable(destinationProtocol), customPath.Value, customHostname.Value, customQueryString.Value, customFragment.Value, serializedAdditionalRawData);
+            return new UriRedirectActionProperties(
+                typeName,
+                redirectType,
+                Optional.ToNullable(destinationProtocol),
+                customPath.Value,
+                customHostname.Value,
+                customQueryString.Value,
+                customFragment.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UriRedirectActionProperties>.Write(ModelReaderWriterOptions options)

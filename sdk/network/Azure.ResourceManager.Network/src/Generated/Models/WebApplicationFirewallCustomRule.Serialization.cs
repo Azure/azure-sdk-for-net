@@ -213,7 +213,18 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebApplicationFirewallCustomRule(name.Value, Optional.ToNullable(etag), priority, Optional.ToNullable(state), Optional.ToNullable(rateLimitDuration), Optional.ToNullable(rateLimitThreshold), ruleType, matchConditions, groupByUserSession ?? new ChangeTrackingList<GroupByUserSession>(), action, serializedAdditionalRawData);
+            return new WebApplicationFirewallCustomRule(
+                name.Value,
+                Optional.ToNullable(etag),
+                priority,
+                Optional.ToNullable(state),
+                Optional.ToNullable(rateLimitDuration),
+                Optional.ToNullable(rateLimitThreshold),
+                ruleType,
+                matchConditions,
+                groupByUserSession ?? new ChangeTrackingList<GroupByUserSession>(),
+                action,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebApplicationFirewallCustomRule>.Write(ModelReaderWriterOptions options)

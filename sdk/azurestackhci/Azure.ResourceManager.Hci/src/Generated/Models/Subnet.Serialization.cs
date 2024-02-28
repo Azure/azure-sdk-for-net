@@ -232,7 +232,16 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new Subnet(name.Value, addressPrefix.Value, addressPrefixes ?? new ChangeTrackingList<string>(), Optional.ToNullable(ipAllocationMethod), ipConfigurationReferences ?? new ChangeTrackingList<WritableSubResource>(), routeTable.Value, ipPools ?? new ChangeTrackingList<IPPool>(), Optional.ToNullable(vlan), serializedAdditionalRawData);
+            return new Subnet(
+                name.Value,
+                addressPrefix.Value,
+                addressPrefixes ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(ipAllocationMethod),
+                ipConfigurationReferences ?? new ChangeTrackingList<WritableSubResource>(),
+                routeTable.Value,
+                ipPools ?? new ChangeTrackingList<IPPool>(),
+                Optional.ToNullable(vlan),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<Subnet>.Write(ModelReaderWriterOptions options)

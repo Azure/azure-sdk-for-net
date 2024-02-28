@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmDeploymentTemplateLink(uri.Value, id.Value, relativePath.Value, contentVersion.Value, queryString.Value, serializedAdditionalRawData);
+            return new ArmDeploymentTemplateLink(
+                uri.Value,
+                id.Value,
+                relativePath.Value,
+                contentVersion.Value,
+                queryString.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArmDeploymentTemplateLink>.Write(ModelReaderWriterOptions options)

@@ -181,7 +181,15 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomHttpsConfiguration(certificateSource, protocolType, minimumTlsVersion, Optional.ToNullable(certificateType), vault, secretName.Value, secretVersion.Value, serializedAdditionalRawData);
+            return new CustomHttpsConfiguration(
+                certificateSource,
+                protocolType,
+                minimumTlsVersion,
+                Optional.ToNullable(certificateType),
+                vault,
+                secretName.Value,
+                secretVersion.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CustomHttpsConfiguration>.Write(ModelReaderWriterOptions options)

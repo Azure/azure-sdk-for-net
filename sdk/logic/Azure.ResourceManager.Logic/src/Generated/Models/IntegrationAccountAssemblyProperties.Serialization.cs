@@ -219,7 +219,18 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationAccountAssemblyProperties(Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), metadata.Value, serializedAdditionalRawData, content.Value, Optional.ToNullable(contentType), contentLink.Value, assemblyName, assemblyVersion.Value, assemblyCulture.Value, assemblyPublicKeyToken.Value);
+            return new IntegrationAccountAssemblyProperties(
+                Optional.ToNullable(createdTime),
+                Optional.ToNullable(changedTime),
+                metadata.Value,
+                serializedAdditionalRawData,
+                content.Value,
+                Optional.ToNullable(contentType),
+                contentLink.Value,
+                assemblyName,
+                assemblyVersion.Value,
+                assemblyCulture.Value,
+                assemblyPublicKeyToken.Value);
         }
 
         BinaryData IPersistableModel<IntegrationAccountAssemblyProperties>.Write(ModelReaderWriterOptions options)

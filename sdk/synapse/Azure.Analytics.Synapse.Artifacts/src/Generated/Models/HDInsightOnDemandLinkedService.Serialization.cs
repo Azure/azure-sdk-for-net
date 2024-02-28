@@ -633,7 +633,47 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new HDInsightOnDemandLinkedService(type, connectVia.Value, description.Value, parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(), annotations ?? new ChangeTrackingList<object>(), additionalProperties, clusterSize, timeToLive, version, linkedServiceName, hostSubscriptionId, servicePrincipalId.Value, servicePrincipalKey.Value, tenant, clusterResourceGroup, clusterNamePrefix.Value, clusterUserName.Value, clusterPassword.Value, clusterSshUserName.Value, clusterSshPassword.Value, additionalLinkedServiceNames ?? new ChangeTrackingList<LinkedServiceReference>(), hcatalogLinkedServiceName.Value, clusterType.Value, sparkVersion.Value, coreConfiguration.Value, hBaseConfiguration.Value, hdfsConfiguration.Value, hiveConfiguration.Value, mapReduceConfiguration.Value, oozieConfiguration.Value, stormConfiguration.Value, yarnConfiguration.Value, encryptedCredential.Value, headNodeSize.Value, dataNodeSize.Value, zookeeperNodeSize.Value, scriptActions ?? new ChangeTrackingList<ScriptAction>(), virtualNetworkId.Value, subnetName.Value, credential.Value);
+            return new HDInsightOnDemandLinkedService(
+                type,
+                connectVia.Value,
+                description.Value,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                clusterSize,
+                timeToLive,
+                version,
+                linkedServiceName,
+                hostSubscriptionId,
+                servicePrincipalId.Value,
+                servicePrincipalKey.Value,
+                tenant,
+                clusterResourceGroup,
+                clusterNamePrefix.Value,
+                clusterUserName.Value,
+                clusterPassword.Value,
+                clusterSshUserName.Value,
+                clusterSshPassword.Value,
+                additionalLinkedServiceNames ?? new ChangeTrackingList<LinkedServiceReference>(),
+                hcatalogLinkedServiceName.Value,
+                clusterType.Value,
+                sparkVersion.Value,
+                coreConfiguration.Value,
+                hBaseConfiguration.Value,
+                hdfsConfiguration.Value,
+                hiveConfiguration.Value,
+                mapReduceConfiguration.Value,
+                oozieConfiguration.Value,
+                stormConfiguration.Value,
+                yarnConfiguration.Value,
+                encryptedCredential.Value,
+                headNodeSize.Value,
+                dataNodeSize.Value,
+                zookeeperNodeSize.Value,
+                scriptActions ?? new ChangeTrackingList<ScriptAction>(),
+                virtualNetworkId.Value,
+                subnetName.Value,
+                credential.Value);
         }
 
         internal partial class HDInsightOnDemandLinkedServiceConverter : JsonConverter<HDInsightOnDemandLinkedService>

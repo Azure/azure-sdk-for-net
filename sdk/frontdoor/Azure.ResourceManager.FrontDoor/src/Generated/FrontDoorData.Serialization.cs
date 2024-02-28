@@ -438,7 +438,28 @@ namespace Azure.ResourceManager.FrontDoor
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, friendlyName.Value, routingRules ?? new ChangeTrackingList<RoutingRuleData>(), loadBalancingSettings ?? new ChangeTrackingList<FrontDoorLoadBalancingSettingsData>(), healthProbeSettings ?? new ChangeTrackingList<FrontDoorHealthProbeSettingsData>(), backendPools ?? new ChangeTrackingList<FrontDoorBackendPool>(), frontendEndpoints ?? new ChangeTrackingList<FrontendEndpointData>(), backendPoolsSettings.Value, Optional.ToNullable(enabledState), Optional.ToNullable(resourceState), provisioningState.Value, cname.Value, frontdoorId.Value, rulesEngines ?? new ChangeTrackingList<FrontDoorRulesEngineData>(), extendedProperties ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new FrontDoorData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                friendlyName.Value,
+                routingRules ?? new ChangeTrackingList<RoutingRuleData>(),
+                loadBalancingSettings ?? new ChangeTrackingList<FrontDoorLoadBalancingSettingsData>(),
+                healthProbeSettings ?? new ChangeTrackingList<FrontDoorHealthProbeSettingsData>(),
+                backendPools ?? new ChangeTrackingList<FrontDoorBackendPool>(),
+                frontendEndpoints ?? new ChangeTrackingList<FrontendEndpointData>(),
+                backendPoolsSettings.Value,
+                Optional.ToNullable(enabledState),
+                Optional.ToNullable(resourceState),
+                provisioningState.Value,
+                cname.Value,
+                frontdoorId.Value,
+                rulesEngines ?? new ChangeTrackingList<FrontDoorRulesEngineData>(),
+                extendedProperties ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorData>.Write(ModelReaderWriterOptions options)

@@ -145,7 +145,13 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateSqlServerSqlDBTaskOutputValidationResult(id.Value, resultType, serializedAdditionalRawData, migrationId.Value, summaryResults ?? new ChangeTrackingDictionary<string, MigrationValidationDatabaseSummaryResult>(), Optional.ToNullable(status));
+            return new MigrateSqlServerSqlDBTaskOutputValidationResult(
+                id.Value,
+                resultType,
+                serializedAdditionalRawData,
+                migrationId.Value,
+                summaryResults ?? new ChangeTrackingDictionary<string, MigrationValidationDatabaseSummaryResult>(),
+                Optional.ToNullable(status));
         }
 
         BinaryData IPersistableModel<MigrateSqlServerSqlDBTaskOutputValidationResult>.Write(ModelReaderWriterOptions options)

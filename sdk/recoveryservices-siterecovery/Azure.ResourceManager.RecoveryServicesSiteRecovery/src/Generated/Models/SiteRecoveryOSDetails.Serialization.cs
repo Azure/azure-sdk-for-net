@@ -140,7 +140,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryOSDetails(osType.Value, productType.Value, osEdition.Value, osVersion.Value, osMajorVersion.Value, osMinorVersion.Value, serializedAdditionalRawData);
+            return new SiteRecoveryOSDetails(
+                osType.Value,
+                productType.Value,
+                osEdition.Value,
+                osVersion.Value,
+                osMajorVersion.Value,
+                osMinorVersion.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryOSDetails>.Write(ModelReaderWriterOptions options)

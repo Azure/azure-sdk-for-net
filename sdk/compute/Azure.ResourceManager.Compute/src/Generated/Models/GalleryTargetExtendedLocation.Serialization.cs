@@ -145,7 +145,13 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GalleryTargetExtendedLocation(name.Value, extendedLocation.Value, Optional.ToNullable(extendedLocationReplicaCount), Optional.ToNullable(storageAccountType), encryption.Value, serializedAdditionalRawData);
+            return new GalleryTargetExtendedLocation(
+                name.Value,
+                extendedLocation.Value,
+                Optional.ToNullable(extendedLocationReplicaCount),
+                Optional.ToNullable(storageAccountType),
+                encryption.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GalleryTargetExtendedLocation>.Write(ModelReaderWriterOptions options)

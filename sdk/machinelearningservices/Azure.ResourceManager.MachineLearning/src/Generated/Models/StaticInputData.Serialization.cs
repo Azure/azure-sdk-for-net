@@ -194,7 +194,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StaticInputData(columns ?? new ChangeTrackingDictionary<string, string>(), dataContext.Value, inputDataType, jobInputType, uri, serializedAdditionalRawData, preprocessingComponentId.Value, windowEnd, windowStart);
+            return new StaticInputData(
+                columns ?? new ChangeTrackingDictionary<string, string>(),
+                dataContext.Value,
+                inputDataType,
+                jobInputType,
+                uri,
+                serializedAdditionalRawData,
+                preprocessingComponentId.Value,
+                windowEnd,
+                windowStart);
         }
 
         BinaryData IPersistableModel<StaticInputData>.Write(ModelReaderWriterOptions options)

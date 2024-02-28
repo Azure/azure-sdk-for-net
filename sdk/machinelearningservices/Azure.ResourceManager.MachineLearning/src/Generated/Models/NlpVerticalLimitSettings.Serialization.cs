@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NlpVerticalLimitSettings(Optional.ToNullable(maxConcurrentTrials), Optional.ToNullable(maxNodes), Optional.ToNullable(maxTrials), Optional.ToNullable(timeout), Optional.ToNullable(trialTimeout), serializedAdditionalRawData);
+            return new NlpVerticalLimitSettings(
+                Optional.ToNullable(maxConcurrentTrials),
+                Optional.ToNullable(maxNodes),
+                Optional.ToNullable(maxTrials),
+                Optional.ToNullable(timeout),
+                Optional.ToNullable(trialTimeout),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NlpVerticalLimitSettings>.Write(ModelReaderWriterOptions options)

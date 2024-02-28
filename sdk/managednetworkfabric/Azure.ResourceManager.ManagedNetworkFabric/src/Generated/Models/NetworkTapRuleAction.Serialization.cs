@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkTapRuleAction(Optional.ToNullable(type), truncate.Value, Optional.ToNullable(isTimestampEnabled), destinationId.Value, matchConfigurationName.Value, serializedAdditionalRawData);
+            return new NetworkTapRuleAction(
+                Optional.ToNullable(type),
+                truncate.Value,
+                Optional.ToNullable(isTimestampEnabled),
+                destinationId.Value,
+                matchConfigurationName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkTapRuleAction>.Write(ModelReaderWriterOptions options)

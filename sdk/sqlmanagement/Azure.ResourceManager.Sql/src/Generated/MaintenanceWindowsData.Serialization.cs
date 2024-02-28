@@ -164,7 +164,13 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MaintenanceWindowsData(id, name, type, systemData.Value, timeRanges ?? new ChangeTrackingList<MaintenanceWindowTimeRange>(), serializedAdditionalRawData);
+            return new MaintenanceWindowsData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                timeRanges ?? new ChangeTrackingList<MaintenanceWindowTimeRange>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MaintenanceWindowsData>.Write(ModelReaderWriterOptions options)

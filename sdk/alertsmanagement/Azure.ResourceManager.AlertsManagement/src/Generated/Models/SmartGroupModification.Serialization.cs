@@ -138,7 +138,13 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SmartGroupModification(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new SmartGroupModification(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SmartGroupModification>.Write(ModelReaderWriterOptions options)

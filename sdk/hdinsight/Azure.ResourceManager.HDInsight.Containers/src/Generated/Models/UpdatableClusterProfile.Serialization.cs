@@ -199,7 +199,15 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UpdatableClusterProfile(serviceConfigsProfiles ?? new ChangeTrackingList<ClusterServiceConfigsProfile>(), sshProfile.Value, autoscaleProfile.Value, authorizationProfile.Value, logAnalyticsProfile.Value, prometheusProfile.Value, scriptActionProfiles ?? new ChangeTrackingList<ScriptActionProfile>(), serializedAdditionalRawData);
+            return new UpdatableClusterProfile(
+                serviceConfigsProfiles ?? new ChangeTrackingList<ClusterServiceConfigsProfile>(),
+                sshProfile.Value,
+                autoscaleProfile.Value,
+                authorizationProfile.Value,
+                logAnalyticsProfile.Value,
+                prometheusProfile.Value,
+                scriptActionProfiles ?? new ChangeTrackingList<ScriptActionProfile>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UpdatableClusterProfile>.Write(ModelReaderWriterOptions options)

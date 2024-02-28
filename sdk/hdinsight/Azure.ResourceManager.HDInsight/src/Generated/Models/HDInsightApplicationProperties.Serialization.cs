@@ -299,7 +299,20 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightApplicationProperties(computeProfile.Value, installScriptActions ?? new ChangeTrackingList<RuntimeScriptAction>(), uninstallScriptActions ?? new ChangeTrackingList<RuntimeScriptAction>(), httpsEndpoints ?? new ChangeTrackingList<HDInsightApplicationHttpsEndpoint>(), sshEndpoints ?? new ChangeTrackingList<HDInsightApplicationEndpoint>(), provisioningState.Value, applicationType.Value, applicationState.Value, errors ?? new ChangeTrackingList<ResponseError>(), Optional.ToNullable(createdDate), marketplaceIdentifier.Value, privateLinkConfigurations ?? new ChangeTrackingList<HDInsightPrivateLinkConfiguration>(), serializedAdditionalRawData);
+            return new HDInsightApplicationProperties(
+                computeProfile.Value,
+                installScriptActions ?? new ChangeTrackingList<RuntimeScriptAction>(),
+                uninstallScriptActions ?? new ChangeTrackingList<RuntimeScriptAction>(),
+                httpsEndpoints ?? new ChangeTrackingList<HDInsightApplicationHttpsEndpoint>(),
+                sshEndpoints ?? new ChangeTrackingList<HDInsightApplicationEndpoint>(),
+                provisioningState.Value,
+                applicationType.Value,
+                applicationState.Value,
+                errors ?? new ChangeTrackingList<ResponseError>(),
+                Optional.ToNullable(createdDate),
+                marketplaceIdentifier.Value,
+                privateLinkConfigurations ?? new ChangeTrackingList<HDInsightPrivateLinkConfiguration>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightApplicationProperties>.Write(ModelReaderWriterOptions options)

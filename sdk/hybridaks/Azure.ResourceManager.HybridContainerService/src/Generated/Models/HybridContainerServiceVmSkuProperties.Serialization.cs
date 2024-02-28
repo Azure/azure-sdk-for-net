@@ -143,7 +143,13 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridContainerServiceVmSkuProperties(resourceType.Value, capabilities ?? new ChangeTrackingList<HybridContainerServiceVmSkuCapabilities>(), name.Value, tier.Value, size.Value, serializedAdditionalRawData);
+            return new HybridContainerServiceVmSkuProperties(
+                resourceType.Value,
+                capabilities ?? new ChangeTrackingList<HybridContainerServiceVmSkuCapabilities>(),
+                name.Value,
+                tier.Value,
+                size.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridContainerServiceVmSkuProperties>.Write(ModelReaderWriterOptions options)

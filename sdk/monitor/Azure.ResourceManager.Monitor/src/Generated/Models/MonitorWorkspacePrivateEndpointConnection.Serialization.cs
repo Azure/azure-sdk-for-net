@@ -209,7 +209,16 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorWorkspacePrivateEndpointConnection(id, name, type, systemData.Value, groupIds ?? new ChangeTrackingList<string>(), privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new MonitorWorkspacePrivateEndpointConnection(
+                id,
+                name,
+                type,
+                systemData.Value,
+                groupIds ?? new ChangeTrackingList<string>(),
+                privateEndpoint,
+                privateLinkServiceConnectionState.Value,
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorWorkspacePrivateEndpointConnection>.Write(ModelReaderWriterOptions options)

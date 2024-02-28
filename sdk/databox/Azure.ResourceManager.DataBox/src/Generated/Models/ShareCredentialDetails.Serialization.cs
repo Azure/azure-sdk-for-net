@@ -147,7 +147,13 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ShareCredentialDetails(shareName.Value, Optional.ToNullable(shareType), userName.Value, password.Value, supportedAccessProtocols ?? new ChangeTrackingList<DataBoxAccessProtocol>(), serializedAdditionalRawData);
+            return new ShareCredentialDetails(
+                shareName.Value,
+                Optional.ToNullable(shareType),
+                userName.Value,
+                password.Value,
+                supportedAccessProtocols ?? new ChangeTrackingList<DataBoxAccessProtocol>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ShareCredentialDetails>.Write(ModelReaderWriterOptions options)

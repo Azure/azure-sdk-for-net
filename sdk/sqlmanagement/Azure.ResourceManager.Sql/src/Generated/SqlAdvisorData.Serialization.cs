@@ -261,7 +261,20 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlAdvisorData(id, name, type, systemData.Value, kind.Value, Optional.ToNullable(location), Optional.ToNullable(advisorStatus), Optional.ToNullable(autoExecuteStatus), Optional.ToNullable(autoExecuteStatusInheritedFrom), recommendationsStatus.Value, Optional.ToNullable(lastChecked), recommendedActions ?? new ChangeTrackingList<RecommendedActionData>(), serializedAdditionalRawData);
+            return new SqlAdvisorData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind.Value,
+                Optional.ToNullable(location),
+                Optional.ToNullable(advisorStatus),
+                Optional.ToNullable(autoExecuteStatus),
+                Optional.ToNullable(autoExecuteStatusInheritedFrom),
+                recommendationsStatus.Value,
+                Optional.ToNullable(lastChecked),
+                recommendedActions ?? new ChangeTrackingList<RecommendedActionData>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlAdvisorData>.Write(ModelReaderWriterOptions options)

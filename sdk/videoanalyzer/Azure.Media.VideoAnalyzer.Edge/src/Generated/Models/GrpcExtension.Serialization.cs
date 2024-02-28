@@ -112,7 +112,15 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new GrpcExtension(type, name, inputs, endpoint, image, samplingOptions.Value, dataTransfer, extensionConfiguration.Value);
+            return new GrpcExtension(
+                type,
+                name,
+                inputs,
+                endpoint,
+                image,
+                samplingOptions.Value,
+                dataTransfer,
+                extensionConfiguration.Value);
         }
     }
 }

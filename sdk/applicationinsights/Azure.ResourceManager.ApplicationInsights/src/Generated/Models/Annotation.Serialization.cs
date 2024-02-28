@@ -144,7 +144,14 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new Annotation(annotationName.Value, category.Value, Optional.ToNullable(eventTime), id.Value, properties.Value, relatedAnnotation.Value, serializedAdditionalRawData);
+            return new Annotation(
+                annotationName.Value,
+                category.Value,
+                Optional.ToNullable(eventTime),
+                id.Value,
+                properties.Value,
+                relatedAnnotation.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<Annotation>.Write(ModelReaderWriterOptions options)

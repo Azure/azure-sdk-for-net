@@ -158,7 +158,16 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AccountSasContent(signedServices, signedResourceTypes, signedPermission, signedIP.Value, Optional.ToNullable(signedProtocol), Optional.ToNullable(signedStart), signedExpiry, keyToSign.Value, serializedAdditionalRawData);
+            return new AccountSasContent(
+                signedServices,
+                signedResourceTypes,
+                signedPermission,
+                signedIP.Value,
+                Optional.ToNullable(signedProtocol),
+                Optional.ToNullable(signedStart),
+                signedExpiry,
+                keyToSign.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AccountSasContent>.Write(ModelReaderWriterOptions options)

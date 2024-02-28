@@ -266,7 +266,21 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudVolumeData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, extendedLocation, attachedTo ?? new ChangeTrackingList<string>(), Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, Optional.ToNullable(provisioningState), serialNumber.Value, sizeMiB, serializedAdditionalRawData);
+            return new NetworkCloudVolumeData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation,
+                attachedTo ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(detailedStatus),
+                detailedStatusMessage.Value,
+                Optional.ToNullable(provisioningState),
+                serialNumber.Value,
+                sizeMiB,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudVolumeData>.Write(ModelReaderWriterOptions options)

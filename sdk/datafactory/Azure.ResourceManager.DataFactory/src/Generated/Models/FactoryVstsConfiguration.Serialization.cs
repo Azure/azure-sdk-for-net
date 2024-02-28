@@ -163,7 +163,17 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FactoryVstsConfiguration(type, accountName, repositoryName, collaborationBranch, rootFolder, lastCommitId.Value, Optional.ToNullable(disablePublish), serializedAdditionalRawData, projectName, Optional.ToNullable(tenantId));
+            return new FactoryVstsConfiguration(
+                type,
+                accountName,
+                repositoryName,
+                collaborationBranch,
+                rootFolder,
+                lastCommitId.Value,
+                Optional.ToNullable(disablePublish),
+                serializedAdditionalRawData,
+                projectName,
+                Optional.ToNullable(tenantId));
         }
 
         BinaryData IPersistableModel<FactoryVstsConfiguration>.Write(ModelReaderWriterOptions options)

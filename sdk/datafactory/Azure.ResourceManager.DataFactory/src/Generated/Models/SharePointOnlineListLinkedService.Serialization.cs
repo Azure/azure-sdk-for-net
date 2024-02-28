@@ -231,7 +231,18 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SharePointOnlineListLinkedService(type, connectVia.Value, description.Value, parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, siteUrl, tenantId, servicePrincipalId, servicePrincipalKey, encryptedCredential.Value);
+            return new SharePointOnlineListLinkedService(
+                type,
+                connectVia.Value,
+                description.Value,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                siteUrl,
+                tenantId,
+                servicePrincipalId,
+                servicePrincipalKey,
+                encryptedCredential.Value);
         }
 
         BinaryData IPersistableModel<SharePointOnlineListLinkedService>.Write(ModelReaderWriterOptions options)

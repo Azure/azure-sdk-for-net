@@ -259,7 +259,18 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AmazonS3CompatibleLinkedService(type, connectVia.Value, description.Value, parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, accessKeyId.Value, secretAccessKey, serviceUrl.Value, forcePathStyle.Value, encryptedCredential.Value);
+            return new AmazonS3CompatibleLinkedService(
+                type,
+                connectVia.Value,
+                description.Value,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                accessKeyId.Value,
+                secretAccessKey,
+                serviceUrl.Value,
+                forcePathStyle.Value,
+                encryptedCredential.Value);
         }
 
         BinaryData IPersistableModel<AmazonS3CompatibleLinkedService>.Write(ModelReaderWriterOptions options)

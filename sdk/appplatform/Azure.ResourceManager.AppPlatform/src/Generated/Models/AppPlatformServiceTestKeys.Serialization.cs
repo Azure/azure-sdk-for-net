@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformServiceTestKeys(primaryKey.Value, secondaryKey.Value, primaryTestEndpoint.Value, secondaryTestEndpoint.Value, Optional.ToNullable(enabled), serializedAdditionalRawData);
+            return new AppPlatformServiceTestKeys(
+                primaryKey.Value,
+                secondaryKey.Value,
+                primaryTestEndpoint.Value,
+                secondaryTestEndpoint.Value,
+                Optional.ToNullable(enabled),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformServiceTestKeys>.Write(ModelReaderWriterOptions options)

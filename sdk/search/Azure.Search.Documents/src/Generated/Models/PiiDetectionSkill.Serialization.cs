@@ -260,7 +260,20 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new PiiDetectionSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, defaultLanguageCode.Value, Optional.ToNullable(minimumPrecision), Optional.ToNullable(maskingMode), maskingCharacter.Value, modelVersion.Value, piiCategories ?? new ChangeTrackingList<string>(), domain.Value);
+            return new PiiDetectionSkill(
+                odataType,
+                name.Value,
+                description.Value,
+                context.Value,
+                inputs,
+                outputs,
+                defaultLanguageCode.Value,
+                Optional.ToNullable(minimumPrecision),
+                Optional.ToNullable(maskingMode),
+                maskingCharacter.Value,
+                modelVersion.Value,
+                piiCategories ?? new ChangeTrackingList<string>(),
+                domain.Value);
         }
     }
 }

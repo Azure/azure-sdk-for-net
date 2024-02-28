@@ -217,7 +217,17 @@ namespace Azure.ResourceManager.Avs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvsPrivateCloudClusterData(id, name, type, systemData.Value, sku, Optional.ToNullable(clusterSize), Optional.ToNullable(provisioningState), Optional.ToNullable(clusterId), hosts ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new AvsPrivateCloudClusterData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                sku,
+                Optional.ToNullable(clusterSize),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(clusterId),
+                hosts ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvsPrivateCloudClusterData>.Write(ModelReaderWriterOptions options)

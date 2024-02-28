@@ -347,7 +347,20 @@ namespace Azure.Communication.JobRouter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RouterWorker(etag, id, Optional.ToNullable(state), queues ?? new ChangeTrackingList<string>(), Optional.ToNullable(capacity), labels ?? new ChangeTrackingDictionary<string, BinaryData>(), tags ?? new ChangeTrackingDictionary<string, BinaryData>(), channels ?? new ChangeTrackingList<RouterChannel>(), offers ?? new ChangeTrackingList<RouterJobOffer>(), assignedJobs ?? new ChangeTrackingList<RouterWorkerAssignment>(), Optional.ToNullable(loadRatio), Optional.ToNullable(availableForOffers), serializedAdditionalRawData);
+            return new RouterWorker(
+                etag,
+                id,
+                Optional.ToNullable(state),
+                queues ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(capacity),
+                labels ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                tags ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                channels ?? new ChangeTrackingList<RouterChannel>(),
+                offers ?? new ChangeTrackingList<RouterJobOffer>(),
+                assignedJobs ?? new ChangeTrackingList<RouterWorkerAssignment>(),
+                Optional.ToNullable(loadRatio),
+                Optional.ToNullable(availableForOffers),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RouterWorker>.Write(ModelReaderWriterOptions options)

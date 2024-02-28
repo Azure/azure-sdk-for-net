@@ -71,7 +71,14 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new DialogCompletedInternal(operationContext.Value, resultInformation.Value, Optional.ToNullable(dialogInputType), dialogId.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value);
+            return new DialogCompletedInternal(
+                operationContext.Value,
+                resultInformation.Value,
+                Optional.ToNullable(dialogInputType),
+                dialogId.Value,
+                callConnectionId.Value,
+                serverCallId.Value,
+                correlationId.Value);
         }
     }
 }

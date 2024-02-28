@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventGridStreamInputDataSource(type, serializedAdditionalRawData, subscriber.Value, Optional.ToNullable(schema), storageAccounts ?? new ChangeTrackingList<StreamAnalyticsStorageAccount>(), eventTypes ?? new ChangeTrackingList<string>());
+            return new EventGridStreamInputDataSource(
+                type,
+                serializedAdditionalRawData,
+                subscriber.Value,
+                Optional.ToNullable(schema),
+                storageAccounts ?? new ChangeTrackingList<StreamAnalyticsStorageAccount>(),
+                eventTypes ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<EventGridStreamInputDataSource>.Write(ModelReaderWriterOptions options)

@@ -145,7 +145,13 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExchangeResult(id.Value, name.Value, Optional.ToNullable(status), properties.Value, error.Value, serializedAdditionalRawData);
+            return new ExchangeResult(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(status),
+                properties.Value,
+                error.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExchangeResult>.Write(ModelReaderWriterOptions options)

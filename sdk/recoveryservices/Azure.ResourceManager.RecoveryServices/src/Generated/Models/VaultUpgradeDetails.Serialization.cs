@@ -201,7 +201,17 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VaultUpgradeDetails(operationId.Value, Optional.ToNullable(startTimeUtc), Optional.ToNullable(lastUpdatedTimeUtc), Optional.ToNullable(endTimeUtc), Optional.ToNullable(status), message.Value, Optional.ToNullable(triggerType), upgradedResourceId.Value, previousResourceId.Value, serializedAdditionalRawData);
+            return new VaultUpgradeDetails(
+                operationId.Value,
+                Optional.ToNullable(startTimeUtc),
+                Optional.ToNullable(lastUpdatedTimeUtc),
+                Optional.ToNullable(endTimeUtc),
+                Optional.ToNullable(status),
+                message.Value,
+                Optional.ToNullable(triggerType),
+                upgradedResourceId.Value,
+                previousResourceId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VaultUpgradeDetails>.Write(ModelReaderWriterOptions options)

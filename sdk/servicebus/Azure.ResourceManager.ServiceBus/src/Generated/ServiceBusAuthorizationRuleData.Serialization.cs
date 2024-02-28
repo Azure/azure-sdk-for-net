@@ -179,7 +179,14 @@ namespace Azure.ResourceManager.ServiceBus
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceBusAuthorizationRuleData(id, name, type, systemData.Value, rights ?? new ChangeTrackingList<ServiceBusAccessRight>(), Optional.ToNullable(location), serializedAdditionalRawData);
+            return new ServiceBusAuthorizationRuleData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                rights ?? new ChangeTrackingList<ServiceBusAccessRight>(),
+                Optional.ToNullable(location),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceBusAuthorizationRuleData>.Write(ModelReaderWriterOptions options)

@@ -206,7 +206,16 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HciClusterReportedProperties(clusterName.Value, Optional.ToNullable(clusterId), clusterVersion.Value, nodes ?? new ChangeTrackingList<HciClusterNode>(), Optional.ToNullable(lastUpdated), Optional.ToNullable(imdsAttestation), Optional.ToNullable(diagnosticLevel), supportedCapabilities ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new HciClusterReportedProperties(
+                clusterName.Value,
+                Optional.ToNullable(clusterId),
+                clusterVersion.Value,
+                nodes ?? new ChangeTrackingList<HciClusterNode>(),
+                Optional.ToNullable(lastUpdated),
+                Optional.ToNullable(imdsAttestation),
+                Optional.ToNullable(diagnosticLevel),
+                supportedCapabilities ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HciClusterReportedProperties>.Write(ModelReaderWriterOptions options)

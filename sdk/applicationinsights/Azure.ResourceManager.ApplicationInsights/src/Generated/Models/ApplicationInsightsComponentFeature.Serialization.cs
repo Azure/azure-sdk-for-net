@@ -195,7 +195,17 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationInsightsComponentFeature(featureName.Value, meterId.Value, meterRateFrequency.Value, resouceId.Value, Optional.ToNullable(isHidden), capabilities ?? new ChangeTrackingList<ApplicationInsightsComponentFeatureCapability>(), title.Value, Optional.ToNullable(isMainFeature), supportedAddonFeatures.Value, serializedAdditionalRawData);
+            return new ApplicationInsightsComponentFeature(
+                featureName.Value,
+                meterId.Value,
+                meterRateFrequency.Value,
+                resouceId.Value,
+                Optional.ToNullable(isHidden),
+                capabilities ?? new ChangeTrackingList<ApplicationInsightsComponentFeatureCapability>(),
+                title.Value,
+                Optional.ToNullable(isMainFeature),
+                supportedAddonFeatures.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationInsightsComponentFeature>.Write(ModelReaderWriterOptions options)

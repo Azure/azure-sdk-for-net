@@ -133,7 +133,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectivityStatusContract(name, status, error.Value, lastUpdated, lastStatusChange, resourceType, isOptional, serializedAdditionalRawData);
+            return new ConnectivityStatusContract(
+                name,
+                status,
+                error.Value,
+                lastUpdated,
+                lastStatusChange,
+                resourceType,
+                isOptional,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectivityStatusContract>.Write(ModelReaderWriterOptions options)

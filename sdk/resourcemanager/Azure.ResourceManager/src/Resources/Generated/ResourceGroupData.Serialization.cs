@@ -184,7 +184,16 @@ namespace Azure.ResourceManager.Resources
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceGroupData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, properties.Value, managedBy.Value, serializedAdditionalRawData);
+            return new ResourceGroupData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties.Value,
+                managedBy.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceGroupData>.Write(ModelReaderWriterOptions options)

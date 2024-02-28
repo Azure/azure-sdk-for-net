@@ -164,7 +164,13 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlServerJobTargetGroupData(id, name, type, systemData.Value, members ?? new ChangeTrackingList<JobTarget>(), serializedAdditionalRawData);
+            return new SqlServerJobTargetGroupData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                members ?? new ChangeTrackingList<JobTarget>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlServerJobTargetGroupData>.Write(ModelReaderWriterOptions options)

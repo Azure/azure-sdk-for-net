@@ -169,7 +169,14 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedInstanceServerConfigurationOptionData(id, name, type, systemData.Value, Optional.ToNullable(serverConfigurationOptionValue), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new ManagedInstanceServerConfigurationOptionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(serverConfigurationOptionValue),
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedInstanceServerConfigurationOptionData>.Write(ModelReaderWriterOptions options)

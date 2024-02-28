@@ -296,7 +296,23 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineInstallPatchesResult(Optional.ToNullable(status), installationActivityId.Value, Optional.ToNullable(rebootStatus), Optional.ToNullable(maintenanceWindowExceeded), Optional.ToNullable(excludedPatchCount), Optional.ToNullable(notSelectedPatchCount), Optional.ToNullable(pendingPatchCount), Optional.ToNullable(installedPatchCount), Optional.ToNullable(failedPatchCount), Optional.ToNullable(startDateTime), Optional.ToNullable(lastModifiedDateTime), Optional.ToNullable(startedBy), Optional.ToNullable(patchServiceUsed), Optional.ToNullable(osType), errorDetails.Value, serializedAdditionalRawData);
+            return new MachineInstallPatchesResult(
+                Optional.ToNullable(status),
+                installationActivityId.Value,
+                Optional.ToNullable(rebootStatus),
+                Optional.ToNullable(maintenanceWindowExceeded),
+                Optional.ToNullable(excludedPatchCount),
+                Optional.ToNullable(notSelectedPatchCount),
+                Optional.ToNullable(pendingPatchCount),
+                Optional.ToNullable(installedPatchCount),
+                Optional.ToNullable(failedPatchCount),
+                Optional.ToNullable(startDateTime),
+                Optional.ToNullable(lastModifiedDateTime),
+                Optional.ToNullable(startedBy),
+                Optional.ToNullable(patchServiceUsed),
+                Optional.ToNullable(osType),
+                errorDetails.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineInstallPatchesResult>.Write(ModelReaderWriterOptions options)

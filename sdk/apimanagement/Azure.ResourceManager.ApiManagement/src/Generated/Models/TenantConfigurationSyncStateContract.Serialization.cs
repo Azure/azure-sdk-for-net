@@ -246,7 +246,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TenantConfigurationSyncStateContract(id, name, type, systemData.Value, branch.Value, commitId.Value, Optional.ToNullable(isExport), Optional.ToNullable(isSynced), Optional.ToNullable(isGitEnabled), Optional.ToNullable(syncDate), Optional.ToNullable(configurationChangeDate), lastOperationId.Value, serializedAdditionalRawData);
+            return new TenantConfigurationSyncStateContract(
+                id,
+                name,
+                type,
+                systemData.Value,
+                branch.Value,
+                commitId.Value,
+                Optional.ToNullable(isExport),
+                Optional.ToNullable(isSynced),
+                Optional.ToNullable(isGitEnabled),
+                Optional.ToNullable(syncDate),
+                Optional.ToNullable(configurationChangeDate),
+                lastOperationId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TenantConfigurationSyncStateContract>.Write(ModelReaderWriterOptions options)

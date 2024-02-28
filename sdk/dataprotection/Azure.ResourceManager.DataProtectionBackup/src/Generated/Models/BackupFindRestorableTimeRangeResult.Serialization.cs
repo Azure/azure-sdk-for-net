@@ -138,7 +138,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupFindRestorableTimeRangeResult(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new BackupFindRestorableTimeRangeResult(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupFindRestorableTimeRangeResult>.Write(ModelReaderWriterOptions options)

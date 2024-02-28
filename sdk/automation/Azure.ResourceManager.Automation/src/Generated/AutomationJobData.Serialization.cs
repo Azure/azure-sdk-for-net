@@ -376,7 +376,26 @@ namespace Azure.ResourceManager.Automation
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationJobData(id, name, type, systemData.Value, runbook.Value, startedBy.Value, runOn.Value, Optional.ToNullable(jobId), Optional.ToNullable(creationTime), Optional.ToNullable(status), statusDetails.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), exception.Value, Optional.ToNullable(lastModifiedTime), Optional.ToNullable(lastStatusModifiedTime), parameters ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new AutomationJobData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                runbook.Value,
+                startedBy.Value,
+                runOn.Value,
+                Optional.ToNullable(jobId),
+                Optional.ToNullable(creationTime),
+                Optional.ToNullable(status),
+                statusDetails.Value,
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                exception.Value,
+                Optional.ToNullable(lastModifiedTime),
+                Optional.ToNullable(lastStatusModifiedTime),
+                parameters ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationJobData>.Write(ModelReaderWriterOptions options)

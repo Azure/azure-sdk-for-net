@@ -95,7 +95,15 @@ namespace Azure.Messaging.EventGrid.Models
                     continue;
                 }
             }
-            return new EventGridEventInternal(id, topic.Value, subject, data, eventType, eventTime, metadataVersion.Value, dataVersion);
+            return new EventGridEventInternal(
+                id,
+                topic.Value,
+                subject,
+                data,
+                eventType,
+                eventTime,
+                metadataVersion.Value,
+                dataVersion);
         }
 
         internal partial class EventGridEventInternalConverter : JsonConverter<EventGridEventInternal>

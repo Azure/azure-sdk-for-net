@@ -329,7 +329,18 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LinkerValidateOperationResult(resourceId.Value, status.Value, linkerName.Value, Optional.ToNullable(isConnectionAvailable), Optional.ToNullable(reportStartTimeUtc), Optional.ToNullable(reportEndTimeUtc), sourceId.Value, targetId.Value, Optional.ToNullable(authType), validationDetail ?? new ChangeTrackingList<LinkerValidationResultItemInfo>(), serializedAdditionalRawData);
+            return new LinkerValidateOperationResult(
+                resourceId.Value,
+                status.Value,
+                linkerName.Value,
+                Optional.ToNullable(isConnectionAvailable),
+                Optional.ToNullable(reportStartTimeUtc),
+                Optional.ToNullable(reportEndTimeUtc),
+                sourceId.Value,
+                targetId.Value,
+                Optional.ToNullable(authType),
+                validationDetail ?? new ChangeTrackingList<LinkerValidationResultItemInfo>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LinkerValidateOperationResult>.Write(ModelReaderWriterOptions options)

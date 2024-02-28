@@ -6,7 +6,6 @@ Azure/aks-pm is an invalid team. Ensure the team exists and has write permission
 liadtal is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 yairgil is not a public member of Azure.
 shenmuxiaosen is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
-'Application Insights' is not a valid label for this repository.
 azmonapplicationinsights is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 armleads-azure is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 mjudeikis is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
@@ -36,7 +35,6 @@ Aviv-Yaniv is an invalid user. Ensure the user exists, is public member of Azure
 sijuman is not a public member of Azure.
 sarathys is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 rakku-ms is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
-'Azure.Spring - Cosmos' is not a valid label for this repository.
 rpsqrd is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 edyoung is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 dpwatrous is not a public member of Azure.
@@ -52,7 +50,6 @@ areddish is an invalid user. Ensure the user exists, is public member of Azure a
 tburns10 is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 ryogok is not a public member of Azure.
 TFR258 is not a public member of Azure.
-toothache is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 JinyuID is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 dipidoo is not a public member of Azure.
 SteveMSFT is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
@@ -67,8 +64,6 @@ mengaims is not a public member of Azure.
 juaduan is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 moreOver0 is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 gils-ms is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
-'Cognitive - Health Insights Cancer Profiling' is not a valid label for this repository.
-'Cognitive - Health Insights Clinical Matching' is not a valid label for this repository.
 bingisbestest is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 nerajput1607 is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 assafi is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
@@ -110,7 +105,6 @@ dkulkarni-ms is not a public member of Azure.
 haagha is not a public member of Azure.
 MS-syh2qs is not a public member of Azure.
 grizzlytheodore is not a public member of Azure.
-'Consumption' is not a valid label for this repository.
 ccmbpxpcrew is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 ccmaxpcrew is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 ccmixpdevs is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
@@ -129,7 +123,6 @@ MehaKaushik is an invalid user. Ensure the user exists, is public member of Azur
 shurd is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 anfeldma-ms is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 zfoster is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
-'Cost Management' is not a valid label for this repository.
 manoharp is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 MSEvanhi is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 shefymk is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
@@ -156,16 +149,13 @@ Tanmayeekamath is an invalid user. Ensure the user exists, is public member of A
 narula0781 is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 ashishonce is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 romil07 is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
-'Device Provisioning Service' is not a valid label for this repository.
 nberdy is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
-'Device Update for IoT Hub' is not a valid label for this repository.
 dpokluda is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 sedols is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 efriesner is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 Aashish93-stack is not a public member of Azure.
 Satya-Kolluri is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 Azure/azure-iot-cli-triage is an invalid team. Ensure the team exists and has write permissions.
-'IoT Models Repository' is not a valid label for this repository.
 brycewang-microsoft is not a public member of Azure.
 andyk-ms is not a public member of Azure.
 tmahmood-microsoft is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
@@ -174,7 +164,6 @@ rasidhan is not a public member of Azure.
 dmdenmsft is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 Kishp01 is not a public member of Azure.
 ahamad-MS is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
-kasun04 is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 saglodha is not a public member of Azure.
 ahmedelnably is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 dkershaw10 is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
@@ -186,10 +175,7 @@ romahamu is not a public member of Azure.
 omzevall is not a public member of Azure.
 ethanann-ms is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 vighatke is not a public member of Azure.
-'IotHub' is not a valid label for this repository.
-'IotCentral' is not a valid label for this repository.
 iluican is not a public member of Azure.
-'IotDPS' is not a valid label for this repository.
 chieftn is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 RandalliLama is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 jlichwa is not a public member of Azure.
@@ -201,7 +187,6 @@ minamnmik is an invalid user. Ensure the user exists, is public member of Azure 
 varunkch is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 azureml-github is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 aashishb is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
-'Managed Services' is not a valid label for this repository.
 Lighthouse-Azure is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 ajlam is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 ambhatna is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
@@ -246,7 +231,6 @@ vpngwsuppgithub is an invalid user. Ensure the user exists, is public member of 
 privlinksuppgithub is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 tjsomasundaram is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 trrwilson is not a public member of Azure.
-'Monitor - Operational Insights' is not a valid label for this repository.
 aperezcloud is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 kenieva is not a public member of Azure.
 sunilagarwal is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
@@ -266,7 +250,6 @@ amirkeren is an invalid user. Ensure the user exists, is public member of Azure 
 bleroy is not a public member of Azure.
 tjacobhi is not a public member of Azure.
 shankarsama is not a public member of Azure.
-DorothySun216 is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 EldertGrootenboer is not a public member of Azure.
 QingChenmsft is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 vaishnavk is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
@@ -288,10 +271,8 @@ sivethe, is an invalid user. Ensure the user exists, is public member of Azure a
 ThomasWeiss, is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 PaulCheng is not a public member of Azure.
 Shipra1Mishra is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
-'vFXT' is not a valid label for this repository.
 zhusijia26 is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 JialinXin is not a public member of Azure.
 orenmichaely is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 tyclintw is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
-'Cognitive - Content Safety' is not a valid label for this repository.
 JieZhou000 is not a public member of Azure.

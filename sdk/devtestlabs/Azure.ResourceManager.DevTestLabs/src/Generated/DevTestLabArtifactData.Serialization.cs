@@ -275,7 +275,22 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabArtifactData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, title.Value, description.Value, publisher.Value, filePath.Value, icon.Value, targetOSType.Value, parameters.Value, Optional.ToNullable(createdDate), serializedAdditionalRawData);
+            return new DevTestLabArtifactData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                title.Value,
+                description.Value,
+                publisher.Value,
+                filePath.Value,
+                icon.Value,
+                targetOSType.Value,
+                parameters.Value,
+                Optional.ToNullable(createdDate),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabArtifactData>.Write(ModelReaderWriterOptions options)

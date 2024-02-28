@@ -130,7 +130,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryJobStatusEventDetails(instanceType, serializedAdditionalRawData, jobId.Value, jobFriendlyName.Value, jobStatus.Value, affectedObjectType.Value);
+            return new SiteRecoveryJobStatusEventDetails(
+                instanceType,
+                serializedAdditionalRawData,
+                jobId.Value,
+                jobFriendlyName.Value,
+                jobStatus.Value,
+                affectedObjectType.Value);
         }
 
         BinaryData IPersistableModel<SiteRecoveryJobStatusEventDetails>.Write(ModelReaderWriterOptions options)

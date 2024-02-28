@@ -204,7 +204,18 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PremierAddOnPatchResource(id, name, type, systemData.Value, sku.Value, product.Value, vendor.Value, marketplacePublisher.Value, marketplaceOffer.Value, kind.Value, serializedAdditionalRawData);
+            return new PremierAddOnPatchResource(
+                id,
+                name,
+                type,
+                systemData.Value,
+                sku.Value,
+                product.Value,
+                vendor.Value,
+                marketplacePublisher.Value,
+                marketplaceOffer.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PremierAddOnPatchResource>.Write(ModelReaderWriterOptions options)

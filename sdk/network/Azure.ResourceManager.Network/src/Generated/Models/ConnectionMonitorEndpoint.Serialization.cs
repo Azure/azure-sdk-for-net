@@ -168,7 +168,15 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectionMonitorEndpoint(name, Optional.ToNullable(type), resourceId.Value, address.Value, filter.Value, scope.Value, Optional.ToNullable(coverageLevel), serializedAdditionalRawData);
+            return new ConnectionMonitorEndpoint(
+                name,
+                Optional.ToNullable(type),
+                resourceId.Value,
+                address.Value,
+                filter.Value,
+                scope.Value,
+                Optional.ToNullable(coverageLevel),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectionMonitorEndpoint>.Write(ModelReaderWriterOptions options)

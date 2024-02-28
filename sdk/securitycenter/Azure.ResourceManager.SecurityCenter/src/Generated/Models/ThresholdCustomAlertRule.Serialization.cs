@@ -151,7 +151,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ThresholdCustomAlertRule(displayName.Value, description.Value, isEnabled, ruleType, serializedAdditionalRawData, minThreshold, maxThreshold);
+            return new ThresholdCustomAlertRule(
+                displayName.Value,
+                description.Value,
+                isEnabled,
+                ruleType,
+                serializedAdditionalRawData,
+                minThreshold,
+                maxThreshold);
         }
 
         BinaryData IPersistableModel<ThresholdCustomAlertRule>.Write(ModelReaderWriterOptions options)

@@ -204,7 +204,15 @@ namespace Azure.ResourceManager.ContainerService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerServiceMaintenanceConfigurationData(id, name, type, systemData.Value, timeInWeek ?? new ChangeTrackingList<ContainerServiceTimeInWeek>(), notAllowedTime ?? new ChangeTrackingList<ContainerServiceTimeSpan>(), maintenanceWindow.Value, serializedAdditionalRawData);
+            return new ContainerServiceMaintenanceConfigurationData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                timeInWeek ?? new ChangeTrackingList<ContainerServiceTimeInWeek>(),
+                notAllowedTime ?? new ChangeTrackingList<ContainerServiceTimeSpan>(),
+                maintenanceWindow.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerServiceMaintenanceConfigurationData>.Write(ModelReaderWriterOptions options)

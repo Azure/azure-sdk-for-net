@@ -166,7 +166,16 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SingleServerConfiguration(deploymentType, appResourceGroup, serializedAdditionalRawData, networkConfiguration.Value, Optional.ToNullable(databaseType), subnetId, virtualMachineConfiguration, dbDiskConfiguration.Value, customResourceNames.Value);
+            return new SingleServerConfiguration(
+                deploymentType,
+                appResourceGroup,
+                serializedAdditionalRawData,
+                networkConfiguration.Value,
+                Optional.ToNullable(databaseType),
+                subnetId,
+                virtualMachineConfiguration,
+                dbDiskConfiguration.Value,
+                customResourceNames.Value);
         }
 
         BinaryData IPersistableModel<SingleServerConfiguration>.Write(ModelReaderWriterOptions options)

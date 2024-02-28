@@ -197,7 +197,17 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppVolumeBackupStatus(Optional.ToNullable(healthy), Optional.ToNullable(relationshipStatus), Optional.ToNullable(mirrorState), unhealthyReason.Value, errorMessage.Value, Optional.ToNullable(lastTransferSize), lastTransferType.Value, Optional.ToNullable(totalTransferBytes), Optional.ToNullable(transferProgressBytes), serializedAdditionalRawData);
+            return new NetAppVolumeBackupStatus(
+                Optional.ToNullable(healthy),
+                Optional.ToNullable(relationshipStatus),
+                Optional.ToNullable(mirrorState),
+                unhealthyReason.Value,
+                errorMessage.Value,
+                Optional.ToNullable(lastTransferSize),
+                lastTransferType.Value,
+                Optional.ToNullable(totalTransferBytes),
+                Optional.ToNullable(transferProgressBytes),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppVolumeBackupStatus>.Write(ModelReaderWriterOptions options)

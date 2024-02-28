@@ -174,7 +174,17 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ThreeTierConfiguration(deploymentType, appResourceGroup, serializedAdditionalRawData, networkConfiguration.Value, centralServer, applicationServer, databaseServer, highAvailabilityConfig.Value, storageConfiguration.Value, customResourceNames.Value);
+            return new ThreeTierConfiguration(
+                deploymentType,
+                appResourceGroup,
+                serializedAdditionalRawData,
+                networkConfiguration.Value,
+                centralServer,
+                applicationServer,
+                databaseServer,
+                highAvailabilityConfig.Value,
+                storageConfiguration.Value,
+                customResourceNames.Value);
         }
 
         BinaryData IPersistableModel<ThreeTierConfiguration>.Write(ModelReaderWriterOptions options)

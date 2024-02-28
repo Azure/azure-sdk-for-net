@@ -134,7 +134,13 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LeaseContainerContent(action, leaseId.Value, Optional.ToNullable(breakPeriod), Optional.ToNullable(leaseDuration), proposedLeaseId.Value, serializedAdditionalRawData);
+            return new LeaseContainerContent(
+                action,
+                leaseId.Value,
+                Optional.ToNullable(breakPeriod),
+                Optional.ToNullable(leaseDuration),
+                proposedLeaseId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LeaseContainerContent>.Write(ModelReaderWriterOptions options)

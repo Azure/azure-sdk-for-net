@@ -323,7 +323,26 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecommendationRuleData(id, name, type, systemData.Value, recommendationName.Value, displayName.Value, message.Value, Optional.ToNullable(recommendationId), description.Value, actionName.Value, Optional.ToNullable(level), Optional.ToNullable(channels), categoryTags ?? new ChangeTrackingList<string>(), Optional.ToNullable(isDynamic), extensionName.Value, bladeName.Value, forwardLink.Value, kind.Value, serializedAdditionalRawData);
+            return new RecommendationRuleData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                recommendationName.Value,
+                displayName.Value,
+                message.Value,
+                Optional.ToNullable(recommendationId),
+                description.Value,
+                actionName.Value,
+                Optional.ToNullable(level),
+                Optional.ToNullable(channels),
+                categoryTags ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(isDynamic),
+                extensionName.Value,
+                bladeName.Value,
+                forwardLink.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecommendationRuleData>.Write(ModelReaderWriterOptions options)

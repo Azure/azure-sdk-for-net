@@ -158,7 +158,16 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JobStepOutput(Optional.ToNullable(type), Optional.ToNullable(subscriptionId), resourceGroupName.Value, serverName, databaseName, schemaName.Value, tableName, credential, serializedAdditionalRawData);
+            return new JobStepOutput(
+                Optional.ToNullable(type),
+                Optional.ToNullable(subscriptionId),
+                resourceGroupName.Value,
+                serverName,
+                databaseName,
+                schemaName.Value,
+                tableName,
+                credential,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<JobStepOutput>.Write(ModelReaderWriterOptions options)

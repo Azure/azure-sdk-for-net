@@ -179,7 +179,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirewallLogSettings(Optional.ToNullable(logType), Optional.ToNullable(logOption), applicationInsights.Value, commonDestination.Value, trafficLogDestination.Value, threatLogDestination.Value, decryptLogDestination.Value, serializedAdditionalRawData);
+            return new FirewallLogSettings(
+                Optional.ToNullable(logType),
+                Optional.ToNullable(logOption),
+                applicationInsights.Value,
+                commonDestination.Value,
+                trafficLogDestination.Value,
+                threatLogDestination.Value,
+                decryptLogDestination.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirewallLogSettings>.Write(ModelReaderWriterOptions options)

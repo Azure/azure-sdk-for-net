@@ -193,7 +193,15 @@ namespace Azure.ResourceManager.Advisor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConfigData(id, name, type, systemData.Value, Optional.ToNullable(exclude), Optional.ToNullable(lowCpuThreshold), digests ?? new ChangeTrackingList<DigestConfig>(), serializedAdditionalRawData);
+            return new ConfigData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(exclude),
+                Optional.ToNullable(lowCpuThreshold),
+                digests ?? new ChangeTrackingList<DigestConfig>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConfigData>.Write(ModelReaderWriterOptions options)

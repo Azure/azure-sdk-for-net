@@ -308,7 +308,22 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FlowLogData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, Optional.ToNullable(etag), targetResourceId.Value, Optional.ToNullable(targetResourceGuid), storageId.Value, Optional.ToNullable(enabled), retentionPolicy.Value, format.Value, flowAnalyticsConfiguration.Value, Optional.ToNullable(provisioningState));
+            return new FlowLogData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                Optional.ToNullable(location),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                targetResourceId.Value,
+                Optional.ToNullable(targetResourceGuid),
+                storageId.Value,
+                Optional.ToNullable(enabled),
+                retentionPolicy.Value,
+                format.Value,
+                flowAnalyticsConfiguration.Value,
+                Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<FlowLogData>.Write(ModelReaderWriterOptions options)

@@ -156,7 +156,14 @@ namespace Azure.ResourceManager.Search.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SharedSearchServicePrivateLinkResourceProperties(privateLinkResourceId.Value, groupId.Value, requestMessage.Value, Optional.ToNullable(resourceRegion), Optional.ToNullable(status), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new SharedSearchServicePrivateLinkResourceProperties(
+                privateLinkResourceId.Value,
+                groupId.Value,
+                requestMessage.Value,
+                Optional.ToNullable(resourceRegion),
+                Optional.ToNullable(status),
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SharedSearchServicePrivateLinkResourceProperties>.Write(ModelReaderWriterOptions options)

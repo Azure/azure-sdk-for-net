@@ -90,7 +90,16 @@ namespace Azure.Communication.CallingServer
                     continue;
                 }
             }
-            return new AddParticipantsFailedInternal(eventSource.Value, operationContext.Value, resultInformation.Value, participants ?? new ChangeTrackingList<CommunicationIdentifierModel>(), version.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value, publicEventType.Value);
+            return new AddParticipantsFailedInternal(
+                eventSource.Value,
+                operationContext.Value,
+                resultInformation.Value,
+                participants ?? new ChangeTrackingList<CommunicationIdentifierModel>(),
+                version.Value,
+                callConnectionId.Value,
+                serverCallId.Value,
+                correlationId.Value,
+                publicEventType.Value);
         }
     }
 }

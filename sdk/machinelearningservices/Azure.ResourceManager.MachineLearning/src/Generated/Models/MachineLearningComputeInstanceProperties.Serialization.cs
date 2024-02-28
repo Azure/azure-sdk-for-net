@@ -575,7 +575,31 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningComputeInstanceProperties(vmSize.Value, subnet.Value, Optional.ToNullable(applicationSharingPolicy), autologgerSettings.Value, sshSettings.Value, customServices ?? new ChangeTrackingList<CustomService>(), osImageMetadata.Value, connectivityEndpoints.Value, applications ?? new ChangeTrackingList<MachineLearningComputeInstanceApplication>(), createdBy.Value, errors ?? new ChangeTrackingList<MachineLearningError>(), Optional.ToNullable(state), Optional.ToNullable(computeInstanceAuthorizationType), personalComputeInstanceSettings.Value, setupScripts.Value, lastOperation.Value, schedules.Value, idleTimeBeforeShutdown.Value, Optional.ToNullable(enableNodePublicIP), containers ?? new ChangeTrackingList<MachineLearningComputeInstanceContainer>(), dataDisks ?? new ChangeTrackingList<MachineLearningComputeInstanceDataDisk>(), dataMounts ?? new ChangeTrackingList<MachineLearningComputeInstanceDataMount>(), versions.Value, serializedAdditionalRawData);
+            return new MachineLearningComputeInstanceProperties(
+                vmSize.Value,
+                subnet.Value,
+                Optional.ToNullable(applicationSharingPolicy),
+                autologgerSettings.Value,
+                sshSettings.Value,
+                customServices ?? new ChangeTrackingList<CustomService>(),
+                osImageMetadata.Value,
+                connectivityEndpoints.Value,
+                applications ?? new ChangeTrackingList<MachineLearningComputeInstanceApplication>(),
+                createdBy.Value,
+                errors ?? new ChangeTrackingList<MachineLearningError>(),
+                Optional.ToNullable(state),
+                Optional.ToNullable(computeInstanceAuthorizationType),
+                personalComputeInstanceSettings.Value,
+                setupScripts.Value,
+                lastOperation.Value,
+                schedules.Value,
+                idleTimeBeforeShutdown.Value,
+                Optional.ToNullable(enableNodePublicIP),
+                containers ?? new ChangeTrackingList<MachineLearningComputeInstanceContainer>(),
+                dataDisks ?? new ChangeTrackingList<MachineLearningComputeInstanceDataDisk>(),
+                dataMounts ?? new ChangeTrackingList<MachineLearningComputeInstanceDataMount>(),
+                versions.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningComputeInstanceProperties>.Write(ModelReaderWriterOptions options)

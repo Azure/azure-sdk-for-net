@@ -153,7 +153,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RestorableSqlDatabase(id, name, type, systemData.Value, resource.Value, serializedAdditionalRawData);
+            return new RestorableSqlDatabase(
+                id,
+                name,
+                type,
+                systemData.Value,
+                resource.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RestorableSqlDatabase>.Write(ModelReaderWriterOptions options)

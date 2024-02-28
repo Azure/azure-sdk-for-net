@@ -413,7 +413,29 @@ namespace Azure.ResourceManager.Workloads
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SapApplicationServerInstanceData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, instanceNo.Value, subnet.Value, hostname.Value, kernelVersion.Value, kernelPatch.Value, ipAddress.Value, Optional.ToNullable(gatewayPort), Optional.ToNullable(icmHttpPort), Optional.ToNullable(icmHttpsPort), loadBalancerDetails, vmDetails ?? new ChangeTrackingList<ApplicationServerVmDetails>(), Optional.ToNullable(status), Optional.ToNullable(health), Optional.ToNullable(provisioningState), errors.Value, serializedAdditionalRawData);
+            return new SapApplicationServerInstanceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                instanceNo.Value,
+                subnet.Value,
+                hostname.Value,
+                kernelVersion.Value,
+                kernelPatch.Value,
+                ipAddress.Value,
+                Optional.ToNullable(gatewayPort),
+                Optional.ToNullable(icmHttpPort),
+                Optional.ToNullable(icmHttpsPort),
+                loadBalancerDetails,
+                vmDetails ?? new ChangeTrackingList<ApplicationServerVmDetails>(),
+                Optional.ToNullable(status),
+                Optional.ToNullable(health),
+                Optional.ToNullable(provisioningState),
+                errors.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SapApplicationServerInstanceData>.Write(ModelReaderWriterOptions options)

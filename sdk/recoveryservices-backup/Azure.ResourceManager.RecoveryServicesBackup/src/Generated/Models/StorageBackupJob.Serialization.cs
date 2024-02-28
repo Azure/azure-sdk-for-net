@@ -288,7 +288,23 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageBackupJob(entityFriendlyName.Value, Optional.ToNullable(backupManagementType), operation.Value, status.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), activityId.Value, jobType, serializedAdditionalRawData, Optional.ToNullable(duration), actionsInfo ?? new ChangeTrackingList<JobSupportedAction>(), errorDetails ?? new ChangeTrackingList<StorageErrorInfo>(), storageAccountName.Value, storageAccountVersion.Value, extendedInfo.Value, Optional.ToNullable(isUserTriggered));
+            return new StorageBackupJob(
+                entityFriendlyName.Value,
+                Optional.ToNullable(backupManagementType),
+                operation.Value,
+                status.Value,
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                activityId.Value,
+                jobType,
+                serializedAdditionalRawData,
+                Optional.ToNullable(duration),
+                actionsInfo ?? new ChangeTrackingList<JobSupportedAction>(),
+                errorDetails ?? new ChangeTrackingList<StorageErrorInfo>(),
+                storageAccountName.Value,
+                storageAccountVersion.Value,
+                extendedInfo.Value,
+                Optional.ToNullable(isUserTriggered));
         }
 
         BinaryData IPersistableModel<StorageBackupJob>.Write(ModelReaderWriterOptions options)

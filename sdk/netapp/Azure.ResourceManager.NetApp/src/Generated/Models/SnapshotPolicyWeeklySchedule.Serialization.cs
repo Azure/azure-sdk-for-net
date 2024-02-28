@@ -145,7 +145,13 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SnapshotPolicyWeeklySchedule(Optional.ToNullable(snapshotsToKeep), day.Value, Optional.ToNullable(hour), Optional.ToNullable(minute), Optional.ToNullable(usedBytes), serializedAdditionalRawData);
+            return new SnapshotPolicyWeeklySchedule(
+                Optional.ToNullable(snapshotsToKeep),
+                day.Value,
+                Optional.ToNullable(hour),
+                Optional.ToNullable(minute),
+                Optional.ToNullable(usedBytes),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SnapshotPolicyWeeklySchedule>.Write(ModelReaderWriterOptions options)

@@ -186,7 +186,16 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlBackupFileInfo(fileName.Value, status.Value, Optional.ToNullable(totalSize), Optional.ToNullable(dataRead), Optional.ToNullable(dataWritten), Optional.ToNullable(copyThroughput), Optional.ToNullable(copyDuration), Optional.ToNullable(familySequenceNumber), serializedAdditionalRawData);
+            return new SqlBackupFileInfo(
+                fileName.Value,
+                status.Value,
+                Optional.ToNullable(totalSize),
+                Optional.ToNullable(dataRead),
+                Optional.ToNullable(dataWritten),
+                Optional.ToNullable(copyThroughput),
+                Optional.ToNullable(copyDuration),
+                Optional.ToNullable(familySequenceNumber),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlBackupFileInfo>.Write(ModelReaderWriterOptions options)

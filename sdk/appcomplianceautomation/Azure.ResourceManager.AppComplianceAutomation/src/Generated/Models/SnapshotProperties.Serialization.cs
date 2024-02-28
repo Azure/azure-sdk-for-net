@@ -182,7 +182,15 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SnapshotProperties(id.Value, snapshotName.Value, Optional.ToNullable(createdAt), Optional.ToNullable(provisioningState), reportProperties.Value, reportSystemData, complianceResults ?? new ChangeTrackingList<ComplianceResult>(), serializedAdditionalRawData);
+            return new SnapshotProperties(
+                id.Value,
+                snapshotName.Value,
+                Optional.ToNullable(createdAt),
+                Optional.ToNullable(provisioningState),
+                reportProperties.Value,
+                reportSystemData,
+                complianceResults ?? new ChangeTrackingList<ComplianceResult>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SnapshotProperties>.Write(ModelReaderWriterOptions options)

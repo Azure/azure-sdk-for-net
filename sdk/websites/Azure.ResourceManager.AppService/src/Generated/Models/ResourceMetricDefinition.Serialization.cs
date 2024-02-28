@@ -237,7 +237,18 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceMetricDefinition(id, name, type, systemData.Value, unit.Value, primaryAggregationType.Value, metricAvailabilities ?? new ChangeTrackingList<ResourceMetricAvailability>(), resourceUri.Value, properties ?? new ChangeTrackingDictionary<string, string>(), kind.Value, serializedAdditionalRawData);
+            return new ResourceMetricDefinition(
+                id,
+                name,
+                type,
+                systemData.Value,
+                unit.Value,
+                primaryAggregationType.Value,
+                metricAvailabilities ?? new ChangeTrackingList<ResourceMetricAvailability>(),
+                resourceUri.Value,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceMetricDefinition>.Write(ModelReaderWriterOptions options)

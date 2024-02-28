@@ -176,7 +176,14 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirewallPolicyExplicitProxy(Optional.ToNullable(enableExplicitProxy), Optional.ToNullable(httpPort), Optional.ToNullable(httpsPort), Optional.ToNullable(enablePacFile), Optional.ToNullable(pacFilePort), pacFile.Value, serializedAdditionalRawData);
+            return new FirewallPolicyExplicitProxy(
+                Optional.ToNullable(enableExplicitProxy),
+                Optional.ToNullable(httpPort),
+                Optional.ToNullable(httpsPort),
+                Optional.ToNullable(enablePacFile),
+                Optional.ToNullable(pacFilePort),
+                pacFile.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirewallPolicyExplicitProxy>.Write(ModelReaderWriterOptions options)

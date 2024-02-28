@@ -130,7 +130,13 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerGroupImageRegistryCredential(server, username.Value, password.Value, identity.Value, identityUrl.Value, serializedAdditionalRawData);
+            return new ContainerGroupImageRegistryCredential(
+                server,
+                username.Value,
+                password.Value,
+                identity.Value,
+                identityUrl.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerGroupImageRegistryCredential>.Write(ModelReaderWriterOptions options)

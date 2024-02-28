@@ -165,7 +165,18 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AudioTranscriptionSegment(id, start, end, text, temperature, avgLogprob, compressionRatio, noSpeechProb, tokens, seek, serializedAdditionalRawData);
+            return new AudioTranscriptionSegment(
+                id,
+                start,
+                end,
+                text,
+                temperature,
+                avgLogprob,
+                compressionRatio,
+                noSpeechProb,
+                tokens,
+                seek,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AudioTranscriptionSegment>.Write(ModelReaderWriterOptions options)

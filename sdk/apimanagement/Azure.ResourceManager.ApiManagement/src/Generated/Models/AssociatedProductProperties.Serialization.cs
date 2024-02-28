@@ -175,7 +175,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AssociatedProductProperties(description.Value, terms.Value, Optional.ToNullable(subscriptionRequired), Optional.ToNullable(approvalRequired), Optional.ToNullable(subscriptionsLimit), Optional.ToNullable(state), serializedAdditionalRawData, id.Value, name);
+            return new AssociatedProductProperties(
+                description.Value,
+                terms.Value,
+                Optional.ToNullable(subscriptionRequired),
+                Optional.ToNullable(approvalRequired),
+                Optional.ToNullable(subscriptionsLimit),
+                Optional.ToNullable(state),
+                serializedAdditionalRawData,
+                id.Value,
+                name);
         }
 
         BinaryData IPersistableModel<AssociatedProductProperties>.Write(ModelReaderWriterOptions options)

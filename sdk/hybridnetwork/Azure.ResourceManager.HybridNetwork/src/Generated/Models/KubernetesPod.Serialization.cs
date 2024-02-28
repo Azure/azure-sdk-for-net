@@ -181,7 +181,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesPod(name.Value, @namespace.Value, Optional.ToNullable(desired), Optional.ToNullable(ready), Optional.ToNullable(status), Optional.ToNullable(creationTime), events ?? new ChangeTrackingList<PodEvent>(), serializedAdditionalRawData);
+            return new KubernetesPod(
+                name.Value,
+                @namespace.Value,
+                Optional.ToNullable(desired),
+                Optional.ToNullable(ready),
+                Optional.ToNullable(status),
+                Optional.ToNullable(creationTime),
+                events ?? new ChangeTrackingList<PodEvent>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesPod>.Write(ModelReaderWriterOptions options)

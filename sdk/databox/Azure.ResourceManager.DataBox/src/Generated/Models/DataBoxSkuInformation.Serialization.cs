@@ -271,7 +271,18 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxSkuInformation(sku.Value, Optional.ToNullable(enabled), dataLocationToServiceLocationMap ?? new ChangeTrackingList<DataLocationToServiceLocationMap>(), capacity.Value, costs ?? new ChangeTrackingList<DataBoxSkuCost>(), apiVersions ?? new ChangeTrackingList<string>(), Optional.ToNullable(disabledReason), disabledReasonMessage.Value, requiredFeature.Value, countriesWithinCommerceBoundary ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new DataBoxSkuInformation(
+                sku.Value,
+                Optional.ToNullable(enabled),
+                dataLocationToServiceLocationMap ?? new ChangeTrackingList<DataLocationToServiceLocationMap>(),
+                capacity.Value,
+                costs ?? new ChangeTrackingList<DataBoxSkuCost>(),
+                apiVersions ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(disabledReason),
+                disabledReasonMessage.Value,
+                requiredFeature.Value,
+                countriesWithinCommerceBoundary ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxSkuInformation>.Write(ModelReaderWriterOptions options)

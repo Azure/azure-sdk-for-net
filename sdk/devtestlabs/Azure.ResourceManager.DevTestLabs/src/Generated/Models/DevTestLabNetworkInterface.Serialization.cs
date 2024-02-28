@@ -189,7 +189,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabNetworkInterface(virtualNetworkId.Value, subnetId.Value, publicIPAddressId.Value, publicIPAddress.Value, privateIPAddress.Value, dnsName.Value, rdpAuthority.Value, sshAuthority.Value, sharedPublicIPAddressConfiguration.Value, serializedAdditionalRawData);
+            return new DevTestLabNetworkInterface(
+                virtualNetworkId.Value,
+                subnetId.Value,
+                publicIPAddressId.Value,
+                publicIPAddress.Value,
+                privateIPAddress.Value,
+                dnsName.Value,
+                rdpAuthority.Value,
+                sshAuthority.Value,
+                sharedPublicIPAddressConfiguration.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabNetworkInterface>.Write(ModelReaderWriterOptions options)

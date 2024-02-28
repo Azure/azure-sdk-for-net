@@ -206,7 +206,17 @@ namespace Azure.ResourceManager.EventGrid
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CaCertificateData(id, name, type, systemData.Value, description.Value, encodedCertificate.Value, Optional.ToNullable(issueTimeInUtc), Optional.ToNullable(expiryTimeInUtc), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new CaCertificateData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                description.Value,
+                encodedCertificate.Value,
+                Optional.ToNullable(issueTimeInUtc),
+                Optional.ToNullable(expiryTimeInUtc),
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CaCertificateData>.Write(ModelReaderWriterOptions options)

@@ -188,7 +188,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirewallNetworkProfile(vnetConfiguration.Value, vwanConfiguration.Value, networkType, publicIPs, enableEgressNat, egressNatIP ?? new ChangeTrackingList<IPAddressInfo>(), trustedRanges ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new FirewallNetworkProfile(
+                vnetConfiguration.Value,
+                vwanConfiguration.Value,
+                networkType,
+                publicIPs,
+                enableEgressNat,
+                egressNatIP ?? new ChangeTrackingList<IPAddressInfo>(),
+                trustedRanges ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirewallNetworkProfile>.Write(ModelReaderWriterOptions options)

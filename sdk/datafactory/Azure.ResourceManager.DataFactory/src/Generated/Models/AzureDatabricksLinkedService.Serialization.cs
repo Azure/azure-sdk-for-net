@@ -552,7 +552,32 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureDatabricksLinkedService(type, connectVia.Value, description.Value, parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, domain, accessToken, authentication.Value, workspaceResourceId.Value, existingClusterId.Value, instancePoolId.Value, newClusterVersion.Value, newClusterNumOfWorker.Value, newClusterNodeType.Value, newClusterSparkConf ?? new ChangeTrackingDictionary<string, BinaryData>(), newClusterSparkEnvVars ?? new ChangeTrackingDictionary<string, BinaryData>(), newClusterCustomTags ?? new ChangeTrackingDictionary<string, BinaryData>(), newClusterLogDestination.Value, newClusterDriverNodeType.Value, newClusterInitScripts.Value, newClusterEnableElasticDisk.Value, encryptedCredential.Value, policyId.Value, credential.Value);
+            return new AzureDatabricksLinkedService(
+                type,
+                connectVia.Value,
+                description.Value,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                domain,
+                accessToken,
+                authentication.Value,
+                workspaceResourceId.Value,
+                existingClusterId.Value,
+                instancePoolId.Value,
+                newClusterVersion.Value,
+                newClusterNumOfWorker.Value,
+                newClusterNodeType.Value,
+                newClusterSparkConf ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                newClusterSparkEnvVars ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                newClusterCustomTags ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                newClusterLogDestination.Value,
+                newClusterDriverNodeType.Value,
+                newClusterInitScripts.Value,
+                newClusterEnableElasticDisk.Value,
+                encryptedCredential.Value,
+                policyId.Value,
+                credential.Value);
         }
 
         BinaryData IPersistableModel<AzureDatabricksLinkedService>.Write(ModelReaderWriterOptions options)

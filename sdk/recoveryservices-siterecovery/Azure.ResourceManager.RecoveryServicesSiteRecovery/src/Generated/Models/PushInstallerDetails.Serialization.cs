@@ -199,7 +199,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PushInstallerDetails(id.Value, name.Value, biosId.Value, fabricObjectId.Value, fqdn.Value, version.Value, Optional.ToNullable(lastHeartbeatUtc), Optional.ToNullable(health), healthErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>(), serializedAdditionalRawData);
+            return new PushInstallerDetails(
+                id.Value,
+                name.Value,
+                biosId.Value,
+                fabricObjectId.Value,
+                fqdn.Value,
+                version.Value,
+                Optional.ToNullable(lastHeartbeatUtc),
+                Optional.ToNullable(health),
+                healthErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PushInstallerDetails>.Write(ModelReaderWriterOptions options)

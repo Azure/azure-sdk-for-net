@@ -164,7 +164,13 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementTenantSettingData(id, name, type, systemData.Value, settings ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new ApiManagementTenantSettingData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                settings ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementTenantSettingData>.Write(ModelReaderWriterOptions options)

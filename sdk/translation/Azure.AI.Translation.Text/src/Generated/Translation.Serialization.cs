@@ -136,7 +136,13 @@ namespace Azure.AI.Translation.Text
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new Translation(to, text, transliteration.Value, alignment.Value, sentLen.Value, serializedAdditionalRawData);
+            return new Translation(
+                to,
+                text,
+                transliteration.Value,
+                alignment.Value,
+                sentLen.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<Translation>.Write(ModelReaderWriterOptions options)

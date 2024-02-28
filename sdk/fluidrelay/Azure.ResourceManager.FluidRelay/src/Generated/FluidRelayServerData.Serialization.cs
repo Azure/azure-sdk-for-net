@@ -263,7 +263,20 @@ namespace Azure.ResourceManager.FluidRelay
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FluidRelayServerData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, identity, Optional.ToNullable(frsTenantId), fluidRelayEndpoints.Value, Optional.ToNullable(provisioningState), encryption.Value, Optional.ToNullable(storagesku), serializedAdditionalRawData);
+            return new FluidRelayServerData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                Optional.ToNullable(frsTenantId),
+                fluidRelayEndpoints.Value,
+                Optional.ToNullable(provisioningState),
+                encryption.Value,
+                Optional.ToNullable(storagesku),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FluidRelayServerData>.Write(ModelReaderWriterOptions options)

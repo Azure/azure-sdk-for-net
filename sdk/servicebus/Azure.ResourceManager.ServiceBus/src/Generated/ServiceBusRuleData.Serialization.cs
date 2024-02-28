@@ -214,7 +214,17 @@ namespace Azure.ResourceManager.ServiceBus
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceBusRuleData(id, name, type, systemData.Value, action.Value, Optional.ToNullable(filterType), sqlFilter.Value, correlationFilter.Value, Optional.ToNullable(location), serializedAdditionalRawData);
+            return new ServiceBusRuleData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                action.Value,
+                Optional.ToNullable(filterType),
+                sqlFilter.Value,
+                correlationFilter.Value,
+                Optional.ToNullable(location),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceBusRuleData>.Write(ModelReaderWriterOptions options)

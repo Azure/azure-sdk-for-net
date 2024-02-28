@@ -152,7 +152,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupRestoreWithRehydrationContent(objectType, restoreTargetInfo, sourceDataStoreType, sourceResourceId.Value, identityDetails.Value, serializedAdditionalRawData, recoveryPointId, rehydrationPriority, rehydrationRetentionDuration);
+            return new BackupRestoreWithRehydrationContent(
+                objectType,
+                restoreTargetInfo,
+                sourceDataStoreType,
+                sourceResourceId.Value,
+                identityDetails.Value,
+                serializedAdditionalRawData,
+                recoveryPointId,
+                rehydrationPriority,
+                rehydrationRetentionDuration);
         }
 
         BinaryData IPersistableModel<BackupRestoreWithRehydrationContent>.Write(ModelReaderWriterOptions options)

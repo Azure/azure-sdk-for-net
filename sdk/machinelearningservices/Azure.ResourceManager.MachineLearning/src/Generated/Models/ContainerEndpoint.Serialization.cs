@@ -161,7 +161,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerEndpoint(Optional.ToNullable(protocol), name.Value, Optional.ToNullable(target), Optional.ToNullable(published), hostIP.Value, serializedAdditionalRawData);
+            return new ContainerEndpoint(
+                Optional.ToNullable(protocol),
+                name.Value,
+                Optional.ToNullable(target),
+                Optional.ToNullable(published),
+                hostIP.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerEndpoint>.Write(ModelReaderWriterOptions options)

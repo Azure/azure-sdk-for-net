@@ -235,7 +235,19 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloningInfo(Optional.ToNullable(correlationId), Optional.ToNullable(overwrite), Optional.ToNullable(cloneCustomHostNames), Optional.ToNullable(cloneSourceControl), sourceWebAppId, Optional.ToNullable(sourceWebAppLocation), hostingEnvironment.Value, appSettingsOverrides ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(configureLoadBalancing), trafficManagerProfileId.Value, trafficManagerProfileName.Value, serializedAdditionalRawData);
+            return new CloningInfo(
+                Optional.ToNullable(correlationId),
+                Optional.ToNullable(overwrite),
+                Optional.ToNullable(cloneCustomHostNames),
+                Optional.ToNullable(cloneSourceControl),
+                sourceWebAppId,
+                Optional.ToNullable(sourceWebAppLocation),
+                hostingEnvironment.Value,
+                appSettingsOverrides ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(configureLoadBalancing),
+                trafficManagerProfileId.Value,
+                trafficManagerProfileName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloningInfo>.Write(ModelReaderWriterOptions options)

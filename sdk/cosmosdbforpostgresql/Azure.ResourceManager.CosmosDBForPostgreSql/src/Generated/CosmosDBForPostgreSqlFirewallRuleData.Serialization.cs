@@ -171,7 +171,15 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBForPostgreSqlFirewallRuleData(id, name, type, systemData.Value, startIPAddress, endIPAddress, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new CosmosDBForPostgreSqlFirewallRuleData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                startIPAddress,
+                endIPAddress,
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBForPostgreSqlFirewallRuleData>.Write(ModelReaderWriterOptions options)

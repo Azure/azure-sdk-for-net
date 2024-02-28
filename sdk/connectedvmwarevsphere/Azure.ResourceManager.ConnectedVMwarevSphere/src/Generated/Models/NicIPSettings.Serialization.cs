@@ -208,7 +208,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NicIPSettings(Optional.ToNullable(allocationMethod), dnsServers ?? new ChangeTrackingList<string>(), gateway ?? new ChangeTrackingList<string>(), ipAddress.Value, subnetMask.Value, primaryWinsServer.Value, secondaryWinsServer.Value, ipAddressInfo ?? new ChangeTrackingList<NicIPAddressSettings>(), serializedAdditionalRawData);
+            return new NicIPSettings(
+                Optional.ToNullable(allocationMethod),
+                dnsServers ?? new ChangeTrackingList<string>(),
+                gateway ?? new ChangeTrackingList<string>(),
+                ipAddress.Value,
+                subnetMask.Value,
+                primaryWinsServer.Value,
+                secondaryWinsServer.Value,
+                ipAddressInfo ?? new ChangeTrackingList<NicIPAddressSettings>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NicIPSettings>.Write(ModelReaderWriterOptions options)

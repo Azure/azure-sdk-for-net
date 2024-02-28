@@ -552,7 +552,28 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirmwareCryptoCertificate(cryptoCertId.Value, name.Value, subject.Value, issuer.Value, Optional.ToNullable(issuedDate), Optional.ToNullable(expirationDate), role.Value, signatureAlgorithm.Value, Optional.ToNullable(keySize), keyAlgorithm.Value, encoding.Value, serialNumber.Value, fingerprint.Value, usage ?? new ChangeTrackingList<string>(), filePaths ?? new ChangeTrackingList<string>(), pairedKey.Value, Optional.ToNullable(isExpired), Optional.ToNullable(isSelfSigned), Optional.ToNullable(isWeakSignature), Optional.ToNullable(isShortKeySize), serializedAdditionalRawData);
+            return new FirmwareCryptoCertificate(
+                cryptoCertId.Value,
+                name.Value,
+                subject.Value,
+                issuer.Value,
+                Optional.ToNullable(issuedDate),
+                Optional.ToNullable(expirationDate),
+                role.Value,
+                signatureAlgorithm.Value,
+                Optional.ToNullable(keySize),
+                keyAlgorithm.Value,
+                encoding.Value,
+                serialNumber.Value,
+                fingerprint.Value,
+                usage ?? new ChangeTrackingList<string>(),
+                filePaths ?? new ChangeTrackingList<string>(),
+                pairedKey.Value,
+                Optional.ToNullable(isExpired),
+                Optional.ToNullable(isSelfSigned),
+                Optional.ToNullable(isWeakSignature),
+                Optional.ToNullable(isShortKeySize),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirmwareCryptoCertificate>.Write(ModelReaderWriterOptions options)

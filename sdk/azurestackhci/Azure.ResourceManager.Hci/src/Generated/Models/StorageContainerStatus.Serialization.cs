@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageContainerStatus(errorCode.Value, errorMessage.Value, Optional.ToNullable(availableSizeMB), Optional.ToNullable(containerSizeMB), provisioningStatus.Value, serializedAdditionalRawData);
+            return new StorageContainerStatus(
+                errorCode.Value,
+                errorMessage.Value,
+                Optional.ToNullable(availableSizeMB),
+                Optional.ToNullable(containerSizeMB),
+                provisioningStatus.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageContainerStatus>.Write(ModelReaderWriterOptions options)

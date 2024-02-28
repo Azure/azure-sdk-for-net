@@ -387,7 +387,25 @@ namespace Azure.ResourceManager.TrafficManager
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrafficManagerEndpointData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, targetResourceId.Value, target.Value, Optional.ToNullable(endpointStatus), Optional.ToNullable(weight), Optional.ToNullable(priority), endpointLocation.Value, Optional.ToNullable(endpointMonitorStatus), Optional.ToNullable(minChildEndpoints), Optional.ToNullable(minChildEndpointsIPv4), Optional.ToNullable(minChildEndpointsIPv6), geoMapping ?? new ChangeTrackingList<string>(), subnets ?? new ChangeTrackingList<TrafficManagerEndpointSubnetInfo>(), customHeaders ?? new ChangeTrackingList<TrafficManagerEndpointCustomHeaderInfo>(), Optional.ToNullable(alwaysServe));
+            return new TrafficManagerEndpointData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                targetResourceId.Value,
+                target.Value,
+                Optional.ToNullable(endpointStatus),
+                Optional.ToNullable(weight),
+                Optional.ToNullable(priority),
+                endpointLocation.Value,
+                Optional.ToNullable(endpointMonitorStatus),
+                Optional.ToNullable(minChildEndpoints),
+                Optional.ToNullable(minChildEndpointsIPv4),
+                Optional.ToNullable(minChildEndpointsIPv6),
+                geoMapping ?? new ChangeTrackingList<string>(),
+                subnets ?? new ChangeTrackingList<TrafficManagerEndpointSubnetInfo>(),
+                customHeaders ?? new ChangeTrackingList<TrafficManagerEndpointCustomHeaderInfo>(),
+                Optional.ToNullable(alwaysServe));
         }
 
         BinaryData IPersistableModel<TrafficManagerEndpointData>.Write(ModelReaderWriterOptions options)

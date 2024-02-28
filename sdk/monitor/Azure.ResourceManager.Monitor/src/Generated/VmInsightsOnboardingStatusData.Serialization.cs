@@ -209,7 +209,16 @@ namespace Azure.ResourceManager.Monitor
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VmInsightsOnboardingStatusData(id, name, type, systemData.Value, resourceId.Value, Optional.ToNullable(onboardingStatus), Optional.ToNullable(dataStatus), data ?? new ChangeTrackingList<DataContainer>(), serializedAdditionalRawData);
+            return new VmInsightsOnboardingStatusData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                resourceId.Value,
+                Optional.ToNullable(onboardingStatus),
+                Optional.ToNullable(dataStatus),
+                data ?? new ChangeTrackingList<DataContainer>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VmInsightsOnboardingStatusData>.Write(ModelReaderWriterOptions options)

@@ -203,7 +203,15 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MessageServerProperties(Optional.ToNullable(msPort), Optional.ToNullable(internalMsPort), Optional.ToNullable(httpPort), Optional.ToNullable(httpsPort), hostname.Value, ipAddress.Value, Optional.ToNullable(health), serializedAdditionalRawData);
+            return new MessageServerProperties(
+                Optional.ToNullable(msPort),
+                Optional.ToNullable(internalMsPort),
+                Optional.ToNullable(httpPort),
+                Optional.ToNullable(httpsPort),
+                hostname.Value,
+                ipAddress.Value,
+                Optional.ToNullable(health),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MessageServerProperties>.Write(ModelReaderWriterOptions options)

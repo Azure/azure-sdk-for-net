@@ -139,7 +139,13 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataProtectionBackupPolicyData(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new DataProtectionBackupPolicyData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataProtectionBackupPolicyData>.Write(ModelReaderWriterOptions options)

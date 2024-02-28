@@ -179,7 +179,14 @@ namespace Azure.ResourceManager.NetApp
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RegionInfoResourceData(id, name, type, systemData.Value, Optional.ToNullable(storageToNetworkProximity), availabilityZoneMappings ?? new ChangeTrackingList<AvailabilityZoneMapping>(), serializedAdditionalRawData);
+            return new RegionInfoResourceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(storageToNetworkProximity),
+                availabilityZoneMappings ?? new ChangeTrackingList<AvailabilityZoneMapping>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RegionInfoResourceData>.Write(ModelReaderWriterOptions options)
