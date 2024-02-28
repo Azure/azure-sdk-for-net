@@ -130,6 +130,30 @@ public partial class ChatCompletionsOptions : IUtf8JsonSerializable
             writer.WritePropertyName("seed"u8);
             writer.WriteNumberValue(Seed.Value);
         }
+        if (Optional.IsDefined(EnableLogProbabilities))
+        {
+            if (EnableLogProbabilities != null)
+            {
+                writer.WritePropertyName("logprobs"u8);
+                writer.WriteBooleanValue(EnableLogProbabilities.Value);
+            }
+            else
+            {
+                writer.WriteNull("logprobs");
+            }
+        }
+        if (Optional.IsDefined(LogProbabilitiesPerToken))
+        {
+            if (LogProbabilitiesPerToken != null)
+            {
+                writer.WritePropertyName("top_logprobs"u8);
+                writer.WriteNumberValue(LogProbabilitiesPerToken.Value);
+            }
+            else
+            {
+                writer.WriteNull("top_logprobs");
+            }
+        }
         if (Optional.IsDefined(ResponseFormat))
         {
             writer.WritePropertyName("response_format"u8);
