@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 return null;
             }
             IReadOnlyList<RulestackCountry> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RulestackCountryListResult(value, nextLink.Value, serializedAdditionalRawData);
+            return new RulestackCountryListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RulestackCountryListResult>.Write(ModelReaderWriterOptions options)

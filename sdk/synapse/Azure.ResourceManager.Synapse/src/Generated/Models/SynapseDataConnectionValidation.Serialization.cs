@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<string> dataConnectionName = default;
-            Optional<SynapseDataConnectionData> properties = default;
+            string dataConnectionName = default;
+            SynapseDataConnectionData properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseDataConnectionValidation(dataConnectionName.Value, properties.Value, serializedAdditionalRawData);
+            return new SynapseDataConnectionValidation(dataConnectionName, properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseDataConnectionValidation>.Write(ModelReaderWriterOptions options)

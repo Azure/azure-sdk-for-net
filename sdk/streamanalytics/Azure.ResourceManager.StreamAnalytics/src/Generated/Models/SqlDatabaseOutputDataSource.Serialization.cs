@@ -110,14 +110,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             string type = default;
-            Optional<string> server = default;
-            Optional<string> database = default;
-            Optional<string> user = default;
-            Optional<string> password = default;
-            Optional<string> table = default;
-            Optional<int> maxBatchCount = default;
-            Optional<int> maxWriterCount = default;
-            Optional<StreamAnalyticsAuthenticationMode> authenticationMode = default;
+            string server = default;
+            string database = default;
+            string user = default;
+            string password = default;
+            string table = default;
+            int? maxBatchCount = default;
+            int? maxWriterCount = default;
+            StreamAnalyticsAuthenticationMode? authenticationMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -200,14 +200,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             return new SqlDatabaseOutputDataSource(
                 type,
                 serializedAdditionalRawData,
-                server.Value,
-                database.Value,
-                user.Value,
-                password.Value,
-                table.Value,
-                Optional.ToNullable(maxBatchCount),
-                Optional.ToNullable(maxWriterCount),
-                Optional.ToNullable(authenticationMode));
+                server,
+                database,
+                user,
+                password,
+                table,
+                maxBatchCount,
+                maxWriterCount,
+                authenticationMode);
         }
 
         BinaryData IPersistableModel<SqlDatabaseOutputDataSource>.Write(ModelReaderWriterOptions options)

@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Redis.Models
             {
                 return null;
             }
-            Optional<string> message = default;
+            string message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Redis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RedisForceRebootResult(message.Value, serializedAdditionalRawData);
+            return new RedisForceRebootResult(message, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RedisForceRebootResult>.Write(ModelReaderWriterOptions options)

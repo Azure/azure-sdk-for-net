@@ -120,16 +120,16 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<AzureLocation> location = default;
+            string name = default;
+            AzureLocation? location = default;
             IDictionary<string, string> tags = default;
-            Optional<bool> logVerbose = default;
-            Optional<bool> logProgress = default;
+            bool? logVerbose = default;
+            bool? logProgress = default;
             AutomationRunbookType runbookType = default;
-            Optional<AutomationRunbookDraft> draft = default;
-            Optional<AutomationContentLink> publishContentLink = default;
-            Optional<string> description = default;
-            Optional<int> logActivityTrace = default;
+            AutomationRunbookDraft draft = default;
+            AutomationContentLink publishContentLink = default;
+            string description = default;
+            int? logActivityTrace = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -236,16 +236,16 @@ namespace Azure.ResourceManager.Automation.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AutomationRunbookCreateOrUpdateContent(
-                name.Value,
-                Optional.ToNullable(location),
+                name,
+                location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                Optional.ToNullable(logVerbose),
-                Optional.ToNullable(logProgress),
+                logVerbose,
+                logProgress,
                 runbookType,
-                draft.Value,
-                publishContentLink.Value,
-                description.Value,
-                Optional.ToNullable(logActivityTrace),
+                draft,
+                publishContentLink,
+                description,
+                logActivityTrace,
                 serializedAdditionalRawData);
         }
 

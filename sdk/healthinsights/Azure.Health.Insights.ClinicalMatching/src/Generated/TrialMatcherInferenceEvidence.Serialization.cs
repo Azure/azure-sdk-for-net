@@ -85,10 +85,10 @@ namespace Azure.Health.Insights.ClinicalMatching
             {
                 return null;
             }
-            Optional<string> eligibilityCriteriaEvidence = default;
-            Optional<ClinicalNoteEvidence> patientDataEvidence = default;
-            Optional<ClinicalCodedElement> patientInfoEvidence = default;
-            Optional<float> importance = default;
+            string eligibilityCriteriaEvidence = default;
+            ClinicalNoteEvidence patientDataEvidence = default;
+            ClinicalCodedElement patientInfoEvidence = default;
+            float? importance = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -131,7 +131,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrialMatcherInferenceEvidence(eligibilityCriteriaEvidence.Value, patientDataEvidence.Value, patientInfoEvidence.Value, Optional.ToNullable(importance), serializedAdditionalRawData);
+            return new TrialMatcherInferenceEvidence(eligibilityCriteriaEvidence, patientDataEvidence, patientInfoEvidence, importance, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrialMatcherInferenceEvidence>.Write(ModelReaderWriterOptions options)

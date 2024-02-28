@@ -21,21 +21,21 @@ namespace Azure.AI.FormRecognizer.Models
                 return null;
             }
             FieldValueType type = default;
-            Optional<string> valueString = default;
-            Optional<DateTimeOffset> valueDate = default;
-            Optional<TimeSpan> valueTime = default;
-            Optional<string> valuePhoneNumber = default;
-            Optional<float> valueNumber = default;
-            Optional<long> valueInteger = default;
+            string valueString = default;
+            DateTimeOffset? valueDate = default;
+            TimeSpan? valueTime = default;
+            string valuePhoneNumber = default;
+            float? valueNumber = default;
+            long? valueInteger = default;
             IReadOnlyList<FieldValue_internal> valueArray = default;
             IReadOnlyDictionary<string, FieldValue_internal> valueObject = default;
-            Optional<SelectionMarkState> valueSelectionMark = default;
-            Optional<string> valueCountryRegion = default;
-            Optional<string> text = default;
+            SelectionMarkState? valueSelectionMark = default;
+            string valueCountryRegion = default;
+            string text = default;
             IReadOnlyList<float> boundingBox = default;
-            Optional<float> confidence = default;
+            float? confidence = default;
             IReadOnlyList<string> elements = default;
-            Optional<int> page = default;
+            int? page = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -185,21 +185,21 @@ namespace Azure.AI.FormRecognizer.Models
             }
             return new FieldValue_internal(
                 type,
-                valueString.Value,
-                Optional.ToNullable(valueDate),
-                Optional.ToNullable(valueTime),
-                valuePhoneNumber.Value,
-                Optional.ToNullable(valueNumber),
-                Optional.ToNullable(valueInteger),
+                valueString,
+                valueDate,
+                valueTime,
+                valuePhoneNumber,
+                valueNumber,
+                valueInteger,
                 valueArray ?? new ChangeTrackingList<FieldValue_internal>(),
                 valueObject ?? new ChangeTrackingDictionary<string, FieldValue_internal>(),
-                Optional.ToNullable(valueSelectionMark),
-                valueCountryRegion.Value,
-                text.Value,
+                valueSelectionMark,
+                valueCountryRegion,
+                text,
                 boundingBox ?? new ChangeTrackingList<float>(),
-                Optional.ToNullable(confidence),
+                confidence,
                 elements ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(page));
+                page);
         }
     }
 }

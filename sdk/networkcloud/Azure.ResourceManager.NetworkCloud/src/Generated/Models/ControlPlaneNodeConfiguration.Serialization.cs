@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<AdministratorConfiguration> administratorConfiguration = default;
+            AdministratorConfiguration administratorConfiguration = default;
             IList<string> availabilityZones = default;
             long count = default;
             string vmSkuName = default;
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ControlPlaneNodeConfiguration(administratorConfiguration.Value, availabilityZones ?? new ChangeTrackingList<string>(), count, vmSkuName, serializedAdditionalRawData);
+            return new ControlPlaneNodeConfiguration(administratorConfiguration, availabilityZones ?? new ChangeTrackingList<string>(), count, vmSkuName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ControlPlaneNodeConfiguration>.Write(ModelReaderWriterOptions options)

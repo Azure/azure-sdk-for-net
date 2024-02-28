@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IReadOnlyList<CognitiveServicesModel> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CognitiveServicesModelListResult(nextLink.Value, value ?? new ChangeTrackingList<CognitiveServicesModel>(), serializedAdditionalRawData);
+            return new CognitiveServicesModelListResult(nextLink, value ?? new ChangeTrackingList<CognitiveServicesModel>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CognitiveServicesModelListResult>.Write(ModelReaderWriterOptions options)

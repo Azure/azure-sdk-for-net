@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<string> taskId = default;
-            Optional<string> status = default;
+            string taskId = default;
+            string status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadBackupJobTaskDetails(taskId.Value, status.Value, serializedAdditionalRawData);
+            return new WorkloadBackupJobTaskDetails(taskId, status, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkloadBackupJobTaskDetails>.Write(ModelReaderWriterOptions options)

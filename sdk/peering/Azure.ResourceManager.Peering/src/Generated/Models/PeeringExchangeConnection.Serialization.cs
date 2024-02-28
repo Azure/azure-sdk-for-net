@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Optional<int> peeringDBFacilityId = default;
-            Optional<PeeringConnectionState> connectionState = default;
-            Optional<PeeringBgpSession> bgpSession = default;
-            Optional<Guid> connectionIdentifier = default;
-            Optional<string> errorMessage = default;
+            int? peeringDBFacilityId = default;
+            PeeringConnectionState? connectionState = default;
+            PeeringBgpSession bgpSession = default;
+            Guid? connectionIdentifier = default;
+            string errorMessage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,11 +146,11 @@ namespace Azure.ResourceManager.Peering.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new PeeringExchangeConnection(
-                Optional.ToNullable(peeringDBFacilityId),
-                Optional.ToNullable(connectionState),
-                bgpSession.Value,
-                Optional.ToNullable(connectionIdentifier),
-                errorMessage.Value,
+                peeringDBFacilityId,
+                connectionState,
+                bgpSession,
+                connectionIdentifier,
+                errorMessage,
                 serializedAdditionalRawData);
         }
 

@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 return null;
             }
             AssociatedTagProperties tag = default;
-            Optional<AssociatedApiProperties> api = default;
-            Optional<AssociatedOperationProperties> operation = default;
-            Optional<AssociatedProductProperties> product = default;
+            AssociatedApiProperties api = default;
+            AssociatedOperationProperties operation = default;
+            AssociatedProductProperties product = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TagResourceContractDetails(tag, api.Value, operation.Value, product.Value, serializedAdditionalRawData);
+            return new TagResourceContractDetails(tag, api, operation, product, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TagResourceContractDetails>.Write(ModelReaderWriterOptions options)

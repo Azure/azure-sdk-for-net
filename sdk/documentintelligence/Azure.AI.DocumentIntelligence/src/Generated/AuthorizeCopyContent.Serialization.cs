@@ -84,7 +84,7 @@ namespace Azure.AI.DocumentIntelligence
                 return null;
             }
             string modelId = default;
-            Optional<string> description = default;
+            string description = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -120,7 +120,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AuthorizeCopyContent(modelId, description.Value, tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new AuthorizeCopyContent(modelId, description, tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AuthorizeCopyContent>.Write(ModelReaderWriterOptions options)

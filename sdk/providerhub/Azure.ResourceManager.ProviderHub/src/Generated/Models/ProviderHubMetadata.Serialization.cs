@@ -85,8 +85,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 return null;
             }
             IList<ResourceProviderAuthorization> providerAuthorizations = default;
-            Optional<ResourceProviderAuthentication> providerAuthentication = default;
-            Optional<ThirdPartyProviderAuthorization> thirdPartyProviderAuthorization = default;
+            ResourceProviderAuthentication providerAuthentication = default;
+            ThirdPartyProviderAuthorization thirdPartyProviderAuthorization = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProviderHubMetadata(providerAuthorizations ?? new ChangeTrackingList<ResourceProviderAuthorization>(), providerAuthentication.Value, thirdPartyProviderAuthorization.Value, serializedAdditionalRawData);
+            return new ProviderHubMetadata(providerAuthorizations ?? new ChangeTrackingList<ResourceProviderAuthorization>(), providerAuthentication, thirdPartyProviderAuthorization, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProviderHubMetadata>.Write(ModelReaderWriterOptions options)

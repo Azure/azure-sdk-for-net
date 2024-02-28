@@ -78,11 +78,11 @@ namespace Azure.Communication.MediaComposition
             int rows = default;
             int columns = default;
             InputGroupType kind = default;
-            Optional<InputPosition> position = default;
-            Optional<string> width = default;
-            Optional<string> height = default;
-            Optional<string> layer = default;
-            Optional<ScalingMode> scalingMode = default;
+            InputPosition position = default;
+            string width = default;
+            string height = default;
+            string layer = default;
+            ScalingMode? scalingMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("inputIds"u8))
@@ -158,11 +158,11 @@ namespace Azure.Communication.MediaComposition
             }
             return new GridInputGroup(
                 kind,
-                position.Value,
-                width.Value,
-                height.Value,
-                layer.Value,
-                Optional.ToNullable(scalingMode),
+                position,
+                width,
+                height,
+                layer,
+                scalingMode,
                 inputIds,
                 rows,
                 columns);

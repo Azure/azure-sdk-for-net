@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -21,9 +20,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> deviceId = default;
-            Optional<string> hubName = default;
-            Optional<DeviceTwinInfo> twin = default;
+            string deviceId = default;
+            string hubName = default;
+            DeviceTwinInfo twin = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deviceId"u8))
@@ -46,7 +45,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new IotHubDeviceDeletedEventData(deviceId.Value, hubName.Value, twin.Value);
+            return new IotHubDeviceDeletedEventData(deviceId, hubName, twin);
         }
 
         internal partial class IotHubDeviceDeletedEventDataConverter : JsonConverter<IotHubDeviceDeletedEventData>

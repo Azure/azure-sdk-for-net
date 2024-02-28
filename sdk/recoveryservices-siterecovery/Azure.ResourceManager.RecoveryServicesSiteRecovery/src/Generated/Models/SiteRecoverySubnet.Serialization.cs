@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> friendlyName = default;
+            string name = default;
+            string friendlyName = default;
             IReadOnlyList<string> addressList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoverySubnet(name.Value, friendlyName.Value, addressList ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new SiteRecoverySubnet(name, friendlyName, addressList ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoverySubnet>.Write(ModelReaderWriterOptions options)

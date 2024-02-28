@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 return null;
             }
             IReadOnlyList<SecurityConnectorGitLabProjectData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GitLabProjectListResponse(value ?? new ChangeTrackingList<SecurityConnectorGitLabProjectData>(), nextLink.Value, serializedAdditionalRawData);
+            return new GitLabProjectListResponse(value ?? new ChangeTrackingList<SecurityConnectorGitLabProjectData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GitLabProjectListResponse>.Write(ModelReaderWriterOptions options)

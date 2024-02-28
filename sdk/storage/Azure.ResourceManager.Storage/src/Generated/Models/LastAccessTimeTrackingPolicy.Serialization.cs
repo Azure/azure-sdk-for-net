@@ -87,8 +87,8 @@ namespace Azure.ResourceManager.Storage.Models
                 return null;
             }
             bool enable = default;
-            Optional<LastAccessTimeTrackingPolicyName> name = default;
-            Optional<int> trackingGranularityInDays = default;
+            LastAccessTimeTrackingPolicyName? name = default;
+            int? trackingGranularityInDays = default;
             IList<string> blobType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LastAccessTimeTrackingPolicy(enable, Optional.ToNullable(name), Optional.ToNullable(trackingGranularityInDays), blobType ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new LastAccessTimeTrackingPolicy(enable, name, trackingGranularityInDays, blobType ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LastAccessTimeTrackingPolicy>.Write(ModelReaderWriterOptions options)

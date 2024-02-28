@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> userAssignedIdentity = default;
+            ResourceIdentifier userAssignedIdentity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedIdentity(userAssignedIdentity.Value, serializedAdditionalRawData);
+            return new ManagedIdentity(userAssignedIdentity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedIdentity>.Write(ModelReaderWriterOptions options)

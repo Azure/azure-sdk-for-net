@@ -104,12 +104,12 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
             IList<RoutingPolicy> routingPolicies = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -188,13 +188,13 @@ namespace Azure.ResourceManager.Network
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new RoutingIntentData(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
+                id,
+                name,
+                type,
                 serializedAdditionalRawData,
-                Optional.ToNullable(etag),
+                etag,
                 routingPolicies ?? new ChangeTrackingList<RoutingPolicy>(),
-                Optional.ToNullable(provisioningState));
+                provisioningState);
         }
 
         BinaryData IPersistableModel<RoutingIntentData>.Write(ModelReaderWriterOptions options)

@@ -88,8 +88,8 @@ namespace Azure.ResourceManager.Monitor.Models
             string name = default;
             MonitorScaleCapacity capacity = default;
             IList<AutoscaleRule> rules = default;
-            Optional<MonitorTimeWindow> fixedDate = default;
-            Optional<MonitorRecurrence> recurrence = default;
+            MonitorTimeWindow fixedDate = default;
+            MonitorRecurrence recurrence = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -142,8 +142,8 @@ namespace Azure.ResourceManager.Monitor.Models
                 name,
                 capacity,
                 rules,
-                fixedDate.Value,
-                recurrence.Value,
+                fixedDate,
+                recurrence,
                 serializedAdditionalRawData);
         }
 

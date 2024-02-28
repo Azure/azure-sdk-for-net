@@ -204,33 +204,33 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<ETag> eTag = default;
+            ETag? eTag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> transactionDate = default;
-            Optional<string> description = default;
-            Optional<ConsumptionAmount> newCredit = default;
-            Optional<ConsumptionAmount> adjustments = default;
-            Optional<ConsumptionAmount> creditExpired = default;
-            Optional<ConsumptionAmount> charges = default;
-            Optional<ConsumptionAmount> closedBalance = default;
-            Optional<ConsumptionEventType> eventType = default;
-            Optional<string> invoiceNumber = default;
-            Optional<ResourceIdentifier> billingProfileId = default;
-            Optional<string> billingProfileDisplayName = default;
-            Optional<ResourceIdentifier> lotId = default;
-            Optional<string> lotSource = default;
-            Optional<ConsumptionAmount> canceledCredit = default;
-            Optional<string> creditCurrency = default;
-            Optional<string> billingCurrency = default;
-            Optional<ConsumptionReseller> reseller = default;
-            Optional<ConsumptionAmountWithExchangeRate> creditExpiredInBillingCurrency = default;
-            Optional<ConsumptionAmountWithExchangeRate> newCreditInBillingCurrency = default;
-            Optional<ConsumptionAmountWithExchangeRate> adjustmentsInBillingCurrency = default;
-            Optional<ConsumptionAmountWithExchangeRate> chargesInBillingCurrency = default;
-            Optional<ConsumptionAmountWithExchangeRate> closedBalanceInBillingCurrency = default;
+            SystemData systemData = default;
+            DateTimeOffset? transactionDate = default;
+            string description = default;
+            ConsumptionAmount newCredit = default;
+            ConsumptionAmount adjustments = default;
+            ConsumptionAmount creditExpired = default;
+            ConsumptionAmount charges = default;
+            ConsumptionAmount closedBalance = default;
+            ConsumptionEventType? eventType = default;
+            string invoiceNumber = default;
+            ResourceIdentifier billingProfileId = default;
+            string billingProfileDisplayName = default;
+            ResourceIdentifier lotId = default;
+            string lotSource = default;
+            ConsumptionAmount canceledCredit = default;
+            string creditCurrency = default;
+            string billingCurrency = default;
+            ConsumptionReseller reseller = default;
+            ConsumptionAmountWithExchangeRate creditExpiredInBillingCurrency = default;
+            ConsumptionAmountWithExchangeRate newCreditInBillingCurrency = default;
+            ConsumptionAmountWithExchangeRate adjustmentsInBillingCurrency = default;
+            ConsumptionAmountWithExchangeRate chargesInBillingCurrency = default;
+            ConsumptionAmountWithExchangeRate closedBalanceInBillingCurrency = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -464,30 +464,30 @@ namespace Azure.ResourceManager.Consumption.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(transactionDate),
-                description.Value,
-                newCredit.Value,
-                adjustments.Value,
-                creditExpired.Value,
-                charges.Value,
-                closedBalance.Value,
-                Optional.ToNullable(eventType),
-                invoiceNumber.Value,
-                billingProfileId.Value,
-                billingProfileDisplayName.Value,
-                lotId.Value,
-                lotSource.Value,
-                canceledCredit.Value,
-                creditCurrency.Value,
-                billingCurrency.Value,
-                reseller.Value,
-                creditExpiredInBillingCurrency.Value,
-                newCreditInBillingCurrency.Value,
-                adjustmentsInBillingCurrency.Value,
-                chargesInBillingCurrency.Value,
-                closedBalanceInBillingCurrency.Value,
-                Optional.ToNullable(eTag),
+                systemData,
+                transactionDate,
+                description,
+                newCredit,
+                adjustments,
+                creditExpired,
+                charges,
+                closedBalance,
+                eventType,
+                invoiceNumber,
+                billingProfileId,
+                billingProfileDisplayName,
+                lotId,
+                lotSource,
+                canceledCredit,
+                creditCurrency,
+                billingCurrency,
+                reseller,
+                creditExpiredInBillingCurrency,
+                newCreditInBillingCurrency,
+                adjustmentsInBillingCurrency,
+                chargesInBillingCurrency,
+                closedBalanceInBillingCurrency,
+                eTag,
                 serializedAdditionalRawData);
         }
 

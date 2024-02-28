@@ -139,15 +139,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DataBoxEdgeOSPlatformType> hostPlatform = default;
-            Optional<EdgeIotDeviceInfo> iotDeviceDetails = default;
-            Optional<EdgeIotDeviceInfo> iotEdgeDeviceDetails = default;
+            SystemData systemData = default;
+            DataBoxEdgeOSPlatformType? hostPlatform = default;
+            EdgeIotDeviceInfo iotDeviceDetails = default;
+            EdgeIotDeviceInfo iotEdgeDeviceDetails = default;
             IList<DataBoxEdgeMountPointMap> shareMappings = default;
-            Optional<IotEdgeAgentInfo> iotEdgeAgentInfo = default;
-            Optional<HostPlatformType> hostPlatformType = default;
-            Optional<EdgeComputeResourceInfo> computeResource = default;
-            Optional<DataBoxEdgeRoleStatus> roleStatus = default;
+            IotEdgeAgentInfo iotEdgeAgentInfo = default;
+            HostPlatformType? hostPlatformType = default;
+            EdgeComputeResourceInfo computeResource = default;
+            DataBoxEdgeRoleStatus? roleStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -280,17 +280,17 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 kind,
                 serializedAdditionalRawData,
-                Optional.ToNullable(hostPlatform),
-                iotDeviceDetails.Value,
-                iotEdgeDeviceDetails.Value,
+                hostPlatform,
+                iotDeviceDetails,
+                iotEdgeDeviceDetails,
                 shareMappings ?? new ChangeTrackingList<DataBoxEdgeMountPointMap>(),
-                iotEdgeAgentInfo.Value,
-                Optional.ToNullable(hostPlatformType),
-                computeResource.Value,
-                Optional.ToNullable(roleStatus));
+                iotEdgeAgentInfo,
+                hostPlatformType,
+                computeResource,
+                roleStatus);
         }
 
         BinaryData IPersistableModel<EdgeIotRole>.Write(ModelReaderWriterOptions options)

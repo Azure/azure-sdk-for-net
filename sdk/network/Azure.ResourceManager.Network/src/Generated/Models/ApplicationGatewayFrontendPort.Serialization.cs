@@ -98,12 +98,12 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<int> port = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            int? port = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -177,13 +177,13 @@ namespace Azure.ResourceManager.Network.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ApplicationGatewayFrontendPort(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
+                id,
+                name,
+                type,
                 serializedAdditionalRawData,
-                Optional.ToNullable(etag),
-                Optional.ToNullable(port),
-                Optional.ToNullable(provisioningState));
+                etag,
+                port,
+                provisioningState);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayFrontendPort>.Write(ModelReaderWriterOptions options)

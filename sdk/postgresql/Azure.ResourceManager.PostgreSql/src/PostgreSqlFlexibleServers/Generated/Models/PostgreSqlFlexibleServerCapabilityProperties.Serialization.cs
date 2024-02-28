@@ -144,19 +144,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<string> name = default;
+            string name = default;
             IReadOnlyList<PostgreSqlFlexibleServerEditionCapability> supportedServerEditions = default;
             IReadOnlyList<PostgreSqlFlexibleServerServerVersionCapability> supportedServerVersions = default;
-            Optional<PostgreSqlFlexibleServerFastProvisioningSupported> fastProvisioningSupported = default;
+            PostgreSqlFlexibleServerFastProvisioningSupported? fastProvisioningSupported = default;
             IReadOnlyList<PostgreSqlFlexibleServerFastProvisioningEditionCapability> supportedFastProvisioningEditions = default;
-            Optional<PostgreSqlFlexibleServerGeoBackupSupported> geoBackupSupported = default;
-            Optional<PostgreSqlFlexibleServerZoneRedundantHaSupported> zoneRedundantHaSupported = default;
-            Optional<PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported> zoneRedundantHaAndGeoBackupSupported = default;
-            Optional<PostgreSqlFlexibleServerStorageAutoGrowthSupported> storageAutoGrowthSupported = default;
-            Optional<PostgreSqlFlexibleServerOnlineResizeSupported> onlineResizeSupported = default;
-            Optional<PostgreSqlFlexibleServerZoneRedundantRestricted> restricted = default;
-            Optional<PostgreSqlFlexbileServerCapabilityStatus> status = default;
-            Optional<string> reason = default;
+            PostgreSqlFlexibleServerGeoBackupSupported? geoBackupSupported = default;
+            PostgreSqlFlexibleServerZoneRedundantHaSupported? zoneRedundantHaSupported = default;
+            PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported? zoneRedundantHaAndGeoBackupSupported = default;
+            PostgreSqlFlexibleServerStorageAutoGrowthSupported? storageAutoGrowthSupported = default;
+            PostgreSqlFlexibleServerOnlineResizeSupported? onlineResizeSupported = default;
+            PostgreSqlFlexibleServerZoneRedundantRestricted? restricted = default;
+            PostgreSqlFlexbileServerCapabilityStatus? status = default;
+            string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -292,20 +292,20 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new PostgreSqlFlexibleServerCapabilityProperties(
-                Optional.ToNullable(status),
-                reason.Value,
+                status,
+                reason,
                 serializedAdditionalRawData,
-                name.Value,
+                name,
                 supportedServerEditions ?? new ChangeTrackingList<PostgreSqlFlexibleServerEditionCapability>(),
                 supportedServerVersions ?? new ChangeTrackingList<PostgreSqlFlexibleServerServerVersionCapability>(),
-                Optional.ToNullable(fastProvisioningSupported),
+                fastProvisioningSupported,
                 supportedFastProvisioningEditions ?? new ChangeTrackingList<PostgreSqlFlexibleServerFastProvisioningEditionCapability>(),
-                Optional.ToNullable(geoBackupSupported),
-                Optional.ToNullable(zoneRedundantHaSupported),
-                Optional.ToNullable(zoneRedundantHaAndGeoBackupSupported),
-                Optional.ToNullable(storageAutoGrowthSupported),
-                Optional.ToNullable(onlineResizeSupported),
-                Optional.ToNullable(restricted));
+                geoBackupSupported,
+                zoneRedundantHaSupported,
+                zoneRedundantHaAndGeoBackupSupported,
+                storageAutoGrowthSupported,
+                onlineResizeSupported,
+                restricted);
         }
 
         BinaryData IPersistableModel<PostgreSqlFlexibleServerCapabilityProperties>.Write(ModelReaderWriterOptions options)

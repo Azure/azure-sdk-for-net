@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             int number = default;
             JitNetworkAccessPortProtocol protocol = default;
-            Optional<string> allowedSourceAddressPrefix = default;
+            string allowedSourceAddressPrefix = default;
             IList<string> allowedSourceAddressPrefixes = default;
             TimeSpan maxRequestAccessDuration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new JitNetworkAccessPortRule(
                 number,
                 protocol,
-                allowedSourceAddressPrefix.Value,
+                allowedSourceAddressPrefix,
                 allowedSourceAddressPrefixes ?? new ChangeTrackingList<string>(),
                 maxRequestAccessDuration,
                 serializedAdditionalRawData);

@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             {
                 return null;
             }
-            Optional<AppConfigurationKeyVaultProperties> keyVaultProperties = default;
+            AppConfigurationKeyVaultProperties keyVaultProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppConfigurationStoreEncryptionProperties(keyVaultProperties.Value, serializedAdditionalRawData);
+            return new AppConfigurationStoreEncryptionProperties(keyVaultProperties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppConfigurationStoreEncryptionProperties>.Write(ModelReaderWriterOptions options)

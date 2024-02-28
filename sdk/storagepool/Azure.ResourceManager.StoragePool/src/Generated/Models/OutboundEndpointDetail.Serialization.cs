@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.StoragePool.Models
             {
                 return null;
             }
-            Optional<IPAddress> ipAddress = default;
-            Optional<int> port = default;
-            Optional<double> latency = default;
-            Optional<bool> isAccessible = default;
+            IPAddress ipAddress = default;
+            int? port = default;
+            double? latency = default;
+            bool? isAccessible = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OutboundEndpointDetail(ipAddress.Value, Optional.ToNullable(port), Optional.ToNullable(latency), Optional.ToNullable(isAccessible), serializedAdditionalRawData);
+            return new OutboundEndpointDetail(ipAddress, port, latency, isAccessible, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OutboundEndpointDetail>.Write(ModelReaderWriterOptions options)

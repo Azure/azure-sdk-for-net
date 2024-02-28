@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> connectionString = default;
-            Optional<ConnectionStringType> type = default;
+            string name = default;
+            string connectionString = default;
+            ConnectionStringType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnStringInfo(name.Value, connectionString.Value, Optional.ToNullable(type), serializedAdditionalRawData);
+            return new ConnStringInfo(name, connectionString, type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnStringInfo>.Write(ModelReaderWriterOptions options)

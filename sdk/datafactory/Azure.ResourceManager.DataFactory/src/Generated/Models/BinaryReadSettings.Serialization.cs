@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<CompressionReadSettings> compressionProperties = default;
+            CompressionReadSettings compressionProperties = default;
             string type = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new BinaryReadSettings(type, additionalProperties, compressionProperties.Value);
+            return new BinaryReadSettings(type, additionalProperties, compressionProperties);
         }
 
         BinaryData IPersistableModel<BinaryReadSettings>.Write(ModelReaderWriterOptions options)

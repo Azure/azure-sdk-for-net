@@ -116,8 +116,8 @@ namespace Azure.ResourceManager.Relay
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> groupId = default;
+            SystemData systemData = default;
+            string groupId = default;
             IReadOnlyList<string> requiredMembers = default;
             IReadOnlyList<string> requiredZoneNames = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -203,8 +203,8 @@ namespace Azure.ResourceManager.Relay
                 id,
                 name,
                 type,
-                systemData.Value,
-                groupId.Value,
+                systemData,
+                groupId,
                 requiredMembers ?? new ChangeTrackingList<string>(),
                 requiredZoneNames ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);

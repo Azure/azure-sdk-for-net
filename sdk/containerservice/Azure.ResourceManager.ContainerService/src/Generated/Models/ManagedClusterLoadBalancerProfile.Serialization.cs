@@ -110,14 +110,14 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<ManagedClusterLoadBalancerProfileManagedOutboundIPs> managedOutboundIPs = default;
-            Optional<ManagedClusterLoadBalancerProfileOutboundIPPrefixes> outboundIPPrefixes = default;
-            Optional<ManagedClusterLoadBalancerProfileOutboundIPs> outboundIPs = default;
+            ManagedClusterLoadBalancerProfileManagedOutboundIPs managedOutboundIPs = default;
+            ManagedClusterLoadBalancerProfileOutboundIPPrefixes outboundIPPrefixes = default;
+            ManagedClusterLoadBalancerProfileOutboundIPs outboundIPs = default;
             IList<WritableSubResource> effectiveOutboundIPs = default;
-            Optional<int> allocatedOutboundPorts = default;
-            Optional<int> idleTimeoutInMinutes = default;
-            Optional<bool> enableMultipleStandardLoadBalancers = default;
-            Optional<ManagedClusterLoadBalancerBackendPoolType> backendPoolType = default;
+            int? allocatedOutboundPorts = default;
+            int? idleTimeoutInMinutes = default;
+            bool? enableMultipleStandardLoadBalancers = default;
+            ManagedClusterLoadBalancerBackendPoolType? backendPoolType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -206,14 +206,14 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ManagedClusterLoadBalancerProfile(
-                managedOutboundIPs.Value,
-                outboundIPPrefixes.Value,
-                outboundIPs.Value,
+                managedOutboundIPs,
+                outboundIPPrefixes,
+                outboundIPs,
                 effectiveOutboundIPs ?? new ChangeTrackingList<WritableSubResource>(),
-                Optional.ToNullable(allocatedOutboundPorts),
-                Optional.ToNullable(idleTimeoutInMinutes),
-                Optional.ToNullable(enableMultipleStandardLoadBalancers),
-                Optional.ToNullable(backendPoolType),
+                allocatedOutboundPorts,
+                idleTimeoutInMinutes,
+                enableMultipleStandardLoadBalancers,
+                backendPoolType,
                 serializedAdditionalRawData);
         }
 

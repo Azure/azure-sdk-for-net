@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<bool> isDataAction = default;
-            Optional<CsmOperationDisplay> display = default;
-            Optional<string> origin = default;
-            Optional<CsmOperationDescriptionProperties> properties = default;
+            string name = default;
+            bool? isDataAction = default;
+            CsmOperationDisplay display = default;
+            string origin = default;
+            CsmOperationDescriptionProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -142,11 +142,11 @@ namespace Azure.ResourceManager.AppService.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new CsmOperationDescription(
-                name.Value,
-                Optional.ToNullable(isDataAction),
-                display.Value,
-                origin.Value,
-                properties.Value,
+                name,
+                isDataAction,
+                display,
+                origin,
+                properties,
                 serializedAdditionalRawData);
         }
 

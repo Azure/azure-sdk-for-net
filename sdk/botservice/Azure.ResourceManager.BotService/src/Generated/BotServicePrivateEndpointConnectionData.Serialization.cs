@@ -118,10 +118,10 @@ namespace Azure.ResourceManager.BotService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SubResource> privateEndpoint = default;
-            Optional<BotServicePrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
-            Optional<BotServicePrivateEndpointConnectionProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            SubResource privateEndpoint = default;
+            BotServicePrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
+            BotServicePrivateEndpointConnectionProvisioningState? provisioningState = default;
             IList<string> groupIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -214,10 +214,10 @@ namespace Azure.ResourceManager.BotService
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 privateEndpoint,
-                privateLinkServiceConnectionState.Value,
-                Optional.ToNullable(provisioningState),
+                privateLinkServiceConnectionState,
+                provisioningState,
                 groupIds ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }

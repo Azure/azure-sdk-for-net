@@ -88,10 +88,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<ETag> etag = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            string name = default;
+            string type = default;
+            ETag? etag = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerNetworkInterfaceIPConfiguration(name.Value, type.Value, Optional.ToNullable(etag), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new ContainerNetworkInterfaceIPConfiguration(name, type, etag, provisioningState, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerNetworkInterfaceIPConfiguration>.Write(ModelReaderWriterOptions options)

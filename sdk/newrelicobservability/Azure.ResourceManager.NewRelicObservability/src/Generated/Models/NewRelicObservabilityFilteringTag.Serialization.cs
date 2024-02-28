@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> value = default;
-            Optional<NewRelicObservabilityTagAction> action = default;
+            string name = default;
+            string value = default;
+            NewRelicObservabilityTagAction? action = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NewRelicObservabilityFilteringTag(name.Value, value.Value, Optional.ToNullable(action), serializedAdditionalRawData);
+            return new NewRelicObservabilityFilteringTag(name, value, action, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NewRelicObservabilityFilteringTag>.Write(ModelReaderWriterOptions options)

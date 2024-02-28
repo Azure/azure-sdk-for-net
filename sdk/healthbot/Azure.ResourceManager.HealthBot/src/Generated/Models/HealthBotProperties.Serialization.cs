@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.HealthBot.Models
             {
                 return null;
             }
-            Optional<string> provisioningState = default;
-            Optional<Uri> botManagementPortalLink = default;
-            Optional<HealthBotKeyVaultProperties> keyVaultProperties = default;
+            string provisioningState = default;
+            Uri botManagementPortalLink = default;
+            HealthBotKeyVaultProperties keyVaultProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.HealthBot.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HealthBotProperties(provisioningState.Value, botManagementPortalLink.Value, keyVaultProperties.Value, serializedAdditionalRawData);
+            return new HealthBotProperties(provisioningState, botManagementPortalLink, keyVaultProperties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HealthBotProperties>.Write(ModelReaderWriterOptions options)

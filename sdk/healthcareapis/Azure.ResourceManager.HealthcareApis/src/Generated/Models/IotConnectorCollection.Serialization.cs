@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IReadOnlyList<HealthcareApisIotConnectorData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotConnectorCollection(nextLink.Value, value ?? new ChangeTrackingList<HealthcareApisIotConnectorData>(), serializedAdditionalRawData);
+            return new IotConnectorCollection(nextLink, value ?? new ChangeTrackingList<HealthcareApisIotConnectorData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotConnectorCollection>.Write(ModelReaderWriterOptions options)

@@ -143,13 +143,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "WebActivity": return WebActivity.DeserializeWebActivity(element, options);
                 }
             }
-            Optional<DataFactoryLinkedServiceReference> linkedServiceName = default;
-            Optional<PipelineActivityPolicy> policy = default;
+            DataFactoryLinkedServiceReference linkedServiceName = default;
+            PipelineActivityPolicy policy = default;
             string name = default;
             string type = "Execution";
-            Optional<string> description = default;
-            Optional<PipelineActivityState> state = default;
-            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
+            string description = default;
+            PipelineActivityState? state = default;
+            ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
             IList<PipelineActivityDependency> dependsOn = default;
             IList<PipelineActivityUserProperty> userProperties = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -241,14 +241,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new ExecutionActivity(
                 name,
                 type,
-                description.Value,
-                Optional.ToNullable(state),
-                Optional.ToNullable(onInactiveMarkAs),
+                description,
+                state,
+                onInactiveMarkAs,
                 dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(),
                 userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(),
                 additionalProperties,
                 linkedServiceName,
-                policy.Value);
+                policy);
         }
 
         BinaryData IPersistableModel<ExecutionActivity>.Write(ModelReaderWriterOptions options)

@@ -119,16 +119,16 @@ namespace Azure.ResourceManager.AgFoodPlatform
             {
                 return null;
             }
-            Optional<ETag> eTag = default;
+            ETag? eTag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> extensionId = default;
-            Optional<string> extensionCategory = default;
-            Optional<string> installedExtensionVersion = default;
-            Optional<string> extensionAuthLink = default;
-            Optional<string> extensionApiDocsLink = default;
+            SystemData systemData = default;
+            string extensionId = default;
+            string extensionCategory = default;
+            string installedExtensionVersion = default;
+            string extensionAuthLink = default;
+            string extensionApiDocsLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -213,13 +213,13 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(eTag),
-                extensionId.Value,
-                extensionCategory.Value,
-                installedExtensionVersion.Value,
-                extensionAuthLink.Value,
-                extensionApiDocsLink.Value,
+                systemData,
+                eTag,
+                extensionId,
+                extensionCategory,
+                installedExtensionVersion,
+                extensionAuthLink,
+                extensionApiDocsLink,
                 serializedAdditionalRawData);
         }
 

@@ -153,17 +153,17 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             }
             AzureLocation location = default;
             IDictionary<string, string> tags = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<string> defaultGroup = default;
-            Optional<DataLakeStoreAccountEncryptionConfig> encryptionConfig = default;
-            Optional<DataLakeStoreEncryptionState> encryptionState = default;
+            ManagedServiceIdentity identity = default;
+            string defaultGroup = default;
+            DataLakeStoreAccountEncryptionConfig encryptionConfig = default;
+            DataLakeStoreEncryptionState? encryptionState = default;
             IList<FirewallRuleForDataLakeStoreAccountCreateOrUpdateContent> firewallRules = default;
             IList<VirtualNetworkRuleForDataLakeStoreAccountCreateOrUpdateContent> virtualNetworkRules = default;
-            Optional<DataLakeStoreFirewallState> firewallState = default;
-            Optional<DataLakeStoreFirewallAllowAzureIPsState> firewallAllowAzureIPs = default;
+            DataLakeStoreFirewallState? firewallState = default;
+            DataLakeStoreFirewallAllowAzureIPsState? firewallAllowAzureIPs = default;
             IList<TrustedIdProviderForDataLakeStoreAccountCreateOrUpdateContent> trustedIdProviders = default;
-            Optional<DataLakeStoreTrustedIdProviderState> trustedIdProviderState = default;
-            Optional<DataLakeStoreCommitmentTierType> newTier = default;
+            DataLakeStoreTrustedIdProviderState? trustedIdProviderState = default;
+            DataLakeStoreCommitmentTierType? newTier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -319,16 +319,16 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 identity,
-                defaultGroup.Value,
-                encryptionConfig.Value,
-                Optional.ToNullable(encryptionState),
+                defaultGroup,
+                encryptionConfig,
+                encryptionState,
                 firewallRules ?? new ChangeTrackingList<FirewallRuleForDataLakeStoreAccountCreateOrUpdateContent>(),
                 virtualNetworkRules ?? new ChangeTrackingList<VirtualNetworkRuleForDataLakeStoreAccountCreateOrUpdateContent>(),
-                Optional.ToNullable(firewallState),
-                Optional.ToNullable(firewallAllowAzureIPs),
+                firewallState,
+                firewallAllowAzureIPs,
                 trustedIdProviders ?? new ChangeTrackingList<TrustedIdProviderForDataLakeStoreAccountCreateOrUpdateContent>(),
-                Optional.ToNullable(trustedIdProviderState),
-                Optional.ToNullable(newTier),
+                trustedIdProviderState,
+                newTier,
                 serializedAdditionalRawData);
         }
 

@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<DefenderCspmAwsOfferingVmScannersConfiguration> configuration = default;
+            bool? enabled = default;
+            DefenderCspmAwsOfferingVmScannersConfiguration configuration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DefenderCspmAwsOfferingVmScanners(Optional.ToNullable(enabled), configuration.Value, serializedAdditionalRawData);
+            return new DefenderCspmAwsOfferingVmScanners(enabled, configuration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DefenderCspmAwsOfferingVmScanners>.Write(ModelReaderWriterOptions options)

@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> addressPrefix = default;
-            Optional<AddressPrefixType> addressPrefixType = default;
+            string addressPrefix = default;
+            AddressPrefixType? addressPrefixType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AddressPrefixItem(addressPrefix.Value, Optional.ToNullable(addressPrefixType), serializedAdditionalRawData);
+            return new AddressPrefixItem(addressPrefix, addressPrefixType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AddressPrefixItem>.Write(ModelReaderWriterOptions options)

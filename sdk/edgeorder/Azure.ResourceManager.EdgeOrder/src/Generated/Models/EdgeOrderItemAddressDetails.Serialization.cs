@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 return null;
             }
             EdgeOrderItemAddressProperties forwardAddress = default;
-            Optional<EdgeOrderItemAddressProperties> returnAddress = default;
+            EdgeOrderItemAddressProperties returnAddress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeOrderItemAddressDetails(forwardAddress, returnAddress.Value, serializedAdditionalRawData);
+            return new EdgeOrderItemAddressDetails(forwardAddress, returnAddress, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeOrderItemAddressDetails>.Write(ModelReaderWriterOptions options)

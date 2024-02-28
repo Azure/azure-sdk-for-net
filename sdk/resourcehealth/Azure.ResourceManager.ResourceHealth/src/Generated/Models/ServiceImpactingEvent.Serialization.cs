@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> eventStartTime = default;
-            Optional<DateTimeOffset> eventStatusLastModifiedTime = default;
-            Optional<string> correlationId = default;
-            Optional<ServiceImpactingEventStatus> status = default;
-            Optional<ServiceImpactingEventIncidentProperties> incidentProperties = default;
+            DateTimeOffset? eventStartTime = default;
+            DateTimeOffset? eventStatusLastModifiedTime = default;
+            string correlationId = default;
+            ServiceImpactingEventStatus status = default;
+            ServiceImpactingEventIncidentProperties incidentProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,11 +146,11 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ServiceImpactingEvent(
-                Optional.ToNullable(eventStartTime),
-                Optional.ToNullable(eventStatusLastModifiedTime),
-                correlationId.Value,
-                status.Value,
-                incidentProperties.Value,
+                eventStartTime,
+                eventStatusLastModifiedTime,
+                correlationId,
+                status,
+                incidentProperties,
                 serializedAdditionalRawData);
         }
 

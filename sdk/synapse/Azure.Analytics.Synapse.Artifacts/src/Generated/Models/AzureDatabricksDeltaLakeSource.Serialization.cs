@@ -60,12 +60,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> query = default;
-            Optional<AzureDatabricksDeltaLakeExportCommand> exportSettings = default;
+            object query = default;
+            AzureDatabricksDeltaLakeExportCommand exportSettings = default;
             string type = default;
-            Optional<object> sourceRetryCount = default;
-            Optional<object> sourceRetryWait = default;
-            Optional<object> maxConcurrentConnections = default;
+            object sourceRetryCount = default;
+            object sourceRetryWait = default;
+            object maxConcurrentConnections = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -125,12 +125,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new AzureDatabricksDeltaLakeSource(
                 type,
-                sourceRetryCount.Value,
-                sourceRetryWait.Value,
-                maxConcurrentConnections.Value,
+                sourceRetryCount,
+                sourceRetryWait,
+                maxConcurrentConnections,
                 additionalProperties,
-                query.Value,
-                exportSettings.Value);
+                query,
+                exportSettings);
         }
 
         internal partial class AzureDatabricksDeltaLakeSourceConverter : JsonConverter<AzureDatabricksDeltaLakeSource>

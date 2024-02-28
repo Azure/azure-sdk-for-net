@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> providerName = default;
+            string providerName = default;
             IList<ContainerAppDiagnosticDataProviderMetadataPropertyBagItem> propertyBag = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppDiagnosticDataProviderMetadata(providerName.Value, propertyBag ?? new ChangeTrackingList<ContainerAppDiagnosticDataProviderMetadataPropertyBagItem>(), serializedAdditionalRawData);
+            return new ContainerAppDiagnosticDataProviderMetadata(providerName, propertyBag ?? new ChangeTrackingList<ContainerAppDiagnosticDataProviderMetadataPropertyBagItem>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppDiagnosticDataProviderMetadata>.Write(ModelReaderWriterOptions options)

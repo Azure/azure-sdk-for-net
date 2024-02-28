@@ -114,15 +114,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             CosmosDBSqlTriggerResourceInfo resource = default;
-            Optional<CosmosDBCreateUpdateConfig> options0 = default;
+            CosmosDBCreateUpdateConfig options0 = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -216,11 +216,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 resource,
-                options0.Value,
+                options0,
                 identity,
                 serializedAdditionalRawData);
         }

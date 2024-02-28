@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             {
                 return null;
             }
-            Optional<string> id = default;
+            string id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppConfigurationRegenerateKeyContent(id.Value, serializedAdditionalRawData);
+            return new AppConfigurationRegenerateKeyContent(id, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppConfigurationRegenerateKeyContent>.Write(ModelReaderWriterOptions options)

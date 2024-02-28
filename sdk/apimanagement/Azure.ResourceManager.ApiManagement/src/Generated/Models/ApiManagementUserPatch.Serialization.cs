@@ -107,13 +107,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<ApiManagementUserState> state = default;
-            Optional<string> note = default;
+            ApiManagementUserState? state = default;
+            string note = default;
             IList<UserIdentityContract> identities = default;
-            Optional<string> email = default;
-            Optional<string> password = default;
-            Optional<string> firstName = default;
-            Optional<string> lastName = default;
+            string email = default;
+            string password = default;
+            string firstName = default;
+            string lastName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -185,13 +185,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ApiManagementUserPatch(
-                Optional.ToNullable(state),
-                note.Value,
+                state,
+                note,
                 identities ?? new ChangeTrackingList<UserIdentityContract>(),
-                email.Value,
-                password.Value,
-                firstName.Value,
-                lastName.Value,
+                email,
+                password,
+                firstName,
+                lastName,
                 serializedAdditionalRawData);
         }
 

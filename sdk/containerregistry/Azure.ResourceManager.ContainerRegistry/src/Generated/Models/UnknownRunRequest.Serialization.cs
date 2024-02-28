@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 return null;
             }
             string type = "Unknown";
-            Optional<bool> isArchiveEnabled = default;
-            Optional<string> agentPoolName = default;
-            Optional<string> logTemplate = default;
+            bool? isArchiveEnabled = default;
+            string agentPoolName = default;
+            string logTemplate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownRunRequest(type, Optional.ToNullable(isArchiveEnabled), agentPoolName.Value, logTemplate.Value, serializedAdditionalRawData);
+            return new UnknownRunRequest(type, isArchiveEnabled, agentPoolName, logTemplate, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryRunContent>.Write(ModelReaderWriterOptions options)

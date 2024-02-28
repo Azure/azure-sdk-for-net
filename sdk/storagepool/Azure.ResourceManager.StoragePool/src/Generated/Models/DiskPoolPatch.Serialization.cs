@@ -109,9 +109,9 @@ namespace Azure.ResourceManager.StoragePool.Models
             {
                 return null;
             }
-            Optional<string> managedBy = default;
+            string managedBy = default;
             IList<string> managedByExtended = default;
-            Optional<StoragePoolSku> sku = default;
+            StoragePoolSku sku = default;
             IDictionary<string, string> tags = default;
             IList<WritableSubResource> disks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -193,9 +193,9 @@ namespace Azure.ResourceManager.StoragePool.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DiskPoolPatch(
-                managedBy.Value,
+                managedBy,
                 managedByExtended ?? new ChangeTrackingList<string>(),
-                sku.Value,
+                sku,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 disks ?? new ChangeTrackingList<WritableSubResource>(),
                 serializedAdditionalRawData);

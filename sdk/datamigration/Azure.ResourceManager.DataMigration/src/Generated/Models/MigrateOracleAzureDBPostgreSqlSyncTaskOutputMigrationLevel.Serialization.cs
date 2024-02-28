@@ -101,13 +101,13 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> startedOn = default;
-            Optional<DateTimeOffset> endedOn = default;
-            Optional<string> sourceServerVersion = default;
-            Optional<string> sourceServer = default;
-            Optional<string> targetServerVersion = default;
-            Optional<string> targetServer = default;
-            Optional<string> id = default;
+            DateTimeOffset? startedOn = default;
+            DateTimeOffset? endedOn = default;
+            string sourceServerVersion = default;
+            string sourceServer = default;
+            string targetServerVersion = default;
+            string targetServer = default;
+            string id = default;
             string resultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -168,15 +168,15 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MigrateOracleAzureDBPostgreSqlSyncTaskOutputMigrationLevel(
-                id.Value,
+                id,
                 resultType,
                 serializedAdditionalRawData,
-                Optional.ToNullable(startedOn),
-                Optional.ToNullable(endedOn),
-                sourceServerVersion.Value,
-                sourceServer.Value,
-                targetServerVersion.Value,
-                targetServer.Value);
+                startedOn,
+                endedOn,
+                sourceServerVersion,
+                sourceServer,
+                targetServerVersion,
+                targetServer);
         }
 
         BinaryData IPersistableModel<MigrateOracleAzureDBPostgreSqlSyncTaskOutputMigrationLevel>.Write(ModelReaderWriterOptions options)

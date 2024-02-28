@@ -151,14 +151,14 @@ namespace Azure.ResourceManager.ArcScVmm
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> inventoryItemId = default;
-            Optional<string> uuid = default;
-            Optional<string> vmmServerId = default;
-            Optional<string> cloudName = default;
-            Optional<CloudCapacity> cloudCapacity = default;
+            SystemData systemData = default;
+            string inventoryItemId = default;
+            string uuid = default;
+            string vmmServerId = default;
+            string cloudName = default;
+            CloudCapacity cloudCapacity = default;
             IReadOnlyList<StorageQoSPolicy> storageQoSPolicies = default;
-            Optional<string> provisioningState = default;
+            string provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -281,17 +281,17 @@ namespace Azure.ResourceManager.ArcScVmm
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 extendedLocation,
-                inventoryItemId.Value,
-                uuid.Value,
-                vmmServerId.Value,
-                cloudName.Value,
-                cloudCapacity.Value,
+                inventoryItemId,
+                uuid,
+                vmmServerId,
+                cloudName,
+                cloudCapacity,
                 storageQoSPolicies ?? new ChangeTrackingList<StorageQoSPolicy>(),
-                provisioningState.Value,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

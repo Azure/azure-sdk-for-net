@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> resourceId = default;
+            ResourceIdentifier resourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComputeNodeIdentityReference(resourceId.Value, serializedAdditionalRawData);
+            return new ComputeNodeIdentityReference(resourceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComputeNodeIdentityReference>.Write(ModelReaderWriterOptions options)

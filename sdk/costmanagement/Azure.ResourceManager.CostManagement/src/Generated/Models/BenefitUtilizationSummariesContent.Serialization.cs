@@ -95,14 +95,14 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<string> billingAccountId = default;
-            Optional<string> billingProfileId = default;
-            Optional<string> benefitOrderId = default;
-            Optional<string> benefitId = default;
+            string billingAccountId = default;
+            string billingProfileId = default;
+            string benefitOrderId = default;
+            string benefitId = default;
             BenefitRecommendationUsageGrain grain = default;
             DateTimeOffset startDate = default;
             DateTimeOffset endDate = default;
-            Optional<BillingAccountBenefitKind> kind = default;
+            BillingAccountBenefitKind? kind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -158,14 +158,14 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new BenefitUtilizationSummariesContent(
-                billingAccountId.Value,
-                billingProfileId.Value,
-                benefitOrderId.Value,
-                benefitId.Value,
+                billingAccountId,
+                billingProfileId,
+                benefitOrderId,
+                benefitId,
                 grain,
                 startDate,
                 endDate,
-                Optional.ToNullable(kind),
+                kind,
                 serializedAdditionalRawData);
         }
 

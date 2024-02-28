@@ -104,14 +104,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> localAddress = default;
-            Optional<string> neighbor = default;
-            Optional<long> asn = default;
-            Optional<BgpPeerState> state = default;
-            Optional<TimeSpan> connectedDuration = default;
-            Optional<long> routesReceived = default;
-            Optional<long> messagesSent = default;
-            Optional<long> messagesReceived = default;
+            string localAddress = default;
+            string neighbor = default;
+            long? asn = default;
+            BgpPeerState? state = default;
+            TimeSpan? connectedDuration = default;
+            long? routesReceived = default;
+            long? messagesSent = default;
+            long? messagesReceived = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -187,14 +187,14 @@ namespace Azure.ResourceManager.Network.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new BgpPeerStatus(
-                localAddress.Value,
-                neighbor.Value,
-                Optional.ToNullable(asn),
-                Optional.ToNullable(state),
-                Optional.ToNullable(connectedDuration),
-                Optional.ToNullable(routesReceived),
-                Optional.ToNullable(messagesSent),
-                Optional.ToNullable(messagesReceived),
+                localAddress,
+                neighbor,
+                asn,
+                state,
+                connectedDuration,
+                routesReceived,
+                messagesSent,
+                messagesReceived,
                 serializedAdditionalRawData);
         }
 

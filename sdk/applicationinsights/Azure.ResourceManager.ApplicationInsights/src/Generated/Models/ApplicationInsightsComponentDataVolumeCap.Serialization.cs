@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<float> cap = default;
-            Optional<int> resetTime = default;
-            Optional<int> warningThreshold = default;
-            Optional<bool> stopSendNotificationWhenHitThreshold = default;
-            Optional<bool> stopSendNotificationWhenHitCap = default;
-            Optional<float> maxHistoryCap = default;
+            float? cap = default;
+            int? resetTime = default;
+            int? warningThreshold = default;
+            bool? stopSendNotificationWhenHitThreshold = default;
+            bool? stopSendNotificationWhenHitCap = default;
+            float? maxHistoryCap = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,12 +165,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ApplicationInsightsComponentDataVolumeCap(
-                Optional.ToNullable(cap),
-                Optional.ToNullable(resetTime),
-                Optional.ToNullable(warningThreshold),
-                Optional.ToNullable(stopSendNotificationWhenHitThreshold),
-                Optional.ToNullable(stopSendNotificationWhenHitCap),
-                Optional.ToNullable(maxHistoryCap),
+                cap,
+                resetTime,
+                warningThreshold,
+                stopSendNotificationWhenHitThreshold,
+                stopSendNotificationWhenHitCap,
+                maxHistoryCap,
                 serializedAdditionalRawData);
         }
 

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             IReadOnlyList<P2SVpnGatewayData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ListP2SVpnGatewaysResult(value ?? new ChangeTrackingList<P2SVpnGatewayData>(), nextLink.Value, serializedAdditionalRawData);
+            return new ListP2SVpnGatewaysResult(value ?? new ChangeTrackingList<P2SVpnGatewayData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ListP2SVpnGatewaysResult>.Write(ModelReaderWriterOptions options)

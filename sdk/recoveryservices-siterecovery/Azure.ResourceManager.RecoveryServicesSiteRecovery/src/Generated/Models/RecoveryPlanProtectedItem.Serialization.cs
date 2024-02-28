@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> virtualMachineId = default;
+            ResourceIdentifier id = default;
+            string virtualMachineId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecoveryPlanProtectedItem(id.Value, virtualMachineId.Value, serializedAdditionalRawData);
+            return new RecoveryPlanProtectedItem(id, virtualMachineId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecoveryPlanProtectedItem>.Write(ModelReaderWriterOptions options)

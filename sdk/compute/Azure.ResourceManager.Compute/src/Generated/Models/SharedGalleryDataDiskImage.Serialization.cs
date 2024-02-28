@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             int lun = default;
-            Optional<int> diskSizeGB = default;
-            Optional<SharedGalleryHostCaching> hostCaching = default;
+            int? diskSizeGB = default;
+            SharedGalleryHostCaching? hostCaching = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SharedGalleryDataDiskImage(Optional.ToNullable(diskSizeGB), Optional.ToNullable(hostCaching), serializedAdditionalRawData, lun);
+            return new SharedGalleryDataDiskImage(diskSizeGB, hostCaching, serializedAdditionalRawData, lun);
         }
 
         BinaryData IPersistableModel<SharedGalleryDataDiskImage>.Write(ModelReaderWriterOptions options)

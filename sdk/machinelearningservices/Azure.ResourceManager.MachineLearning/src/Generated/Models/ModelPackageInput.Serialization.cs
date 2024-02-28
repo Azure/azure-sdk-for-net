@@ -86,8 +86,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             PackageInputType inputType = default;
-            Optional<PackageInputDeliveryMode> mode = default;
-            Optional<string> mountPath = default;
+            PackageInputDeliveryMode? mode = default;
+            string mountPath = default;
             PackageInputPathBase path = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ModelPackageInput(inputType, Optional.ToNullable(mode), mountPath.Value, path, serializedAdditionalRawData);
+            return new ModelPackageInput(inputType, mode, mountPath, path, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ModelPackageInput>.Write(ModelReaderWriterOptions options)

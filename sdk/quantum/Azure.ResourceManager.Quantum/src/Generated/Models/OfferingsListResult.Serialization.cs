@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Quantum.Models
                 return null;
             }
             IReadOnlyList<ProviderDescription> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Quantum.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OfferingsListResult(value ?? new ChangeTrackingList<ProviderDescription>(), nextLink.Value, serializedAdditionalRawData);
+            return new OfferingsListResult(value ?? new ChangeTrackingList<ProviderDescription>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OfferingsListResult>.Write(ModelReaderWriterOptions options)

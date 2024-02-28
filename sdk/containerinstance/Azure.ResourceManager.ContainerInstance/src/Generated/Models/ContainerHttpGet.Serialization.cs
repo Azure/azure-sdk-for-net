@@ -86,9 +86,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            Optional<string> path = default;
+            string path = default;
             int port = default;
-            Optional<ContainerHttpGetScheme> scheme = default;
+            ContainerHttpGetScheme? scheme = default;
             IList<ContainerHttpHeader> httpHeaders = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerHttpGet(path.Value, port, Optional.ToNullable(scheme), httpHeaders ?? new ChangeTrackingList<ContainerHttpHeader>(), serializedAdditionalRawData);
+            return new ContainerHttpGet(path, port, scheme, httpHeaders ?? new ChangeTrackingList<ContainerHttpHeader>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerHttpGet>.Write(ModelReaderWriterOptions options)

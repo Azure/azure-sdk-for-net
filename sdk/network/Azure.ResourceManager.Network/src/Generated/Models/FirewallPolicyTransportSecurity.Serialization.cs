@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<FirewallPolicyCertificateAuthority> certificateAuthority = default;
+            FirewallPolicyCertificateAuthority certificateAuthority = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirewallPolicyTransportSecurity(certificateAuthority.Value, serializedAdditionalRawData);
+            return new FirewallPolicyTransportSecurity(certificateAuthority, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirewallPolicyTransportSecurity>.Write(ModelReaderWriterOptions options)

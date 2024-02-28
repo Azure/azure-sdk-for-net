@@ -137,16 +137,16 @@ namespace Azure.ResourceManager.Logic
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<LogicWorkflowTriggerProvisioningState> provisioningState = default;
-            Optional<DateTimeOffset> createdTime = default;
-            Optional<DateTimeOffset> changedTime = default;
-            Optional<LogicWorkflowState> state = default;
-            Optional<LogicWorkflowStatus> status = default;
-            Optional<DateTimeOffset> lastExecutionTime = default;
-            Optional<DateTimeOffset> nextExecutionTime = default;
-            Optional<LogicWorkflowTriggerRecurrence> recurrence = default;
-            Optional<LogicResourceReference> workflow = default;
+            SystemData systemData = default;
+            LogicWorkflowTriggerProvisioningState? provisioningState = default;
+            DateTimeOffset? createdTime = default;
+            DateTimeOffset? changedTime = default;
+            LogicWorkflowState? state = default;
+            LogicWorkflowStatus? status = default;
+            DateTimeOffset? lastExecutionTime = default;
+            DateTimeOffset? nextExecutionTime = default;
+            LogicWorkflowTriggerRecurrence recurrence = default;
+            LogicResourceReference workflow = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -278,16 +278,16 @@ namespace Azure.ResourceManager.Logic
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(createdTime),
-                Optional.ToNullable(changedTime),
-                Optional.ToNullable(state),
-                Optional.ToNullable(status),
-                Optional.ToNullable(lastExecutionTime),
-                Optional.ToNullable(nextExecutionTime),
-                recurrence.Value,
-                workflow.Value,
+                systemData,
+                provisioningState,
+                createdTime,
+                changedTime,
+                state,
+                status,
+                lastExecutionTime,
+                nextExecutionTime,
+                recurrence,
+                workflow,
                 serializedAdditionalRawData);
         }
 

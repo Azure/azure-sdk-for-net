@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<JwtClaimChecks> jwtClaimChecks = default;
+            JwtClaimChecks jwtClaimChecks = default;
             IList<string> allowedAudiences = default;
-            Optional<DefaultAuthorizationPolicy> defaultAuthorizationPolicy = default;
+            DefaultAuthorizationPolicy defaultAuthorizationPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceAadValidation(jwtClaimChecks.Value, allowedAudiences ?? new ChangeTrackingList<string>(), defaultAuthorizationPolicy.Value, serializedAdditionalRawData);
+            return new AppServiceAadValidation(jwtClaimChecks, allowedAudiences ?? new ChangeTrackingList<string>(), defaultAuthorizationPolicy, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceAadValidation>.Write(ModelReaderWriterOptions options)

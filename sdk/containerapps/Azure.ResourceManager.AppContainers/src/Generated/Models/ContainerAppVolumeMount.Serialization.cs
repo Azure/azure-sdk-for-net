@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> volumeName = default;
-            Optional<string> mountPath = default;
-            Optional<string> subPath = default;
+            string volumeName = default;
+            string mountPath = default;
+            string subPath = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppVolumeMount(volumeName.Value, mountPath.Value, subPath.Value, serializedAdditionalRawData);
+            return new ContainerAppVolumeMount(volumeName, mountPath, subPath, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppVolumeMount>.Write(ModelReaderWriterOptions options)

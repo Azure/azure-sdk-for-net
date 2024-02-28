@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> orderBy = default;
+            string name = default;
+            string orderBy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CassandraClusterKey(name.Value, orderBy.Value, serializedAdditionalRawData);
+            return new CassandraClusterKey(name, orderBy, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CassandraClusterKey>.Write(ModelReaderWriterOptions options)

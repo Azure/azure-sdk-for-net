@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
+            bool? enabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new Mtls(Optional.ToNullable(enabled), serializedAdditionalRawData);
+            return new Mtls(enabled, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<Mtls>.Write(ModelReaderWriterOptions options)

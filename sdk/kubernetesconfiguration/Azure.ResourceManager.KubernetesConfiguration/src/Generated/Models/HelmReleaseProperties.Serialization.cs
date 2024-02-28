@@ -124,11 +124,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 return null;
             }
-            Optional<long?> lastRevisionApplied = default;
-            Optional<KubernetesObjectReference> helmChartRef = default;
-            Optional<long?> failureCount = default;
-            Optional<long?> installFailureCount = default;
-            Optional<long?> upgradeFailureCount = default;
+            long? lastRevisionApplied = default;
+            KubernetesObjectReference helmChartRef = default;
+            long? failureCount = default;
+            long? installFailureCount = default;
+            long? upgradeFailureCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -190,11 +190,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new HelmReleaseProperties(
-                Optional.ToNullable(lastRevisionApplied),
-                helmChartRef.Value,
-                Optional.ToNullable(failureCount),
-                Optional.ToNullable(installFailureCount),
-                Optional.ToNullable(upgradeFailureCount),
+                lastRevisionApplied,
+                helmChartRef,
+                failureCount,
+                installFailureCount,
+                upgradeFailureCount,
                 serializedAdditionalRawData);
         }
 

@@ -97,15 +97,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
             IDictionary<string, ParameterSpecification> parameters = default;
             IList<object> annotations = default;
             object connectionString = default;
-            Optional<object> userName = default;
-            Optional<SecretBase> password = default;
-            Optional<object> encryptedCredential = default;
-            Optional<SqlAlwaysEncryptedProperties> alwaysEncryptedSettings = default;
+            object userName = default;
+            SecretBase password = default;
+            object encryptedCredential = default;
+            SqlAlwaysEncryptedProperties alwaysEncryptedSettings = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -222,16 +222,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new SqlServerLinkedService(
                 type,
-                connectVia.Value,
-                description.Value,
+                connectVia,
+                description,
                 parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
                 annotations ?? new ChangeTrackingList<object>(),
                 additionalProperties,
                 connectionString,
-                userName.Value,
-                password.Value,
-                encryptedCredential.Value,
-                alwaysEncryptedSettings.Value);
+                userName,
+                password,
+                encryptedCredential,
+                alwaysEncryptedSettings);
         }
 
         internal partial class SqlServerLinkedServiceConverter : JsonConverter<SqlServerLinkedService>

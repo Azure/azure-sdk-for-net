@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<DeinterlaceParity> parity = default;
-            Optional<DeinterlaceMode> mode = default;
+            DeinterlaceParity? parity = default;
+            DeinterlaceMode? mode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeinterlaceSettings(Optional.ToNullable(parity), Optional.ToNullable(mode), serializedAdditionalRawData);
+            return new DeinterlaceSettings(parity, mode, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeinterlaceSettings>.Write(ModelReaderWriterOptions options)

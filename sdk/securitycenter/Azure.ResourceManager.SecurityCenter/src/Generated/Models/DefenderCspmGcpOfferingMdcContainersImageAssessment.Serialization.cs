@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<string> workloadIdentityProviderId = default;
-            Optional<string> serviceAccountEmailAddress = default;
+            bool? enabled = default;
+            string workloadIdentityProviderId = default;
+            string serviceAccountEmailAddress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DefenderCspmGcpOfferingMdcContainersImageAssessment(Optional.ToNullable(enabled), workloadIdentityProviderId.Value, serviceAccountEmailAddress.Value, serializedAdditionalRawData);
+            return new DefenderCspmGcpOfferingMdcContainersImageAssessment(enabled, workloadIdentityProviderId, serviceAccountEmailAddress, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DefenderCspmGcpOfferingMdcContainersImageAssessment>.Write(ModelReaderWriterOptions options)

@@ -109,13 +109,13 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<bool> disableBgpRoutePropagation = default;
-            Optional<EffectiveRouteSource> source = default;
-            Optional<EffectiveRouteState> state = default;
+            string name = default;
+            bool? disableBgpRoutePropagation = default;
+            EffectiveRouteSource? source = default;
+            EffectiveRouteState? state = default;
             IReadOnlyList<string> addressPrefix = default;
             IReadOnlyList<string> nextHopIPAddress = default;
-            Optional<RouteNextHopType> nextHopType = default;
+            RouteNextHopType? nextHopType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -196,13 +196,13 @@ namespace Azure.ResourceManager.Network.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new EffectiveRoute(
-                name.Value,
-                Optional.ToNullable(disableBgpRoutePropagation),
-                Optional.ToNullable(source),
-                Optional.ToNullable(state),
+                name,
+                disableBgpRoutePropagation,
+                source,
+                state,
                 addressPrefix ?? new ChangeTrackingList<string>(),
                 nextHopIPAddress ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(nextHopType),
+                nextHopType,
                 serializedAdditionalRawData);
         }
 

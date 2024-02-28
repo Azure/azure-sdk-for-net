@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Quantum.Jobs.Models
 {
@@ -18,7 +17,7 @@ namespace Azure.Quantum.Jobs.Models
             {
                 return null;
             }
-            Optional<string> sasUri = default;
+            string sasUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sasUri"u8))
@@ -27,7 +26,7 @@ namespace Azure.Quantum.Jobs.Models
                     continue;
                 }
             }
-            return new SasUriResponse(sasUri.Value);
+            return new SasUriResponse(sasUri);
         }
     }
 }

@@ -118,11 +118,11 @@ namespace Azure.ResourceManager.Grafana
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SubResource> privateEndpoint = default;
-            Optional<GrafanaPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
+            SystemData systemData = default;
+            SubResource privateEndpoint = default;
+            GrafanaPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
             IList<string> groupIds = default;
-            Optional<GrafanaPrivateEndpointConnectionProvisioningState> provisioningState = default;
+            GrafanaPrivateEndpointConnectionProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -214,11 +214,11 @@ namespace Azure.ResourceManager.Grafana
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 privateEndpoint,
-                privateLinkServiceConnectionState.Value,
+                privateLinkServiceConnectionState,
                 groupIds ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(provisioningState),
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

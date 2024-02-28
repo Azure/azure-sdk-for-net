@@ -34,7 +34,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 return null;
             }
             string type = default;
-            Optional<CredentialsBase> credentials = default;
+            CredentialsBase credentials = default;
             string url = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -58,7 +58,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new UnsecuredEndpoint(type, credentials.Value, url);
+            return new UnsecuredEndpoint(type, credentials, url);
         }
     }
 }

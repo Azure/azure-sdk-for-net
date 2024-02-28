@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<string> policyGroupName = default;
-            Optional<PolicySummaryResults> results = default;
+            string policyGroupName = default;
+            PolicySummaryResults results = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicyGroupSummary(policyGroupName.Value, results.Value, serializedAdditionalRawData);
+            return new PolicyGroupSummary(policyGroupName, results, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicyGroupSummary>.Write(ModelReaderWriterOptions options)

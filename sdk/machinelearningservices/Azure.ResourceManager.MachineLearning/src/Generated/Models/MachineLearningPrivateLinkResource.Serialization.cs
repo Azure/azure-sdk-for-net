@@ -137,15 +137,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<MachineLearningSku> sku = default;
+            ManagedServiceIdentity identity = default;
+            MachineLearningSku sku = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> groupId = default;
+            SystemData systemData = default;
+            string groupId = default;
             IReadOnlyList<string> requiredMembers = default;
             IList<string> requiredZoneNames = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -269,12 +269,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 identity,
-                sku.Value,
-                groupId.Value,
+                sku,
+                groupId,
                 requiredMembers ?? new ChangeTrackingList<string>(),
                 requiredZoneNames ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);

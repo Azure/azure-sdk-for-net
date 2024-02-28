@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<IntegrationServiceEnvironmentNetworkDependencyCategoryType> category = default;
-            Optional<string> displayName = default;
+            IntegrationServiceEnvironmentNetworkDependencyCategoryType? category = default;
+            string displayName = default;
             IReadOnlyList<IntegrationServiceEnvironmentNetworkEndpoint> endpoints = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationServiceEnvironmentNetworkDependency(Optional.ToNullable(category), displayName.Value, endpoints ?? new ChangeTrackingList<IntegrationServiceEnvironmentNetworkEndpoint>(), serializedAdditionalRawData);
+            return new IntegrationServiceEnvironmentNetworkDependency(category, displayName, endpoints ?? new ChangeTrackingList<IntegrationServiceEnvironmentNetworkEndpoint>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationServiceEnvironmentNetworkDependency>.Write(ModelReaderWriterOptions options)

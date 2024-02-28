@@ -104,12 +104,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> summaryCode = default;
-            Optional<HealthErrorCategory> category = default;
-            Optional<SiteRecoveryErrorSeverity> severity = default;
-            Optional<string> summaryMessage = default;
-            Optional<string> affectedResourceType = default;
-            Optional<string> affectedResourceSubtype = default;
+            string summaryCode = default;
+            HealthErrorCategory? category = default;
+            SiteRecoveryErrorSeverity? severity = default;
+            string summaryMessage = default;
+            string affectedResourceType = default;
+            string affectedResourceSubtype = default;
             IReadOnlyList<string> affectedResourceCorrelationIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -174,12 +174,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new HealthErrorSummary(
-                summaryCode.Value,
-                Optional.ToNullable(category),
-                Optional.ToNullable(severity),
-                summaryMessage.Value,
-                affectedResourceType.Value,
-                affectedResourceSubtype.Value,
+                summaryCode,
+                category,
+                severity,
+                summaryMessage,
+                affectedResourceType,
+                affectedResourceSubtype,
                 affectedResourceCorrelationIds ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }

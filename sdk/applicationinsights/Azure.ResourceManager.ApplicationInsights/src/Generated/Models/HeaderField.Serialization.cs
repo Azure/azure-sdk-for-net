@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<string> key = default;
-            Optional<string> value = default;
+            string key = default;
+            string value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HeaderField(key.Value, value.Value, serializedAdditionalRawData);
+            return new HeaderField(key, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HeaderField>.Write(ModelReaderWriterOptions options)

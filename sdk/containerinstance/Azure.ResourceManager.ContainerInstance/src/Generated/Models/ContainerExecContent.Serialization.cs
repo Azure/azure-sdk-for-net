@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            Optional<string> command = default;
-            Optional<ContainerExecRequestTerminalSize> terminalSize = default;
+            string command = default;
+            ContainerExecRequestTerminalSize terminalSize = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerExecContent(command.Value, terminalSize.Value, serializedAdditionalRawData);
+            return new ContainerExecContent(command, terminalSize, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerExecContent>.Write(ModelReaderWriterOptions options)

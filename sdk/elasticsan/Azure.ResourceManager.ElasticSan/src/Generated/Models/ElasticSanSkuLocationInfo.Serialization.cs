@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             IReadOnlyList<string> zones = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ElasticSanSkuLocationInfo(Optional.ToNullable(location), zones ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new ElasticSanSkuLocationInfo(location, zones ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticSanSkuLocationInfo>.Write(ModelReaderWriterOptions options)

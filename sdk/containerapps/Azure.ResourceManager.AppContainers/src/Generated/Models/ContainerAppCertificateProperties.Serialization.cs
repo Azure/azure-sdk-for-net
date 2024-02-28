@@ -124,17 +124,17 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<ContainerAppCertificateProvisioningState> provisioningState = default;
-            Optional<string> password = default;
-            Optional<string> subjectName = default;
+            ContainerAppCertificateProvisioningState? provisioningState = default;
+            string password = default;
+            string subjectName = default;
             IReadOnlyList<string> subjectAlternativeNames = default;
-            Optional<byte[]> value = default;
-            Optional<string> issuer = default;
-            Optional<DateTimeOffset> issueDate = default;
-            Optional<DateTimeOffset> expirationDate = default;
-            Optional<string> thumbprint = default;
-            Optional<bool> valid = default;
-            Optional<string> publicKeyHash = default;
+            byte[] value = default;
+            string issuer = default;
+            DateTimeOffset? issueDate = default;
+            DateTimeOffset? expirationDate = default;
+            string thumbprint = default;
+            bool? valid = default;
+            string publicKeyHash = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -230,17 +230,17 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ContainerAppCertificateProperties(
-                Optional.ToNullable(provisioningState),
-                password.Value,
-                subjectName.Value,
+                provisioningState,
+                password,
+                subjectName,
                 subjectAlternativeNames ?? new ChangeTrackingList<string>(),
-                value.Value,
-                issuer.Value,
-                Optional.ToNullable(issueDate),
-                Optional.ToNullable(expirationDate),
-                thumbprint.Value,
-                Optional.ToNullable(valid),
-                publicKeyHash.Value,
+                value,
+                issuer,
+                issueDate,
+                expirationDate,
+                thumbprint,
+                valid,
+                publicKeyHash,
                 serializedAdditionalRawData);
         }
 

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             IReadOnlyList<ActionGroupData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ActionGroupList(value ?? new ChangeTrackingList<ActionGroupData>(), nextLink.Value, serializedAdditionalRawData);
+            return new ActionGroupList(value ?? new ChangeTrackingList<ActionGroupData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ActionGroupList>.Write(ModelReaderWriterOptions options)

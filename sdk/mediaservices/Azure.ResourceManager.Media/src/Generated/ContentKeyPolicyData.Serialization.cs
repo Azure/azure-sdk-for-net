@@ -122,11 +122,11 @@ namespace Azure.ResourceManager.Media
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> policyId = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<DateTimeOffset> lastModified = default;
-            Optional<string> description = default;
+            SystemData systemData = default;
+            Guid? policyId = default;
+            DateTimeOffset? created = default;
+            DateTimeOffset? lastModified = default;
+            string description = default;
             IList<ContentKeyPolicyOption> options0 = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -224,11 +224,11 @@ namespace Azure.ResourceManager.Media
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(policyId),
-                Optional.ToNullable(created),
-                Optional.ToNullable(lastModified),
-                description.Value,
+                systemData,
+                policyId,
+                created,
+                lastModified,
+                description,
                 options0 ?? new ChangeTrackingList<ContentKeyPolicyOption>(),
                 serializedAdditionalRawData);
         }

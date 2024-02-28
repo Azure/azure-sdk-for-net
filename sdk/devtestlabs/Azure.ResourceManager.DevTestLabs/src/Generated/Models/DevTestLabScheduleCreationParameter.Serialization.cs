@@ -128,17 +128,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<AzureLocation> location = default;
+            string name = default;
+            AzureLocation? location = default;
             IDictionary<string, string> tags = default;
-            Optional<DevTestLabEnableStatus> status = default;
-            Optional<string> taskType = default;
-            Optional<DevTestLabWeekDetails> weeklyRecurrence = default;
-            Optional<DayDetails> dailyRecurrence = default;
-            Optional<HourDetails> hourlyRecurrence = default;
-            Optional<string> timeZoneId = default;
-            Optional<DevTestLabNotificationSettings> notificationSettings = default;
-            Optional<ResourceIdentifier> targetResourceId = default;
+            DevTestLabEnableStatus? status = default;
+            string taskType = default;
+            DevTestLabWeekDetails weeklyRecurrence = default;
+            DayDetails dailyRecurrence = default;
+            HourDetails hourlyRecurrence = default;
+            string timeZoneId = default;
+            DevTestLabNotificationSettings notificationSettings = default;
+            ResourceIdentifier targetResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -254,17 +254,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DevTestLabScheduleCreationParameter(
-                name.Value,
-                Optional.ToNullable(location),
+                name,
+                location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                Optional.ToNullable(status),
-                taskType.Value,
-                weeklyRecurrence.Value,
-                dailyRecurrence.Value,
-                hourlyRecurrence.Value,
-                timeZoneId.Value,
-                notificationSettings.Value,
-                targetResourceId.Value,
+                status,
+                taskType,
+                weeklyRecurrence,
+                dailyRecurrence,
+                hourlyRecurrence,
+                timeZoneId,
+                notificationSettings,
+                targetResourceId,
                 serializedAdditionalRawData);
         }
 

@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<string> labSubnetName = default;
-            Optional<DevTestLabUsagePermissionType> allowPublicIP = default;
+            ResourceIdentifier resourceId = default;
+            string labSubnetName = default;
+            DevTestLabUsagePermissionType? allowPublicIP = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabSubnet(resourceId.Value, labSubnetName.Value, Optional.ToNullable(allowPublicIP), serializedAdditionalRawData);
+            return new DevTestLabSubnet(resourceId, labSubnetName, allowPublicIP, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabSubnet>.Write(ModelReaderWriterOptions options)

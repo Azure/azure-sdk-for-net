@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Grafana.Models
             {
                 return null;
             }
-            Optional<string> marketplacePlanId = default;
-            Optional<MarketplaceAutoRenew> marketplaceAutoRenew = default;
+            string marketplacePlanId = default;
+            MarketplaceAutoRenew? marketplaceAutoRenew = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EnterpriseConfigurations(marketplacePlanId.Value, Optional.ToNullable(marketplaceAutoRenew), serializedAdditionalRawData);
+            return new EnterpriseConfigurations(marketplacePlanId, marketplaceAutoRenew, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EnterpriseConfigurations>.Write(ModelReaderWriterOptions options)

@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> publisher = default;
-            Optional<string> offer = default;
-            Optional<string> sku = default;
+            string publisher = default;
+            string offer = default;
+            string sku = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CommunityGalleryImageIdentifier(publisher.Value, offer.Value, sku.Value, serializedAdditionalRawData);
+            return new CommunityGalleryImageIdentifier(publisher, offer, sku, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CommunityGalleryImageIdentifier>.Write(ModelReaderWriterOptions options)

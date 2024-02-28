@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<long> maxSizeMB = default;
-            Optional<string> vhdType = default;
-            Optional<string> vhdId = default;
-            Optional<string> vhdName = default;
+            long? maxSizeMB = default;
+            string vhdType = default;
+            string vhdId = default;
+            string vhdName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryDiskDetails(Optional.ToNullable(maxSizeMB), vhdType.Value, vhdId.Value, vhdName.Value, serializedAdditionalRawData);
+            return new SiteRecoveryDiskDetails(maxSizeMB, vhdType, vhdId, vhdName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryDiskDetails>.Write(ModelReaderWriterOptions options)

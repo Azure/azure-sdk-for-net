@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<ContainerRegistryPrivateLinkServiceConnectionStatus> status = default;
-            Optional<string> description = default;
-            Optional<ActionsRequiredForPrivateLinkServiceConsumer> actionsRequired = default;
+            ContainerRegistryPrivateLinkServiceConnectionStatus? status = default;
+            string description = default;
+            ActionsRequiredForPrivateLinkServiceConsumer? actionsRequired = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryPrivateLinkServiceConnectionState(Optional.ToNullable(status), description.Value, Optional.ToNullable(actionsRequired), serializedAdditionalRawData);
+            return new ContainerRegistryPrivateLinkServiceConnectionState(status, description, actionsRequired, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryPrivateLinkServiceConnectionState>.Write(ModelReaderWriterOptions options)

@@ -194,28 +194,28 @@ namespace Azure.ResourceManager.Automation
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<AutomationRunbookType> runbookType = default;
-            Optional<AutomationContentLink> publishContentLink = default;
-            Optional<RunbookState> state = default;
-            Optional<bool> logVerbose = default;
-            Optional<bool> logProgress = default;
-            Optional<int> logActivityTrace = default;
-            Optional<int> jobCount = default;
+            SystemData systemData = default;
+            AutomationRunbookType? runbookType = default;
+            AutomationContentLink publishContentLink = default;
+            RunbookState? state = default;
+            bool? logVerbose = default;
+            bool? logProgress = default;
+            int? logActivityTrace = default;
+            int? jobCount = default;
             IDictionary<string, RunbookParameterDefinition> parameters = default;
             IList<string> outputTypes = default;
-            Optional<AutomationRunbookDraft> draft = default;
-            Optional<RunbookProvisioningState> provisioningState = default;
-            Optional<string> lastModifiedBy = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<string> description = default;
+            AutomationRunbookDraft draft = default;
+            RunbookProvisioningState? provisioningState = default;
+            string lastModifiedBy = default;
+            DateTimeOffset? creationTime = default;
+            DateTimeOffset? lastModifiedTime = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -431,25 +431,25 @@ namespace Azure.ResourceManager.Automation
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                Optional.ToNullable(etag),
-                Optional.ToNullable(runbookType),
-                publishContentLink.Value,
-                Optional.ToNullable(state),
-                Optional.ToNullable(logVerbose),
-                Optional.ToNullable(logProgress),
-                Optional.ToNullable(logActivityTrace),
-                Optional.ToNullable(jobCount),
+                etag,
+                runbookType,
+                publishContentLink,
+                state,
+                logVerbose,
+                logProgress,
+                logActivityTrace,
+                jobCount,
                 parameters ?? new ChangeTrackingDictionary<string, RunbookParameterDefinition>(),
                 outputTypes ?? new ChangeTrackingList<string>(),
-                draft.Value,
-                Optional.ToNullable(provisioningState),
-                lastModifiedBy.Value,
-                Optional.ToNullable(creationTime),
-                Optional.ToNullable(lastModifiedTime),
-                description.Value,
+                draft,
+                provisioningState,
+                lastModifiedBy,
+                creationTime,
+                lastModifiedTime,
+                description,
                 serializedAdditionalRawData);
         }
 

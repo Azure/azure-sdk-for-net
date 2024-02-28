@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<bool> reportedForPolicyViolation = default;
+            bool? reportedForPolicyViolation = default;
             IReadOnlyList<GalleryImageVersionPolicyViolation> policyViolations = default;
-            Optional<bool> allowDeletionOfReplicatedLocations = default;
+            bool? allowDeletionOfReplicatedLocations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GalleryImageVersionSafetyProfile(Optional.ToNullable(allowDeletionOfReplicatedLocations), serializedAdditionalRawData, Optional.ToNullable(reportedForPolicyViolation), policyViolations ?? new ChangeTrackingList<GalleryImageVersionPolicyViolation>());
+            return new GalleryImageVersionSafetyProfile(allowDeletionOfReplicatedLocations, serializedAdditionalRawData, reportedForPolicyViolation, policyViolations ?? new ChangeTrackingList<GalleryImageVersionPolicyViolation>());
         }
 
         BinaryData IPersistableModel<GalleryImageVersionSafetyProfile>.Write(ModelReaderWriterOptions options)

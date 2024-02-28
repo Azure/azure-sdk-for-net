@@ -101,8 +101,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<string> metric = default;
-            Optional<WafMetricsResponseSeriesItemUnit> unit = default;
+            string metric = default;
+            WafMetricsResponseSeriesItemUnit? unit = default;
             IReadOnlyList<WafMetricsResponseSeriesPropertiesItemsItem> groups = default;
             IReadOnlyList<Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems> data = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WafMetricsResponseSeriesItem(metric.Value, Optional.ToNullable(unit), groups ?? new ChangeTrackingList<WafMetricsResponseSeriesPropertiesItemsItem>(), data ?? new ChangeTrackingList<Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems>(), serializedAdditionalRawData);
+            return new WafMetricsResponseSeriesItem(metric, unit, groups ?? new ChangeTrackingList<WafMetricsResponseSeriesPropertiesItemsItem>(), data ?? new ChangeTrackingList<Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WafMetricsResponseSeriesItem>.Write(ModelReaderWriterOptions options)

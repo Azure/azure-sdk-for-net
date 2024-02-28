@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> eventTimestamp = default;
-            Optional<string> eventType = default;
-            Optional<string> eventSummary = default;
-            Optional<string> eventLevel = default;
-            Optional<string> eventDescription = default;
+            DateTimeOffset? eventTimestamp = default;
+            string eventType = default;
+            string eventSummary = default;
+            string eventLevel = default;
+            string eventDescription = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,11 +134,11 @@ namespace Azure.ResourceManager.Peering.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new PeeringServicePrefixEvent(
-                Optional.ToNullable(eventTimestamp),
-                eventType.Value,
-                eventSummary.Value,
-                eventLevel.Value,
-                eventDescription.Value,
+                eventTimestamp,
+                eventType,
+                eventSummary,
+                eventLevel,
+                eventDescription,
                 serializedAdditionalRawData);
         }
 

@@ -150,16 +150,16 @@ namespace Azure.ResourceManager.Sql
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             IDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<FailoverGroupReadWriteEndpoint> readWriteEndpoint = default;
-            Optional<FailoverGroupReadOnlyEndpoint> readOnlyEndpoint = default;
-            Optional<FailoverGroupReplicationRole> replicationRole = default;
-            Optional<string> replicationState = default;
+            SystemData systemData = default;
+            FailoverGroupReadWriteEndpoint readWriteEndpoint = default;
+            FailoverGroupReadOnlyEndpoint readOnlyEndpoint = default;
+            FailoverGroupReplicationRole? replicationRole = default;
+            string replicationState = default;
             IList<PartnerServerInfo> partnerServers = default;
             IList<ResourceIdentifier> databases = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -302,13 +302,13 @@ namespace Azure.ResourceManager.Sql
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(location),
+                systemData,
+                location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                readWriteEndpoint.Value,
-                readOnlyEndpoint.Value,
-                Optional.ToNullable(replicationRole),
-                replicationState.Value,
+                readWriteEndpoint,
+                readOnlyEndpoint,
+                replicationRole,
+                replicationState,
                 partnerServers ?? new ChangeTrackingList<PartnerServerInfo>(),
                 databases ?? new ChangeTrackingList<ResourceIdentifier>(),
                 serializedAdditionalRawData);

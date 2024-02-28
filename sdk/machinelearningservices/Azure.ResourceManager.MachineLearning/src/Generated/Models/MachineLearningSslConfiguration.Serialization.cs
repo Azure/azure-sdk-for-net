@@ -122,12 +122,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<MachineLearningSslConfigStatus> status = default;
-            Optional<string> cert = default;
-            Optional<string> key = default;
-            Optional<string> cname = default;
-            Optional<string> leafDomainLabel = default;
-            Optional<bool> overwriteExistingDomain = default;
+            MachineLearningSslConfigStatus? status = default;
+            string cert = default;
+            string key = default;
+            string cname = default;
+            string leafDomainLabel = default;
+            bool? overwriteExistingDomain = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -197,12 +197,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MachineLearningSslConfiguration(
-                Optional.ToNullable(status),
-                cert.Value,
-                key.Value,
-                cname.Value,
-                leafDomainLabel.Value,
-                Optional.ToNullable(overwriteExistingDomain),
+                status,
+                cert,
+                key,
+                cname,
+                leafDomainLabel,
+                overwriteExistingDomain,
                 serializedAdditionalRawData);
         }
 

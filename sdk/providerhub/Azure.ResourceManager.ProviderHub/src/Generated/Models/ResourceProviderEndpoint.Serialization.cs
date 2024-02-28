@@ -114,13 +114,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
+            bool? enabled = default;
             IReadOnlyList<string> apiVersions = default;
-            Optional<Uri> endpointUri = default;
+            Uri endpointUri = default;
             IReadOnlyList<AzureLocation> locations = default;
             IReadOnlyList<string> requiredFeatures = default;
-            Optional<FeaturesRule> featuresRule = default;
-            Optional<TimeSpan> timeout = default;
+            FeaturesRule featuresRule = default;
+            TimeSpan? timeout = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -210,13 +210,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ResourceProviderEndpoint(
-                Optional.ToNullable(enabled),
+                enabled,
                 apiVersions ?? new ChangeTrackingList<string>(),
-                endpointUri.Value,
+                endpointUri,
                 locations ?? new ChangeTrackingList<AzureLocation>(),
                 requiredFeatures ?? new ChangeTrackingList<string>(),
-                featuresRule.Value,
-                Optional.ToNullable(timeout),
+                featuresRule,
+                timeout,
                 serializedAdditionalRawData);
         }
 

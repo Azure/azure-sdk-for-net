@@ -96,18 +96,18 @@ namespace Azure.Communication.ShortCodes.Models
             {
                 return null;
             }
-            Optional<bool> isVanity = default;
+            bool? isVanity = default;
             IList<string> preferredVanityNumbers = default;
-            Optional<NumberType> numberType = default;
-            Optional<bool> isPoliticalCampaign = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<Uri> url = default;
+            NumberType? numberType = default;
+            bool? isPoliticalCampaign = default;
+            string name = default;
+            string description = default;
+            Uri url = default;
             IList<ProgramSignUpType> signUpTypes = default;
-            Optional<Uri> signUpUrl = default;
-            Optional<Uri> termsOfServiceUrl = default;
-            Optional<Uri> privacyPolicyUrl = default;
-            Optional<DateTimeOffset> expectedDateOfService = default;
+            Uri signUpUrl = default;
+            Uri termsOfServiceUrl = default;
+            Uri privacyPolicyUrl = default;
+            DateTimeOffset? expectedDateOfService = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isVanity"u8))
@@ -222,18 +222,18 @@ namespace Azure.Communication.ShortCodes.Models
                 }
             }
             return new ProgramDetails(
-                Optional.ToNullable(isVanity),
+                isVanity,
                 preferredVanityNumbers ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(numberType),
-                Optional.ToNullable(isPoliticalCampaign),
-                name.Value,
-                description.Value,
-                url.Value,
+                numberType,
+                isPoliticalCampaign,
+                name,
+                description,
+                url,
                 signUpTypes ?? new ChangeTrackingList<ProgramSignUpType>(),
-                signUpUrl.Value,
-                termsOfServiceUrl.Value,
-                privacyPolicyUrl.Value,
-                Optional.ToNullable(expectedDateOfService));
+                signUpUrl,
+                termsOfServiceUrl,
+                privacyPolicyUrl,
+                expectedDateOfService);
         }
     }
 }

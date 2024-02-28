@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<BatchIPAddressProvisioningType> provision = default;
+            BatchIPAddressProvisioningType? provision = default;
             IList<ResourceIdentifier> ipAddressIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchPublicIPAddressConfiguration(Optional.ToNullable(provision), ipAddressIds ?? new ChangeTrackingList<ResourceIdentifier>(), serializedAdditionalRawData);
+            return new BatchPublicIPAddressConfiguration(provision, ipAddressIds ?? new ChangeTrackingList<ResourceIdentifier>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchPublicIPAddressConfiguration>.Write(ModelReaderWriterOptions options)

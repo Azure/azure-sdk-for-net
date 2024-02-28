@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DataShare.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IReadOnlyList<SynchronizationDetails> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynchronizationDetailsList(nextLink.Value, value, serializedAdditionalRawData);
+            return new SynchronizationDetailsList(nextLink, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynchronizationDetailsList>.Write(ModelReaderWriterOptions options)

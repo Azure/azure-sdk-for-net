@@ -94,15 +94,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<string> description = default;
-            Optional<object> structure = default;
-            Optional<object> schema = default;
+            string description = default;
+            object structure = default;
+            object schema = default;
             LinkedServiceReference linkedServiceName = default;
             IDictionary<string, ParameterSpecification> parameters = default;
             IList<object> annotations = default;
-            Optional<DatasetFolder> folder = default;
+            DatasetFolder folder = default;
             object index = default;
-            Optional<object> path = default;
+            object path = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -215,16 +215,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new WebTableDataset(
                 type,
-                description.Value,
-                structure.Value,
-                schema.Value,
+                description,
+                structure,
+                schema,
                 linkedServiceName,
                 parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
                 annotations ?? new ChangeTrackingList<object>(),
-                folder.Value,
+                folder,
                 additionalProperties,
                 index,
-                path.Value);
+                path);
         }
 
         internal partial class WebTableDatasetConverter : JsonConverter<WebTableDataset>

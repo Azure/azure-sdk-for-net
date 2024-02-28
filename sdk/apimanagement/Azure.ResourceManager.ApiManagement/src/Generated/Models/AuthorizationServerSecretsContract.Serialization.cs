@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> clientSecret = default;
-            Optional<string> resourceOwnerUsername = default;
-            Optional<string> resourceOwnerPassword = default;
+            string clientSecret = default;
+            string resourceOwnerUsername = default;
+            string resourceOwnerPassword = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AuthorizationServerSecretsContract(clientSecret.Value, resourceOwnerUsername.Value, resourceOwnerPassword.Value, serializedAdditionalRawData);
+            return new AuthorizationServerSecretsContract(clientSecret, resourceOwnerUsername, resourceOwnerPassword, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AuthorizationServerSecretsContract>.Write(ModelReaderWriterOptions options)

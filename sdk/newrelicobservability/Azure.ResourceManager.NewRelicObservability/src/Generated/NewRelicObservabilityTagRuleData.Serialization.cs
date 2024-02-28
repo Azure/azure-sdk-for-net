@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.NewRelicObservability
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<NewRelicProvisioningState> provisioningState = default;
-            Optional<NewRelicObservabilityLogRules> logRules = default;
-            Optional<NewRelicObservabilityMetricRules> metricRules = default;
+            SystemData systemData = default;
+            NewRelicProvisioningState? provisioningState = default;
+            NewRelicObservabilityLogRules logRules = default;
+            NewRelicObservabilityMetricRules metricRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -188,10 +188,10 @@ namespace Azure.ResourceManager.NewRelicObservability
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(provisioningState),
-                logRules.Value,
-                metricRules.Value,
+                systemData,
+                provisioningState,
+                logRules,
+                metricRules,
                 serializedAdditionalRawData);
         }
 

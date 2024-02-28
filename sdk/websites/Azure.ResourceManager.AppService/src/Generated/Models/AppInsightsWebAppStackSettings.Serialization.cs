@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<bool> isSupported = default;
-            Optional<bool> isDefaultOff = default;
+            bool? isSupported = default;
+            bool? isDefaultOff = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppInsightsWebAppStackSettings(Optional.ToNullable(isSupported), Optional.ToNullable(isDefaultOff), serializedAdditionalRawData);
+            return new AppInsightsWebAppStackSettings(isSupported, isDefaultOff, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppInsightsWebAppStackSettings>.Write(ModelReaderWriterOptions options)

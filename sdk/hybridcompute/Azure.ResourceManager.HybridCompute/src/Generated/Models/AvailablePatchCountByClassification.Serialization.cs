@@ -109,15 +109,15 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<int> security = default;
-            Optional<int> critical = default;
-            Optional<int> definition = default;
-            Optional<int> updateRollup = default;
-            Optional<int> featurePack = default;
-            Optional<int> servicePack = default;
-            Optional<int> tools = default;
-            Optional<int> updates = default;
-            Optional<int> other = default;
+            int? security = default;
+            int? critical = default;
+            int? definition = default;
+            int? updateRollup = default;
+            int? featurePack = default;
+            int? servicePack = default;
+            int? tools = default;
+            int? updates = default;
+            int? other = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -210,15 +210,15 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AvailablePatchCountByClassification(
-                Optional.ToNullable(security),
-                Optional.ToNullable(critical),
-                Optional.ToNullable(definition),
-                Optional.ToNullable(updateRollup),
-                Optional.ToNullable(featurePack),
-                Optional.ToNullable(servicePack),
-                Optional.ToNullable(tools),
-                Optional.ToNullable(updates),
-                Optional.ToNullable(other),
+                security,
+                critical,
+                definition,
+                updateRollup,
+                featurePack,
+                servicePack,
+                tools,
+                updates,
+                other,
                 serializedAdditionalRawData);
         }
 

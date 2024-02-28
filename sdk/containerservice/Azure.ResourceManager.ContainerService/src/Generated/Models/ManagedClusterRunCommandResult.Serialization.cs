@@ -102,13 +102,13 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> provisioningState = default;
-            Optional<int> exitCode = default;
-            Optional<DateTimeOffset> startedAt = default;
-            Optional<DateTimeOffset> finishedAt = default;
-            Optional<string> logs = default;
-            Optional<string> reason = default;
+            string id = default;
+            string provisioningState = default;
+            int? exitCode = default;
+            DateTimeOffset? startedAt = default;
+            DateTimeOffset? finishedAt = default;
+            string logs = default;
+            string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,13 +179,13 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ManagedClusterRunCommandResult(
-                id.Value,
-                provisioningState.Value,
-                Optional.ToNullable(exitCode),
-                Optional.ToNullable(startedAt),
-                Optional.ToNullable(finishedAt),
-                logs.Value,
-                reason.Value,
+                id,
+                provisioningState,
+                exitCode,
+                startedAt,
+                finishedAt,
+                logs,
+                reason,
                 serializedAdditionalRawData);
         }
 

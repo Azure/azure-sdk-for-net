@@ -127,14 +127,14 @@ namespace Azure.ResourceManager.Avs
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<PortMirroringProfileDirection> direction = default;
-            Optional<string> source = default;
-            Optional<string> destination = default;
-            Optional<PortMirroringProfileStatus> status = default;
-            Optional<WorkloadNetworkPortMirroringProfileProvisioningState> provisioningState = default;
-            Optional<long> revision = default;
+            SystemData systemData = default;
+            string displayName = default;
+            PortMirroringProfileDirection? direction = default;
+            string source = default;
+            string destination = default;
+            PortMirroringProfileStatus? status = default;
+            WorkloadNetworkPortMirroringProfileProvisioningState? provisioningState = default;
+            long? revision = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -236,14 +236,14 @@ namespace Azure.ResourceManager.Avs
                 id,
                 name,
                 type,
-                systemData.Value,
-                displayName.Value,
-                Optional.ToNullable(direction),
-                source.Value,
-                destination.Value,
-                Optional.ToNullable(status),
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(revision),
+                systemData,
+                displayName,
+                direction,
+                source,
+                destination,
+                status,
+                provisioningState,
+                revision,
                 serializedAdditionalRawData);
         }
 

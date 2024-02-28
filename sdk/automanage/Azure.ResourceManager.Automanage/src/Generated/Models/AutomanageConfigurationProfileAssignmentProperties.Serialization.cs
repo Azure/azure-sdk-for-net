@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Automanage.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> configurationProfile = default;
-            Optional<ResourceIdentifier> targetId = default;
-            Optional<string> status = default;
+            ResourceIdentifier configurationProfile = default;
+            ResourceIdentifier targetId = default;
+            string status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Automanage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomanageConfigurationProfileAssignmentProperties(configurationProfile.Value, targetId.Value, status.Value, serializedAdditionalRawData);
+            return new AutomanageConfigurationProfileAssignmentProperties(configurationProfile, targetId, status, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomanageConfigurationProfileAssignmentProperties>.Write(ModelReaderWriterOptions options)

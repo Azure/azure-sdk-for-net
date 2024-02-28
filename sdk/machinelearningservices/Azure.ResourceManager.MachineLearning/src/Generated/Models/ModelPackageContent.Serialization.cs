@@ -145,11 +145,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<BaseEnvironmentSource> baseEnvironmentSource = default;
+            BaseEnvironmentSource baseEnvironmentSource = default;
             IDictionary<string, string> environmentVariables = default;
             InferencingServer inferencingServer = default;
             IList<ModelPackageInput> inputs = default;
-            Optional<ModelConfiguration> modelConfiguration = default;
+            ModelConfiguration modelConfiguration = default;
             IDictionary<string, string> tags = default;
             string targetEnvironmentId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -238,11 +238,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ModelPackageContent(
-                baseEnvironmentSource.Value,
+                baseEnvironmentSource,
                 environmentVariables ?? new ChangeTrackingDictionary<string, string>(),
                 inferencingServer,
                 inputs ?? new ChangeTrackingList<ModelPackageInput>(),
-                modelConfiguration.Value,
+                modelConfiguration,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 targetEnvironmentId,
                 serializedAdditionalRawData);

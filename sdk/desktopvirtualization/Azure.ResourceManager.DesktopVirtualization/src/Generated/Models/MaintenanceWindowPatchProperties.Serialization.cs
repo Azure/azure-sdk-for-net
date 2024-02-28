@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            Optional<int> hour = default;
-            Optional<DesktopVirtualizationDayOfWeek> dayOfWeek = default;
+            int? hour = default;
+            DesktopVirtualizationDayOfWeek? dayOfWeek = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MaintenanceWindowPatchProperties(Optional.ToNullable(hour), Optional.ToNullable(dayOfWeek), serializedAdditionalRawData);
+            return new MaintenanceWindowPatchProperties(hour, dayOfWeek, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MaintenanceWindowPatchProperties>.Write(ModelReaderWriterOptions options)

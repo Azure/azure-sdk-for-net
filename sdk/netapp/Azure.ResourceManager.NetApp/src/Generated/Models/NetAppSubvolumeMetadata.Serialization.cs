@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.NetApp.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> path = default;
-            Optional<string> parentPath = default;
-            Optional<long> size = default;
-            Optional<long> bytesUsed = default;
-            Optional<string> permissions = default;
-            Optional<DateTimeOffset> creationTimeStamp = default;
-            Optional<DateTimeOffset> accessedTimeStamp = default;
-            Optional<DateTimeOffset> modifiedTimeStamp = default;
-            Optional<DateTimeOffset> changedTimeStamp = default;
-            Optional<string> provisioningState = default;
+            SystemData systemData = default;
+            string path = default;
+            string parentPath = default;
+            long? size = default;
+            long? bytesUsed = default;
+            string permissions = default;
+            DateTimeOffset? creationTimeStamp = default;
+            DateTimeOffset? accessedTimeStamp = default;
+            DateTimeOffset? modifiedTimeStamp = default;
+            DateTimeOffset? changedTimeStamp = default;
+            string provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -276,17 +276,17 @@ namespace Azure.ResourceManager.NetApp.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                path.Value,
-                parentPath.Value,
-                Optional.ToNullable(size),
-                Optional.ToNullable(bytesUsed),
-                permissions.Value,
-                Optional.ToNullable(creationTimeStamp),
-                Optional.ToNullable(accessedTimeStamp),
-                Optional.ToNullable(modifiedTimeStamp),
-                Optional.ToNullable(changedTimeStamp),
-                provisioningState.Value,
+                systemData,
+                path,
+                parentPath,
+                size,
+                bytesUsed,
+                permissions,
+                creationTimeStamp,
+                accessedTimeStamp,
+                modifiedTimeStamp,
+                changedTimeStamp,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

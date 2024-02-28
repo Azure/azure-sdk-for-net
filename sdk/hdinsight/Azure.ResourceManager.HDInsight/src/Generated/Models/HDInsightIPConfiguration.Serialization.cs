@@ -106,14 +106,14 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
+            ResourceIdentifier id = default;
             string name = default;
-            Optional<ResourceType> type = default;
-            Optional<HDInsightPrivateLinkConfigurationProvisioningState> provisioningState = default;
-            Optional<bool> primary = default;
-            Optional<IPAddress> privateIPAddress = default;
-            Optional<HDInsightPrivateIPAllocationMethod> privateIPAllocationMethod = default;
-            Optional<WritableSubResource> subnet = default;
+            ResourceType? type = default;
+            HDInsightPrivateLinkConfigurationProvisioningState? provisioningState = default;
+            bool? primary = default;
+            IPAddress privateIPAddress = default;
+            HDInsightPrivateIPAllocationMethod? privateIPAllocationMethod = default;
+            WritableSubResource subnet = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -205,13 +205,13 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new HDInsightIPConfiguration(
-                id.Value,
+                id,
                 name,
-                Optional.ToNullable(type),
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(primary),
-                privateIPAddress.Value,
-                Optional.ToNullable(privateIPAllocationMethod),
+                type,
+                provisioningState,
+                primary,
+                privateIPAddress,
+                privateIPAllocationMethod,
                 subnet,
                 serializedAdditionalRawData);
         }

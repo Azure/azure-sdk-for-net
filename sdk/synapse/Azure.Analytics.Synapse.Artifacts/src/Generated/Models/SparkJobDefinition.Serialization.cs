@@ -69,13 +69,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> description = default;
+            string description = default;
             BigDataPoolReference targetBigDataPool = default;
-            Optional<SparkConfigurationReference> targetSparkConfiguration = default;
-            Optional<string> requiredSparkVersion = default;
-            Optional<string> language = default;
+            SparkConfigurationReference targetSparkConfiguration = default;
+            string requiredSparkVersion = default;
+            string language = default;
             SparkJobProperties jobProperties = default;
-            Optional<SparkJobDefinitionFolder> folder = default;
+            SparkJobDefinitionFolder folder = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -128,13 +128,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new SparkJobDefinition(
-                description.Value,
+                description,
                 targetBigDataPool,
-                targetSparkConfiguration.Value,
-                requiredSparkVersion.Value,
-                language.Value,
+                targetSparkConfiguration,
+                requiredSparkVersion,
+                language,
                 jobProperties,
-                folder.Value,
+                folder,
                 additionalProperties);
         }
 

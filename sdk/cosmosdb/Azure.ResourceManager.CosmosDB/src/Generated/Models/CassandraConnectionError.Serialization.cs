@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<CassandraConnectionState> connectionState = default;
-            Optional<string> ipFrom = default;
-            Optional<string> ipTo = default;
-            Optional<int> port = default;
-            Optional<string> exception = default;
+            CassandraConnectionState? connectionState = default;
+            string ipFrom = default;
+            string ipTo = default;
+            int? port = default;
+            string exception = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,11 +138,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new CassandraConnectionError(
-                Optional.ToNullable(connectionState),
-                ipFrom.Value,
-                ipTo.Value,
-                Optional.ToNullable(port),
-                exception.Value,
+                connectionState,
+                ipFrom,
+                ipTo,
+                port,
+                exception,
                 serializedAdditionalRawData);
         }
 

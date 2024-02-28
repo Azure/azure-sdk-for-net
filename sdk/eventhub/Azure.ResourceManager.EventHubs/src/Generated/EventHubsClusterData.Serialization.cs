@@ -132,18 +132,18 @@ namespace Azure.ResourceManager.EventHubs
             {
                 return null;
             }
-            Optional<EventHubsClusterSku> sku = default;
+            EventHubsClusterSku sku = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> createdAt = default;
-            Optional<DateTimeOffset> updatedAt = default;
-            Optional<string> metricId = default;
-            Optional<string> status = default;
-            Optional<bool> supportsScaling = default;
+            SystemData systemData = default;
+            DateTimeOffset? createdAt = default;
+            DateTimeOffset? updatedAt = default;
+            string metricId = default;
+            string status = default;
+            bool? supportsScaling = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -259,15 +259,15 @@ namespace Azure.ResourceManager.EventHubs
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                sku.Value,
-                Optional.ToNullable(createdAt),
-                Optional.ToNullable(updatedAt),
-                metricId.Value,
-                status.Value,
-                Optional.ToNullable(supportsScaling),
+                sku,
+                createdAt,
+                updatedAt,
+                metricId,
+                status,
+                supportsScaling,
                 serializedAdditionalRawData);
         }
 

@@ -19,8 +19,8 @@ namespace Azure.Maps.Search.Models
             {
                 return null;
             }
-            Optional<ErrorDetail> error = default;
-            Optional<SearchSummary> summary = default;
+            ErrorDetail error = default;
+            SearchSummary summary = default;
             IReadOnlyList<SearchAddressResultItem> results = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -57,7 +57,7 @@ namespace Azure.Maps.Search.Models
                     continue;
                 }
             }
-            return new SearchAddressBatchItemResponse(summary.Value, results ?? new ChangeTrackingList<SearchAddressResultItem>(), error.Value);
+            return new SearchAddressBatchItemResponse(summary, results ?? new ChangeTrackingList<SearchAddressResultItem>(), error);
         }
     }
 }

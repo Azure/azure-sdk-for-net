@@ -137,12 +137,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IReadOnlyDictionary<string, BinaryData> additionalData = default;
-            Optional<string> friendlyName = default;
-            Optional<int> appId = default;
-            Optional<string> appName = default;
-            Optional<string> instanceName = default;
+            string friendlyName = default;
+            int? appId = default;
+            string appName = default;
+            string instanceName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -243,14 +243,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 kind,
                 serializedAdditionalRawData,
                 additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                friendlyName.Value,
-                Optional.ToNullable(appId),
-                appName.Value,
-                instanceName.Value);
+                friendlyName,
+                appId,
+                appName,
+                instanceName);
         }
 
         BinaryData IPersistableModel<SecurityInsightsCloudApplicationEntity>.Write(ModelReaderWriterOptions options)

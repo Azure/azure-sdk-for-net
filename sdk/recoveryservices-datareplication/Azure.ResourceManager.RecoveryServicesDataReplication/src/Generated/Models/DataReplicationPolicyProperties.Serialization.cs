@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 return null;
             }
-            Optional<DataReplicationProvisioningState> provisioningState = default;
+            DataReplicationProvisioningState? provisioningState = default;
             PolicyModelCustomProperties customProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataReplicationPolicyProperties(Optional.ToNullable(provisioningState), customProperties, serializedAdditionalRawData);
+            return new DataReplicationPolicyProperties(provisioningState, customProperties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataReplicationPolicyProperties>.Write(ModelReaderWriterOptions options)

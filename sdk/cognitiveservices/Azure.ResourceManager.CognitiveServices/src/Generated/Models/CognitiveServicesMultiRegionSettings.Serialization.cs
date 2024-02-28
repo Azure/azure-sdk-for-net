@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<CognitiveServicesRoutingMethod> routingMethod = default;
+            CognitiveServicesRoutingMethod? routingMethod = default;
             IList<CognitiveServicesRegionSetting> regions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CognitiveServicesMultiRegionSettings(Optional.ToNullable(routingMethod), regions ?? new ChangeTrackingList<CognitiveServicesRegionSetting>(), serializedAdditionalRawData);
+            return new CognitiveServicesMultiRegionSettings(routingMethod, regions ?? new ChangeTrackingList<CognitiveServicesRegionSetting>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CognitiveServicesMultiRegionSettings>.Write(ModelReaderWriterOptions options)

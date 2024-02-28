@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<TimeSpan> duration = default;
+            TimeSpan? duration = default;
             string objectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomCopySetting(objectType, serializedAdditionalRawData, Optional.ToNullable(duration));
+            return new CustomCopySetting(objectType, serializedAdditionalRawData, duration);
         }
 
         BinaryData IPersistableModel<CustomCopySetting>.Write(ModelReaderWriterOptions options)

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Avs.Models
                 return null;
             }
             IReadOnlyList<WorkloadNetworkSegmentData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadNetworkSegmentsList(value ?? new ChangeTrackingList<WorkloadNetworkSegmentData>(), nextLink.Value, serializedAdditionalRawData);
+            return new WorkloadNetworkSegmentsList(value ?? new ChangeTrackingList<WorkloadNetworkSegmentData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkloadNetworkSegmentsList>.Write(ModelReaderWriterOptions options)

@@ -241,38 +241,38 @@ namespace Azure.ResourceManager.ApplicationInsights
                 return null;
             }
             string kind = default;
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> applicationId = default;
-            Optional<string> appId = default;
-            Optional<string> name0 = default;
-            Optional<ApplicationType> applicationType = default;
-            Optional<FlowType> flowType = default;
-            Optional<RequestSource> requestSource = default;
-            Optional<string> instrumentationKey = default;
-            Optional<DateTimeOffset> creationDate = default;
-            Optional<Guid> tenantId = default;
-            Optional<string> hockeyAppId = default;
-            Optional<string> hockeyAppToken = default;
-            Optional<string> provisioningState = default;
-            Optional<double> samplingPercentage = default;
-            Optional<string> connectionString = default;
-            Optional<int> retentionInDays = default;
-            Optional<bool> disableIPMasking = default;
-            Optional<bool> immediatePurgeDataOn30Days = default;
-            Optional<string> workspaceResourceId = default;
-            Optional<DateTimeOffset> laMigrationDate = default;
+            SystemData systemData = default;
+            string applicationId = default;
+            string appId = default;
+            string name0 = default;
+            ApplicationType? applicationType = default;
+            FlowType? flowType = default;
+            RequestSource? requestSource = default;
+            string instrumentationKey = default;
+            DateTimeOffset? creationDate = default;
+            Guid? tenantId = default;
+            string hockeyAppId = default;
+            string hockeyAppToken = default;
+            string provisioningState = default;
+            double? samplingPercentage = default;
+            string connectionString = default;
+            int? retentionInDays = default;
+            bool? disableIPMasking = default;
+            bool? immediatePurgeDataOn30Days = default;
+            string workspaceResourceId = default;
+            DateTimeOffset? laMigrationDate = default;
             IReadOnlyList<PrivateLinkScopedResourceContent> privateLinkScopedResources = default;
-            Optional<PublicNetworkAccessType> publicNetworkAccessForIngestion = default;
-            Optional<PublicNetworkAccessType> publicNetworkAccessForQuery = default;
-            Optional<IngestionMode> ingestionMode = default;
-            Optional<bool> disableLocalAuth = default;
-            Optional<bool> forceCustomerStorageForProfiler = default;
+            PublicNetworkAccessType? publicNetworkAccessForIngestion = default;
+            PublicNetworkAccessType? publicNetworkAccessForQuery = default;
+            IngestionMode? ingestionMode = default;
+            bool? disableLocalAuth = default;
+            bool? forceCustomerStorageForProfiler = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -550,36 +550,36 @@ namespace Azure.ResourceManager.ApplicationInsights
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 kind,
-                Optional.ToNullable(etag),
-                applicationId.Value,
-                appId.Value,
-                name0.Value,
-                Optional.ToNullable(applicationType),
-                Optional.ToNullable(flowType),
-                Optional.ToNullable(requestSource),
-                instrumentationKey.Value,
-                Optional.ToNullable(creationDate),
-                Optional.ToNullable(tenantId),
-                hockeyAppId.Value,
-                hockeyAppToken.Value,
-                provisioningState.Value,
-                Optional.ToNullable(samplingPercentage),
-                connectionString.Value,
-                Optional.ToNullable(retentionInDays),
-                Optional.ToNullable(disableIPMasking),
-                Optional.ToNullable(immediatePurgeDataOn30Days),
-                workspaceResourceId.Value,
-                Optional.ToNullable(laMigrationDate),
+                etag,
+                applicationId,
+                appId,
+                name0,
+                applicationType,
+                flowType,
+                requestSource,
+                instrumentationKey,
+                creationDate,
+                tenantId,
+                hockeyAppId,
+                hockeyAppToken,
+                provisioningState,
+                samplingPercentage,
+                connectionString,
+                retentionInDays,
+                disableIPMasking,
+                immediatePurgeDataOn30Days,
+                workspaceResourceId,
+                laMigrationDate,
                 privateLinkScopedResources ?? new ChangeTrackingList<PrivateLinkScopedResourceContent>(),
-                Optional.ToNullable(publicNetworkAccessForIngestion),
-                Optional.ToNullable(publicNetworkAccessForQuery),
-                Optional.ToNullable(ingestionMode),
-                Optional.ToNullable(disableLocalAuth),
-                Optional.ToNullable(forceCustomerStorageForProfiler),
+                publicNetworkAccessForIngestion,
+                publicNetworkAccessForQuery,
+                ingestionMode,
+                disableLocalAuth,
+                forceCustomerStorageForProfiler,
                 serializedAdditionalRawData);
         }
 

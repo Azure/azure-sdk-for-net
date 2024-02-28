@@ -100,9 +100,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IssueOrigin> origin = default;
-            Optional<IssueSeverity> severity = default;
-            Optional<ConnectivityIssueType> type = default;
+            IssueOrigin? origin = default;
+            IssueSeverity? severity = default;
+            ConnectivityIssueType? type = default;
             IReadOnlyList<IDictionary<string, string>> context = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectivityIssueInfo(Optional.ToNullable(origin), Optional.ToNullable(severity), Optional.ToNullable(type), context ?? new ChangeTrackingList<IDictionary<string, string>>(), serializedAdditionalRawData);
+            return new ConnectivityIssueInfo(origin, severity, type, context ?? new ChangeTrackingList<IDictionary<string, string>>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectivityIssueInfo>.Write(ModelReaderWriterOptions options)

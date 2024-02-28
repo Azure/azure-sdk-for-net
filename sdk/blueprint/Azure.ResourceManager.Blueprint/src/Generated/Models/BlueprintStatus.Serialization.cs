@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Blueprint.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> timeCreated = default;
-            Optional<DateTimeOffset> lastModified = default;
+            DateTimeOffset? timeCreated = default;
+            DateTimeOffset? lastModified = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BlueprintStatus(Optional.ToNullable(timeCreated), Optional.ToNullable(lastModified), serializedAdditionalRawData);
+            return new BlueprintStatus(timeCreated, lastModified, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BlueprintStatus>.Write(ModelReaderWriterOptions options)

@@ -35,7 +35,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             string key = default;
             string odataType = default;
-            Optional<string> description = default;
+            string description = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("key"u8))
@@ -54,7 +54,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new CognitiveServicesAccountKey(odataType, description.Value, key);
+            return new CognitiveServicesAccountKey(odataType, description, key);
         }
     }
 }

@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             {
                 return null;
             }
-            Optional<Status> status = default;
-            Optional<string> cert = default;
-            Optional<string> key = default;
-            Optional<string> cname = default;
+            Status? status = default;
+            string cert = default;
+            string key = default;
+            string cname = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SslConfiguration(Optional.ToNullable(status), cert.Value, key.Value, cname.Value, serializedAdditionalRawData);
+            return new SslConfiguration(status, cert, key, cname, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SslConfiguration>.Write(ModelReaderWriterOptions options)

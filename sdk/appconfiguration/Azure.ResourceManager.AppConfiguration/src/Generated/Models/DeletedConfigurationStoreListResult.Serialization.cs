@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 return null;
             }
             IReadOnlyList<DeletedAppConfigurationStoreData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeletedConfigurationStoreListResult(value ?? new ChangeTrackingList<DeletedAppConfigurationStoreData>(), nextLink.Value, serializedAdditionalRawData);
+            return new DeletedConfigurationStoreListResult(value ?? new ChangeTrackingList<DeletedAppConfigurationStoreData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeletedConfigurationStoreListResult>.Write(ModelReaderWriterOptions options)

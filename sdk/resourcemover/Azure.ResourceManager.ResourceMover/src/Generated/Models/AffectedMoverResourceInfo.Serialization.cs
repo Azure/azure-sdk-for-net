@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<ResourceIdentifier> sourceId = default;
+            ResourceIdentifier id = default;
+            ResourceIdentifier sourceId = default;
             IReadOnlyList<AffectedMoverResourceInfo> moveResources = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AffectedMoverResourceInfo(id.Value, sourceId.Value, moveResources ?? new ChangeTrackingList<AffectedMoverResourceInfo>(), serializedAdditionalRawData);
+            return new AffectedMoverResourceInfo(id, sourceId, moveResources ?? new ChangeTrackingList<AffectedMoverResourceInfo>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AffectedMoverResourceInfo>.Write(ModelReaderWriterOptions options)

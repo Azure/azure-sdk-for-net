@@ -104,14 +104,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> apiName = default;
-            Optional<string> apiRevision = default;
-            Optional<string> apiVersion = default;
-            Optional<string> description = default;
-            Optional<string> method = default;
-            Optional<string> uriTemplate = default;
+            string id = default;
+            string name = default;
+            string apiName = default;
+            string apiRevision = default;
+            string apiVersion = default;
+            string description = default;
+            string method = default;
+            string uriTemplate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -163,14 +163,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AssociatedOperationProperties(
-                id.Value,
-                name.Value,
-                apiName.Value,
-                apiRevision.Value,
-                apiVersion.Value,
-                description.Value,
-                method.Value,
-                uriTemplate.Value,
+                id,
+                name,
+                apiName,
+                apiRevision,
+                apiVersion,
+                description,
+                method,
+                uriTemplate,
                 serializedAdditionalRawData);
         }
 

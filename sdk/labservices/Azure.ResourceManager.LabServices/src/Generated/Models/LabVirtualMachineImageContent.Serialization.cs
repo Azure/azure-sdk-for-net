@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<ResourceIdentifier> labVirtualMachineId = default;
+            string name = default;
+            ResourceIdentifier labVirtualMachineId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabVirtualMachineImageContent(name.Value, labVirtualMachineId.Value, serializedAdditionalRawData);
+            return new LabVirtualMachineImageContent(name, labVirtualMachineId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabVirtualMachineImageContent>.Write(ModelReaderWriterOptions options)

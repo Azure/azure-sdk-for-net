@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<string> nodeId = default;
-            Optional<ManagedIntegrationRuntimeNodeStatus> status = default;
+            string nodeId = default;
+            ManagedIntegrationRuntimeNodeStatus? status = default;
             IReadOnlyList<ManagedIntegrationRuntimeError> errors = default;
             IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ManagedIntegrationRuntimeNode(nodeId.Value, Optional.ToNullable(status), errors ?? new ChangeTrackingList<ManagedIntegrationRuntimeError>(), additionalProperties);
+            return new ManagedIntegrationRuntimeNode(nodeId, status, errors ?? new ChangeTrackingList<ManagedIntegrationRuntimeError>(), additionalProperties);
         }
 
         BinaryData IPersistableModel<ManagedIntegrationRuntimeNode>.Write(ModelReaderWriterOptions options)

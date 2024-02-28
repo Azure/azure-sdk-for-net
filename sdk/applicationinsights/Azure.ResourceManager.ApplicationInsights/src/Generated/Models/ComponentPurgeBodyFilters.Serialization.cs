@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<string> column = default;
-            Optional<string> @operator = default;
-            Optional<BinaryData> value = default;
-            Optional<string> key = default;
+            string column = default;
+            string @operator = default;
+            BinaryData value = default;
+            string key = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComponentPurgeBodyFilters(column.Value, @operator.Value, value.Value, key.Value, serializedAdditionalRawData);
+            return new ComponentPurgeBodyFilters(column, @operator, value, key, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComponentPurgeBodyFilters>.Write(ModelReaderWriterOptions options)

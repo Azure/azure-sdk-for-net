@@ -99,9 +99,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<SecurityTrafficDirection> direction = default;
-            Optional<int> destinationPort = default;
+            string name = default;
+            SecurityTrafficDirection? direction = default;
+            int? destinationPort = default;
             IList<SecurityTransportProtocol> protocols = default;
             IList<string> ipAddresses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -166,9 +166,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new RecommendedSecurityRule(
-                name.Value,
-                Optional.ToNullable(direction),
-                Optional.ToNullable(destinationPort),
+                name,
+                direction,
+                destinationPort,
                 protocols ?? new ChangeTrackingList<SecurityTransportProtocol>(),
                 ipAddresses ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);

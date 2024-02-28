@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Optional<string> dataType = default;
-            Optional<bool?> isConfigurationParameter = default;
+            string dataType = default;
+            bool? isConfigurationParameter = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamingJobFunctionInput(dataType.Value, Optional.ToNullable(isConfigurationParameter), serializedAdditionalRawData);
+            return new StreamingJobFunctionInput(dataType, isConfigurationParameter, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamingJobFunctionInput>.Write(ModelReaderWriterOptions options)

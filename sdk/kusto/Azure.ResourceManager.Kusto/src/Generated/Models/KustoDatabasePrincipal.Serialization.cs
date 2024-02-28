@@ -93,10 +93,10 @@ namespace Azure.ResourceManager.Kusto.Models
             KustoDatabasePrincipalRole role = default;
             string name = default;
             KustoDatabasePrincipalType type = default;
-            Optional<string> fqn = default;
-            Optional<string> email = default;
-            Optional<string> appId = default;
-            Optional<string> tenantName = default;
+            string fqn = default;
+            string email = default;
+            string appId = default;
+            string tenantName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,10 +146,10 @@ namespace Azure.ResourceManager.Kusto.Models
                 role,
                 name,
                 type,
-                fqn.Value,
-                email.Value,
-                appId.Value,
-                tenantName.Value,
+                fqn,
+                email,
+                appId,
+                tenantName,
                 serializedAdditionalRawData);
         }
 

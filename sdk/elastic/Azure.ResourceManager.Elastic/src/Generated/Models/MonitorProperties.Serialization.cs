@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.Elastic.Models
             {
                 return null;
             }
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<MonitoringStatus> monitoringStatus = default;
-            Optional<ElasticProperties> elasticProperties = default;
-            Optional<UserInfo> userInfo = default;
-            Optional<LiftrResourceCategory> liftrResourceCategory = default;
-            Optional<int> liftrResourcePreference = default;
+            ProvisioningState? provisioningState = default;
+            MonitoringStatus? monitoringStatus = default;
+            ElasticProperties elasticProperties = default;
+            UserInfo userInfo = default;
+            LiftrResourceCategory? liftrResourceCategory = default;
+            int? liftrResourcePreference = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,12 +165,12 @@ namespace Azure.ResourceManager.Elastic.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MonitorProperties(
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(monitoringStatus),
-                elasticProperties.Value,
-                userInfo.Value,
-                Optional.ToNullable(liftrResourceCategory),
-                Optional.ToNullable(liftrResourcePreference),
+                provisioningState,
+                monitoringStatus,
+                elasticProperties,
+                userInfo,
+                liftrResourceCategory,
+                liftrResourcePreference,
                 serializedAdditionalRawData);
         }
 

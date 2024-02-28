@@ -113,9 +113,9 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             string metricName = default;
-            Optional<string> metricNamespace = default;
+            string metricNamespace = default;
             ResourceIdentifier metricResourceUri = default;
-            Optional<AzureLocation> metricResourceLocation = default;
+            AzureLocation? metricResourceLocation = default;
             TimeSpan timeGrain = default;
             MetricStatisticType statistic = default;
             TimeSpan timeWindow = default;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Monitor.Models
             MetricTriggerComparisonOperation @operator = default;
             double threshold = default;
             IList<AutoscaleRuleMetricDimension> dimensions = default;
-            Optional<bool> dividePerInstance = default;
+            bool? dividePerInstance = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -214,9 +214,9 @@ namespace Azure.ResourceManager.Monitor.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MetricTrigger(
                 metricName,
-                metricNamespace.Value,
+                metricNamespace,
                 metricResourceUri,
-                Optional.ToNullable(metricResourceLocation),
+                metricResourceLocation,
                 timeGrain,
                 statistic,
                 timeWindow,
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 @operator,
                 threshold,
                 dimensions ?? new ChangeTrackingList<AutoscaleRuleMetricDimension>(),
-                Optional.ToNullable(dividePerInstance),
+                dividePerInstance,
                 serializedAdditionalRawData);
         }
 
