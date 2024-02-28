@@ -81,10 +81,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 return null;
             }
-            Optional<MetastoreDBConnectionAuthenticationMode> metastoreDBConnectionAuthenticationMode = default;
-            Optional<string> metastoreDBConnectionPasswordSecret = default;
+            MetastoreDBConnectionAuthenticationMode? metastoreDBConnectionAuthenticationMode = default;
+            string metastoreDBConnectionPasswordSecret = default;
             string metastoreDBConnectionURL = default;
-            Optional<string> metastoreDBConnectionUserName = default;
+            string metastoreDBConnectionUserName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FlinkHiveCatalogOption(Optional.ToNullable(metastoreDBConnectionAuthenticationMode), metastoreDBConnectionPasswordSecret.Value, metastoreDBConnectionURL, metastoreDBConnectionUserName.Value, serializedAdditionalRawData);
+            return new FlinkHiveCatalogOption(metastoreDBConnectionAuthenticationMode, metastoreDBConnectionPasswordSecret, metastoreDBConnectionURL, metastoreDBConnectionUserName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FlinkHiveCatalogOption>.Write(ModelReaderWriterOptions options)

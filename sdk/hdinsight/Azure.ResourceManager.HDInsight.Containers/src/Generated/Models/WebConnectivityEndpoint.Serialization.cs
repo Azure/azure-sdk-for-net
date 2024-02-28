@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 return null;
             }
             string fqdn = default;
-            Optional<string> privateFqdn = default;
+            string privateFqdn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebConnectivityEndpoint(fqdn, privateFqdn.Value, serializedAdditionalRawData);
+            return new WebConnectivityEndpoint(fqdn, privateFqdn, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebConnectivityEndpoint>.Write(ModelReaderWriterOptions options)

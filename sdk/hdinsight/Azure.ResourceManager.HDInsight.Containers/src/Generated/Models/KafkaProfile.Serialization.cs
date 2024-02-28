@@ -91,12 +91,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 return null;
             }
-            Optional<bool> enableKRaft = default;
-            Optional<bool> enablePublicEndpoints = default;
-            Optional<Uri> remoteStorageUri = default;
+            bool? enableKRaft = default;
+            bool? enablePublicEndpoints = default;
+            Uri remoteStorageUri = default;
             DiskStorageProfile diskStorage = default;
-            Optional<HDInsightIdentityProfile> clusterIdentity = default;
-            Optional<KafkaConnectivityEndpoints> connectivityEndpoints = default;
+            HDInsightIdentityProfile clusterIdentity = default;
+            KafkaConnectivityEndpoints connectivityEndpoints = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,7 +157,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KafkaProfile(Optional.ToNullable(enableKRaft), Optional.ToNullable(enablePublicEndpoints), remoteStorageUri.Value, diskStorage, clusterIdentity.Value, connectivityEndpoints.Value, serializedAdditionalRawData);
+            return new KafkaProfile(
+                enableKRaft,
+                enablePublicEndpoints,
+                remoteStorageUri,
+                diskStorage,
+                clusterIdentity,
+                connectivityEndpoints,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KafkaProfile>.Write(ModelReaderWriterOptions options)

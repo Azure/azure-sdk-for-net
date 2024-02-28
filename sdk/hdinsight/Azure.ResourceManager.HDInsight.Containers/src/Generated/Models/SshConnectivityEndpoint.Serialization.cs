@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 return null;
             }
             string endpoint = default;
-            Optional<string> privateSshEndpoint = default;
+            string privateSshEndpoint = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SshConnectivityEndpoint(endpoint, privateSshEndpoint.Value, serializedAdditionalRawData);
+            return new SshConnectivityEndpoint(endpoint, privateSshEndpoint, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SshConnectivityEndpoint>.Write(ModelReaderWriterOptions options)

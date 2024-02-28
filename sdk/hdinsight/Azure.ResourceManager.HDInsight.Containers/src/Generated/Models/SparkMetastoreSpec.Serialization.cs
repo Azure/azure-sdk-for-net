@@ -95,11 +95,11 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
             string dbServerHost = default;
             string dbName = default;
-            Optional<DBConnectionAuthenticationMode> dbConnectionAuthenticationMode = default;
-            Optional<string> dbUserName = default;
-            Optional<string> dbPasswordSecretName = default;
-            Optional<string> keyVaultId = default;
-            Optional<string> thriftUrl = default;
+            DBConnectionAuthenticationMode? dbConnectionAuthenticationMode = default;
+            string dbUserName = default;
+            string dbPasswordSecretName = default;
+            string keyVaultId = default;
+            string thriftUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,15 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SparkMetastoreSpec(dbServerHost, dbName, Optional.ToNullable(dbConnectionAuthenticationMode), dbUserName.Value, dbPasswordSecretName.Value, keyVaultId.Value, thriftUrl.Value, serializedAdditionalRawData);
+            return new SparkMetastoreSpec(
+                dbServerHost,
+                dbName,
+                dbConnectionAuthenticationMode,
+                dbUserName,
+                dbPasswordSecretName,
+                keyVaultId,
+                thriftUrl,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SparkMetastoreSpec>.Write(ModelReaderWriterOptions options)

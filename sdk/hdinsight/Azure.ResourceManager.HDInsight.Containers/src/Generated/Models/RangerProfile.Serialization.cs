@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 return null;
             }
             RangerAdminSpec rangerAdmin = default;
-            Optional<RangerAuditSpec> rangerAudit = default;
+            RangerAuditSpec rangerAudit = default;
             RangerUsersyncSpec rangerUsersync = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RangerProfile(rangerAdmin, rangerAudit.Value, rangerUsersync, serializedAdditionalRawData);
+            return new RangerProfile(rangerAdmin, rangerAudit, rangerUsersync, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RangerProfile>.Write(ModelReaderWriterOptions options)

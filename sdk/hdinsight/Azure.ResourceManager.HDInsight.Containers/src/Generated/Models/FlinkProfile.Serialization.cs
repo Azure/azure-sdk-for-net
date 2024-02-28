@@ -96,13 +96,13 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 return null;
             }
             FlinkStorageProfile storage = default;
-            Optional<int> numReplicas = default;
+            int? numReplicas = default;
             ComputeResourceRequirement jobManager = default;
-            Optional<ComputeResourceRequirement> historyServer = default;
+            ComputeResourceRequirement historyServer = default;
             ComputeResourceRequirement taskManager = default;
-            Optional<FlinkCatalogOptions> catalogOptions = default;
-            Optional<DeploymentMode> deploymentMode = default;
-            Optional<FlinkJobProfile> jobSpec = default;
+            FlinkCatalogOptions catalogOptions = default;
+            DeploymentMode? deploymentMode = default;
+            FlinkJobProfile jobSpec = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -173,7 +173,16 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FlinkProfile(storage, Optional.ToNullable(numReplicas), jobManager, historyServer.Value, taskManager, catalogOptions.Value, Optional.ToNullable(deploymentMode), jobSpec.Value, serializedAdditionalRawData);
+            return new FlinkProfile(
+                storage,
+                numReplicas,
+                jobManager,
+                historyServer,
+                taskManager,
+                catalogOptions,
+                deploymentMode,
+                jobSpec,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FlinkProfile>.Write(ModelReaderWriterOptions options)

@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 return null;
             }
             IReadOnlyList<ClusterPoolAvailableUpgrade> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterPoolAvailableUpgradeList(value, nextLink.Value, serializedAdditionalRawData);
+            return new ClusterPoolAvailableUpgradeList(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterPoolAvailableUpgradeList>.Write(ModelReaderWriterOptions options)

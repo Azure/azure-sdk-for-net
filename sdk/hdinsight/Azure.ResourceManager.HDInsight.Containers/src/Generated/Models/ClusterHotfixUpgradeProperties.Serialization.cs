@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 return null;
             }
-            Optional<string> targetOssVersion = default;
-            Optional<string> targetClusterVersion = default;
-            Optional<string> targetBuildNumber = default;
-            Optional<string> componentName = default;
+            string targetOssVersion = default;
+            string targetClusterVersion = default;
+            string targetBuildNumber = default;
+            string componentName = default;
             ClusterUpgradeType upgradeType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -126,7 +126,13 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterHotfixUpgradeProperties(upgradeType, serializedAdditionalRawData, targetOssVersion.Value, targetClusterVersion.Value, targetBuildNumber.Value, componentName.Value);
+            return new ClusterHotfixUpgradeProperties(
+                upgradeType,
+                serializedAdditionalRawData,
+                targetOssVersion,
+                targetClusterVersion,
+                targetBuildNumber,
+                componentName);
         }
 
         BinaryData IPersistableModel<ClusterHotfixUpgradeProperties>.Write(ModelReaderWriterOptions options)

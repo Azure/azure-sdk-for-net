@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 return null;
             }
             bool enableInternalIngress = default;
-            Optional<ResourceIdentifier> privateLinkServiceId = default;
+            ResourceIdentifier privateLinkServiceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterAccessProfile(enableInternalIngress, privateLinkServiceId.Value, serializedAdditionalRawData);
+            return new ClusterAccessProfile(enableInternalIngress, privateLinkServiceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterAccessProfile>.Write(ModelReaderWriterOptions options)

@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 return null;
             }
-            Optional<string> bootstrapServerEndpoint = default;
+            string bootstrapServerEndpoint = default;
             IReadOnlyList<string> brokerEndpoints = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KafkaConnectivityEndpoints(bootstrapServerEndpoint.Value, brokerEndpoints ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new KafkaConnectivityEndpoints(bootstrapServerEndpoint, brokerEndpoints ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KafkaConnectivityEndpoints>.Write(ModelReaderWriterOptions options)

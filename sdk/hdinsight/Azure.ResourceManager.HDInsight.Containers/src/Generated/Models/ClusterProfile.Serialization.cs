@@ -219,23 +219,23 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             string clusterVersion = default;
             string ossVersion = default;
             IReadOnlyList<ClusterComponentItem> components = default;
-            Optional<HDInsightIdentityProfile> identityProfile = default;
+            HDInsightIdentityProfile identityProfile = default;
             AuthorizationProfile authorizationProfile = default;
-            Optional<ClusterSecretsProfile> secretsProfile = default;
+            ClusterSecretsProfile secretsProfile = default;
             IList<ClusterServiceConfigsProfile> serviceConfigsProfiles = default;
-            Optional<ClusterConnectivityProfile> connectivityProfile = default;
-            Optional<ClusterAccessProfile> clusterAccessProfile = default;
-            Optional<ClusterLogAnalyticsProfile> logAnalyticsProfile = default;
-            Optional<ClusterPrometheusProfile> prometheusProfile = default;
-            Optional<ClusterSshProfile> sshProfile = default;
-            Optional<ClusterAutoscaleProfile> autoscaleProfile = default;
-            Optional<ClusterRangerPluginProfile> rangerPluginProfile = default;
-            Optional<KafkaProfile> kafkaProfile = default;
-            Optional<TrinoProfile> trinoProfile = default;
+            ClusterConnectivityProfile connectivityProfile = default;
+            ClusterAccessProfile clusterAccessProfile = default;
+            ClusterLogAnalyticsProfile logAnalyticsProfile = default;
+            ClusterPrometheusProfile prometheusProfile = default;
+            ClusterSshProfile sshProfile = default;
+            ClusterAutoscaleProfile autoscaleProfile = default;
+            ClusterRangerPluginProfile rangerPluginProfile = default;
+            KafkaProfile kafkaProfile = default;
+            TrinoProfile trinoProfile = default;
             IDictionary<string, BinaryData> llapProfile = default;
-            Optional<FlinkProfile> flinkProfile = default;
-            Optional<SparkProfile> sparkProfile = default;
-            Optional<RangerProfile> rangerProfile = default;
+            FlinkProfile flinkProfile = default;
+            SparkProfile sparkProfile = default;
+            RangerProfile rangerProfile = default;
             IDictionary<string, BinaryData> stubProfile = default;
             IList<ScriptActionProfile> scriptActionProfiles = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -473,7 +473,30 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterProfile(clusterVersion, ossVersion, components ?? new ChangeTrackingList<ClusterComponentItem>(), identityProfile.Value, authorizationProfile, secretsProfile.Value, serviceConfigsProfiles ?? new ChangeTrackingList<ClusterServiceConfigsProfile>(), connectivityProfile.Value, clusterAccessProfile.Value, logAnalyticsProfile.Value, prometheusProfile.Value, sshProfile.Value, autoscaleProfile.Value, rangerPluginProfile.Value, kafkaProfile.Value, trinoProfile.Value, llapProfile ?? new ChangeTrackingDictionary<string, BinaryData>(), flinkProfile.Value, sparkProfile.Value, rangerProfile.Value, stubProfile ?? new ChangeTrackingDictionary<string, BinaryData>(), scriptActionProfiles ?? new ChangeTrackingList<ScriptActionProfile>(), serializedAdditionalRawData);
+            return new ClusterProfile(
+                clusterVersion,
+                ossVersion,
+                components ?? new ChangeTrackingList<ClusterComponentItem>(),
+                identityProfile,
+                authorizationProfile,
+                secretsProfile,
+                serviceConfigsProfiles ?? new ChangeTrackingList<ClusterServiceConfigsProfile>(),
+                connectivityProfile,
+                clusterAccessProfile,
+                logAnalyticsProfile,
+                prometheusProfile,
+                sshProfile,
+                autoscaleProfile,
+                rangerPluginProfile,
+                kafkaProfile,
+                trinoProfile,
+                llapProfile ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                flinkProfile,
+                sparkProfile,
+                rangerProfile,
+                stubProfile ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                scriptActionProfiles ?? new ChangeTrackingList<ScriptActionProfile>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterProfile>.Write(ModelReaderWriterOptions options)

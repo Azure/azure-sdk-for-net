@@ -96,8 +96,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ClusterAvailableUpgradeType> upgradeType = default;
+            SystemData systemData = default;
+            ClusterAvailableUpgradeType? upgradeType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -153,7 +153,13 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterAvailableUpgrade(id, name, type, systemData.Value, Optional.ToNullable(upgradeType), serializedAdditionalRawData);
+            return new ClusterAvailableUpgrade(
+                id,
+                name,
+                type,
+                systemData,
+                upgradeType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterAvailableUpgrade>.Write(ModelReaderWriterOptions options)

@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 return null;
             }
             string catalogName = default;
-            Optional<MetastoreDBConnectionAuthenticationMode> metastoreDBConnectionAuthenticationMode = default;
-            Optional<string> metastoreDBConnectionPasswordSecret = default;
+            MetastoreDBConnectionAuthenticationMode? metastoreDBConnectionAuthenticationMode = default;
+            string metastoreDBConnectionPasswordSecret = default;
             string metastoreDBConnectionURL = default;
-            Optional<string> metastoreDBConnectionUserName = default;
+            string metastoreDBConnectionUserName = default;
             string metastoreWarehouseDir = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -135,7 +135,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HiveCatalogOption(catalogName, Optional.ToNullable(metastoreDBConnectionAuthenticationMode), metastoreDBConnectionPasswordSecret.Value, metastoreDBConnectionURL, metastoreDBConnectionUserName.Value, metastoreWarehouseDir, serializedAdditionalRawData);
+            return new HiveCatalogOption(
+                catalogName,
+                metastoreDBConnectionAuthenticationMode,
+                metastoreDBConnectionPasswordSecret,
+                metastoreDBConnectionURL,
+                metastoreDBConnectionUserName,
+                metastoreWarehouseDir,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HiveCatalogOption>.Write(ModelReaderWriterOptions options)

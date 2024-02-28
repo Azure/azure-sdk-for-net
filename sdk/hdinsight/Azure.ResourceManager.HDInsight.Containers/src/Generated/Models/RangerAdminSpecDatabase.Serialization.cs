@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
             string host = default;
             string name = default;
-            Optional<string> passwordSecretRef = default;
-            Optional<string> username = default;
+            string passwordSecretRef = default;
+            string username = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RangerAdminSpecDatabase(host, name, passwordSecretRef.Value, username.Value, serializedAdditionalRawData);
+            return new RangerAdminSpecDatabase(host, name, passwordSecretRef, username, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RangerAdminSpecDatabase>.Write(ModelReaderWriterOptions options)

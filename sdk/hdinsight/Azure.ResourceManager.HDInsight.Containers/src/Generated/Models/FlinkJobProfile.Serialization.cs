@@ -87,9 +87,9 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
             string jobJarDirectory = default;
             string jarName = default;
-            Optional<string> entryClass = default;
-            Optional<string> args = default;
-            Optional<string> savePointName = default;
+            string entryClass = default;
+            string args = default;
+            string savePointName = default;
             UpgradeMode upgradeMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -131,7 +131,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FlinkJobProfile(jobJarDirectory, jarName, entryClass.Value, args.Value, savePointName.Value, upgradeMode, serializedAdditionalRawData);
+            return new FlinkJobProfile(
+                jobJarDirectory,
+                jarName,
+                entryClass,
+                args,
+                savePointName,
+                upgradeMode,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FlinkJobProfile>.Write(ModelReaderWriterOptions options)

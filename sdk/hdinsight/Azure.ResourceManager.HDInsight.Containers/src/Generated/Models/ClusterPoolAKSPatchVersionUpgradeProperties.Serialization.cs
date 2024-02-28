@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 return null;
             }
-            Optional<bool> upgradeClusterPool = default;
-            Optional<bool> upgradeAllClusterNodes = default;
-            Optional<string> targetAksVersion = default;
+            bool? upgradeClusterPool = default;
+            bool? upgradeAllClusterNodes = default;
+            string targetAksVersion = default;
             ClusterPoolUpgradeType upgradeType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterPoolAKSPatchVersionUpgradeProperties(upgradeType, serializedAdditionalRawData, Optional.ToNullable(upgradeClusterPool), Optional.ToNullable(upgradeAllClusterNodes), targetAksVersion.Value);
+            return new ClusterPoolAKSPatchVersionUpgradeProperties(upgradeType, serializedAdditionalRawData, upgradeClusterPool, upgradeAllClusterNodes, targetAksVersion);
         }
 
         BinaryData IPersistableModel<ClusterPoolAKSPatchVersionUpgradeProperties>.Write(ModelReaderWriterOptions options)
