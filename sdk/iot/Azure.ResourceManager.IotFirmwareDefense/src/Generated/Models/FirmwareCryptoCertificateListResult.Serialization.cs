@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 return null;
             }
             IReadOnlyList<FirmwareFirmwareCryptoCertificateResourceData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirmwareCryptoCertificateListResult(value ?? new ChangeTrackingList<FirmwareFirmwareCryptoCertificateResourceData>(), nextLink.Value, serializedAdditionalRawData);
+            return new FirmwareCryptoCertificateListResult(value ?? new ChangeTrackingList<FirmwareFirmwareCryptoCertificateResourceData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirmwareCryptoCertificateListResult>.Write(ModelReaderWriterOptions options)

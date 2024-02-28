@@ -197,15 +197,15 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid?> firmwareCryptoKeyId = default;
-            Optional<string> keyType = default;
-            Optional<long?> keySize = default;
-            Optional<string> keyAlgorithm = default;
+            SystemData systemData = default;
+            Guid? firmwareCryptoKeyId = default;
+            string keyType = default;
+            long? keySize = default;
+            string keyAlgorithm = default;
             IList<string> usage = default;
             IReadOnlyList<string> filePaths = default;
-            Optional<PairedKey> pairedKey = default;
-            Optional<bool?> isShortKeySize = default;
+            PairedKey pairedKey = default;
+            bool? isShortKeySize = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -340,7 +340,20 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirmwareFirmwareCryptoKeyResourceData(id, name, type, systemData.Value, Optional.ToNullable(firmwareCryptoKeyId), keyType.Value, Optional.ToNullable(keySize), keyAlgorithm.Value, usage ?? new ChangeTrackingList<string>(), filePaths ?? new ChangeTrackingList<string>(), pairedKey.Value, Optional.ToNullable(isShortKeySize), serializedAdditionalRawData);
+            return new FirmwareFirmwareCryptoKeyResourceData(
+                id,
+                name,
+                type,
+                systemData,
+                firmwareCryptoKeyId,
+                keyType,
+                keySize,
+                keyAlgorithm,
+                usage ?? new ChangeTrackingList<string>(),
+                filePaths ?? new ChangeTrackingList<string>(),
+                pairedKey,
+                isShortKeySize,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirmwareFirmwareCryptoKeyResourceData>.Write(ModelReaderWriterOptions options)

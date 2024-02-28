@@ -101,13 +101,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            Optional<long> totalCertificates = default;
-            Optional<long> pairedKeys = default;
-            Optional<long> expired = default;
-            Optional<long> expiringSoon = default;
-            Optional<long> weakSignature = default;
-            Optional<long> selfSigned = default;
-            Optional<long> shortKeySize = default;
+            long? totalCertificates = default;
+            long? pairedKeys = default;
+            long? expired = default;
+            long? expiringSoon = default;
+            long? weakSignature = default;
+            long? selfSigned = default;
+            long? shortKeySize = default;
             SummaryType summaryType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -187,7 +187,16 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirmwareFirmwareCryptoCertificateSummaryResourceInfo(summaryType, serializedAdditionalRawData, Optional.ToNullable(totalCertificates), Optional.ToNullable(pairedKeys), Optional.ToNullable(expired), Optional.ToNullable(expiringSoon), Optional.ToNullable(weakSignature), Optional.ToNullable(selfSigned), Optional.ToNullable(shortKeySize));
+            return new FirmwareFirmwareCryptoCertificateSummaryResourceInfo(
+                summaryType,
+                serializedAdditionalRawData,
+                totalCertificates,
+                pairedKeys,
+                expired,
+                expiringSoon,
+                weakSignature,
+                selfSigned,
+                shortKeySize);
         }
 
         BinaryData IPersistableModel<FirmwareFirmwareCryptoCertificateSummaryResourceInfo>.Write(ModelReaderWriterOptions options)

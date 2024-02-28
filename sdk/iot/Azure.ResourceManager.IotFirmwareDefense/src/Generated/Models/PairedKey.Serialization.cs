@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            Optional<Guid> id = default;
-            Optional<string> type = default;
+            Guid? id = default;
+            string type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PairedKey(Optional.ToNullable(id), type.Value, serializedAdditionalRawData);
+            return new PairedKey(id, type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PairedKey>.Write(ModelReaderWriterOptions options)

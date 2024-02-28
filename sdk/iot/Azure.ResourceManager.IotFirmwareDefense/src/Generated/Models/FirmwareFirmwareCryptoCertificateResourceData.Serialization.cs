@@ -341,27 +341,27 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid?> cryptoCertId = default;
-            Optional<string> name0 = default;
-            Optional<FirmwareCryptoCertificateEntity> subject = default;
-            Optional<FirmwareCryptoCertificateEntity> issuer = default;
-            Optional<DateTimeOffset?> issuedDate = default;
-            Optional<DateTimeOffset?> expirationDate = default;
-            Optional<string> role = default;
-            Optional<string> signatureAlgorithm = default;
-            Optional<long?> keySize = default;
-            Optional<string> keyAlgorithm = default;
-            Optional<string> encoding = default;
-            Optional<string> serialNumber = default;
-            Optional<string> fingerprint = default;
+            SystemData systemData = default;
+            Guid? cryptoCertId = default;
+            string name0 = default;
+            FirmwareCryptoCertificateEntity subject = default;
+            FirmwareCryptoCertificateEntity issuer = default;
+            DateTimeOffset? issuedDate = default;
+            DateTimeOffset? expirationDate = default;
+            string role = default;
+            string signatureAlgorithm = default;
+            long? keySize = default;
+            string keyAlgorithm = default;
+            string encoding = default;
+            string serialNumber = default;
+            string fingerprint = default;
             IList<string> usage = default;
             IReadOnlyList<string> filePaths = default;
-            Optional<PairedKey> pairedKey = default;
-            Optional<bool?> isExpired = default;
-            Optional<bool?> isSelfSigned = default;
-            Optional<bool?> isWeakSignature = default;
-            Optional<bool?> isShortKeySize = default;
+            PairedKey pairedKey = default;
+            bool? isExpired = default;
+            bool? isSelfSigned = default;
+            bool? isWeakSignature = default;
+            bool? isShortKeySize = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -616,7 +616,32 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirmwareFirmwareCryptoCertificateResourceData(id, name, type, systemData.Value, Optional.ToNullable(cryptoCertId), name0.Value, subject.Value, issuer.Value, Optional.ToNullable(issuedDate), Optional.ToNullable(expirationDate), role.Value, signatureAlgorithm.Value, Optional.ToNullable(keySize), keyAlgorithm.Value, encoding.Value, serialNumber.Value, fingerprint.Value, usage ?? new ChangeTrackingList<string>(), filePaths ?? new ChangeTrackingList<string>(), pairedKey.Value, Optional.ToNullable(isExpired), Optional.ToNullable(isSelfSigned), Optional.ToNullable(isWeakSignature), Optional.ToNullable(isShortKeySize), serializedAdditionalRawData);
+            return new FirmwareFirmwareCryptoCertificateResourceData(
+                id,
+                name,
+                type,
+                systemData,
+                cryptoCertId,
+                name0,
+                subject,
+                issuer,
+                issuedDate,
+                expirationDate,
+                role,
+                signatureAlgorithm,
+                keySize,
+                keyAlgorithm,
+                encoding,
+                serialNumber,
+                fingerprint,
+                usage ?? new ChangeTrackingList<string>(),
+                filePaths ?? new ChangeTrackingList<string>(),
+                pairedKey,
+                isExpired,
+                isSelfSigned,
+                isWeakSignature,
+                isShortKeySize,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirmwareFirmwareCryptoCertificateResourceData>.Write(ModelReaderWriterOptions options)

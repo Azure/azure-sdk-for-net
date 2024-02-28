@@ -202,17 +202,17 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid?> cveId = default;
-            Optional<CveComponent> component = default;
-            Optional<string> severity = default;
-            Optional<string> name0 = default;
-            Optional<string> cvssScore = default;
-            Optional<string> cvssVersion = default;
-            Optional<string> cvssV2Score = default;
-            Optional<string> cvssV3Score = default;
+            SystemData systemData = default;
+            Guid? cveId = default;
+            CveComponent component = default;
+            string severity = default;
+            string name0 = default;
+            string cvssScore = default;
+            string cvssVersion = default;
+            string cvssV2Score = default;
+            string cvssV3Score = default;
             IReadOnlyList<CveLink> links = default;
-            Optional<string> description = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -358,7 +358,22 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CveResourceData(id, name, type, systemData.Value, Optional.ToNullable(cveId), component.Value, severity.Value, name0.Value, cvssScore.Value, cvssVersion.Value, cvssV2Score.Value, cvssV3Score.Value, links ?? new ChangeTrackingList<CveLink>(), description.Value, serializedAdditionalRawData);
+            return new CveResourceData(
+                id,
+                name,
+                type,
+                systemData,
+                cveId,
+                component,
+                severity,
+                name0,
+                cvssScore,
+                cvssVersion,
+                cvssV2Score,
+                cvssV3Score,
+                links ?? new ChangeTrackingList<CveLink>(),
+                description,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CveResourceData>.Write(ModelReaderWriterOptions options)

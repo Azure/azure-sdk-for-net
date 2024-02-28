@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            Optional<long> errorCode = default;
-            Optional<string> message = default;
+            long? errorCode = default;
+            string message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StatusMessage(Optional.ToNullable(errorCode), message.Value, serializedAdditionalRawData);
+            return new StatusMessage(errorCode, message, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StatusMessage>.Write(ModelReaderWriterOptions options)

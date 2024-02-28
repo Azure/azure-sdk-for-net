@@ -135,11 +135,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> componentId = default;
-            Optional<string> componentName = default;
-            Optional<string> version = default;
-            Optional<string> license = default;
+            SystemData systemData = default;
+            string componentId = default;
+            string componentName = default;
+            string version = default;
+            string license = default;
             IList<string> filePaths = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -231,7 +231,17 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SbomComponentResourceData(id, name, type, systemData.Value, componentId.Value, componentName.Value, version.Value, license.Value, filePaths ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new SbomComponentResourceData(
+                id,
+                name,
+                type,
+                systemData,
+                componentId,
+                componentName,
+                version,
+                license,
+                filePaths ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SbomComponentResourceData>.Write(ModelReaderWriterOptions options)

@@ -126,11 +126,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            Optional<long?> critical = default;
-            Optional<long?> high = default;
-            Optional<long?> medium = default;
-            Optional<long?> low = default;
-            Optional<long?> unknown = default;
+            long? critical = default;
+            long? high = default;
+            long? medium = default;
+            long? low = default;
+            long? unknown = default;
             SummaryType summaryType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -197,7 +197,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CveSummary(summaryType, serializedAdditionalRawData, Optional.ToNullable(critical), Optional.ToNullable(high), Optional.ToNullable(medium), Optional.ToNullable(low), Optional.ToNullable(unknown));
+            return new CveSummary(
+                summaryType,
+                serializedAdditionalRawData,
+                critical,
+                high,
+                medium,
+                low,
+                unknown);
         }
 
         BinaryData IPersistableModel<CveSummary>.Write(ModelReaderWriterOptions options)

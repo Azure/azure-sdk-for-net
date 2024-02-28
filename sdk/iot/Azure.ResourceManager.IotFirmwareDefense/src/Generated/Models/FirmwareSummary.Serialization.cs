@@ -150,13 +150,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            Optional<long?> extractedSize = default;
-            Optional<long?> fileSize = default;
-            Optional<long?> extractedFileCount = default;
-            Optional<long?> componentCount = default;
-            Optional<long?> binaryCount = default;
-            Optional<long?> analysisTimeSeconds = default;
-            Optional<long?> rootFileSystems = default;
+            long? extractedSize = default;
+            long? fileSize = default;
+            long? extractedFileCount = default;
+            long? componentCount = default;
+            long? binaryCount = default;
+            long? analysisTimeSeconds = default;
+            long? rootFileSystems = default;
             SummaryType summaryType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -243,7 +243,16 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirmwareSummary(summaryType, serializedAdditionalRawData, Optional.ToNullable(extractedSize), Optional.ToNullable(fileSize), Optional.ToNullable(extractedFileCount), Optional.ToNullable(componentCount), Optional.ToNullable(binaryCount), Optional.ToNullable(analysisTimeSeconds), Optional.ToNullable(rootFileSystems));
+            return new FirmwareSummary(
+                summaryType,
+                serializedAdditionalRawData,
+                extractedSize,
+                fileSize,
+                extractedFileCount,
+                componentCount,
+                binaryCount,
+                analysisTimeSeconds,
+                rootFileSystems);
         }
 
         BinaryData IPersistableModel<FirmwareSummary>.Write(ModelReaderWriterOptions options)
