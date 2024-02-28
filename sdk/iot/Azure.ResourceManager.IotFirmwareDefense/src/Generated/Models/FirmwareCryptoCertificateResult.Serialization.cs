@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             Optional<string> fingerprint = default;
             IList<string> usage = default;
             IReadOnlyList<string> filePaths = default;
-            Optional<PairedKey> pairedKey = default;
+            Optional<FirmwarePairedKey> pairedKey = default;
             Optional<bool?> isExpired = default;
             Optional<bool?> isSelfSigned = default;
             Optional<bool?> isWeakSignature = default;
@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                                 pairedKey = null;
                                 continue;
                             }
-                            pairedKey = PairedKey.DeserializePairedKey(property0.Value, options);
+                            pairedKey = FirmwarePairedKey.DeserializeFirmwarePairedKey(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("isExpired"u8))

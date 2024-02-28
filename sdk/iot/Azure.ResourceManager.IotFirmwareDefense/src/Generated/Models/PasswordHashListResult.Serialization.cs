@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(Value is ChangeTrackingList<PasswordHashResult> collection && collection.IsUndefined))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<FirmwarePasswordHashResult> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            IReadOnlyList<PasswordHashResult> value = default;
+            IReadOnlyList<FirmwarePasswordHashResult> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     {
                         continue;
                     }
-                    List<PasswordHashResult> array = new List<PasswordHashResult>();
+                    List<FirmwarePasswordHashResult> array = new List<FirmwarePasswordHashResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PasswordHashResult.DeserializePasswordHashResult(item, options));
+                        array.Add(FirmwarePasswordHashResult.DeserializeFirmwarePasswordHashResult(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PasswordHashListResult(value ?? new ChangeTrackingList<PasswordHashResult>(), nextLink.Value, serializedAdditionalRawData);
+            return new PasswordHashListResult(value ?? new ChangeTrackingList<FirmwarePasswordHashResult>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PasswordHashListResult>.Write(ModelReaderWriterOptions options)

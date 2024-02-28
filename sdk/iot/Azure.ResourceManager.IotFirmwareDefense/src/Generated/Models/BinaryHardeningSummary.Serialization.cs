@@ -31,60 +31,60 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 writer.WritePropertyName("totalFiles"u8);
                 writer.WriteNumberValue(TotalFiles.Value);
             }
-            if (Nx.HasValue)
+            if (NXPercentage.HasValue)
             {
-                if (Nx != null)
+                if (NXPercentage != null)
                 {
                     writer.WritePropertyName("nx"u8);
-                    writer.WriteNumberValue(Nx.Value);
+                    writer.WriteNumberValue(NXPercentage.Value);
                 }
                 else
                 {
                     writer.WriteNull("nx");
                 }
             }
-            if (Pie.HasValue)
+            if (PiePercentage.HasValue)
             {
-                if (Pie != null)
+                if (PiePercentage != null)
                 {
                     writer.WritePropertyName("pie"u8);
-                    writer.WriteNumberValue(Pie.Value);
+                    writer.WriteNumberValue(PiePercentage.Value);
                 }
                 else
                 {
                     writer.WriteNull("pie");
                 }
             }
-            if (Relro.HasValue)
+            if (RelroPercentage.HasValue)
             {
-                if (Relro != null)
+                if (RelroPercentage != null)
                 {
                     writer.WritePropertyName("relro"u8);
-                    writer.WriteNumberValue(Relro.Value);
+                    writer.WriteNumberValue(RelroPercentage.Value);
                 }
                 else
                 {
                     writer.WriteNull("relro");
                 }
             }
-            if (Canary.HasValue)
+            if (CanaryPercentage.HasValue)
             {
-                if (Canary != null)
+                if (CanaryPercentage != null)
                 {
                     writer.WritePropertyName("canary"u8);
-                    writer.WriteNumberValue(Canary.Value);
+                    writer.WriteNumberValue(CanaryPercentage.Value);
                 }
                 else
                 {
                     writer.WriteNull("canary");
                 }
             }
-            if (Stripped.HasValue)
+            if (StrippedPercentage.HasValue)
             {
-                if (Stripped != null)
+                if (StrippedPercentage != null)
                 {
                     writer.WritePropertyName("stripped"u8);
-                    writer.WriteNumberValue(Stripped.Value);
+                    writer.WriteNumberValue(StrippedPercentage.Value);
                 }
                 else
                 {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             Optional<int?> relro = default;
             Optional<int?> canary = default;
             Optional<int?> stripped = default;
-            SummaryType summaryType = default;
+            FirmwareSummaryType summaryType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
                 if (property.NameEquals("summaryType"u8))
                 {
-                    summaryType = new SummaryType(property.Value.GetString());
+                    summaryType = new FirmwareSummaryType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

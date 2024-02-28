@@ -123,30 +123,30 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
             writer.WritePropertyName("features"u8);
             writer.WriteStartObject();
-            if (Nx.HasValue)
+            if (NXFlag.HasValue)
             {
                 writer.WritePropertyName("nx"u8);
-                writer.WriteBooleanValue(Nx.Value);
+                writer.WriteBooleanValue(NXFlag.Value);
             }
-            if (Pie.HasValue)
+            if (PieFlag.HasValue)
             {
                 writer.WritePropertyName("pie"u8);
-                writer.WriteBooleanValue(Pie.Value);
+                writer.WriteBooleanValue(PieFlag.Value);
             }
-            if (Relro.HasValue)
+            if (RelroFlag.HasValue)
             {
                 writer.WritePropertyName("relro"u8);
-                writer.WriteBooleanValue(Relro.Value);
+                writer.WriteBooleanValue(RelroFlag.Value);
             }
-            if (Canary.HasValue)
+            if (CanaryFlag.HasValue)
             {
                 writer.WritePropertyName("canary"u8);
-                writer.WriteBooleanValue(Canary.Value);
+                writer.WriteBooleanValue(CanaryFlag.Value);
             }
-            if (Stripped.HasValue)
+            if (StrippedFlag.HasValue)
             {
                 writer.WritePropertyName("stripped"u8);
-                writer.WriteBooleanValue(Stripped.Value);
+                writer.WriteBooleanValue(StrippedFlag.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

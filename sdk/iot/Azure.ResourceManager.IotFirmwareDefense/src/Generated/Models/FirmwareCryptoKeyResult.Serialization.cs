@@ -198,13 +198,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> firmwareCryptoKeyId = default;
+            Optional<string> cryptoKeyId = default;
             Optional<string> keyType = default;
             Optional<long?> keySize = default;
             Optional<string> keyAlgorithm = default;
             IList<string> usage = default;
             IReadOnlyList<string> filePaths = default;
-            Optional<PairedKey> pairedKey = default;
+            Optional<FirmwarePairedKey> pairedKey = default;
             Optional<bool?> isShortKeySize = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -247,10 +247,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                firmwareCryptoKeyId = null;
+                                cryptoKeyId = null;
                                 continue;
                             }
-                            firmwareCryptoKeyId = property0.Value.GetString();
+                            cryptoKeyId = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("keyType"u8))
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                                 pairedKey = null;
                                 continue;
                             }
-                            pairedKey = PairedKey.DeserializePairedKey(property0.Value, options);
+                            pairedKey = FirmwarePairedKey.DeserializeFirmwarePairedKey(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("isShortKeySize"u8))
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 name,
                 type,
                 systemData.Value,
-                firmwareCryptoKeyId.Value,
+                cryptoKeyId.Value,
                 keyType.Value,
                 Optional.ToNullable(keySize),
                 keyAlgorithm.Value,

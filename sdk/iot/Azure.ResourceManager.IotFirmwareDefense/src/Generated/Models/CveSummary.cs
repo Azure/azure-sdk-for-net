@@ -11,12 +11,12 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
     /// <summary> Properties for a CVE analysis summary. </summary>
-    public partial class CveSummary : SummaryResourceProperties
+    public partial class CveSummary : IotFirmwareSummaryProperties
     {
         /// <summary> Initializes a new instance of <see cref="CveSummary"/>. </summary>
         internal CveSummary()
         {
-            SummaryType = SummaryType.CVE;
+            SummaryType = FirmwareSummaryType.Cve;
         }
 
         /// <summary> Initializes a new instance of <see cref="CveSummary"/>. </summary>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="medium"> The total number of medium severity CVEs detected. </param>
         /// <param name="low"> The total number of low severity CVEs detected. </param>
         /// <param name="unknown"> The total number of unknown severity CVEs detected. </param>
-        internal CveSummary(SummaryType summaryType, IDictionary<string, BinaryData> serializedAdditionalRawData, long? critical, long? high, long? medium, long? low, long? unknown) : base(summaryType, serializedAdditionalRawData)
+        internal CveSummary(FirmwareSummaryType summaryType, IDictionary<string, BinaryData> serializedAdditionalRawData, long? critical, long? high, long? medium, long? low, long? unknown) : base(summaryType, serializedAdditionalRawData)
         {
             Critical = critical;
             High = high;

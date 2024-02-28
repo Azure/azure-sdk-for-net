@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Tests
         public async Task TestGetSbomComponents()
         {
             ResourceGroupResource testRg = await testSubscription.GetResourceGroupAsync(rgName);
-            FirmwareWorkspaceResource testWorkspace = await testRg.GetFirmwareWorkspaceAsync(workspaceName);
-            FirmwareResource testFirmware = await testWorkspace.GetFirmwareAsync(firmwareId);
+            IotFirmwareWorkspaceResource testWorkspace = await testRg.GetIotFirmwareWorkspaceAsync(workspaceName);
+            IotFirmwareResource testFirmware = await testWorkspace.GetIotFirmwareAsync(firmwareId);
 
             var results = testFirmware.GetSbomComponentsAsync();
             await foreach ( SbomComponentResult result in results ) {

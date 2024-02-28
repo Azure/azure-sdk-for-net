@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             Optional<long> weakSignature = default;
             Optional<long> selfSigned = default;
             Optional<long> shortKeySize = default;
-            SummaryType summaryType = default;
+            FirmwareSummaryType summaryType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
                 if (property.NameEquals("summaryType"u8))
                 {
-                    summaryType = new SummaryType(property.Value.GetString());
+                    summaryType = new FirmwareSummaryType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

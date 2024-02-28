@@ -11,12 +11,12 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
     /// <summary> Properties for cryptographic key summary. </summary>
-    public partial class FirmwareCryptoKeySummary : SummaryResourceProperties
+    public partial class FirmwareCryptoKeySummary : IotFirmwareSummaryProperties
     {
         /// <summary> Initializes a new instance of <see cref="FirmwareCryptoKeySummary"/>. </summary>
         internal FirmwareCryptoKeySummary()
         {
-            SummaryType = SummaryType.FirmwareCryptoKey;
+            SummaryType = FirmwareSummaryType.FirmwareCryptoKey;
         }
 
         /// <summary> Initializes a new instance of <see cref="FirmwareCryptoKeySummary"/>. </summary>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="privateKeys"> Total number of private keys found. </param>
         /// <param name="pairedKeys"> Total number of keys found that have a matching paired key or certificate. </param>
         /// <param name="shortKeySize"> Total number of keys found that have an insecure key size for the algorithm. </param>
-        internal FirmwareCryptoKeySummary(SummaryType summaryType, IDictionary<string, BinaryData> serializedAdditionalRawData, long? totalKeys, long? publicKeys, long? privateKeys, long? pairedKeys, long? shortKeySize) : base(summaryType, serializedAdditionalRawData)
+        internal FirmwareCryptoKeySummary(FirmwareSummaryType summaryType, IDictionary<string, BinaryData> serializedAdditionalRawData, long? totalKeys, long? publicKeys, long? privateKeys, long? pairedKeys, long? shortKeySize) : base(summaryType, serializedAdditionalRawData)
         {
             TotalKeys = totalKeys;
             PublicKeys = publicKeys;

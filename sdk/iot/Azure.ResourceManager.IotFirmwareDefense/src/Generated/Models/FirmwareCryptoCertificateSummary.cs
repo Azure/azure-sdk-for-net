@@ -11,12 +11,12 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
     /// <summary> Properties for cryptographic certificate summary. </summary>
-    public partial class FirmwareCryptoCertificateSummary : SummaryResourceProperties
+    public partial class FirmwareCryptoCertificateSummary : IotFirmwareSummaryProperties
     {
         /// <summary> Initializes a new instance of <see cref="FirmwareCryptoCertificateSummary"/>. </summary>
         internal FirmwareCryptoCertificateSummary()
         {
-            SummaryType = SummaryType.FirmwareCryptoCertificate;
+            SummaryType = FirmwareSummaryType.FirmwareCryptoCertificate;
         }
 
         /// <summary> Initializes a new instance of <see cref="FirmwareCryptoCertificateSummary"/>. </summary>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="weakSignature"> Total number of certificates found using a weak signature algorithm. </param>
         /// <param name="selfSigned"> Total number of certificates found that are self-signed. </param>
         /// <param name="shortKeySize"> Total number of certificates found that have an insecure key size for the key algorithm. </param>
-        internal FirmwareCryptoCertificateSummary(SummaryType summaryType, IDictionary<string, BinaryData> serializedAdditionalRawData, long? totalCertificates, long? pairedKeys, long? expired, long? expiringSoon, long? weakSignature, long? selfSigned, long? shortKeySize) : base(summaryType, serializedAdditionalRawData)
+        internal FirmwareCryptoCertificateSummary(FirmwareSummaryType summaryType, IDictionary<string, BinaryData> serializedAdditionalRawData, long? totalCertificates, long? pairedKeys, long? expired, long? expiringSoon, long? weakSignature, long? selfSigned, long? shortKeySize) : base(summaryType, serializedAdditionalRawData)
         {
             TotalCertificates = totalCertificates;
             PairedKeys = pairedKeys;

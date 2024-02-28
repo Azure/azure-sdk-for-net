@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="pairedKey"> A matching paired key or certificate. </param>
         /// <param name="isShortKeySize"> Indicates the key size is considered too small to be secure for the algorithm. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FirmwareCryptoKeyResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string firmwareCryptoKeyId, string keyType, long? keySize, string keyAlgorithm, IList<string> usage, IReadOnlyList<string> filePaths, PairedKey pairedKey, bool? isShortKeySize, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal FirmwareCryptoKeyResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string firmwareCryptoKeyId, string keyType, long? keySize, string keyAlgorithm, IList<string> usage, IReadOnlyList<string> filePaths, FirmwarePairedKey pairedKey, bool? isShortKeySize, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             FirmwareCryptoKeyId = firmwareCryptoKeyId;
             KeyType = keyType;
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <summary> List of files where this key was found. </summary>
         public IReadOnlyList<string> FilePaths { get; }
         /// <summary> A matching paired key or certificate. </summary>
-        public PairedKey PairedKey { get; set; }
+        public FirmwarePairedKey PairedKey { get; set; }
         /// <summary> Indicates the key size is considered too small to be secure for the algorithm. </summary>
         public bool? IsShortKeySize { get; set; }
     }

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateListByFirmwareRequest(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareName)
+        internal HttpMessage CreateListByFirmwareRequest(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             uri.AppendPath("/providers/Microsoft.IoTFirmwareDefense/workspaces/", false);
             uri.AppendPath(workspaceName, true);
             uri.AppendPath("/firmwares/", false);
-            uri.AppendPath(firmwareName, true);
+            uri.AppendPath(firmwareId, true);
             uri.AppendPath("/binaryHardeningResults", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -64,11 +64,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the firmware analysis workspace. </param>
-        /// <param name="firmwareName"> The id of the firmware. </param>
+        /// <param name="firmwareId"> The id of the firmware. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="firmwareName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="firmwareName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BinaryHardeningListResult>> ListByFirmwareAsync(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="firmwareId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="firmwareId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<BinaryHardeningListResult>> ListByFirmwareAsync(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -94,16 +94,16 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             {
                 throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
             }
-            if (firmwareName == null)
+            if (firmwareId == null)
             {
-                throw new ArgumentNullException(nameof(firmwareName));
+                throw new ArgumentNullException(nameof(firmwareId));
             }
-            if (firmwareName.Length == 0)
+            if (firmwareId.Length == 0)
             {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(firmwareName));
+                throw new ArgumentException("Value cannot be an empty string.", nameof(firmwareId));
             }
 
-            using var message = CreateListByFirmwareRequest(subscriptionId, resourceGroupName, workspaceName, firmwareName);
+            using var message = CreateListByFirmwareRequest(subscriptionId, resourceGroupName, workspaceName, firmwareId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -123,11 +123,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the firmware analysis workspace. </param>
-        /// <param name="firmwareName"> The id of the firmware. </param>
+        /// <param name="firmwareId"> The id of the firmware. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="firmwareName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="firmwareName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BinaryHardeningListResult> ListByFirmware(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="firmwareId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="firmwareId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<BinaryHardeningListResult> ListByFirmware(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -153,16 +153,16 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             {
                 throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
             }
-            if (firmwareName == null)
+            if (firmwareId == null)
             {
-                throw new ArgumentNullException(nameof(firmwareName));
+                throw new ArgumentNullException(nameof(firmwareId));
             }
-            if (firmwareName.Length == 0)
+            if (firmwareId.Length == 0)
             {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(firmwareName));
+                throw new ArgumentException("Value cannot be an empty string.", nameof(firmwareId));
             }
 
-            using var message = CreateListByFirmwareRequest(subscriptionId, resourceGroupName, workspaceName, firmwareName);
+            using var message = CreateListByFirmwareRequest(subscriptionId, resourceGroupName, workspaceName, firmwareId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             }
         }
 
-        internal HttpMessage CreateListByFirmwareNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string firmwareName)
+        internal HttpMessage CreateListByFirmwareNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string firmwareId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -197,11 +197,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the firmware analysis workspace. </param>
-        /// <param name="firmwareName"> The id of the firmware. </param>
+        /// <param name="firmwareId"> The id of the firmware. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="firmwareName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="firmwareName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BinaryHardeningListResult>> ListByFirmwareNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string firmwareName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="firmwareId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="firmwareId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<BinaryHardeningListResult>> ListByFirmwareNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string firmwareId, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -231,16 +231,16 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             {
                 throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
             }
-            if (firmwareName == null)
+            if (firmwareId == null)
             {
-                throw new ArgumentNullException(nameof(firmwareName));
+                throw new ArgumentNullException(nameof(firmwareId));
             }
-            if (firmwareName.Length == 0)
+            if (firmwareId.Length == 0)
             {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(firmwareName));
+                throw new ArgumentException("Value cannot be an empty string.", nameof(firmwareId));
             }
 
-            using var message = CreateListByFirmwareNextPageRequest(nextLink, subscriptionId, resourceGroupName, workspaceName, firmwareName);
+            using var message = CreateListByFirmwareNextPageRequest(nextLink, subscriptionId, resourceGroupName, workspaceName, firmwareId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -261,11 +261,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the firmware analysis workspace. </param>
-        /// <param name="firmwareName"> The id of the firmware. </param>
+        /// <param name="firmwareId"> The id of the firmware. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="firmwareName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="firmwareName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BinaryHardeningListResult> ListByFirmwareNextPage(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string firmwareName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="firmwareId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="firmwareId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<BinaryHardeningListResult> ListByFirmwareNextPage(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string firmwareId, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -295,16 +295,16 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             {
                 throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
             }
-            if (firmwareName == null)
+            if (firmwareId == null)
             {
-                throw new ArgumentNullException(nameof(firmwareName));
+                throw new ArgumentNullException(nameof(firmwareId));
             }
-            if (firmwareName.Length == 0)
+            if (firmwareId.Length == 0)
             {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(firmwareName));
+                throw new ArgumentException("Value cannot be an empty string.", nameof(firmwareId));
             }
 
-            using var message = CreateListByFirmwareNextPageRequest(nextLink, subscriptionId, resourceGroupName, workspaceName, firmwareName);
+            using var message = CreateListByFirmwareNextPageRequest(nextLink, subscriptionId, resourceGroupName, workspaceName, firmwareId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

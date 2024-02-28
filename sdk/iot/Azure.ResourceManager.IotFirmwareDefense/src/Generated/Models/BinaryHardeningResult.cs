@@ -63,13 +63,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="class"> The executable class to indicate 32 or 64 bit. </param>
         /// <param name="runpath"> The runpath of the uploaded firmware. </param>
         /// <param name="rpath"> The rpath of the uploaded firmware. </param>
-        /// <param name="nx"> NX (no-execute) flag. </param>
-        /// <param name="pie"> PIE (position independent executable) flag. </param>
-        /// <param name="relro"> RELRO (relocation read-only) flag. </param>
-        /// <param name="canary"> Canary (stack canaries) flag. </param>
-        /// <param name="stripped"> Stripped flag. </param>
+        /// <param name="nxFlag"> NX (no-execute) flag. </param>
+        /// <param name="pieFlag"> PIE (position independent executable) flag. </param>
+        /// <param name="relroFlag"> RELRO (relocation read-only) flag. </param>
+        /// <param name="canaryFlag"> Canary (stack canaries) flag. </param>
+        /// <param name="strippedFlag"> Stripped flag. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BinaryHardeningResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string binaryHardeningId, string architecture, string filePath, string @class, string runpath, string rpath, bool? nx, bool? pie, bool? relro, bool? canary, bool? stripped, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal BinaryHardeningResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string binaryHardeningId, string architecture, string filePath, string @class, string runpath, string rpath, bool? nxFlag, bool? pieFlag, bool? relroFlag, bool? canaryFlag, bool? strippedFlag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             BinaryHardeningId = binaryHardeningId;
             Architecture = architecture;
@@ -77,11 +77,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             Class = @class;
             Runpath = runpath;
             Rpath = rpath;
-            Nx = nx;
-            Pie = pie;
-            Relro = relro;
-            Canary = canary;
-            Stripped = stripped;
+            NXFlag = nxFlag;
+            PieFlag = pieFlag;
+            RelroFlag = relroFlag;
+            CanaryFlag = canaryFlag;
+            StrippedFlag = strippedFlag;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -98,14 +98,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <summary> The rpath of the uploaded firmware. </summary>
         public string Rpath { get; set; }
         /// <summary> NX (no-execute) flag. </summary>
-        public bool? Nx { get; set; }
+        public bool? NXFlag { get; set; }
         /// <summary> PIE (position independent executable) flag. </summary>
-        public bool? Pie { get; set; }
+        public bool? PieFlag { get; set; }
         /// <summary> RELRO (relocation read-only) flag. </summary>
-        public bool? Relro { get; set; }
+        public bool? RelroFlag { get; set; }
         /// <summary> Canary (stack canaries) flag. </summary>
-        public bool? Canary { get; set; }
+        public bool? CanaryFlag { get; set; }
         /// <summary> Stripped flag. </summary>
-        public bool? Stripped { get; set; }
+        public bool? StrippedFlag { get; set; }
     }
 }

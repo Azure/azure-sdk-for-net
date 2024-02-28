@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="isWeakSignature"> Indicates the signature algorithm used is insecure. </param>
         /// <param name="isShortKeySize"> Indicates the certificate's key size is considered too small to be secure for the key algorithm. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FirmwareCryptoCertificateResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string cryptoCertId, string namePropertiesName, FirmwareCryptoCertificateEntity subject, FirmwareCryptoCertificateEntity issuer, DateTimeOffset? issuedOn, DateTimeOffset? expireOn, string role, string signatureAlgorithm, long? keySize, string keyAlgorithm, string encoding, string serialNumber, string fingerprint, IList<string> usage, IReadOnlyList<string> filePaths, PairedKey pairedKey, bool? isExpired, bool? isSelfSigned, bool? isWeakSignature, bool? isShortKeySize, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal FirmwareCryptoCertificateResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string cryptoCertId, string namePropertiesName, FirmwareCryptoCertificateEntity subject, FirmwareCryptoCertificateEntity issuer, DateTimeOffset? issuedOn, DateTimeOffset? expireOn, string role, string signatureAlgorithm, long? keySize, string keyAlgorithm, string encoding, string serialNumber, string fingerprint, IList<string> usage, IReadOnlyList<string> filePaths, FirmwarePairedKey pairedKey, bool? isExpired, bool? isSelfSigned, bool? isWeakSignature, bool? isShortKeySize, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             CryptoCertId = cryptoCertId;
             NamePropertiesName = namePropertiesName;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <summary> List of files where this certificate was found. </summary>
         public IReadOnlyList<string> FilePaths { get; }
         /// <summary> A matching paired private key. </summary>
-        public PairedKey PairedKey { get; set; }
+        public FirmwarePairedKey PairedKey { get; set; }
         /// <summary> Indicates if the certificate is expired. </summary>
         public bool? IsExpired { get; set; }
         /// <summary> Indicates if the certificate is self-signed. </summary>

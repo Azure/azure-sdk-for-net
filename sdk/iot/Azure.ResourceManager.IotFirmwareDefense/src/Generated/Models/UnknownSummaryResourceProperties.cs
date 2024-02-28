@@ -11,12 +11,12 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
     /// <summary> The UnknownSummaryResourceProperties. </summary>
-    internal partial class UnknownSummaryResourceProperties : SummaryResourceProperties
+    internal partial class UnknownSummaryResourceProperties : IotFirmwareSummaryProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownSummaryResourceProperties"/>. </summary>
         /// <param name="summaryType"> Describes the type of summary. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownSummaryResourceProperties(SummaryType summaryType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(summaryType, serializedAdditionalRawData)
+        internal UnknownSummaryResourceProperties(FirmwareSummaryType summaryType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(summaryType, serializedAdditionalRawData)
         {
             SummaryType = summaryType;
         }

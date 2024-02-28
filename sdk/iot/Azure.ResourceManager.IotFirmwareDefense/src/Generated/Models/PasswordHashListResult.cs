@@ -49,14 +49,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <summary> Initializes a new instance of <see cref="PasswordHashListResult"/>. </summary>
         internal PasswordHashListResult()
         {
-            Value = new ChangeTrackingList<PasswordHashResult>();
+            Value = new ChangeTrackingList<FirmwarePasswordHashResult>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PasswordHashListResult"/>. </summary>
         /// <param name="value"> The list of password hash results. </param>
         /// <param name="nextLink"> The uri to fetch the next page of resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PasswordHashListResult(IReadOnlyList<PasswordHashResult> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PasswordHashListResult(IReadOnlyList<FirmwarePasswordHashResult> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         }
 
         /// <summary> The list of password hash results. </summary>
-        public IReadOnlyList<PasswordHashResult> Value { get; }
+        public IReadOnlyList<FirmwarePasswordHashResult> Value { get; }
         /// <summary> The uri to fetch the next page of resources. </summary>
         public string NextLink { get; }
     }

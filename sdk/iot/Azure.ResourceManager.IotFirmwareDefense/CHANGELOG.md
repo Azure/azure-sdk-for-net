@@ -2,13 +2,15 @@
 
 ## 1.0.0 (2024-02-14)
 
+This release is the first stable release of the IoT Firmware Defense Management client library.
+
 ### Features Added
 
 - Updated Microsoft.IoTfirmwareDefense API version to `2024-01-10`
 - Added new Get operations and models for fetching firmware analysis results and result summaries as resources.
 - Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 
-### Breaking Changes
+### Other Changes
 
 - Removed Generate* action operations (post actions) for fetching firmware analysis results
 - Deprecated several unused properties in firmware results models

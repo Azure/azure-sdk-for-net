@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(Value is ChangeTrackingList<FirmwareWorkspaceData> collection && collection.IsUndefined))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<IotFirmwareWorkspaceData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            IReadOnlyList<FirmwareWorkspaceData> value = default;
+            IReadOnlyList<IotFirmwareWorkspaceData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     {
                         continue;
                     }
-                    List<FirmwareWorkspaceData> array = new List<FirmwareWorkspaceData>();
+                    List<IotFirmwareWorkspaceData> array = new List<IotFirmwareWorkspaceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FirmwareWorkspaceData.DeserializeFirmwareWorkspaceData(item, options));
+                        array.Add(IotFirmwareWorkspaceData.DeserializeIotFirmwareWorkspaceData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkspaceList(value ?? new ChangeTrackingList<FirmwareWorkspaceData>(), nextLink.Value, serializedAdditionalRawData);
+            return new WorkspaceList(value ?? new ChangeTrackingList<IotFirmwareWorkspaceData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkspaceList>.Write(ModelReaderWriterOptions options)

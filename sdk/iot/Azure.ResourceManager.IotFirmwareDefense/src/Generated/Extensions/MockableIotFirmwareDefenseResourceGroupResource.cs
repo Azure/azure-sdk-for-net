@@ -36,11 +36,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Mocking
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of FirmwareWorkspaceResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of FirmwareWorkspaceResources and their operations over a FirmwareWorkspaceResource. </returns>
-        public virtual FirmwareWorkspaceCollection GetFirmwareWorkspaces()
+        /// <summary> Gets a collection of IotFirmwareWorkspaceResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of IotFirmwareWorkspaceResources and their operations over a IotFirmwareWorkspaceResource. </returns>
+        public virtual IotFirmwareWorkspaceCollection GetIotFirmwareWorkspaces()
         {
-            return GetCachedClient(client => new FirmwareWorkspaceCollection(client, Id));
+            return GetCachedClient(client => new IotFirmwareWorkspaceCollection(client, Id));
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="FirmwareWorkspaceResource"/></description>
+        /// <description><see cref="IotFirmwareWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -69,9 +69,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<FirmwareWorkspaceResource>> GetFirmwareWorkspaceAsync(string workspaceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IotFirmwareWorkspaceResource>> GetIotFirmwareWorkspaceAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
-            return await GetFirmwareWorkspaces().GetAsync(workspaceName, cancellationToken).ConfigureAwait(false);
+            return await GetIotFirmwareWorkspaces().GetAsync(workspaceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="FirmwareWorkspaceResource"/></description>
+        /// <description><see cref="IotFirmwareWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -100,9 +100,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<FirmwareWorkspaceResource> GetFirmwareWorkspace(string workspaceName, CancellationToken cancellationToken = default)
+        public virtual Response<IotFirmwareWorkspaceResource> GetIotFirmwareWorkspace(string workspaceName, CancellationToken cancellationToken = default)
         {
-            return GetFirmwareWorkspaces().Get(workspaceName, cancellationToken);
+            return GetIotFirmwareWorkspaces().Get(workspaceName, cancellationToken);
         }
     }
 }

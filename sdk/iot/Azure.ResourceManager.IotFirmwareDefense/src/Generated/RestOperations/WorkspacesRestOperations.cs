@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string workspaceName, FirmwareWorkspaceData data)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string workspaceName, IotFirmwareWorkspaceData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<FirmwareWorkspaceData>> CreateAsync(string subscriptionId, string resourceGroupName, string workspaceName, FirmwareWorkspaceData data, CancellationToken cancellationToken = default)
+        public async Task<Response<IotFirmwareWorkspaceData>> CreateAsync(string subscriptionId, string resourceGroupName, string workspaceName, IotFirmwareWorkspaceData data, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -289,9 +289,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                 case 200:
                 case 201:
                     {
-                        FirmwareWorkspaceData value = default;
+                        IotFirmwareWorkspaceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = FirmwareWorkspaceData.DeserializeFirmwareWorkspaceData(document.RootElement);
+                        value = IotFirmwareWorkspaceData.DeserializeIotFirmwareWorkspaceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<FirmwareWorkspaceData> Create(string subscriptionId, string resourceGroupName, string workspaceName, FirmwareWorkspaceData data, CancellationToken cancellationToken = default)
+        public Response<IotFirmwareWorkspaceData> Create(string subscriptionId, string resourceGroupName, string workspaceName, IotFirmwareWorkspaceData data, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -345,9 +345,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                 case 200:
                 case 201:
                     {
-                        FirmwareWorkspaceData value = default;
+                        IotFirmwareWorkspaceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = FirmwareWorkspaceData.DeserializeFirmwareWorkspaceData(document.RootElement);
+                        value = IotFirmwareWorkspaceData.DeserializeIotFirmwareWorkspaceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, FirmwareWorkspacePatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, IotFirmwareWorkspacePatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<FirmwareWorkspaceData>> UpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, FirmwareWorkspacePatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response<IotFirmwareWorkspaceData>> UpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, IotFirmwareWorkspacePatch patch, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -424,9 +424,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             {
                 case 200:
                     {
-                        FirmwareWorkspaceData value = default;
+                        IotFirmwareWorkspaceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = FirmwareWorkspaceData.DeserializeFirmwareWorkspaceData(document.RootElement);
+                        value = IotFirmwareWorkspaceData.DeserializeIotFirmwareWorkspaceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<FirmwareWorkspaceData> Update(string subscriptionId, string resourceGroupName, string workspaceName, FirmwareWorkspacePatch patch, CancellationToken cancellationToken = default)
+        public Response<IotFirmwareWorkspaceData> Update(string subscriptionId, string resourceGroupName, string workspaceName, IotFirmwareWorkspacePatch patch, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -479,9 +479,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             {
                 case 200:
                     {
-                        FirmwareWorkspaceData value = default;
+                        IotFirmwareWorkspaceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = FirmwareWorkspaceData.DeserializeFirmwareWorkspaceData(document.RootElement);
+                        value = IotFirmwareWorkspaceData.DeserializeIotFirmwareWorkspaceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -628,7 +628,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<FirmwareWorkspaceData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        public async Task<Response<IotFirmwareWorkspaceData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -661,13 +661,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             {
                 case 200:
                     {
-                        FirmwareWorkspaceData value = default;
+                        IotFirmwareWorkspaceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = FirmwareWorkspaceData.DeserializeFirmwareWorkspaceData(document.RootElement);
+                        value = IotFirmwareWorkspaceData.DeserializeIotFirmwareWorkspaceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((FirmwareWorkspaceData)null, message.Response);
+                    return Response.FromValue((IotFirmwareWorkspaceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -680,7 +680,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<FirmwareWorkspaceData> Get(string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        public Response<IotFirmwareWorkspaceData> Get(string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -713,19 +713,19 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             {
                 case 200:
                     {
-                        FirmwareWorkspaceData value = default;
+                        IotFirmwareWorkspaceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = FirmwareWorkspaceData.DeserializeFirmwareWorkspaceData(document.RootElement);
+                        value = IotFirmwareWorkspaceData.DeserializeIotFirmwareWorkspaceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((FirmwareWorkspaceData)null, message.Response);
+                    return Response.FromValue((IotFirmwareWorkspaceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateGenerateUploadUrlRequest(string subscriptionId, string resourceGroupName, string workspaceName, UploadUrlContent content)
+        internal HttpMessage CreateGenerateUploadUriRequest(string subscriptionId, string resourceGroupName, string workspaceName, FirmwareUploadUriContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -758,7 +758,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<UriToken>> GenerateUploadUrlAsync(string subscriptionId, string resourceGroupName, string workspaceName, UploadUrlContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<FirmwareUriToken>> GenerateUploadUriAsync(string subscriptionId, string resourceGroupName, string workspaceName, FirmwareUploadUriContent content, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -789,15 +789,15 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                 throw new ArgumentNullException(nameof(content));
             }
 
-            using var message = CreateGenerateUploadUrlRequest(subscriptionId, resourceGroupName, workspaceName, content);
+            using var message = CreateGenerateUploadUriRequest(subscriptionId, resourceGroupName, workspaceName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        UriToken value = default;
+                        FirmwareUriToken value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = UriToken.DeserializeUriToken(document.RootElement);
+                        value = FirmwareUriToken.DeserializeFirmwareUriToken(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -813,7 +813,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<UriToken> GenerateUploadUrl(string subscriptionId, string resourceGroupName, string workspaceName, UploadUrlContent content, CancellationToken cancellationToken = default)
+        public Response<FirmwareUriToken> GenerateUploadUri(string subscriptionId, string resourceGroupName, string workspaceName, FirmwareUploadUriContent content, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -844,15 +844,15 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                 throw new ArgumentNullException(nameof(content));
             }
 
-            using var message = CreateGenerateUploadUrlRequest(subscriptionId, resourceGroupName, workspaceName, content);
+            using var message = CreateGenerateUploadUriRequest(subscriptionId, resourceGroupName, workspaceName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        UriToken value = default;
+                        FirmwareUriToken value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = UriToken.DeserializeUriToken(document.RootElement);
+                        value = FirmwareUriToken.DeserializeFirmwareUriToken(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

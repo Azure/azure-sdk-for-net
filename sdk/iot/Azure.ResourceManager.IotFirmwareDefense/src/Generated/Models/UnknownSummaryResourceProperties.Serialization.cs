@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    internal partial class UnknownSummaryResourceProperties : IUtf8JsonSerializable, IJsonModel<SummaryResourceProperties>
+    internal partial class UnknownSummaryResourceProperties : IUtf8JsonSerializable, IJsonModel<IotFirmwareSummaryProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SummaryResourceProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IotFirmwareSummaryProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<SummaryResourceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<IotFirmwareSummaryProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SummaryResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<IotFirmwareSummaryProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SummaryResourceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotFirmwareSummaryProperties)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -46,16 +46,16 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             writer.WriteEndObject();
         }
 
-        SummaryResourceProperties IJsonModel<SummaryResourceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        IotFirmwareSummaryProperties IJsonModel<IotFirmwareSummaryProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SummaryResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<IotFirmwareSummaryProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SummaryResourceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotFirmwareSummaryProperties)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSummaryResourceProperties(document.RootElement, options);
+            return DeserializeIotFirmwareSummaryProperties(document.RootElement, options);
         }
 
         internal static UnknownSummaryResourceProperties DeserializeUnknownSummaryResourceProperties(JsonElement element, ModelReaderWriterOptions options = null)
@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            SummaryType summaryType = "Unknown";
+            FirmwareSummaryType summaryType = "Unknown";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("summaryType"u8))
                 {
-                    summaryType = new SummaryType(property.Value.GetString());
+                    summaryType = new FirmwareSummaryType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -85,35 +85,35 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             return new UnknownSummaryResourceProperties(summaryType, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<SummaryResourceProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<IotFirmwareSummaryProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SummaryResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<IotFirmwareSummaryProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SummaryResourceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotFirmwareSummaryProperties)} does not support '{options.Format}' format.");
             }
         }
 
-        SummaryResourceProperties IPersistableModel<SummaryResourceProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        IotFirmwareSummaryProperties IPersistableModel<IotFirmwareSummaryProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SummaryResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<IotFirmwareSummaryProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeSummaryResourceProperties(document.RootElement, options);
+                        return DeserializeIotFirmwareSummaryProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SummaryResourceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotFirmwareSummaryProperties)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<SummaryResourceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<IotFirmwareSummaryProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

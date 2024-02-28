@@ -37,39 +37,39 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="FirmwareResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FirmwareResource.CreateResourceIdentifier" /> to create a <see cref="FirmwareResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="IotFirmwareResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IotFirmwareResource.CreateResourceIdentifier" /> to create an <see cref="IotFirmwareResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FirmwareResource"/> object. </returns>
-        public virtual FirmwareResource GetFirmwareResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="IotFirmwareResource"/> object. </returns>
+        public virtual IotFirmwareResource GetIotFirmwareResource(ResourceIdentifier id)
         {
-            FirmwareResource.ValidateResourceId(id);
-            return new FirmwareResource(Client, id);
+            IotFirmwareResource.ValidateResourceId(id);
+            return new IotFirmwareResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SummaryResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SummaryResource.CreateResourceIdentifier" /> to create a <see cref="SummaryResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="IotFirmwareSummaryResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IotFirmwareSummaryResource.CreateResourceIdentifier" /> to create an <see cref="IotFirmwareSummaryResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SummaryResource"/> object. </returns>
-        public virtual SummaryResource GetSummaryResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="IotFirmwareSummaryResource"/> object. </returns>
+        public virtual IotFirmwareSummaryResource GetIotFirmwareSummaryResource(ResourceIdentifier id)
         {
-            SummaryResource.ValidateResourceId(id);
-            return new SummaryResource(Client, id);
+            IotFirmwareSummaryResource.ValidateResourceId(id);
+            return new IotFirmwareSummaryResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="FirmwareWorkspaceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FirmwareWorkspaceResource.CreateResourceIdentifier" /> to create a <see cref="FirmwareWorkspaceResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="IotFirmwareWorkspaceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IotFirmwareWorkspaceResource.CreateResourceIdentifier" /> to create an <see cref="IotFirmwareWorkspaceResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FirmwareWorkspaceResource"/> object. </returns>
-        public virtual FirmwareWorkspaceResource GetFirmwareWorkspaceResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="IotFirmwareWorkspaceResource"/> object. </returns>
+        public virtual IotFirmwareWorkspaceResource GetIotFirmwareWorkspaceResource(ResourceIdentifier id)
         {
-            FirmwareWorkspaceResource.ValidateResourceId(id);
-            return new FirmwareWorkspaceResource(Client, id);
+            IotFirmwareWorkspaceResource.ValidateResourceId(id);
+            return new IotFirmwareWorkspaceResource(Client, id);
         }
     }
 }
