@@ -38,6 +38,22 @@ namespace Azure.ResourceManager.HDInsight.Containers.Tests
         }
 
         [RecordedTest]
+        public async Task TestCheckIfClusterNameAvaliable()
+        {
+            Location = "west us 3";
+
+            // Create cluster pool
+            string clusterPoolName = Recording.GenerateAssetName("sdk-testpool-");
+            string clusterName = Recording.GenerateAssetName("sdk-test-cluster-");
+            Response<HDInsightNameAvailabilityResult> response = await Subscription.CheckHDInsightNameAvailabilityAsync(Location, new HDInsightNameAvailabilityContent()
+            {
+                Name = clusterPoolName + "/" + clusterName,
+                ResourceType = "Microsoft.HDInsight/clusterPools/clusters",
+            });
+            Assert.IsTrue(response.Value.IsNameAvailable);
+        }
+
+        [RecordedTest]
         public async Task TestTrinoCluster()
         {
             Location = "west us 3";
