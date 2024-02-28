@@ -51,7 +51,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <exception cref="ArgumentNullException"> <paramref name="outputBlobSasUri"/> is null. </exception>
         public GetVpnSitesConfigurationContent(Uri outputBlobSasUri)
         {
-            Argument.AssertNotNull(outputBlobSasUri, nameof(outputBlobSasUri));
+            if (outputBlobSasUri == null)
+            {
+                throw new ArgumentNullException(nameof(outputBlobSasUri));
+            }
 
             VpnSites = new ChangeTrackingList<string>();
             OutputBlobSasUri = outputBlobSasUri;

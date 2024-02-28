@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MonitorLocalizableString> array = new List<MonitorLocalizableString>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorLocalizableString.DeserializeMonitorLocalizableString(item));
+                        array.Add(MonitorLocalizableString.DeserializeMonitorLocalizableString(item, options));
                     }
                     value = array;
                     continue;

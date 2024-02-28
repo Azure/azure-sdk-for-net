@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 return null;
             }
             IReadOnlyList<ClusterJob> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     List<ClusterJob> array = new List<ClusterJob>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClusterJob.DeserializeClusterJob(item));
+                        array.Add(ClusterJob.DeserializeClusterJob(item, options));
                     }
                     value = array;
                     continue;
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterJobListResult(value, nextLink.Value, serializedAdditionalRawData);
+            return new ClusterJobListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterJobListResult>.Write(ModelReaderWriterOptions options)

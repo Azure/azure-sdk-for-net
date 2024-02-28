@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(StorageSizeInGB))
+            if (StorageSizeInGB.HasValue)
             {
                 writer.WritePropertyName("storageSizeGB"u8);
                 writer.WriteNumberValue(StorageSizeInGB.Value);
             }
-            if (Optional.IsDefined(Iops))
+            if (Iops.HasValue)
             {
                 writer.WritePropertyName("iops"u8);
                 writer.WriteNumberValue(Iops.Value);
             }
-            if (Optional.IsDefined(AutoGrow))
+            if (AutoGrow.HasValue)
             {
                 writer.WritePropertyName("autoGrow"u8);
                 writer.WriteStringValue(AutoGrow.Value.ToString());
             }
-            if (Optional.IsDefined(LogOnDisk))
+            if (LogOnDisk.HasValue)
             {
                 writer.WritePropertyName("logOnDisk"u8);
                 writer.WriteStringValue(LogOnDisk.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(StorageSku))
+            if (options.Format != "W" && StorageSku != null)
             {
                 writer.WritePropertyName("storageSku"u8);
                 writer.WriteStringValue(StorageSku);
             }
-            if (Optional.IsDefined(AutoIoScaling))
+            if (AutoIoScaling.HasValue)
             {
                 writer.WritePropertyName("autoIoScaling"u8);
                 writer.WriteStringValue(AutoIoScaling.Value.ToString());
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<int> storageSizeGB = default;
-            Optional<int> iops = default;
-            Optional<MySqlFlexibleServerEnableStatusEnum> autoGrow = default;
-            Optional<MySqlFlexibleServerEnableStatusEnum> logOnDisk = default;
-            Optional<string> storageSku = default;
-            Optional<MySqlFlexibleServerEnableStatusEnum> autoIoScaling = default;
+            int? storageSizeGB = default;
+            int? iops = default;
+            MySqlFlexibleServerEnableStatusEnum? autoGrow = default;
+            MySqlFlexibleServerEnableStatusEnum? logOnDisk = default;
+            string storageSku = default;
+            MySqlFlexibleServerEnableStatusEnum? autoIoScaling = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlFlexibleServerStorage(Optional.ToNullable(storageSizeGB), Optional.ToNullable(iops), Optional.ToNullable(autoGrow), Optional.ToNullable(logOnDisk), storageSku.Value, Optional.ToNullable(autoIoScaling), serializedAdditionalRawData);
+            return new MySqlFlexibleServerStorage(
+                storageSizeGB,
+                iops,
+                autoGrow,
+                logOnDisk,
+                storageSku,
+                autoIoScaling,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlFlexibleServerStorage>.Write(ModelReaderWriterOptions options)

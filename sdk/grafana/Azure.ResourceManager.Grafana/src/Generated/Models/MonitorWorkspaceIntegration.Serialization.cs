@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Grafana.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MonitorWorkspaceResourceId))
+            if (MonitorWorkspaceResourceId != null)
             {
                 writer.WritePropertyName("azureMonitorWorkspaceResourceId"u8);
                 writer.WriteStringValue(MonitorWorkspaceResourceId);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Grafana.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> azureMonitorWorkspaceResourceId = default;
+            ResourceIdentifier azureMonitorWorkspaceResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorWorkspaceIntegration(azureMonitorWorkspaceResourceId.Value, serializedAdditionalRawData);
+            return new MonitorWorkspaceIntegration(azureMonitorWorkspaceResourceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorWorkspaceIntegration>.Write(ModelReaderWriterOptions options)

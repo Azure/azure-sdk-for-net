@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Token))
+            if (Token != null)
             {
                 writer.WritePropertyName("token"u8);
                 writer.WriteStringValue(Token);
             }
-            if (Optional.IsDefined(ExpiryTimeInUtcTicks))
+            if (ExpiryTimeInUtcTicks.HasValue)
             {
                 writer.WritePropertyName("expiryTimeInUtcTicks"u8);
                 writer.WriteNumberValue(ExpiryTimeInUtcTicks.Value);
             }
-            if (Optional.IsDefined(SecurityPin))
+            if (SecurityPin != null)
             {
                 writer.WritePropertyName("securityPIN"u8);
                 writer.WriteStringValue(SecurityPin);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<string> token = default;
-            Optional<long> expiryTimeInUtcTicks = default;
-            Optional<string> securityPin = default;
+            string token = default;
+            long? expiryTimeInUtcTicks = default;
+            string securityPin = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TokenInformation(token.Value, Optional.ToNullable(expiryTimeInUtcTicks), securityPin.Value, serializedAdditionalRawData);
+            return new TokenInformation(token, expiryTimeInUtcTicks, securityPin, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TokenInformation>.Write(ModelReaderWriterOptions options)

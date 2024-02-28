@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             IReadOnlyList<AutoscaleSettingData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<AutoscaleSettingData> array = new List<AutoscaleSettingData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutoscaleSettingData.DeserializeAutoscaleSettingData(item));
+                        array.Add(AutoscaleSettingData.DeserializeAutoscaleSettingData(item, options));
                     }
                     value = array;
                     continue;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutoscaleSettingResourceCollection(value, nextLink.Value, serializedAdditionalRawData);
+            return new AutoscaleSettingResourceCollection(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutoscaleSettingResourceCollection>.Write(ModelReaderWriterOptions options)

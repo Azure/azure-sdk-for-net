@@ -55,7 +55,10 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <exception cref="ArgumentNullException"> <paramref name="contactEmails"/> is null. </exception>
         public BudgetAssociatedNotification(bool isEnabled, NotificationAlertTriggerType @operator, decimal threshold, IEnumerable<string> contactEmails)
         {
-            Argument.AssertNotNull(contactEmails, nameof(contactEmails));
+            if (contactEmails == null)
+            {
+                throw new ArgumentNullException(nameof(contactEmails));
+            }
 
             IsEnabled = isEnabled;
             Operator = @operator;

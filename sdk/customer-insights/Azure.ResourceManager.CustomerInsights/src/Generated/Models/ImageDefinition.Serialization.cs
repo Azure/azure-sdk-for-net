@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ImageExists))
+            if (ImageExists.HasValue)
             {
                 writer.WritePropertyName("imageExists"u8);
                 writer.WriteBooleanValue(ImageExists.Value);
             }
-            if (Optional.IsDefined(ContentUri))
+            if (ContentUri != null)
             {
                 writer.WritePropertyName("contentUrl"u8);
                 writer.WriteStringValue(ContentUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(RelativePath))
+            if (RelativePath != null)
             {
                 writer.WritePropertyName("relativePath"u8);
                 writer.WriteStringValue(RelativePath);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<bool> imageExists = default;
-            Optional<Uri> contentUrl = default;
-            Optional<string> relativePath = default;
+            bool? imageExists = default;
+            Uri contentUrl = default;
+            string relativePath = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ImageDefinition(Optional.ToNullable(imageExists), contentUrl.Value, relativePath.Value, serializedAdditionalRawData);
+            return new ImageDefinition(imageExists, contentUrl, relativePath, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ImageDefinition>.Write(ModelReaderWriterOptions options)

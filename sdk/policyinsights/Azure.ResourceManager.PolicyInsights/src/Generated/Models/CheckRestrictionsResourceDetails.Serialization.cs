@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 JsonSerializer.Serialize(writer, document.RootElement);
             }
 #endif
-            if (Optional.IsDefined(ApiVersion))
+            if (ApiVersion != null)
             {
                 writer.WritePropertyName("apiVersion"u8);
                 writer.WriteStringValue(ApiVersion);
             }
-            if (Optional.IsDefined(Scope))
+            if (Scope != null)
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 return null;
             }
             BinaryData resourceContent = default;
-            Optional<string> apiVersion = default;
-            Optional<string> scope = default;
+            string apiVersion = default;
+            string scope = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CheckRestrictionsResourceDetails(resourceContent, apiVersion.Value, scope.Value, serializedAdditionalRawData);
+            return new CheckRestrictionsResourceDetails(resourceContent, apiVersion, scope, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CheckRestrictionsResourceDetails>.Write(ModelReaderWriterOptions options)

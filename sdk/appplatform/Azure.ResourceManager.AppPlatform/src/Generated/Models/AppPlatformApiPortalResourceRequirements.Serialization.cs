@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Cpu))
+            if (options.Format != "W" && Cpu != null)
             {
                 writer.WritePropertyName("cpu"u8);
                 writer.WriteStringValue(Cpu);
             }
-            if (options.Format != "W" && Optional.IsDefined(Memory))
+            if (options.Format != "W" && Memory != null)
             {
                 writer.WritePropertyName("memory"u8);
                 writer.WriteStringValue(Memory);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<string> cpu = default;
-            Optional<string> memory = default;
+            string cpu = default;
+            string memory = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformApiPortalResourceRequirements(cpu.Value, memory.Value, serializedAdditionalRawData);
+            return new AppPlatformApiPortalResourceRequirements(cpu, memory, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformApiPortalResourceRequirements>.Write(ModelReaderWriterOptions options)

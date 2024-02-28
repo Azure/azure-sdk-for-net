@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DelayEvaluation))
+            if (DelayEvaluation.HasValue)
             {
                 writer.WritePropertyName("delayEvaluation"u8);
                 writer.WriteNumberValue(DelayEvaluation.Value);
             }
-            if (Optional.IsDefined(EvaluationInterval))
+            if (EvaluationInterval.HasValue)
             {
                 writer.WritePropertyName("evaluationInterval"u8);
                 writer.WriteNumberValue(EvaluationInterval.Value);
@@ -80,12 +80,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Bandit": return BanditPolicy.DeserializeBanditPolicy(element);
-                    case "MedianStopping": return MedianStoppingPolicy.DeserializeMedianStoppingPolicy(element);
-                    case "TruncationSelection": return TruncationSelectionPolicy.DeserializeTruncationSelectionPolicy(element);
+                    case "Bandit": return BanditPolicy.DeserializeBanditPolicy(element, options);
+                    case "MedianStopping": return MedianStoppingPolicy.DeserializeMedianStoppingPolicy(element, options);
+                    case "TruncationSelection": return TruncationSelectionPolicy.DeserializeTruncationSelectionPolicy(element, options);
                 }
             }
-            return UnknownEarlyTerminationPolicy.DeserializeUnknownEarlyTerminationPolicy(element);
+            return UnknownEarlyTerminationPolicy.DeserializeUnknownEarlyTerminationPolicy(element, options);
         }
 
         BinaryData IPersistableModel<MachineLearningEarlyTerminationPolicy>.Write(ModelReaderWriterOptions options)

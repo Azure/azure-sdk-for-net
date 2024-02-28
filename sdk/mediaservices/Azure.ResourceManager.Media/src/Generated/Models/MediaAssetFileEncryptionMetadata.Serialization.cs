@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(InitializationVector))
+            if (InitializationVector != null)
             {
                 writer.WritePropertyName("initializationVector"u8);
                 writer.WriteStringValue(InitializationVector);
             }
-            if (Optional.IsDefined(AssetFileName))
+            if (AssetFileName != null)
             {
                 writer.WritePropertyName("assetFileName"u8);
                 writer.WriteStringValue(AssetFileName);
@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<string> initializationVector = default;
-            Optional<string> assetFileName = default;
+            string initializationVector = default;
+            string assetFileName = default;
             Guid assetFileId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MediaAssetFileEncryptionMetadata(initializationVector.Value, assetFileName.Value, assetFileId, serializedAdditionalRawData);
+            return new MediaAssetFileEncryptionMetadata(initializationVector, assetFileName, assetFileId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MediaAssetFileEncryptionMetadata>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<ProxyArtifactListOverview> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ProxyArtifactListOverview>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ProxyArtifactListOverview> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     List<ProxyArtifactListOverview> array = new List<ProxyArtifactListOverview>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProxyArtifactListOverview.DeserializeProxyArtifactListOverview(item));
+                        array.Add(ProxyArtifactListOverview.DeserializeProxyArtifactListOverview(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProxyArtifactOverviewListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ProxyArtifactOverviewListResult(value ?? new ChangeTrackingList<ProxyArtifactListOverview>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProxyArtifactOverviewListResult>.Write(ModelReaderWriterOptions options)

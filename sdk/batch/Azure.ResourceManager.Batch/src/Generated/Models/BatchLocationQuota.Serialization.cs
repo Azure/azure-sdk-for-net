@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Batch.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(AccountQuota))
+            if (options.Format != "W" && AccountQuota.HasValue)
             {
                 writer.WritePropertyName("accountQuota"u8);
                 writer.WriteNumberValue(AccountQuota.Value);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<int> accountQuota = default;
+            int? accountQuota = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchLocationQuota(Optional.ToNullable(accountQuota), serializedAdditionalRawData);
+            return new BatchLocationQuota(accountQuota, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchLocationQuota>.Write(ModelReaderWriterOptions options)

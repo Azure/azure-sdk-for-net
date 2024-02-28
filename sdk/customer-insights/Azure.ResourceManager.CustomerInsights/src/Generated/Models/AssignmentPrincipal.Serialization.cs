@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             writer.WriteStringValue(PrincipalId);
             writer.WritePropertyName("principalType"u8);
             writer.WriteStringValue(PrincipalType);
-            if (Optional.IsCollectionDefined(PrincipalMetadata))
+            if (!(PrincipalMetadata is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("principalMetadata"u8);
                 writer.WriteStartObject();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
             string principalId = default;
             string principalType = default;
-            Optional<IDictionary<string, string>> principalMetadata = default;
+            IDictionary<string, string> principalMetadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AssignmentPrincipal(principalId, principalType, Optional.ToDictionary(principalMetadata), serializedAdditionalRawData);
+            return new AssignmentPrincipal(principalId, principalType, principalMetadata ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AssignmentPrincipal>.Write(ModelReaderWriterOptions options)

@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FailoverDirection))
+            if (FailoverDirection != null)
             {
                 writer.WritePropertyName("failoverDirection"u8);
                 writer.WriteStringValue(FailoverDirection);
             }
-            if (Optional.IsDefined(NetworkType))
+            if (NetworkType != null)
             {
                 writer.WritePropertyName("networkType"u8);
                 writer.WriteStringValue(NetworkType);
             }
-            if (Optional.IsDefined(NetworkId))
+            if (NetworkId != null)
             {
                 writer.WritePropertyName("networkId"u8);
                 writer.WriteStringValue(NetworkId);
             }
-            if (Optional.IsDefined(ProviderSpecificDetails))
+            if (ProviderSpecificDetails != null)
             {
                 writer.WritePropertyName("providerSpecificDetails"u8);
                 writer.WriteObjectValue(ProviderSpecificDetails);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> failoverDirection = default;
-            Optional<string> networkType = default;
-            Optional<ResourceIdentifier> networkId = default;
-            Optional<TestFailoverProviderSpecificContent> providerSpecificDetails = default;
+            string failoverDirection = default;
+            string networkType = default;
+            ResourceIdentifier networkId = default;
+            TestFailoverProviderSpecificContent providerSpecificDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    providerSpecificDetails = TestFailoverProviderSpecificContent.DeserializeTestFailoverProviderSpecificContent(property.Value);
+                    providerSpecificDetails = TestFailoverProviderSpecificContent.DeserializeTestFailoverProviderSpecificContent(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TestFailoverProperties(failoverDirection.Value, networkType.Value, networkId.Value, providerSpecificDetails.Value, serializedAdditionalRawData);
+            return new TestFailoverProperties(failoverDirection, networkType, networkId, providerSpecificDetails, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TestFailoverProperties>.Write(ModelReaderWriterOptions options)

@@ -32,27 +32,27 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStringValue(FromTime, "O");
             writer.WritePropertyName("toTime"u8);
             writer.WriteStringValue(ToTime, "O");
-            if (Optional.IsDefined(GroupByThrottlePolicy))
+            if (GroupByThrottlePolicy.HasValue)
             {
                 writer.WritePropertyName("groupByThrottlePolicy"u8);
                 writer.WriteBooleanValue(GroupByThrottlePolicy.Value);
             }
-            if (Optional.IsDefined(GroupByOperationName))
+            if (GroupByOperationName.HasValue)
             {
                 writer.WritePropertyName("groupByOperationName"u8);
                 writer.WriteBooleanValue(GroupByOperationName.Value);
             }
-            if (Optional.IsDefined(GroupByResourceName))
+            if (GroupByResourceName.HasValue)
             {
                 writer.WritePropertyName("groupByResourceName"u8);
                 writer.WriteBooleanValue(GroupByResourceName.Value);
             }
-            if (Optional.IsDefined(GroupByClientApplicationId))
+            if (GroupByClientApplicationId.HasValue)
             {
                 writer.WritePropertyName("groupByClientApplicationId"u8);
                 writer.WriteBooleanValue(GroupByClientApplicationId.Value);
             }
-            if (Optional.IsDefined(GroupByUserAgent))
+            if (GroupByUserAgent.HasValue)
             {
                 writer.WritePropertyName("groupByUserAgent"u8);
                 writer.WriteBooleanValue(GroupByUserAgent.Value);
@@ -98,11 +98,11 @@ namespace Azure.ResourceManager.Compute.Models
             Uri blobContainerSasUri = default;
             DateTimeOffset fromTime = default;
             DateTimeOffset toTime = default;
-            Optional<bool> groupByThrottlePolicy = default;
-            Optional<bool> groupByOperationName = default;
-            Optional<bool> groupByResourceName = default;
-            Optional<bool> groupByClientApplicationId = default;
-            Optional<bool> groupByUserAgent = default;
+            bool? groupByThrottlePolicy = default;
+            bool? groupByOperationName = default;
+            bool? groupByResourceName = default;
+            bool? groupByClientApplicationId = default;
+            bool? groupByUserAgent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -173,7 +173,16 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ThrottledRequestsContent(blobContainerSasUri, fromTime, toTime, Optional.ToNullable(groupByThrottlePolicy), Optional.ToNullable(groupByOperationName), Optional.ToNullable(groupByResourceName), Optional.ToNullable(groupByClientApplicationId), Optional.ToNullable(groupByUserAgent), serializedAdditionalRawData);
+            return new ThrottledRequestsContent(
+                blobContainerSasUri,
+                fromTime,
+                toTime,
+                groupByThrottlePolicy,
+                groupByOperationName,
+                groupByResourceName,
+                groupByClientApplicationId,
+                groupByUserAgent,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ThrottledRequestsContent>.Write(ModelReaderWriterOptions options)

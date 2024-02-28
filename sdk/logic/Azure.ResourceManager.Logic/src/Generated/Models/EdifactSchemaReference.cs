@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -54,10 +53,22 @@ namespace Azure.ResourceManager.Logic.Models
         /// <exception cref="ArgumentNullException"> <paramref name="messageId"/>, <paramref name="messageVersion"/>, <paramref name="messageRelease"/> or <paramref name="schemaName"/> is null. </exception>
         public EdifactSchemaReference(string messageId, string messageVersion, string messageRelease, string schemaName)
         {
-            Argument.AssertNotNull(messageId, nameof(messageId));
-            Argument.AssertNotNull(messageVersion, nameof(messageVersion));
-            Argument.AssertNotNull(messageRelease, nameof(messageRelease));
-            Argument.AssertNotNull(schemaName, nameof(schemaName));
+            if (messageId == null)
+            {
+                throw new ArgumentNullException(nameof(messageId));
+            }
+            if (messageVersion == null)
+            {
+                throw new ArgumentNullException(nameof(messageVersion));
+            }
+            if (messageRelease == null)
+            {
+                throw new ArgumentNullException(nameof(messageRelease));
+            }
+            if (schemaName == null)
+            {
+                throw new ArgumentNullException(nameof(schemaName));
+            }
 
             MessageId = messageId;
             MessageVersion = messageVersion;

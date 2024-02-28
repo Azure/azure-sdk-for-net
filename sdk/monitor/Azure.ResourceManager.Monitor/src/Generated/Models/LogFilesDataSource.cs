@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -57,8 +56,14 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="streams"/> or <paramref name="filePatterns"/> is null. </exception>
         public LogFilesDataSource(IEnumerable<string> streams, IEnumerable<string> filePatterns, LogFilesDataSourceFormat format)
         {
-            Argument.AssertNotNull(streams, nameof(streams));
-            Argument.AssertNotNull(filePatterns, nameof(filePatterns));
+            if (streams == null)
+            {
+                throw new ArgumentNullException(nameof(streams));
+            }
+            if (filePatterns == null)
+            {
+                throw new ArgumentNullException(nameof(filePatterns));
+            }
 
             Streams = streams.ToList();
             FilePatterns = filePatterns.ToList();

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ActiveDirectoryAuth))
+            if (ActiveDirectoryAuth.HasValue)
             {
                 writer.WritePropertyName("activeDirectoryAuth"u8);
                 writer.WriteStringValue(ActiveDirectoryAuth.Value.ToString());
             }
-            if (Optional.IsDefined(PasswordAuth))
+            if (PasswordAuth.HasValue)
             {
                 writer.WritePropertyName("passwordAuth"u8);
                 writer.WriteStringValue(PasswordAuth.Value.ToString());
             }
-            if (Optional.IsDefined(TenantId))
+            if (TenantId.HasValue)
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<PostgreSqlFlexibleServerActiveDirectoryAuthEnum> activeDirectoryAuth = default;
-            Optional<PostgreSqlFlexibleServerPasswordAuthEnum> passwordAuth = default;
-            Optional<Guid> tenantId = default;
+            PostgreSqlFlexibleServerActiveDirectoryAuthEnum? activeDirectoryAuth = default;
+            PostgreSqlFlexibleServerPasswordAuthEnum? passwordAuth = default;
+            Guid? tenantId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlFlexibleServerAuthConfig(Optional.ToNullable(activeDirectoryAuth), Optional.ToNullable(passwordAuth), Optional.ToNullable(tenantId), serializedAdditionalRawData);
+            return new PostgreSqlFlexibleServerAuthConfig(activeDirectoryAuth, passwordAuth, tenantId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlFlexibleServerAuthConfig>.Write(ModelReaderWriterOptions options)

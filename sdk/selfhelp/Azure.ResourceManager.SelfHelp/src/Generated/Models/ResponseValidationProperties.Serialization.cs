@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Regex))
+            if (Regex != null)
             {
                 writer.WritePropertyName("regex"u8);
                 writer.WriteStringValue(Regex);
             }
-            if (Optional.IsDefined(IsRequired))
+            if (IsRequired.HasValue)
             {
                 writer.WritePropertyName("isRequired"u8);
                 writer.WriteBooleanValue(IsRequired.Value);
             }
-            if (Optional.IsDefined(ValidationErrorMessage))
+            if (ValidationErrorMessage != null)
             {
                 writer.WritePropertyName("validationErrorMessage"u8);
                 writer.WriteStringValue(ValidationErrorMessage);
             }
-            if (Optional.IsDefined(MaxLength))
+            if (MaxLength.HasValue)
             {
                 writer.WritePropertyName("maxLength"u8);
                 writer.WriteNumberValue(MaxLength.Value);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            Optional<string> regex = default;
-            Optional<bool> isRequired = default;
-            Optional<string> validationErrorMessage = default;
-            Optional<long> maxLength = default;
+            string regex = default;
+            bool? isRequired = default;
+            string validationErrorMessage = default;
+            long? maxLength = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResponseValidationProperties(regex.Value, Optional.ToNullable(isRequired), validationErrorMessage.Value, Optional.ToNullable(maxLength), serializedAdditionalRawData);
+            return new ResponseValidationProperties(regex, isRequired, validationErrorMessage, maxLength, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResponseValidationProperties>.Write(ModelReaderWriterOptions options)

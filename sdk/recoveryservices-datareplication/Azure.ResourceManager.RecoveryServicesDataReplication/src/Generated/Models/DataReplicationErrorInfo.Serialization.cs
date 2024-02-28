@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Code))
+            if (options.Format != "W" && Code != null)
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (options.Format != "W" && Optional.IsDefined(ErrorModelType))
+            if (options.Format != "W" && ErrorModelType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ErrorModelType);
             }
-            if (options.Format != "W" && Optional.IsDefined(Severity))
+            if (options.Format != "W" && Severity != null)
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(Message))
+            if (options.Format != "W" && Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (options.Format != "W" && Optional.IsDefined(Causes))
+            if (options.Format != "W" && Causes != null)
             {
                 writer.WritePropertyName("causes"u8);
                 writer.WriteStringValue(Causes);
             }
-            if (options.Format != "W" && Optional.IsDefined(Recommendation))
+            if (options.Format != "W" && Recommendation != null)
             {
                 writer.WritePropertyName("recommendation"u8);
                 writer.WriteStringValue(Recommendation);
@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<string> type = default;
-            Optional<string> severity = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<string> message = default;
-            Optional<string> causes = default;
-            Optional<string> recommendation = default;
+            string code = default;
+            string type = default;
+            string severity = default;
+            DateTimeOffset? creationTime = default;
+            string message = default;
+            string causes = default;
+            string recommendation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -155,7 +155,15 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataReplicationErrorInfo(code.Value, type.Value, severity.Value, Optional.ToNullable(creationTime), message.Value, causes.Value, recommendation.Value, serializedAdditionalRawData);
+            return new DataReplicationErrorInfo(
+                code,
+                type,
+                severity,
+                creationTime,
+                message,
+                causes,
+                recommendation,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataReplicationErrorInfo>.Write(ModelReaderWriterOptions options)

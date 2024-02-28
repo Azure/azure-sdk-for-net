@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(StandardTierStorageRedundancy))
+            if (options.Format != "W" && StandardTierStorageRedundancy.HasValue)
             {
                 writer.WritePropertyName("standardTierStorageRedundancy"u8);
                 writer.WriteStringValue(StandardTierStorageRedundancy.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CrossRegionRestore))
+            if (options.Format != "W" && CrossRegionRestore.HasValue)
             {
                 writer.WritePropertyName("crossRegionRestore"u8);
                 writer.WriteStringValue(CrossRegionRestore.Value.ToString());
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Optional<StandardTierStorageRedundancy> standardTierStorageRedundancy = default;
-            Optional<CrossRegionRestore> crossRegionRestore = default;
+            StandardTierStorageRedundancy? standardTierStorageRedundancy = default;
+            CrossRegionRestore? crossRegionRestore = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VaultPropertiesRedundancySettings(Optional.ToNullable(standardTierStorageRedundancy), Optional.ToNullable(crossRegionRestore), serializedAdditionalRawData);
+            return new VaultPropertiesRedundancySettings(standardTierStorageRedundancy, crossRegionRestore, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VaultPropertiesRedundancySettings>.Write(ModelReaderWriterOptions options)

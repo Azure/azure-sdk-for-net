@@ -17,7 +17,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
-            if (Optional.IsDefined(CaseSensitive))
+            if (CaseSensitive.HasValue)
             {
                 if (CaseSensitive != null)
                 {
@@ -29,7 +29,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("caseSensitive");
                 }
             }
-            if (Optional.IsDefined(AccentSensitive))
+            if (AccentSensitive.HasValue)
             {
                 if (AccentSensitive != null)
                 {
@@ -41,7 +41,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("accentSensitive");
                 }
             }
-            if (Optional.IsDefined(FuzzyEditDistance))
+            if (FuzzyEditDistance.HasValue)
             {
                 if (FuzzyEditDistance != null)
                 {
@@ -63,9 +63,9 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             string text = default;
-            Optional<bool?> caseSensitive = default;
-            Optional<bool?> accentSensitive = default;
-            Optional<int?> fuzzyEditDistance = default;
+            bool? caseSensitive = default;
+            bool? accentSensitive = default;
+            int? fuzzyEditDistance = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("text"u8))
@@ -104,7 +104,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new CustomEntityAlias(text, Optional.ToNullable(caseSensitive), Optional.ToNullable(accentSensitive), Optional.ToNullable(fuzzyEditDistance));
+            return new CustomEntityAlias(text, caseSensitive, accentSensitive, fuzzyEditDistance);
         }
     }
 }

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(IPCommunityRules))
+            if (!(IPCommunityRules is ChangeTrackingList<IPCommunityRule> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("ipCommunityRules"u8);
                 writer.WriteStartArray();
@@ -88,8 +88,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<IList<IPCommunityRule>> ipCommunityRules = default;
+            IDictionary<string, string> tags = default;
+            IList<IPCommunityRule> ipCommunityRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             List<IPCommunityRule> array = new List<IPCommunityRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IPCommunityRule.DeserializeIPCommunityRule(item));
+                                array.Add(IPCommunityRule.DeserializeIPCommunityRule(item, options));
                             }
                             ipCommunityRules = array;
                             continue;
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkFabricIPCommunityPatch(Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToList(ipCommunityRules));
+            return new NetworkFabricIPCommunityPatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, ipCommunityRules ?? new ChangeTrackingList<IPCommunityRule>());
         }
 
         BinaryData IPersistableModel<NetworkFabricIPCommunityPatch>.Write(ModelReaderWriterOptions options)

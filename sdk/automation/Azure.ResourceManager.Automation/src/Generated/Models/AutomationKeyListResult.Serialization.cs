@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Keys))
+            if (!(Keys is ChangeTrackingList<AutomationKey> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("keys"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AutomationKey>> keys = default;
+            IReadOnlyList<AutomationKey> keys = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<AutomationKey> array = new List<AutomationKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutomationKey.DeserializeAutomationKey(item));
+                        array.Add(AutomationKey.DeserializeAutomationKey(item, options));
                     }
                     keys = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationKeyListResult(Optional.ToList(keys), serializedAdditionalRawData);
+            return new AutomationKeyListResult(keys ?? new ChangeTrackingList<AutomationKey>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationKeyListResult>.Write(ModelReaderWriterOptions options)

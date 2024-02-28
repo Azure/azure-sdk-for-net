@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(SupportedTier))
+            if (options.Format != "W" && SupportedTier != null)
             {
                 writer.WritePropertyName("supportedTier"u8);
                 writer.WriteStringValue(SupportedTier);
             }
-            if (options.Format != "W" && Optional.IsDefined(SupportedSku))
+            if (options.Format != "W" && SupportedSku != null)
             {
                 writer.WritePropertyName("supportedSku"u8);
                 writer.WriteStringValue(SupportedSku);
             }
-            if (options.Format != "W" && Optional.IsDefined(SupportedStorageGb))
+            if (options.Format != "W" && SupportedStorageGb.HasValue)
             {
                 writer.WritePropertyName("supportedStorageGb"u8);
                 writer.WriteNumberValue(SupportedStorageGb.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(SupportedServerVersions))
+            if (options.Format != "W" && SupportedServerVersions != null)
             {
                 writer.WritePropertyName("supportedServerVersions"u8);
                 writer.WriteStringValue(SupportedServerVersions);
             }
-            if (options.Format != "W" && Optional.IsDefined(ServerCount))
+            if (options.Format != "W" && ServerCount.HasValue)
             {
                 writer.WritePropertyName("serverCount"u8);
                 writer.WriteNumberValue(ServerCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CapabilityStatus))
+            if (options.Format != "W" && CapabilityStatus.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(CapabilityStatus.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Reason))
+            if (options.Format != "W" && Reason != null)
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<string> supportedTier = default;
-            Optional<string> supportedSku = default;
-            Optional<long> supportedStorageGb = default;
-            Optional<string> supportedServerVersions = default;
-            Optional<int> serverCount = default;
-            Optional<PostgreSqlFlexbileServerCapabilityStatus> status = default;
-            Optional<string> reason = default;
+            string supportedTier = default;
+            string supportedSku = default;
+            long? supportedStorageGb = default;
+            string supportedServerVersions = default;
+            int? serverCount = default;
+            PostgreSqlFlexbileServerCapabilityStatus? status = default;
+            string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -163,7 +163,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlFlexibleServerFastProvisioningEditionCapability(Optional.ToNullable(status), reason.Value, serializedAdditionalRawData, supportedTier.Value, supportedSku.Value, Optional.ToNullable(supportedStorageGb), supportedServerVersions.Value, Optional.ToNullable(serverCount));
+            return new PostgreSqlFlexibleServerFastProvisioningEditionCapability(
+                status,
+                reason,
+                serializedAdditionalRawData,
+                supportedTier,
+                supportedSku,
+                supportedStorageGb,
+                supportedServerVersions,
+                serverCount);
         }
 
         BinaryData IPersistableModel<PostgreSqlFlexibleServerFastProvisioningEditionCapability>.Write(ModelReaderWriterOptions options)

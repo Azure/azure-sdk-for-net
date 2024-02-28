@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RestartWithFailover))
+            if (RestartWithFailover.HasValue)
             {
                 writer.WritePropertyName("restartWithFailover"u8);
                 writer.WriteStringValue(RestartWithFailover.Value.ToString());
             }
-            if (Optional.IsDefined(MaxFailoverSeconds))
+            if (MaxFailoverSeconds.HasValue)
             {
                 writer.WritePropertyName("maxFailoverSeconds"u8);
                 writer.WriteNumberValue(MaxFailoverSeconds.Value);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<MySqlFlexibleServerEnableStatusEnum> restartWithFailover = default;
-            Optional<int> maxFailoverSeconds = default;
+            MySqlFlexibleServerEnableStatusEnum? restartWithFailover = default;
+            int? maxFailoverSeconds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlFlexibleServerRestartParameter(Optional.ToNullable(restartWithFailover), Optional.ToNullable(maxFailoverSeconds), serializedAdditionalRawData);
+            return new MySqlFlexibleServerRestartParameter(restartWithFailover, maxFailoverSeconds, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlFlexibleServerRestartParameter>.Write(ModelReaderWriterOptions options)

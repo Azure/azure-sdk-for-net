@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ErrorCode))
+            if (options.Format != "W" && ErrorCode.HasValue)
             {
                 writer.WritePropertyName("errorCode"u8);
                 writer.WriteNumberValue(ErrorCode.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(PersistentCount))
+            if (options.Format != "W" && PersistentCount.HasValue)
             {
                 writer.WritePropertyName("persistentCount"u8);
                 writer.WriteNumberValue(PersistentCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(TransientCount))
+            if (options.Format != "W" && TransientCount.HasValue)
             {
                 writer.WritePropertyName("transientCount"u8);
                 writer.WriteNumberValue(TransientCount.Value);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Optional<int> errorCode = default;
-            Optional<long> persistentCount = default;
-            Optional<long> transientCount = default;
+            int? errorCode = default;
+            long? persistentCount = default;
+            long? transientCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServerEndpointFilesNotSyncingError(Optional.ToNullable(errorCode), Optional.ToNullable(persistentCount), Optional.ToNullable(transientCount), serializedAdditionalRawData);
+            return new ServerEndpointFilesNotSyncingError(errorCode, persistentCount, transientCount, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServerEndpointFilesNotSyncingError>.Write(ModelReaderWriterOptions options)

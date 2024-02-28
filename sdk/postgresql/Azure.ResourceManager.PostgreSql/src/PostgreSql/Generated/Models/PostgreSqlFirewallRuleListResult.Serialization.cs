@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<PostgreSqlFirewallRuleData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PostgreSqlFirewallRuleData>> value = default;
+            IReadOnlyList<PostgreSqlFirewallRuleData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                     List<PostgreSqlFirewallRuleData> array = new List<PostgreSqlFirewallRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PostgreSqlFirewallRuleData.DeserializePostgreSqlFirewallRuleData(item));
+                        array.Add(PostgreSqlFirewallRuleData.DeserializePostgreSqlFirewallRuleData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlFirewallRuleListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new PostgreSqlFirewallRuleListResult(value ?? new ChangeTrackingList<PostgreSqlFirewallRuleData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlFirewallRuleListResult>.Write(ModelReaderWriterOptions options)

@@ -27,22 +27,22 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Input))
+            if (Input != null)
             {
                 writer.WritePropertyName("input"u8);
                 writer.WriteObjectValue(Input);
             }
-            if (Optional.IsDefined(CompatibilityLevel))
+            if (CompatibilityLevel != null)
             {
                 writer.WritePropertyName("compatibilityLevel"u8);
                 writer.WriteStringValue(CompatibilityLevel);
             }
-            if (Optional.IsDefined(EventsUri))
+            if (EventsUri != null)
             {
                 writer.WritePropertyName("eventsUri"u8);
                 writer.WriteStringValue(EventsUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(DataLocalion))
+            if (DataLocalion.HasValue)
             {
                 writer.WritePropertyName("dataLocale"u8);
                 writer.WriteStringValue(DataLocalion.Value);
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Optional<StreamingJobInputData> input = default;
-            Optional<string> compatibilityLevel = default;
-            Optional<Uri> eventsUri = default;
-            Optional<AzureLocation> dataLocale = default;
+            StreamingJobInputData input = default;
+            string compatibilityLevel = default;
+            Uri eventsUri = default;
+            AzureLocation? dataLocale = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     {
                         continue;
                     }
-                    input = StreamingJobInputData.DeserializeStreamingJobInputData(property.Value);
+                    input = StreamingJobInputData.DeserializeStreamingJobInputData(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("compatibilityLevel"u8))
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamAnalyticsSampleInputContent(input.Value, compatibilityLevel.Value, eventsUri.Value, Optional.ToNullable(dataLocale), serializedAdditionalRawData);
+            return new StreamAnalyticsSampleInputContent(input, compatibilityLevel, eventsUri, dataLocale, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamAnalyticsSampleInputContent>.Write(ModelReaderWriterOptions options)

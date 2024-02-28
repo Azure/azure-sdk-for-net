@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
 {
@@ -53,8 +52,14 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="messageId"/> is null. </exception>
         internal MessageFile(string id, DateTimeOffset createdAt, string messageId)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(messageId, nameof(messageId));
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (messageId == null)
+            {
+                throw new ArgumentNullException(nameof(messageId));
+            }
 
             Id = id;
             CreatedAt = createdAt;

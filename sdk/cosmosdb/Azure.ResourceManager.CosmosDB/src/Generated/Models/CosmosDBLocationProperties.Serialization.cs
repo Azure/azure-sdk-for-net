@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(DoesSupportAvailabilityZone))
+            if (options.Format != "W" && DoesSupportAvailabilityZone.HasValue)
             {
                 writer.WritePropertyName("supportsAvailabilityZone"u8);
                 writer.WriteBooleanValue(DoesSupportAvailabilityZone.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsResidencyRestricted))
+            if (options.Format != "W" && IsResidencyRestricted.HasValue)
             {
                 writer.WritePropertyName("isResidencyRestricted"u8);
                 writer.WriteBooleanValue(IsResidencyRestricted.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(BackupStorageRedundancies))
+            if (options.Format != "W" && !(BackupStorageRedundancies is ChangeTrackingList<CosmosDBBackupStorageRedundancy> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("backupStorageRedundancies"u8);
                 writer.WriteStartArray();
@@ -46,17 +46,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(IsSubscriptionRegionAccessAllowedForRegular))
+            if (options.Format != "W" && IsSubscriptionRegionAccessAllowedForRegular.HasValue)
             {
                 writer.WritePropertyName("isSubscriptionRegionAccessAllowedForRegular"u8);
                 writer.WriteBooleanValue(IsSubscriptionRegionAccessAllowedForRegular.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsSubscriptionRegionAccessAllowedForAz))
+            if (options.Format != "W" && IsSubscriptionRegionAccessAllowedForAz.HasValue)
             {
                 writer.WritePropertyName("isSubscriptionRegionAccessAllowedForAz"u8);
                 writer.WriteBooleanValue(IsSubscriptionRegionAccessAllowedForAz.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -99,12 +99,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<bool> supportsAvailabilityZone = default;
-            Optional<bool> isResidencyRestricted = default;
-            Optional<IReadOnlyList<CosmosDBBackupStorageRedundancy>> backupStorageRedundancies = default;
-            Optional<bool> isSubscriptionRegionAccessAllowedForRegular = default;
-            Optional<bool> isSubscriptionRegionAccessAllowedForAz = default;
-            Optional<CosmosDBStatus> status = default;
+            bool? supportsAvailabilityZone = default;
+            bool? isResidencyRestricted = default;
+            IReadOnlyList<CosmosDBBackupStorageRedundancy> backupStorageRedundancies = default;
+            bool? isSubscriptionRegionAccessAllowedForRegular = default;
+            bool? isSubscriptionRegionAccessAllowedForAz = default;
+            CosmosDBStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -174,7 +174,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBLocationProperties(Optional.ToNullable(supportsAvailabilityZone), Optional.ToNullable(isResidencyRestricted), Optional.ToList(backupStorageRedundancies), Optional.ToNullable(isSubscriptionRegionAccessAllowedForRegular), Optional.ToNullable(isSubscriptionRegionAccessAllowedForAz), Optional.ToNullable(status), serializedAdditionalRawData);
+            return new CosmosDBLocationProperties(
+                supportsAvailabilityZone,
+                isResidencyRestricted,
+                backupStorageRedundancies ?? new ChangeTrackingList<CosmosDBBackupStorageRedundancy>(),
+                isSubscriptionRegionAccessAllowedForRegular,
+                isSubscriptionRegionAccessAllowedForAz,
+                status,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBLocationProperties>.Write(ModelReaderWriterOptions options)

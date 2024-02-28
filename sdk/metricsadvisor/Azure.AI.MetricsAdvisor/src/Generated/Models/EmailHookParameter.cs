@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
@@ -20,7 +19,10 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="toList"/> is null. </exception>
         public EmailHookParameter(IEnumerable<string> toList)
         {
-            Argument.AssertNotNull(toList, nameof(toList));
+            if (toList == null)
+            {
+                throw new ArgumentNullException(nameof(toList));
+            }
 
             ToList = toList.ToList();
         }

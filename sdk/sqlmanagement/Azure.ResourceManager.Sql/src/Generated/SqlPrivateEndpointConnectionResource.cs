@@ -281,7 +281,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SqlPrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, SqlPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _sqlPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("SqlPrivateEndpointConnectionResource.Update");
             scope.Start();
@@ -327,7 +330,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SqlPrivateEndpointConnectionResource> Update(WaitUntil waitUntil, SqlPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _sqlPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("SqlPrivateEndpointConnectionResource.Update");
             scope.Start();

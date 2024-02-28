@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(BindingType))
+            if (BindingType.HasValue)
             {
                 writer.WritePropertyName("bindingType"u8);
                 writer.WriteStringValue(BindingType.Value.ToString());
             }
-            if (Optional.IsDefined(CertificateId))
+            if (CertificateId != null)
             {
                 writer.WritePropertyName("certificateId"u8);
                 writer.WriteStringValue(CertificateId);
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.AppContainers.Models
                 return null;
             }
             string name = default;
-            Optional<ContainerAppCustomDomainBindingType> bindingType = default;
-            Optional<ResourceIdentifier> certificateId = default;
+            ContainerAppCustomDomainBindingType? bindingType = default;
+            ResourceIdentifier certificateId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppCustomDomain(name, Optional.ToNullable(bindingType), certificateId.Value, serializedAdditionalRawData);
+            return new ContainerAppCustomDomain(name, bindingType, certificateId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppCustomDomain>.Write(ModelReaderWriterOptions options)

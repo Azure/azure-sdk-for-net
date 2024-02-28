@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
@@ -22,8 +21,14 @@ namespace Azure.AI.TextAnalytics.Models
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="category"/> is null. </exception>
         public Entity(string text, string category, int offset, int length, double confidenceScore)
         {
-            Argument.AssertNotNull(text, nameof(text));
-            Argument.AssertNotNull(category, nameof(category));
+            if (text == null)
+            {
+                throw new ArgumentNullException(nameof(text));
+            }
+            if (category == null)
+            {
+                throw new ArgumentNullException(nameof(category));
+            }
 
             Text = text;
             Category = category;

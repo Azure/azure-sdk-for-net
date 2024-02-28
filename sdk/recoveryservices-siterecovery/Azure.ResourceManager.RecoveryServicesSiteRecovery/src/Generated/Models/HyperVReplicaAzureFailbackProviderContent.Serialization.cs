@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DataSyncOption))
+            if (DataSyncOption != null)
             {
                 writer.WritePropertyName("dataSyncOption"u8);
                 writer.WriteStringValue(DataSyncOption);
             }
-            if (Optional.IsDefined(RecoveryVmCreationOption))
+            if (RecoveryVmCreationOption != null)
             {
                 writer.WritePropertyName("recoveryVmCreationOption"u8);
                 writer.WriteStringValue(RecoveryVmCreationOption);
             }
-            if (Optional.IsDefined(ProviderIdForAlternateRecovery))
+            if (ProviderIdForAlternateRecovery != null)
             {
                 writer.WritePropertyName("providerIdForAlternateRecovery"u8);
                 writer.WriteStringValue(ProviderIdForAlternateRecovery);
@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> dataSyncOption = default;
-            Optional<string> recoveryVmCreationOption = default;
-            Optional<string> providerIdForAlternateRecovery = default;
+            string dataSyncOption = default;
+            string recoveryVmCreationOption = default;
+            string providerIdForAlternateRecovery = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HyperVReplicaAzureFailbackProviderContent(instanceType, serializedAdditionalRawData, dataSyncOption.Value, recoveryVmCreationOption.Value, providerIdForAlternateRecovery.Value);
+            return new HyperVReplicaAzureFailbackProviderContent(instanceType, serializedAdditionalRawData, dataSyncOption, recoveryVmCreationOption, providerIdForAlternateRecovery);
         }
 
         BinaryData IPersistableModel<HyperVReplicaAzureFailbackProviderContent>.Write(ModelReaderWriterOptions options)

@@ -45,7 +45,10 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
         public HealthApiClient(string endpoint, WebPubSubServiceClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
             options ??= new WebPubSubServiceClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);

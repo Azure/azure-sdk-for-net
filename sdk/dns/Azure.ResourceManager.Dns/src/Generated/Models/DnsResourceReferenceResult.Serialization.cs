@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Dns.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(DnsResourceReferences))
+            if (!(DnsResourceReferences is ChangeTrackingList<DnsResourceReference> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dnsResourceReferences"u8);
                 writer.WriteStartArray();
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Dns.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DnsResourceReference>> dnsResourceReferences = default;
+            IReadOnlyList<DnsResourceReference> dnsResourceReferences = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Dns.Models
                             List<DnsResourceReference> array = new List<DnsResourceReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DnsResourceReference.DeserializeDnsResourceReference(item));
+                                array.Add(DnsResourceReference.DeserializeDnsResourceReference(item, options));
                             }
                             dnsResourceReferences = array;
                             continue;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Dns.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DnsResourceReferenceResult(Optional.ToList(dnsResourceReferences), serializedAdditionalRawData);
+            return new DnsResourceReferenceResult(dnsResourceReferences ?? new ChangeTrackingList<DnsResourceReference>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DnsResourceReferenceResult>.Write(ModelReaderWriterOptions options)

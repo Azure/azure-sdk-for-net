@@ -31,37 +31,37 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStringValue(OSType.ToSerialString());
             writer.WritePropertyName("osState"u8);
             writer.WriteStringValue(OSState.ToSerialString());
-            if (Optional.IsDefined(Snapshot))
+            if (Snapshot != null)
             {
                 writer.WritePropertyName("snapshot"u8);
                 JsonSerializer.Serialize(writer, Snapshot);
             }
-            if (Optional.IsDefined(ManagedDisk))
+            if (ManagedDisk != null)
             {
                 writer.WritePropertyName("managedDisk"u8);
                 JsonSerializer.Serialize(writer, ManagedDisk);
             }
-            if (Optional.IsDefined(BlobUri))
+            if (BlobUri != null)
             {
                 writer.WritePropertyName("blobUri"u8);
                 writer.WriteStringValue(BlobUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(Caching))
+            if (Caching.HasValue)
             {
                 writer.WritePropertyName("caching"u8);
                 writer.WriteStringValue(Caching.Value.ToSerialString());
             }
-            if (Optional.IsDefined(DiskSizeGB))
+            if (DiskSizeGB.HasValue)
             {
                 writer.WritePropertyName("diskSizeGB"u8);
                 writer.WriteNumberValue(DiskSizeGB.Value);
             }
-            if (Optional.IsDefined(StorageAccountType))
+            if (StorageAccountType.HasValue)
             {
                 writer.WritePropertyName("storageAccountType"u8);
                 writer.WriteStringValue(StorageAccountType.Value.ToString());
             }
-            if (Optional.IsDefined(DiskEncryptionSet))
+            if (DiskEncryptionSet != null)
             {
                 writer.WritePropertyName("diskEncryptionSet"u8);
                 JsonSerializer.Serialize(writer, DiskEncryptionSet);
@@ -106,13 +106,13 @@ namespace Azure.ResourceManager.Compute.Models
             }
             SupportedOperatingSystemType osType = default;
             OperatingSystemStateType osState = default;
-            Optional<WritableSubResource> snapshot = default;
-            Optional<WritableSubResource> managedDisk = default;
-            Optional<Uri> blobUri = default;
-            Optional<CachingType> caching = default;
-            Optional<int> diskSizeGB = default;
-            Optional<StorageAccountType> storageAccountType = default;
-            Optional<WritableSubResource> diskEncryptionSet = default;
+            WritableSubResource snapshot = default;
+            WritableSubResource managedDisk = default;
+            Uri blobUri = default;
+            CachingType? caching = default;
+            int? diskSizeGB = default;
+            StorageAccountType? storageAccountType = default;
+            WritableSubResource diskEncryptionSet = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -196,7 +196,17 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ImageOSDisk(snapshot, managedDisk, blobUri.Value, Optional.ToNullable(caching), Optional.ToNullable(diskSizeGB), Optional.ToNullable(storageAccountType), diskEncryptionSet, serializedAdditionalRawData, osType, osState);
+            return new ImageOSDisk(
+                snapshot,
+                managedDisk,
+                blobUri,
+                caching,
+                diskSizeGB,
+                storageAccountType,
+                diskEncryptionSet,
+                serializedAdditionalRawData,
+                osType,
+                osState);
         }
 
         BinaryData IPersistableModel<ImageOSDisk>.Write(ModelReaderWriterOptions options)

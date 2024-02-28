@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Peering.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PeeringServiceLocation))
+            if (PeeringServiceLocation != null)
             {
                 writer.WritePropertyName("peeringServiceLocation"u8);
                 writer.WriteStringValue(PeeringServiceLocation);
             }
-            if (Optional.IsDefined(PeeringServiceProvider))
+            if (PeeringServiceProvider != null)
             {
                 writer.WritePropertyName("peeringServiceProvider"u8);
                 writer.WriteStringValue(PeeringServiceProvider);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Optional<string> peeringServiceLocation = default;
-            Optional<string> peeringServiceProvider = default;
+            string peeringServiceLocation = default;
+            string peeringServiceProvider = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Peering.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CheckPeeringServiceProviderAvailabilityContent(peeringServiceLocation.Value, peeringServiceProvider.Value, serializedAdditionalRawData);
+            return new CheckPeeringServiceProviderAvailabilityContent(peeringServiceLocation, peeringServiceProvider, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CheckPeeringServiceProviderAvailabilityContent>.Write(ModelReaderWriterOptions options)

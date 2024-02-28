@@ -26,19 +26,19 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(AccountType.ToString());
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
@@ -81,10 +81,10 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
+            ResourceIdentifier id = default;
             MediaServicesStorageAccountType type = default;
-            Optional<ResourceIdentity> identity = default;
-            Optional<string> status = default;
+            ResourceIdentity identity = default;
+            string status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    identity = ResourceIdentity.DeserializeResourceIdentity(property.Value);
+                    identity = ResourceIdentity.DeserializeResourceIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MediaServicesStorageAccount(id.Value, type, identity.Value, status.Value, serializedAdditionalRawData);
+            return new MediaServicesStorageAccount(id, type, identity, status, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MediaServicesStorageAccount>.Write(ModelReaderWriterOptions options)

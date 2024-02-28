@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Code))
+            if (options.Format != "W" && Code != null)
             {
                 if (Code != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("code");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 if (CreatedOn != null)
                 {
@@ -50,12 +50,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("createdDateTime");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(Level))
+            if (options.Format != "W" && Level.HasValue)
             {
                 writer.WritePropertyName("level"u8);
                 writer.WriteStringValue(Level.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Message))
+            if (options.Format != "W" && Message != null)
             {
                 if (Message != null)
                 {
@@ -105,10 +105,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<DateTimeOffset?> createdDateTime = default;
-            Optional<JobStatusMessageLevel> level = default;
-            Optional<string> message = default;
+            string code = default;
+            DateTimeOffset? createdDateTime = default;
+            JobStatusMessageLevel? level = default;
+            string message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JobStatusMessage(code.Value, Optional.ToNullable(createdDateTime), Optional.ToNullable(level), message.Value, serializedAdditionalRawData);
+            return new JobStatusMessage(code, createdDateTime, level, message, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<JobStatusMessage>.Write(ModelReaderWriterOptions options)

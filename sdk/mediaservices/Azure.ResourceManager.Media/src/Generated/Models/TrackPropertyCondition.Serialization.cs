@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStringValue(Property.ToString());
             writer.WritePropertyName("operation"u8);
             writer.WriteStringValue(Operation.ToString());
-            if (Optional.IsDefined(Value))
+            if (Value != null)
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Media.Models
             }
             TrackPropertyType property = default;
             TrackPropertyCompareOperation operation = default;
-            Optional<string> value = default;
+            string value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property0 in element.EnumerateObject())
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrackPropertyCondition(property, operation, value.Value, serializedAdditionalRawData);
+            return new TrackPropertyCondition(property, operation, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrackPropertyCondition>.Write(ModelReaderWriterOptions options)

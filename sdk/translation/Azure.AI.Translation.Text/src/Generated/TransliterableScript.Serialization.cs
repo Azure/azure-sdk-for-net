@@ -94,7 +94,7 @@ namespace Azure.AI.Translation.Text
                     List<CommonScriptModel> array = new List<CommonScriptModel>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeCommonScriptModel(item));
+                        array.Add(DeserializeCommonScriptModel(item, options));
                     }
                     toScripts = array;
                     continue;
@@ -125,7 +125,13 @@ namespace Azure.AI.Translation.Text
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TransliterableScript(code, name, nativeName, dir, serializedAdditionalRawData, toScripts);
+            return new TransliterableScript(
+                code,
+                name,
+                nativeName,
+                dir,
+                serializedAdditionalRawData,
+                toScripts);
         }
 
         BinaryData IPersistableModel<TransliterableScript>.Write(ModelReaderWriterOptions options)

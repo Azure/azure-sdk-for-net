@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(StartOn))
+            if (StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(ExpireOn))
+            if (ExpireOn.HasValue)
             {
                 writer.WritePropertyName("expiryTime"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (Optional.IsDefined(Permission))
+            if (Permission != null)
             {
                 writer.WritePropertyName("permission"u8);
                 writer.WriteStringValue(Permission);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> expiryTime = default;
-            Optional<string> permission = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? expiryTime = default;
+            string permission = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageServiceAccessPolicy(Optional.ToNullable(startTime), Optional.ToNullable(expiryTime), permission.Value, serializedAdditionalRawData);
+            return new StorageServiceAccessPolicy(startTime, expiryTime, permission, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageServiceAccessPolicy>.Write(ModelReaderWriterOptions options)

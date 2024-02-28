@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ForceUpgrade))
+            if (ForceUpgrade.HasValue)
             {
                 writer.WritePropertyName("forceUpgrade"u8);
                 writer.WriteBooleanValue(ForceUpgrade.Value);
             }
-            if (Optional.IsDefined(Until))
+            if (Until.HasValue)
             {
                 writer.WritePropertyName("until"u8);
                 writer.WriteStringValue(Until.Value, "O");
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<bool> forceUpgrade = default;
-            Optional<DateTimeOffset> until = default;
+            bool? forceUpgrade = default;
+            DateTimeOffset? until = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UpgradeOverrideSettings(Optional.ToNullable(forceUpgrade), Optional.ToNullable(until), serializedAdditionalRawData);
+            return new UpgradeOverrideSettings(forceUpgrade, until, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UpgradeOverrideSettings>.Write(ModelReaderWriterOptions options)

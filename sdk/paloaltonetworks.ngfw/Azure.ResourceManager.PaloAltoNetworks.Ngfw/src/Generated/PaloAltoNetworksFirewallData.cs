@@ -61,10 +61,22 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentNullException"> <paramref name="networkProfile"/>, <paramref name="dnsSettings"/>, <paramref name="planData"/> or <paramref name="marketplaceDetails"/> is null. </exception>
         public PaloAltoNetworksFirewallData(AzureLocation location, FirewallNetworkProfile networkProfile, FirewallDnsSettings dnsSettings, FirewallBillingPlanInfo planData, PanFirewallMarketplaceDetails marketplaceDetails) : base(location)
         {
-            Argument.AssertNotNull(networkProfile, nameof(networkProfile));
-            Argument.AssertNotNull(dnsSettings, nameof(dnsSettings));
-            Argument.AssertNotNull(planData, nameof(planData));
-            Argument.AssertNotNull(marketplaceDetails, nameof(marketplaceDetails));
+            if (networkProfile == null)
+            {
+                throw new ArgumentNullException(nameof(networkProfile));
+            }
+            if (dnsSettings == null)
+            {
+                throw new ArgumentNullException(nameof(dnsSettings));
+            }
+            if (planData == null)
+            {
+                throw new ArgumentNullException(nameof(planData));
+            }
+            if (marketplaceDetails == null)
+            {
+                throw new ArgumentNullException(nameof(marketplaceDetails));
+            }
 
             NetworkProfile = networkProfile;
             DnsSettings = dnsSettings;

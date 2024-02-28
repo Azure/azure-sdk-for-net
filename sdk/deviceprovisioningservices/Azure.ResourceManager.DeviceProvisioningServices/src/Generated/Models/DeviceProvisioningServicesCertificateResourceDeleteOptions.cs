@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
@@ -18,7 +17,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> is null. </exception>
         public DeviceProvisioningServicesCertificateResourceDeleteOptions(string ifMatch)
         {
-            Argument.AssertNotNull(ifMatch, nameof(ifMatch));
+            if (ifMatch == null)
+            {
+                throw new ArgumentNullException(nameof(ifMatch));
+            }
 
             IfMatch = ifMatch;
         }

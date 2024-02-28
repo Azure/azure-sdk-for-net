@@ -27,12 +27,12 @@ namespace Azure.AI.ContentSafety
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Content))
+            if (Content != null)
             {
                 writer.WritePropertyName("content"u8);
                 writer.WriteBase64StringValue(Content.ToArray(), "D");
             }
-            if (Optional.IsDefined(BlobUri))
+            if (BlobUri != null)
             {
                 writer.WritePropertyName("blobUrl"u8);
                 writer.WriteStringValue(BlobUri.AbsoluteUri);
@@ -75,8 +75,8 @@ namespace Azure.AI.ContentSafety
             {
                 return null;
             }
-            Optional<BinaryData> content = default;
-            Optional<Uri> blobUrl = default;
+            BinaryData content = default;
+            Uri blobUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +105,7 @@ namespace Azure.AI.ContentSafety
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContentSafetyImageData(content.Value, blobUrl.Value, serializedAdditionalRawData);
+            return new ContentSafetyImageData(content, blobUrl, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContentSafetyImageData>.Write(ModelReaderWriterOptions options)

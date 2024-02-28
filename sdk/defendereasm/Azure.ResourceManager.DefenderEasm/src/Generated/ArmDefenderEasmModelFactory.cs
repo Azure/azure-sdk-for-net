@@ -30,7 +30,16 @@ namespace Azure.ResourceManager.DefenderEasm.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new EasmWorkspaceData(id, name, resourceType, systemData, tags, location, provisioningState, dataPlaneEndpoint, serializedAdditionalRawData: null);
+            return new EasmWorkspaceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                provisioningState,
+                dataPlaneEndpoint,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.EasmWorkspacePatch"/>. </summary>
@@ -55,7 +64,15 @@ namespace Azure.ResourceManager.DefenderEasm.Models
         /// <returns> A new <see cref="DefenderEasm.EasmLabelData"/> instance for mocking. </returns>
         public static EasmLabelData EasmLabelData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, EasmResourceProvisioningState? provisioningState = null, string displayName = null, string color = null)
         {
-            return new EasmLabelData(id, name, resourceType, systemData, provisioningState, displayName, color, serializedAdditionalRawData: null);
+            return new EasmLabelData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                displayName,
+                color,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.EasmLabelPatch"/>. </summary>
@@ -69,7 +86,15 @@ namespace Azure.ResourceManager.DefenderEasm.Models
         /// <returns> A new <see cref="Models.EasmLabelPatch"/> instance for mocking. </returns>
         public static EasmLabelPatch EasmLabelPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, EasmResourceProvisioningState? provisioningState = null, string displayName = null, string color = null)
         {
-            return new EasmLabelPatch(id, name, resourceType, systemData, provisioningState, displayName, color, serializedAdditionalRawData: null);
+            return new EasmLabelPatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                displayName,
+                color,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.EasmTask"/>. </summary>
@@ -88,7 +113,20 @@ namespace Azure.ResourceManager.DefenderEasm.Models
         /// <returns> A new <see cref="Models.EasmTask"/> instance for mocking. </returns>
         public static EasmTask EasmTask(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, EasmResourceProvisioningState? provisioningState = null, string startedAt = null, string completedAt = null, string lastPolledAt = null, string state = null, string phase = null, string reason = null, BinaryData metadata = null)
         {
-            return new EasmTask(id, name, resourceType, systemData, provisioningState, startedAt, completedAt, lastPolledAt, state, phase, reason, metadata, serializedAdditionalRawData: null);
+            return new EasmTask(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                startedAt,
+                completedAt,
+                lastPolledAt,
+                state,
+                phase,
+                reason,
+                metadata,
+                serializedAdditionalRawData: null);
         }
     }
 }

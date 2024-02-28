@@ -115,7 +115,7 @@ namespace Microsoft.Azure.WebJobs
         {
             get
             {
-                return _maxMessageBatchSize.HasValue ? _maxMessageBatchSize.Value : 1000;
+                return _maxMessageBatchSize.HasValue ? _maxMessageBatchSize.Value : 0;
             }
             set
             {
@@ -133,7 +133,7 @@ namespace Microsoft.Azure.WebJobs
         /// Gets a boolean to check if maximum message batch option was set on the trigger.
         /// Since a nullable property can't be used in the attribute. This is a work around for it.
         /// </summary>
-        internal bool IsMaxMessageBatchSizeOptionSet { get { return _maxMessageBatchSize.HasValue; } }
+        internal bool IsMaxMessageBatchSizeOptionSet { get { return _maxMessageBatchSize.HasValue && _maxMessageBatchSize != 0; } }
 
         private string DebuggerDisplay
         {

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Dynatrace.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(LogRules))
+            if (LogRules != null)
             {
                 writer.WritePropertyName("logRules"u8);
                 writer.WriteObjectValue(LogRules);
             }
-            if (Optional.IsDefined(MetricRules))
+            if (MetricRules != null)
             {
                 writer.WritePropertyName("metricRules"u8);
                 writer.WriteObjectValue(MetricRules);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Dynatrace.Models
             {
                 return null;
             }
-            Optional<DynatraceMonitorResourceLogRules> logRules = default;
-            Optional<DynatraceMonitorResourceMetricRules> metricRules = default;
+            DynatraceMonitorResourceLogRules logRules = default;
+            DynatraceMonitorResourceMetricRules metricRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     {
                         continue;
                     }
-                    logRules = DynatraceMonitorResourceLogRules.DeserializeDynatraceMonitorResourceLogRules(property.Value);
+                    logRules = DynatraceMonitorResourceLogRules.DeserializeDynatraceMonitorResourceLogRules(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("metricRules"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     {
                         continue;
                     }
-                    metricRules = DynatraceMonitorResourceMetricRules.DeserializeDynatraceMonitorResourceMetricRules(property.Value);
+                    metricRules = DynatraceMonitorResourceMetricRules.DeserializeDynatraceMonitorResourceMetricRules(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DynatraceTagRulePatch(logRules.Value, metricRules.Value, serializedAdditionalRawData);
+            return new DynatraceTagRulePatch(logRules, metricRules, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DynatraceTagRulePatch>.Write(ModelReaderWriterOptions options)

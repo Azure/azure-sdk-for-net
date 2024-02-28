@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsEncryptionInTransitEnabled))
+            if (IsEncryptionInTransitEnabled.HasValue)
             {
                 writer.WritePropertyName("isEncryptionInTransitEnabled"u8);
                 writer.WriteBooleanValue(IsEncryptionInTransitEnabled.Value);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<bool> isEncryptionInTransitEnabled = default;
+            bool? isEncryptionInTransitEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EncryptionInTransitProperties(Optional.ToNullable(isEncryptionInTransitEnabled), serializedAdditionalRawData);
+            return new EncryptionInTransitProperties(isEncryptionInTransitEnabled, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EncryptionInTransitProperties>.Write(ModelReaderWriterOptions options)

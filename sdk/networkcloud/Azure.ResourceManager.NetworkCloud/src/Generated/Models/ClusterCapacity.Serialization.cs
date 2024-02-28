@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AvailableApplianceStorageGB))
+            if (AvailableApplianceStorageGB.HasValue)
             {
                 writer.WritePropertyName("availableApplianceStorageGB"u8);
                 writer.WriteNumberValue(AvailableApplianceStorageGB.Value);
             }
-            if (Optional.IsDefined(AvailableCoreCount))
+            if (AvailableCoreCount.HasValue)
             {
                 writer.WritePropertyName("availableCoreCount"u8);
                 writer.WriteNumberValue(AvailableCoreCount.Value);
             }
-            if (Optional.IsDefined(AvailableHostStorageGB))
+            if (AvailableHostStorageGB.HasValue)
             {
                 writer.WritePropertyName("availableHostStorageGB"u8);
                 writer.WriteNumberValue(AvailableHostStorageGB.Value);
             }
-            if (Optional.IsDefined(AvailableMemoryGB))
+            if (AvailableMemoryGB.HasValue)
             {
                 writer.WritePropertyName("availableMemoryGB"u8);
                 writer.WriteNumberValue(AvailableMemoryGB.Value);
             }
-            if (Optional.IsDefined(TotalApplianceStorageGB))
+            if (TotalApplianceStorageGB.HasValue)
             {
                 writer.WritePropertyName("totalApplianceStorageGB"u8);
                 writer.WriteNumberValue(TotalApplianceStorageGB.Value);
             }
-            if (Optional.IsDefined(TotalCoreCount))
+            if (TotalCoreCount.HasValue)
             {
                 writer.WritePropertyName("totalCoreCount"u8);
                 writer.WriteNumberValue(TotalCoreCount.Value);
             }
-            if (Optional.IsDefined(TotalHostStorageGB))
+            if (TotalHostStorageGB.HasValue)
             {
                 writer.WritePropertyName("totalHostStorageGB"u8);
                 writer.WriteNumberValue(TotalHostStorageGB.Value);
             }
-            if (Optional.IsDefined(TotalMemoryGB))
+            if (TotalMemoryGB.HasValue)
             {
                 writer.WritePropertyName("totalMemoryGB"u8);
                 writer.WriteNumberValue(TotalMemoryGB.Value);
@@ -104,14 +104,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<long> availableApplianceStorageGB = default;
-            Optional<long> availableCoreCount = default;
-            Optional<long> availableHostStorageGB = default;
-            Optional<long> availableMemoryGB = default;
-            Optional<long> totalApplianceStorageGB = default;
-            Optional<long> totalCoreCount = default;
-            Optional<long> totalHostStorageGB = default;
-            Optional<long> totalMemoryGB = default;
+            long? availableApplianceStorageGB = default;
+            long? availableCoreCount = default;
+            long? availableHostStorageGB = default;
+            long? availableMemoryGB = default;
+            long? totalApplianceStorageGB = default;
+            long? totalCoreCount = default;
+            long? totalHostStorageGB = default;
+            long? totalMemoryGB = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -194,7 +194,16 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterCapacity(Optional.ToNullable(availableApplianceStorageGB), Optional.ToNullable(availableCoreCount), Optional.ToNullable(availableHostStorageGB), Optional.ToNullable(availableMemoryGB), Optional.ToNullable(totalApplianceStorageGB), Optional.ToNullable(totalCoreCount), Optional.ToNullable(totalHostStorageGB), Optional.ToNullable(totalMemoryGB), serializedAdditionalRawData);
+            return new ClusterCapacity(
+                availableApplianceStorageGB,
+                availableCoreCount,
+                availableHostStorageGB,
+                availableMemoryGB,
+                totalApplianceStorageGB,
+                totalCoreCount,
+                totalHostStorageGB,
+                totalMemoryGB,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterCapacity>.Write(ModelReaderWriterOptions options)

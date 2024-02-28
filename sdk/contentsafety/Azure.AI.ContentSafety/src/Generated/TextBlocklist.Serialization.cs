@@ -29,7 +29,7 @@ namespace Azure.AI.ContentSafety
             writer.WriteStartObject();
             writer.WritePropertyName("blocklistName"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -73,7 +73,7 @@ namespace Azure.AI.ContentSafety
                 return null;
             }
             string blocklistName = default;
-            Optional<string> description = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.AI.ContentSafety
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TextBlocklist(blocklistName, description.Value, serializedAdditionalRawData);
+            return new TextBlocklist(blocklistName, description, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TextBlocklist>.Write(ModelReaderWriterOptions options)

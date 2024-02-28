@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SoftwareAssuranceIntent))
+            if (SoftwareAssuranceIntent.HasValue)
             {
                 writer.WritePropertyName("softwareAssuranceIntent"u8);
                 writer.WriteStringValue(SoftwareAssuranceIntent.Value.ToString());
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<SoftwareAssuranceIntent> softwareAssuranceIntent = default;
+            SoftwareAssuranceIntent? softwareAssuranceIntent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SoftwareAssuranceChangeRequestProperties(Optional.ToNullable(softwareAssuranceIntent), serializedAdditionalRawData);
+            return new SoftwareAssuranceChangeRequestProperties(softwareAssuranceIntent, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SoftwareAssuranceChangeRequestProperties>.Write(ModelReaderWriterOptions options)

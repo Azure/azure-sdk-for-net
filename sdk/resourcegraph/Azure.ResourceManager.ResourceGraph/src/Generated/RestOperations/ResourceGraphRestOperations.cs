@@ -62,7 +62,10 @@ namespace Azure.ResourceManager.ResourceGraph
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public async Task<Response<ResourceQueryResult>> ResourcesAsync(ResourceQueryContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var message = CreateResourcesRequest(content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -86,7 +89,10 @@ namespace Azure.ResourceManager.ResourceGraph
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public Response<ResourceQueryResult> Resources(ResourceQueryContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var message = CreateResourcesRequest(content);
             _pipeline.Send(message, cancellationToken);
@@ -129,7 +135,10 @@ namespace Azure.ResourceManager.ResourceGraph
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public async Task<Response<BinaryData>> ResourcesHistoryAsync(ResourcesHistoryContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var message = CreateResourcesHistoryRequest(content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -152,7 +161,10 @@ namespace Azure.ResourceManager.ResourceGraph
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public Response<BinaryData> ResourcesHistory(ResourcesHistoryContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var message = CreateResourcesHistoryRequest(content);
             _pipeline.Send(message, cancellationToken);

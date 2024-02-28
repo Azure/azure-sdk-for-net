@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SasUri))
+            if (SasUri != null)
             {
                 writer.WritePropertyName("sasUrl"u8);
                 writer.WriteStringValue(SasUri.AbsoluteUri);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<Uri> sasUrl = default;
+            Uri sasUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VpnPacketCaptureStopContent(sasUrl.Value, serializedAdditionalRawData);
+            return new VpnPacketCaptureStopContent(sasUrl, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VpnPacketCaptureStopContent>.Write(ModelReaderWriterOptions options)

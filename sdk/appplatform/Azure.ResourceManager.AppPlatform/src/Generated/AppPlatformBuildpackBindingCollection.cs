@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="buildpackBindingName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AppPlatformBuildpackBindingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string buildpackBindingName, AppPlatformBuildpackBindingData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(buildpackBindingName, nameof(buildpackBindingName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (buildpackBindingName == null)
+            {
+                throw new ArgumentNullException(nameof(buildpackBindingName));
+            }
+            if (buildpackBindingName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(buildpackBindingName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _appPlatformBuildpackBindingBuildpackBindingClientDiagnostics.CreateScope("AppPlatformBuildpackBindingCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="buildpackBindingName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AppPlatformBuildpackBindingResource> CreateOrUpdate(WaitUntil waitUntil, string buildpackBindingName, AppPlatformBuildpackBindingData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(buildpackBindingName, nameof(buildpackBindingName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (buildpackBindingName == null)
+            {
+                throw new ArgumentNullException(nameof(buildpackBindingName));
+            }
+            if (buildpackBindingName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(buildpackBindingName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _appPlatformBuildpackBindingBuildpackBindingClientDiagnostics.CreateScope("AppPlatformBuildpackBindingCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="buildpackBindingName"/> is null. </exception>
         public virtual async Task<Response<AppPlatformBuildpackBindingResource>> GetAsync(string buildpackBindingName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(buildpackBindingName, nameof(buildpackBindingName));
+            if (buildpackBindingName == null)
+            {
+                throw new ArgumentNullException(nameof(buildpackBindingName));
+            }
+            if (buildpackBindingName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(buildpackBindingName));
+            }
 
             using var scope = _appPlatformBuildpackBindingBuildpackBindingClientDiagnostics.CreateScope("AppPlatformBuildpackBindingCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="buildpackBindingName"/> is null. </exception>
         public virtual Response<AppPlatformBuildpackBindingResource> Get(string buildpackBindingName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(buildpackBindingName, nameof(buildpackBindingName));
+            if (buildpackBindingName == null)
+            {
+                throw new ArgumentNullException(nameof(buildpackBindingName));
+            }
+            if (buildpackBindingName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(buildpackBindingName));
+            }
 
             using var scope = _appPlatformBuildpackBindingBuildpackBindingClientDiagnostics.CreateScope("AppPlatformBuildpackBindingCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="buildpackBindingName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string buildpackBindingName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(buildpackBindingName, nameof(buildpackBindingName));
+            if (buildpackBindingName == null)
+            {
+                throw new ArgumentNullException(nameof(buildpackBindingName));
+            }
+            if (buildpackBindingName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(buildpackBindingName));
+            }
 
             using var scope = _appPlatformBuildpackBindingBuildpackBindingClientDiagnostics.CreateScope("AppPlatformBuildpackBindingCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="buildpackBindingName"/> is null. </exception>
         public virtual Response<bool> Exists(string buildpackBindingName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(buildpackBindingName, nameof(buildpackBindingName));
+            if (buildpackBindingName == null)
+            {
+                throw new ArgumentNullException(nameof(buildpackBindingName));
+            }
+            if (buildpackBindingName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(buildpackBindingName));
+            }
 
             using var scope = _appPlatformBuildpackBindingBuildpackBindingClientDiagnostics.CreateScope("AppPlatformBuildpackBindingCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="buildpackBindingName"/> is null. </exception>
         public virtual async Task<NullableResponse<AppPlatformBuildpackBindingResource>> GetIfExistsAsync(string buildpackBindingName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(buildpackBindingName, nameof(buildpackBindingName));
+            if (buildpackBindingName == null)
+            {
+                throw new ArgumentNullException(nameof(buildpackBindingName));
+            }
+            if (buildpackBindingName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(buildpackBindingName));
+            }
 
             using var scope = _appPlatformBuildpackBindingBuildpackBindingClientDiagnostics.CreateScope("AppPlatformBuildpackBindingCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="buildpackBindingName"/> is null. </exception>
         public virtual NullableResponse<AppPlatformBuildpackBindingResource> GetIfExists(string buildpackBindingName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(buildpackBindingName, nameof(buildpackBindingName));
+            if (buildpackBindingName == null)
+            {
+                throw new ArgumentNullException(nameof(buildpackBindingName));
+            }
+            if (buildpackBindingName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(buildpackBindingName));
+            }
 
             using var scope = _appPlatformBuildpackBindingBuildpackBindingClientDiagnostics.CreateScope("AppPlatformBuildpackBindingCollection.GetIfExists");
             scope.Start();

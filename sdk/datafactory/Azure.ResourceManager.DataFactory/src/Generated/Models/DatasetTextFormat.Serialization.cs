@@ -27,59 +27,59 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ColumnDelimiter))
+            if (ColumnDelimiter != null)
             {
                 writer.WritePropertyName("columnDelimiter"u8);
                 JsonSerializer.Serialize(writer, ColumnDelimiter);
             }
-            if (Optional.IsDefined(RowDelimiter))
+            if (RowDelimiter != null)
             {
                 writer.WritePropertyName("rowDelimiter"u8);
                 JsonSerializer.Serialize(writer, RowDelimiter);
             }
-            if (Optional.IsDefined(EscapeChar))
+            if (EscapeChar != null)
             {
                 writer.WritePropertyName("escapeChar"u8);
                 JsonSerializer.Serialize(writer, EscapeChar);
             }
-            if (Optional.IsDefined(QuoteChar))
+            if (QuoteChar != null)
             {
                 writer.WritePropertyName("quoteChar"u8);
                 JsonSerializer.Serialize(writer, QuoteChar);
             }
-            if (Optional.IsDefined(NullValue))
+            if (NullValue != null)
             {
                 writer.WritePropertyName("nullValue"u8);
                 JsonSerializer.Serialize(writer, NullValue);
             }
-            if (Optional.IsDefined(EncodingName))
+            if (EncodingName != null)
             {
                 writer.WritePropertyName("encodingName"u8);
                 JsonSerializer.Serialize(writer, EncodingName);
             }
-            if (Optional.IsDefined(TreatEmptyAsNull))
+            if (TreatEmptyAsNull != null)
             {
                 writer.WritePropertyName("treatEmptyAsNull"u8);
                 JsonSerializer.Serialize(writer, TreatEmptyAsNull);
             }
-            if (Optional.IsDefined(SkipLineCount))
+            if (SkipLineCount != null)
             {
                 writer.WritePropertyName("skipLineCount"u8);
                 JsonSerializer.Serialize(writer, SkipLineCount);
             }
-            if (Optional.IsDefined(FirstRowAsHeader))
+            if (FirstRowAsHeader != null)
             {
                 writer.WritePropertyName("firstRowAsHeader"u8);
                 JsonSerializer.Serialize(writer, FirstRowAsHeader);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DatasetStorageFormatType);
-            if (Optional.IsDefined(Serializer))
+            if (Serializer != null)
             {
                 writer.WritePropertyName("serializer"u8);
                 JsonSerializer.Serialize(writer, Serializer);
             }
-            if (Optional.IsDefined(Deserializer))
+            if (Deserializer != null)
             {
                 writer.WritePropertyName("deserializer"u8);
                 JsonSerializer.Serialize(writer, Deserializer);
@@ -119,18 +119,18 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryElement<string>> columnDelimiter = default;
-            Optional<DataFactoryElement<string>> rowDelimiter = default;
-            Optional<DataFactoryElement<string>> escapeChar = default;
-            Optional<DataFactoryElement<string>> quoteChar = default;
-            Optional<DataFactoryElement<string>> nullValue = default;
-            Optional<DataFactoryElement<string>> encodingName = default;
-            Optional<DataFactoryElement<bool>> treatEmptyAsNull = default;
-            Optional<DataFactoryElement<int>> skipLineCount = default;
-            Optional<DataFactoryElement<bool>> firstRowAsHeader = default;
+            DataFactoryElement<string> columnDelimiter = default;
+            DataFactoryElement<string> rowDelimiter = default;
+            DataFactoryElement<string> escapeChar = default;
+            DataFactoryElement<string> quoteChar = default;
+            DataFactoryElement<string> nullValue = default;
+            DataFactoryElement<string> encodingName = default;
+            DataFactoryElement<bool> treatEmptyAsNull = default;
+            DataFactoryElement<int> skipLineCount = default;
+            DataFactoryElement<bool> firstRowAsHeader = default;
             string type = default;
-            Optional<DataFactoryElement<string>> serializer = default;
-            Optional<DataFactoryElement<string>> deserializer = default;
+            DataFactoryElement<string> serializer = default;
+            DataFactoryElement<string> deserializer = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -242,7 +242,20 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DatasetTextFormat(type, serializer.Value, deserializer.Value, additionalProperties, columnDelimiter.Value, rowDelimiter.Value, escapeChar.Value, quoteChar.Value, nullValue.Value, encodingName.Value, treatEmptyAsNull.Value, skipLineCount.Value, firstRowAsHeader.Value);
+            return new DatasetTextFormat(
+                type,
+                serializer,
+                deserializer,
+                additionalProperties,
+                columnDelimiter,
+                rowDelimiter,
+                escapeChar,
+                quoteChar,
+                nullValue,
+                encodingName,
+                treatEmptyAsNull,
+                skipLineCount,
+                firstRowAsHeader);
         }
 
         BinaryData IPersistableModel<DatasetTextFormat>.Write(ModelReaderWriterOptions options)

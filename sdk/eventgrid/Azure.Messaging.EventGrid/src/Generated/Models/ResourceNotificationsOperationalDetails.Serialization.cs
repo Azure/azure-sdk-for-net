@@ -19,7 +19,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<DateTimeOffset> resourceEventTime = default;
+            DateTimeOffset? resourceEventTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceEventTime"u8))
@@ -32,7 +32,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new ResourceNotificationsOperationalDetails(Optional.ToNullable(resourceEventTime));
+            return new ResourceNotificationsOperationalDetails(resourceEventTime);
         }
     }
 }

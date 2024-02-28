@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ConnectVia))
+            if (ConnectVia != null)
             {
                 writer.WritePropertyName("connectVia"u8);
                 writer.WriteObjectValue(ConnectVia);
             }
-            if (Optional.IsDefined(StagingLinkedService))
+            if (StagingLinkedService != null)
             {
                 writer.WritePropertyName("stagingLinkedService"u8);
                 writer.WriteObjectValue(StagingLinkedService);
             }
-            if (Optional.IsDefined(Path))
+            if (Path != null)
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<SynapseEntityReference> connectVia = default;
-            Optional<SynapseEntityReference> stagingLinkedService = default;
-            Optional<string> path = default;
+            SynapseEntityReference connectVia = default;
+            SynapseEntityReference stagingLinkedService = default;
+            string path = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     {
                         continue;
                     }
-                    connectVia = SynapseEntityReference.DeserializeSynapseEntityReference(property.Value);
+                    connectVia = SynapseEntityReference.DeserializeSynapseEntityReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("stagingLinkedService"u8))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     {
                         continue;
                     }
-                    stagingLinkedService = SynapseEntityReference.DeserializeSynapseEntityReference(property.Value);
+                    stagingLinkedService = SynapseEntityReference.DeserializeSynapseEntityReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("path"u8))
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseIntegrationRuntimeDataProxyProperties(connectVia.Value, stagingLinkedService.Value, path.Value, serializedAdditionalRawData);
+            return new SynapseIntegrationRuntimeDataProxyProperties(connectVia, stagingLinkedService, path, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseIntegrationRuntimeDataProxyProperties>.Write(ModelReaderWriterOptions options)

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AffectedResourceType))
+            if (AffectedResourceType != null)
             {
                 writer.WritePropertyName("affectedResourceType"u8);
                 writer.WriteStringValue(AffectedResourceType);
             }
-            if (Optional.IsDefined(AffectedObjectsCount))
+            if (AffectedObjectsCount.HasValue)
             {
                 writer.WritePropertyName("affectedObjectsCount"u8);
                 writer.WriteNumberValue(AffectedObjectsCount.Value);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             {
                 return null;
             }
-            Optional<string> affectedResourceType = default;
-            Optional<long> affectedObjectsCount = default;
+            string affectedResourceType = default;
+            long? affectedObjectsCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SpringBootSiteErrorSummaryModel(affectedResourceType.Value, Optional.ToNullable(affectedObjectsCount), serializedAdditionalRawData);
+            return new SpringBootSiteErrorSummaryModel(affectedResourceType, affectedObjectsCount, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SpringBootSiteErrorSummaryModel>.Write(ModelReaderWriterOptions options)

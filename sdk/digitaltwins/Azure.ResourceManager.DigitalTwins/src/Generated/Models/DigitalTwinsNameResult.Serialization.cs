@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsNameAvailable))
+            if (IsNameAvailable.HasValue)
             {
                 writer.WritePropertyName("nameAvailable"u8);
                 writer.WriteBooleanValue(IsNameAvailable.Value);
             }
-            if (Optional.IsDefined(Message))
+            if (Message != null)
             {
                 if (Message != null)
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     writer.WriteNull("message");
                 }
             }
-            if (Optional.IsDefined(Reason))
+            if (Reason.HasValue)
             {
                 if (Reason != null)
                 {
@@ -93,9 +93,9 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             {
                 return null;
             }
-            Optional<bool> nameAvailable = default;
-            Optional<string> message = default;
-            Optional<DigitalTwinsNameUnavailableReason?> reason = default;
+            bool? nameAvailable = default;
+            string message = default;
+            DigitalTwinsNameUnavailableReason? reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DigitalTwinsNameResult(Optional.ToNullable(nameAvailable), message.Value, Optional.ToNullable(reason), serializedAdditionalRawData);
+            return new DigitalTwinsNameResult(nameAvailable, message, reason, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DigitalTwinsNameResult>.Write(ModelReaderWriterOptions options)

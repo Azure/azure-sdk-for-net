@@ -72,9 +72,26 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Devices.xml" path="doc/members/member[@name='CreateOrUpdateAsync(string,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateAsync(string sensorPartnerId, string deviceId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
-            Argument.AssertNotNullOrEmpty(deviceId, nameof(deviceId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (sensorPartnerId == null)
+            {
+                throw new ArgumentNullException(nameof(sensorPartnerId));
+            }
+            if (sensorPartnerId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sensorPartnerId));
+            }
+            if (deviceId == null)
+            {
+                throw new ArgumentNullException(nameof(deviceId));
+            }
+            if (deviceId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Devices.CreateOrUpdate");
             scope.Start();
@@ -111,9 +128,26 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Devices.xml" path="doc/members/member[@name='CreateOrUpdate(string,string,RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdate(string sensorPartnerId, string deviceId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
-            Argument.AssertNotNullOrEmpty(deviceId, nameof(deviceId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (sensorPartnerId == null)
+            {
+                throw new ArgumentNullException(nameof(sensorPartnerId));
+            }
+            if (sensorPartnerId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sensorPartnerId));
+            }
+            if (deviceId == null)
+            {
+                throw new ArgumentNullException(nameof(deviceId));
+            }
+            if (deviceId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Devices.CreateOrUpdate");
             scope.Start();
@@ -149,8 +183,22 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Devices.xml" path="doc/members/member[@name='GetDeviceAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetDeviceAsync(string sensorPartnerId, string deviceId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
-            Argument.AssertNotNullOrEmpty(deviceId, nameof(deviceId));
+            if (sensorPartnerId == null)
+            {
+                throw new ArgumentNullException(nameof(sensorPartnerId));
+            }
+            if (sensorPartnerId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sensorPartnerId));
+            }
+            if (deviceId == null)
+            {
+                throw new ArgumentNullException(nameof(deviceId));
+            }
+            if (deviceId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Devices.GetDevice");
             scope.Start();
@@ -186,8 +234,22 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Devices.xml" path="doc/members/member[@name='GetDevice(string,string,RequestContext)']/*" />
         public virtual Response GetDevice(string sensorPartnerId, string deviceId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
-            Argument.AssertNotNullOrEmpty(deviceId, nameof(deviceId));
+            if (sensorPartnerId == null)
+            {
+                throw new ArgumentNullException(nameof(sensorPartnerId));
+            }
+            if (sensorPartnerId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sensorPartnerId));
+            }
+            if (deviceId == null)
+            {
+                throw new ArgumentNullException(nameof(deviceId));
+            }
+            if (deviceId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Devices.GetDevice");
             scope.Start();
@@ -223,8 +285,22 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Devices.xml" path="doc/members/member[@name='DeleteAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteAsync(string sensorPartnerId, string deviceId, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
-            Argument.AssertNotNullOrEmpty(deviceId, nameof(deviceId));
+            if (sensorPartnerId == null)
+            {
+                throw new ArgumentNullException(nameof(sensorPartnerId));
+            }
+            if (sensorPartnerId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sensorPartnerId));
+            }
+            if (deviceId == null)
+            {
+                throw new ArgumentNullException(nameof(deviceId));
+            }
+            if (deviceId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Devices.Delete");
             scope.Start();
@@ -260,8 +336,22 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Devices.xml" path="doc/members/member[@name='Delete(string,string,RequestContext)']/*" />
         public virtual Response Delete(string sensorPartnerId, string deviceId, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
-            Argument.AssertNotNullOrEmpty(deviceId, nameof(deviceId));
+            if (sensorPartnerId == null)
+            {
+                throw new ArgumentNullException(nameof(sensorPartnerId));
+            }
+            if (sensorPartnerId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sensorPartnerId));
+            }
+            if (deviceId == null)
+            {
+                throw new ArgumentNullException(nameof(deviceId));
+            }
+            if (deviceId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Devices.Delete");
             scope.Start();
@@ -314,7 +404,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Devices.xml" path="doc/members/member[@name='GetDevicesAsync(string,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetDevicesAsync(string sensorPartnerId, IEnumerable<string> parentDeviceIds, IEnumerable<string> deviceDataModelIds, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
+            if (sensorPartnerId == null)
+            {
+                throw new ArgumentNullException(nameof(sensorPartnerId));
+            }
+            if (sensorPartnerId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sensorPartnerId));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDevicesRequest(sensorPartnerId, parentDeviceIds, deviceDataModelIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDevicesNextPageRequest(nextLink, sensorPartnerId, parentDeviceIds, deviceDataModelIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
@@ -358,7 +455,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Devices.xml" path="doc/members/member[@name='GetDevices(string,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetDevices(string sensorPartnerId, IEnumerable<string> parentDeviceIds, IEnumerable<string> deviceDataModelIds, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
+            if (sensorPartnerId == null)
+            {
+                throw new ArgumentNullException(nameof(sensorPartnerId));
+            }
+            if (sensorPartnerId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sensorPartnerId));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDevicesRequest(sensorPartnerId, parentDeviceIds, deviceDataModelIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDevicesNextPageRequest(nextLink, sensorPartnerId, parentDeviceIds, deviceDataModelIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
@@ -375,42 +479,42 @@ namespace Azure.Verticals.AgriFood.Farming
             uri.AppendPath("/sensor-partners/", false);
             uri.AppendPath(sensorPartnerId, true);
             uri.AppendPath("/devices", false);
-            if (parentDeviceIds != null && Optional.IsCollectionDefined(parentDeviceIds))
+            if (parentDeviceIds != null && !(parentDeviceIds is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var param in parentDeviceIds)
                 {
                     uri.AppendQuery("parentDeviceIds", param, true);
                 }
             }
-            if (deviceDataModelIds != null && Optional.IsCollectionDefined(deviceDataModelIds))
+            if (deviceDataModelIds != null && !(deviceDataModelIds is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 foreach (var param in deviceDataModelIds)
                 {
                     uri.AppendQuery("deviceDataModelIds", param, true);
                 }
             }
-            if (ids != null && Optional.IsCollectionDefined(ids))
+            if (ids != null && !(ids is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
             {
                 foreach (var param in ids)
                 {
                     uri.AppendQuery("ids", param, true);
                 }
             }
-            if (names != null && Optional.IsCollectionDefined(names))
+            if (names != null && !(names is ChangeTrackingList<string> changeTrackingList2 && changeTrackingList2.IsUndefined))
             {
                 foreach (var param in names)
                 {
                     uri.AppendQuery("names", param, true);
                 }
             }
-            if (propertyFilters != null && Optional.IsCollectionDefined(propertyFilters))
+            if (propertyFilters != null && !(propertyFilters is ChangeTrackingList<string> changeTrackingList3 && changeTrackingList3.IsUndefined))
             {
                 foreach (var param in propertyFilters)
                 {
                     uri.AppendQuery("propertyFilters", param, true);
                 }
             }
-            if (statuses != null && Optional.IsCollectionDefined(statuses))
+            if (statuses != null && !(statuses is ChangeTrackingList<string> changeTrackingList4 && changeTrackingList4.IsUndefined))
             {
                 foreach (var param in statuses)
                 {

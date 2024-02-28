@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -24,8 +23,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="credentials"/> or <paramref name="nameNodeAddress"/> is null. </exception>
         public HdfsDatastore(MachineLearningDatastoreCredentials credentials, string nameNodeAddress) : base(credentials)
         {
-            Argument.AssertNotNull(credentials, nameof(credentials));
-            Argument.AssertNotNull(nameNodeAddress, nameof(nameNodeAddress));
+            if (credentials == null)
+            {
+                throw new ArgumentNullException(nameof(credentials));
+            }
+            if (nameNodeAddress == null)
+            {
+                throw new ArgumentNullException(nameof(nameNodeAddress));
+            }
 
             NameNodeAddress = nameNodeAddress;
             DatastoreType = DatastoreType.Hdfs;

@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
             writer.WriteStringValue(MaximumDuration, "P");
             writer.WritePropertyName("rebootSetting"u8);
             writer.WriteStringValue(RebootSetting.ToString());
-            if (Optional.IsDefined(WindowsParameters))
+            if (WindowsParameters != null)
             {
                 writer.WritePropertyName("windowsParameters"u8);
                 writer.WriteObjectValue(WindowsParameters);
             }
-            if (Optional.IsDefined(LinuxParameters))
+            if (LinuxParameters != null)
             {
                 writer.WritePropertyName("linuxParameters"u8);
                 writer.WriteObjectValue(LinuxParameters);
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
             TimeSpan maximumDuration = default;
             VmGuestPatchRebootSetting rebootSetting = default;
-            Optional<HybridComputeWindowsParameters> windowsParameters = default;
-            Optional<HybridComputeLinuxParameters> linuxParameters = default;
+            HybridComputeWindowsParameters windowsParameters = default;
+            HybridComputeLinuxParameters linuxParameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    windowsParameters = HybridComputeWindowsParameters.DeserializeHybridComputeWindowsParameters(property.Value);
+                    windowsParameters = HybridComputeWindowsParameters.DeserializeHybridComputeWindowsParameters(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("linuxParameters"u8))
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    linuxParameters = HybridComputeLinuxParameters.DeserializeHybridComputeLinuxParameters(property.Value);
+                    linuxParameters = HybridComputeLinuxParameters.DeserializeHybridComputeLinuxParameters(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineInstallPatchesContent(maximumDuration, rebootSetting, windowsParameters.Value, linuxParameters.Value, serializedAdditionalRawData);
+            return new MachineInstallPatchesContent(maximumDuration, rebootSetting, windowsParameters, linuxParameters, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineInstallPatchesContent>.Write(ModelReaderWriterOptions options)

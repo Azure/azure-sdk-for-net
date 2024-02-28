@@ -53,8 +53,14 @@ namespace Azure.Communication.Messages
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="language"/> is null. </exception>
         public MessageTemplate(string name, string language)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(language, nameof(language));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (language == null)
+            {
+                throw new ArgumentNullException(nameof(language));
+            }
 
             Name = name;
             Language = language;

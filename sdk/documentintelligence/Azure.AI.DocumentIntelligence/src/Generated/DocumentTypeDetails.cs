@@ -51,7 +51,10 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="ArgumentNullException"> <paramref name="fieldSchema"/> is null. </exception>
         internal DocumentTypeDetails(IReadOnlyDictionary<string, DocumentFieldSchema> fieldSchema)
         {
-            Argument.AssertNotNull(fieldSchema, nameof(fieldSchema));
+            if (fieldSchema == null)
+            {
+                throw new ArgumentNullException(nameof(fieldSchema));
+            }
 
             FieldSchema = fieldSchema;
             FieldConfidence = new ChangeTrackingDictionary<string, float>();

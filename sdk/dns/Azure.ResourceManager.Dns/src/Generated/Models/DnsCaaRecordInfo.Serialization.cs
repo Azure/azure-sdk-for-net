@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Dns.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Flags))
+            if (Flags.HasValue)
             {
                 writer.WritePropertyName("flags"u8);
                 writer.WriteNumberValue(Flags.Value);
             }
-            if (Optional.IsDefined(Tag))
+            if (Tag != null)
             {
                 writer.WritePropertyName("tag"u8);
                 writer.WriteStringValue(Tag);
             }
-            if (Optional.IsDefined(Value))
+            if (Value != null)
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Dns.Models
             {
                 return null;
             }
-            Optional<int> flags = default;
-            Optional<string> tag = default;
-            Optional<string> value = default;
+            int? flags = default;
+            string tag = default;
+            string value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Dns.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DnsCaaRecordInfo(Optional.ToNullable(flags), tag.Value, value.Value, serializedAdditionalRawData);
+            return new DnsCaaRecordInfo(flags, tag, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DnsCaaRecordInfo>.Write(ModelReaderWriterOptions options)

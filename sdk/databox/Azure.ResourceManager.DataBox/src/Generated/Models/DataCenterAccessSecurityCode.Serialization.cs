@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ReverseDataCenterAccessCode))
+            if (ReverseDataCenterAccessCode != null)
             {
                 writer.WritePropertyName("reverseDCAccessCode"u8);
                 writer.WriteStringValue(ReverseDataCenterAccessCode);
             }
-            if (Optional.IsDefined(ForwardDataCenterAccessCode))
+            if (ForwardDataCenterAccessCode != null)
             {
                 writer.WritePropertyName("forwardDCAccessCode"u8);
                 writer.WriteStringValue(ForwardDataCenterAccessCode);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<string> reverseDCAccessCode = default;
-            Optional<string> forwardDCAccessCode = default;
+            string reverseDCAccessCode = default;
+            string forwardDCAccessCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataCenterAccessSecurityCode(reverseDCAccessCode.Value, forwardDCAccessCode.Value, serializedAdditionalRawData);
+            return new DataCenterAccessSecurityCode(reverseDCAccessCode, forwardDCAccessCode, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataCenterAccessSecurityCode>.Write(ModelReaderWriterOptions options)

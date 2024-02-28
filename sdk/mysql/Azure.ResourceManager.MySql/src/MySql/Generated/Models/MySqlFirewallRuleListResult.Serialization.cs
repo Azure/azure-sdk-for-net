@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.MySql.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<MySqlFirewallRuleData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.MySql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MySqlFirewallRuleData>> value = default;
+            IReadOnlyList<MySqlFirewallRuleData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.MySql.Models
                     List<MySqlFirewallRuleData> array = new List<MySqlFirewallRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MySqlFirewallRuleData.DeserializeMySqlFirewallRuleData(item));
+                        array.Add(MySqlFirewallRuleData.DeserializeMySqlFirewallRuleData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.MySql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlFirewallRuleListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new MySqlFirewallRuleListResult(value ?? new ChangeTrackingList<MySqlFirewallRuleData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlFirewallRuleListResult>.Write(ModelReaderWriterOptions options)

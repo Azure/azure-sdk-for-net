@@ -59,7 +59,10 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetwork"/> is null. </exception>
         public DnsResolverData(AzureLocation location, WritableSubResource virtualNetwork) : base(location)
         {
-            Argument.AssertNotNull(virtualNetwork, nameof(virtualNetwork));
+            if (virtualNetwork == null)
+            {
+                throw new ArgumentNullException(nameof(virtualNetwork));
+            }
 
             VirtualNetwork = virtualNetwork;
         }

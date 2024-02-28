@@ -15,17 +15,17 @@ namespace Azure.AI.TextAnalytics
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Conditionality))
+            if (Conditionality.HasValue)
             {
                 writer.WritePropertyName("conditionality"u8);
                 writer.WriteStringValue(Conditionality.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Certainty))
+            if (Certainty.HasValue)
             {
                 writer.WritePropertyName("certainty"u8);
                 writer.WriteStringValue(Certainty.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Association))
+            if (Association.HasValue)
             {
                 writer.WritePropertyName("association"u8);
                 writer.WriteStringValue(Association.Value.ToSerialString());
@@ -39,9 +39,9 @@ namespace Azure.AI.TextAnalytics
             {
                 return null;
             }
-            Optional<EntityConditionality> conditionality = default;
-            Optional<EntityCertainty> certainty = default;
-            Optional<EntityAssociation> association = default;
+            EntityConditionality? conditionality = default;
+            EntityCertainty? certainty = default;
+            EntityAssociation? association = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("conditionality"u8))
@@ -72,7 +72,7 @@ namespace Azure.AI.TextAnalytics
                     continue;
                 }
             }
-            return new HealthcareEntityAssertion(Optional.ToNullable(conditionality), Optional.ToNullable(certainty), Optional.ToNullable(association));
+            return new HealthcareEntityAssertion(conditionality, certainty, association);
         }
     }
 }

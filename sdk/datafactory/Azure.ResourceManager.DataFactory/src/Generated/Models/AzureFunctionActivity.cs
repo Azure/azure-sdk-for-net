@@ -22,8 +22,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="functionName"/> is null. </exception>
         public AzureFunctionActivity(string name, AzureFunctionActivityMethod method, DataFactoryElement<string> functionName) : base(name)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(functionName, nameof(functionName));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (functionName == null)
+            {
+                throw new ArgumentNullException(nameof(functionName));
+            }
 
             Method = method;
             FunctionName = functionName;

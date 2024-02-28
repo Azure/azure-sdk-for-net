@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Grafana.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TermUnit))
+            if (TermUnit != null)
             {
                 writer.WritePropertyName("termUnit"u8);
                 writer.WriteStringValue(TermUnit);
             }
-            if (Optional.IsDefined(StartOn))
+            if (StartOn.HasValue)
             {
                 writer.WritePropertyName("startDate"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (EndOn.HasValue)
             {
                 writer.WritePropertyName("endDate"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Grafana.Models
             {
                 return null;
             }
-            Optional<string> termUnit = default;
-            Optional<DateTimeOffset> startDate = default;
-            Optional<DateTimeOffset> endDate = default;
+            string termUnit = default;
+            DateTimeOffset? startDate = default;
+            DateTimeOffset? endDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubscriptionTerm(termUnit.Value, Optional.ToNullable(startDate), Optional.ToNullable(endDate), serializedAdditionalRawData);
+            return new SubscriptionTerm(termUnit, startDate, endDate, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubscriptionTerm>.Write(ModelReaderWriterOptions options)

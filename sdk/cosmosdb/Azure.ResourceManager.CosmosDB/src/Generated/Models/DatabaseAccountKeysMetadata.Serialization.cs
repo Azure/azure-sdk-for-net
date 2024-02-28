@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(PrimaryMasterKey))
+            if (options.Format != "W" && PrimaryMasterKey != null)
             {
                 writer.WritePropertyName("primaryMasterKey"u8);
                 writer.WriteObjectValue(PrimaryMasterKey);
             }
-            if (options.Format != "W" && Optional.IsDefined(SecondaryMasterKey))
+            if (options.Format != "W" && SecondaryMasterKey != null)
             {
                 writer.WritePropertyName("secondaryMasterKey"u8);
                 writer.WriteObjectValue(SecondaryMasterKey);
             }
-            if (options.Format != "W" && Optional.IsDefined(PrimaryReadonlyMasterKey))
+            if (options.Format != "W" && PrimaryReadonlyMasterKey != null)
             {
                 writer.WritePropertyName("primaryReadonlyMasterKey"u8);
                 writer.WriteObjectValue(PrimaryReadonlyMasterKey);
             }
-            if (options.Format != "W" && Optional.IsDefined(SecondaryReadonlyMasterKey))
+            if (options.Format != "W" && SecondaryReadonlyMasterKey != null)
             {
                 writer.WritePropertyName("secondaryReadonlyMasterKey"u8);
                 writer.WriteObjectValue(SecondaryReadonlyMasterKey);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<AccountKeyMetadata> primaryMasterKey = default;
-            Optional<AccountKeyMetadata> secondaryMasterKey = default;
-            Optional<AccountKeyMetadata> primaryReadonlyMasterKey = default;
-            Optional<AccountKeyMetadata> secondaryReadonlyMasterKey = default;
+            AccountKeyMetadata primaryMasterKey = default;
+            AccountKeyMetadata secondaryMasterKey = default;
+            AccountKeyMetadata primaryReadonlyMasterKey = default;
+            AccountKeyMetadata secondaryReadonlyMasterKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    primaryMasterKey = AccountKeyMetadata.DeserializeAccountKeyMetadata(property.Value);
+                    primaryMasterKey = AccountKeyMetadata.DeserializeAccountKeyMetadata(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("secondaryMasterKey"u8))
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    secondaryMasterKey = AccountKeyMetadata.DeserializeAccountKeyMetadata(property.Value);
+                    secondaryMasterKey = AccountKeyMetadata.DeserializeAccountKeyMetadata(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("primaryReadonlyMasterKey"u8))
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    primaryReadonlyMasterKey = AccountKeyMetadata.DeserializeAccountKeyMetadata(property.Value);
+                    primaryReadonlyMasterKey = AccountKeyMetadata.DeserializeAccountKeyMetadata(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("secondaryReadonlyMasterKey"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    secondaryReadonlyMasterKey = AccountKeyMetadata.DeserializeAccountKeyMetadata(property.Value);
+                    secondaryReadonlyMasterKey = AccountKeyMetadata.DeserializeAccountKeyMetadata(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatabaseAccountKeysMetadata(primaryMasterKey.Value, secondaryMasterKey.Value, primaryReadonlyMasterKey.Value, secondaryReadonlyMasterKey.Value, serializedAdditionalRawData);
+            return new DatabaseAccountKeysMetadata(primaryMasterKey, secondaryMasterKey, primaryReadonlyMasterKey, secondaryReadonlyMasterKey, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatabaseAccountKeysMetadata>.Write(ModelReaderWriterOptions options)

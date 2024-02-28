@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(VersioningScheme))
+            if (VersioningScheme.HasValue)
             {
                 writer.WritePropertyName("versioningScheme"u8);
                 writer.WriteStringValue(VersioningScheme.Value.ToString());
             }
-            if (Optional.IsDefined(VersionQueryName))
+            if (VersionQueryName != null)
             {
                 writer.WritePropertyName("versionQueryName"u8);
                 writer.WriteStringValue(VersionQueryName);
             }
-            if (Optional.IsDefined(VersionHeaderName))
+            if (VersionHeaderName != null)
             {
                 writer.WritePropertyName("versionHeaderName"u8);
                 writer.WriteStringValue(VersionHeaderName);
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<VersioningScheme> versioningScheme = default;
-            Optional<string> versionQueryName = default;
-            Optional<string> versionHeaderName = default;
+            string id = default;
+            string name = default;
+            string description = default;
+            VersioningScheme? versioningScheme = default;
+            string versionQueryName = default;
+            string versionHeaderName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,7 +144,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiVersionSetContractDetails(id.Value, name.Value, description.Value, Optional.ToNullable(versioningScheme), versionQueryName.Value, versionHeaderName.Value, serializedAdditionalRawData);
+            return new ApiVersionSetContractDetails(
+                id,
+                name,
+                description,
+                versioningScheme,
+                versionQueryName,
+                versionHeaderName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiVersionSetContractDetails>.Write(ModelReaderWriterOptions options)

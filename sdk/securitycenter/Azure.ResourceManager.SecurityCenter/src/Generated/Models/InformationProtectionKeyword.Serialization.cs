@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Pattern))
+            if (Pattern != null)
             {
                 writer.WritePropertyName("pattern"u8);
                 writer.WriteStringValue(Pattern);
             }
-            if (Optional.IsDefined(Custom))
+            if (Custom.HasValue)
             {
                 writer.WritePropertyName("custom"u8);
                 writer.WriteBooleanValue(Custom.Value);
             }
-            if (Optional.IsDefined(CanBeNumeric))
+            if (CanBeNumeric.HasValue)
             {
                 writer.WritePropertyName("canBeNumeric"u8);
                 writer.WriteBooleanValue(CanBeNumeric.Value);
             }
-            if (Optional.IsDefined(Excluded))
+            if (Excluded.HasValue)
             {
                 writer.WritePropertyName("excluded"u8);
                 writer.WriteBooleanValue(Excluded.Value);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> pattern = default;
-            Optional<bool> custom = default;
-            Optional<bool> canBeNumeric = default;
-            Optional<bool> excluded = default;
+            string pattern = default;
+            bool? custom = default;
+            bool? canBeNumeric = default;
+            bool? excluded = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InformationProtectionKeyword(pattern.Value, Optional.ToNullable(custom), Optional.ToNullable(canBeNumeric), Optional.ToNullable(excluded), serializedAdditionalRawData);
+            return new InformationProtectionKeyword(pattern, custom, canBeNumeric, excluded, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InformationProtectionKeyword>.Write(ModelReaderWriterOptions options)

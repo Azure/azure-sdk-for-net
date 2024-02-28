@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CentralServerVmId))
+            if (CentralServerVmId != null)
             {
                 writer.WritePropertyName("centralServerVmId"u8);
                 writer.WriteStringValue(CentralServerVmId);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> centralServerVmId = default;
+            ResourceIdentifier centralServerVmId = default;
             SapSoftwareInstallationType softwareInstallationType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExternalInstallationSoftwareConfiguration(softwareInstallationType, serializedAdditionalRawData, centralServerVmId.Value);
+            return new ExternalInstallationSoftwareConfiguration(softwareInstallationType, serializedAdditionalRawData, centralServerVmId);
         }
 
         BinaryData IPersistableModel<ExternalInstallationSoftwareConfiguration>.Write(ModelReaderWriterOptions options)

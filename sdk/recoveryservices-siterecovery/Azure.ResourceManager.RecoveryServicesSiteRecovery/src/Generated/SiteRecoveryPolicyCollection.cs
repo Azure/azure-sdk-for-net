@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -89,8 +89,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<SiteRecoveryPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string policyName, SiteRecoveryPolicyCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (policyName == null)
+            {
+                throw new ArgumentNullException(nameof(policyName));
+            }
+            if (policyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(policyName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _siteRecoveryPolicyReplicationPoliciesClientDiagnostics.CreateScope("SiteRecoveryPolicyCollection.CreateOrUpdate");
             scope.Start();
@@ -122,7 +132,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -138,8 +148,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<SiteRecoveryPolicyResource> CreateOrUpdate(WaitUntil waitUntil, string policyName, SiteRecoveryPolicyCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (policyName == null)
+            {
+                throw new ArgumentNullException(nameof(policyName));
+            }
+            if (policyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(policyName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _siteRecoveryPolicyReplicationPoliciesClientDiagnostics.CreateScope("SiteRecoveryPolicyCollection.CreateOrUpdate");
             scope.Start();
@@ -171,7 +191,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -185,7 +205,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
         public virtual async Task<Response<SiteRecoveryPolicyResource>> GetAsync(string policyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
+            if (policyName == null)
+            {
+                throw new ArgumentNullException(nameof(policyName));
+            }
+            if (policyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(policyName));
+            }
 
             using var scope = _siteRecoveryPolicyReplicationPoliciesClientDiagnostics.CreateScope("SiteRecoveryPolicyCollection.Get");
             scope.Start();
@@ -216,7 +243,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -230,7 +257,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
         public virtual Response<SiteRecoveryPolicyResource> Get(string policyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
+            if (policyName == null)
+            {
+                throw new ArgumentNullException(nameof(policyName));
+            }
+            if (policyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(policyName));
+            }
 
             using var scope = _siteRecoveryPolicyReplicationPoliciesClientDiagnostics.CreateScope("SiteRecoveryPolicyCollection.Get");
             scope.Start();
@@ -261,7 +295,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -291,7 +325,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -321,7 +355,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -335,7 +369,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string policyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
+            if (policyName == null)
+            {
+                throw new ArgumentNullException(nameof(policyName));
+            }
+            if (policyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(policyName));
+            }
 
             using var scope = _siteRecoveryPolicyReplicationPoliciesClientDiagnostics.CreateScope("SiteRecoveryPolicyCollection.Exists");
             scope.Start();
@@ -364,7 +405,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -378,7 +419,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
         public virtual Response<bool> Exists(string policyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
+            if (policyName == null)
+            {
+                throw new ArgumentNullException(nameof(policyName));
+            }
+            if (policyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(policyName));
+            }
 
             using var scope = _siteRecoveryPolicyReplicationPoliciesClientDiagnostics.CreateScope("SiteRecoveryPolicyCollection.Exists");
             scope.Start();
@@ -407,7 +455,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -421,7 +469,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
         public virtual async Task<NullableResponse<SiteRecoveryPolicyResource>> GetIfExistsAsync(string policyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
+            if (policyName == null)
+            {
+                throw new ArgumentNullException(nameof(policyName));
+            }
+            if (policyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(policyName));
+            }
 
             using var scope = _siteRecoveryPolicyReplicationPoliciesClientDiagnostics.CreateScope("SiteRecoveryPolicyCollection.GetIfExists");
             scope.Start();
@@ -452,7 +507,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -466,7 +521,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
         public virtual NullableResponse<SiteRecoveryPolicyResource> GetIfExists(string policyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
+            if (policyName == null)
+            {
+                throw new ArgumentNullException(nameof(policyName));
+            }
+            if (policyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(policyName));
+            }
 
             using var scope = _siteRecoveryPolicyReplicationPoliciesClientDiagnostics.CreateScope("SiteRecoveryPolicyCollection.GetIfExists");
             scope.Start();

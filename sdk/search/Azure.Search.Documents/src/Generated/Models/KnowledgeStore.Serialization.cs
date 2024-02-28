@@ -25,7 +25,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 if (Identity != null)
                 {
@@ -37,7 +37,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("identity");
                 }
             }
-            if (Optional.IsDefined(Parameters))
+            if (Parameters != null)
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteObjectValue(Parameters);
@@ -53,8 +53,8 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             string storageConnectionString = default;
             IList<KnowledgeStoreProjection> projections = default;
-            Optional<SearchIndexerDataIdentity> identity = default;
-            Optional<SearchIndexerKnowledgeStoreParameters> parameters = default;
+            SearchIndexerDataIdentity identity = default;
+            SearchIndexerKnowledgeStoreParameters parameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageConnectionString"u8))
@@ -92,7 +92,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new KnowledgeStore(storageConnectionString, projections, identity.Value, parameters.Value);
+            return new KnowledgeStore(storageConnectionString, projections, identity, parameters);
         }
     }
 }

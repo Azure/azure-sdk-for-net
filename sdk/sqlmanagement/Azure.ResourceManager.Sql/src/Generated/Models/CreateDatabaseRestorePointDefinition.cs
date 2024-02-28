@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.Sql.Models
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointLabel"/> is null. </exception>
         public CreateDatabaseRestorePointDefinition(string restorePointLabel)
         {
-            Argument.AssertNotNull(restorePointLabel, nameof(restorePointLabel));
+            if (restorePointLabel == null)
+            {
+                throw new ArgumentNullException(nameof(restorePointLabel));
+            }
 
             RestorePointLabel = restorePointLabel;
         }

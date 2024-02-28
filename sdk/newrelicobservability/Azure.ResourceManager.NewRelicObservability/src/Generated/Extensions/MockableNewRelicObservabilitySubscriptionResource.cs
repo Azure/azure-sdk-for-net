@@ -80,7 +80,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         /// <returns> An async collection of <see cref="NewRelicAccountResourceData"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NewRelicAccountResourceData> GetNewRelicAccountsAsync(string userEmail, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(userEmail, nameof(userEmail));
+            if (userEmail == null)
+            {
+                throw new ArgumentNullException(nameof(userEmail));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => AccountsRestClient.CreateListRequest(Id.SubscriptionId, userEmail, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AccountsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, userEmail, location);
@@ -111,7 +114,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         /// <returns> A collection of <see cref="NewRelicAccountResourceData"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NewRelicAccountResourceData> GetNewRelicAccounts(string userEmail, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(userEmail, nameof(userEmail));
+            if (userEmail == null)
+            {
+                throw new ArgumentNullException(nameof(userEmail));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => AccountsRestClient.CreateListRequest(Id.SubscriptionId, userEmail, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AccountsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, userEmail, location);
@@ -202,7 +208,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         /// <returns> An async collection of <see cref="NewRelicOrganizationResourceData"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NewRelicOrganizationResourceData> GetNewRelicOrganizationsAsync(string userEmail, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(userEmail, nameof(userEmail));
+            if (userEmail == null)
+            {
+                throw new ArgumentNullException(nameof(userEmail));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => OrganizationsRestClient.CreateListRequest(Id.SubscriptionId, userEmail, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OrganizationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, userEmail, location);
@@ -233,7 +242,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         /// <returns> A collection of <see cref="NewRelicOrganizationResourceData"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NewRelicOrganizationResourceData> GetNewRelicOrganizations(string userEmail, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(userEmail, nameof(userEmail));
+            if (userEmail == null)
+            {
+                throw new ArgumentNullException(nameof(userEmail));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => OrganizationsRestClient.CreateListRequest(Id.SubscriptionId, userEmail, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OrganizationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, userEmail, location);

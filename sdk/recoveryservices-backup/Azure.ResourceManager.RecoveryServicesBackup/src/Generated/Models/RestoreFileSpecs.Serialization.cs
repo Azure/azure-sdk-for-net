@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Path))
+            if (Path != null)
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (Optional.IsDefined(FileSpecType))
+            if (FileSpecType != null)
             {
                 writer.WritePropertyName("fileSpecType"u8);
                 writer.WriteStringValue(FileSpecType);
             }
-            if (Optional.IsDefined(TargetFolderPath))
+            if (TargetFolderPath != null)
             {
                 writer.WritePropertyName("targetFolderPath"u8);
                 writer.WriteStringValue(TargetFolderPath);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<string> path = default;
-            Optional<string> fileSpecType = default;
-            Optional<string> targetFolderPath = default;
+            string path = default;
+            string fileSpecType = default;
+            string targetFolderPath = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RestoreFileSpecs(path.Value, fileSpecType.Value, targetFolderPath.Value, serializedAdditionalRawData);
+            return new RestoreFileSpecs(path, fileSpecType, targetFolderPath, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RestoreFileSpecs>.Write(ModelReaderWriterOptions options)

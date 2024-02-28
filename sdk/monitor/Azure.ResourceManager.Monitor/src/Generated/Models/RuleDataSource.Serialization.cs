@@ -28,22 +28,22 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartObject();
             writer.WritePropertyName("odata.type"u8);
             writer.WriteStringValue(OdataType);
-            if (Optional.IsDefined(ResourceId))
+            if (ResourceId != null)
             {
                 writer.WritePropertyName("resourceUri"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Optional.IsDefined(LegacyResourceId))
+            if (LegacyResourceId != null)
             {
                 writer.WritePropertyName("legacyResourceId"u8);
                 writer.WriteStringValue(LegacyResourceId);
             }
-            if (Optional.IsDefined(ResourceLocation))
+            if (ResourceLocation != null)
             {
                 writer.WritePropertyName("resourceLocation"u8);
                 writer.WriteStringValue(ResourceLocation);
             }
-            if (Optional.IsDefined(MetricNamespace))
+            if (MetricNamespace != null)
             {
                 writer.WritePropertyName("metricNamespace"u8);
                 writer.WriteStringValue(MetricNamespace);
@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Microsoft.Azure.Management.Insights.Models.RuleManagementEventDataSource": return RuleManagementEventDataSource.DeserializeRuleManagementEventDataSource(element);
-                    case "Microsoft.Azure.Management.Insights.Models.RuleMetricDataSource": return RuleMetricDataSource.DeserializeRuleMetricDataSource(element);
+                    case "Microsoft.Azure.Management.Insights.Models.RuleManagementEventDataSource": return RuleManagementEventDataSource.DeserializeRuleManagementEventDataSource(element, options);
+                    case "Microsoft.Azure.Management.Insights.Models.RuleMetricDataSource": return RuleMetricDataSource.DeserializeRuleMetricDataSource(element, options);
                 }
             }
-            return UnknownRuleDataSource.DeserializeUnknownRuleDataSource(element);
+            return UnknownRuleDataSource.DeserializeUnknownRuleDataSource(element, options);
         }
 
         BinaryData IPersistableModel<RuleDataSource>.Write(ModelReaderWriterOptions options)

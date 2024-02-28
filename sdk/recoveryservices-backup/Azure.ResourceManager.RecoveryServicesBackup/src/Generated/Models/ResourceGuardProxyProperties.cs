@@ -51,7 +51,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardResourceId"/> is null. </exception>
         public ResourceGuardProxyProperties(ResourceIdentifier resourceGuardResourceId)
         {
-            Argument.AssertNotNull(resourceGuardResourceId, nameof(resourceGuardResourceId));
+            if (resourceGuardResourceId == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGuardResourceId));
+            }
 
             ResourceGuardResourceId = resourceGuardResourceId;
             ResourceGuardOperationDetails = new ChangeTrackingList<ResourceGuardOperationDetail>();

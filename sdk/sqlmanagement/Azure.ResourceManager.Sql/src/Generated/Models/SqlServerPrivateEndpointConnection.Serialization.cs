@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(Properties))
+            if (options.Format != "W" && Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<ServerPrivateEndpointConnectionProperties> properties = default;
+            ResourceIdentifier id = default;
+            ServerPrivateEndpointConnectionProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    properties = ServerPrivateEndpointConnectionProperties.DeserializeServerPrivateEndpointConnectionProperties(property.Value);
+                    properties = ServerPrivateEndpointConnectionProperties.DeserializeServerPrivateEndpointConnectionProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlServerPrivateEndpointConnection(id.Value, properties.Value, serializedAdditionalRawData);
+            return new SqlServerPrivateEndpointConnection(id, properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlServerPrivateEndpointConnection>.Write(ModelReaderWriterOptions options)

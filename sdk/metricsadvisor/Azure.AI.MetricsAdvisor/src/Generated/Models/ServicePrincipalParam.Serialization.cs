@@ -17,7 +17,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStartObject();
             writer.WritePropertyName("clientId"u8);
             writer.WriteStringValue(ClientId);
-            if (Optional.IsDefined(ClientSecret))
+            if (ClientSecret != null)
             {
                 writer.WritePropertyName("clientSecret"u8);
                 writer.WriteStringValue(ClientSecret);
@@ -34,7 +34,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 return null;
             }
             string clientId = default;
-            Optional<string> clientSecret = default;
+            string clientSecret = default;
             string tenantId = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -54,7 +54,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new ServicePrincipalParam(clientId, clientSecret.Value, tenantId);
+            return new ServicePrincipalParam(clientId, clientSecret, tenantId);
         }
     }
 }

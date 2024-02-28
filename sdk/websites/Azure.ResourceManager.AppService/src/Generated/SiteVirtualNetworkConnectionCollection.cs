@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SiteVirtualNetworkConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string vnetName, AppServiceVirtualNetworkData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (vnetName == null)
+            {
+                throw new ArgumentNullException(nameof(vnetName));
+            }
+            if (vnetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(vnetName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _siteVirtualNetworkConnectionWebAppsClientDiagnostics.CreateScope("SiteVirtualNetworkConnectionCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SiteVirtualNetworkConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string vnetName, AppServiceVirtualNetworkData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (vnetName == null)
+            {
+                throw new ArgumentNullException(nameof(vnetName));
+            }
+            if (vnetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(vnetName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _siteVirtualNetworkConnectionWebAppsClientDiagnostics.CreateScope("SiteVirtualNetworkConnectionCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> is null. </exception>
         public virtual async Task<Response<SiteVirtualNetworkConnectionResource>> GetAsync(string vnetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
+            if (vnetName == null)
+            {
+                throw new ArgumentNullException(nameof(vnetName));
+            }
+            if (vnetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(vnetName));
+            }
 
             using var scope = _siteVirtualNetworkConnectionWebAppsClientDiagnostics.CreateScope("SiteVirtualNetworkConnectionCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> is null. </exception>
         public virtual Response<SiteVirtualNetworkConnectionResource> Get(string vnetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
+            if (vnetName == null)
+            {
+                throw new ArgumentNullException(nameof(vnetName));
+            }
+            if (vnetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(vnetName));
+            }
 
             using var scope = _siteVirtualNetworkConnectionWebAppsClientDiagnostics.CreateScope("SiteVirtualNetworkConnectionCollection.Get");
             scope.Start();
@@ -326,7 +360,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string vnetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
+            if (vnetName == null)
+            {
+                throw new ArgumentNullException(nameof(vnetName));
+            }
+            if (vnetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(vnetName));
+            }
 
             using var scope = _siteVirtualNetworkConnectionWebAppsClientDiagnostics.CreateScope("SiteVirtualNetworkConnectionCollection.Exists");
             scope.Start();
@@ -369,7 +410,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> is null. </exception>
         public virtual Response<bool> Exists(string vnetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
+            if (vnetName == null)
+            {
+                throw new ArgumentNullException(nameof(vnetName));
+            }
+            if (vnetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(vnetName));
+            }
 
             using var scope = _siteVirtualNetworkConnectionWebAppsClientDiagnostics.CreateScope("SiteVirtualNetworkConnectionCollection.Exists");
             scope.Start();
@@ -412,7 +460,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> is null. </exception>
         public virtual async Task<NullableResponse<SiteVirtualNetworkConnectionResource>> GetIfExistsAsync(string vnetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
+            if (vnetName == null)
+            {
+                throw new ArgumentNullException(nameof(vnetName));
+            }
+            if (vnetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(vnetName));
+            }
 
             using var scope = _siteVirtualNetworkConnectionWebAppsClientDiagnostics.CreateScope("SiteVirtualNetworkConnectionCollection.GetIfExists");
             scope.Start();
@@ -457,7 +512,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> is null. </exception>
         public virtual NullableResponse<SiteVirtualNetworkConnectionResource> GetIfExists(string vnetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
+            if (vnetName == null)
+            {
+                throw new ArgumentNullException(nameof(vnetName));
+            }
+            if (vnetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(vnetName));
+            }
 
             using var scope = _siteVirtualNetworkConnectionWebAppsClientDiagnostics.CreateScope("SiteVirtualNetworkConnectionCollection.GetIfExists");
             scope.Start();

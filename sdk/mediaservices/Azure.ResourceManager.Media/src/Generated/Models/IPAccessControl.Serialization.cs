@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AllowedIPs))
+            if (!(AllowedIPs is ChangeTrackingList<IPRange> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("allow"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<IList<IPRange>> allow = default;
+            IList<IPRange> allow = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<IPRange> array = new List<IPRange>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IPRange.DeserializeIPRange(item));
+                        array.Add(IPRange.DeserializeIPRange(item, options));
                     }
                     allow = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IPAccessControl(Optional.ToList(allow), serializedAdditionalRawData);
+            return new IPAccessControl(allow ?? new ChangeTrackingList<IPRange>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IPAccessControl>.Write(ModelReaderWriterOptions options)

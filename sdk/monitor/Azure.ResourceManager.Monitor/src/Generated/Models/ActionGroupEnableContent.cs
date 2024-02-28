@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="receiverName"/> is null. </exception>
         public ActionGroupEnableContent(string receiverName)
         {
-            Argument.AssertNotNull(receiverName, nameof(receiverName));
+            if (receiverName == null)
+            {
+                throw new ArgumentNullException(nameof(receiverName));
+            }
 
             ReceiverName = receiverName;
         }

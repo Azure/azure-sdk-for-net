@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Search.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(Properties))
+            if (options.Format != "W" && Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Search.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<ShareableSearchServicePrivateLinkResourceProperties> properties = default;
+            string name = default;
+            ShareableSearchServicePrivateLinkResourceProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Search.Models
                     {
                         continue;
                     }
-                    properties = ShareableSearchServicePrivateLinkResourceProperties.DeserializeShareableSearchServicePrivateLinkResourceProperties(property.Value);
+                    properties = ShareableSearchServicePrivateLinkResourceProperties.DeserializeShareableSearchServicePrivateLinkResourceProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Search.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ShareableSearchServicePrivateLinkResourceType(name.Value, properties.Value, serializedAdditionalRawData);
+            return new ShareableSearchServicePrivateLinkResourceType(name, properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ShareableSearchServicePrivateLinkResourceType>.Write(ModelReaderWriterOptions options)

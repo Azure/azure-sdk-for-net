@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SampleUtterance))
+            if (SampleUtterance != null)
             {
                 writer.WritePropertyName("sampleUtterance"u8);
                 writer.WriteObjectValue(SampleUtterance);
             }
-            if (Optional.IsDefined(Score))
+            if (Score.HasValue)
             {
                 writer.WritePropertyName("score"u8);
                 writer.WriteNumberValue(Score.Value);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<SampleUtterance> sampleUtterance = default;
-            Optional<float> score = default;
+            SampleUtterance sampleUtterance = default;
+            float? score = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    sampleUtterance = SampleUtterance.DeserializeSampleUtterance(property.Value);
+                    sampleUtterance = SampleUtterance.DeserializeSampleUtterance(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("score"u8))
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QueryUtterancesResult(sampleUtterance.Value, Optional.ToNullable(score), serializedAdditionalRawData);
+            return new QueryUtterancesResult(sampleUtterance, score, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QueryUtterancesResult>.Write(ModelReaderWriterOptions options)

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteStartObject();
             writer.WritePropertyName("schedule"u8);
             writer.WriteStringValue(Schedule);
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 return null;
             }
             string schedule = default;
-            Optional<ContainerRegistryTriggerStatus> status = default;
+            ContainerRegistryTriggerStatus? status = default;
             string name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryTimerTrigger(schedule, Optional.ToNullable(status), name, serializedAdditionalRawData);
+            return new ContainerRegistryTimerTrigger(schedule, status, name, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryTimerTrigger>.Write(ModelReaderWriterOptions options)

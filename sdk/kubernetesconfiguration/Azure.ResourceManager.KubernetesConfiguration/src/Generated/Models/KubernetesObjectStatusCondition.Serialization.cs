@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(LastTransitionOn))
+            if (LastTransitionOn.HasValue)
             {
                 writer.WritePropertyName("lastTransitionTime"u8);
                 writer.WriteStringValue(LastTransitionOn.Value, "O");
             }
-            if (Optional.IsDefined(Message))
+            if (Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Optional.IsDefined(Reason))
+            if (Reason != null)
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
             }
-            if (Optional.IsDefined(Status))
+            if (Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Optional.IsDefined(ObjectStatusConditionDefinitionType))
+            if (ObjectStatusConditionDefinitionType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ObjectStatusConditionDefinitionType);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> lastTransitionTime = default;
-            Optional<string> message = default;
-            Optional<string> reason = default;
-            Optional<string> status = default;
-            Optional<string> type = default;
+            DateTimeOffset? lastTransitionTime = default;
+            string message = default;
+            string reason = default;
+            string status = default;
+            string type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesObjectStatusCondition(Optional.ToNullable(lastTransitionTime), message.Value, reason.Value, status.Value, type.Value, serializedAdditionalRawData);
+            return new KubernetesObjectStatusCondition(
+                lastTransitionTime,
+                message,
+                reason,
+                status,
+                type,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesObjectStatusCondition>.Write(ModelReaderWriterOptions options)

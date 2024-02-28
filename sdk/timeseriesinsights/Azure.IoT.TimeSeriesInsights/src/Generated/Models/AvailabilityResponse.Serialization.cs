@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
@@ -18,7 +17,7 @@ namespace Azure.IoT.TimeSeriesInsights
             {
                 return null;
             }
-            Optional<Availability> availability = default;
+            Availability availability = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("availability"u8))
@@ -31,7 +30,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     continue;
                 }
             }
-            return new AvailabilityResponse(availability.Value);
+            return new AvailabilityResponse(availability);
         }
     }
 }

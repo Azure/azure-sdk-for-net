@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStartObject();
             writer.WritePropertyName("value"u8);
             writer.WriteStringValue(IPAddressOrRange);
-            if (Optional.IsDefined(Action))
+            if (Action.HasValue)
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action.Value.ToString());
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Storage.Models
                 return null;
             }
             string value = default;
-            Optional<StorageAccountNetworkRuleAction> action = default;
+            StorageAccountNetworkRuleAction? action = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageAccountIPRule(value, Optional.ToNullable(action), serializedAdditionalRawData);
+            return new StorageAccountIPRule(value, action, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageAccountIPRule>.Write(ModelReaderWriterOptions options)

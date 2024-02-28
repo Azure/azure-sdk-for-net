@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AppLocation))
+            if (AppLocation.HasValue)
             {
                 writer.WritePropertyName("appLocation"u8);
                 writer.WriteStringValue(AppLocation.Value);
             }
-            if (Optional.IsDefined(InfrastructureConfiguration))
+            if (InfrastructureConfiguration != null)
             {
                 writer.WritePropertyName("infrastructureConfiguration"u8);
                 writer.WriteObjectValue(InfrastructureConfiguration);
             }
-            if (Optional.IsDefined(SoftwareConfiguration))
+            if (SoftwareConfiguration != null)
             {
                 writer.WritePropertyName("softwareConfiguration"u8);
                 writer.WriteObjectValue(SoftwareConfiguration);
             }
-            if (Optional.IsDefined(OSSapConfiguration))
+            if (OSSapConfiguration != null)
             {
                 writer.WritePropertyName("osSapConfiguration"u8);
                 writer.WriteObjectValue(OSSapConfiguration);
@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<AzureLocation> appLocation = default;
-            Optional<InfrastructureConfiguration> infrastructureConfiguration = default;
-            Optional<SapSoftwareConfiguration> softwareConfiguration = default;
-            Optional<OSSapConfiguration> osSapConfiguration = default;
+            AzureLocation? appLocation = default;
+            InfrastructureConfiguration infrastructureConfiguration = default;
+            SapSoftwareConfiguration softwareConfiguration = default;
+            OSSapConfiguration osSapConfiguration = default;
             SapConfigurationType configurationType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    infrastructureConfiguration = InfrastructureConfiguration.DeserializeInfrastructureConfiguration(property.Value);
+                    infrastructureConfiguration = InfrastructureConfiguration.DeserializeInfrastructureConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("softwareConfiguration"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    softwareConfiguration = SapSoftwareConfiguration.DeserializeSapSoftwareConfiguration(property.Value);
+                    softwareConfiguration = SapSoftwareConfiguration.DeserializeSapSoftwareConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("osSapConfiguration"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    osSapConfiguration = OSSapConfiguration.DeserializeOSSapConfiguration(property.Value);
+                    osSapConfiguration = OSSapConfiguration.DeserializeOSSapConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("configurationType"u8))
@@ -142,7 +142,13 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeploymentWithOSConfiguration(configurationType, serializedAdditionalRawData, Optional.ToNullable(appLocation), infrastructureConfiguration.Value, softwareConfiguration.Value, osSapConfiguration.Value);
+            return new DeploymentWithOSConfiguration(
+                configurationType,
+                serializedAdditionalRawData,
+                appLocation,
+                infrastructureConfiguration,
+                softwareConfiguration,
+                osSapConfiguration);
         }
 
         BinaryData IPersistableModel<DeploymentWithOSConfiguration>.Write(ModelReaderWriterOptions options)

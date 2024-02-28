@@ -49,7 +49,10 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <returns> Returns a <see cref="DigitalTwinsDescriptionResource"/> object. </returns>
         public static DigitalTwinsDescriptionResource GetDigitalTwinsDescriptionResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableDigitalTwinsArmClient(client).GetDigitalTwinsDescriptionResource(id);
         }
@@ -68,7 +71,10 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <returns> Returns a <see cref="DigitalTwinsEndpointResource"/> object. </returns>
         public static DigitalTwinsEndpointResource GetDigitalTwinsEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableDigitalTwinsArmClient(client).GetDigitalTwinsEndpointResource(id);
         }
@@ -87,7 +93,10 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <returns> Returns a <see cref="DigitalTwinsPrivateLinkResource"/> object. </returns>
         public static DigitalTwinsPrivateLinkResource GetDigitalTwinsPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableDigitalTwinsArmClient(client).GetDigitalTwinsPrivateLinkResource(id);
         }
@@ -106,7 +115,10 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <returns> Returns a <see cref="DigitalTwinsPrivateEndpointConnectionResource"/> object. </returns>
         public static DigitalTwinsPrivateEndpointConnectionResource GetDigitalTwinsPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableDigitalTwinsArmClient(client).GetDigitalTwinsPrivateEndpointConnectionResource(id);
         }
@@ -125,7 +137,10 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <returns> Returns a <see cref="TimeSeriesDatabaseConnectionResource"/> object. </returns>
         public static TimeSeriesDatabaseConnectionResource GetTimeSeriesDatabaseConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableDigitalTwinsArmClient(client).GetTimeSeriesDatabaseConnectionResource(id);
         }
@@ -142,7 +157,10 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <returns> An object representing collection of DigitalTwinsDescriptionResources and their operations over a DigitalTwinsDescriptionResource. </returns>
         public static DigitalTwinsDescriptionCollection GetDigitalTwinsDescriptions(this ResourceGroupResource resourceGroupResource)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableDigitalTwinsResourceGroupResource(resourceGroupResource).GetDigitalTwinsDescriptions();
         }
@@ -180,7 +198,10 @@ namespace Azure.ResourceManager.DigitalTwins
         [ForwardsClientCalls]
         public static async Task<Response<DigitalTwinsDescriptionResource>> GetDigitalTwinsDescriptionAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return await GetMockableDigitalTwinsResourceGroupResource(resourceGroupResource).GetDigitalTwinsDescriptionAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
@@ -218,7 +239,10 @@ namespace Azure.ResourceManager.DigitalTwins
         [ForwardsClientCalls]
         public static Response<DigitalTwinsDescriptionResource> GetDigitalTwinsDescription(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableDigitalTwinsResourceGroupResource(resourceGroupResource).GetDigitalTwinsDescription(resourceName, cancellationToken);
         }
@@ -254,7 +278,10 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <returns> An async collection of <see cref="DigitalTwinsDescriptionResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DigitalTwinsDescriptionResource> GetDigitalTwinsDescriptionsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableDigitalTwinsSubscriptionResource(subscriptionResource).GetDigitalTwinsDescriptionsAsync(cancellationToken);
         }
@@ -290,7 +317,10 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <returns> A collection of <see cref="DigitalTwinsDescriptionResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DigitalTwinsDescriptionResource> GetDigitalTwinsDescriptions(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableDigitalTwinsSubscriptionResource(subscriptionResource).GetDigitalTwinsDescriptions(cancellationToken);
         }
@@ -327,7 +357,10 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<DigitalTwinsNameResult>> CheckDigitalTwinsNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, DigitalTwinsNameContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return await GetMockableDigitalTwinsSubscriptionResource(subscriptionResource).CheckDigitalTwinsNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
@@ -364,7 +397,10 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<DigitalTwinsNameResult> CheckDigitalTwinsNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, DigitalTwinsNameContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableDigitalTwinsSubscriptionResource(subscriptionResource).CheckDigitalTwinsNameAvailability(location, content, cancellationToken);
         }

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Relay.Models
             writer.WriteStartObject();
             writer.WritePropertyName("keyType"u8);
             writer.WriteStringValue(KeyType.ToString());
-            if (Optional.IsDefined(Key))
+            if (Key != null)
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Relay.Models
                 return null;
             }
             RelayAccessKeyType keyType = default;
-            Optional<string> key = default;
+            string key = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Relay.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RelayRegenerateAccessKeyContent(keyType, key.Value, serializedAdditionalRawData);
+            return new RelayRegenerateAccessKeyContent(keyType, key, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RelayRegenerateAccessKeyContent>.Write(ModelReaderWriterOptions options)

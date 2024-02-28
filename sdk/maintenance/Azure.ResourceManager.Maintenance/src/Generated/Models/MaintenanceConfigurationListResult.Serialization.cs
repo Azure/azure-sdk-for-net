@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<MaintenanceConfigurationData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MaintenanceConfigurationData>> value = default;
+            IReadOnlyList<MaintenanceConfigurationData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                     List<MaintenanceConfigurationData> array = new List<MaintenanceConfigurationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MaintenanceConfigurationData.DeserializeMaintenanceConfigurationData(item));
+                        array.Add(MaintenanceConfigurationData.DeserializeMaintenanceConfigurationData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MaintenanceConfigurationListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new MaintenanceConfigurationListResult(value ?? new ChangeTrackingList<MaintenanceConfigurationData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MaintenanceConfigurationListResult>.Write(ModelReaderWriterOptions options)

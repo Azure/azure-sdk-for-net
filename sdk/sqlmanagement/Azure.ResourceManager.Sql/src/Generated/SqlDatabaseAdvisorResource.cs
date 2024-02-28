@@ -266,7 +266,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<Response<SqlDatabaseAdvisorResource>> UpdateAsync(SqlAdvisorData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _sqlDatabaseAdvisorDatabaseAdvisorsClientDiagnostics.CreateScope("SqlDatabaseAdvisorResource.Update");
             scope.Start();
@@ -308,7 +311,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual Response<SqlDatabaseAdvisorResource> Update(SqlAdvisorData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _sqlDatabaseAdvisorDatabaseAdvisorsClientDiagnostics.CreateScope("SqlDatabaseAdvisorResource.Update");
             scope.Start();

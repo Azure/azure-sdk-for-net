@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteStartObject();
             writer.WritePropertyName("serviceUri"u8);
             writer.WriteStringValue(ServiceUri.AbsoluteUri);
-            if (Optional.IsCollectionDefined(CustomHeaders))
+            if (!(CustomHeaders is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("customHeaders"u8);
                 writer.WriteStartObject();
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 return null;
             }
             Uri serviceUri = default;
-            Optional<IReadOnlyDictionary<string, string>> customHeaders = default;
+            IReadOnlyDictionary<string, string> customHeaders = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryWebhookCallbackConfig(serviceUri, Optional.ToDictionary(customHeaders), serializedAdditionalRawData);
+            return new ContainerRegistryWebhookCallbackConfig(serviceUri, customHeaders ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryWebhookCallbackConfig>.Write(ModelReaderWriterOptions options)

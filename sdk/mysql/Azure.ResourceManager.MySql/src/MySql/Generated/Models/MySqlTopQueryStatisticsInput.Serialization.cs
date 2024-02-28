@@ -137,7 +137,14 @@ namespace Azure.ResourceManager.MySql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlTopQueryStatisticsInput(numberOfTopQueries, aggregationFunction, observedMetric, observationStartTime, observationEndTime, aggregationWindow, serializedAdditionalRawData);
+            return new MySqlTopQueryStatisticsInput(
+                numberOfTopQueries,
+                aggregationFunction,
+                observedMetric,
+                observationStartTime,
+                observationEndTime,
+                aggregationWindow,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlTopQueryStatisticsInput>.Write(ModelReaderWriterOptions options)

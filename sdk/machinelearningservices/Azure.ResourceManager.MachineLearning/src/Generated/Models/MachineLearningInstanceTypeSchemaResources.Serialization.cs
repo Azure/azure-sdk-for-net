@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Requests))
+            if (!(Requests is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("requests"u8);
                 writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Limits))
+            if (!(Limits is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("limits"u8);
                 writer.WriteStartObject();
@@ -86,8 +86,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> requests = default;
-            Optional<IDictionary<string, string>> limits = default;
+            IDictionary<string, string> requests = default;
+            IDictionary<string, string> limits = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningInstanceTypeSchemaResources(Optional.ToDictionary(requests), Optional.ToDictionary(limits), serializedAdditionalRawData);
+            return new MachineLearningInstanceTypeSchemaResources(requests ?? new ChangeTrackingDictionary<string, string>(), limits ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningInstanceTypeSchemaResources>.Write(ModelReaderWriterOptions options)

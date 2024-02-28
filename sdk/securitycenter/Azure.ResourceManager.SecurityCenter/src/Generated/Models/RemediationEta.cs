@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -52,7 +51,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <exception cref="ArgumentNullException"> <paramref name="justification"/> is null. </exception>
         public RemediationEta(DateTimeOffset eta, string justification)
         {
-            Argument.AssertNotNull(justification, nameof(justification));
+            if (justification == null)
+            {
+                throw new ArgumentNullException(nameof(justification));
+            }
 
             Eta = eta;
             Justification = justification;

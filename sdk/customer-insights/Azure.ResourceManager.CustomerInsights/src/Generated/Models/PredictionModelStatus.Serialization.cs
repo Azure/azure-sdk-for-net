@@ -26,54 +26,54 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(TenantId))
+            if (options.Format != "W" && TenantId.HasValue)
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(PredictionName))
+            if (options.Format != "W" && PredictionName != null)
             {
                 writer.WritePropertyName("predictionName"u8);
                 writer.WriteStringValue(PredictionName);
             }
-            if (options.Format != "W" && Optional.IsDefined(PredictionGuidId))
+            if (options.Format != "W" && PredictionGuidId != null)
             {
                 writer.WritePropertyName("predictionGuidId"u8);
                 writer.WriteStringValue(PredictionGuidId);
             }
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
-            if (options.Format != "W" && Optional.IsDefined(Message))
+            if (options.Format != "W" && Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (options.Format != "W" && Optional.IsDefined(TrainingSetCount))
+            if (options.Format != "W" && TrainingSetCount.HasValue)
             {
                 writer.WritePropertyName("trainingSetCount"u8);
                 writer.WriteNumberValue(TrainingSetCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(TestSetCount))
+            if (options.Format != "W" && TestSetCount.HasValue)
             {
                 writer.WritePropertyName("testSetCount"u8);
                 writer.WriteNumberValue(TestSetCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ValidationSetCount))
+            if (options.Format != "W" && ValidationSetCount.HasValue)
             {
                 writer.WritePropertyName("validationSetCount"u8);
                 writer.WriteNumberValue(ValidationSetCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(TrainingAccuracy))
+            if (options.Format != "W" && TrainingAccuracy.HasValue)
             {
                 writer.WritePropertyName("trainingAccuracy"u8);
                 writer.WriteNumberValue(TrainingAccuracy.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(SignalsUsed))
+            if (options.Format != "W" && SignalsUsed.HasValue)
             {
                 writer.WritePropertyName("signalsUsed"u8);
                 writer.WriteNumberValue(SignalsUsed.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ModelVersion))
+            if (options.Format != "W" && ModelVersion != null)
             {
                 writer.WritePropertyName("modelVersion"u8);
                 writer.WriteStringValue(ModelVersion);
@@ -116,17 +116,17 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<Guid> tenantId = default;
-            Optional<string> predictionName = default;
-            Optional<string> predictionGuidId = default;
+            Guid? tenantId = default;
+            string predictionName = default;
+            string predictionGuidId = default;
             PredictionModelLifeCycle status = default;
-            Optional<string> message = default;
-            Optional<int> trainingSetCount = default;
-            Optional<int> testSetCount = default;
-            Optional<int> validationSetCount = default;
-            Optional<decimal> trainingAccuracy = default;
-            Optional<int> signalsUsed = default;
-            Optional<string> modelVersion = default;
+            string message = default;
+            int? trainingSetCount = default;
+            int? testSetCount = default;
+            int? validationSetCount = default;
+            decimal? trainingAccuracy = default;
+            int? signalsUsed = default;
+            string modelVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -216,7 +216,19 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PredictionModelStatus(Optional.ToNullable(tenantId), predictionName.Value, predictionGuidId.Value, status, message.Value, Optional.ToNullable(trainingSetCount), Optional.ToNullable(testSetCount), Optional.ToNullable(validationSetCount), Optional.ToNullable(trainingAccuracy), Optional.ToNullable(signalsUsed), modelVersion.Value, serializedAdditionalRawData);
+            return new PredictionModelStatus(
+                tenantId,
+                predictionName,
+                predictionGuidId,
+                status,
+                message,
+                trainingSetCount,
+                testSetCount,
+                validationSetCount,
+                trainingAccuracy,
+                signalsUsed,
+                modelVersion,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PredictionModelStatus>.Write(ModelReaderWriterOptions options)

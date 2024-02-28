@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<SecurityEvent> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SecurityEvent>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<SecurityEvent> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SecurityEvent> array = new List<SecurityEvent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityEvent.DeserializeSecurityEvent(item));
+                        array.Add(SecurityEvent.DeserializeSecurityEvent(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityEventCollection(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SecurityEventCollection(value ?? new ChangeTrackingList<SecurityEvent>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityEventCollection>.Write(ModelReaderWriterOptions options)

@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Code))
+            if (options.Format != "W" && Code.HasValue)
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Cause))
+            if (options.Format != "W" && Cause != null)
             {
                 writer.WritePropertyName("cause"u8);
                 writer.WriteStringValue(Cause);
             }
-            if (options.Format != "W" && Optional.IsDefined(Description))
+            if (options.Format != "W" && Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsDefined(Severity))
+            if (options.Format != "W" && Severity.HasValue)
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<SubAssessmentStatusCode> code = default;
-            Optional<string> cause = default;
-            Optional<string> description = default;
-            Optional<SecurityAssessmentSeverity> severity = default;
+            SubAssessmentStatusCode? code = default;
+            string cause = default;
+            string description = default;
+            SecurityAssessmentSeverity? severity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubAssessmentStatus(Optional.ToNullable(code), cause.Value, description.Value, Optional.ToNullable(severity), serializedAdditionalRawData);
+            return new SubAssessmentStatus(code, cause, description, severity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubAssessmentStatus>.Write(ModelReaderWriterOptions options)

@@ -23,22 +23,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(MinWordSize))
+            if (MinWordSize.HasValue)
             {
                 writer.WritePropertyName("minWordSize"u8);
                 writer.WriteNumberValue(MinWordSize.Value);
             }
-            if (Optional.IsDefined(MinSubwordSize))
+            if (MinSubwordSize.HasValue)
             {
                 writer.WritePropertyName("minSubwordSize"u8);
                 writer.WriteNumberValue(MinSubwordSize.Value);
             }
-            if (Optional.IsDefined(MaxSubwordSize))
+            if (MaxSubwordSize.HasValue)
             {
                 writer.WritePropertyName("maxSubwordSize"u8);
                 writer.WriteNumberValue(MaxSubwordSize.Value);
             }
-            if (Optional.IsDefined(OnlyLongestMatch))
+            if (OnlyLongestMatch.HasValue)
             {
                 writer.WritePropertyName("onlyLongestMatch"u8);
                 writer.WriteBooleanValue(OnlyLongestMatch.Value);
@@ -57,10 +57,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             IList<string> wordList = default;
-            Optional<int> minWordSize = default;
-            Optional<int> minSubwordSize = default;
-            Optional<int> maxSubwordSize = default;
-            Optional<bool> onlyLongestMatch = default;
+            int? minWordSize = default;
+            int? minSubwordSize = default;
+            int? maxSubwordSize = default;
+            bool? onlyLongestMatch = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,14 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new DictionaryDecompounderTokenFilter(odataType, name, wordList, Optional.ToNullable(minWordSize), Optional.ToNullable(minSubwordSize), Optional.ToNullable(maxSubwordSize), Optional.ToNullable(onlyLongestMatch));
+            return new DictionaryDecompounderTokenFilter(
+                odataType,
+                name,
+                wordList,
+                minWordSize,
+                minSubwordSize,
+                maxSubwordSize,
+                onlyLongestMatch);
         }
     }
 }

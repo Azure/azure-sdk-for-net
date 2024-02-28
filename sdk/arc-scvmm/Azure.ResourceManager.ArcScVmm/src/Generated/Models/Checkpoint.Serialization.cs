@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ParentCheckpointId))
+            if (ParentCheckpointId != null)
             {
                 writer.WritePropertyName("parentCheckpointID"u8);
                 writer.WriteStringValue(ParentCheckpointId);
             }
-            if (Optional.IsDefined(CheckpointId))
+            if (CheckpointId != null)
             {
                 writer.WritePropertyName("checkpointID"u8);
                 writer.WriteStringValue(CheckpointId);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             {
                 return null;
             }
-            Optional<string> parentCheckpointId = default;
-            Optional<string> checkpointId = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
+            string parentCheckpointId = default;
+            string checkpointId = default;
+            string name = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new Checkpoint(parentCheckpointId.Value, checkpointId.Value, name.Value, description.Value, serializedAdditionalRawData);
+            return new Checkpoint(parentCheckpointId, checkpointId, name, description, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<Checkpoint>.Write(ModelReaderWriterOptions options)

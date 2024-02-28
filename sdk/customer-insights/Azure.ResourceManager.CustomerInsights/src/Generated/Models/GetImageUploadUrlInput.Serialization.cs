@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EntityType))
+            if (EntityType != null)
             {
                 writer.WritePropertyName("entityType"u8);
                 writer.WriteStringValue(EntityType);
             }
-            if (Optional.IsDefined(EntityTypeName))
+            if (EntityTypeName != null)
             {
                 writer.WritePropertyName("entityTypeName"u8);
                 writer.WriteStringValue(EntityTypeName);
             }
-            if (Optional.IsDefined(RelativePath))
+            if (RelativePath != null)
             {
                 writer.WritePropertyName("relativePath"u8);
                 writer.WriteStringValue(RelativePath);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<string> entityType = default;
-            Optional<string> entityTypeName = default;
-            Optional<string> relativePath = default;
+            string entityType = default;
+            string entityTypeName = default;
+            string relativePath = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GetImageUploadUrlInput(entityType.Value, entityTypeName.Value, relativePath.Value, serializedAdditionalRawData);
+            return new GetImageUploadUrlInput(entityType, entityTypeName, relativePath, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GetImageUploadUrlInput>.Write(ModelReaderWriterOptions options)

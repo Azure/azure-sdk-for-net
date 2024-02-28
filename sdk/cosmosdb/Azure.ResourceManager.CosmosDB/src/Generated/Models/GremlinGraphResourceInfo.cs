@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <exception cref="ArgumentNullException"> <paramref name="graphName"/> is null. </exception>
         public GremlinGraphResourceInfo(string graphName)
         {
-            Argument.AssertNotNull(graphName, nameof(graphName));
+            if (graphName == null)
+            {
+                throw new ArgumentNullException(nameof(graphName));
+            }
 
             GraphName = graphName;
         }

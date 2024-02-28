@@ -23,11 +23,11 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
             int failed = default;
             int inProgress = default;
             int total = default;
-            Optional<IReadOnlyList<TasksStateTasksEntityRecognitionTasksItem>> entityRecognitionTasks = default;
-            Optional<IReadOnlyList<TasksStateTasksEntityRecognitionPiiTasksItem>> entityRecognitionPiiTasks = default;
-            Optional<IReadOnlyList<TasksStateTasksKeyPhraseExtractionTasksItem>> keyPhraseExtractionTasks = default;
-            Optional<IReadOnlyList<TasksStateTasksEntityLinkingTasksItem>> entityLinkingTasks = default;
-            Optional<IReadOnlyList<TasksStateTasksSentimentAnalysisTasksItem>> sentimentAnalysisTasks = default;
+            IReadOnlyList<TasksStateTasksEntityRecognitionTasksItem> entityRecognitionTasks = default;
+            IReadOnlyList<TasksStateTasksEntityRecognitionPiiTasksItem> entityRecognitionPiiTasks = default;
+            IReadOnlyList<TasksStateTasksKeyPhraseExtractionTasksItem> keyPhraseExtractionTasks = default;
+            IReadOnlyList<TasksStateTasksEntityLinkingTasksItem> entityLinkingTasks = default;
+            IReadOnlyList<TasksStateTasksSentimentAnalysisTasksItem> sentimentAnalysisTasks = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("completed"u8))
@@ -121,7 +121,16 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
                     continue;
                 }
             }
-            return new TasksStateTasks(completed, failed, inProgress, total, Optional.ToList(entityRecognitionTasks), Optional.ToList(entityRecognitionPiiTasks), Optional.ToList(keyPhraseExtractionTasks), Optional.ToList(entityLinkingTasks), Optional.ToList(sentimentAnalysisTasks));
+            return new TasksStateTasks(
+                completed,
+                failed,
+                inProgress,
+                total,
+                entityRecognitionTasks ?? new ChangeTrackingList<TasksStateTasksEntityRecognitionTasksItem>(),
+                entityRecognitionPiiTasks ?? new ChangeTrackingList<TasksStateTasksEntityRecognitionPiiTasksItem>(),
+                keyPhraseExtractionTasks ?? new ChangeTrackingList<TasksStateTasksKeyPhraseExtractionTasksItem>(),
+                entityLinkingTasks ?? new ChangeTrackingList<TasksStateTasksEntityLinkingTasksItem>(),
+                sentimentAnalysisTasks ?? new ChangeTrackingList<TasksStateTasksSentimentAnalysisTasksItem>());
         }
     }
 }

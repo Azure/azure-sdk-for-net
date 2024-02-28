@@ -26,47 +26,47 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id.HasValue)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteNumberValue(Id.Value);
             }
-            if (Optional.IsDefined(Code))
+            if (Code != null)
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (Optional.IsDefined(SummaryMessage))
+            if (SummaryMessage != null)
             {
                 writer.WritePropertyName("summaryMessage"u8);
                 writer.WriteStringValue(SummaryMessage);
             }
-            if (Optional.IsDefined(RunAsAccountId))
+            if (RunAsAccountId != null)
             {
                 writer.WritePropertyName("runAsAccountId"u8);
                 writer.WriteStringValue(RunAsAccountId);
             }
-            if (Optional.IsDefined(Message))
+            if (Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Optional.IsDefined(PossibleCauses))
+            if (PossibleCauses != null)
             {
                 writer.WritePropertyName("possibleCauses"u8);
                 writer.WriteStringValue(PossibleCauses);
             }
-            if (Optional.IsDefined(RecommendedAction))
+            if (RecommendedAction != null)
             {
                 writer.WritePropertyName("recommendedAction"u8);
                 writer.WriteStringValue(RecommendedAction);
             }
-            if (Optional.IsDefined(Severity))
+            if (Severity != null)
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity);
             }
-            if (Optional.IsDefined(UpdatedTimeStamp))
+            if (UpdatedTimeStamp.HasValue)
             {
                 writer.WritePropertyName("updatedTimeStamp"u8);
                 writer.WriteStringValue(UpdatedTimeStamp.Value, "O");
@@ -109,15 +109,15 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             {
                 return null;
             }
-            Optional<long> id = default;
-            Optional<string> code = default;
-            Optional<string> summaryMessage = default;
-            Optional<string> runAsAccountId = default;
-            Optional<string> message = default;
-            Optional<string> possibleCauses = default;
-            Optional<string> recommendedAction = default;
-            Optional<string> severity = default;
-            Optional<DateTimeOffset> updatedTimeStamp = default;
+            long? id = default;
+            string code = default;
+            string summaryMessage = default;
+            string runAsAccountId = default;
+            string message = default;
+            string possibleCauses = default;
+            string recommendedAction = default;
+            string severity = default;
+            DateTimeOffset? updatedTimeStamp = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -181,7 +181,17 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SpringBootSiteError(Optional.ToNullable(id), code.Value, summaryMessage.Value, runAsAccountId.Value, message.Value, possibleCauses.Value, recommendedAction.Value, severity.Value, Optional.ToNullable(updatedTimeStamp), serializedAdditionalRawData);
+            return new SpringBootSiteError(
+                id,
+                code,
+                summaryMessage,
+                runAsAccountId,
+                message,
+                possibleCauses,
+                recommendedAction,
+                severity,
+                updatedTimeStamp,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SpringBootSiteError>.Write(ModelReaderWriterOptions options)

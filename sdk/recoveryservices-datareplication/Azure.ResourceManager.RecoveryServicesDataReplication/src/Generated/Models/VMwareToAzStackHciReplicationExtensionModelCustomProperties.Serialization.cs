@@ -28,74 +28,74 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             writer.WriteStartObject();
             writer.WritePropertyName("vmwareFabricArmId"u8);
             writer.WriteStringValue(VmwareFabricArmId);
-            if (options.Format != "W" && Optional.IsDefined(VmwareSiteId))
+            if (options.Format != "W" && VmwareSiteId != null)
             {
                 writer.WritePropertyName("vmwareSiteId"u8);
                 writer.WriteStringValue(VmwareSiteId);
             }
             writer.WritePropertyName("azStackHciFabricArmId"u8);
             writer.WriteStringValue(AzStackHciFabricArmId);
-            if (options.Format != "W" && Optional.IsDefined(AzStackHciSiteId))
+            if (options.Format != "W" && AzStackHciSiteId != null)
             {
                 writer.WritePropertyName("azStackHciSiteId"u8);
                 writer.WriteStringValue(AzStackHciSiteId);
             }
-            if (Optional.IsDefined(StorageAccountId))
+            if (StorageAccountId != null)
             {
                 writer.WritePropertyName("storageAccountId"u8);
                 writer.WriteStringValue(StorageAccountId);
             }
-            if (Optional.IsDefined(StorageAccountSasSecretName))
+            if (StorageAccountSasSecretName != null)
             {
                 writer.WritePropertyName("storageAccountSasSecretName"u8);
                 writer.WriteStringValue(StorageAccountSasSecretName);
             }
-            if (options.Format != "W" && Optional.IsDefined(AsrServiceUri))
+            if (options.Format != "W" && AsrServiceUri != null)
             {
                 writer.WritePropertyName("asrServiceUri"u8);
                 writer.WriteStringValue(AsrServiceUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(RcmServiceUri))
+            if (options.Format != "W" && RcmServiceUri != null)
             {
                 writer.WritePropertyName("rcmServiceUri"u8);
                 writer.WriteStringValue(RcmServiceUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(GatewayServiceUri))
+            if (options.Format != "W" && GatewayServiceUri != null)
             {
                 writer.WritePropertyName("gatewayServiceUri"u8);
                 writer.WriteStringValue(GatewayServiceUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(SourceGatewayServiceId))
+            if (options.Format != "W" && SourceGatewayServiceId != null)
             {
                 writer.WritePropertyName("sourceGatewayServiceId"u8);
                 writer.WriteStringValue(SourceGatewayServiceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetGatewayServiceId))
+            if (options.Format != "W" && TargetGatewayServiceId != null)
             {
                 writer.WritePropertyName("targetGatewayServiceId"u8);
                 writer.WriteStringValue(TargetGatewayServiceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(SourceStorageContainerName))
+            if (options.Format != "W" && SourceStorageContainerName != null)
             {
                 writer.WritePropertyName("sourceStorageContainerName"u8);
                 writer.WriteStringValue(SourceStorageContainerName);
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetStorageContainerName))
+            if (options.Format != "W" && TargetStorageContainerName != null)
             {
                 writer.WritePropertyName("targetStorageContainerName"u8);
                 writer.WriteStringValue(TargetStorageContainerName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceLocation))
+            if (options.Format != "W" && ResourceLocation != null)
             {
                 writer.WritePropertyName("resourceLocation"u8);
                 writer.WriteStringValue(ResourceLocation);
             }
-            if (options.Format != "W" && Optional.IsDefined(SubscriptionId))
+            if (options.Format != "W" && SubscriptionId != null)
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceGroup))
+            if (options.Format != "W" && ResourceGroup != null)
             {
                 writer.WritePropertyName("resourceGroup"u8);
                 writer.WriteStringValue(ResourceGroup);
@@ -141,21 +141,21 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 return null;
             }
             ResourceIdentifier vmwareFabricArmId = default;
-            Optional<ResourceIdentifier> vmwareSiteId = default;
+            ResourceIdentifier vmwareSiteId = default;
             ResourceIdentifier azStackHciFabricArmId = default;
-            Optional<ResourceIdentifier> azStackHciSiteId = default;
-            Optional<ResourceIdentifier> storageAccountId = default;
-            Optional<string> storageAccountSasSecretName = default;
-            Optional<Uri> asrServiceUri = default;
-            Optional<Uri> rcmServiceUri = default;
-            Optional<Uri> gatewayServiceUri = default;
-            Optional<string> sourceGatewayServiceId = default;
-            Optional<string> targetGatewayServiceId = default;
-            Optional<string> sourceStorageContainerName = default;
-            Optional<string> targetStorageContainerName = default;
-            Optional<string> resourceLocation = default;
-            Optional<string> subscriptionId = default;
-            Optional<string> resourceGroup = default;
+            ResourceIdentifier azStackHciSiteId = default;
+            ResourceIdentifier storageAccountId = default;
+            string storageAccountSasSecretName = default;
+            Uri asrServiceUri = default;
+            Uri rcmServiceUri = default;
+            Uri gatewayServiceUri = default;
+            string sourceGatewayServiceId = default;
+            string targetGatewayServiceId = default;
+            string sourceStorageContainerName = default;
+            string targetStorageContainerName = default;
+            string resourceLocation = default;
+            string subscriptionId = default;
+            string resourceGroup = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -276,7 +276,25 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareToAzStackHciReplicationExtensionModelCustomProperties(instanceType, serializedAdditionalRawData, vmwareFabricArmId, vmwareSiteId.Value, azStackHciFabricArmId, azStackHciSiteId.Value, storageAccountId.Value, storageAccountSasSecretName.Value, asrServiceUri.Value, rcmServiceUri.Value, gatewayServiceUri.Value, sourceGatewayServiceId.Value, targetGatewayServiceId.Value, sourceStorageContainerName.Value, targetStorageContainerName.Value, resourceLocation.Value, subscriptionId.Value, resourceGroup.Value);
+            return new VMwareToAzStackHciReplicationExtensionModelCustomProperties(
+                instanceType,
+                serializedAdditionalRawData,
+                vmwareFabricArmId,
+                vmwareSiteId,
+                azStackHciFabricArmId,
+                azStackHciSiteId,
+                storageAccountId,
+                storageAccountSasSecretName,
+                asrServiceUri,
+                rcmServiceUri,
+                gatewayServiceUri,
+                sourceGatewayServiceId,
+                targetGatewayServiceId,
+                sourceStorageContainerName,
+                targetStorageContainerName,
+                resourceLocation,
+                subscriptionId,
+                resourceGroup);
         }
 
         BinaryData IPersistableModel<VMwareToAzStackHciReplicationExtensionModelCustomProperties>.Write(ModelReaderWriterOptions options)

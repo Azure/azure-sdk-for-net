@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(PairedKeyType))
+            if (PairedKeyType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(PairedKeyType);
             }
-            if (Optional.IsDefined(AdditionalProperties))
+            if (AdditionalProperties != null)
             {
                 if (AdditionalProperties != null)
                 {
@@ -93,9 +93,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> type = default;
-            Optional<BinaryData> additionalProperties = default;
+            string id = default;
+            string type = default;
+            BinaryData additionalProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PairedKey(id.Value, type.Value, additionalProperties.Value, serializedAdditionalRawData);
+            return new PairedKey(id, type, additionalProperties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PairedKey>.Write(ModelReaderWriterOptions options)

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
-            if (Optional.IsCollectionDefined(IncludedTracks))
+            if (!(IncludedTracks is ChangeTrackingList<TrackDescriptor> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("includedTracks"u8);
                 writer.WriteStartArray();
@@ -80,12 +80,12 @@ namespace Azure.ResourceManager.Media.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "#Microsoft.Media.FromAllInputFile": return FromAllInputFile.DeserializeFromAllInputFile(element);
-                    case "#Microsoft.Media.FromEachInputFile": return FromEachInputFile.DeserializeFromEachInputFile(element);
-                    case "#Microsoft.Media.InputFile": return MediaJobInputFile.DeserializeMediaJobInputFile(element);
+                    case "#Microsoft.Media.FromAllInputFile": return FromAllInputFile.DeserializeFromAllInputFile(element, options);
+                    case "#Microsoft.Media.FromEachInputFile": return FromEachInputFile.DeserializeFromEachInputFile(element, options);
+                    case "#Microsoft.Media.InputFile": return MediaJobInputFile.DeserializeMediaJobInputFile(element, options);
                 }
             }
-            return UnknownInputDefinition.DeserializeUnknownInputDefinition(element);
+            return UnknownInputDefinition.DeserializeUnknownInputDefinition(element, options);
         }
 
         BinaryData IPersistableModel<MediaJobInputDefinition>.Write(ModelReaderWriterOptions options)

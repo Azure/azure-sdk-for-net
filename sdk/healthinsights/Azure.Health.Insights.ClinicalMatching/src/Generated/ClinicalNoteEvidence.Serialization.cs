@@ -29,7 +29,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (Optional.IsDefined(Text))
+            if (Text != null)
             {
                 writer.WritePropertyName("text"u8);
                 writer.WriteStringValue(Text);
@@ -77,7 +77,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 return null;
             }
             string id = default;
-            Optional<string> text = default;
+            string text = default;
             int offset = default;
             int length = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -110,7 +110,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClinicalNoteEvidence(id, text.Value, offset, length, serializedAdditionalRawData);
+            return new ClinicalNoteEvidence(id, text, offset, length, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClinicalNoteEvidence>.Write(ModelReaderWriterOptions options)

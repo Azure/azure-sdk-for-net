@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="loadBalancerName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<LoadBalancerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string loadBalancerName, LoadBalancerData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(loadBalancerName, nameof(loadBalancerName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (loadBalancerName == null)
+            {
+                throw new ArgumentNullException(nameof(loadBalancerName));
+            }
+            if (loadBalancerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(loadBalancerName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _loadBalancerClientDiagnostics.CreateScope("LoadBalancerCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="loadBalancerName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<LoadBalancerResource> CreateOrUpdate(WaitUntil waitUntil, string loadBalancerName, LoadBalancerData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(loadBalancerName, nameof(loadBalancerName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (loadBalancerName == null)
+            {
+                throw new ArgumentNullException(nameof(loadBalancerName));
+            }
+            if (loadBalancerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(loadBalancerName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _loadBalancerClientDiagnostics.CreateScope("LoadBalancerCollection.CreateOrUpdate");
             scope.Start();
@@ -180,7 +200,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="loadBalancerName"/> is null. </exception>
         public virtual async Task<Response<LoadBalancerResource>> GetAsync(string loadBalancerName, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(loadBalancerName, nameof(loadBalancerName));
+            if (loadBalancerName == null)
+            {
+                throw new ArgumentNullException(nameof(loadBalancerName));
+            }
+            if (loadBalancerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(loadBalancerName));
+            }
 
             using var scope = _loadBalancerClientDiagnostics.CreateScope("LoadBalancerCollection.Get");
             scope.Start();
@@ -226,7 +253,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="loadBalancerName"/> is null. </exception>
         public virtual Response<LoadBalancerResource> Get(string loadBalancerName, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(loadBalancerName, nameof(loadBalancerName));
+            if (loadBalancerName == null)
+            {
+                throw new ArgumentNullException(nameof(loadBalancerName));
+            }
+            if (loadBalancerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(loadBalancerName));
+            }
 
             using var scope = _loadBalancerClientDiagnostics.CreateScope("LoadBalancerCollection.Get");
             scope.Start();
@@ -332,7 +366,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="loadBalancerName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string loadBalancerName, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(loadBalancerName, nameof(loadBalancerName));
+            if (loadBalancerName == null)
+            {
+                throw new ArgumentNullException(nameof(loadBalancerName));
+            }
+            if (loadBalancerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(loadBalancerName));
+            }
 
             using var scope = _loadBalancerClientDiagnostics.CreateScope("LoadBalancerCollection.Exists");
             scope.Start();
@@ -376,7 +417,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="loadBalancerName"/> is null. </exception>
         public virtual Response<bool> Exists(string loadBalancerName, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(loadBalancerName, nameof(loadBalancerName));
+            if (loadBalancerName == null)
+            {
+                throw new ArgumentNullException(nameof(loadBalancerName));
+            }
+            if (loadBalancerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(loadBalancerName));
+            }
 
             using var scope = _loadBalancerClientDiagnostics.CreateScope("LoadBalancerCollection.Exists");
             scope.Start();
@@ -420,7 +468,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="loadBalancerName"/> is null. </exception>
         public virtual async Task<NullableResponse<LoadBalancerResource>> GetIfExistsAsync(string loadBalancerName, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(loadBalancerName, nameof(loadBalancerName));
+            if (loadBalancerName == null)
+            {
+                throw new ArgumentNullException(nameof(loadBalancerName));
+            }
+            if (loadBalancerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(loadBalancerName));
+            }
 
             using var scope = _loadBalancerClientDiagnostics.CreateScope("LoadBalancerCollection.GetIfExists");
             scope.Start();
@@ -466,7 +521,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="loadBalancerName"/> is null. </exception>
         public virtual NullableResponse<LoadBalancerResource> GetIfExists(string loadBalancerName, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(loadBalancerName, nameof(loadBalancerName));
+            if (loadBalancerName == null)
+            {
+                throw new ArgumentNullException(nameof(loadBalancerName));
+            }
+            if (loadBalancerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(loadBalancerName));
+            }
 
             using var scope = _loadBalancerClientDiagnostics.CreateScope("LoadBalancerCollection.GetIfExists");
             scope.Start();

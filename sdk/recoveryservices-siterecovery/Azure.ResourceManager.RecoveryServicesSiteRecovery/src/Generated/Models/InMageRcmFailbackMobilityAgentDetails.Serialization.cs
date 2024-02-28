@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Version))
+            if (options.Format != "W" && Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (options.Format != "W" && Optional.IsDefined(LatestVersion))
+            if (options.Format != "W" && LatestVersion != null)
             {
                 writer.WritePropertyName("latestVersion"u8);
                 writer.WriteStringValue(LatestVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(DriverVersion))
+            if (options.Format != "W" && DriverVersion != null)
             {
                 writer.WritePropertyName("driverVersion"u8);
                 writer.WriteStringValue(DriverVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(LatestUpgradableVersionWithoutReboot))
+            if (options.Format != "W" && LatestUpgradableVersionWithoutReboot != null)
             {
                 writer.WritePropertyName("latestUpgradableVersionWithoutReboot"u8);
                 writer.WriteStringValue(LatestUpgradableVersionWithoutReboot);
             }
-            if (options.Format != "W" && Optional.IsDefined(AgentVersionExpireOn))
+            if (options.Format != "W" && AgentVersionExpireOn.HasValue)
             {
                 writer.WritePropertyName("agentVersionExpiryDate"u8);
                 writer.WriteStringValue(AgentVersionExpireOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(DriverVersionExpireOn))
+            if (options.Format != "W" && DriverVersionExpireOn.HasValue)
             {
                 writer.WritePropertyName("driverVersionExpiryDate"u8);
                 writer.WriteStringValue(DriverVersionExpireOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastHeartbeatReceivedOn))
+            if (options.Format != "W" && LastHeartbeatReceivedOn.HasValue)
             {
                 writer.WritePropertyName("lastHeartbeatUtc"u8);
                 writer.WriteStringValue(LastHeartbeatReceivedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ReasonsBlockingUpgrade))
+            if (options.Format != "W" && !(ReasonsBlockingUpgrade is ChangeTrackingList<AgentUpgradeBlockedReason> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("reasonsBlockingUpgrade"u8);
                 writer.WriteStartArray();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(IsUpgradeable))
+            if (options.Format != "W" && IsUpgradeable != null)
             {
                 writer.WritePropertyName("isUpgradeable"u8);
                 writer.WriteStringValue(IsUpgradeable);
@@ -114,15 +114,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> version = default;
-            Optional<string> latestVersion = default;
-            Optional<string> driverVersion = default;
-            Optional<string> latestUpgradableVersionWithoutReboot = default;
-            Optional<DateTimeOffset> agentVersionExpireOn = default;
-            Optional<DateTimeOffset> driverVersionExpireOn = default;
-            Optional<DateTimeOffset> lastHeartbeatUtc = default;
-            Optional<IReadOnlyList<AgentUpgradeBlockedReason>> reasonsBlockingUpgrade = default;
-            Optional<string> isUpgradeable = default;
+            string version = default;
+            string latestVersion = default;
+            string driverVersion = default;
+            string latestUpgradableVersionWithoutReboot = default;
+            DateTimeOffset? agentVersionExpireOn = default;
+            DateTimeOffset? driverVersionExpireOn = default;
+            DateTimeOffset? lastHeartbeatUtc = default;
+            IReadOnlyList<AgentUpgradeBlockedReason> reasonsBlockingUpgrade = default;
+            string isUpgradeable = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -199,7 +199,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageRcmFailbackMobilityAgentDetails(version.Value, latestVersion.Value, driverVersion.Value, latestUpgradableVersionWithoutReboot.Value, Optional.ToNullable(agentVersionExpireOn), Optional.ToNullable(driverVersionExpireOn), Optional.ToNullable(lastHeartbeatUtc), Optional.ToList(reasonsBlockingUpgrade), isUpgradeable.Value, serializedAdditionalRawData);
+            return new InMageRcmFailbackMobilityAgentDetails(
+                version,
+                latestVersion,
+                driverVersion,
+                latestUpgradableVersionWithoutReboot,
+                agentVersionExpireOn,
+                driverVersionExpireOn,
+                lastHeartbeatUtc,
+                reasonsBlockingUpgrade ?? new ChangeTrackingList<AgentUpgradeBlockedReason>(),
+                isUpgradeable,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InMageRcmFailbackMobilityAgentDetails>.Write(ModelReaderWriterOptions options)

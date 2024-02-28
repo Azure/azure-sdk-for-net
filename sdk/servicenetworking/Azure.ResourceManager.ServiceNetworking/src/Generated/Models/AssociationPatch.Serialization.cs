@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AssociationType))
+            if (AssociationType.HasValue)
             {
                 writer.WritePropertyName("associationType"u8);
                 writer.WriteStringValue(AssociationType.Value.ToString());
             }
-            if (Optional.IsDefined(Subnet))
+            if (Subnet != null)
             {
                 writer.WritePropertyName("subnet"u8);
                 JsonSerializer.Serialize(writer, Subnet);
@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<AssociationType> associationType = default;
-            Optional<WritableSubResource> subnet = default;
+            IDictionary<string, string> tags = default;
+            AssociationType? associationType = default;
+            WritableSubResource subnet = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AssociationPatch(Optional.ToDictionary(tags), Optional.ToNullable(associationType), subnet, serializedAdditionalRawData);
+            return new AssociationPatch(tags ?? new ChangeTrackingDictionary<string, string>(), associationType, subnet, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AssociationPatch>.Write(ModelReaderWriterOptions options)

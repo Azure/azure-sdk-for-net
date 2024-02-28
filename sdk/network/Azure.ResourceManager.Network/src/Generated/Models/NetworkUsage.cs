@@ -54,7 +54,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         internal NetworkUsage(NetworkUsageUnit unit, long currentValue, long limit, NetworkUsageName name)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
 
             Unit = unit;
             CurrentValue = currentValue;

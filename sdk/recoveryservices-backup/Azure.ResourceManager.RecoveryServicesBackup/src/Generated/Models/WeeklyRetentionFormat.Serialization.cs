@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(DaysOfTheWeek))
+            if (!(DaysOfTheWeek is ChangeTrackingList<BackupDayOfWeek> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("daysOfTheWeek"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(WeeksOfTheMonth))
+            if (!(WeeksOfTheMonth is ChangeTrackingList<BackupWeekOfMonth> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("weeksOfTheMonth"u8);
                 writer.WriteStartArray();
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<IList<BackupDayOfWeek>> daysOfTheWeek = default;
-            Optional<IList<BackupWeekOfMonth>> weeksOfTheMonth = default;
+            IList<BackupDayOfWeek> daysOfTheWeek = default;
+            IList<BackupWeekOfMonth> weeksOfTheMonth = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WeeklyRetentionFormat(Optional.ToList(daysOfTheWeek), Optional.ToList(weeksOfTheMonth), serializedAdditionalRawData);
+            return new WeeklyRetentionFormat(daysOfTheWeek ?? new ChangeTrackingList<BackupDayOfWeek>(), weeksOfTheMonth ?? new ChangeTrackingList<BackupWeekOfMonth>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WeeklyRetentionFormat>.Write(ModelReaderWriterOptions options)

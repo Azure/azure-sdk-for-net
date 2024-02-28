@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Communication.Messages
 {
@@ -21,8 +20,14 @@ namespace Azure.Communication.Messages
         /// <exception cref="ArgumentNullException"> <paramref name="to"/> or <paramref name="content"/> is null. </exception>
         public TextNotificationContent(Guid channelRegistrationId, IEnumerable<string> to, string content) : base(channelRegistrationId, to)
         {
-            Argument.AssertNotNull(to, nameof(to));
-            Argument.AssertNotNull(content, nameof(content));
+            if (to == null)
+            {
+                throw new ArgumentNullException(nameof(to));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             Kind = CommunicationMessageKind.Text;
             Content = content;

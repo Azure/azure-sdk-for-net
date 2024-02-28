@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             writer.WriteStartObject();
             writer.WritePropertyName("networkId"u8);
             writer.WriteStringValue(NetworkId);
-            if (Optional.IsDefined(PluginType))
+            if (PluginType.HasValue)
             {
                 writer.WritePropertyName("pluginType"u8);
                 writer.WriteStringValue(PluginType.Value.ToString());
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             ResourceIdentifier networkId = default;
-            Optional<KubernetesPluginType> pluginType = default;
+            KubernetesPluginType? pluginType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new L2NetworkAttachmentConfiguration(networkId, Optional.ToNullable(pluginType), serializedAdditionalRawData);
+            return new L2NetworkAttachmentConfiguration(networkId, pluginType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<L2NetworkAttachmentConfiguration>.Write(ModelReaderWriterOptions options)

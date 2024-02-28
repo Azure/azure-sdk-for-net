@@ -204,7 +204,10 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<StorageAccountNameAvailabilityResult>> CheckStorageAccountNameAvailabilityAsync(StorageAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = StorageAccountClientDiagnostics.CreateScope("MockableStorageSubscriptionResource.CheckStorageAccountNameAvailability");
             scope.Start();
@@ -246,7 +249,10 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<StorageAccountNameAvailabilityResult> CheckStorageAccountNameAvailability(StorageAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = StorageAccountClientDiagnostics.CreateScope("MockableStorageSubscriptionResource.CheckStorageAccountNameAvailability");
             scope.Start();

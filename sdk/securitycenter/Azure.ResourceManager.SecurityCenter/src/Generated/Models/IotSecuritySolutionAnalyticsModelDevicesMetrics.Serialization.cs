@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Date))
+            if (Date.HasValue)
             {
                 writer.WritePropertyName("date"u8);
                 writer.WriteStringValue(Date.Value, "O");
             }
-            if (Optional.IsDefined(DevicesMetrics))
+            if (DevicesMetrics != null)
             {
                 writer.WritePropertyName("devicesMetrics"u8);
                 writer.WriteObjectValue(DevicesMetrics);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> date = default;
-            Optional<IotSeverityMetrics> devicesMetrics = default;
+            DateTimeOffset? date = default;
+            IotSeverityMetrics devicesMetrics = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    devicesMetrics = IotSeverityMetrics.DeserializeIotSeverityMetrics(property.Value);
+                    devicesMetrics = IotSeverityMetrics.DeserializeIotSeverityMetrics(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotSecuritySolutionAnalyticsModelDevicesMetrics(Optional.ToNullable(date), devicesMetrics.Value, serializedAdditionalRawData);
+            return new IotSecuritySolutionAnalyticsModelDevicesMetrics(date, devicesMetrics, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotSecuritySolutionAnalyticsModelDevicesMetrics>.Write(ModelReaderWriterOptions options)

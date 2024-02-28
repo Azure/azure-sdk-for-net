@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.HybridCompute.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(City))
+            if (City != null)
             {
                 writer.WritePropertyName("city"u8);
                 writer.WriteStringValue(City);
             }
-            if (Optional.IsDefined(District))
+            if (District != null)
             {
                 writer.WritePropertyName("district"u8);
                 writer.WriteStringValue(District);
             }
-            if (Optional.IsDefined(CountryOrRegion))
+            if (CountryOrRegion != null)
             {
                 writer.WritePropertyName("countryOrRegion"u8);
                 writer.WriteStringValue(CountryOrRegion);
@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 return null;
             }
             string name = default;
-            Optional<string> city = default;
-            Optional<string> district = default;
-            Optional<string> countryOrRegion = default;
+            string city = default;
+            string district = default;
+            string countryOrRegion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridComputeLocation(name, city.Value, district.Value, countryOrRegion.Value, serializedAdditionalRawData);
+            return new HybridComputeLocation(name, city, district, countryOrRegion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridComputeLocation>.Write(ModelReaderWriterOptions options)

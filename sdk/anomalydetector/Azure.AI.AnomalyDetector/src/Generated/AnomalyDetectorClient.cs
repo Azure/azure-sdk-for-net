@@ -53,8 +53,14 @@ namespace Azure.AI.AnomalyDetector
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public AnomalyDetectorClient(Uri endpoint, AzureKeyCredential credential, AnomalyDetectorClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
             options ??= new AnomalyDetectorClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -69,7 +75,14 @@ namespace Azure.AI.AnomalyDetector
         /// <exception cref="ArgumentException"> <paramref name="apiVersion"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Univariate GetUnivariateClient(string apiVersion = "v1.1")
         {
-            Argument.AssertNotNullOrEmpty(apiVersion, nameof(apiVersion));
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
+            if (apiVersion.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(apiVersion));
+            }
 
             return new Univariate(ClientDiagnostics, _pipeline, _keyCredential, _endpoint, apiVersion);
         }
@@ -80,7 +93,14 @@ namespace Azure.AI.AnomalyDetector
         /// <exception cref="ArgumentException"> <paramref name="apiVersion"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Multivariate GetMultivariateClient(string apiVersion = "v1.1")
         {
-            Argument.AssertNotNullOrEmpty(apiVersion, nameof(apiVersion));
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
+            if (apiVersion.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(apiVersion));
+            }
 
             return new Multivariate(ClientDiagnostics, _pipeline, _keyCredential, _endpoint, apiVersion);
         }

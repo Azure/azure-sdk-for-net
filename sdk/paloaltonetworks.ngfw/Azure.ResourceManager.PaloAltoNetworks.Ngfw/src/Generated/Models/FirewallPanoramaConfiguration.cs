@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <exception cref="ArgumentNullException"> <paramref name="configString"/> is null. </exception>
         public FirewallPanoramaConfiguration(string configString)
         {
-            Argument.AssertNotNull(configString, nameof(configString));
+            if (configString == null)
+            {
+                throw new ArgumentNullException(nameof(configString));
+            }
 
             ConfigString = configString;
         }

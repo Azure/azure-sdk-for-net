@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id.HasValue)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id.Value);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(IsSucceeded))
+            if (IsSucceeded.HasValue)
             {
                 writer.WritePropertyName("isSucceeded"u8);
                 writer.WriteBooleanValue(IsSucceeded.Value);
             }
-            if (Optional.IsDefined(Error))
+            if (Error != null)
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteStringValue(Error);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<Guid> id = default;
-            Optional<string> name = default;
-            Optional<bool> isSucceeded = default;
-            Optional<string> error = default;
+            Guid? id = default;
+            string name = default;
+            bool? isSucceeded = default;
+            string error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ChangeDirectoryResult(Optional.ToNullable(id), name.Value, Optional.ToNullable(isSucceeded), error.Value, serializedAdditionalRawData);
+            return new ChangeDirectoryResult(id, name, isSucceeded, error, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ChangeDirectoryResult>.Write(ModelReaderWriterOptions options)

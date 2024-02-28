@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Attestation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<AttestationPrivateEndpointConnectionData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Attestation.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AttestationPrivateEndpointConnectionData>> value = default;
+            IReadOnlyList<AttestationPrivateEndpointConnectionData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Attestation.Models
                     List<AttestationPrivateEndpointConnectionData> array = new List<AttestationPrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AttestationPrivateEndpointConnectionData.DeserializeAttestationPrivateEndpointConnectionData(item));
+                        array.Add(AttestationPrivateEndpointConnectionData.DeserializeAttestationPrivateEndpointConnectionData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Attestation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AttestationPrivateEndpointConnectionListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new AttestationPrivateEndpointConnectionListResult(value ?? new ChangeTrackingList<AttestationPrivateEndpointConnectionData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AttestationPrivateEndpointConnectionListResult>.Write(ModelReaderWriterOptions options)

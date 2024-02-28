@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink.AbsoluteUri);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                 return null;
             }
             IReadOnlyList<DataProductDataType> value = default;
-            Optional<Uri> nextLink = default;
+            Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                     List<DataProductDataType> array = new List<DataProductDataType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataProductDataType.DeserializeDataProductDataType(item));
+                        array.Add(DataProductDataType.DeserializeDataProductDataType(item, options));
                     }
                     value = array;
                     continue;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataTypeListResult(value, nextLink.Value, serializedAdditionalRawData);
+            return new DataTypeListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataTypeListResult>.Write(ModelReaderWriterOptions options)

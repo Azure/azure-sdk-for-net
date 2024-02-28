@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             writer.WritePropertyName("diskId"u8);
             writer.WriteStringValue(DiskId);
-            if (Optional.IsDefined(TargetDiskName))
+            if (TargetDiskName != null)
             {
                 writer.WritePropertyName("targetDiskName"u8);
                 writer.WriteStringValue(TargetDiskName);
             }
-            if (Optional.IsDefined(IsOSDisk))
+            if (IsOSDisk != null)
             {
                 writer.WritePropertyName("isOSDisk"u8);
                 writer.WriteStringValue(IsOSDisk);
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 return null;
             }
             string diskId = default;
-            Optional<string> targetDiskName = default;
-            Optional<string> isOSDisk = default;
+            string targetDiskName = default;
+            string isOSDisk = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareCbtUpdateDiskContent(diskId, targetDiskName.Value, isOSDisk.Value, serializedAdditionalRawData);
+            return new VMwareCbtUpdateDiskContent(diskId, targetDiskName, isOSDisk, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VMwareCbtUpdateDiskContent>.Write(ModelReaderWriterOptions options)

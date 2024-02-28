@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<NetAppVolumeResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string volumeName, NetAppVolumeData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (volumeName == null)
+            {
+                throw new ArgumentNullException(nameof(volumeName));
+            }
+            if (volumeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _netAppVolumeVolumesClientDiagnostics.CreateScope("NetAppVolumeCollection.CreateOrUpdate");
             scope.Start();
@@ -115,7 +125,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<NetAppVolumeResource> CreateOrUpdate(WaitUntil waitUntil, string volumeName, NetAppVolumeData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (volumeName == null)
+            {
+                throw new ArgumentNullException(nameof(volumeName));
+            }
+            if (volumeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _netAppVolumeVolumesClientDiagnostics.CreateScope("NetAppVolumeCollection.CreateOrUpdate");
             scope.Start();
@@ -164,7 +184,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> is null. </exception>
         public virtual async Task<Response<NetAppVolumeResource>> GetAsync(string volumeName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
+            if (volumeName == null)
+            {
+                throw new ArgumentNullException(nameof(volumeName));
+            }
+            if (volumeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeName));
+            }
 
             using var scope = _netAppVolumeVolumesClientDiagnostics.CreateScope("NetAppVolumeCollection.Get");
             scope.Start();
@@ -209,7 +236,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> is null. </exception>
         public virtual Response<NetAppVolumeResource> Get(string volumeName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
+            if (volumeName == null)
+            {
+                throw new ArgumentNullException(nameof(volumeName));
+            }
+            if (volumeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeName));
+            }
 
             using var scope = _netAppVolumeVolumesClientDiagnostics.CreateScope("NetAppVolumeCollection.Get");
             scope.Start();
@@ -254,7 +288,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -284,7 +318,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -314,7 +348,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string volumeName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
+            if (volumeName == null)
+            {
+                throw new ArgumentNullException(nameof(volumeName));
+            }
+            if (volumeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeName));
+            }
 
             using var scope = _netAppVolumeVolumesClientDiagnostics.CreateScope("NetAppVolumeCollection.Exists");
             scope.Start();
@@ -357,7 +398,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> is null. </exception>
         public virtual Response<bool> Exists(string volumeName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
+            if (volumeName == null)
+            {
+                throw new ArgumentNullException(nameof(volumeName));
+            }
+            if (volumeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeName));
+            }
 
             using var scope = _netAppVolumeVolumesClientDiagnostics.CreateScope("NetAppVolumeCollection.Exists");
             scope.Start();
@@ -400,7 +448,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> is null. </exception>
         public virtual async Task<NullableResponse<NetAppVolumeResource>> GetIfExistsAsync(string volumeName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
+            if (volumeName == null)
+            {
+                throw new ArgumentNullException(nameof(volumeName));
+            }
+            if (volumeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeName));
+            }
 
             using var scope = _netAppVolumeVolumesClientDiagnostics.CreateScope("NetAppVolumeCollection.GetIfExists");
             scope.Start();
@@ -445,7 +500,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> is null. </exception>
         public virtual NullableResponse<NetAppVolumeResource> GetIfExists(string volumeName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
+            if (volumeName == null)
+            {
+                throw new ArgumentNullException(nameof(volumeName));
+            }
+            if (volumeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeName));
+            }
 
             using var scope = _netAppVolumeVolumesClientDiagnostics.CreateScope("NetAppVolumeCollection.GetIfExists");
             scope.Start();

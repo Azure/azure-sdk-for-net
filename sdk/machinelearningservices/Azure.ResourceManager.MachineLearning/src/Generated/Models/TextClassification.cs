@@ -22,7 +22,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="trainingData"/> is null. </exception>
         public TextClassification(MachineLearningTableJobInput trainingData) : base(trainingData)
         {
-            Argument.AssertNotNull(trainingData, nameof(trainingData));
+            if (trainingData == null)
+            {
+                throw new ArgumentNullException(nameof(trainingData));
+            }
 
             SearchSpace = new ChangeTrackingList<NlpParameterSubspace>();
             TaskType = TaskType.TextClassification;

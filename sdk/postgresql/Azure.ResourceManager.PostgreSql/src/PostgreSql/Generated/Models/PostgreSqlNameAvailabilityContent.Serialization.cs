@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(ResourceType))
+            if (ResourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 return null;
             }
             string name = default;
-            Optional<ResourceType> type = default;
+            ResourceType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlNameAvailabilityContent(name, Optional.ToNullable(type), serializedAdditionalRawData);
+            return new PostgreSqlNameAvailabilityContent(name, type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlNameAvailabilityContent>.Write(ModelReaderWriterOptions options)

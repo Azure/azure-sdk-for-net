@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ChecksFailedPercent))
+            if (ChecksFailedPercent.HasValue)
             {
                 writer.WritePropertyName("checksFailedPercent"u8);
                 writer.WriteNumberValue(ChecksFailedPercent.Value);
             }
-            if (Optional.IsDefined(RoundTripTimeMs))
+            if (RoundTripTimeMs.HasValue)
             {
                 writer.WritePropertyName("roundTripTimeMs"u8);
                 writer.WriteNumberValue(RoundTripTimeMs.Value);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<int> checksFailedPercent = default;
-            Optional<float> roundTripTimeMs = default;
+            int? checksFailedPercent = default;
+            float? roundTripTimeMs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectionMonitorSuccessThreshold(Optional.ToNullable(checksFailedPercent), Optional.ToNullable(roundTripTimeMs), serializedAdditionalRawData);
+            return new ConnectionMonitorSuccessThreshold(checksFailedPercent, roundTripTimeMs, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectionMonitorSuccessThreshold>.Write(ModelReaderWriterOptions options)

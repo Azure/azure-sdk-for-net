@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             writer.WriteStringValue(Code);
             writer.WritePropertyName("message"u8);
             writer.WriteStringValue(Message);
-            if (Optional.IsCollectionDefined(Details))
+            if (!(Details is ChangeTrackingList<ErrorDetail> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             }
             string code = default;
             string message = default;
-            Optional<IReadOnlyList<ErrorDetail>> details = default;
+            IReadOnlyList<ErrorDetail> details = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     List<ErrorDetail> array = new List<ErrorDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ErrorDetail.DeserializeErrorDetail(item));
+                        array.Add(ErrorDetail.DeserializeErrorDetail(item, options));
                     }
                     details = array;
                     continue;
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ErrorResponse(code, message, Optional.ToList(details), serializedAdditionalRawData);
+            return new ErrorResponse(code, message, details ?? new ChangeTrackingList<ErrorDetail>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ErrorResponse>.Write(ModelReaderWriterOptions options)

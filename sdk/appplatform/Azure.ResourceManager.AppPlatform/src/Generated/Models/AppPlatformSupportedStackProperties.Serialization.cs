@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(StackId))
+            if (StackId != null)
             {
                 writer.WritePropertyName("stackId"u8);
                 writer.WriteStringValue(StackId);
             }
-            if (Optional.IsDefined(Version))
+            if (Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<string> stackId = default;
-            Optional<string> version = default;
+            string stackId = default;
+            string version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformSupportedStackProperties(stackId.Value, version.Value, serializedAdditionalRawData);
+            return new AppPlatformSupportedStackProperties(stackId, version, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformSupportedStackProperties>.Write(ModelReaderWriterOptions options)

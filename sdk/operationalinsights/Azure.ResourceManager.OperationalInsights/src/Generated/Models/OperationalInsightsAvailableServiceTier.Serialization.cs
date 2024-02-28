@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ServiceTier))
+            if (options.Format != "W" && ServiceTier.HasValue)
             {
                 writer.WritePropertyName("serviceTier"u8);
                 writer.WriteStringValue(ServiceTier.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(IsEnabled))
+            if (options.Format != "W" && IsEnabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MinimumRetention))
+            if (options.Format != "W" && MinimumRetention.HasValue)
             {
                 writer.WritePropertyName("minimumRetention"u8);
                 writer.WriteNumberValue(MinimumRetention.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MaximumRetention))
+            if (options.Format != "W" && MaximumRetention.HasValue)
             {
                 writer.WritePropertyName("maximumRetention"u8);
                 writer.WriteNumberValue(MaximumRetention.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(DefaultRetention))
+            if (options.Format != "W" && DefaultRetention.HasValue)
             {
                 writer.WritePropertyName("defaultRetention"u8);
                 writer.WriteNumberValue(DefaultRetention.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CapacityReservationLevel))
+            if (options.Format != "W" && CapacityReservationLevel.HasValue)
             {
                 writer.WritePropertyName("capacityReservationLevel"u8);
                 writer.WriteNumberValue(CapacityReservationLevel.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastSkuUpdatedOn))
+            if (options.Format != "W" && LastSkuUpdatedOn.HasValue)
             {
                 writer.WritePropertyName("lastSkuUpdate"u8);
                 writer.WriteStringValue(LastSkuUpdatedOn.Value, "O");
@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Optional<OperationalInsightsSkuName> serviceTier = default;
-            Optional<bool> enabled = default;
-            Optional<long> minimumRetention = default;
-            Optional<long> maximumRetention = default;
-            Optional<long> defaultRetention = default;
-            Optional<long> capacityReservationLevel = default;
-            Optional<DateTimeOffset> lastSkuUpdate = default;
+            OperationalInsightsSkuName? serviceTier = default;
+            bool? enabled = default;
+            long? minimumRetention = default;
+            long? maximumRetention = default;
+            long? defaultRetention = default;
+            long? capacityReservationLevel = default;
+            DateTimeOffset? lastSkuUpdate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,7 +179,15 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationalInsightsAvailableServiceTier(Optional.ToNullable(serviceTier), Optional.ToNullable(enabled), Optional.ToNullable(minimumRetention), Optional.ToNullable(maximumRetention), Optional.ToNullable(defaultRetention), Optional.ToNullable(capacityReservationLevel), Optional.ToNullable(lastSkuUpdate), serializedAdditionalRawData);
+            return new OperationalInsightsAvailableServiceTier(
+                serviceTier,
+                enabled,
+                minimumRetention,
+                maximumRetention,
+                defaultRetention,
+                capacityReservationLevel,
+                lastSkuUpdate,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationalInsightsAvailableServiceTier>.Write(ModelReaderWriterOptions options)

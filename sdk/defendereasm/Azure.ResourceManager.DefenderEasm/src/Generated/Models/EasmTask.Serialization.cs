@@ -42,49 +42,49 @@ namespace Azure.ResourceManager.DefenderEasm.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(StartedAt))
+            if (StartedAt != null)
             {
                 writer.WritePropertyName("startedAt"u8);
                 writer.WriteStringValue(StartedAt);
             }
-            if (Optional.IsDefined(CompletedAt))
+            if (CompletedAt != null)
             {
                 writer.WritePropertyName("completedAt"u8);
                 writer.WriteStringValue(CompletedAt);
             }
-            if (Optional.IsDefined(LastPolledAt))
+            if (LastPolledAt != null)
             {
                 writer.WritePropertyName("lastPolledAt"u8);
                 writer.WriteStringValue(LastPolledAt);
             }
-            if (Optional.IsDefined(State))
+            if (State != null)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
             }
-            if (Optional.IsDefined(Phase))
+            if (Phase != null)
             {
                 writer.WritePropertyName("phase"u8);
                 writer.WriteStringValue(Phase);
             }
-            if (Optional.IsDefined(Reason))
+            if (Reason != null)
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
             }
-            if (Optional.IsDefined(Metadata))
+            if (Metadata != null)
             {
                 writer.WritePropertyName("metadata"u8);
 #if NET6_0_OR_GREATER
@@ -138,15 +138,15 @@ namespace Azure.ResourceManager.DefenderEasm.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<EasmResourceProvisioningState> provisioningState = default;
-            Optional<string> startedAt = default;
-            Optional<string> completedAt = default;
-            Optional<string> lastPolledAt = default;
-            Optional<string> state = default;
-            Optional<string> phase = default;
-            Optional<string> reason = default;
-            Optional<BinaryData> metadata = default;
+            SystemData systemData = default;
+            EasmResourceProvisioningState? provisioningState = default;
+            string startedAt = default;
+            string completedAt = default;
+            string lastPolledAt = default;
+            string state = default;
+            string phase = default;
+            string reason = default;
+            BinaryData metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -241,7 +241,20 @@ namespace Azure.ResourceManager.DefenderEasm.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EasmTask(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), startedAt.Value, completedAt.Value, lastPolledAt.Value, state.Value, phase.Value, reason.Value, metadata.Value, serializedAdditionalRawData);
+            return new EasmTask(
+                id,
+                name,
+                type,
+                systemData,
+                provisioningState,
+                startedAt,
+                completedAt,
+                lastPolledAt,
+                state,
+                phase,
+                reason,
+                metadata,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EasmTask>.Write(ModelReaderWriterOptions options)

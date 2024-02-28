@@ -51,7 +51,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <exception cref="ArgumentNullException"> <paramref name="ruleGroupName"/> is null. </exception>
         public ManagedRuleGroupOverride(string ruleGroupName)
         {
-            Argument.AssertNotNull(ruleGroupName, nameof(ruleGroupName));
+            if (ruleGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(ruleGroupName));
+            }
 
             RuleGroupName = ruleGroupName;
             Rules = new ChangeTrackingList<ManagedRuleOverride>();

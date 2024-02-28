@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(LeaseId))
+            if (LeaseId != null)
             {
                 writer.WritePropertyName("leaseId"u8);
                 writer.WriteStringValue(LeaseId);
             }
-            if (Optional.IsDefined(LeaseTimeSeconds))
+            if (LeaseTimeSeconds != null)
             {
                 writer.WritePropertyName("leaseTimeSeconds"u8);
                 writer.WriteStringValue(LeaseTimeSeconds);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<string> leaseId = default;
-            Optional<string> leaseTimeSeconds = default;
+            string leaseId = default;
+            string leaseTimeSeconds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LeaseShareResponse(leaseId.Value, leaseTimeSeconds.Value, serializedAdditionalRawData);
+            return new LeaseShareResponse(leaseId, leaseTimeSeconds, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LeaseShareResponse>.Write(ModelReaderWriterOptions options)

@@ -31,7 +31,7 @@ namespace Azure.AI.OpenAI
             writer.WriteBooleanValue(Filtered);
             writer.WritePropertyName("detected"u8);
             writer.WriteBooleanValue(Detected);
-            if (Optional.IsDefined(Url))
+            if (Url != null)
             {
                 writer.WritePropertyName("URL"u8);
                 writer.WriteStringValue(Url.AbsoluteUri);
@@ -78,7 +78,7 @@ namespace Azure.AI.OpenAI
             }
             bool filtered = default;
             bool detected = default;
-            Optional<Uri> url = default;
+            Uri url = default;
             string license = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +114,7 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContentFilterCitedDetectionResult(filtered, detected, url.Value, license, serializedAdditionalRawData);
+            return new ContentFilterCitedDetectionResult(filtered, detected, url, license, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContentFilterCitedDetectionResult>.Write(ModelReaderWriterOptions options)

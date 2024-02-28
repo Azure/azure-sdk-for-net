@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(TimeInMinutes))
+            if (TimeInMinutes.HasValue)
             {
                 writer.WritePropertyName("timeInMinutes"u8);
                 writer.WriteNumberValue(TimeInMinutes.Value);
             }
-            if (Optional.IsDefined(WebhookUri))
+            if (WebhookUri != null)
             {
                 writer.WritePropertyName("webhookUrl"u8);
                 writer.WriteStringValue(WebhookUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(EmailRecipient))
+            if (EmailRecipient != null)
             {
                 writer.WritePropertyName("emailRecipient"u8);
                 writer.WriteStringValue(EmailRecipient);
             }
-            if (Optional.IsDefined(NotificationLocale))
+            if (NotificationLocale != null)
             {
                 writer.WritePropertyName("notificationLocale"u8);
                 writer.WriteStringValue(NotificationLocale);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<DevTestLabEnableStatus> status = default;
-            Optional<int> timeInMinutes = default;
-            Optional<Uri> webhookUrl = default;
-            Optional<string> emailRecipient = default;
-            Optional<string> notificationLocale = default;
+            DevTestLabEnableStatus? status = default;
+            int? timeInMinutes = default;
+            Uri webhookUrl = default;
+            string emailRecipient = default;
+            string notificationLocale = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabNotificationSettings(Optional.ToNullable(status), Optional.ToNullable(timeInMinutes), webhookUrl.Value, emailRecipient.Value, notificationLocale.Value, serializedAdditionalRawData);
+            return new DevTestLabNotificationSettings(
+                status,
+                timeInMinutes,
+                webhookUrl,
+                emailRecipient,
+                notificationLocale,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabNotificationSettings>.Write(ModelReaderWriterOptions options)

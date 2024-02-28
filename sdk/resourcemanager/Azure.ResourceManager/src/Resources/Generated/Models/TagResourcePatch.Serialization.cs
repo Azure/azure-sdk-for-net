@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PatchMode))
+            if (PatchMode.HasValue)
             {
                 writer.WritePropertyName("operation"u8);
                 writer.WriteStringValue(PatchMode.Value.ToString());
             }
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<TagPatchMode> operation = default;
-            Optional<Tag> properties = default;
+            TagPatchMode? operation = default;
+            Tag properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    properties = Tag.DeserializeTag(property.Value);
+                    properties = Tag.DeserializeTag(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TagResourcePatch(Optional.ToNullable(operation), properties.Value, serializedAdditionalRawData);
+            return new TagResourcePatch(operation, properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TagResourcePatch>.Write(ModelReaderWriterOptions options)

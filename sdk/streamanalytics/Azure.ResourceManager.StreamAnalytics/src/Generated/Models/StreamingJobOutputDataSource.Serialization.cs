@@ -70,24 +70,24 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "GatewayMessageBus": return GatewayMessageBusOutputDataSource.DeserializeGatewayMessageBusOutputDataSource(element);
-                    case "Microsoft.AzureFunction": return FunctionOutputDataSource.DeserializeFunctionOutputDataSource(element);
-                    case "Microsoft.DBForPostgreSQL/servers/databases": return PostgreSQLOutputDataSource.DeserializePostgreSQLOutputDataSource(element);
-                    case "Microsoft.DataLake/Accounts": return DataLakeStoreOutputDataSource.DeserializeDataLakeStoreOutputDataSource(element);
-                    case "Microsoft.EventHub/EventHub": return EventHubV2OutputDataSource.DeserializeEventHubV2OutputDataSource(element);
-                    case "Microsoft.ServiceBus/EventHub": return EventHubOutputDataSource.DeserializeEventHubOutputDataSource(element);
-                    case "Microsoft.ServiceBus/Queue": return ServiceBusQueueOutputDataSource.DeserializeServiceBusQueueOutputDataSource(element);
-                    case "Microsoft.ServiceBus/Topic": return ServiceBusTopicOutputDataSource.DeserializeServiceBusTopicOutputDataSource(element);
-                    case "Microsoft.Sql/Server/DataWarehouse": return SynapseOutputDataSource.DeserializeSynapseOutputDataSource(element);
-                    case "Microsoft.Sql/Server/Database": return SqlDatabaseOutputDataSource.DeserializeSqlDatabaseOutputDataSource(element);
-                    case "Microsoft.Storage/Blob": return BlobOutputDataSource.DeserializeBlobOutputDataSource(element);
-                    case "Microsoft.Storage/DocumentDB": return DocumentDbOutputDataSource.DeserializeDocumentDbOutputDataSource(element);
-                    case "Microsoft.Storage/Table": return TableOutputDataSource.DeserializeTableOutputDataSource(element);
-                    case "PowerBI": return PowerBIOutputDataSource.DeserializePowerBIOutputDataSource(element);
-                    case "Raw": return RawOutputDatasource.DeserializeRawOutputDatasource(element);
+                    case "GatewayMessageBus": return GatewayMessageBusOutputDataSource.DeserializeGatewayMessageBusOutputDataSource(element, options);
+                    case "Microsoft.AzureFunction": return FunctionOutputDataSource.DeserializeFunctionOutputDataSource(element, options);
+                    case "Microsoft.DBForPostgreSQL/servers/databases": return PostgreSQLOutputDataSource.DeserializePostgreSQLOutputDataSource(element, options);
+                    case "Microsoft.DataLake/Accounts": return DataLakeStoreOutputDataSource.DeserializeDataLakeStoreOutputDataSource(element, options);
+                    case "Microsoft.EventHub/EventHub": return EventHubV2OutputDataSource.DeserializeEventHubV2OutputDataSource(element, options);
+                    case "Microsoft.ServiceBus/EventHub": return EventHubOutputDataSource.DeserializeEventHubOutputDataSource(element, options);
+                    case "Microsoft.ServiceBus/Queue": return ServiceBusQueueOutputDataSource.DeserializeServiceBusQueueOutputDataSource(element, options);
+                    case "Microsoft.ServiceBus/Topic": return ServiceBusTopicOutputDataSource.DeserializeServiceBusTopicOutputDataSource(element, options);
+                    case "Microsoft.Sql/Server/DataWarehouse": return SynapseOutputDataSource.DeserializeSynapseOutputDataSource(element, options);
+                    case "Microsoft.Sql/Server/Database": return SqlDatabaseOutputDataSource.DeserializeSqlDatabaseOutputDataSource(element, options);
+                    case "Microsoft.Storage/Blob": return BlobOutputDataSource.DeserializeBlobOutputDataSource(element, options);
+                    case "Microsoft.Storage/DocumentDB": return DocumentDbOutputDataSource.DeserializeDocumentDbOutputDataSource(element, options);
+                    case "Microsoft.Storage/Table": return TableOutputDataSource.DeserializeTableOutputDataSource(element, options);
+                    case "PowerBI": return PowerBIOutputDataSource.DeserializePowerBIOutputDataSource(element, options);
+                    case "Raw": return RawOutputDatasource.DeserializeRawOutputDatasource(element, options);
                 }
             }
-            return UnknownOutputDataSource.DeserializeUnknownOutputDataSource(element);
+            return UnknownOutputDataSource.DeserializeUnknownOutputDataSource(element, options);
         }
 
         BinaryData IPersistableModel<StreamingJobOutputDataSource>.Write(ModelReaderWriterOptions options)

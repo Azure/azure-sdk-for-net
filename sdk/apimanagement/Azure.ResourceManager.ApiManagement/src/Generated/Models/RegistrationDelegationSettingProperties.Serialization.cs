@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsUserRegistrationDelegationEnabled))
+            if (IsUserRegistrationDelegationEnabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsUserRegistrationDelegationEnabled.Value);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
+            bool? enabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RegistrationDelegationSettingProperties(Optional.ToNullable(enabled), serializedAdditionalRawData);
+            return new RegistrationDelegationSettingProperties(enabled, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RegistrationDelegationSettingProperties>.Write(ModelReaderWriterOptions options)

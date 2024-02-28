@@ -58,7 +58,10 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public KustoClusterData(AzureLocation location, KustoSku sku) : base(location)
         {
-            Argument.AssertNotNull(sku, nameof(sku));
+            if (sku == null)
+            {
+                throw new ArgumentNullException(nameof(sku));
+            }
 
             Sku = sku;
             Zones = new ChangeTrackingList<string>();

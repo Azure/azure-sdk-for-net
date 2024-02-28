@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsEnabled))
+            if (IsEnabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(Registration))
+            if (Registration != null)
             {
                 writer.WritePropertyName("registration"u8);
                 writer.WriteObjectValue(Registration);
             }
-            if (Optional.IsDefined(GraphApiVersion))
+            if (GraphApiVersion != null)
             {
                 writer.WritePropertyName("graphApiVersion"u8);
                 writer.WriteStringValue(GraphApiVersion);
             }
-            if (Optional.IsDefined(Login))
+            if (Login != null)
             {
                 writer.WritePropertyName("login"u8);
                 writer.WriteObjectValue(Login);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<ContainerAppRegistration> registration = default;
-            Optional<string> graphApiVersion = default;
-            Optional<LoginScopes> login = default;
+            bool? enabled = default;
+            ContainerAppRegistration registration = default;
+            string graphApiVersion = default;
+            LoginScopes login = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    registration = ContainerAppRegistration.DeserializeContainerAppRegistration(property.Value);
+                    registration = ContainerAppRegistration.DeserializeContainerAppRegistration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("graphApiVersion"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    login = Models.LoginScopes.DeserializeLoginScopes(property.Value);
+                    login = Models.LoginScopes.DeserializeLoginScopes(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppFacebookConfiguration(Optional.ToNullable(enabled), registration.Value, graphApiVersion.Value, login.Value, serializedAdditionalRawData);
+            return new ContainerAppFacebookConfiguration(enabled, registration, graphApiVersion, login, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppFacebookConfiguration>.Write(ModelReaderWriterOptions options)

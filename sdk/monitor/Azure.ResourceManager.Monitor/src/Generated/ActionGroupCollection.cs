@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="actionGroupName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ActionGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string actionGroupName, ActionGroupData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(actionGroupName, nameof(actionGroupName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (actionGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(actionGroupName));
+            }
+            if (actionGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(actionGroupName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _actionGroupClientDiagnostics.CreateScope("ActionGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="actionGroupName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ActionGroupResource> CreateOrUpdate(WaitUntil waitUntil, string actionGroupName, ActionGroupData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(actionGroupName, nameof(actionGroupName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (actionGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(actionGroupName));
+            }
+            if (actionGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(actionGroupName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _actionGroupClientDiagnostics.CreateScope("ActionGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="actionGroupName"/> is null. </exception>
         public virtual async Task<Response<ActionGroupResource>> GetAsync(string actionGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(actionGroupName, nameof(actionGroupName));
+            if (actionGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(actionGroupName));
+            }
+            if (actionGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(actionGroupName));
+            }
 
             using var scope = _actionGroupClientDiagnostics.CreateScope("ActionGroupCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="actionGroupName"/> is null. </exception>
         public virtual Response<ActionGroupResource> Get(string actionGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(actionGroupName, nameof(actionGroupName));
+            if (actionGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(actionGroupName));
+            }
+            if (actionGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(actionGroupName));
+            }
 
             using var scope = _actionGroupClientDiagnostics.CreateScope("ActionGroupCollection.Get");
             scope.Start();
@@ -327,7 +361,14 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="actionGroupName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string actionGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(actionGroupName, nameof(actionGroupName));
+            if (actionGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(actionGroupName));
+            }
+            if (actionGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(actionGroupName));
+            }
 
             using var scope = _actionGroupClientDiagnostics.CreateScope("ActionGroupCollection.Exists");
             scope.Start();
@@ -370,7 +411,14 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="actionGroupName"/> is null. </exception>
         public virtual Response<bool> Exists(string actionGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(actionGroupName, nameof(actionGroupName));
+            if (actionGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(actionGroupName));
+            }
+            if (actionGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(actionGroupName));
+            }
 
             using var scope = _actionGroupClientDiagnostics.CreateScope("ActionGroupCollection.Exists");
             scope.Start();
@@ -413,7 +461,14 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="actionGroupName"/> is null. </exception>
         public virtual async Task<NullableResponse<ActionGroupResource>> GetIfExistsAsync(string actionGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(actionGroupName, nameof(actionGroupName));
+            if (actionGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(actionGroupName));
+            }
+            if (actionGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(actionGroupName));
+            }
 
             using var scope = _actionGroupClientDiagnostics.CreateScope("ActionGroupCollection.GetIfExists");
             scope.Start();
@@ -458,7 +513,14 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="actionGroupName"/> is null. </exception>
         public virtual NullableResponse<ActionGroupResource> GetIfExists(string actionGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(actionGroupName, nameof(actionGroupName));
+            if (actionGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(actionGroupName));
+            }
+            if (actionGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(actionGroupName));
+            }
 
             using var scope = _actionGroupClientDiagnostics.CreateScope("ActionGroupCollection.GetIfExists");
             scope.Start();

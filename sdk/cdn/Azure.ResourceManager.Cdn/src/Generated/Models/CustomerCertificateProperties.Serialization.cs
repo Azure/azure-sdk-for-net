@@ -29,32 +29,32 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStartObject();
             writer.WritePropertyName("secretSource"u8);
             JsonSerializer.Serialize(writer, SecretSource);
-            if (Optional.IsDefined(SecretVersion))
+            if (SecretVersion != null)
             {
                 writer.WritePropertyName("secretVersion"u8);
                 writer.WriteStringValue(SecretVersion);
             }
-            if (Optional.IsDefined(UseLatestVersion))
+            if (UseLatestVersion.HasValue)
             {
                 writer.WritePropertyName("useLatestVersion"u8);
                 writer.WriteBooleanValue(UseLatestVersion.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Subject))
+            if (options.Format != "W" && Subject != null)
             {
                 writer.WritePropertyName("subject"u8);
                 writer.WriteStringValue(Subject);
             }
-            if (options.Format != "W" && Optional.IsDefined(ExpiresOn))
+            if (options.Format != "W" && ExpiresOn.HasValue)
             {
                 writer.WritePropertyName("expirationDate"u8);
                 writer.WriteStringValue(ExpiresOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(CertificateAuthority))
+            if (options.Format != "W" && CertificateAuthority != null)
             {
                 writer.WritePropertyName("certificateAuthority"u8);
                 writer.WriteStringValue(CertificateAuthority);
             }
-            if (Optional.IsCollectionDefined(SubjectAlternativeNames))
+            if (!(SubjectAlternativeNames is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("subjectAlternativeNames"u8);
                 writer.WriteStartArray();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(Thumbprint))
+            if (options.Format != "W" && Thumbprint != null)
             {
                 writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(Thumbprint);
@@ -110,13 +110,13 @@ namespace Azure.ResourceManager.Cdn.Models
                 return null;
             }
             WritableSubResource secretSource = default;
-            Optional<string> secretVersion = default;
-            Optional<bool> useLatestVersion = default;
-            Optional<string> subject = default;
-            Optional<DateTimeOffset> expirationDate = default;
-            Optional<string> certificateAuthority = default;
-            Optional<IList<string>> subjectAlternativeNames = default;
-            Optional<string> thumbprint = default;
+            string secretVersion = default;
+            bool? useLatestVersion = default;
+            string subject = default;
+            DateTimeOffset? expirationDate = default;
+            string certificateAuthority = default;
+            IList<string> subjectAlternativeNames = default;
+            string thumbprint = default;
             SecretType type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -190,7 +190,17 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomerCertificateProperties(type, serializedAdditionalRawData, secretSource, secretVersion.Value, Optional.ToNullable(useLatestVersion), subject.Value, Optional.ToNullable(expirationDate), certificateAuthority.Value, Optional.ToList(subjectAlternativeNames), thumbprint.Value);
+            return new CustomerCertificateProperties(
+                type,
+                serializedAdditionalRawData,
+                secretSource,
+                secretVersion,
+                useLatestVersion,
+                subject,
+                expirationDate,
+                certificateAuthority,
+                subjectAlternativeNames ?? new ChangeTrackingList<string>(),
+                thumbprint);
         }
 
         BinaryData IPersistableModel<CustomerCertificateProperties>.Write(ModelReaderWriterOptions options)

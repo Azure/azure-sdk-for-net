@@ -18,7 +18,7 @@ namespace Azure.Communication.CallAutomation
             writer.WriteStartObject();
             writer.WritePropertyName("botAppId"u8);
             writer.WriteStringValue(BotAppId);
-            if (Optional.IsDefined(Language))
+            if (Language != null)
             {
                 writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);
@@ -48,7 +48,7 @@ namespace Azure.Communication.CallAutomation
                 return null;
             }
             string botAppId = default;
-            Optional<string> language = default;
+            string language = default;
             DialogInputType kind = default;
             IDictionary<string, object> context = default;
             foreach (var property in element.EnumerateObject())
@@ -86,7 +86,7 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new PowerVirtualAgentsDialog(kind, context, botAppId, language.Value);
+            return new PowerVirtualAgentsDialog(kind, context, botAppId, language);
         }
     }
 }

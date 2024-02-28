@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.LargeInstance.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(BillingMode))
+            if (BillingMode != null)
             {
                 writer.WritePropertyName("billingMode"u8);
                 writer.WriteStringValue(BillingMode);
             }
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteStringValue(Sku);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.LargeInstance.Models
             {
                 return null;
             }
-            Optional<string> billingMode = default;
-            Optional<string> sku = default;
+            string billingMode = default;
+            string sku = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LargeInstanceStorageBillingProperties(billingMode.Value, sku.Value, serializedAdditionalRawData);
+            return new LargeInstanceStorageBillingProperties(billingMode, sku, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LargeInstanceStorageBillingProperties>.Write(ModelReaderWriterOptions options)

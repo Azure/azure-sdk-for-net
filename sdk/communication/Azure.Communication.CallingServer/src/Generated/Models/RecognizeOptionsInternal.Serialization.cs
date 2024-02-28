@@ -15,19 +15,19 @@ namespace Azure.Communication.CallingServer
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(InterruptPrompt))
+            if (InterruptPrompt.HasValue)
             {
                 writer.WritePropertyName("interruptPrompt"u8);
                 writer.WriteBooleanValue(InterruptPrompt.Value);
             }
-            if (Optional.IsDefined(InitialSilenceTimeoutInSeconds))
+            if (InitialSilenceTimeoutInSeconds.HasValue)
             {
                 writer.WritePropertyName("initialSilenceTimeoutInSeconds"u8);
                 writer.WriteNumberValue(InitialSilenceTimeoutInSeconds.Value);
             }
             writer.WritePropertyName("targetParticipant"u8);
             writer.WriteObjectValue(TargetParticipant);
-            if (Optional.IsDefined(DtmfOptions))
+            if (DtmfOptions != null)
             {
                 writer.WritePropertyName("dtmfOptions"u8);
                 writer.WriteObjectValue(DtmfOptions);

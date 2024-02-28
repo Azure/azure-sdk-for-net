@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Maps.Routing.Models
 {
@@ -18,7 +17,7 @@ namespace Azure.Maps.Routing.Models
             {
                 return null;
             }
-            Optional<BatchResultSummary> summary = default;
+            BatchResultSummary summary = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("summary"u8))
@@ -31,7 +30,7 @@ namespace Azure.Maps.Routing.Models
                     continue;
                 }
             }
-            return new BatchResult(summary.Value);
+            return new BatchResult(summary);
         }
     }
 }

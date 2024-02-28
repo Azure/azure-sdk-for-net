@@ -56,7 +56,7 @@ namespace Azure.AI.OpenAI.Assistants
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownToolDefinition(document.RootElement, options);
+            return DeserializeToolDefinition(document.RootElement, options);
         }
 
         internal static UnknownToolDefinition DeserializeUnknownToolDefinition(JsonElement element, ModelReaderWriterOptions options = null)
@@ -108,7 +108,7 @@ namespace Azure.AI.OpenAI.Assistants
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownToolDefinition(document.RootElement, options);
+                        return DeserializeToolDefinition(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(ToolDefinition)} does not support '{options.Format}' format.");

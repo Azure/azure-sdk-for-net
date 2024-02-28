@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(StatusCode))
+            if (StatusCode.HasValue)
             {
                 writer.WritePropertyName("statusCode"u8);
                 writer.WriteStringValue(StatusCode.Value.ToString());
             }
-            if (Optional.IsDefined(CustomErrorPageUri))
+            if (CustomErrorPageUri != null)
             {
                 writer.WritePropertyName("customErrorPageUrl"u8);
                 writer.WriteStringValue(CustomErrorPageUri.AbsoluteUri);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ApplicationGatewayCustomErrorStatusCode> statusCode = default;
-            Optional<Uri> customErrorPageUrl = default;
+            ApplicationGatewayCustomErrorStatusCode? statusCode = default;
+            Uri customErrorPageUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayCustomError(Optional.ToNullable(statusCode), customErrorPageUrl.Value, serializedAdditionalRawData);
+            return new ApplicationGatewayCustomError(statusCode, customErrorPageUrl, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayCustomError>.Write(ModelReaderWriterOptions options)

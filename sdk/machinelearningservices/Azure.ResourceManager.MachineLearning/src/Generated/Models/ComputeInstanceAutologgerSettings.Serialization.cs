@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MlflowAutologger))
+            if (MlflowAutologger.HasValue)
             {
                 writer.WritePropertyName("mlflowAutologger"u8);
                 writer.WriteStringValue(MlflowAutologger.Value.ToString());
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<MachineLearningFlowAutoLogger> mlflowAutologger = default;
+            MachineLearningFlowAutoLogger? mlflowAutologger = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComputeInstanceAutologgerSettings(Optional.ToNullable(mlflowAutologger), serializedAdditionalRawData);
+            return new ComputeInstanceAutologgerSettings(mlflowAutologger, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComputeInstanceAutologgerSettings>.Write(ModelReaderWriterOptions options)

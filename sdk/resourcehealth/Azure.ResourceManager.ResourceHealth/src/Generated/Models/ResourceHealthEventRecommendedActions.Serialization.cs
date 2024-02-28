@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Message))
+            if (Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Optional.IsCollectionDefined(Actions))
+            if (!(Actions is ChangeTrackingList<ResourceHealthEventRecommendedActionsItem> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(LocaleCode))
+            if (LocaleCode != null)
             {
                 writer.WritePropertyName("localeCode"u8);
                 writer.WriteStringValue(LocaleCode);
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 return null;
             }
-            Optional<string> message = default;
-            Optional<IReadOnlyList<ResourceHealthEventRecommendedActionsItem>> actions = default;
-            Optional<string> localeCode = default;
+            string message = default;
+            IReadOnlyList<ResourceHealthEventRecommendedActionsItem> actions = default;
+            string localeCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     List<ResourceHealthEventRecommendedActionsItem> array = new List<ResourceHealthEventRecommendedActionsItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceHealthEventRecommendedActionsItem.DeserializeResourceHealthEventRecommendedActionsItem(item));
+                        array.Add(ResourceHealthEventRecommendedActionsItem.DeserializeResourceHealthEventRecommendedActionsItem(item, options));
                     }
                     actions = array;
                     continue;
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceHealthEventRecommendedActions(message.Value, Optional.ToList(actions), localeCode.Value, serializedAdditionalRawData);
+            return new ResourceHealthEventRecommendedActions(message, actions ?? new ChangeTrackingList<ResourceHealthEventRecommendedActionsItem>(), localeCode, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceHealthEventRecommendedActions>.Write(ModelReaderWriterOptions options)

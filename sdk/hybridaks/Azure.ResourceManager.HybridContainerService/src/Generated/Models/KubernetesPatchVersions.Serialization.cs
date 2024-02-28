@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Readiness))
+            if (!(Readiness is ChangeTrackingList<KubernetesVersionReadiness> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("readiness"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Upgrades))
+            if (!(Upgrades is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("upgrades"u8);
                 writer.WriteStartArray();
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<KubernetesVersionReadiness>> readiness = default;
-            Optional<IReadOnlyList<string>> upgrades = default;
+            IReadOnlyList<KubernetesVersionReadiness> readiness = default;
+            IReadOnlyList<string> upgrades = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     List<KubernetesVersionReadiness> array = new List<KubernetesVersionReadiness>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KubernetesVersionReadiness.DeserializeKubernetesVersionReadiness(item));
+                        array.Add(KubernetesVersionReadiness.DeserializeKubernetesVersionReadiness(item, options));
                     }
                     readiness = array;
                     continue;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesPatchVersions(Optional.ToList(readiness), Optional.ToList(upgrades), serializedAdditionalRawData);
+            return new KubernetesPatchVersions(readiness ?? new ChangeTrackingList<KubernetesVersionReadiness>(), upgrades ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesPatchVersions>.Write(ModelReaderWriterOptions options)

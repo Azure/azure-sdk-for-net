@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AgentVersion))
+            if (AgentVersion != null)
             {
                 writer.WritePropertyName("agentVersion"u8);
                 writer.WriteStringValue(AgentVersion);
             }
-            if (Optional.IsDefined(AgentUpdateStatus))
+            if (AgentUpdateStatus != null)
             {
                 writer.WritePropertyName("agentUpdateStatus"u8);
                 writer.WriteStringValue(AgentUpdateStatus);
             }
-            if (Optional.IsDefined(PostUpdateRebootStatus))
+            if (PostUpdateRebootStatus != null)
             {
                 writer.WritePropertyName("postUpdateRebootStatus"u8);
                 writer.WriteStringValue(PostUpdateRebootStatus);
             }
-            if (Optional.IsDefined(AgentExpireOn))
+            if (AgentExpireOn.HasValue)
             {
                 writer.WritePropertyName("agentExpiryDate"u8);
                 writer.WriteStringValue(AgentExpireOn.Value, "O");
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> agentVersion = default;
-            Optional<string> agentUpdateStatus = default;
-            Optional<string> postUpdateRebootStatus = default;
-            Optional<DateTimeOffset> agentExpireOn = default;
+            string agentVersion = default;
+            string agentUpdateStatus = default;
+            string postUpdateRebootStatus = default;
+            DateTimeOffset? agentExpireOn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageAgentDetails(agentVersion.Value, agentUpdateStatus.Value, postUpdateRebootStatus.Value, Optional.ToNullable(agentExpireOn), serializedAdditionalRawData);
+            return new InMageAgentDetails(agentVersion, agentUpdateStatus, postUpdateRebootStatus, agentExpireOn, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InMageAgentDetails>.Write(ModelReaderWriterOptions options)

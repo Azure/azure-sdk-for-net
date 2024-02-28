@@ -15,22 +15,22 @@ namespace Azure.IoT.Hub.Service.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(MethodName))
+            if (MethodName != null)
             {
                 writer.WritePropertyName("methodName"u8);
                 writer.WriteStringValue(MethodName);
             }
-            if (Optional.IsDefined(Payload))
+            if (Payload != null)
             {
                 writer.WritePropertyName("payload"u8);
                 writer.WriteObjectValue(Payload);
             }
-            if (Optional.IsDefined(ResponseTimeoutInSeconds))
+            if (ResponseTimeoutInSeconds.HasValue)
             {
                 writer.WritePropertyName("responseTimeoutInSeconds"u8);
                 writer.WriteNumberValue(ResponseTimeoutInSeconds.Value);
             }
-            if (Optional.IsDefined(ConnectTimeoutInSeconds))
+            if (ConnectTimeoutInSeconds.HasValue)
             {
                 writer.WritePropertyName("connectTimeoutInSeconds"u8);
                 writer.WriteNumberValue(ConnectTimeoutInSeconds.Value);
@@ -44,10 +44,10 @@ namespace Azure.IoT.Hub.Service.Models
             {
                 return null;
             }
-            Optional<string> methodName = default;
-            Optional<object> payload = default;
-            Optional<int> responseTimeoutInSeconds = default;
-            Optional<int> connectTimeoutInSeconds = default;
+            string methodName = default;
+            object payload = default;
+            int? responseTimeoutInSeconds = default;
+            int? connectTimeoutInSeconds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("methodName"u8))
@@ -83,7 +83,7 @@ namespace Azure.IoT.Hub.Service.Models
                     continue;
                 }
             }
-            return new CloudToDeviceMethodRequest(methodName.Value, payload.Value, Optional.ToNullable(responseTimeoutInSeconds), Optional.ToNullable(connectTimeoutInSeconds));
+            return new CloudToDeviceMethodRequest(methodName, payload, responseTimeoutInSeconds, connectTimeoutInSeconds);
         }
     }
 }

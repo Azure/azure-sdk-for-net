@@ -989,6 +989,640 @@ foreach (BinaryData item in client.GetClassifiers(null))
 }
 ]]></code></example>
     </member>
+    <member name="BuildDocumentModelAsync(WaitUntil,BuildDocumentModelContent,CancellationToken)">
+      <example>
+This sample shows how to call BuildDocumentModelAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+BuildDocumentModelContent buildRequest = new BuildDocumentModelContent("<modelId>", DocumentBuildMode.Template);
+Operation<DocumentModelDetails> operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, buildRequest);
+DocumentModelDetails responseData = operation.Value;
+]]></code>
+This sample shows how to call BuildDocumentModelAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+BuildDocumentModelContent buildRequest = new BuildDocumentModelContent("<modelId>", DocumentBuildMode.Template)
+{
+    Description = "<description>",
+    AzureBlobSource = new AzureBlobContentSource(new Uri("http://localhost:3000"))
+    {
+        Prefix = "<prefix>",
+    },
+    AzureBlobFileListSource = new AzureBlobFileListContentSource(new Uri("http://localhost:3000"), "<fileList>"),
+    Tags =
+    {
+        ["key"] = "<tags>"
+    },
+};
+Operation<DocumentModelDetails> operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, buildRequest);
+DocumentModelDetails responseData = operation.Value;
+]]></code></example>
+    </member>
+    <member name="BuildDocumentModel(WaitUntil,BuildDocumentModelContent,CancellationToken)">
+      <example>
+This sample shows how to call BuildDocumentModel.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+BuildDocumentModelContent buildRequest = new BuildDocumentModelContent("<modelId>", DocumentBuildMode.Template);
+Operation<DocumentModelDetails> operation = client.BuildDocumentModel(WaitUntil.Completed, buildRequest);
+DocumentModelDetails responseData = operation.Value;
+]]></code>
+This sample shows how to call BuildDocumentModel with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+BuildDocumentModelContent buildRequest = new BuildDocumentModelContent("<modelId>", DocumentBuildMode.Template)
+{
+    Description = "<description>",
+    AzureBlobSource = new AzureBlobContentSource(new Uri("http://localhost:3000"))
+    {
+        Prefix = "<prefix>",
+    },
+    AzureBlobFileListSource = new AzureBlobFileListContentSource(new Uri("http://localhost:3000"), "<fileList>"),
+    Tags =
+    {
+        ["key"] = "<tags>"
+    },
+};
+Operation<DocumentModelDetails> operation = client.BuildDocumentModel(WaitUntil.Completed, buildRequest);
+DocumentModelDetails responseData = operation.Value;
+]]></code></example>
+    </member>
+    <member name="BuildDocumentModelAsync(WaitUntil,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call BuildDocumentModelAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    modelId = "<modelId>",
+    buildMode = "template",
+});
+Operation<BinaryData> operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, content);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("modelId").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+]]></code>
+This sample shows how to call BuildDocumentModelAsync with all parameters and request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    modelId = "<modelId>",
+    description = "<description>",
+    buildMode = "template",
+    azureBlobSource = new
+    {
+        containerUrl = "http://localhost:3000",
+        prefix = "<prefix>",
+    },
+    azureBlobFileListSource = new
+    {
+        containerUrl = "http://localhost:3000",
+        fileList = "<fileList>",
+    },
+    tags = new
+    {
+        key = "<tags>",
+    },
+});
+Operation<BinaryData> operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, content);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("modelId").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+Console.WriteLine(result.GetProperty("apiVersion").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("buildMode").ToString());
+Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("containerUrl").ToString());
+Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("prefix").ToString());
+Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("containerUrl").ToString());
+Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("fileList").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("buildMode").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("example").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldConfidence").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="BuildDocumentModel(WaitUntil,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call BuildDocumentModel and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    modelId = "<modelId>",
+    buildMode = "template",
+});
+Operation<BinaryData> operation = client.BuildDocumentModel(WaitUntil.Completed, content);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("modelId").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+]]></code>
+This sample shows how to call BuildDocumentModel with all parameters and request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    modelId = "<modelId>",
+    description = "<description>",
+    buildMode = "template",
+    azureBlobSource = new
+    {
+        containerUrl = "http://localhost:3000",
+        prefix = "<prefix>",
+    },
+    azureBlobFileListSource = new
+    {
+        containerUrl = "http://localhost:3000",
+        fileList = "<fileList>",
+    },
+    tags = new
+    {
+        key = "<tags>",
+    },
+});
+Operation<BinaryData> operation = client.BuildDocumentModel(WaitUntil.Completed, content);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("modelId").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+Console.WriteLine(result.GetProperty("apiVersion").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("buildMode").ToString());
+Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("containerUrl").ToString());
+Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("prefix").ToString());
+Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("containerUrl").ToString());
+Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("fileList").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("buildMode").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("example").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldConfidence").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="ComposeModelAsync(WaitUntil,ComposeDocumentModelContent,CancellationToken)">
+      <example>
+This sample shows how to call ComposeModelAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+ComposeDocumentModelContent composeRequest = new ComposeDocumentModelContent("<modelId>", new ComponentDocumentModelDetails[]
+{
+    new ComponentDocumentModelDetails("<modelId>")
+});
+Operation<DocumentModelDetails> operation = await client.ComposeModelAsync(WaitUntil.Completed, composeRequest);
+DocumentModelDetails responseData = operation.Value;
+]]></code>
+This sample shows how to call ComposeModelAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+ComposeDocumentModelContent composeRequest = new ComposeDocumentModelContent("<modelId>", new ComponentDocumentModelDetails[]
+{
+    new ComponentDocumentModelDetails("<modelId>")
+})
+{
+    Description = "<description>",
+    Tags =
+    {
+        ["key"] = "<tags>"
+    },
+};
+Operation<DocumentModelDetails> operation = await client.ComposeModelAsync(WaitUntil.Completed, composeRequest);
+DocumentModelDetails responseData = operation.Value;
+]]></code></example>
+    </member>
+    <member name="ComposeModel(WaitUntil,ComposeDocumentModelContent,CancellationToken)">
+      <example>
+This sample shows how to call ComposeModel.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+ComposeDocumentModelContent composeRequest = new ComposeDocumentModelContent("<modelId>", new ComponentDocumentModelDetails[]
+{
+    new ComponentDocumentModelDetails("<modelId>")
+});
+Operation<DocumentModelDetails> operation = client.ComposeModel(WaitUntil.Completed, composeRequest);
+DocumentModelDetails responseData = operation.Value;
+]]></code>
+This sample shows how to call ComposeModel with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+ComposeDocumentModelContent composeRequest = new ComposeDocumentModelContent("<modelId>", new ComponentDocumentModelDetails[]
+{
+    new ComponentDocumentModelDetails("<modelId>")
+})
+{
+    Description = "<description>",
+    Tags =
+    {
+        ["key"] = "<tags>"
+    },
+};
+Operation<DocumentModelDetails> operation = client.ComposeModel(WaitUntil.Completed, composeRequest);
+DocumentModelDetails responseData = operation.Value;
+]]></code></example>
+    </member>
+    <member name="ComposeModelAsync(WaitUntil,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call ComposeModelAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    modelId = "<modelId>",
+    componentModels = new object[]
+    {
+        new
+        {
+            modelId = "<modelId>",
+        }
+    },
+});
+Operation<BinaryData> operation = await client.ComposeModelAsync(WaitUntil.Completed, content);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("modelId").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+]]></code>
+This sample shows how to call ComposeModelAsync with all parameters and request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    modelId = "<modelId>",
+    description = "<description>",
+    componentModels = new object[]
+    {
+        new
+        {
+            modelId = "<modelId>",
+        }
+    },
+    tags = new
+    {
+        key = "<tags>",
+    },
+});
+Operation<BinaryData> operation = await client.ComposeModelAsync(WaitUntil.Completed, content);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("modelId").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+Console.WriteLine(result.GetProperty("apiVersion").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("buildMode").ToString());
+Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("containerUrl").ToString());
+Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("prefix").ToString());
+Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("containerUrl").ToString());
+Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("fileList").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("buildMode").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("example").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldConfidence").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="ComposeModel(WaitUntil,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call ComposeModel and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    modelId = "<modelId>",
+    componentModels = new object[]
+    {
+        new
+        {
+            modelId = "<modelId>",
+        }
+    },
+});
+Operation<BinaryData> operation = client.ComposeModel(WaitUntil.Completed, content);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("modelId").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+]]></code>
+This sample shows how to call ComposeModel with all parameters and request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    modelId = "<modelId>",
+    description = "<description>",
+    componentModels = new object[]
+    {
+        new
+        {
+            modelId = "<modelId>",
+        }
+    },
+    tags = new
+    {
+        key = "<tags>",
+    },
+});
+Operation<BinaryData> operation = client.ComposeModel(WaitUntil.Completed, content);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("modelId").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+Console.WriteLine(result.GetProperty("apiVersion").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("buildMode").ToString());
+Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("containerUrl").ToString());
+Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("prefix").ToString());
+Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("containerUrl").ToString());
+Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("fileList").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("buildMode").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("example").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldConfidence").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="CopyModelToAsync(WaitUntil,string,CopyAuthorization,CancellationToken)">
+      <example>
+This sample shows how to call CopyModelToAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+CopyAuthorization copyToRequest = new CopyAuthorization(
+"<targetResourceId>",
+"<targetResourceRegion>",
+"<targetModelId>",
+new Uri("http://localhost:3000"),
+"<accessToken>",
+DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"));
+Operation<DocumentModelDetails> operation = await client.CopyModelToAsync(WaitUntil.Completed, "<modelId>", copyToRequest);
+DocumentModelDetails responseData = operation.Value;
+]]></code>
+This sample shows how to call CopyModelToAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+CopyAuthorization copyToRequest = new CopyAuthorization(
+"<targetResourceId>",
+"<targetResourceRegion>",
+"<targetModelId>",
+new Uri("http://localhost:3000"),
+"<accessToken>",
+DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"));
+Operation<DocumentModelDetails> operation = await client.CopyModelToAsync(WaitUntil.Completed, "<modelId>", copyToRequest);
+DocumentModelDetails responseData = operation.Value;
+]]></code></example>
+    </member>
+    <member name="CopyModelTo(WaitUntil,string,CopyAuthorization,CancellationToken)">
+      <example>
+This sample shows how to call CopyModelTo.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+CopyAuthorization copyToRequest = new CopyAuthorization(
+"<targetResourceId>",
+"<targetResourceRegion>",
+"<targetModelId>",
+new Uri("http://localhost:3000"),
+"<accessToken>",
+DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"));
+Operation<DocumentModelDetails> operation = client.CopyModelTo(WaitUntil.Completed, "<modelId>", copyToRequest);
+DocumentModelDetails responseData = operation.Value;
+]]></code>
+This sample shows how to call CopyModelTo with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+CopyAuthorization copyToRequest = new CopyAuthorization(
+"<targetResourceId>",
+"<targetResourceRegion>",
+"<targetModelId>",
+new Uri("http://localhost:3000"),
+"<accessToken>",
+DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"));
+Operation<DocumentModelDetails> operation = client.CopyModelTo(WaitUntil.Completed, "<modelId>", copyToRequest);
+DocumentModelDetails responseData = operation.Value;
+]]></code></example>
+    </member>
+    <member name="CopyModelToAsync(WaitUntil,string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CopyModelToAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    targetResourceId = "<targetResourceId>",
+    targetResourceRegion = "<targetResourceRegion>",
+    targetModelId = "<targetModelId>",
+    targetModelLocation = "http://localhost:3000",
+    accessToken = "<accessToken>",
+    expirationDateTime = "2022-05-10T14:57:31.2311892-04:00",
+});
+Operation<BinaryData> operation = await client.CopyModelToAsync(WaitUntil.Completed, "<modelId>", content);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("modelId").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+]]></code>
+This sample shows how to call CopyModelToAsync with all parameters and request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    targetResourceId = "<targetResourceId>",
+    targetResourceRegion = "<targetResourceRegion>",
+    targetModelId = "<targetModelId>",
+    targetModelLocation = "http://localhost:3000",
+    accessToken = "<accessToken>",
+    expirationDateTime = "2022-05-10T14:57:31.2311892-04:00",
+});
+Operation<BinaryData> operation = await client.CopyModelToAsync(WaitUntil.Completed, "<modelId>", content);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("modelId").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+Console.WriteLine(result.GetProperty("apiVersion").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("buildMode").ToString());
+Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("containerUrl").ToString());
+Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("prefix").ToString());
+Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("containerUrl").ToString());
+Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("fileList").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("buildMode").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("example").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldConfidence").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="CopyModelTo(WaitUntil,string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CopyModelTo and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    targetResourceId = "<targetResourceId>",
+    targetResourceRegion = "<targetResourceRegion>",
+    targetModelId = "<targetModelId>",
+    targetModelLocation = "http://localhost:3000",
+    accessToken = "<accessToken>",
+    expirationDateTime = "2022-05-10T14:57:31.2311892-04:00",
+});
+Operation<BinaryData> operation = client.CopyModelTo(WaitUntil.Completed, "<modelId>", content);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("modelId").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+]]></code>
+This sample shows how to call CopyModelTo with all parameters and request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    targetResourceId = "<targetResourceId>",
+    targetResourceRegion = "<targetResourceRegion>",
+    targetModelId = "<targetModelId>",
+    targetModelLocation = "http://localhost:3000",
+    accessToken = "<accessToken>",
+    expirationDateTime = "2022-05-10T14:57:31.2311892-04:00",
+});
+Operation<BinaryData> operation = client.CopyModelTo(WaitUntil.Completed, "<modelId>", content);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("modelId").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+Console.WriteLine(result.GetProperty("apiVersion").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("buildMode").ToString());
+Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("containerUrl").ToString());
+Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("prefix").ToString());
+Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("containerUrl").ToString());
+Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("fileList").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("buildMode").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("example").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldConfidence").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
     <member name="BuildClassifierAsync(WaitUntil,BuildDocumentClassifierContent,CancellationToken)">
       <example>
 This sample shows how to call BuildClassifierAsync.

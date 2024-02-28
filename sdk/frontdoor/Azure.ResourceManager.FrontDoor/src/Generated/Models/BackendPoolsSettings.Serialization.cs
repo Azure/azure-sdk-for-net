@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EnforceCertificateNameCheck))
+            if (EnforceCertificateNameCheck.HasValue)
             {
                 writer.WritePropertyName("enforceCertificateNameCheck"u8);
                 writer.WriteStringValue(EnforceCertificateNameCheck.Value.ToString());
             }
-            if (Optional.IsDefined(SendRecvTimeoutInSeconds))
+            if (SendRecvTimeoutInSeconds.HasValue)
             {
                 writer.WritePropertyName("sendRecvTimeoutSeconds"u8);
                 writer.WriteNumberValue(SendRecvTimeoutInSeconds.Value);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Optional<EnforceCertificateNameCheckEnabledState> enforceCertificateNameCheck = default;
-            Optional<int> sendRecvTimeoutSeconds = default;
+            EnforceCertificateNameCheckEnabledState? enforceCertificateNameCheck = default;
+            int? sendRecvTimeoutSeconds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackendPoolsSettings(Optional.ToNullable(enforceCertificateNameCheck), Optional.ToNullable(sendRecvTimeoutSeconds), serializedAdditionalRawData);
+            return new BackendPoolsSettings(enforceCertificateNameCheck, sendRecvTimeoutSeconds, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackendPoolsSettings>.Write(ModelReaderWriterOptions options)

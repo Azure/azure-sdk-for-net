@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<OperationalInsightsSavedSearchData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<OperationalInsightsSavedSearchData>> value = default;
+            IReadOnlyList<OperationalInsightsSavedSearchData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     List<OperationalInsightsSavedSearchData> array = new List<OperationalInsightsSavedSearchData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OperationalInsightsSavedSearchData.DeserializeOperationalInsightsSavedSearchData(item));
+                        array.Add(OperationalInsightsSavedSearchData.DeserializeOperationalInsightsSavedSearchData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SavedSearchesListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new SavedSearchesListResult(value ?? new ChangeTrackingList<OperationalInsightsSavedSearchData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SavedSearchesListResult>.Write(ModelReaderWriterOptions options)

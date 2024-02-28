@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -21,8 +20,14 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="rules"/> is null. </exception>
         public StemmerOverrideTokenFilter(string name, IEnumerable<string> rules) : base(name)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(rules, nameof(rules));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (rules == null)
+            {
+                throw new ArgumentNullException(nameof(rules));
+            }
 
             Rules = rules.ToList();
             ODataType = "#Microsoft.Azure.Search.StemmerOverrideTokenFilter";

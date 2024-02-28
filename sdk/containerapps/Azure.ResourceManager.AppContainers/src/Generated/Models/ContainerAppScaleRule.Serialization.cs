@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(AzureQueue))
+            if (AzureQueue != null)
             {
                 writer.WritePropertyName("azureQueue"u8);
                 writer.WriteObjectValue(AzureQueue);
             }
-            if (Optional.IsDefined(Custom))
+            if (Custom != null)
             {
                 writer.WritePropertyName("custom"u8);
                 writer.WriteObjectValue(Custom);
             }
-            if (Optional.IsDefined(Http))
+            if (Http != null)
             {
                 writer.WritePropertyName("http"u8);
                 writer.WriteObjectValue(Http);
             }
-            if (Optional.IsDefined(Tcp))
+            if (Tcp != null)
             {
                 writer.WritePropertyName("tcp"u8);
                 writer.WriteObjectValue(Tcp);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<ContainerAppQueueScaleRule> azureQueue = default;
-            Optional<ContainerAppCustomScaleRule> custom = default;
-            Optional<ContainerAppHttpScaleRule> http = default;
-            Optional<ContainerAppTcpScaleRule> tcp = default;
+            string name = default;
+            ContainerAppQueueScaleRule azureQueue = default;
+            ContainerAppCustomScaleRule custom = default;
+            ContainerAppHttpScaleRule http = default;
+            ContainerAppTcpScaleRule tcp = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    azureQueue = ContainerAppQueueScaleRule.DeserializeContainerAppQueueScaleRule(property.Value);
+                    azureQueue = ContainerAppQueueScaleRule.DeserializeContainerAppQueueScaleRule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("custom"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    custom = ContainerAppCustomScaleRule.DeserializeContainerAppCustomScaleRule(property.Value);
+                    custom = ContainerAppCustomScaleRule.DeserializeContainerAppCustomScaleRule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("http"u8))
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    http = ContainerAppHttpScaleRule.DeserializeContainerAppHttpScaleRule(property.Value);
+                    http = ContainerAppHttpScaleRule.DeserializeContainerAppHttpScaleRule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tcp"u8))
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    tcp = ContainerAppTcpScaleRule.DeserializeContainerAppTcpScaleRule(property.Value);
+                    tcp = ContainerAppTcpScaleRule.DeserializeContainerAppTcpScaleRule(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -145,7 +145,13 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppScaleRule(name.Value, azureQueue.Value, custom.Value, http.Value, tcp.Value, serializedAdditionalRawData);
+            return new ContainerAppScaleRule(
+                name,
+                azureQueue,
+                custom,
+                http,
+                tcp,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppScaleRule>.Write(ModelReaderWriterOptions options)
