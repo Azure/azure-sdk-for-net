@@ -421,6 +421,18 @@ namespace Azure.ResourceManager.NetApp
                     writer.WriteNull("originatingResourceId");
                 }
             }
+            if (options.Format != "W" && InheritedSizeInBytes.HasValue)
+            {
+                if (InheritedSizeInBytes != null)
+                {
+                    writer.WritePropertyName("inheritedSizeInBytes"u8);
+                    writer.WriteNumberValue(InheritedSizeInBytes.Value);
+                }
+                else
+                {
+                    writer.WriteNull("inheritedSizeInBytes");
+                }
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -522,6 +534,7 @@ namespace Azure.ResourceManager.NetApp
             Optional<string> provisionedAvailabilityZone = default;
             Optional<bool> isLargeVolume = default;
             Optional<ResourceIdentifier> originatingResourceId = default;
+            Optional<long?> inheritedSizeInBytes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -1086,6 +1099,16 @@ namespace Azure.ResourceManager.NetApp
                             originatingResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("inheritedSizeInBytes"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                inheritedSizeInBytes = null;
+                                continue;
+                            }
+                            inheritedSizeInBytes = property0.Value.GetInt64();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -1158,6 +1181,7 @@ namespace Azure.ResourceManager.NetApp
                 provisionedAvailabilityZone.Value,
                 Optional.ToNullable(isLargeVolume),
                 originatingResourceId.Value,
+                Optional.ToNullable(inheritedSizeInBytes),
                 serializedAdditionalRawData);
         }
 
