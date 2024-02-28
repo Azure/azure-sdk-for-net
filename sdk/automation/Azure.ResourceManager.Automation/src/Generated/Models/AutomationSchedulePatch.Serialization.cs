@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<bool> isEnabled = default;
+            string name = default;
+            string description = default;
+            bool? isEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationSchedulePatch(name.Value, description.Value, Optional.ToNullable(isEnabled), serializedAdditionalRawData);
+            return new AutomationSchedulePatch(name, description, isEnabled, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationSchedulePatch>.Write(ModelReaderWriterOptions options)

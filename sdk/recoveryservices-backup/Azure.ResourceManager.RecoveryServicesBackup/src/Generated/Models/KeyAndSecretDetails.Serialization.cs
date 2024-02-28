@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<KekDetails> kekDetails = default;
-            Optional<BekDetails> bekDetails = default;
-            Optional<string> encryptionMechanism = default;
+            KekDetails kekDetails = default;
+            BekDetails bekDetails = default;
+            string encryptionMechanism = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KeyAndSecretDetails(kekDetails.Value, bekDetails.Value, encryptionMechanism.Value, serializedAdditionalRawData);
+            return new KeyAndSecretDetails(kekDetails, bekDetails, encryptionMechanism, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KeyAndSecretDetails>.Write(ModelReaderWriterOptions options)

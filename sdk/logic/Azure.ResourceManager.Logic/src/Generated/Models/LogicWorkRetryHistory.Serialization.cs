@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<string> code = default;
-            Optional<string> clientRequestId = default;
-            Optional<string> serviceRequestId = default;
-            Optional<LogicErrorResponse> error = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            string code = default;
+            string clientRequestId = default;
+            string serviceRequestId = default;
+            LogicErrorResponse error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -153,12 +153,12 @@ namespace Azure.ResourceManager.Logic.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new LogicWorkRetryHistory(
-                Optional.ToNullable(startTime),
-                Optional.ToNullable(endTime),
-                code.Value,
-                clientRequestId.Value,
-                serviceRequestId.Value,
-                error.Value,
+                startTime,
+                endTime,
+                code,
+                clientRequestId,
+                serviceRequestId,
+                error,
                 serializedAdditionalRawData);
         }
 

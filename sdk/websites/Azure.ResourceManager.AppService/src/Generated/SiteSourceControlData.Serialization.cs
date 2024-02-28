@@ -136,18 +136,18 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Uri> repoUrl = default;
-            Optional<string> branch = default;
-            Optional<bool> isManualIntegration = default;
-            Optional<bool> isGitHubAction = default;
-            Optional<bool> deploymentRollbackEnabled = default;
-            Optional<bool> isMercurial = default;
-            Optional<GitHubActionConfiguration> gitHubActionConfiguration = default;
+            SystemData systemData = default;
+            Uri repoUrl = default;
+            string branch = default;
+            bool? isManualIntegration = default;
+            bool? isGitHubAction = default;
+            bool? deploymentRollbackEnabled = default;
+            bool? isMercurial = default;
+            GitHubActionConfiguration gitHubActionConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -263,15 +263,15 @@ namespace Azure.ResourceManager.AppService
                 id,
                 name,
                 type,
-                systemData.Value,
-                repoUrl.Value,
-                branch.Value,
-                Optional.ToNullable(isManualIntegration),
-                Optional.ToNullable(isGitHubAction),
-                Optional.ToNullable(deploymentRollbackEnabled),
-                Optional.ToNullable(isMercurial),
-                gitHubActionConfiguration.Value,
-                kind.Value,
+                systemData,
+                repoUrl,
+                branch,
+                isManualIntegration,
+                isGitHubAction,
+                deploymentRollbackEnabled,
+                isMercurial,
+                gitHubActionConfiguration,
+                kind,
                 serializedAdditionalRawData);
         }
 

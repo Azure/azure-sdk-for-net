@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             IList<ApplicationGatewaySslProtocol> disabledSslProtocols = default;
-            Optional<ApplicationGatewaySslPolicyType> policyType = default;
-            Optional<ApplicationGatewaySslPolicyName> policyName = default;
+            ApplicationGatewaySslPolicyType? policyType = default;
+            ApplicationGatewaySslPolicyName? policyName = default;
             IList<ApplicationGatewaySslCipherSuite> cipherSuites = default;
-            Optional<ApplicationGatewaySslProtocol> minProtocolVersion = default;
+            ApplicationGatewaySslProtocol? minProtocolVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -171,10 +171,10 @@ namespace Azure.ResourceManager.Network.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ApplicationGatewaySslPolicy(
                 disabledSslProtocols ?? new ChangeTrackingList<ApplicationGatewaySslProtocol>(),
-                Optional.ToNullable(policyType),
-                Optional.ToNullable(policyName),
+                policyType,
+                policyName,
                 cipherSuites ?? new ChangeTrackingList<ApplicationGatewaySslCipherSuite>(),
-                Optional.ToNullable(minProtocolVersion),
+                minProtocolVersion,
                 serializedAdditionalRawData);
         }
 

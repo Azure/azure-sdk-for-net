@@ -98,9 +98,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             bool isCapped = default;
             bool isSystemCollection = default;
             bool isView = default;
-            Optional<MongoDBShardKeyInfo> shardKey = default;
+            MongoDBShardKeyInfo shardKey = default;
             bool supportsSharding = default;
-            Optional<string> viewOf = default;
+            string viewOf = default;
             long averageDocumentSize = default;
             long dataSize = default;
             long documentCount = default;
@@ -191,9 +191,9 @@ namespace Azure.ResourceManager.DataMigration.Models
                 isCapped,
                 isSystemCollection,
                 isView,
-                shardKey.Value,
+                shardKey,
                 supportsSharding,
-                viewOf.Value);
+                viewOf);
         }
 
         BinaryData IPersistableModel<MongoDBCollectionInfo>.Write(ModelReaderWriterOptions options)

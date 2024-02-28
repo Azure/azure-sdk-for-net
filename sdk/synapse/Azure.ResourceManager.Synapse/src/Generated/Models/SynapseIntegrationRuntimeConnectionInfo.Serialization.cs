@@ -98,12 +98,12 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<string> serviceToken = default;
-            Optional<BinaryData> identityCertThumbprint = default;
-            Optional<Uri> hostServiceUri = default;
-            Optional<string> version = default;
-            Optional<string> publicKey = default;
-            Optional<bool> isIdentityCertExprired = default;
+            string serviceToken = default;
+            BinaryData identityCertThumbprint = default;
+            Uri hostServiceUri = default;
+            string version = default;
+            string publicKey = default;
+            bool? isIdentityCertExprired = default;
             IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -154,12 +154,12 @@ namespace Azure.ResourceManager.Synapse.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new SynapseIntegrationRuntimeConnectionInfo(
-                serviceToken.Value,
-                identityCertThumbprint.Value,
-                hostServiceUri.Value,
-                version.Value,
-                publicKey.Value,
-                Optional.ToNullable(isIdentityCertExprired),
+                serviceToken,
+                identityCertThumbprint,
+                hostServiceUri,
+                version,
+                publicKey,
+                isIdentityCertExprired,
                 additionalProperties);
         }
 

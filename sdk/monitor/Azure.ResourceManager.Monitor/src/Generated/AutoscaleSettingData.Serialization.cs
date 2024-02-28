@@ -163,14 +163,14 @@ namespace Azure.ResourceManager.Monitor
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IList<AutoscaleProfile> profiles = default;
             IList<AutoscaleNotification> notifications = default;
-            Optional<bool> enabled = default;
-            Optional<PredictiveAutoscalePolicy> predictiveAutoscalePolicy = default;
-            Optional<string> name0 = default;
-            Optional<ResourceIdentifier> targetResourceUri = default;
-            Optional<AzureLocation> targetResourceLocation = default;
+            bool? enabled = default;
+            PredictiveAutoscalePolicy predictiveAutoscalePolicy = default;
+            string name0 = default;
+            ResourceIdentifier targetResourceUri = default;
+            AzureLocation? targetResourceLocation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -307,16 +307,16 @@ namespace Azure.ResourceManager.Monitor
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 profiles,
                 notifications ?? new ChangeTrackingList<AutoscaleNotification>(),
-                Optional.ToNullable(enabled),
-                predictiveAutoscalePolicy.Value,
-                name0.Value,
-                targetResourceUri.Value,
-                Optional.ToNullable(targetResourceLocation),
+                enabled,
+                predictiveAutoscalePolicy,
+                name0,
+                targetResourceUri,
+                targetResourceLocation,
                 serializedAdditionalRawData);
         }
 

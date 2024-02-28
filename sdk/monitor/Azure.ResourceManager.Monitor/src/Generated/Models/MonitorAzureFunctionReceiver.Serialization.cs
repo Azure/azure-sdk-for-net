@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Monitor.Models
             ResourceIdentifier functionAppResourceId = default;
             string functionName = default;
             Uri httpTriggerUrl = default;
-            Optional<bool> useCommonAlertSchema = default;
+            bool? useCommonAlertSchema = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 functionAppResourceId,
                 functionName,
                 httpTriggerUrl,
-                Optional.ToNullable(useCommonAlertSchema),
+                useCommonAlertSchema,
                 serializedAdditionalRawData);
         }
 

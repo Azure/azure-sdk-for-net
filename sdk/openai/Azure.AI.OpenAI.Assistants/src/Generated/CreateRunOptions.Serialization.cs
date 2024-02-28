@@ -139,9 +139,9 @@ namespace Azure.AI.OpenAI.Assistants
                 return null;
             }
             string assistantId = default;
-            Optional<string> model = default;
-            Optional<string> instructions = default;
-            Optional<string> additionalInstructions = default;
+            string model = default;
+            string instructions = default;
+            string additionalInstructions = default;
             IList<ToolDefinition> tools = default;
             IDictionary<string, string> metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -219,9 +219,9 @@ namespace Azure.AI.OpenAI.Assistants
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new CreateRunOptions(
                 assistantId,
-                model.Value,
-                instructions.Value,
-                additionalInstructions.Value,
+                model,
+                instructions,
+                additionalInstructions,
                 tools ?? new ChangeTrackingList<ToolDefinition>(),
                 metadata ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);

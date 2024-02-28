@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Optional<int> streamingUnits = default;
+            int? streamingUnits = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScaleStreamingJobContent(Optional.ToNullable(streamingUnits), serializedAdditionalRawData);
+            return new ScaleStreamingJobContent(streamingUnits, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScaleStreamingJobContent>.Write(ModelReaderWriterOptions options)

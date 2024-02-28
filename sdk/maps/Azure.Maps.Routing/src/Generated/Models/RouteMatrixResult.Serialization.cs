@@ -19,9 +19,9 @@ namespace Azure.Maps.Routing.Models
             {
                 return null;
             }
-            Optional<string> formatVersion = default;
+            string formatVersion = default;
             IReadOnlyList<IList<RouteMatrix>> matrix = default;
-            Optional<RouteMatrixSummary> summary = default;
+            RouteMatrixSummary summary = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("formatVersion"u8))
@@ -65,7 +65,7 @@ namespace Azure.Maps.Routing.Models
                     continue;
                 }
             }
-            return new RouteMatrixResult(formatVersion.Value, matrix ?? new ChangeTrackingList<IList<RouteMatrix>>(), summary.Value);
+            return new RouteMatrixResult(formatVersion, matrix ?? new ChangeTrackingList<IList<RouteMatrix>>(), summary);
         }
     }
 }

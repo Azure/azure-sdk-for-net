@@ -95,11 +95,11 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             string type = default;
-            Optional<string> iotHubNamespace = default;
-            Optional<string> sharedAccessPolicyName = default;
-            Optional<string> sharedAccessPolicyKey = default;
-            Optional<string> consumerGroupName = default;
-            Optional<string> endpoint = default;
+            string iotHubNamespace = default;
+            string sharedAccessPolicyName = default;
+            string sharedAccessPolicyKey = default;
+            string consumerGroupName = default;
+            string endpoint = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -155,11 +155,11 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             return new IoTHubStreamInputDataSource(
                 type,
                 serializedAdditionalRawData,
-                iotHubNamespace.Value,
-                sharedAccessPolicyName.Value,
-                sharedAccessPolicyKey.Value,
-                consumerGroupName.Value,
-                endpoint.Value);
+                iotHubNamespace,
+                sharedAccessPolicyName,
+                sharedAccessPolicyKey,
+                consumerGroupName,
+                endpoint);
         }
 
         BinaryData IPersistableModel<IoTHubStreamInputDataSource>.Write(ModelReaderWriterOptions options)

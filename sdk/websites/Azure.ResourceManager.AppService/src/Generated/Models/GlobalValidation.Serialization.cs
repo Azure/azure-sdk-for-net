@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<bool> requireAuthentication = default;
-            Optional<UnauthenticatedClientActionV2> unauthenticatedClientAction = default;
-            Optional<string> redirectToProvider = default;
+            bool? requireAuthentication = default;
+            UnauthenticatedClientActionV2? unauthenticatedClientAction = default;
+            string redirectToProvider = default;
             IList<string> excludedPaths = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GlobalValidation(Optional.ToNullable(requireAuthentication), Optional.ToNullable(unauthenticatedClientAction), redirectToProvider.Value, excludedPaths ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new GlobalValidation(requireAuthentication, unauthenticatedClientAction, redirectToProvider, excludedPaths ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GlobalValidation>.Write(ModelReaderWriterOptions options)

@@ -88,8 +88,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             ResourceIdentifier resourceGuardResourceId = default;
             IList<ResourceGuardOperationDetail> resourceGuardOperationDetails = default;
-            Optional<DateTimeOffset> lastUpdatedTime = default;
-            Optional<string> description = default;
+            DateTimeOffset? lastUpdatedTime = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceGuardProxyProperties(resourceGuardResourceId, resourceGuardOperationDetails ?? new ChangeTrackingList<ResourceGuardOperationDetail>(), Optional.ToNullable(lastUpdatedTime), description.Value, serializedAdditionalRawData);
+            return new ResourceGuardProxyProperties(resourceGuardResourceId, resourceGuardOperationDetails ?? new ChangeTrackingList<ResourceGuardOperationDetail>(), lastUpdatedTime, description, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceGuardProxyProperties>.Write(ModelReaderWriterOptions options)

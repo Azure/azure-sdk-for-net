@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
             {
                 return null;
             }
-            Optional<ApiCenterProvisioningState> provisioningState = default;
+            ApiCenterProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiCenterServicePatch(Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new ApiCenterServicePatch(provisioningState, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiCenterServicePatch>.Write(ModelReaderWriterOptions options)

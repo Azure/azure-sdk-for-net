@@ -122,11 +122,11 @@ namespace Azure.ResourceManager.Quota
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<QuotaRequestState> provisioningState = default;
-            Optional<string> message = default;
-            Optional<ServiceErrorDetail> error = default;
-            Optional<DateTimeOffset> requestSubmitTime = default;
+            SystemData systemData = default;
+            QuotaRequestState? provisioningState = default;
+            string message = default;
+            ServiceErrorDetail error = default;
+            DateTimeOffset? requestSubmitTime = default;
             IReadOnlyList<QuotaSubRequestDetail> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -224,11 +224,11 @@ namespace Azure.ResourceManager.Quota
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(provisioningState),
-                message.Value,
-                error.Value,
-                Optional.ToNullable(requestSubmitTime),
+                systemData,
+                provisioningState,
+                message,
+                error,
+                requestSubmitTime,
                 value ?? new ChangeTrackingList<QuotaSubRequestDetail>(),
                 serializedAdditionalRawData);
         }

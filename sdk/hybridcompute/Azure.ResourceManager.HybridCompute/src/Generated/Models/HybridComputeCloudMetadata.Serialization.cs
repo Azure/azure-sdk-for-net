@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<string> provider = default;
+            string provider = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridComputeCloudMetadata(provider.Value, serializedAdditionalRawData);
+            return new HybridComputeCloudMetadata(provider, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridComputeCloudMetadata>.Write(ModelReaderWriterOptions options)

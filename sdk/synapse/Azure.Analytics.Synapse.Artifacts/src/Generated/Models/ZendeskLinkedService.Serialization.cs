@@ -99,16 +99,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
             IDictionary<string, ParameterSpecification> parameters = default;
             IList<object> annotations = default;
             ZendeskAuthenticationType authenticationType = default;
             object url = default;
-            Optional<object> userName = default;
-            Optional<SecretBase> password = default;
-            Optional<SecretBase> apiToken = default;
-            Optional<object> encryptedCredential = default;
+            object userName = default;
+            SecretBase password = default;
+            SecretBase apiToken = default;
+            object encryptedCredential = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -230,17 +230,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new ZendeskLinkedService(
                 type,
-                connectVia.Value,
-                description.Value,
+                connectVia,
+                description,
                 parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
                 annotations ?? new ChangeTrackingList<object>(),
                 additionalProperties,
                 authenticationType,
                 url,
-                userName.Value,
-                password.Value,
-                apiToken.Value,
-                encryptedCredential.Value);
+                userName,
+                password,
+                apiToken,
+                encryptedCredential);
         }
 
         internal partial class ZendeskLinkedServiceConverter : JsonConverter<ZendeskLinkedService>

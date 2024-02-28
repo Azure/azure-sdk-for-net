@@ -116,16 +116,16 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<string> content = default;
+            string content = default;
             string type = default;
-            Optional<string> thumbprint = default;
-            Optional<string> issuer = default;
-            Optional<DateTimeOffset> issuedDate = default;
-            Optional<DateTimeOffset> expirationDate = default;
-            Optional<DateTimeOffset> activateDate = default;
-            Optional<string> subjectName = default;
+            string thumbprint = default;
+            string issuer = default;
+            DateTimeOffset? issuedDate = default;
+            DateTimeOffset? expirationDate = default;
+            DateTimeOffset? activateDate = default;
+            string subjectName = default;
             IReadOnlyList<string> dnsNames = default;
-            Optional<AppPlatformCertificateProvisioningState> provisioningState = default;
+            AppPlatformCertificateProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -213,16 +213,16 @@ namespace Azure.ResourceManager.AppPlatform.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AppPlatformContentCertificateProperties(
                 type,
-                thumbprint.Value,
-                issuer.Value,
-                Optional.ToNullable(issuedDate),
-                Optional.ToNullable(expirationDate),
-                Optional.ToNullable(activateDate),
-                subjectName.Value,
+                thumbprint,
+                issuer,
+                issuedDate,
+                expirationDate,
+                activateDate,
+                subjectName,
                 dnsNames ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(provisioningState),
+                provisioningState,
                 serializedAdditionalRawData,
-                content.Value);
+                content);
         }
 
         BinaryData IPersistableModel<AppPlatformContentCertificateProperties>.Write(ModelReaderWriterOptions options)

@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<string> selectedStorageClassName = default;
-            Optional<string> provisioner = default;
+            string selectedStorageClassName = default;
+            string provisioner = default;
             string objectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesStorageClassRestoreCriteria(objectType, serializedAdditionalRawData, selectedStorageClassName.Value, provisioner.Value);
+            return new KubernetesStorageClassRestoreCriteria(objectType, serializedAdditionalRawData, selectedStorageClassName, provisioner);
         }
 
         BinaryData IPersistableModel<KubernetesStorageClassRestoreCriteria>.Write(ModelReaderWriterOptions options)

@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Optional<OperationalInsightsSkuName> serviceTier = default;
-            Optional<bool> enabled = default;
-            Optional<long> minimumRetention = default;
-            Optional<long> maximumRetention = default;
-            Optional<long> defaultRetention = default;
-            Optional<long> capacityReservationLevel = default;
-            Optional<DateTimeOffset> lastSkuUpdate = default;
+            OperationalInsightsSkuName? serviceTier = default;
+            bool? enabled = default;
+            long? minimumRetention = default;
+            long? maximumRetention = default;
+            long? defaultRetention = default;
+            long? capacityReservationLevel = default;
+            DateTimeOffset? lastSkuUpdate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -180,13 +180,13 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new OperationalInsightsAvailableServiceTier(
-                Optional.ToNullable(serviceTier),
-                Optional.ToNullable(enabled),
-                Optional.ToNullable(minimumRetention),
-                Optional.ToNullable(maximumRetention),
-                Optional.ToNullable(defaultRetention),
-                Optional.ToNullable(capacityReservationLevel),
-                Optional.ToNullable(lastSkuUpdate),
+                serviceTier,
+                enabled,
+                minimumRetention,
+                maximumRetention,
+                defaultRetention,
+                capacityReservationLevel,
+                lastSkuUpdate,
                 serializedAdditionalRawData);
         }
 

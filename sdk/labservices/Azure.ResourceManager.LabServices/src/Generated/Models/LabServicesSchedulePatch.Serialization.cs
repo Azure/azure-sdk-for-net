@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> startAt = default;
-            Optional<DateTimeOffset> stopAt = default;
-            Optional<LabServicesRecurrencePattern> recurrencePattern = default;
-            Optional<string> timeZoneId = default;
-            Optional<BinaryData> notes = default;
+            DateTimeOffset? startAt = default;
+            DateTimeOffset? stopAt = default;
+            LabServicesRecurrencePattern recurrencePattern = default;
+            string timeZoneId = default;
+            BinaryData notes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -168,11 +168,11 @@ namespace Azure.ResourceManager.LabServices.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new LabServicesSchedulePatch(
-                Optional.ToNullable(startAt),
-                Optional.ToNullable(stopAt),
-                recurrencePattern.Value,
-                timeZoneId.Value,
-                notes.Value,
+                startAt,
+                stopAt,
+                recurrencePattern,
+                timeZoneId,
+                notes,
                 serializedAdditionalRawData);
         }
 

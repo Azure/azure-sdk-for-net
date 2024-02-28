@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<ResourceIdentifier> targetId = default;
+            ResourceIdentifier id = default;
+            ResourceIdentifier targetId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MoverResourceDependencyOverride(id.Value, targetId.Value, serializedAdditionalRawData);
+            return new MoverResourceDependencyOverride(id, targetId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MoverResourceDependencyOverride>.Write(ModelReaderWriterOptions options)

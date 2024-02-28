@@ -19,9 +19,9 @@ namespace Azure.Security.KeyVault.Storage.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> sid = default;
-            Optional<SasDefinitionAttributes> attributes = default;
+            string id = default;
+            string sid = default;
+            SasDefinitionAttributes attributes = default;
             IReadOnlyDictionary<string, string> tags = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -59,7 +59,7 @@ namespace Azure.Security.KeyVault.Storage.Models
                     continue;
                 }
             }
-            return new SasDefinitionItem(id.Value, sid.Value, attributes.Value, tags ?? new ChangeTrackingDictionary<string, string>());
+            return new SasDefinitionItem(id, sid, attributes, tags ?? new ChangeTrackingDictionary<string, string>());
         }
     }
 }

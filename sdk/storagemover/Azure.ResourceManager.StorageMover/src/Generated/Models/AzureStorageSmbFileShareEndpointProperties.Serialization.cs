@@ -83,8 +83,8 @@ namespace Azure.ResourceManager.StorageMover.Models
             ResourceIdentifier storageAccountResourceId = default;
             string fileShareName = default;
             EndpointType endpointType = default;
-            Optional<string> description = default;
-            Optional<StorageMoverProvisioningState> provisioningState = default;
+            string description = default;
+            StorageMoverProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,8 +126,8 @@ namespace Azure.ResourceManager.StorageMover.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AzureStorageSmbFileShareEndpointProperties(
                 endpointType,
-                description.Value,
-                Optional.ToNullable(provisioningState),
+                description,
+                provisioningState,
                 serializedAdditionalRawData,
                 storageAccountResourceId,
                 fileShareName);

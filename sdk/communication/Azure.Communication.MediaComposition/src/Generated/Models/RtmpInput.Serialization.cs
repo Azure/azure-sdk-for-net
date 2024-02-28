@@ -46,9 +46,9 @@ namespace Azure.Communication.MediaComposition
             string streamKey = default;
             LayoutResolution resolution = default;
             string streamUrl = default;
-            Optional<RtmpMode> mode = default;
+            RtmpMode? mode = default;
             MediaInputType kind = default;
-            Optional<string> placeholderImageUri = default;
+            string placeholderImageUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("streamKey"u8))
@@ -88,11 +88,11 @@ namespace Azure.Communication.MediaComposition
             }
             return new RtmpInput(
                 kind,
-                placeholderImageUri.Value,
+                placeholderImageUri,
                 streamKey,
                 resolution,
                 streamUrl,
-                Optional.ToNullable(mode));
+                mode);
         }
     }
 }

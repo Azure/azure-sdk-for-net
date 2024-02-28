@@ -99,15 +99,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             string name = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<ActivityState> state = default;
-            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
+            string description = default;
+            ActivityState? state = default;
+            ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
             IList<ActivityDependency> dependsOn = default;
             IList<UserProperty> userProperties = default;
-            Optional<object> timeout = default;
-            Optional<object> sleep = default;
-            Optional<object> minimumSize = default;
-            Optional<object> childItems = default;
+            object timeout = default;
+            object sleep = default;
+            object minimumSize = default;
+            object childItems = default;
             DatasetReference dataset = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
@@ -233,16 +233,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new ValidationActivity(
                 name,
                 type,
-                description.Value,
-                Optional.ToNullable(state),
-                Optional.ToNullable(onInactiveMarkAs),
+                description,
+                state,
+                onInactiveMarkAs,
                 dependsOn ?? new ChangeTrackingList<ActivityDependency>(),
                 userProperties ?? new ChangeTrackingList<UserProperty>(),
                 additionalProperties,
-                timeout.Value,
-                sleep.Value,
-                minimumSize.Value,
-                childItems.Value,
+                timeout,
+                sleep,
+                minimumSize,
+                childItems,
                 dataset);
         }
 

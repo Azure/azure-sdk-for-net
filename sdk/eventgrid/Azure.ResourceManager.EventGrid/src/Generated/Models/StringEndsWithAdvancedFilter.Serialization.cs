@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
             IList<string> values = default;
             AdvancedFilterOperatorType operatorType = default;
-            Optional<string> key = default;
+            string key = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StringEndsWithAdvancedFilter(operatorType, key.Value, serializedAdditionalRawData, values ?? new ChangeTrackingList<string>());
+            return new StringEndsWithAdvancedFilter(operatorType, key, serializedAdditionalRawData, values ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<StringEndsWithAdvancedFilter>.Write(ModelReaderWriterOptions options)

@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             DataMoveLevel dataMoveLevel = default;
             string correlationId = default;
             IList<ResourceIdentifier> sourceContainerArmIds = default;
-            Optional<bool> pauseGC = default;
+            bool? pauseGC = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 dataMoveLevel,
                 correlationId,
                 sourceContainerArmIds ?? new ChangeTrackingList<ResourceIdentifier>(),
-                Optional.ToNullable(pauseGC),
+                pauseGC,
                 serializedAdditionalRawData);
         }
 

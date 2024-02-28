@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> workspace = default;
-            Optional<AdditionalWorkspaceType> type = default;
+            string workspace = default;
+            AdditionalWorkspaceType? type = default;
             IList<AdditionalWorkspaceDataType> dataTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AdditionalWorkspacesProperties(workspace.Value, Optional.ToNullable(type), dataTypes ?? new ChangeTrackingList<AdditionalWorkspaceDataType>(), serializedAdditionalRawData);
+            return new AdditionalWorkspacesProperties(workspace, type, dataTypes ?? new ChangeTrackingList<AdditionalWorkspaceDataType>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AdditionalWorkspacesProperties>.Write(ModelReaderWriterOptions options)

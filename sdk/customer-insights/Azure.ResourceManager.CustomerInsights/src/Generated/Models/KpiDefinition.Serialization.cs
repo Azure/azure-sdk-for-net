@@ -183,21 +183,21 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
             EntityType entityType = default;
             string entityTypeName = default;
-            Optional<Guid> tenantId = default;
-            Optional<string> kpiName = default;
+            Guid? tenantId = default;
+            string kpiName = default;
             IReadOnlyDictionary<string, string> displayName = default;
             IReadOnlyDictionary<string, string> description = default;
             CalculationWindowType calculationWindow = default;
-            Optional<string> calculationWindowFieldName = default;
+            string calculationWindowFieldName = default;
             KpiFunction function = default;
             string expression = default;
-            Optional<string> unit = default;
-            Optional<string> filter = default;
+            string unit = default;
+            string filter = default;
             IReadOnlyList<string> groupBy = default;
             IReadOnlyList<KpiGroupByMetadata> groupByMetadata = default;
             IReadOnlyList<KpiParticipantProfilesMetadata> participantProfilesMetadata = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<KpiThresholds> thresHolds = default;
+            ProvisioningState? provisioningState = default;
+            KpiThresholds thresHolds = default;
             IReadOnlyList<KpiAlias> aliases = default;
             IReadOnlyList<KpiExtract> extracts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -383,21 +383,21 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             return new KpiDefinition(
                 entityType,
                 entityTypeName,
-                Optional.ToNullable(tenantId),
-                kpiName.Value,
+                tenantId,
+                kpiName,
                 displayName ?? new ChangeTrackingDictionary<string, string>(),
                 description ?? new ChangeTrackingDictionary<string, string>(),
                 calculationWindow,
-                calculationWindowFieldName.Value,
+                calculationWindowFieldName,
                 function,
                 expression,
-                unit.Value,
-                filter.Value,
+                unit,
+                filter,
                 groupBy ?? new ChangeTrackingList<string>(),
                 groupByMetadata ?? new ChangeTrackingList<KpiGroupByMetadata>(),
                 participantProfilesMetadata ?? new ChangeTrackingList<KpiParticipantProfilesMetadata>(),
-                Optional.ToNullable(provisioningState),
-                thresHolds.Value,
+                provisioningState,
+                thresHolds,
                 aliases ?? new ChangeTrackingList<KpiAlias>(),
                 extracts ?? new ChangeTrackingList<KpiExtract>(),
                 serializedAdditionalRawData);

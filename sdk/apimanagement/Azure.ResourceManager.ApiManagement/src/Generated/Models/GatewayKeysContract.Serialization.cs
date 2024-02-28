@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> primary = default;
-            Optional<string> secondary = default;
+            string primary = default;
+            string secondary = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GatewayKeysContract(primary.Value, secondary.Value, serializedAdditionalRawData);
+            return new GatewayKeysContract(primary, secondary, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GatewayKeysContract>.Write(ModelReaderWriterOptions options)

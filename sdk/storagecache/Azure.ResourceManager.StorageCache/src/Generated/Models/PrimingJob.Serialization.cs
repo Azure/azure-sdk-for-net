@@ -95,11 +95,11 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
             string primingJobName = default;
             Uri primingManifestUrl = default;
-            Optional<string> primingJobId = default;
-            Optional<PrimingJobState> primingJobState = default;
-            Optional<string> primingJobStatus = default;
-            Optional<string> primingJobDetails = default;
-            Optional<double> primingJobPercentComplete = default;
+            string primingJobId = default;
+            PrimingJobState? primingJobState = default;
+            string primingJobStatus = default;
+            string primingJobDetails = default;
+            double? primingJobPercentComplete = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -156,11 +156,11 @@ namespace Azure.ResourceManager.StorageCache.Models
             return new PrimingJob(
                 primingJobName,
                 primingManifestUrl,
-                primingJobId.Value,
-                Optional.ToNullable(primingJobState),
-                primingJobStatus.Value,
-                primingJobDetails.Value,
-                Optional.ToNullable(primingJobPercentComplete),
+                primingJobId,
+                primingJobState,
+                primingJobStatus,
+                primingJobDetails,
+                primingJobPercentComplete,
                 serializedAdditionalRawData);
         }
 

@@ -117,11 +117,11 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<LinkerValidationResultStatus?> result = default;
-            Optional<string> errorMessage = default;
-            Optional<string> errorCode = default;
+            string name = default;
+            string description = default;
+            LinkerValidationResultStatus? result = default;
+            string errorMessage = default;
+            string errorCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -178,11 +178,11 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new LinkerValidationResultItemInfo(
-                name.Value,
-                description.Value,
-                Optional.ToNullable(result),
-                errorMessage.Value,
-                errorCode.Value,
+                name,
+                description,
+                result,
+                errorMessage,
+                errorCode,
                 serializedAdditionalRawData);
         }
 

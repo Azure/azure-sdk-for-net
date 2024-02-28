@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Maps.Search.Models
 {
@@ -18,8 +17,8 @@ namespace Azure.Maps.Search.Models
             {
                 return null;
             }
-            Optional<EntryPointType> type = default;
-            Optional<LatLongPairAbbreviated> position = default;
+            EntryPointType? type = default;
+            LatLongPairAbbreviated position = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -41,7 +40,7 @@ namespace Azure.Maps.Search.Models
                     continue;
                 }
             }
-            return new FacilityEntryPoint(Optional.ToNullable(type), position.Value);
+            return new FacilityEntryPoint(type, position);
         }
     }
 }

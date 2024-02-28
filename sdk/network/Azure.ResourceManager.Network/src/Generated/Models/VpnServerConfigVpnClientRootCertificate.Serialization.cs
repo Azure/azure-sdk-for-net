@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<BinaryData> publicCertData = default;
+            string name = default;
+            BinaryData publicCertData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VpnServerConfigVpnClientRootCertificate(name.Value, publicCertData.Value, serializedAdditionalRawData);
+            return new VpnServerConfigVpnClientRootCertificate(name, publicCertData, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VpnServerConfigVpnClientRootCertificate>.Write(ModelReaderWriterOptions options)

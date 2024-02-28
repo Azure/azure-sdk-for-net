@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<DataBoxStageStatus> deviceErasureStatus = default;
-            Optional<string> erasureOrDestructionCertificateSasKey = default;
+            DataBoxStageStatus? deviceErasureStatus = default;
+            string erasureOrDestructionCertificateSasKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeviceErasureDetails(Optional.ToNullable(deviceErasureStatus), erasureOrDestructionCertificateSasKey.Value, serializedAdditionalRawData);
+            return new DeviceErasureDetails(deviceErasureStatus, erasureOrDestructionCertificateSasKey, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeviceErasureDetails>.Write(ModelReaderWriterOptions options)

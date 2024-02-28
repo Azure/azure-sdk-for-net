@@ -55,11 +55,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> bucketName = default;
-            Optional<object> version = default;
+            object bucketName = default;
+            object version = default;
             string type = default;
-            Optional<object> folderPath = default;
-            Optional<object> fileName = default;
+            object folderPath = default;
+            object fileName = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -110,11 +110,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new GoogleCloudStorageLocation(
                 type,
-                folderPath.Value,
-                fileName.Value,
+                folderPath,
+                fileName,
                 additionalProperties,
-                bucketName.Value,
-                version.Value);
+                bucketName,
+                version);
         }
 
         internal partial class GoogleCloudStorageLocationConverter : JsonConverter<GoogleCloudStorageLocation>

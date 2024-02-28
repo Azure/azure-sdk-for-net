@@ -85,8 +85,8 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 return null;
             }
             IReadOnlyList<DataLakeAnalyticsAccountBasic> value = default;
-            Optional<int> count = default;
-            Optional<string> nextLink = default;
+            int? count = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataLakeAnalyticsAccountListResult(value ?? new ChangeTrackingList<DataLakeAnalyticsAccountBasic>(), Optional.ToNullable(count), nextLink.Value, serializedAdditionalRawData);
+            return new DataLakeAnalyticsAccountListResult(value ?? new ChangeTrackingList<DataLakeAnalyticsAccountBasic>(), count, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataLakeAnalyticsAccountListResult>.Write(ModelReaderWriterOptions options)

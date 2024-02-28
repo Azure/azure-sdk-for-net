@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<AppServiceAadRegistration> registration = default;
-            Optional<AppServiceAadLoginFlow> login = default;
-            Optional<AppServiceAadValidation> validation = default;
-            Optional<bool> isAutoProvisioned = default;
+            bool? enabled = default;
+            AppServiceAadRegistration registration = default;
+            AppServiceAadLoginFlow login = default;
+            AppServiceAadValidation validation = default;
+            bool? isAutoProvisioned = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,11 +150,11 @@ namespace Azure.ResourceManager.AppService.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AppServiceAadProvider(
-                Optional.ToNullable(enabled),
-                registration.Value,
-                login.Value,
-                validation.Value,
-                Optional.ToNullable(isAutoProvisioned),
+                enabled,
+                registration,
+                login,
+                validation,
+                isAutoProvisioned,
                 serializedAdditionalRawData);
         }
 

@@ -132,10 +132,10 @@ namespace Azure.ResourceManager.Compute
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<RestorePointGroupSource> source = default;
-            Optional<string> provisioningState = default;
-            Optional<string> restorePointGroupId = default;
+            SystemData systemData = default;
+            RestorePointGroupSource source = default;
+            string provisioningState = default;
+            string restorePointGroupId = default;
             IReadOnlyList<RestorePointData> restorePoints = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -239,12 +239,12 @@ namespace Azure.ResourceManager.Compute
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                source.Value,
-                provisioningState.Value,
-                restorePointGroupId.Value,
+                source,
+                provisioningState,
+                restorePointGroupId,
                 restorePoints ?? new ChangeTrackingList<RestorePointData>(),
                 serializedAdditionalRawData);
         }

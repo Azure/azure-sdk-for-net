@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<string> planId = default;
-            Optional<string> planDisplayName = default;
+            string planId = default;
+            string planDisplayName = default;
             IReadOnlyList<PlanRequesterInfo> requesters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PlanRequesterDetails(planId.Value, planDisplayName.Value, requesters ?? new ChangeTrackingList<PlanRequesterInfo>(), serializedAdditionalRawData);
+            return new PlanRequesterDetails(planId, planDisplayName, requesters ?? new ChangeTrackingList<PlanRequesterInfo>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PlanRequesterDetails>.Write(ModelReaderWriterOptions options)

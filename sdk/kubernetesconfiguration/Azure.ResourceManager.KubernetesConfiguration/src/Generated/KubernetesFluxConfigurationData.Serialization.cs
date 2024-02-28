@@ -271,24 +271,24 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<KubernetesConfigurationScope> scope = default;
-            Optional<string> @namespace = default;
-            Optional<KubernetesConfigurationSourceKind> sourceKind = default;
-            Optional<bool> suspend = default;
-            Optional<KubernetesGitRepository> gitRepository = default;
-            Optional<KubernetesBucket> bucket = default;
-            Optional<KubernetesAzureBlob> azureBlob = default;
+            SystemData systemData = default;
+            KubernetesConfigurationScope? scope = default;
+            string @namespace = default;
+            KubernetesConfigurationSourceKind? sourceKind = default;
+            bool? suspend = default;
+            KubernetesGitRepository gitRepository = default;
+            KubernetesBucket bucket = default;
+            KubernetesAzureBlob azureBlob = default;
             IDictionary<string, Kustomization> kustomizations = default;
             IDictionary<string, string> configurationProtectedSettings = default;
             IReadOnlyList<KubernetesObjectStatus> statuses = default;
-            Optional<string> repositoryPublicKey = default;
-            Optional<string> sourceSyncedCommitId = default;
-            Optional<DateTimeOffset?> sourceUpdatedAt = default;
-            Optional<DateTimeOffset?> statusUpdatedAt = default;
-            Optional<KubernetesFluxComplianceState> complianceState = default;
-            Optional<KubernetesConfigurationProvisioningState> provisioningState = default;
-            Optional<string> errorMessage = default;
+            string repositoryPublicKey = default;
+            string sourceSyncedCommitId = default;
+            DateTimeOffset? sourceUpdatedAt = default;
+            DateTimeOffset? statusUpdatedAt = default;
+            KubernetesFluxComplianceState? complianceState = default;
+            KubernetesConfigurationProvisioningState? provisioningState = default;
+            string errorMessage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -514,24 +514,24 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(scope),
-                @namespace.Value,
-                Optional.ToNullable(sourceKind),
-                Optional.ToNullable(suspend),
-                gitRepository.Value,
-                bucket.Value,
-                azureBlob.Value,
+                systemData,
+                scope,
+                @namespace,
+                sourceKind,
+                suspend,
+                gitRepository,
+                bucket,
+                azureBlob,
                 kustomizations ?? new ChangeTrackingDictionary<string, Kustomization>(),
                 configurationProtectedSettings ?? new ChangeTrackingDictionary<string, string>(),
                 statuses ?? new ChangeTrackingList<KubernetesObjectStatus>(),
-                repositoryPublicKey.Value,
-                sourceSyncedCommitId.Value,
-                Optional.ToNullable(sourceUpdatedAt),
-                Optional.ToNullable(statusUpdatedAt),
-                Optional.ToNullable(complianceState),
-                Optional.ToNullable(provisioningState),
-                errorMessage.Value,
+                repositoryPublicKey,
+                sourceSyncedCommitId,
+                sourceUpdatedAt,
+                statusUpdatedAt,
+                complianceState,
+                provisioningState,
+                errorMessage,
                 serializedAdditionalRawData);
         }
 

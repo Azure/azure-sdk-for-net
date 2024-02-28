@@ -151,17 +151,17 @@ namespace Azure.ResourceManager.Compute.Models
             string name = default;
             AzureLocation location = default;
             IDictionary<string, string> tags = default;
-            Optional<ExtendedLocation> extendedLocation = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<PurchasePlan> plan = default;
-            Optional<OSDiskImage> osDiskImage = default;
+            ExtendedLocation extendedLocation = default;
+            ResourceIdentifier id = default;
+            PurchasePlan plan = default;
+            OSDiskImage osDiskImage = default;
             IList<DataDiskImage> dataDiskImages = default;
-            Optional<AutomaticOSUpgradeProperties> automaticOSUpgradeProperties = default;
-            Optional<HyperVGeneration> hyperVGeneration = default;
-            Optional<DisallowedConfiguration> disallowed = default;
+            AutomaticOSUpgradeProperties automaticOSUpgradeProperties = default;
+            HyperVGeneration? hyperVGeneration = default;
+            DisallowedConfiguration disallowed = default;
             IList<VirtualMachineImageFeature> features = default;
-            Optional<ArchitectureType> architecture = default;
-            Optional<ImageDeprecationStatus> imageDeprecationStatus = default;
+            ArchitectureType? architecture = default;
+            ImageDeprecationStatus imageDeprecationStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -318,21 +318,21 @@ namespace Azure.ResourceManager.Compute.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new VirtualMachineImage(
-                id.Value,
+                id,
                 serializedAdditionalRawData,
                 name,
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 extendedLocation,
-                plan.Value,
-                osDiskImage.Value,
+                plan,
+                osDiskImage,
                 dataDiskImages ?? new ChangeTrackingList<DataDiskImage>(),
-                automaticOSUpgradeProperties.Value,
-                Optional.ToNullable(hyperVGeneration),
-                disallowed.Value,
+                automaticOSUpgradeProperties,
+                hyperVGeneration,
+                disallowed,
                 features ?? new ChangeTrackingList<VirtualMachineImageFeature>(),
-                Optional.ToNullable(architecture),
-                imageDeprecationStatus.Value);
+                architecture,
+                imageDeprecationStatus);
         }
 
         BinaryData IPersistableModel<VirtualMachineImage>.Write(ModelReaderWriterOptions options)

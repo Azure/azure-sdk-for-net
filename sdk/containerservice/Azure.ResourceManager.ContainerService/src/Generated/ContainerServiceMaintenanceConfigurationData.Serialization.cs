@@ -117,10 +117,10 @@ namespace Azure.ResourceManager.ContainerService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IList<ContainerServiceTimeInWeek> timeInWeek = default;
             IList<ContainerServiceTimeSpan> notAllowedTime = default;
-            Optional<ContainerServiceMaintenanceWindow> maintenanceWindow = default;
+            ContainerServiceMaintenanceWindow maintenanceWindow = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -208,10 +208,10 @@ namespace Azure.ResourceManager.ContainerService
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 timeInWeek ?? new ChangeTrackingList<ContainerServiceTimeInWeek>(),
                 notAllowedTime ?? new ChangeTrackingList<ContainerServiceTimeSpan>(),
-                maintenanceWindow.Value,
+                maintenanceWindow,
                 serializedAdditionalRawData);
         }
 

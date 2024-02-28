@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<bool> enabled = default;
+            bool? enabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ActivityLogAlertPatch(tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(enabled), serializedAdditionalRawData);
+            return new ActivityLogAlertPatch(tags ?? new ChangeTrackingDictionary<string, string>(), enabled, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ActivityLogAlertPatch>.Write(ModelReaderWriterOptions options)

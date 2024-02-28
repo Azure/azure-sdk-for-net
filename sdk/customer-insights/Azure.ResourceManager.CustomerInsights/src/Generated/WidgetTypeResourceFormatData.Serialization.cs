@@ -142,16 +142,16 @@ namespace Azure.ResourceManager.CustomerInsights
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> widgetTypeName = default;
-            Optional<string> definition = default;
-            Optional<string> description = default;
+            SystemData systemData = default;
+            string widgetTypeName = default;
+            string definition = default;
+            string description = default;
             IDictionary<string, string> displayName = default;
-            Optional<Uri> imageUrl = default;
-            Optional<Guid> tenantId = default;
-            Optional<string> widgetVersion = default;
-            Optional<DateTimeOffset> changed = default;
-            Optional<DateTimeOffset> created = default;
+            Uri imageUrl = default;
+            Guid? tenantId = default;
+            string widgetVersion = default;
+            DateTimeOffset? changed = default;
+            DateTimeOffset? created = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -272,16 +272,16 @@ namespace Azure.ResourceManager.CustomerInsights
                 id,
                 name,
                 type,
-                systemData.Value,
-                widgetTypeName.Value,
-                definition.Value,
-                description.Value,
+                systemData,
+                widgetTypeName,
+                definition,
+                description,
                 displayName ?? new ChangeTrackingDictionary<string, string>(),
-                imageUrl.Value,
-                Optional.ToNullable(tenantId),
-                widgetVersion.Value,
-                Optional.ToNullable(changed),
-                Optional.ToNullable(created),
+                imageUrl,
+                tenantId,
+                widgetVersion,
+                changed,
+                created,
                 serializedAdditionalRawData);
         }
 

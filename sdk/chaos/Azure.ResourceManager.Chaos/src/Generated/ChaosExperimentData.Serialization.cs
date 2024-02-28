@@ -126,14 +126,14 @@ namespace Azure.ResourceManager.Chaos
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ChaosProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            ChaosProvisioningState? provisioningState = default;
             IList<ChaosExperimentStep> steps = default;
             IList<ChaosTargetSelector> selectors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -243,11 +243,11 @@ namespace Azure.ResourceManager.Chaos
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 identity,
-                Optional.ToNullable(provisioningState),
+                provisioningState,
                 steps,
                 selectors,
                 serializedAdditionalRawData);

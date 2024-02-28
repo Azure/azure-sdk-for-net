@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 return null;
             }
             IReadOnlyList<WebPubSubHubData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebPubSubHubList(value ?? new ChangeTrackingList<WebPubSubHubData>(), nextLink.Value, serializedAdditionalRawData);
+            return new WebPubSubHubList(value ?? new ChangeTrackingList<WebPubSubHubData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebPubSubHubList>.Write(ModelReaderWriterOptions options)

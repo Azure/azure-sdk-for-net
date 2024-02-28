@@ -138,19 +138,19 @@ namespace Azure.ResourceManager.NetApp
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SnapshotPolicyHourlySchedule> hourlySchedule = default;
-            Optional<SnapshotPolicyDailySchedule> dailySchedule = default;
-            Optional<SnapshotPolicyWeeklySchedule> weeklySchedule = default;
-            Optional<SnapshotPolicyMonthlySchedule> monthlySchedule = default;
-            Optional<bool> enabled = default;
-            Optional<string> provisioningState = default;
+            SystemData systemData = default;
+            SnapshotPolicyHourlySchedule hourlySchedule = default;
+            SnapshotPolicyDailySchedule dailySchedule = default;
+            SnapshotPolicyWeeklySchedule weeklySchedule = default;
+            SnapshotPolicyMonthlySchedule monthlySchedule = default;
+            bool? enabled = default;
+            string provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -279,16 +279,16 @@ namespace Azure.ResourceManager.NetApp
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                Optional.ToNullable(etag),
-                hourlySchedule.Value,
-                dailySchedule.Value,
-                weeklySchedule.Value,
-                monthlySchedule.Value,
-                Optional.ToNullable(enabled),
-                provisioningState.Value,
+                etag,
+                hourlySchedule,
+                dailySchedule,
+                weeklySchedule,
+                monthlySchedule,
+                enabled,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

@@ -152,21 +152,21 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ETag> panETag = default;
+            SystemData systemData = default;
+            ETag? panETag = default;
             FirewallNetworkProfile networkProfile = default;
-            Optional<FirewallBooleanType> isPanoramaManaged = default;
-            Optional<FirewallPanoramaConfiguration> panoramaConfig = default;
-            Optional<RulestackDetails> associatedRulestack = default;
+            FirewallBooleanType? isPanoramaManaged = default;
+            FirewallPanoramaConfiguration panoramaConfig = default;
+            RulestackDetails associatedRulestack = default;
             FirewallDnsSettings dnsSettings = default;
             IList<FirewallFrontendSetting> frontEndSettings = default;
-            Optional<FirewallProvisioningState> provisioningState = default;
+            FirewallProvisioningState? provisioningState = default;
             FirewallBillingPlanInfo planData = default;
             PanFirewallMarketplaceDetails marketplaceDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -327,18 +327,18 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 identity,
-                Optional.ToNullable(panETag),
+                panETag,
                 networkProfile,
-                Optional.ToNullable(isPanoramaManaged),
-                panoramaConfig.Value,
-                associatedRulestack.Value,
+                isPanoramaManaged,
+                panoramaConfig,
+                associatedRulestack,
                 dnsSettings,
                 frontEndSettings ?? new ChangeTrackingList<FirewallFrontendSetting>(),
-                Optional.ToNullable(provisioningState),
+                provisioningState,
                 planData,
                 marketplaceDetails,
                 serializedAdditionalRawData);

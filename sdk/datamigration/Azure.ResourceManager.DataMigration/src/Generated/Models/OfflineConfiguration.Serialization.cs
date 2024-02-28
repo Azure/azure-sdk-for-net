@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<bool> offline = default;
-            Optional<string> lastBackupName = default;
+            bool? offline = default;
+            string lastBackupName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OfflineConfiguration(Optional.ToNullable(offline), lastBackupName.Value, serializedAdditionalRawData);
+            return new OfflineConfiguration(offline, lastBackupName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OfflineConfiguration>.Write(ModelReaderWriterOptions options)

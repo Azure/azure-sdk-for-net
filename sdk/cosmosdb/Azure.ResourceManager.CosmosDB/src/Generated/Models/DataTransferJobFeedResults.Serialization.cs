@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             IReadOnlyList<DataTransferJobGetResultData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataTransferJobFeedResults(value ?? new ChangeTrackingList<DataTransferJobGetResultData>(), nextLink.Value, serializedAdditionalRawData);
+            return new DataTransferJobFeedResults(value ?? new ChangeTrackingList<DataTransferJobGetResultData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataTransferJobFeedResults>.Write(ModelReaderWriterOptions options)

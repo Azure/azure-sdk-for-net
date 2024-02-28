@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 return null;
             }
             IReadOnlyList<DevTestLabFormulaData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FormulaList(value ?? new ChangeTrackingList<DevTestLabFormulaData>(), nextLink.Value, serializedAdditionalRawData);
+            return new FormulaList(value ?? new ChangeTrackingList<DevTestLabFormulaData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FormulaList>.Write(ModelReaderWriterOptions options)

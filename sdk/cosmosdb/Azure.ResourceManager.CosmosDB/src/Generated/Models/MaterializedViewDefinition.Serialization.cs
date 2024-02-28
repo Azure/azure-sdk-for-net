@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> sourceCollectionRid = default;
+            string sourceCollectionRid = default;
             string sourceCollectionId = default;
             string definition = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MaterializedViewDefinition(sourceCollectionRid.Value, sourceCollectionId, definition, serializedAdditionalRawData);
+            return new MaterializedViewDefinition(sourceCollectionRid, sourceCollectionId, definition, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MaterializedViewDefinition>.Write(ModelReaderWriterOptions options)

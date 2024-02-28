@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> lastTransitionTime = default;
-            Optional<string> message = default;
-            Optional<string> reason = default;
-            Optional<string> status = default;
-            Optional<string> type = default;
+            DateTimeOffset? lastTransitionTime = default;
+            string message = default;
+            string reason = default;
+            string status = default;
+            string type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,11 +134,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new KubernetesObjectStatusCondition(
-                Optional.ToNullable(lastTransitionTime),
-                message.Value,
-                reason.Value,
-                status.Value,
-                type.Value,
+                lastTransitionTime,
+                message,
+                reason,
+                status,
+                type,
                 serializedAdditionalRawData);
         }
 

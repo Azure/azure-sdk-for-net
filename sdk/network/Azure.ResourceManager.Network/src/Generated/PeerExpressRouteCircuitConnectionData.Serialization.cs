@@ -125,17 +125,17 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<WritableSubResource> expressRouteCircuitPeering = default;
-            Optional<WritableSubResource> peerExpressRouteCircuitPeering = default;
-            Optional<string> addressPrefix = default;
-            Optional<CircuitConnectionStatus> circuitConnectionStatus = default;
-            Optional<string> connectionName = default;
-            Optional<Guid> authResourceGuid = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            WritableSubResource expressRouteCircuitPeering = default;
+            WritableSubResource peerExpressRouteCircuitPeering = default;
+            string addressPrefix = default;
+            CircuitConnectionStatus? circuitConnectionStatus = default;
+            string connectionName = default;
+            Guid? authResourceGuid = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -246,18 +246,18 @@ namespace Azure.ResourceManager.Network
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new PeerExpressRouteCircuitConnectionData(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
+                id,
+                name,
+                type,
                 serializedAdditionalRawData,
-                Optional.ToNullable(etag),
+                etag,
                 expressRouteCircuitPeering,
                 peerExpressRouteCircuitPeering,
-                addressPrefix.Value,
-                Optional.ToNullable(circuitConnectionStatus),
-                connectionName.Value,
-                Optional.ToNullable(authResourceGuid),
-                Optional.ToNullable(provisioningState));
+                addressPrefix,
+                circuitConnectionStatus,
+                connectionName,
+                authResourceGuid,
+                provisioningState);
         }
 
         BinaryData IPersistableModel<PeerExpressRouteCircuitConnectionData>.Write(ModelReaderWriterOptions options)

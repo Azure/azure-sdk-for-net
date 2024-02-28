@@ -132,14 +132,14 @@ namespace Azure.ResourceManager.CustomerInsights
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> viewName = default;
-            Optional<string> userId = default;
-            Optional<Guid> tenantId = default;
+            SystemData systemData = default;
+            string viewName = default;
+            string userId = default;
+            Guid? tenantId = default;
             IDictionary<string, string> displayName = default;
-            Optional<string> definition = default;
-            Optional<DateTimeOffset> changed = default;
-            Optional<DateTimeOffset> created = default;
+            string definition = default;
+            DateTimeOffset? changed = default;
+            DateTimeOffset? created = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -246,14 +246,14 @@ namespace Azure.ResourceManager.CustomerInsights
                 id,
                 name,
                 type,
-                systemData.Value,
-                viewName.Value,
-                userId.Value,
-                Optional.ToNullable(tenantId),
+                systemData,
+                viewName,
+                userId,
+                tenantId,
                 displayName ?? new ChangeTrackingDictionary<string, string>(),
-                definition.Value,
-                Optional.ToNullable(changed),
-                Optional.ToNullable(created),
+                definition,
+                changed,
+                created,
                 serializedAdditionalRawData);
         }
 

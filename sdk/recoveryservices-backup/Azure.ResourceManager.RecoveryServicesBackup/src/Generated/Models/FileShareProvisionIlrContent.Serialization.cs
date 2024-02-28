@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<string> recoveryPointId = default;
-            Optional<ResourceIdentifier> sourceResourceId = default;
+            string recoveryPointId = default;
+            ResourceIdentifier sourceResourceId = default;
             string objectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FileShareProvisionIlrContent(objectType, serializedAdditionalRawData, recoveryPointId.Value, sourceResourceId.Value);
+            return new FileShareProvisionIlrContent(objectType, serializedAdditionalRawData, recoveryPointId, sourceResourceId);
         }
 
         BinaryData IPersistableModel<FileShareProvisionIlrContent>.Write(ModelReaderWriterOptions options)

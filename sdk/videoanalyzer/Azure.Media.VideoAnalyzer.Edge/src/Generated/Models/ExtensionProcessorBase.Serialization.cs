@@ -55,7 +55,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             }
             EndpointBase endpoint = default;
             ImageProperties image = default;
-            Optional<SamplingOptions> samplingOptions = default;
+            SamplingOptions samplingOptions = default;
             string type = "#Microsoft.VideoAnalyzer.ExtensionProcessorBase";
             string name = default;
             IList<NodeInput> inputs = default;
@@ -107,7 +107,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 inputs,
                 endpoint,
                 image,
-                samplingOptions.Value);
+                samplingOptions);
         }
     }
 }

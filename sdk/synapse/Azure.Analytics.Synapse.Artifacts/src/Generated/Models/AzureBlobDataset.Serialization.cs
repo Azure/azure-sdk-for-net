@@ -122,20 +122,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<string> description = default;
-            Optional<object> structure = default;
-            Optional<object> schema = default;
+            string description = default;
+            object structure = default;
+            object schema = default;
             LinkedServiceReference linkedServiceName = default;
             IDictionary<string, ParameterSpecification> parameters = default;
             IList<object> annotations = default;
-            Optional<DatasetFolder> folder = default;
-            Optional<object> folderPath = default;
-            Optional<object> tableRootLocation = default;
-            Optional<object> fileName = default;
-            Optional<object> modifiedDatetimeStart = default;
-            Optional<object> modifiedDatetimeEnd = default;
-            Optional<DatasetStorageFormat> format = default;
-            Optional<DatasetCompression> compression = default;
+            DatasetFolder folder = default;
+            object folderPath = default;
+            object tableRootLocation = default;
+            object fileName = default;
+            object modifiedDatetimeStart = default;
+            object modifiedDatetimeEnd = default;
+            DatasetStorageFormat format = default;
+            DatasetCompression compression = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -297,21 +297,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new AzureBlobDataset(
                 type,
-                description.Value,
-                structure.Value,
-                schema.Value,
+                description,
+                structure,
+                schema,
                 linkedServiceName,
                 parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
                 annotations ?? new ChangeTrackingList<object>(),
-                folder.Value,
+                folder,
                 additionalProperties,
-                folderPath.Value,
-                tableRootLocation.Value,
-                fileName.Value,
-                modifiedDatetimeStart.Value,
-                modifiedDatetimeEnd.Value,
-                format.Value,
-                compression.Value);
+                folderPath,
+                tableRootLocation,
+                fileName,
+                modifiedDatetimeStart,
+                modifiedDatetimeEnd,
+                format,
+                compression);
         }
 
         internal partial class AzureBlobDatasetConverter : JsonConverter<AzureBlobDataset>

@@ -133,19 +133,19 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<KubeEnvironmentProvisioningState> provisioningState = default;
-            Optional<string> deploymentErrors = default;
-            Optional<bool> internalLoadBalancerEnabled = default;
-            Optional<string> defaultDomain = default;
-            Optional<string> staticIP = default;
-            Optional<ArcConfiguration> arcConfiguration = default;
-            Optional<AppLogsConfiguration> appLogsConfiguration = default;
-            Optional<ResourceIdentifier> aksResourceId = default;
+            SystemData systemData = default;
+            KubeEnvironmentProvisioningState? provisioningState = default;
+            string deploymentErrors = default;
+            bool? internalLoadBalancerEnabled = default;
+            string defaultDomain = default;
+            string staticIP = default;
+            ArcConfiguration arcConfiguration = default;
+            AppLogsConfiguration appLogsConfiguration = default;
+            ResourceIdentifier aksResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -261,16 +261,16 @@ namespace Azure.ResourceManager.AppService.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(provisioningState),
-                deploymentErrors.Value,
-                Optional.ToNullable(internalLoadBalancerEnabled),
-                defaultDomain.Value,
-                staticIP.Value,
-                arcConfiguration.Value,
-                appLogsConfiguration.Value,
-                aksResourceId.Value,
-                kind.Value,
+                systemData,
+                provisioningState,
+                deploymentErrors,
+                internalLoadBalancerEnabled,
+                defaultDomain,
+                staticIP,
+                arcConfiguration,
+                appLogsConfiguration,
+                aksResourceId,
+                kind,
                 serializedAdditionalRawData);
         }
 

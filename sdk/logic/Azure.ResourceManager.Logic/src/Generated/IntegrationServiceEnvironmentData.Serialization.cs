@@ -114,15 +114,15 @@ namespace Azure.ResourceManager.Logic
             {
                 return null;
             }
-            Optional<IntegrationServiceEnvironmentProperties> properties = default;
-            Optional<IntegrationServiceEnvironmentSku> sku = default;
-            Optional<ManagedServiceIdentity> identity = default;
+            IntegrationServiceEnvironmentProperties properties = default;
+            IntegrationServiceEnvironmentSku sku = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -207,11 +207,11 @@ namespace Azure.ResourceManager.Logic
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                properties.Value,
-                sku.Value,
+                properties,
+                sku,
                 identity,
                 serializedAdditionalRawData);
         }

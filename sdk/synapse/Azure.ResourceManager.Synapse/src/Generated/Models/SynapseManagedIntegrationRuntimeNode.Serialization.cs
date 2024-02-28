@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<string> nodeId = default;
-            Optional<SynapseManagedIntegrationRuntimeNodeStatus> status = default;
+            string nodeId = default;
+            SynapseManagedIntegrationRuntimeNodeStatus? status = default;
             IReadOnlyList<SynapseManagedIntegrationRuntimeError> errors = default;
             IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SynapseManagedIntegrationRuntimeNode(nodeId.Value, Optional.ToNullable(status), errors ?? new ChangeTrackingList<SynapseManagedIntegrationRuntimeError>(), additionalProperties);
+            return new SynapseManagedIntegrationRuntimeNode(nodeId, status, errors ?? new ChangeTrackingList<SynapseManagedIntegrationRuntimeError>(), additionalProperties);
         }
 
         BinaryData IPersistableModel<SynapseManagedIntegrationRuntimeNode>.Write(ModelReaderWriterOptions options)

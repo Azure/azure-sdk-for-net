@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> publicIPAddress = default;
-            Optional<string> privateIPAddress = default;
-            Optional<string> instanceName = default;
+            string name = default;
+            string publicIPAddress = default;
+            string privateIPAddress = default;
+            string instanceName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualApplianceNicProperties(name.Value, publicIPAddress.Value, privateIPAddress.Value, instanceName.Value, serializedAdditionalRawData);
+            return new VirtualApplianceNicProperties(name, publicIPAddress, privateIPAddress, instanceName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualApplianceNicProperties>.Write(ModelReaderWriterOptions options)

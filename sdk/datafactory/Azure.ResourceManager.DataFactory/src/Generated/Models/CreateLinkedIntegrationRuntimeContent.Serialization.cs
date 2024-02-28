@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> subscriptionId = default;
-            Optional<string> dataFactoryName = default;
-            Optional<AzureLocation> dataFactoryLocation = default;
+            string name = default;
+            string subscriptionId = default;
+            string dataFactoryName = default;
+            AzureLocation? dataFactoryLocation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CreateLinkedIntegrationRuntimeContent(name.Value, subscriptionId.Value, dataFactoryName.Value, Optional.ToNullable(dataFactoryLocation), serializedAdditionalRawData);
+            return new CreateLinkedIntegrationRuntimeContent(name, subscriptionId, dataFactoryName, dataFactoryLocation, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CreateLinkedIntegrationRuntimeContent>.Write(ModelReaderWriterOptions options)

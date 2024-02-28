@@ -86,8 +86,8 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             IList<CloudServiceLoadBalancerConfiguration> loadBalancerConfigurations = default;
-            Optional<CloudServiceSlotType> slotType = default;
-            Optional<WritableSubResource> swappableCloudService = default;
+            CloudServiceSlotType? slotType = default;
+            WritableSubResource swappableCloudService = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudServiceNetworkProfile(loadBalancerConfigurations ?? new ChangeTrackingList<CloudServiceLoadBalancerConfiguration>(), Optional.ToNullable(slotType), swappableCloudService, serializedAdditionalRawData);
+            return new CloudServiceNetworkProfile(loadBalancerConfigurations ?? new ChangeTrackingList<CloudServiceLoadBalancerConfiguration>(), slotType, swappableCloudService, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudServiceNetworkProfile>.Write(ModelReaderWriterOptions options)

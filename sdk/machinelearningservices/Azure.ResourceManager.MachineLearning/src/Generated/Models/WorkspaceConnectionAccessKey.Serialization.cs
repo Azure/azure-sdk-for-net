@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> accessKeyId = default;
-            Optional<string> secretAccessKey = default;
+            string accessKeyId = default;
+            string secretAccessKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkspaceConnectionAccessKey(accessKeyId.Value, secretAccessKey.Value, serializedAdditionalRawData);
+            return new WorkspaceConnectionAccessKey(accessKeyId, secretAccessKey, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkspaceConnectionAccessKey>.Write(ModelReaderWriterOptions options)

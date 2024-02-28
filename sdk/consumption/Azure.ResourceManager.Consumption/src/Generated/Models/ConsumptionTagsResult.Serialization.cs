@@ -114,14 +114,14 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<ETag> eTag = default;
+            ETag? eTag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IList<ConsumptionTag> tags = default;
-            Optional<string> nextLink = default;
-            Optional<string> previousLink = default;
+            string nextLink = default;
+            string previousLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -205,11 +205,11 @@ namespace Azure.ResourceManager.Consumption.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingList<ConsumptionTag>(),
-                nextLink.Value,
-                previousLink.Value,
-                Optional.ToNullable(eTag),
+                nextLink,
+                previousLink,
+                eTag,
                 serializedAdditionalRawData);
         }
 

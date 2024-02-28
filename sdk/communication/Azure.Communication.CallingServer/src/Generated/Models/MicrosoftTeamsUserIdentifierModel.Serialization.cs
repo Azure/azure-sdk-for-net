@@ -37,8 +37,8 @@ namespace Azure.Communication
                 return null;
             }
             string userId = default;
-            Optional<bool> isAnonymous = default;
-            Optional<CommunicationCloudEnvironmentModel> cloud = default;
+            bool? isAnonymous = default;
+            CommunicationCloudEnvironmentModel? cloud = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("userId"u8))
@@ -65,7 +65,7 @@ namespace Azure.Communication
                     continue;
                 }
             }
-            return new MicrosoftTeamsUserIdentifierModel(userId, Optional.ToNullable(isAnonymous), Optional.ToNullable(cloud));
+            return new MicrosoftTeamsUserIdentifierModel(userId, isAnonymous, cloud);
         }
     }
 }

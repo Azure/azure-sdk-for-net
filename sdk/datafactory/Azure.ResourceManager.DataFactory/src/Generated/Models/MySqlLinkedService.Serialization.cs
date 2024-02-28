@@ -161,20 +161,20 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
             IDictionary<string, EntityParameterSpecification> parameters = default;
             IList<BinaryData> annotations = default;
-            Optional<DataFactoryElement<string>> driverVersion = default;
-            Optional<DataFactoryElement<string>> connectionString = default;
-            Optional<DataFactoryElement<string>> server = default;
-            Optional<DataFactoryElement<int>> port = default;
-            Optional<DataFactoryElement<string>> username = default;
-            Optional<DataFactoryElement<string>> database = default;
-            Optional<DataFactoryElement<int>> sslMode = default;
-            Optional<DataFactoryElement<int>> useSystemTrustStore = default;
-            Optional<DataFactoryKeyVaultSecretReference> password = default;
-            Optional<string> encryptedCredential = default;
+            DataFactoryElement<string> driverVersion = default;
+            DataFactoryElement<string> connectionString = default;
+            DataFactoryElement<string> server = default;
+            DataFactoryElement<int> port = default;
+            DataFactoryElement<string> username = default;
+            DataFactoryElement<string> database = default;
+            DataFactoryElement<int> sslMode = default;
+            DataFactoryElement<int> useSystemTrustStore = default;
+            DataFactoryKeyVaultSecretReference password = default;
+            string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -336,21 +336,21 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new MySqlLinkedService(
                 type,
-                connectVia.Value,
-                description.Value,
+                connectVia,
+                description,
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 annotations ?? new ChangeTrackingList<BinaryData>(),
                 additionalProperties,
-                driverVersion.Value,
-                connectionString.Value,
-                server.Value,
-                port.Value,
-                username.Value,
-                database.Value,
-                sslMode.Value,
-                useSystemTrustStore.Value,
+                driverVersion,
+                connectionString,
+                server,
+                port,
+                username,
+                database,
+                sslMode,
+                useSystemTrustStore,
                 password,
-                encryptedCredential.Value);
+                encryptedCredential);
         }
 
         BinaryData IPersistableModel<MySqlLinkedService>.Write(ModelReaderWriterOptions options)

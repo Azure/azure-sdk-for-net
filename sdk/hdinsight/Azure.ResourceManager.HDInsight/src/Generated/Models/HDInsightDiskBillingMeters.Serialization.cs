@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<string> diskRpMeter = default;
-            Optional<string> sku = default;
-            Optional<HDInsightTier> tier = default;
+            string diskRpMeter = default;
+            string sku = default;
+            HDInsightTier? tier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightDiskBillingMeters(diskRpMeter.Value, sku.Value, Optional.ToNullable(tier), serializedAdditionalRawData);
+            return new HDInsightDiskBillingMeters(diskRpMeter, sku, tier, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightDiskBillingMeters>.Write(ModelReaderWriterOptions options)

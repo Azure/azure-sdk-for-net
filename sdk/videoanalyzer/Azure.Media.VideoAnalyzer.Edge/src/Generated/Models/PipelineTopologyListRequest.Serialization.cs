@@ -30,7 +30,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 return null;
             }
             string methodName = default;
-            Optional<string> apiVersion = default;
+            string apiVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("methodName"u8))
@@ -44,7 +44,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new PipelineTopologyListRequest(methodName, apiVersion.Value);
+            return new PipelineTopologyListRequest(methodName, apiVersion);
         }
     }
 }

@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<ContainerRegistryPolicyStatus> status = default;
+            ContainerRegistryPolicyStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryQuarantinePolicy(Optional.ToNullable(status), serializedAdditionalRawData);
+            return new ContainerRegistryQuarantinePolicy(status, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryQuarantinePolicy>.Write(ModelReaderWriterOptions options)

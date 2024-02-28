@@ -111,11 +111,11 @@ namespace Azure.ResourceManager.Support
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> createdOn = default;
-            Optional<float> chunkSize = default;
-            Optional<float> fileSize = default;
-            Optional<float> numberOfChunks = default;
+            SystemData systemData = default;
+            DateTimeOffset? createdOn = default;
+            float? chunkSize = default;
+            float? fileSize = default;
+            float? numberOfChunks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -202,11 +202,11 @@ namespace Azure.ResourceManager.Support
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(createdOn),
-                Optional.ToNullable(chunkSize),
-                Optional.ToNullable(fileSize),
-                Optional.ToNullable(numberOfChunks),
+                systemData,
+                createdOn,
+                chunkSize,
+                fileSize,
+                numberOfChunks,
                 serializedAdditionalRawData);
         }
 

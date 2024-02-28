@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> timestamp = default;
-            Optional<SyncGroupLogType> type = default;
-            Optional<string> source = default;
-            Optional<string> details = default;
-            Optional<Guid> tracingId = default;
-            Optional<string> operationStatus = default;
+            DateTimeOffset? timestamp = default;
+            SyncGroupLogType? type = default;
+            string source = default;
+            string details = default;
+            Guid? tracingId = default;
+            string operationStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -153,12 +153,12 @@ namespace Azure.ResourceManager.Sql.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SyncGroupLogProperties(
-                Optional.ToNullable(timestamp),
-                Optional.ToNullable(type),
-                source.Value,
-                details.Value,
-                Optional.ToNullable(tracingId),
-                operationStatus.Value,
+                timestamp,
+                type,
+                source,
+                details,
+                tracingId,
+                operationStatus,
                 serializedAdditionalRawData);
         }
 

@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Optional<string> workspaceId = default;
-            Optional<string> key = default;
+            string workspaceId = default;
+            string key = default;
             IReadOnlyList<string> connectedAgents = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Peering.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PeeringLogAnalyticsWorkspaceProperties(workspaceId.Value, key.Value, connectedAgents ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new PeeringLogAnalyticsWorkspaceProperties(workspaceId, key, connectedAgents ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PeeringLogAnalyticsWorkspaceProperties>.Write(ModelReaderWriterOptions options)

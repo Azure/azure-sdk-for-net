@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> reasonType = default;
-            Optional<string> summary = default;
-            Optional<string> detail = default;
+            string id = default;
+            string reasonType = default;
+            string summary = default;
+            string detail = default;
             IReadOnlyList<TroubleshootingRecommendedActions> recommendedActions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -144,10 +144,10 @@ namespace Azure.ResourceManager.Network.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new TroubleshootingDetails(
-                id.Value,
-                reasonType.Value,
-                summary.Value,
-                detail.Value,
+                id,
+                reasonType,
+                summary,
+                detail,
                 recommendedActions ?? new ChangeTrackingList<TroubleshootingRecommendedActions>(),
                 serializedAdditionalRawData);
         }

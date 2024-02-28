@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> domainNameLabel = default;
-            Optional<PublicIPAddressDnsSettingsDomainNameLabelScope> domainNameLabelScope = default;
-            Optional<string> fqdn = default;
-            Optional<string> reverseFqdn = default;
+            string domainNameLabel = default;
+            PublicIPAddressDnsSettingsDomainNameLabelScope? domainNameLabelScope = default;
+            string fqdn = default;
+            string reverseFqdn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PublicIPAddressDnsSettings(domainNameLabel.Value, Optional.ToNullable(domainNameLabelScope), fqdn.Value, reverseFqdn.Value, serializedAdditionalRawData);
+            return new PublicIPAddressDnsSettings(domainNameLabel, domainNameLabelScope, fqdn, reverseFqdn, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PublicIPAddressDnsSettings>.Write(ModelReaderWriterOptions options)

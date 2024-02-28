@@ -159,13 +159,13 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> resourceType = default;
-            Optional<string> name = default;
-            Optional<string> tier = default;
-            Optional<string> size = default;
-            Optional<string> family = default;
-            Optional<string> kind = default;
-            Optional<ComputeResourceSkuCapacity> capacity = default;
+            string resourceType = default;
+            string name = default;
+            string tier = default;
+            string size = default;
+            string family = default;
+            string kind = default;
+            ComputeResourceSkuCapacity capacity = default;
             IReadOnlyList<AzureLocation> locations = default;
             IReadOnlyList<ComputeResourceSkuLocationInfo> locationInfo = default;
             IReadOnlyList<string> apiVersions = default;
@@ -306,13 +306,13 @@ namespace Azure.ResourceManager.Compute.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ComputeResourceSku(
-                resourceType.Value,
-                name.Value,
-                tier.Value,
-                size.Value,
-                family.Value,
-                kind.Value,
-                capacity.Value,
+                resourceType,
+                name,
+                tier,
+                size,
+                family,
+                kind,
+                capacity,
                 locations ?? new ChangeTrackingList<AzureLocation>(),
                 locationInfo ?? new ChangeTrackingList<ComputeResourceSkuLocationInfo>(),
                 apiVersions ?? new ChangeTrackingList<string>(),

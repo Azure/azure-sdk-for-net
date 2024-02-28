@@ -318,49 +318,49 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<bool> enabled = default;
-            Optional<string> runtimeVersion = default;
-            Optional<UnauthenticatedClientAction> unauthenticatedClientAction = default;
-            Optional<bool> tokenStoreEnabled = default;
+            SystemData systemData = default;
+            bool? enabled = default;
+            string runtimeVersion = default;
+            UnauthenticatedClientAction? unauthenticatedClientAction = default;
+            bool? tokenStoreEnabled = default;
             IList<string> allowedExternalRedirectUrls = default;
-            Optional<BuiltInAuthenticationProvider> defaultProvider = default;
-            Optional<double> tokenRefreshExtensionHours = default;
-            Optional<string> clientId = default;
-            Optional<string> clientSecret = default;
-            Optional<string> clientSecretSettingName = default;
-            Optional<string> clientSecretCertificateThumbprint = default;
-            Optional<string> issuer = default;
-            Optional<bool> validateIssuer = default;
+            BuiltInAuthenticationProvider? defaultProvider = default;
+            double? tokenRefreshExtensionHours = default;
+            string clientId = default;
+            string clientSecret = default;
+            string clientSecretSettingName = default;
+            string clientSecretCertificateThumbprint = default;
+            string issuer = default;
+            bool? validateIssuer = default;
             IList<string> allowedAudiences = default;
             IList<string> additionalLoginParams = default;
-            Optional<string> aadClaimsAuthorization = default;
-            Optional<string> googleClientId = default;
-            Optional<string> googleClientSecret = default;
-            Optional<string> googleClientSecretSettingName = default;
+            string aadClaimsAuthorization = default;
+            string googleClientId = default;
+            string googleClientSecret = default;
+            string googleClientSecretSettingName = default;
             IList<string> googleOAuthScopes = default;
-            Optional<string> facebookAppId = default;
-            Optional<string> facebookAppSecret = default;
-            Optional<string> facebookAppSecretSettingName = default;
+            string facebookAppId = default;
+            string facebookAppSecret = default;
+            string facebookAppSecretSettingName = default;
             IList<string> facebookOAuthScopes = default;
-            Optional<string> gitHubClientId = default;
-            Optional<string> gitHubClientSecret = default;
-            Optional<string> gitHubClientSecretSettingName = default;
+            string gitHubClientId = default;
+            string gitHubClientSecret = default;
+            string gitHubClientSecretSettingName = default;
             IList<string> gitHubOAuthScopes = default;
-            Optional<string> twitterConsumerKey = default;
-            Optional<string> twitterConsumerSecret = default;
-            Optional<string> twitterConsumerSecretSettingName = default;
-            Optional<string> microsoftAccountClientId = default;
-            Optional<string> microsoftAccountClientSecret = default;
-            Optional<string> microsoftAccountClientSecretSettingName = default;
+            string twitterConsumerKey = default;
+            string twitterConsumerSecret = default;
+            string twitterConsumerSecretSettingName = default;
+            string microsoftAccountClientId = default;
+            string microsoftAccountClientSecret = default;
+            string microsoftAccountClientSecretSettingName = default;
             IList<string> microsoftAccountOAuthScopes = default;
-            Optional<string> isAuthFromFile = default;
-            Optional<string> authFilePath = default;
-            Optional<string> configVersion = default;
+            string isAuthFromFile = default;
+            string authFilePath = default;
+            string configVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -693,46 +693,46 @@ namespace Azure.ResourceManager.AppService.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(enabled),
-                runtimeVersion.Value,
-                Optional.ToNullable(unauthenticatedClientAction),
-                Optional.ToNullable(tokenStoreEnabled),
+                systemData,
+                enabled,
+                runtimeVersion,
+                unauthenticatedClientAction,
+                tokenStoreEnabled,
                 allowedExternalRedirectUrls ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(defaultProvider),
-                Optional.ToNullable(tokenRefreshExtensionHours),
-                clientId.Value,
-                clientSecret.Value,
-                clientSecretSettingName.Value,
-                clientSecretCertificateThumbprint.Value,
-                issuer.Value,
-                Optional.ToNullable(validateIssuer),
+                defaultProvider,
+                tokenRefreshExtensionHours,
+                clientId,
+                clientSecret,
+                clientSecretSettingName,
+                clientSecretCertificateThumbprint,
+                issuer,
+                validateIssuer,
                 allowedAudiences ?? new ChangeTrackingList<string>(),
                 additionalLoginParams ?? new ChangeTrackingList<string>(),
-                aadClaimsAuthorization.Value,
-                googleClientId.Value,
-                googleClientSecret.Value,
-                googleClientSecretSettingName.Value,
+                aadClaimsAuthorization,
+                googleClientId,
+                googleClientSecret,
+                googleClientSecretSettingName,
                 googleOAuthScopes ?? new ChangeTrackingList<string>(),
-                facebookAppId.Value,
-                facebookAppSecret.Value,
-                facebookAppSecretSettingName.Value,
+                facebookAppId,
+                facebookAppSecret,
+                facebookAppSecretSettingName,
                 facebookOAuthScopes ?? new ChangeTrackingList<string>(),
-                gitHubClientId.Value,
-                gitHubClientSecret.Value,
-                gitHubClientSecretSettingName.Value,
+                gitHubClientId,
+                gitHubClientSecret,
+                gitHubClientSecretSettingName,
                 gitHubOAuthScopes ?? new ChangeTrackingList<string>(),
-                twitterConsumerKey.Value,
-                twitterConsumerSecret.Value,
-                twitterConsumerSecretSettingName.Value,
-                microsoftAccountClientId.Value,
-                microsoftAccountClientSecret.Value,
-                microsoftAccountClientSecretSettingName.Value,
+                twitterConsumerKey,
+                twitterConsumerSecret,
+                twitterConsumerSecretSettingName,
+                microsoftAccountClientId,
+                microsoftAccountClientSecret,
+                microsoftAccountClientSecretSettingName,
                 microsoftAccountOAuthScopes ?? new ChangeTrackingList<string>(),
-                isAuthFromFile.Value,
-                authFilePath.Value,
-                configVersion.Value,
-                kind.Value,
+                isAuthFromFile,
+                authFilePath,
+                configVersion,
+                kind,
                 serializedAdditionalRawData);
         }
 

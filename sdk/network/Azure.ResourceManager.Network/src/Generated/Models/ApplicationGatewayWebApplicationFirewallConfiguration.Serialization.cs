@@ -117,10 +117,10 @@ namespace Azure.ResourceManager.Network.Models
             string ruleSetType = default;
             string ruleSetVersion = default;
             IList<ApplicationGatewayFirewallDisabledRuleGroup> disabledRuleGroups = default;
-            Optional<bool> requestBodyCheck = default;
-            Optional<int> maxRequestBodySize = default;
-            Optional<int> maxRequestBodySizeInKb = default;
-            Optional<int> fileUploadLimitInMb = default;
+            bool? requestBodyCheck = default;
+            int? maxRequestBodySize = default;
+            int? maxRequestBodySizeInKb = default;
+            int? fileUploadLimitInMb = default;
             IList<ApplicationGatewayFirewallExclusion> exclusions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -222,10 +222,10 @@ namespace Azure.ResourceManager.Network.Models
                 ruleSetType,
                 ruleSetVersion,
                 disabledRuleGroups ?? new ChangeTrackingList<ApplicationGatewayFirewallDisabledRuleGroup>(),
-                Optional.ToNullable(requestBodyCheck),
-                Optional.ToNullable(maxRequestBodySize),
-                Optional.ToNullable(maxRequestBodySizeInKb),
-                Optional.ToNullable(fileUploadLimitInMb),
+                requestBodyCheck,
+                maxRequestBodySize,
+                maxRequestBodySizeInKb,
+                fileUploadLimitInMb,
                 exclusions ?? new ChangeTrackingList<ApplicationGatewayFirewallExclusion>(),
                 serializedAdditionalRawData);
         }

@@ -127,21 +127,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
             IDictionary<string, ParameterSpecification> parameters = default;
             IList<object> annotations = default;
             object host = default;
-            Optional<object> port = default;
-            Optional<SftpAuthenticationType> authenticationType = default;
-            Optional<object> userName = default;
-            Optional<SecretBase> password = default;
-            Optional<object> encryptedCredential = default;
-            Optional<object> privateKeyPath = default;
-            Optional<SecretBase> privateKeyContent = default;
-            Optional<SecretBase> passPhrase = default;
-            Optional<object> skipHostKeyValidation = default;
-            Optional<object> hostKeyFingerprint = default;
+            object port = default;
+            SftpAuthenticationType? authenticationType = default;
+            object userName = default;
+            SecretBase password = default;
+            object encryptedCredential = default;
+            object privateKeyPath = default;
+            SecretBase privateKeyContent = default;
+            SecretBase passPhrase = default;
+            object skipHostKeyValidation = default;
+            object hostKeyFingerprint = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -312,22 +312,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new SftpServerLinkedService(
                 type,
-                connectVia.Value,
-                description.Value,
+                connectVia,
+                description,
                 parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
                 annotations ?? new ChangeTrackingList<object>(),
                 additionalProperties,
                 host,
-                port.Value,
-                Optional.ToNullable(authenticationType),
-                userName.Value,
-                password.Value,
-                encryptedCredential.Value,
-                privateKeyPath.Value,
-                privateKeyContent.Value,
-                passPhrase.Value,
-                skipHostKeyValidation.Value,
-                hostKeyFingerprint.Value);
+                port,
+                authenticationType,
+                userName,
+                password,
+                encryptedCredential,
+                privateKeyPath,
+                privateKeyContent,
+                passPhrase,
+                skipHostKeyValidation,
+                hostKeyFingerprint);
         }
 
         internal partial class SftpServerLinkedServiceConverter : JsonConverter<SftpServerLinkedService>

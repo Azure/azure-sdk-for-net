@@ -117,11 +117,11 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<MigrateOracleAzureDBPostgreSqlSyncTaskInput> input = default;
+            MigrateOracleAzureDBPostgreSqlSyncTaskInput input = default;
             IReadOnlyList<MigrateOracleAzureDBPostgreSqlSyncTaskOutput> output = default;
             TaskType taskType = default;
             IReadOnlyList<ODataError> errors = default;
-            Optional<TaskState> state = default;
+            TaskState? state = default;
             IReadOnlyList<CommandProperties> commands = default;
             IDictionary<string, string> clientData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -216,11 +216,11 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateOracleAzureDBForPostgreSqlSyncTaskProperties(
                 taskType,
                 errors ?? new ChangeTrackingList<ODataError>(),
-                Optional.ToNullable(state),
+                state,
                 commands ?? new ChangeTrackingList<CommandProperties>(),
                 clientData ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
-                input.Value,
+                input,
                 output ?? new ChangeTrackingList<MigrateOracleAzureDBPostgreSqlSyncTaskOutput>());
         }
 

@@ -171,22 +171,22 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
             IDictionary<string, EntityParameterSpecification> parameters = default;
             IList<BinaryData> annotations = default;
-            Optional<DataFactoryElement<string>> url = default;
-            Optional<DataFactoryElement<string>> accountKey = default;
-            Optional<DataFactoryElement<string>> servicePrincipalId = default;
-            Optional<DataFactorySecretBaseDefinition> servicePrincipalKey = default;
-            Optional<DataFactoryElement<string>> tenant = default;
-            Optional<DataFactoryElement<string>> azureCloudType = default;
-            Optional<string> encryptedCredential = default;
-            Optional<DataFactoryCredentialReference> credential = default;
-            Optional<DataFactoryElement<string>> servicePrincipalCredentialType = default;
-            Optional<DataFactorySecretBaseDefinition> servicePrincipalCredential = default;
-            Optional<DataFactoryElement<string>> sasUri = default;
-            Optional<DataFactorySecretBaseDefinition> sasToken = default;
+            DataFactoryElement<string> url = default;
+            DataFactoryElement<string> accountKey = default;
+            DataFactoryElement<string> servicePrincipalId = default;
+            DataFactorySecretBaseDefinition servicePrincipalKey = default;
+            DataFactoryElement<string> tenant = default;
+            DataFactoryElement<string> azureCloudType = default;
+            string encryptedCredential = default;
+            DataFactoryCredentialReference credential = default;
+            DataFactoryElement<string> servicePrincipalCredentialType = default;
+            DataFactorySecretBaseDefinition servicePrincipalCredential = default;
+            DataFactoryElement<string> sasUri = default;
+            DataFactorySecretBaseDefinition sasToken = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -366,22 +366,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new AzureBlobFSLinkedService(
                 type,
-                connectVia.Value,
-                description.Value,
+                connectVia,
+                description,
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 annotations ?? new ChangeTrackingList<BinaryData>(),
                 additionalProperties,
-                url.Value,
-                accountKey.Value,
-                servicePrincipalId.Value,
+                url,
+                accountKey,
+                servicePrincipalId,
                 servicePrincipalKey,
-                tenant.Value,
-                azureCloudType.Value,
-                encryptedCredential.Value,
-                credential.Value,
-                servicePrincipalCredentialType.Value,
+                tenant,
+                azureCloudType,
+                encryptedCredential,
+                credential,
+                servicePrincipalCredentialType,
                 servicePrincipalCredential,
-                sasUri.Value,
+                sasUri,
                 sasToken);
         }
 

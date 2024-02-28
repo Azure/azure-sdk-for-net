@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Maintenance.Models
             {
                 return null;
             }
-            Optional<MaintenanceRebootOption> rebootSetting = default;
-            Optional<MaintenanceWindowsPatchSettings> windowsParameters = default;
-            Optional<MaintenanceLinuxPatchSettings> linuxParameters = default;
+            MaintenanceRebootOption? rebootSetting = default;
+            MaintenanceWindowsPatchSettings windowsParameters = default;
+            MaintenanceLinuxPatchSettings linuxParameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MaintenancePatchConfiguration(Optional.ToNullable(rebootSetting), windowsParameters.Value, linuxParameters.Value, serializedAdditionalRawData);
+            return new MaintenancePatchConfiguration(rebootSetting, windowsParameters, linuxParameters, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MaintenancePatchConfiguration>.Write(ModelReaderWriterOptions options)

@@ -149,13 +149,13 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> hostName = default;
-            Optional<bool> isHostnameAlreadyVerified = default;
-            Optional<ContainerAppDnsVerificationTestResult> customDomainVerificationTest = default;
-            Optional<ContainerAppCustomDomainVerificationFailureInfo> customDomainVerificationFailureInfo = default;
-            Optional<bool> hasConflictOnManagedEnvironment = default;
-            Optional<bool> conflictWithEnvironmentCustomDomain = default;
-            Optional<string> conflictingContainerAppResourceId = default;
+            string hostName = default;
+            bool? isHostnameAlreadyVerified = default;
+            ContainerAppDnsVerificationTestResult? customDomainVerificationTest = default;
+            ContainerAppCustomDomainVerificationFailureInfo customDomainVerificationFailureInfo = default;
+            bool? hasConflictOnManagedEnvironment = default;
+            bool? conflictWithEnvironmentCustomDomain = default;
+            string conflictingContainerAppResourceId = default;
             IReadOnlyList<string> cNameRecords = default;
             IReadOnlyList<string> txtRecords = default;
             IReadOnlyList<string> aRecords = default;
@@ -297,13 +297,13 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ContainerAppCustomHostnameAnalysisResult(
-                hostName.Value,
-                Optional.ToNullable(isHostnameAlreadyVerified),
-                Optional.ToNullable(customDomainVerificationTest),
-                customDomainVerificationFailureInfo.Value,
-                Optional.ToNullable(hasConflictOnManagedEnvironment),
-                Optional.ToNullable(conflictWithEnvironmentCustomDomain),
-                conflictingContainerAppResourceId.Value,
+                hostName,
+                isHostnameAlreadyVerified,
+                customDomainVerificationTest,
+                customDomainVerificationFailureInfo,
+                hasConflictOnManagedEnvironment,
+                conflictWithEnvironmentCustomDomain,
+                conflictingContainerAppResourceId,
                 cNameRecords ?? new ChangeTrackingList<string>(),
                 txtRecords ?? new ChangeTrackingList<string>(),
                 aRecords ?? new ChangeTrackingList<string>(),

@@ -134,17 +134,17 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
             IDictionary<string, EntityParameterSpecification> parameters = default;
             IList<BinaryData> annotations = default;
             DataFactoryElement<string> accountName = default;
-            Optional<DataFactorySecretBaseDefinition> accessKey = default;
+            DataFactorySecretBaseDefinition accessKey = default;
             DataFactoryElement<string> batchUri = default;
             DataFactoryElement<string> poolName = default;
             DataFactoryLinkedServiceReference linkedServiceName = default;
-            Optional<string> encryptedCredential = default;
-            Optional<DataFactoryCredentialReference> credential = default;
+            string encryptedCredential = default;
+            DataFactoryCredentialReference credential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -263,8 +263,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new AzureBatchLinkedService(
                 type,
-                connectVia.Value,
-                description.Value,
+                connectVia,
+                description,
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 annotations ?? new ChangeTrackingList<BinaryData>(),
                 additionalProperties,
@@ -273,8 +273,8 @@ namespace Azure.ResourceManager.DataFactory.Models
                 batchUri,
                 poolName,
                 linkedServiceName,
-                encryptedCredential.Value,
-                credential.Value);
+                encryptedCredential,
+                credential);
         }
 
         BinaryData IPersistableModel<AzureBatchLinkedService>.Write(ModelReaderWriterOptions options)

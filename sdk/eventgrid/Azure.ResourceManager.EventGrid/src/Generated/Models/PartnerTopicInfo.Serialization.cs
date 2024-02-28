@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<Guid> azureSubscriptionId = default;
-            Optional<string> resourceGroupName = default;
-            Optional<string> name = default;
-            Optional<PartnerTopicEventTypeInfo> eventTypeInfo = default;
-            Optional<string> source = default;
+            Guid? azureSubscriptionId = default;
+            string resourceGroupName = default;
+            string name = default;
+            PartnerTopicEventTypeInfo eventTypeInfo = default;
+            string source = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,11 +138,11 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new PartnerTopicInfo(
-                Optional.ToNullable(azureSubscriptionId),
-                resourceGroupName.Value,
-                name.Value,
-                eventTypeInfo.Value,
-                source.Value,
+                azureSubscriptionId,
+                resourceGroupName,
+                name,
+                eventTypeInfo,
+                source,
                 serializedAdditionalRawData);
         }
 

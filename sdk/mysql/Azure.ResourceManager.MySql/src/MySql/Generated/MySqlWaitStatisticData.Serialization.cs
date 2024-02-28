@@ -136,16 +136,16 @@ namespace Azure.ResourceManager.MySql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<string> eventName = default;
-            Optional<string> eventTypeName = default;
-            Optional<long> queryId = default;
-            Optional<string> databaseName = default;
-            Optional<long> userId = default;
-            Optional<long> count = default;
-            Optional<double> totalTimeInMs = default;
+            SystemData systemData = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            string eventName = default;
+            string eventTypeName = default;
+            long? queryId = default;
+            string databaseName = default;
+            long? userId = default;
+            long? count = default;
+            double? totalTimeInMs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -265,16 +265,16 @@ namespace Azure.ResourceManager.MySql
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(startTime),
-                Optional.ToNullable(endTime),
-                eventName.Value,
-                eventTypeName.Value,
-                Optional.ToNullable(queryId),
-                databaseName.Value,
-                Optional.ToNullable(userId),
-                Optional.ToNullable(count),
-                Optional.ToNullable(totalTimeInMs),
+                systemData,
+                startTime,
+                endTime,
+                eventName,
+                eventTypeName,
+                queryId,
+                databaseName,
+                userId,
+                count,
+                totalTimeInMs,
                 serializedAdditionalRawData);
         }
 

@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<ApplicationInsightsComponentDataVolumeCap> dataVolumeCap = default;
+            ApplicationInsightsComponentDataVolumeCap dataVolumeCap = default;
             IList<string> currentBillingFeatures = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationInsightsComponentBillingFeatures(dataVolumeCap.Value, currentBillingFeatures ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new ApplicationInsightsComponentBillingFeatures(dataVolumeCap, currentBillingFeatures ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationInsightsComponentBillingFeatures>.Write(ModelReaderWriterOptions options)

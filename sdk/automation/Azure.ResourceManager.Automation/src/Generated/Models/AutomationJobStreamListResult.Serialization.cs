@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Automation.Models
                 return null;
             }
             IReadOnlyList<AutomationJobStream> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationJobStreamListResult(value ?? new ChangeTrackingList<AutomationJobStream>(), nextLink.Value, serializedAdditionalRawData);
+            return new AutomationJobStreamListResult(value ?? new ChangeTrackingList<AutomationJobStream>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationJobStreamListResult>.Write(ModelReaderWriterOptions options)

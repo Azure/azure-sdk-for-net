@@ -134,19 +134,19 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<WritableSubResource> frontendIPConfiguration = default;
-            Optional<LoadBalancingTransportProtocol> protocol = default;
-            Optional<int> frontendPortRangeStart = default;
-            Optional<int> frontendPortRangeEnd = default;
-            Optional<int> backendPort = default;
-            Optional<int> idleTimeoutInMinutes = default;
-            Optional<bool> enableFloatingIP = default;
-            Optional<bool> enableTcpReset = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            WritableSubResource frontendIPConfiguration = default;
+            LoadBalancingTransportProtocol? protocol = default;
+            int? frontendPortRangeStart = default;
+            int? frontendPortRangeEnd = default;
+            int? backendPort = default;
+            int? idleTimeoutInMinutes = default;
+            bool? enableFloatingIP = default;
+            bool? enableTcpReset = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -283,20 +283,20 @@ namespace Azure.ResourceManager.Network.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new LoadBalancerInboundNatPool(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
+                id,
+                name,
+                type,
                 serializedAdditionalRawData,
-                Optional.ToNullable(etag),
+                etag,
                 frontendIPConfiguration,
-                Optional.ToNullable(protocol),
-                Optional.ToNullable(frontendPortRangeStart),
-                Optional.ToNullable(frontendPortRangeEnd),
-                Optional.ToNullable(backendPort),
-                Optional.ToNullable(idleTimeoutInMinutes),
-                Optional.ToNullable(enableFloatingIP),
-                Optional.ToNullable(enableTcpReset),
-                Optional.ToNullable(provisioningState));
+                protocol,
+                frontendPortRangeStart,
+                frontendPortRangeEnd,
+                backendPort,
+                idleTimeoutInMinutes,
+                enableFloatingIP,
+                enableTcpReset,
+                provisioningState);
         }
 
         BinaryData IPersistableModel<LoadBalancerInboundNatPool>.Write(ModelReaderWriterOptions options)

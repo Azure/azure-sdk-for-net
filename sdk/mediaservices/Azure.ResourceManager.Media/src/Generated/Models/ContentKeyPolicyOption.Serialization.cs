@@ -78,8 +78,8 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<Guid> policyOptionId = default;
-            Optional<string> name = default;
+            Guid? policyOptionId = default;
+            string name = default;
             ContentKeyPolicyConfiguration configuration = default;
             ContentKeyPolicyRestriction restriction = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContentKeyPolicyOption(Optional.ToNullable(policyOptionId), name.Value, configuration, restriction, serializedAdditionalRawData);
+            return new ContentKeyPolicyOption(policyOptionId, name, configuration, restriction, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContentKeyPolicyOption>.Write(ModelReaderWriterOptions options)

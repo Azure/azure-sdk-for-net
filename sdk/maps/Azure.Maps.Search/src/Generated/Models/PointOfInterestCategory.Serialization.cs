@@ -19,8 +19,8 @@ namespace Azure.Maps.Search.Models
             {
                 return null;
             }
-            Optional<int> id = default;
-            Optional<string> name = default;
+            int? id = default;
+            string name = default;
             IReadOnlyList<int> childCategoryIds = default;
             IReadOnlyList<string> synonyms = default;
             foreach (var property in element.EnumerateObject())
@@ -68,7 +68,7 @@ namespace Azure.Maps.Search.Models
                     continue;
                 }
             }
-            return new PointOfInterestCategory(Optional.ToNullable(id), name.Value, childCategoryIds ?? new ChangeTrackingList<int>(), synonyms ?? new ChangeTrackingList<string>());
+            return new PointOfInterestCategory(id, name, childCategoryIds ?? new ChangeTrackingList<int>(), synonyms ?? new ChangeTrackingList<string>());
         }
     }
 }

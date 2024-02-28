@@ -134,13 +134,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             string model = default;
-            Optional<string> manufacturer = default;
+            string manufacturer = default;
             IList<SupportedVersionProperties> supportedVersions = default;
             IList<NetworkDeviceRoleName> supportedRoleTypes = default;
             IList<NetworkDeviceInterfaceProperties> interfaces = default;
-            Optional<NetworkFabricProvisioningState> provisioningState = default;
+            NetworkFabricProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -252,13 +252,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 model,
-                manufacturer.Value,
+                manufacturer,
                 supportedVersions ?? new ChangeTrackingList<SupportedVersionProperties>(),
                 supportedRoleTypes ?? new ChangeTrackingList<NetworkDeviceRoleName>(),
                 interfaces ?? new ChangeTrackingList<NetworkDeviceInterfaceProperties>(),
-                Optional.ToNullable(provisioningState),
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

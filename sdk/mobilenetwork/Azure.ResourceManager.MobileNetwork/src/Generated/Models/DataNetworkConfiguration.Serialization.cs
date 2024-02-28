@@ -118,14 +118,14 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
             WritableSubResource dataNetwork = default;
             Ambr sessionAmbr = default;
-            Optional<int> _5qi = default;
-            Optional<int> allocationAndRetentionPriorityLevel = default;
-            Optional<MobileNetworkPreemptionCapability> preemptionCapability = default;
-            Optional<MobileNetworkPreemptionVulnerability> preemptionVulnerability = default;
-            Optional<MobileNetworkPduSessionType> defaultSessionType = default;
+            int? _5qi = default;
+            int? allocationAndRetentionPriorityLevel = default;
+            MobileNetworkPreemptionCapability? preemptionCapability = default;
+            MobileNetworkPreemptionVulnerability? preemptionVulnerability = default;
+            MobileNetworkPduSessionType? defaultSessionType = default;
             IList<MobileNetworkPduSessionType> additionalAllowedSessionTypes = default;
             IList<WritableSubResource> allowedServices = default;
-            Optional<int> maximumNumberOfBufferedPackets = default;
+            int? maximumNumberOfBufferedPackets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -227,14 +227,14 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             return new DataNetworkConfiguration(
                 dataNetwork,
                 sessionAmbr,
-                Optional.ToNullable(_5qi),
-                Optional.ToNullable(allocationAndRetentionPriorityLevel),
-                Optional.ToNullable(preemptionCapability),
-                Optional.ToNullable(preemptionVulnerability),
-                Optional.ToNullable(defaultSessionType),
+                _5qi,
+                allocationAndRetentionPriorityLevel,
+                preemptionCapability,
+                preemptionVulnerability,
+                defaultSessionType,
                 additionalAllowedSessionTypes ?? new ChangeTrackingList<MobileNetworkPduSessionType>(),
                 allowedServices,
-                Optional.ToNullable(maximumNumberOfBufferedPackets),
+                maximumNumberOfBufferedPackets,
                 serializedAdditionalRawData);
         }
 

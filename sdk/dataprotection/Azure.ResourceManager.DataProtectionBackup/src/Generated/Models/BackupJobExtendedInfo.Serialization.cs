@@ -121,12 +121,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 return null;
             }
             IReadOnlyDictionary<string, string> additionalDetails = default;
-            Optional<string> backupInstanceState = default;
-            Optional<double> dataTransferredInBytes = default;
-            Optional<string> recoveryDestination = default;
-            Optional<RestoreJobRecoveryPointDetails> sourceRecoverPoint = default;
+            string backupInstanceState = default;
+            double? dataTransferredInBytes = default;
+            string recoveryDestination = default;
+            RestoreJobRecoveryPointDetails sourceRecoverPoint = default;
             IReadOnlyList<BackupJobSubTask> subTasks = default;
-            Optional<RestoreJobRecoveryPointDetails> targetRecoverPoint = default;
+            RestoreJobRecoveryPointDetails targetRecoverPoint = default;
             IReadOnlyList<UserFacingWarningDetail> warningDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -219,12 +219,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new BackupJobExtendedInfo(
                 additionalDetails ?? new ChangeTrackingDictionary<string, string>(),
-                backupInstanceState.Value,
-                Optional.ToNullable(dataTransferredInBytes),
-                recoveryDestination.Value,
-                sourceRecoverPoint.Value,
+                backupInstanceState,
+                dataTransferredInBytes,
+                recoveryDestination,
+                sourceRecoverPoint,
                 subTasks ?? new ChangeTrackingList<BackupJobSubTask>(),
-                targetRecoverPoint.Value,
+                targetRecoverPoint,
                 warningDetails ?? new ChangeTrackingList<UserFacingWarningDetail>(),
                 serializedAdditionalRawData);
         }

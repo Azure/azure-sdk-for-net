@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Optional<string> persistentVolumeClaim = default;
-            Optional<string> persistentVolume = default;
-            Optional<string> storageClass = default;
+            string persistentVolumeClaim = default;
+            string persistentVolume = default;
+            string storageClass = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AmlFileSystemContainerStorageInterface(persistentVolumeClaim.Value, persistentVolume.Value, storageClass.Value, serializedAdditionalRawData);
+            return new AmlFileSystemContainerStorageInterface(persistentVolumeClaim, persistentVolume, storageClass, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AmlFileSystemContainerStorageInterface>.Write(ModelReaderWriterOptions options)

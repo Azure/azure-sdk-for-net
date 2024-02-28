@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<int> defaultMaximumExpirationTimeInDays = default;
+            int? defaultMaximumExpirationTimeInDays = default;
             IList<EventGridPartnerContent> authorizedPartnersList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PartnerAuthorization(Optional.ToNullable(defaultMaximumExpirationTimeInDays), authorizedPartnersList ?? new ChangeTrackingList<EventGridPartnerContent>(), serializedAdditionalRawData);
+            return new PartnerAuthorization(defaultMaximumExpirationTimeInDays, authorizedPartnersList ?? new ChangeTrackingList<EventGridPartnerContent>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PartnerAuthorization>.Write(ModelReaderWriterOptions options)

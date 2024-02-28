@@ -108,14 +108,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> startAddress = default;
-            Optional<string> endAddress = default;
-            Optional<AppServiceVirtualNetworkRouteType> routeType = default;
+            SystemData systemData = default;
+            string startAddress = default;
+            string endAddress = default;
+            AppServiceVirtualNetworkRouteType? routeType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -190,11 +190,11 @@ namespace Azure.ResourceManager.AppService.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                startAddress.Value,
-                endAddress.Value,
-                Optional.ToNullable(routeType),
-                kind.Value,
+                systemData,
+                startAddress,
+                endAddress,
+                routeType,
+                kind,
                 serializedAdditionalRawData);
         }
 

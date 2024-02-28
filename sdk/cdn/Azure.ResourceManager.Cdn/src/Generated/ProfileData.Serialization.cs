@@ -137,17 +137,17 @@ namespace Azure.ResourceManager.Cdn
                 return null;
             }
             CdnSku sku = default;
-            Optional<string> kind = default;
+            string kind = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ProfileResourceState> resourceState = default;
-            Optional<ProfileProvisioningState> provisioningState = default;
-            Optional<Guid> frontDoorId = default;
-            Optional<int?> originResponseTimeoutSeconds = default;
+            SystemData systemData = default;
+            ProfileResourceState? resourceState = default;
+            ProfileProvisioningState? provisioningState = default;
+            Guid? frontDoorId = default;
+            int? originResponseTimeoutSeconds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -264,15 +264,15 @@ namespace Azure.ResourceManager.Cdn
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 sku,
-                kind.Value,
-                Optional.ToNullable(resourceState),
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(frontDoorId),
-                Optional.ToNullable(originResponseTimeoutSeconds),
+                kind,
+                resourceState,
+                provisioningState,
+                frontDoorId,
+                originResponseTimeoutSeconds,
                 serializedAdditionalRawData);
         }
 

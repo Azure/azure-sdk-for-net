@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Relay.Models
                 return null;
             }
             IReadOnlyList<WcfRelayData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Relay.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WcfRelaysListResult(value ?? new ChangeTrackingList<WcfRelayData>(), nextLink.Value, serializedAdditionalRawData);
+            return new WcfRelaysListResult(value ?? new ChangeTrackingList<WcfRelayData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WcfRelaysListResult>.Write(ModelReaderWriterOptions options)

@@ -122,15 +122,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             string subscriptionId = default;
             string resourceGroupName = default;
             string resourceName = default;
             AzureLocation resourceLocation = default;
-            Optional<string> version = default;
-            Optional<DataBoxEdgeOSPlatformType> hostPlatform = default;
-            Optional<HostPlatformType> hostPlatformType = default;
-            Optional<DataBoxEdgeRoleAddonProvisioningState> provisioningState = default;
+            string version = default;
+            DataBoxEdgeOSPlatformType? hostPlatform = default;
+            HostPlatformType? hostPlatformType = default;
+            DataBoxEdgeRoleAddonProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -238,17 +238,17 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 kind,
                 serializedAdditionalRawData,
                 subscriptionId,
                 resourceGroupName,
                 resourceName,
                 resourceLocation,
-                version.Value,
-                Optional.ToNullable(hostPlatform),
-                Optional.ToNullable(hostPlatformType),
-                Optional.ToNullable(provisioningState));
+                version,
+                hostPlatform,
+                hostPlatformType,
+                provisioningState);
         }
 
         BinaryData IPersistableModel<EdgeArcAddon>.Write(ModelReaderWriterOptions options)

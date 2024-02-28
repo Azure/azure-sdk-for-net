@@ -128,18 +128,18 @@ namespace Azure.ResourceManager.DataFactory
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ChangeDataCaptureFolder> folder = default;
-            Optional<string> description = default;
+            SystemData systemData = default;
+            ChangeDataCaptureFolder folder = default;
+            string description = default;
             IList<MapperSourceConnectionsInfo> sourceConnectionsInfo = default;
             IList<MapperTargetConnectionsInfo> targetConnectionsInfo = default;
             MapperPolicy policy = default;
-            Optional<bool> allowVnetOverride = default;
-            Optional<string> status = default;
+            bool? allowVnetOverride = default;
+            string status = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -249,15 +249,15 @@ namespace Azure.ResourceManager.DataFactory
                 id,
                 name,
                 type,
-                systemData.Value,
-                folder.Value,
-                description.Value,
+                systemData,
+                folder,
+                description,
                 sourceConnectionsInfo,
                 targetConnectionsInfo,
                 policy,
-                Optional.ToNullable(allowVnetOverride),
-                status.Value,
-                Optional.ToNullable(etag),
+                allowVnetOverride,
+                status,
+                etag,
                 additionalProperties);
         }
 

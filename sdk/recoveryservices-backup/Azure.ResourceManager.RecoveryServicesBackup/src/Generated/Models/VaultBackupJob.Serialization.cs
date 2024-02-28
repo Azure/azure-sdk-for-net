@@ -131,17 +131,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<TimeSpan> duration = default;
+            TimeSpan? duration = default;
             IList<JobSupportedAction> actionsInfo = default;
             IList<VaultBackupJobErrorInfo> errorDetails = default;
-            Optional<VaultBackupJobExtendedInfo> extendedInfo = default;
-            Optional<string> entityFriendlyName = default;
-            Optional<BackupManagementType> backupManagementType = default;
-            Optional<string> operation = default;
-            Optional<string> status = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<string> activityId = default;
+            VaultBackupJobExtendedInfo extendedInfo = default;
+            string entityFriendlyName = default;
+            BackupManagementType? backupManagementType = default;
+            string operation = default;
+            string status = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            string activityId = default;
             string jobType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -252,19 +252,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new VaultBackupJob(
-                entityFriendlyName.Value,
-                Optional.ToNullable(backupManagementType),
-                operation.Value,
-                status.Value,
-                Optional.ToNullable(startTime),
-                Optional.ToNullable(endTime),
-                activityId.Value,
+                entityFriendlyName,
+                backupManagementType,
+                operation,
+                status,
+                startTime,
+                endTime,
+                activityId,
                 jobType,
                 serializedAdditionalRawData,
-                Optional.ToNullable(duration),
+                duration,
                 actionsInfo ?? new ChangeTrackingList<JobSupportedAction>(),
                 errorDetails ?? new ChangeTrackingList<VaultBackupJobErrorInfo>(),
-                extendedInfo.Value);
+                extendedInfo);
         }
 
         BinaryData IPersistableModel<VaultBackupJob>.Write(ModelReaderWriterOptions options)

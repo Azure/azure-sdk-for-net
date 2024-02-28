@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> deploymentName = default;
+            string deploymentName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchEndpointDefaults(deploymentName.Value, serializedAdditionalRawData);
+            return new BatchEndpointDefaults(deploymentName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchEndpointDefaults>.Write(ModelReaderWriterOptions options)

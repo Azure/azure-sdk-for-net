@@ -99,9 +99,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<string> matchConfigurationName = default;
-            Optional<long> sequenceNumber = default;
-            Optional<NetworkFabricIPAddressType> ipAddressType = default;
+            string matchConfigurationName = default;
+            long? sequenceNumber = default;
+            NetworkFabricIPAddressType? ipAddressType = default;
             IList<NetworkTapRuleMatchCondition> matchConditions = default;
             IList<NetworkTapRuleAction> actions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -166,9 +166,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new NetworkTapRuleMatchConfiguration(
-                matchConfigurationName.Value,
-                Optional.ToNullable(sequenceNumber),
-                Optional.ToNullable(ipAddressType),
+                matchConfigurationName,
+                sequenceNumber,
+                ipAddressType,
                 matchConditions ?? new ChangeTrackingList<NetworkTapRuleMatchCondition>(),
                 actions ?? new ChangeTrackingList<NetworkTapRuleAction>(),
                 serializedAdditionalRawData);

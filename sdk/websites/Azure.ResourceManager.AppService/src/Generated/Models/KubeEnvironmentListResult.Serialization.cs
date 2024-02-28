@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             IReadOnlyList<KubeEnvironmentData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubeEnvironmentListResult(value, nextLink.Value, serializedAdditionalRawData);
+            return new KubeEnvironmentListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubeEnvironmentListResult>.Write(ModelReaderWriterOptions options)

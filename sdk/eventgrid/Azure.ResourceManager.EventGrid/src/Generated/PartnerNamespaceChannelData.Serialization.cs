@@ -127,14 +127,14 @@ namespace Azure.ResourceManager.EventGrid
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<PartnerNamespaceChannelType> channelType = default;
-            Optional<PartnerTopicInfo> partnerTopicInfo = default;
-            Optional<PartnerDestinationInfo> partnerDestinationInfo = default;
-            Optional<string> messageForActivation = default;
-            Optional<PartnerNamespaceChannelProvisioningState> provisioningState = default;
-            Optional<PartnerTopicReadinessState> readinessState = default;
-            Optional<DateTimeOffset> expirationTimeIfNotActivatedUtc = default;
+            SystemData systemData = default;
+            PartnerNamespaceChannelType? channelType = default;
+            PartnerTopicInfo partnerTopicInfo = default;
+            PartnerDestinationInfo partnerDestinationInfo = default;
+            string messageForActivation = default;
+            PartnerNamespaceChannelProvisioningState? provisioningState = default;
+            PartnerTopicReadinessState? readinessState = default;
+            DateTimeOffset? expirationTimeIfNotActivatedUtc = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -244,14 +244,14 @@ namespace Azure.ResourceManager.EventGrid
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(channelType),
-                partnerTopicInfo.Value,
-                partnerDestinationInfo.Value,
-                messageForActivation.Value,
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(readinessState),
-                Optional.ToNullable(expirationTimeIfNotActivatedUtc),
+                systemData,
+                channelType,
+                partnerTopicInfo,
+                partnerDestinationInfo,
+                messageForActivation,
+                provisioningState,
+                readinessState,
+                expirationTimeIfNotActivatedUtc,
                 serializedAdditionalRawData);
         }
 

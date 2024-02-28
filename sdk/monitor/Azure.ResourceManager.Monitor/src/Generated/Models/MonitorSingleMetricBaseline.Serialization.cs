@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.Monitor.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             string timespan = default;
             TimeSpan interval = default;
-            Optional<string> @namespace = default;
+            string @namespace = default;
             IReadOnlyList<MonitorTimeSeriesBaseline> baselines = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -187,10 +187,10 @@ namespace Azure.ResourceManager.Monitor.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 timespan,
                 interval,
-                @namespace.Value,
+                @namespace,
                 baselines,
                 serializedAdditionalRawData);
         }

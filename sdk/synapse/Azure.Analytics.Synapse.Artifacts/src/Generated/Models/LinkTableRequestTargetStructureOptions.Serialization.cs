@@ -32,7 +32,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> type = default;
+            string type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -41,7 +41,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new LinkTableRequestTargetStructureOptions(type.Value);
+            return new LinkTableRequestTargetStructureOptions(type);
         }
 
         internal partial class LinkTableRequestTargetStructureOptionsConverter : JsonConverter<LinkTableRequestTargetStructureOptions>

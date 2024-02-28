@@ -117,11 +117,11 @@ namespace Azure.ResourceManager.Sphere
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> deploymentId = default;
+            SystemData systemData = default;
+            string deploymentId = default;
             IList<SphereImageData> deployedImages = default;
-            Optional<DateTimeOffset> deploymentDateUtc = default;
-            Optional<SphereProvisioningState> provisioningState = default;
+            DateTimeOffset? deploymentDateUtc = default;
+            SphereProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -209,11 +209,11 @@ namespace Azure.ResourceManager.Sphere
                 id,
                 name,
                 type,
-                systemData.Value,
-                deploymentId.Value,
+                systemData,
+                deploymentId,
                 deployedImages ?? new ChangeTrackingList<SphereImageData>(),
-                Optional.ToNullable(deploymentDateUtc),
-                Optional.ToNullable(provisioningState),
+                deploymentDateUtc,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

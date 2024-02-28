@@ -110,13 +110,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<CanaryTrafficRegionRolloutConfiguration> canary = default;
-            Optional<TrafficRegionRolloutConfiguration> lowTraffic = default;
-            Optional<TrafficRegionRolloutConfiguration> mediumTraffic = default;
-            Optional<TrafficRegionRolloutConfiguration> highTraffic = default;
-            Optional<TrafficRegionRolloutConfiguration> restOfTheWorldGroupOne = default;
-            Optional<TrafficRegionRolloutConfiguration> restOfTheWorldGroupTwo = default;
-            Optional<ProviderRegistrationData> providerRegistration = default;
+            CanaryTrafficRegionRolloutConfiguration canary = default;
+            TrafficRegionRolloutConfiguration lowTraffic = default;
+            TrafficRegionRolloutConfiguration mediumTraffic = default;
+            TrafficRegionRolloutConfiguration highTraffic = default;
+            TrafficRegionRolloutConfiguration restOfTheWorldGroupOne = default;
+            TrafficRegionRolloutConfiguration restOfTheWorldGroupTwo = default;
+            ProviderRegistrationData providerRegistration = default;
             IList<ResourceTypeRegistrationData> resourceTypeRegistrations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -206,13 +206,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DefaultRolloutSpecification(
-                canary.Value,
-                lowTraffic.Value,
-                mediumTraffic.Value,
-                highTraffic.Value,
-                restOfTheWorldGroupOne.Value,
-                restOfTheWorldGroupTwo.Value,
-                providerRegistration.Value,
+                canary,
+                lowTraffic,
+                mediumTraffic,
+                highTraffic,
+                restOfTheWorldGroupOne,
+                restOfTheWorldGroupTwo,
+                providerRegistration,
                 resourceTypeRegistrations ?? new ChangeTrackingList<ResourceTypeRegistrationData>(),
                 serializedAdditionalRawData);
         }

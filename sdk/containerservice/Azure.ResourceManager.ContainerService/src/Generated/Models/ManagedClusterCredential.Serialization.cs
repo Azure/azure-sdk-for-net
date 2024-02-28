@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<byte[]> value = default;
+            string name = default;
+            byte[] value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterCredential(name.Value, value.Value, serializedAdditionalRawData);
+            return new ManagedClusterCredential(name, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterCredential>.Write(ModelReaderWriterOptions options)

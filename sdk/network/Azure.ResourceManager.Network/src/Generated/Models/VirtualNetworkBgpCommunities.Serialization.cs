@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             string virtualNetworkCommunity = default;
-            Optional<string> regionalCommunity = default;
+            string regionalCommunity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualNetworkBgpCommunities(virtualNetworkCommunity, regionalCommunity.Value, serializedAdditionalRawData);
+            return new VirtualNetworkBgpCommunities(virtualNetworkCommunity, regionalCommunity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualNetworkBgpCommunities>.Write(ModelReaderWriterOptions options)

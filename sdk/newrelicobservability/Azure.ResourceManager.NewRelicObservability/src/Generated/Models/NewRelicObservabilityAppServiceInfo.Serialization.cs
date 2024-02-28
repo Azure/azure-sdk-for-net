@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> azureResourceId = default;
-            Optional<string> agentVersion = default;
-            Optional<string> agentStatus = default;
+            ResourceIdentifier azureResourceId = default;
+            string agentVersion = default;
+            string agentStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NewRelicObservabilityAppServiceInfo(azureResourceId.Value, agentVersion.Value, agentStatus.Value, serializedAdditionalRawData);
+            return new NewRelicObservabilityAppServiceInfo(azureResourceId, agentVersion, agentStatus, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NewRelicObservabilityAppServiceInfo>.Write(ModelReaderWriterOptions options)

@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<Guid> uuid = default;
+            ResourceIdentifier id = default;
+            Guid? uuid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GuestConfigurationVmInfo(id.Value, Optional.ToNullable(uuid), serializedAdditionalRawData);
+            return new GuestConfigurationVmInfo(id, uuid, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GuestConfigurationVmInfo>.Write(ModelReaderWriterOptions options)

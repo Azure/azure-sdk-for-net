@@ -147,17 +147,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 return null;
             }
             AlertRuleKind kind = default;
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> alertRuleTemplateName = default;
-            Optional<string> description = default;
-            Optional<string> displayName = default;
-            Optional<bool> enabled = default;
-            Optional<DateTimeOffset> lastModifiedUtc = default;
-            Optional<SecurityInsightsAlertSeverity> severity = default;
+            SystemData systemData = default;
+            string alertRuleTemplateName = default;
+            string description = default;
+            string displayName = default;
+            bool? enabled = default;
+            DateTimeOffset? lastModifiedUtc = default;
+            SecurityInsightsAlertSeverity? severity = default;
             IReadOnlyList<SecurityInsightsAttackTactic> tactics = default;
             IReadOnlyList<string> techniques = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -294,16 +294,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 kind,
-                Optional.ToNullable(etag),
+                etag,
                 serializedAdditionalRawData,
-                alertRuleTemplateName.Value,
-                description.Value,
-                displayName.Value,
-                Optional.ToNullable(enabled),
-                Optional.ToNullable(lastModifiedUtc),
-                Optional.ToNullable(severity),
+                alertRuleTemplateName,
+                description,
+                displayName,
+                enabled,
+                lastModifiedUtc,
+                severity,
                 tactics ?? new ChangeTrackingList<SecurityInsightsAttackTactic>(),
                 techniques ?? new ChangeTrackingList<string>());
         }

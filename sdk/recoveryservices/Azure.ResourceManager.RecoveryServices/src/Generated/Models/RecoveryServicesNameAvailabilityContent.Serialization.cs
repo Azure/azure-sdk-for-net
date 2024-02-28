@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Optional<ResourceType> type = default;
-            Optional<string> name = default;
+            ResourceType? type = default;
+            string name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecoveryServicesNameAvailabilityContent(Optional.ToNullable(type), name.Value, serializedAdditionalRawData);
+            return new RecoveryServicesNameAvailabilityContent(type, name, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecoveryServicesNameAvailabilityContent>.Write(ModelReaderWriterOptions options)

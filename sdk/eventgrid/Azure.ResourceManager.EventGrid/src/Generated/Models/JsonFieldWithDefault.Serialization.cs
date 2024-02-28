@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<string> sourceField = default;
-            Optional<string> defaultValue = default;
+            string sourceField = default;
+            string defaultValue = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JsonFieldWithDefault(sourceField.Value, defaultValue.Value, serializedAdditionalRawData);
+            return new JsonFieldWithDefault(sourceField, defaultValue, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<JsonFieldWithDefault>.Write(ModelReaderWriterOptions options)

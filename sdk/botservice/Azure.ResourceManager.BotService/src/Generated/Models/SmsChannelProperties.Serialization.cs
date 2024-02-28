@@ -82,8 +82,8 @@ namespace Azure.ResourceManager.BotService.Models
             }
             string phone = default;
             string accountSID = default;
-            Optional<string> authToken = default;
-            Optional<bool> isValidated = default;
+            string authToken = default;
+            bool? isValidated = default;
             bool isEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -127,8 +127,8 @@ namespace Azure.ResourceManager.BotService.Models
             return new SmsChannelProperties(
                 phone,
                 accountSID,
-                authToken.Value,
-                Optional.ToNullable(isValidated),
+                authToken,
+                isValidated,
                 isEnabled,
                 serializedAdditionalRawData);
         }

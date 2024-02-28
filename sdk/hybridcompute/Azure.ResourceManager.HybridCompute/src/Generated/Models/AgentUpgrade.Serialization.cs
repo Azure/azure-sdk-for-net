@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<string> desiredVersion = default;
-            Optional<Guid> correlationId = default;
-            Optional<bool> enableAutomaticUpgrade = default;
-            Optional<string> lastAttemptDesiredVersion = default;
-            Optional<DateTimeOffset> lastAttemptTimestamp = default;
-            Optional<LastAttemptStatusEnum> lastAttemptStatus = default;
-            Optional<string> lastAttemptMessage = default;
+            string desiredVersion = default;
+            Guid? correlationId = default;
+            bool? enableAutomaticUpgrade = default;
+            string lastAttemptDesiredVersion = default;
+            DateTimeOffset? lastAttemptTimestamp = default;
+            LastAttemptStatusEnum? lastAttemptStatus = default;
+            string lastAttemptMessage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -168,13 +168,13 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AgentUpgrade(
-                desiredVersion.Value,
-                Optional.ToNullable(correlationId),
-                Optional.ToNullable(enableAutomaticUpgrade),
-                lastAttemptDesiredVersion.Value,
-                Optional.ToNullable(lastAttemptTimestamp),
-                Optional.ToNullable(lastAttemptStatus),
-                lastAttemptMessage.Value,
+                desiredVersion,
+                correlationId,
+                enableAutomaticUpgrade,
+                lastAttemptDesiredVersion,
+                lastAttemptTimestamp,
+                lastAttemptStatus,
+                lastAttemptMessage,
                 serializedAdditionalRawData);
         }
 

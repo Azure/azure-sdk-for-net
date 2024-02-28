@@ -134,18 +134,18 @@ namespace Azure.ResourceManager.EventHubs
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IReadOnlyList<string> partitionIds = default;
-            Optional<DateTimeOffset> createdAt = default;
-            Optional<DateTimeOffset> updatedAt = default;
-            Optional<long> partitionCount = default;
-            Optional<EventHubEntityStatus> status = default;
-            Optional<CaptureDescription> captureDescription = default;
-            Optional<RetentionDescription> retentionDescription = default;
+            DateTimeOffset? createdAt = default;
+            DateTimeOffset? updatedAt = default;
+            long? partitionCount = default;
+            EventHubEntityStatus? status = default;
+            CaptureDescription captureDescription = default;
+            RetentionDescription retentionDescription = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -273,15 +273,15 @@ namespace Azure.ResourceManager.EventHubs
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 partitionIds ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(createdAt),
-                Optional.ToNullable(updatedAt),
-                Optional.ToNullable(partitionCount),
-                Optional.ToNullable(status),
-                captureDescription.Value,
-                retentionDescription.Value,
-                Optional.ToNullable(location),
+                createdAt,
+                updatedAt,
+                partitionCount,
+                status,
+                captureDescription,
+                retentionDescription,
+                location,
                 serializedAdditionalRawData);
         }
 

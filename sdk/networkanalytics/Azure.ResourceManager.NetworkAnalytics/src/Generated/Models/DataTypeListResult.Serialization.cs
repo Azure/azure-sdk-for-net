@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                 return null;
             }
             IReadOnlyList<DataProductDataType> value = default;
-            Optional<Uri> nextLink = default;
+            Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataTypeListResult(value, nextLink.Value, serializedAdditionalRawData);
+            return new DataTypeListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataTypeListResult>.Write(ModelReaderWriterOptions options)

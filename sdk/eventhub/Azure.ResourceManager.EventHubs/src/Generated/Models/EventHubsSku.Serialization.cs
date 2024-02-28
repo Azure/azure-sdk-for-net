@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.EventHubs.Models
                 return null;
             }
             EventHubsSkuName name = default;
-            Optional<EventHubsSkuTier> tier = default;
-            Optional<int> capacity = default;
+            EventHubsSkuTier? tier = default;
+            int? capacity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventHubsSku(name, Optional.ToNullable(tier), Optional.ToNullable(capacity), serializedAdditionalRawData);
+            return new EventHubsSku(name, tier, capacity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventHubsSku>.Write(ModelReaderWriterOptions options)
