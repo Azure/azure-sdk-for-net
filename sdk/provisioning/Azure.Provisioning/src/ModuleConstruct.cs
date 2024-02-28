@@ -65,8 +65,7 @@ namespace Azure.Provisioning
                 ResourceManager.Subscription => ConstructScope.Subscription,
                 //TODO managementgroup support
                 ResourceManager.ResourceGroup => ConstructScope.ResourceGroup,
-                // regular resource in anonymous scope
-                _ => ConstructScope.ResourceGroup,
+                _ => throw new InvalidOperationException(),
             };
         }
 
