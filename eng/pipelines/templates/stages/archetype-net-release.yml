@@ -8,8 +8,12 @@ parameters:
   TargetDocRepoName: 'not-specified'
   Environment: nuget
 
+
 stages:
   - stage: Signing
+    variables:
+      - template: /eng/pipelines/templates/variables/globals.yml
+      - template: /eng/pipelines/templates/variables/image.yml
     dependsOn: ${{parameters.DependsOn}}
     jobs:
       - deployment: SignPackage
@@ -46,6 +50,9 @@ stages:
     - ${{ each artifact in parameters.Artifacts }}:
       - ${{if ne(artifact.skipReleaseStage, 'true')}}:
         - stage:
+          variables:
+            - template: /eng/pipelines/templates/variables/globals.yml
+            - template: /eng/pipelines/templates/variables/image.yml
           displayName: 'Release: ${{artifact.name}}'
           dependsOn: Signing
           condition: and(succeeded(), ne(variables['SetDevVersion'], 'true'), ne(variables['Skip.Release'], 'true'), ne(variables['Build.Repository.Name'], 'Azure/azure-sdk-for-net-pr'))
@@ -264,6 +271,9 @@ stages:
                         ArtifactName: ${{ parameters.ArtifactName }}
 
   - stage: Integration
+    variables:
+      - template: /eng/pipelines/templates/variables/globals.yml
+      - template: /eng/pipelines/templates/variables/image.yml
     dependsOn: Signing
     jobs:
       - job: PublishPackages
