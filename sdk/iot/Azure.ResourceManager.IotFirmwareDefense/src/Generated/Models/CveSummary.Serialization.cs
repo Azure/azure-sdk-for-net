@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             Optional<long?> medium = default;
             Optional<long?> low = default;
             Optional<long?> unknown = default;
-            FirmwareSummaryType summaryType = default;
+            FirmwareAnalysisSummaryType summaryType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
                 if (property.NameEquals("summaryType"u8))
                 {
-                    summaryType = new FirmwareSummaryType(property.Value.GetString());
+                    summaryType = new FirmwareAnalysisSummaryType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

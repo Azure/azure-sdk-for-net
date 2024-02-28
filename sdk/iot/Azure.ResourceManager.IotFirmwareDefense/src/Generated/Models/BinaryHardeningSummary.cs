@@ -11,12 +11,12 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
     /// <summary> Properties for a binary hardening analysis summary. </summary>
-    public partial class BinaryHardeningSummary : IotFirmwareSummaryProperties
+    public partial class BinaryHardeningSummary : FirmwareAnalysisSummaryProperties
     {
         /// <summary> Initializes a new instance of <see cref="BinaryHardeningSummary"/>. </summary>
         internal BinaryHardeningSummary()
         {
-            SummaryType = FirmwareSummaryType.BinaryHardening;
+            SummaryType = FirmwareAnalysisSummaryType.BinaryHardening;
         }
 
         /// <summary> Initializes a new instance of <see cref="BinaryHardeningSummary"/>. </summary>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="relroPercentage"> RELRO summary percentage. </param>
         /// <param name="canaryPercentage"> Canary summary percentage. </param>
         /// <param name="strippedPercentage"> Stripped summary percentage. </param>
-        internal BinaryHardeningSummary(FirmwareSummaryType summaryType, IDictionary<string, BinaryData> serializedAdditionalRawData, long? totalFiles, int? nxPercentage, int? piePercentage, int? relroPercentage, int? canaryPercentage, int? strippedPercentage) : base(summaryType, serializedAdditionalRawData)
+        internal BinaryHardeningSummary(FirmwareAnalysisSummaryType summaryType, IDictionary<string, BinaryData> serializedAdditionalRawData, long? totalFiles, int? nxPercentage, int? piePercentage, int? relroPercentage, int? canaryPercentage, int? strippedPercentage) : base(summaryType, serializedAdditionalRawData)
         {
             TotalFiles = totalFiles;
             NXPercentage = nxPercentage;

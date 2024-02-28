@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense
 {
     /// <summary>
     /// A class representing a collection of <see cref="IotFirmwareResource"/> and their operations.
-    /// Each <see cref="IotFirmwareResource"/> in the collection will belong to the same instance of <see cref="IotFirmwareWorkspaceResource"/>.
-    /// To get an <see cref="IotFirmwareCollection"/> instance call the GetIotFirmwares method from an instance of <see cref="IotFirmwareWorkspaceResource"/>.
+    /// Each <see cref="IotFirmwareResource"/> in the collection will belong to the same instance of <see cref="FirmwareAnalysisWorkspaceResource"/>.
+    /// To get an <see cref="IotFirmwareCollection"/> instance call the GetIotFirmwares method from an instance of <see cref="FirmwareAnalysisWorkspaceResource"/>.
     /// </summary>
     public partial class IotFirmwareCollection : ArmCollection, IEnumerable<IotFirmwareResource>, IAsyncEnumerable<IotFirmwareResource>
     {
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != IotFirmwareWorkspaceResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, IotFirmwareWorkspaceResource.ResourceType), nameof(id));
+            if (id.ResourceType != FirmwareAnalysisWorkspaceResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, FirmwareAnalysisWorkspaceResource.ResourceType), nameof(id));
         }
 
         /// <summary>

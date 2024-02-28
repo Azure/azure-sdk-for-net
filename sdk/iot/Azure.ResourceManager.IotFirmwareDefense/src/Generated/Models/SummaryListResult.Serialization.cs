@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(Value is ChangeTrackingList<IotFirmwareSummaryData> collection && collection.IsUndefined))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<FirmwareAnalysisSummaryData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            IReadOnlyList<IotFirmwareSummaryData> value = default;
+            IReadOnlyList<FirmwareAnalysisSummaryData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     {
                         continue;
                     }
-                    List<IotFirmwareSummaryData> array = new List<IotFirmwareSummaryData>();
+                    List<FirmwareAnalysisSummaryData> array = new List<FirmwareAnalysisSummaryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IotFirmwareSummaryData.DeserializeIotFirmwareSummaryData(item, options));
+                        array.Add(FirmwareAnalysisSummaryData.DeserializeFirmwareAnalysisSummaryData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SummaryListResult(value ?? new ChangeTrackingList<IotFirmwareSummaryData>(), nextLink.Value, serializedAdditionalRawData);
+            return new SummaryListResult(value ?? new ChangeTrackingList<FirmwareAnalysisSummaryData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SummaryListResult>.Write(ModelReaderWriterOptions options)

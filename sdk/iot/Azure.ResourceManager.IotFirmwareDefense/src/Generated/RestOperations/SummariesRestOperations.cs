@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             }
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareId, FirmwareSummaryName summaryName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareId, FirmwareAnalysisSummaryName summaryName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="firmwareId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="firmwareId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IotFirmwareSummaryData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareId, FirmwareSummaryName summaryName, CancellationToken cancellationToken = default)
+        public async Task<Response<FirmwareAnalysisSummaryData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareId, FirmwareAnalysisSummaryName summaryName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -252,13 +252,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             {
                 case 200:
                     {
-                        IotFirmwareSummaryData value = default;
+                        FirmwareAnalysisSummaryData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = IotFirmwareSummaryData.DeserializeIotFirmwareSummaryData(document.RootElement);
+                        value = FirmwareAnalysisSummaryData.DeserializeFirmwareAnalysisSummaryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((IotFirmwareSummaryData)null, message.Response);
+                    return Response.FromValue((FirmwareAnalysisSummaryData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="firmwareId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="firmwareId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IotFirmwareSummaryData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareId, FirmwareSummaryName summaryName, CancellationToken cancellationToken = default)
+        public Response<FirmwareAnalysisSummaryData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareId, FirmwareAnalysisSummaryName summaryName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -314,13 +314,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             {
                 case 200:
                     {
-                        IotFirmwareSummaryData value = default;
+                        FirmwareAnalysisSummaryData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = IotFirmwareSummaryData.DeserializeIotFirmwareSummaryData(document.RootElement);
+                        value = FirmwareAnalysisSummaryData.DeserializeFirmwareAnalysisSummaryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((IotFirmwareSummaryData)null, message.Response);
+                    return Response.FromValue((FirmwareAnalysisSummaryData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

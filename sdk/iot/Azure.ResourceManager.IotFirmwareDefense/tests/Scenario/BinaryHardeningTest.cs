@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Tests
         public async Task TestGetBinaryHardeningResults()
         {
             ResourceGroupResource testRg = await testSubscription.GetResourceGroupAsync(rgName);
-            IotFirmwareWorkspaceResource testWorkspace = await testRg.GetIotFirmwareWorkspaceAsync(workspaceName);
+            FirmwareAnalysisWorkspaceResource testWorkspace = await testRg.GetFirmwareAnalysisWorkspaceAsync(workspaceName);
             IotFirmwareResource testFirmware = await testWorkspace.GetIotFirmwareAsync(firmwareId);
 
             var results = testFirmware.GetBinaryHardeningResultsAsync();

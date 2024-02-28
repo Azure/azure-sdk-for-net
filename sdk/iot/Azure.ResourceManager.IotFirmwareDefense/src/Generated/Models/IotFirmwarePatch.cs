@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="statusMessages"> A list of errors or other messages generated during firmware analysis. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IotFirmwarePatch(string fileName, string vendor, string model, string version, string description, long? fileSize, FirmwareScanStatus? status, IList<FirmwareAnalysisStatusMessage> statusMessages, IotFirmwareProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal IotFirmwarePatch(string fileName, string vendor, string model, string version, string description, long? fileSize, FirmwareAnalysisStatus? status, IList<FirmwareAnalysisStatusMessage> statusMessages, FirmwareProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FileName = fileName;
             Vendor = vendor;
@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <summary> File size of the uploaded firmware image. </summary>
         public long? FileSize { get; set; }
         /// <summary> The status of firmware scan. </summary>
-        public FirmwareScanStatus? Status { get; set; }
+        public FirmwareAnalysisStatus? Status { get; set; }
         /// <summary> A list of errors or other messages generated during firmware analysis. </summary>
         public IList<FirmwareAnalysisStatusMessage> StatusMessages { get; }
         /// <summary> Provisioning state of the resource. </summary>
-        public IotFirmwareProvisioningState? ProvisioningState { get; }
+        public FirmwareProvisioningState? ProvisioningState { get; }
     }
 }

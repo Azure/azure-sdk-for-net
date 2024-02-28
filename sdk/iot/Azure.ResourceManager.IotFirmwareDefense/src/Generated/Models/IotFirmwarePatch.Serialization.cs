@@ -130,9 +130,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             Optional<string> version = default;
             Optional<string> description = default;
             Optional<long?> fileSize = default;
-            Optional<FirmwareScanStatus> status = default;
+            Optional<FirmwareAnalysisStatus> status = default;
             IList<FirmwareAnalysisStatusMessage> statusMessages = default;
-            Optional<IotFirmwareProvisioningState> provisioningState = default;
+            Optional<FirmwareProvisioningState> provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                             {
                                 continue;
                             }
-                            status = new FirmwareScanStatus(property0.Value.GetString());
+                            status = new FirmwareAnalysisStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("statusMessages"u8))
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                             {
                                 continue;
                             }
-                            provisioningState = new IotFirmwareProvisioningState(property0.Value.GetString());
+                            provisioningState = new FirmwareProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }

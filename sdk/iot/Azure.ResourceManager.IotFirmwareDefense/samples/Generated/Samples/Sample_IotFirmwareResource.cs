@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
             IotFirmwareResource iotFirmware = client.GetIotFirmwareResource(iotFirmwareResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (FirmwareCryptoCertificateResult item in iotFirmware.GetCryptoCertificatesAsync())
+            await foreach (CryptoCertificateResult item in iotFirmware.GetCryptoCertificatesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
             IotFirmwareResource iotFirmware = client.GetIotFirmwareResource(iotFirmwareResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (FirmwareCryptoCertificateResult item in iotFirmware.GetCryptoCertificatesAsync())
+            await foreach (CryptoCertificateResult item in iotFirmware.GetCryptoCertificatesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
             IotFirmwareResource iotFirmware = client.GetIotFirmwareResource(iotFirmwareResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (FirmwareCryptoKeyResult item in iotFirmware.GetCryptoKeysAsync())
+            await foreach (CryptoKeyResult item in iotFirmware.GetCryptoKeysAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
             IotFirmwareResource iotFirmware = client.GetIotFirmwareResource(iotFirmwareResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (FirmwareCryptoKeyResult item in iotFirmware.GetCryptoKeysAsync())
+            await foreach (CryptoKeyResult item in iotFirmware.GetCryptoKeysAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
                 Version = "s",
                 Description = "uz",
                 FileSize = 17,
-                Status = FirmwareScanStatus.Pending,
+                Status = FirmwareAnalysisStatus.Pending,
                 StatusMessages =
 {
 new FirmwareAnalysisStatusMessage()
@@ -603,7 +603,7 @@ Message = "ulvhmhokezathzzauiitu",
             IotFirmwareResource iotFirmware = client.GetIotFirmwareResource(iotFirmwareResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (FirmwarePasswordHashResult item in iotFirmware.GetPasswordHashesAsync())
+            await foreach (PasswordHashResult item in iotFirmware.GetPasswordHashesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -634,7 +634,7 @@ Message = "ulvhmhokezathzzauiitu",
             IotFirmwareResource iotFirmware = client.GetIotFirmwareResource(iotFirmwareResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (FirmwarePasswordHashResult item in iotFirmware.GetPasswordHashesAsync())
+            await foreach (PasswordHashResult item in iotFirmware.GetPasswordHashesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

@@ -101,14 +101,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Tests
             await action.Should().ThrowAsync<Exception>();
         }
 
-        private async Task<IotFirmwareWorkspaceResource> getWorkspace()
+        private async Task<FirmwareAnalysisWorkspaceResource> getWorkspace()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             rg = await CreateResourceGroup(subscription, rgName, AzureLocation.EastUS);
-            var _ = await rg.GetIotFirmwareWorkspaces().CreateOrUpdateAsync(
+            var _ = await rg.GetFirmwareAnalysisWorkspaces().CreateOrUpdateAsync(
                 WaitUntil.Completed,
                 Recording.GenerateAssetName("resource"),
-                new IotFirmwareWorkspaceData(AzureLocation.EastUS));
+                new FirmwareAnalysisWorkspaceData(AzureLocation.EastUS));
             return _.Value;
         }
     }

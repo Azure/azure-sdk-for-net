@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
     /// A Class representing an IotFirmware along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="IotFirmwareResource"/>
     /// from an instance of <see cref="ArmClient"/> using the GetIotFirmwareResource method.
-    /// Otherwise you can get one from its parent resource <see cref="IotFirmwareWorkspaceResource"/> using the GetIotFirmware method.
+    /// Otherwise you can get one from its parent resource <see cref="FirmwareAnalysisWorkspaceResource"/> using the GetIotFirmware method.
     /// </summary>
     public partial class IotFirmwareResource : ArmResource
     {
@@ -116,11 +116,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of IotFirmwareSummaryResources in the IotFirmware. </summary>
-        /// <returns> An object representing collection of IotFirmwareSummaryResources and their operations over a IotFirmwareSummaryResource. </returns>
-        public virtual IotFirmwareSummaryCollection GetIotFirmwareSummaries()
+        /// <summary> Gets a collection of FirmwareAnalysisSummaryResources in the IotFirmware. </summary>
+        /// <returns> An object representing collection of FirmwareAnalysisSummaryResources and their operations over a FirmwareAnalysisSummaryResource. </returns>
+        public virtual FirmwareAnalysisSummaryCollection GetFirmwareAnalysisSummaries()
         {
-            return GetCachedClient(client => new IotFirmwareSummaryCollection(client, Id));
+            return GetCachedClient(client => new FirmwareAnalysisSummaryCollection(client, Id));
         }
 
         /// <summary>
@@ -140,16 +140,16 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="IotFirmwareSummaryResource"/></description>
+        /// <description><see cref="FirmwareAnalysisSummaryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="summaryName"> The Firmware analysis summary name describing the type of summary. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<IotFirmwareSummaryResource>> GetIotFirmwareSummaryAsync(FirmwareSummaryName summaryName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FirmwareAnalysisSummaryResource>> GetFirmwareAnalysisSummaryAsync(FirmwareAnalysisSummaryName summaryName, CancellationToken cancellationToken = default)
         {
-            return await GetIotFirmwareSummaries().GetAsync(summaryName, cancellationToken).ConfigureAwait(false);
+            return await GetFirmwareAnalysisSummaries().GetAsync(summaryName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -169,16 +169,16 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="IotFirmwareSummaryResource"/></description>
+        /// <description><see cref="FirmwareAnalysisSummaryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="summaryName"> The Firmware analysis summary name describing the type of summary. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<IotFirmwareSummaryResource> GetIotFirmwareSummary(FirmwareSummaryName summaryName, CancellationToken cancellationToken = default)
+        public virtual Response<FirmwareAnalysisSummaryResource> GetFirmwareAnalysisSummary(FirmwareAnalysisSummaryName summaryName, CancellationToken cancellationToken = default)
         {
-            return GetIotFirmwareSummaries().Get(summaryName, cancellationToken);
+            return GetFirmwareAnalysisSummaries().Get(summaryName, cancellationToken);
         }
 
         /// <summary>
@@ -505,12 +505,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="FirmwareCryptoCertificateResult"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<FirmwareCryptoCertificateResult> GetCryptoCertificatesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="CryptoCertificateResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CryptoCertificateResult> GetCryptoCertificatesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cryptoCertificatesRestClient.CreateListByFirmwareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cryptoCertificatesRestClient.CreateListByFirmwareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => FirmwareCryptoCertificateResult.DeserializeFirmwareCryptoCertificateResult(e), _cryptoCertificatesClientDiagnostics, Pipeline, "IotFirmwareResource.GetCryptoCertificates", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => CryptoCertificateResult.DeserializeCryptoCertificateResult(e), _cryptoCertificatesClientDiagnostics, Pipeline, "IotFirmwareResource.GetCryptoCertificates", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -531,12 +531,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FirmwareCryptoCertificateResult"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<FirmwareCryptoCertificateResult> GetCryptoCertificates(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CryptoCertificateResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CryptoCertificateResult> GetCryptoCertificates(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cryptoCertificatesRestClient.CreateListByFirmwareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cryptoCertificatesRestClient.CreateListByFirmwareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => FirmwareCryptoCertificateResult.DeserializeFirmwareCryptoCertificateResult(e), _cryptoCertificatesClientDiagnostics, Pipeline, "IotFirmwareResource.GetCryptoCertificates", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => CryptoCertificateResult.DeserializeCryptoCertificateResult(e), _cryptoCertificatesClientDiagnostics, Pipeline, "IotFirmwareResource.GetCryptoCertificates", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -557,12 +557,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="FirmwareCryptoKeyResult"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<FirmwareCryptoKeyResult> GetCryptoKeysAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="CryptoKeyResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CryptoKeyResult> GetCryptoKeysAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cryptoKeysRestClient.CreateListByFirmwareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cryptoKeysRestClient.CreateListByFirmwareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => FirmwareCryptoKeyResult.DeserializeFirmwareCryptoKeyResult(e), _cryptoKeysClientDiagnostics, Pipeline, "IotFirmwareResource.GetCryptoKeys", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => CryptoKeyResult.DeserializeCryptoKeyResult(e), _cryptoKeysClientDiagnostics, Pipeline, "IotFirmwareResource.GetCryptoKeys", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -583,12 +583,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FirmwareCryptoKeyResult"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<FirmwareCryptoKeyResult> GetCryptoKeys(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CryptoKeyResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CryptoKeyResult> GetCryptoKeys(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cryptoKeysRestClient.CreateListByFirmwareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cryptoKeysRestClient.CreateListByFirmwareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => FirmwareCryptoKeyResult.DeserializeFirmwareCryptoKeyResult(e), _cryptoKeysClientDiagnostics, Pipeline, "IotFirmwareResource.GetCryptoKeys", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => CryptoKeyResult.DeserializeCryptoKeyResult(e), _cryptoKeysClientDiagnostics, Pipeline, "IotFirmwareResource.GetCryptoKeys", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -813,12 +813,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="FirmwarePasswordHashResult"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<FirmwarePasswordHashResult> GetPasswordHashesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="PasswordHashResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PasswordHashResult> GetPasswordHashesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _passwordHashesRestClient.CreateListByFirmwareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _passwordHashesRestClient.CreateListByFirmwareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => FirmwarePasswordHashResult.DeserializeFirmwarePasswordHashResult(e), _passwordHashesClientDiagnostics, Pipeline, "IotFirmwareResource.GetPasswordHashes", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PasswordHashResult.DeserializePasswordHashResult(e), _passwordHashesClientDiagnostics, Pipeline, "IotFirmwareResource.GetPasswordHashes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -839,12 +839,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FirmwarePasswordHashResult"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<FirmwarePasswordHashResult> GetPasswordHashes(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PasswordHashResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PasswordHashResult> GetPasswordHashes(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _passwordHashesRestClient.CreateListByFirmwareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _passwordHashesRestClient.CreateListByFirmwareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => FirmwarePasswordHashResult.DeserializeFirmwarePasswordHashResult(e), _passwordHashesClientDiagnostics, Pipeline, "IotFirmwareResource.GetPasswordHashes", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PasswordHashResult.DeserializePasswordHashResult(e), _passwordHashesClientDiagnostics, Pipeline, "IotFirmwareResource.GetPasswordHashes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

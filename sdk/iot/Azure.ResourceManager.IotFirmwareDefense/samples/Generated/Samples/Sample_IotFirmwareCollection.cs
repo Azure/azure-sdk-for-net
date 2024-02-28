@@ -31,16 +31,16 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this IotFirmwareWorkspaceResource created on azure
-            // for more information of creating IotFirmwareWorkspaceResource, please refer to the document of IotFirmwareWorkspaceResource
+            // this example assumes you already have this FirmwareAnalysisWorkspaceResource created on azure
+            // for more information of creating FirmwareAnalysisWorkspaceResource, please refer to the document of FirmwareAnalysisWorkspaceResource
             string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
             string resourceGroupName = "rgworkspaces-firmwares";
             string workspaceName = "A7";
-            ResourceIdentifier iotFirmwareWorkspaceResourceId = IotFirmwareWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
-            IotFirmwareWorkspaceResource iotFirmwareWorkspace = client.GetIotFirmwareWorkspaceResource(iotFirmwareWorkspaceResourceId);
+            ResourceIdentifier firmwareAnalysisWorkspaceResourceId = FirmwareAnalysisWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
+            FirmwareAnalysisWorkspaceResource firmwareAnalysisWorkspace = client.GetFirmwareAnalysisWorkspaceResource(firmwareAnalysisWorkspaceResourceId);
 
             // get the collection of this IotFirmwareResource
-            IotFirmwareCollection collection = iotFirmwareWorkspace.GetIotFirmwares();
+            IotFirmwareCollection collection = firmwareAnalysisWorkspace.GetIotFirmwares();
 
             // invoke the operation and iterate over the result
             await foreach (IotFirmwareResource item in collection.GetAllAsync())
@@ -68,16 +68,16 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this IotFirmwareWorkspaceResource created on azure
-            // for more information of creating IotFirmwareWorkspaceResource, please refer to the document of IotFirmwareWorkspaceResource
+            // this example assumes you already have this FirmwareAnalysisWorkspaceResource created on azure
+            // for more information of creating FirmwareAnalysisWorkspaceResource, please refer to the document of FirmwareAnalysisWorkspaceResource
             string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
             string resourceGroupName = "rgworkspaces-firmwares";
             string workspaceName = "A7";
-            ResourceIdentifier iotFirmwareWorkspaceResourceId = IotFirmwareWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
-            IotFirmwareWorkspaceResource iotFirmwareWorkspace = client.GetIotFirmwareWorkspaceResource(iotFirmwareWorkspaceResourceId);
+            ResourceIdentifier firmwareAnalysisWorkspaceResourceId = FirmwareAnalysisWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
+            FirmwareAnalysisWorkspaceResource firmwareAnalysisWorkspace = client.GetFirmwareAnalysisWorkspaceResource(firmwareAnalysisWorkspaceResourceId);
 
             // get the collection of this IotFirmwareResource
-            IotFirmwareCollection collection = iotFirmwareWorkspace.GetIotFirmwares();
+            IotFirmwareCollection collection = firmwareAnalysisWorkspace.GetIotFirmwares();
 
             // invoke the operation and iterate over the result
             await foreach (IotFirmwareResource item in collection.GetAllAsync())
@@ -105,16 +105,16 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this IotFirmwareWorkspaceResource created on azure
-            // for more information of creating IotFirmwareWorkspaceResource, please refer to the document of IotFirmwareWorkspaceResource
+            // this example assumes you already have this FirmwareAnalysisWorkspaceResource created on azure
+            // for more information of creating FirmwareAnalysisWorkspaceResource, please refer to the document of FirmwareAnalysisWorkspaceResource
             string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
             string resourceGroupName = "rgworkspaces-firmwares";
             string workspaceName = "A7";
-            ResourceIdentifier iotFirmwareWorkspaceResourceId = IotFirmwareWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
-            IotFirmwareWorkspaceResource iotFirmwareWorkspace = client.GetIotFirmwareWorkspaceResource(iotFirmwareWorkspaceResourceId);
+            ResourceIdentifier firmwareAnalysisWorkspaceResourceId = FirmwareAnalysisWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
+            FirmwareAnalysisWorkspaceResource firmwareAnalysisWorkspace = client.GetFirmwareAnalysisWorkspaceResource(firmwareAnalysisWorkspaceResourceId);
 
             // get the collection of this IotFirmwareResource
-            IotFirmwareCollection collection = iotFirmwareWorkspace.GetIotFirmwares();
+            IotFirmwareCollection collection = firmwareAnalysisWorkspace.GetIotFirmwares();
 
             // invoke the operation
             string firmwareId = "umrkdttp";
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
                 Version = "s",
                 Description = "uz",
                 FileSize = 17,
-                Status = FirmwareScanStatus.Pending,
+                Status = FirmwareAnalysisStatus.Pending,
                 StatusMessages =
 {
 new FirmwareAnalysisStatusMessage()
@@ -158,16 +158,16 @@ Message = "ulvhmhokezathzzauiitu",
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this IotFirmwareWorkspaceResource created on azure
-            // for more information of creating IotFirmwareWorkspaceResource, please refer to the document of IotFirmwareWorkspaceResource
+            // this example assumes you already have this FirmwareAnalysisWorkspaceResource created on azure
+            // for more information of creating FirmwareAnalysisWorkspaceResource, please refer to the document of FirmwareAnalysisWorkspaceResource
             string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
             string resourceGroupName = "rgworkspaces-firmwares";
             string workspaceName = "A7";
-            ResourceIdentifier iotFirmwareWorkspaceResourceId = IotFirmwareWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
-            IotFirmwareWorkspaceResource iotFirmwareWorkspace = client.GetIotFirmwareWorkspaceResource(iotFirmwareWorkspaceResourceId);
+            ResourceIdentifier firmwareAnalysisWorkspaceResourceId = FirmwareAnalysisWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
+            FirmwareAnalysisWorkspaceResource firmwareAnalysisWorkspace = client.GetFirmwareAnalysisWorkspaceResource(firmwareAnalysisWorkspaceResourceId);
 
             // get the collection of this IotFirmwareResource
-            IotFirmwareCollection collection = iotFirmwareWorkspace.GetIotFirmwares();
+            IotFirmwareCollection collection = firmwareAnalysisWorkspace.GetIotFirmwares();
 
             // invoke the operation
             string firmwareId = "umrkdttp";
@@ -195,16 +195,16 @@ Message = "ulvhmhokezathzzauiitu",
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this IotFirmwareWorkspaceResource created on azure
-            // for more information of creating IotFirmwareWorkspaceResource, please refer to the document of IotFirmwareWorkspaceResource
+            // this example assumes you already have this FirmwareAnalysisWorkspaceResource created on azure
+            // for more information of creating FirmwareAnalysisWorkspaceResource, please refer to the document of FirmwareAnalysisWorkspaceResource
             string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
             string resourceGroupName = "rgworkspaces-firmwares";
             string workspaceName = "A7";
-            ResourceIdentifier iotFirmwareWorkspaceResourceId = IotFirmwareWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
-            IotFirmwareWorkspaceResource iotFirmwareWorkspace = client.GetIotFirmwareWorkspaceResource(iotFirmwareWorkspaceResourceId);
+            ResourceIdentifier firmwareAnalysisWorkspaceResourceId = FirmwareAnalysisWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
+            FirmwareAnalysisWorkspaceResource firmwareAnalysisWorkspace = client.GetFirmwareAnalysisWorkspaceResource(firmwareAnalysisWorkspaceResourceId);
 
             // get the collection of this IotFirmwareResource
-            IotFirmwareCollection collection = iotFirmwareWorkspace.GetIotFirmwares();
+            IotFirmwareCollection collection = firmwareAnalysisWorkspace.GetIotFirmwares();
 
             // invoke the operation
             string firmwareId = "umrkdttp";
@@ -230,16 +230,16 @@ Message = "ulvhmhokezathzzauiitu",
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this IotFirmwareWorkspaceResource created on azure
-            // for more information of creating IotFirmwareWorkspaceResource, please refer to the document of IotFirmwareWorkspaceResource
+            // this example assumes you already have this FirmwareAnalysisWorkspaceResource created on azure
+            // for more information of creating FirmwareAnalysisWorkspaceResource, please refer to the document of FirmwareAnalysisWorkspaceResource
             string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
             string resourceGroupName = "rgworkspaces-firmwares";
             string workspaceName = "A7";
-            ResourceIdentifier iotFirmwareWorkspaceResourceId = IotFirmwareWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
-            IotFirmwareWorkspaceResource iotFirmwareWorkspace = client.GetIotFirmwareWorkspaceResource(iotFirmwareWorkspaceResourceId);
+            ResourceIdentifier firmwareAnalysisWorkspaceResourceId = FirmwareAnalysisWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
+            FirmwareAnalysisWorkspaceResource firmwareAnalysisWorkspace = client.GetFirmwareAnalysisWorkspaceResource(firmwareAnalysisWorkspaceResourceId);
 
             // get the collection of this IotFirmwareResource
-            IotFirmwareCollection collection = iotFirmwareWorkspace.GetIotFirmwares();
+            IotFirmwareCollection collection = firmwareAnalysisWorkspace.GetIotFirmwares();
 
             // invoke the operation
             string firmwareId = "umrkdttp";
@@ -261,16 +261,16 @@ Message = "ulvhmhokezathzzauiitu",
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this IotFirmwareWorkspaceResource created on azure
-            // for more information of creating IotFirmwareWorkspaceResource, please refer to the document of IotFirmwareWorkspaceResource
+            // this example assumes you already have this FirmwareAnalysisWorkspaceResource created on azure
+            // for more information of creating FirmwareAnalysisWorkspaceResource, please refer to the document of FirmwareAnalysisWorkspaceResource
             string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
             string resourceGroupName = "rgworkspaces-firmwares";
             string workspaceName = "A7";
-            ResourceIdentifier iotFirmwareWorkspaceResourceId = IotFirmwareWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
-            IotFirmwareWorkspaceResource iotFirmwareWorkspace = client.GetIotFirmwareWorkspaceResource(iotFirmwareWorkspaceResourceId);
+            ResourceIdentifier firmwareAnalysisWorkspaceResourceId = FirmwareAnalysisWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
+            FirmwareAnalysisWorkspaceResource firmwareAnalysisWorkspace = client.GetFirmwareAnalysisWorkspaceResource(firmwareAnalysisWorkspaceResourceId);
 
             // get the collection of this IotFirmwareResource
-            IotFirmwareCollection collection = iotFirmwareWorkspace.GetIotFirmwares();
+            IotFirmwareCollection collection = firmwareAnalysisWorkspace.GetIotFirmwares();
 
             // invoke the operation
             string firmwareId = "umrkdttp";
@@ -304,16 +304,16 @@ Message = "ulvhmhokezathzzauiitu",
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this IotFirmwareWorkspaceResource created on azure
-            // for more information of creating IotFirmwareWorkspaceResource, please refer to the document of IotFirmwareWorkspaceResource
+            // this example assumes you already have this FirmwareAnalysisWorkspaceResource created on azure
+            // for more information of creating FirmwareAnalysisWorkspaceResource, please refer to the document of FirmwareAnalysisWorkspaceResource
             string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
             string resourceGroupName = "rgworkspaces-firmwares";
             string workspaceName = "A7";
-            ResourceIdentifier iotFirmwareWorkspaceResourceId = IotFirmwareWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
-            IotFirmwareWorkspaceResource iotFirmwareWorkspace = client.GetIotFirmwareWorkspaceResource(iotFirmwareWorkspaceResourceId);
+            ResourceIdentifier firmwareAnalysisWorkspaceResourceId = FirmwareAnalysisWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
+            FirmwareAnalysisWorkspaceResource firmwareAnalysisWorkspace = client.GetFirmwareAnalysisWorkspaceResource(firmwareAnalysisWorkspaceResourceId);
 
             // get the collection of this IotFirmwareResource
-            IotFirmwareCollection collection = iotFirmwareWorkspace.GetIotFirmwares();
+            IotFirmwareCollection collection = firmwareAnalysisWorkspace.GetIotFirmwares();
 
             // invoke the operation
             string firmwareId = "umrkdttp";
@@ -339,16 +339,16 @@ Message = "ulvhmhokezathzzauiitu",
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this IotFirmwareWorkspaceResource created on azure
-            // for more information of creating IotFirmwareWorkspaceResource, please refer to the document of IotFirmwareWorkspaceResource
+            // this example assumes you already have this FirmwareAnalysisWorkspaceResource created on azure
+            // for more information of creating FirmwareAnalysisWorkspaceResource, please refer to the document of FirmwareAnalysisWorkspaceResource
             string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
             string resourceGroupName = "rgworkspaces-firmwares";
             string workspaceName = "A7";
-            ResourceIdentifier iotFirmwareWorkspaceResourceId = IotFirmwareWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
-            IotFirmwareWorkspaceResource iotFirmwareWorkspace = client.GetIotFirmwareWorkspaceResource(iotFirmwareWorkspaceResourceId);
+            ResourceIdentifier firmwareAnalysisWorkspaceResourceId = FirmwareAnalysisWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
+            FirmwareAnalysisWorkspaceResource firmwareAnalysisWorkspace = client.GetFirmwareAnalysisWorkspaceResource(firmwareAnalysisWorkspaceResourceId);
 
             // get the collection of this IotFirmwareResource
-            IotFirmwareCollection collection = iotFirmwareWorkspace.GetIotFirmwares();
+            IotFirmwareCollection collection = firmwareAnalysisWorkspace.GetIotFirmwares();
 
             // invoke the operation
             string firmwareId = "umrkdttp";
@@ -370,16 +370,16 @@ Message = "ulvhmhokezathzzauiitu",
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this IotFirmwareWorkspaceResource created on azure
-            // for more information of creating IotFirmwareWorkspaceResource, please refer to the document of IotFirmwareWorkspaceResource
+            // this example assumes you already have this FirmwareAnalysisWorkspaceResource created on azure
+            // for more information of creating FirmwareAnalysisWorkspaceResource, please refer to the document of FirmwareAnalysisWorkspaceResource
             string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
             string resourceGroupName = "rgworkspaces-firmwares";
             string workspaceName = "A7";
-            ResourceIdentifier iotFirmwareWorkspaceResourceId = IotFirmwareWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
-            IotFirmwareWorkspaceResource iotFirmwareWorkspace = client.GetIotFirmwareWorkspaceResource(iotFirmwareWorkspaceResourceId);
+            ResourceIdentifier firmwareAnalysisWorkspaceResourceId = FirmwareAnalysisWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
+            FirmwareAnalysisWorkspaceResource firmwareAnalysisWorkspace = client.GetFirmwareAnalysisWorkspaceResource(firmwareAnalysisWorkspaceResourceId);
 
             // get the collection of this IotFirmwareResource
-            IotFirmwareCollection collection = iotFirmwareWorkspace.GetIotFirmwares();
+            IotFirmwareCollection collection = firmwareAnalysisWorkspace.GetIotFirmwares();
 
             // invoke the operation
             string firmwareId = "umrkdttp";

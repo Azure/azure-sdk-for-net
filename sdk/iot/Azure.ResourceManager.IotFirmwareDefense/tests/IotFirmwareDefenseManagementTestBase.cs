@@ -46,16 +46,16 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Tests
             return lro.Value;
         }
 
-        protected async Task<IotFirmwareWorkspaceResource> CreateWorkspace(ResourceGroupResource rg)
+        protected async Task<FirmwareAnalysisWorkspaceResource> CreateWorkspace(ResourceGroupResource rg)
         {
-            var _ = await rg.GetIotFirmwareWorkspaces().CreateOrUpdateAsync(
+            var _ = await rg.GetFirmwareAnalysisWorkspaces().CreateOrUpdateAsync(
                 WaitUntil.Completed,
                 Recording.GenerateAssetName("resource"),
-                new IotFirmwareWorkspaceData(AzureLocation.EastUS));
+                new FirmwareAnalysisWorkspaceData(AzureLocation.EastUS));
             return _.Value;
         }
 
-        protected async Task<IotFirmwareResource> CreateFirmware(IotFirmwareWorkspaceResource workspace, IotFirmwareData firmwareData)
+        protected async Task<IotFirmwareResource> CreateFirmware(FirmwareAnalysisWorkspaceResource workspace, IotFirmwareData firmwareData)
         {
             var _ = await workspace.GetIotFirmwares().CreateOrUpdateAsync(
                 WaitUntil.Completed,

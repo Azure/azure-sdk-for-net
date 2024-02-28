@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Tests
         public async Task TestGetPasswordHashes()
         {
             ResourceGroupResource testRg = await testSubscription.GetResourceGroupAsync(rgName);
-            IotFirmwareWorkspaceResource testWorkspace = await testRg.GetIotFirmwareWorkspaceAsync(workspaceName);
+            FirmwareAnalysisWorkspaceResource testWorkspace = await testRg.GetFirmwareAnalysisWorkspaceAsync(workspaceName);
             IotFirmwareResource testFirmware = await testWorkspace.GetIotFirmwareAsync(firmwareId);
 
             var results = testFirmware.GetPasswordHashesAsync();
-            await foreach ( FirmwarePasswordHashResult result in results ) {
+            await foreach ( PasswordHashResult result in results ) {
                 Console.WriteLine($"Fetched: {result}");
             }
             Assert.NotNull(results);

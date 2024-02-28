@@ -50,14 +50,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <summary> Initializes a new instance of <see cref="SummaryListResult"/>. </summary>
         internal SummaryListResult()
         {
-            Value = new ChangeTrackingList<IotFirmwareSummaryData>();
+            Value = new ChangeTrackingList<FirmwareAnalysisSummaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SummaryListResult"/>. </summary>
         /// <param name="value"> The list of summaries. </param>
         /// <param name="nextLink"> The uri to fetch the next page of resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SummaryListResult(IReadOnlyList<IotFirmwareSummaryData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SummaryListResult(IReadOnlyList<FirmwareAnalysisSummaryData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         }
 
         /// <summary> The list of summaries. </summary>
-        public IReadOnlyList<IotFirmwareSummaryData> Value { get; }
+        public IReadOnlyList<FirmwareAnalysisSummaryData> Value { get; }
         /// <summary> The uri to fetch the next page of resources. </summary>
         public string NextLink { get; }
     }

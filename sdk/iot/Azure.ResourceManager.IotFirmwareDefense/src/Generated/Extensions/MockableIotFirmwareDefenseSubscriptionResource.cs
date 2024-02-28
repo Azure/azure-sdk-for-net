@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Mocking
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableIotFirmwareDefenseSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _iotFirmwareWorkspaceWorkspacesClientDiagnostics;
-        private WorkspacesRestOperations _iotFirmwareWorkspaceWorkspacesRestClient;
+        private ClientDiagnostics _firmwareAnalysisWorkspaceWorkspacesClientDiagnostics;
+        private WorkspacesRestOperations _firmwareAnalysisWorkspaceWorkspacesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableIotFirmwareDefenseSubscriptionResource"/> class for mocking. </summary>
         protected MockableIotFirmwareDefenseSubscriptionResource()
@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Mocking
         {
         }
 
-        private ClientDiagnostics IotFirmwareWorkspaceWorkspacesClientDiagnostics => _iotFirmwareWorkspaceWorkspacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.IotFirmwareDefense", IotFirmwareWorkspaceResource.ResourceType.Namespace, Diagnostics);
-        private WorkspacesRestOperations IotFirmwareWorkspaceWorkspacesRestClient => _iotFirmwareWorkspaceWorkspacesRestClient ??= new WorkspacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(IotFirmwareWorkspaceResource.ResourceType));
+        private ClientDiagnostics FirmwareAnalysisWorkspaceWorkspacesClientDiagnostics => _firmwareAnalysisWorkspaceWorkspacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.IotFirmwareDefense", FirmwareAnalysisWorkspaceResource.ResourceType.Namespace, Diagnostics);
+        private WorkspacesRestOperations FirmwareAnalysisWorkspaceWorkspacesRestClient => _firmwareAnalysisWorkspaceWorkspacesRestClient ??= new WorkspacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(FirmwareAnalysisWorkspaceResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -59,17 +59,17 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="IotFirmwareWorkspaceResource"/></description>
+        /// <description><see cref="FirmwareAnalysisWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IotFirmwareWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<IotFirmwareWorkspaceResource> GetIotFirmwareWorkspacesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="FirmwareAnalysisWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<FirmwareAnalysisWorkspaceResource> GetFirmwareAnalysisWorkspacesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => IotFirmwareWorkspaceWorkspacesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IotFirmwareWorkspaceWorkspacesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IotFirmwareWorkspaceResource(Client, IotFirmwareWorkspaceData.DeserializeIotFirmwareWorkspaceData(e)), IotFirmwareWorkspaceWorkspacesClientDiagnostics, Pipeline, "MockableIotFirmwareDefenseSubscriptionResource.GetIotFirmwareWorkspaces", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => FirmwareAnalysisWorkspaceWorkspacesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FirmwareAnalysisWorkspaceWorkspacesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FirmwareAnalysisWorkspaceResource(Client, FirmwareAnalysisWorkspaceData.DeserializeFirmwareAnalysisWorkspaceData(e)), FirmwareAnalysisWorkspaceWorkspacesClientDiagnostics, Pipeline, "MockableIotFirmwareDefenseSubscriptionResource.GetFirmwareAnalysisWorkspaces", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -89,17 +89,17 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="IotFirmwareWorkspaceResource"/></description>
+        /// <description><see cref="FirmwareAnalysisWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="IotFirmwareWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<IotFirmwareWorkspaceResource> GetIotFirmwareWorkspaces(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="FirmwareAnalysisWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<FirmwareAnalysisWorkspaceResource> GetFirmwareAnalysisWorkspaces(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => IotFirmwareWorkspaceWorkspacesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IotFirmwareWorkspaceWorkspacesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IotFirmwareWorkspaceResource(Client, IotFirmwareWorkspaceData.DeserializeIotFirmwareWorkspaceData(e)), IotFirmwareWorkspaceWorkspacesClientDiagnostics, Pipeline, "MockableIotFirmwareDefenseSubscriptionResource.GetIotFirmwareWorkspaces", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => FirmwareAnalysisWorkspaceWorkspacesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FirmwareAnalysisWorkspaceWorkspacesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FirmwareAnalysisWorkspaceResource(Client, FirmwareAnalysisWorkspaceData.DeserializeFirmwareAnalysisWorkspaceData(e)), FirmwareAnalysisWorkspaceWorkspacesClientDiagnostics, Pipeline, "MockableIotFirmwareDefenseSubscriptionResource.GetFirmwareAnalysisWorkspaces", "value", "nextLink", cancellationToken);
         }
     }
 }

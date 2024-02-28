@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Tests
         public async Task TestGetCryptoKeys()
         {
             ResourceGroupResource testRg = await testSubscription.GetResourceGroupAsync(rgName);
-            IotFirmwareWorkspaceResource testWorkspace = await testRg.GetIotFirmwareWorkspaceAsync(workspaceName);
+            FirmwareAnalysisWorkspaceResource testWorkspace = await testRg.GetFirmwareAnalysisWorkspaceAsync(workspaceName);
             IotFirmwareResource testFirmware = await testWorkspace.GetIotFirmwareAsync(firmwareId);
 
             var results = testFirmware.GetCryptoKeysAsync();
-            await foreach ( FirmwareCryptoKeyResult result in results ) {
+            await foreach ( CryptoKeyResult result in results ) {
                 Console.WriteLine($"Fetched: {result}");
             }
             Assert.NotNull(results);

@@ -58,32 +58,25 @@ override-operation-name:
 
 rename-mapping:
   GenerateUploadUrlRequest: FirmwareUploadUrlRequest
-  Workspace: IotFirmwareWorkspace
+  Workspace: FirmwareAnalysisWorkspace
   BinaryHardeningResource: BinaryHardeningResult
   BinaryHardeningSummaryResource: BinaryHardeningSummary
   CveResource: CveResult
-  PasswordHashResource: FirmwarePasswordHashResult
+  PasswordHashResource: PasswordHashResult
   SbomComponentResource: SbomComponentResult
-  SummaryName: FirmwareSummaryName
+  SummaryName: FirmwareAnalysisSummaryName
   SummaryName.CVE: Cve
-  SummaryName.CryptoCertificate: FirmwareCryptoCertificate
-  SummaryName.CryptoKey: FirmwareCryptoKey
-  SummaryType: FirmwareSummaryType
+  SummaryType: FirmwareAnalysisSummaryType
   SummaryType.CVE: Cve
-  SummaryType.CryptoCertificate: FirmwareCryptoCertificate
-  SummaryType.CryptoKey: FirmwareCryptoKey
-  CryptoCertificateEntity: FirmwareCryptoCertificateEntity
-  CryptoCertificateListResult: FirmwareCryptoCertificateListResult
-  CryptoCertificateResource: FirmwareCryptoCertificateResult
-  CryptoCertificateSummaryResource: FirmwareCryptoCertificateSummary
-  CryptoKeyListResult: FirmwareCryptoKeyListResult
-  CryptoKeyResource: FirmwareCryptoKeyResult
-  CryptoKeyResource.properties.cryptoKeyId: FirmwareCryptoKeyId
-  CryptoKeySummaryResource: FirmwareCryptoKeySummary
+  CryptoCertificateResource: CryptoCertificateResult
+  CryptoCertificateSummaryResource: CryptoCertificateSummary
+  CryptoKeyResource: CryptoKeyResult
+  CryptoKeyResource.properties.cryptoKeyId: CryptoKeyId
+  CryptoKeySummaryResource: CryptoKeySummary
   Firmware: IotFirmware
-  ProvisioningState: IotFirmwareProvisioningState
-  SummaryResource: IotFirmwareSummary
-  SummaryResourceProperties: IotFirmwareSummaryProperties
+  ProvisioningState: FirmwareProvisioningState
+  SummaryResource: FirmwareAnalysisSummary
+  SummaryResourceProperties: FirmwareAnalysisSummaryProperties
   BinaryHardeningResource.properties.features.nx: NXFlag
   BinaryHardeningResource.properties.features.pie: PieFlag
   BinaryHardeningResource.properties.features.relro: RelroFlag
@@ -94,9 +87,9 @@ rename-mapping:
   BinaryHardeningSummaryResource.relro: RelroPercentage
   BinaryHardeningSummaryResource.canary: CanaryPercentage
   BinaryHardeningSummaryResource.stripped: StrippedPercentage
-  Status: FirmwareScanStatus
+  Status: FirmwareAnalysisStatus
   StatusMessage: FirmwareAnalysisStatusMessage
-  PairedKey: FirmwarePairedKey
+  PairedKey: CryptoPairedKey
   UrlToken: FirmwareUrlToken
 
 ```

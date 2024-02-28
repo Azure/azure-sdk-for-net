@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Tests
         [RecordedTest]
         public async Task TestGetFirmwareSummary()
         {
-            var summaryName = FirmwareSummaryName.Firmware;
+            var summaryName = FirmwareAnalysisSummaryName.Firmware;
             ResourceGroupResource testRg = await testSubscription.GetResourceGroupAsync(rgName);
-            IotFirmwareWorkspaceResource testWorkspace = await testRg.GetIotFirmwareWorkspaceAsync(workspaceName);
+            FirmwareAnalysisWorkspaceResource testWorkspace = await testRg.GetFirmwareAnalysisWorkspaceAsync(workspaceName);
             IotFirmwareResource testFirmware = await testWorkspace.GetIotFirmwareAsync(firmwareId);
 
-            var response = await testFirmware.GetIotFirmwareSummaryAsync(summaryName);
+            var response = await testFirmware.GetFirmwareAnalysisSummaryAsync(summaryName);
             FirmwareSummary summary = (FirmwareSummary) response.Value.Data.Properties;
             Assert.AreEqual(summary.SummaryType.ToString(), summaryName.ToString());
             Assert.Greater(summary.FileSize, 0);
@@ -54,12 +54,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Tests
         [RecordedTest]
         public async Task TestGetBinaryHardeningSummary()
         {
-            var summaryName = FirmwareSummaryName.BinaryHardening;
+            var summaryName = FirmwareAnalysisSummaryName.BinaryHardening;
             ResourceGroupResource testRg = await testSubscription.GetResourceGroupAsync(rgName);
-            IotFirmwareWorkspaceResource testWorkspace = await testRg.GetIotFirmwareWorkspaceAsync(workspaceName);
+            FirmwareAnalysisWorkspaceResource testWorkspace = await testRg.GetFirmwareAnalysisWorkspaceAsync(workspaceName);
             IotFirmwareResource testFirmware = await testWorkspace.GetIotFirmwareAsync(firmwareId);
 
-            var response = await testFirmware.GetIotFirmwareSummaryAsync(summaryName);
+            var response = await testFirmware.GetFirmwareAnalysisSummaryAsync(summaryName);
             BinaryHardeningSummary summary = (BinaryHardeningSummary) response.Value.Data.Properties;
             Assert.AreEqual(summary.SummaryType.ToString(), summaryName.ToString());
             Assert.GreaterOrEqual(summary.NXPercentage, 0);
@@ -69,12 +69,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Tests
         [RecordedTest]
         public async Task TestGetCveSummary()
         {
-            var summaryName = FirmwareSummaryName.Cve;
+            var summaryName = FirmwareAnalysisSummaryName.Cve;
             ResourceGroupResource testRg = await testSubscription.GetResourceGroupAsync(rgName);
-            IotFirmwareWorkspaceResource testWorkspace = await testRg.GetIotFirmwareWorkspaceAsync(workspaceName);
+            FirmwareAnalysisWorkspaceResource testWorkspace = await testRg.GetFirmwareAnalysisWorkspaceAsync(workspaceName);
             IotFirmwareResource testFirmware = await testWorkspace.GetIotFirmwareAsync(firmwareId);
 
-            var response = await testFirmware.GetIotFirmwareSummaryAsync(summaryName);
+            var response = await testFirmware.GetFirmwareAnalysisSummaryAsync(summaryName);
             CveSummary summary = (CveSummary) response.Value.Data.Properties;
             Assert.AreEqual(summary.SummaryType.ToString(), summaryName.ToString());
             Assert.GreaterOrEqual(summary.Critical, 0);
@@ -84,13 +84,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Tests
         [RecordedTest]
         public async Task TestGetCryptoCertificateSummary()
         {
-            var summaryName = FirmwareSummaryName.FirmwareCryptoCertificate;
+            var summaryName = FirmwareAnalysisSummaryName.CryptoCertificate;
             ResourceGroupResource testRg = await testSubscription.GetResourceGroupAsync(rgName);
-            IotFirmwareWorkspaceResource testWorkspace = await testRg.GetIotFirmwareWorkspaceAsync(workspaceName);
+            FirmwareAnalysisWorkspaceResource testWorkspace = await testRg.GetFirmwareAnalysisWorkspaceAsync(workspaceName);
             IotFirmwareResource testFirmware = await testWorkspace.GetIotFirmwareAsync(firmwareId);
 
-            var response = await testFirmware.GetIotFirmwareSummaryAsync(summaryName);
-            FirmwareCryptoCertificateSummary summary = (FirmwareCryptoCertificateSummary) response.Value.Data.Properties;
+            var response = await testFirmware.GetFirmwareAnalysisSummaryAsync(summaryName);
+            CryptoCertificateSummary summary = (CryptoCertificateSummary) response.Value.Data.Properties;
             Assert.AreEqual(summary.SummaryType.ToString(), summaryName.ToString());
             Assert.GreaterOrEqual(summary.TotalCertificates, 0);
         }
@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Tests
         [RecordedTest]
         public async Task TestGetCryptoKeySummary()
         {
-            var summaryName = FirmwareSummaryName.FirmwareCryptoKey;
+            var summaryName = FirmwareAnalysisSummaryName.CryptoKey;
             ResourceGroupResource testRg = await testSubscription.GetResourceGroupAsync(rgName);
-            IotFirmwareWorkspaceResource testWorkspace = await testRg.GetIotFirmwareWorkspaceAsync(workspaceName);
+            FirmwareAnalysisWorkspaceResource testWorkspace = await testRg.GetFirmwareAnalysisWorkspaceAsync(workspaceName);
             IotFirmwareResource testFirmware = await testWorkspace.GetIotFirmwareAsync(firmwareId);
 
-            var response = await testFirmware.GetIotFirmwareSummaryAsync(summaryName);
-            FirmwareCryptoKeySummary summary = (FirmwareCryptoKeySummary) response.Value.Data.Properties;
+            var response = await testFirmware.GetFirmwareAnalysisSummaryAsync(summaryName);
+            CryptoKeySummary summary = (CryptoKeySummary) response.Value.Data.Properties;
             Assert.AreEqual(summary.SummaryType.ToString(), summaryName.ToString());
             Assert.GreaterOrEqual(summary.TotalKeys, 0);
         }
