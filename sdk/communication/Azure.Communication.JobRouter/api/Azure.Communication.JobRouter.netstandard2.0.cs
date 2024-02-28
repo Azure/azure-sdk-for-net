@@ -186,7 +186,7 @@ namespace Azure.Communication.JobRouter
         public int Capacity { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Communication.JobRouter.RouterChannel> Channels { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, Azure.Communication.JobRouter.RouterValue> Labels { get { throw null; } }
-        public int MaxConcurrentOffers { get { throw null; } set { } }
+        public int? MaxConcurrentOffers { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Queues { get { throw null; } }
         public Azure.RequestConditions RequestConditions { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.Communication.JobRouter.RouterValue> Tags { get { throw null; } }
