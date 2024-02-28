@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> statusCodes = default;
-            Optional<string> path = default;
-            Optional<int> count = default;
-            Optional<string> timeInterval = default;
+            string statusCodes = default;
+            string path = default;
+            int? count = default;
+            string timeInterval = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StatusCodesRangeBasedTrigger(statusCodes.Value, path.Value, Optional.ToNullable(count), timeInterval.Value, serializedAdditionalRawData);
+            return new StatusCodesRangeBasedTrigger(statusCodes, path, count, timeInterval, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StatusCodesRangeBasedTrigger>.Write(ModelReaderWriterOptions options)

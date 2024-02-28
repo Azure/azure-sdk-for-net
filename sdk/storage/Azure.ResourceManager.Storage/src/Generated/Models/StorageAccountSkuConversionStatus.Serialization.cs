@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<StorageAccountSkuConversionState> skuConversionStatus = default;
-            Optional<StorageSkuName> targetSkuName = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
+            StorageAccountSkuConversionState? skuConversionStatus = default;
+            StorageSkuName? targetSkuName = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageAccountSkuConversionStatus(Optional.ToNullable(skuConversionStatus), Optional.ToNullable(targetSkuName), Optional.ToNullable(startTime), Optional.ToNullable(endTime), serializedAdditionalRawData);
+            return new StorageAccountSkuConversionStatus(skuConversionStatus, targetSkuName, startTime, endTime, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageAccountSkuConversionStatus>.Write(ModelReaderWriterOptions options)

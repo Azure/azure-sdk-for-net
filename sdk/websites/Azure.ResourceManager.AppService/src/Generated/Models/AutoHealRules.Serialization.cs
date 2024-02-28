@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<AutoHealTriggers> triggers = default;
-            Optional<AutoHealActions> actions = default;
+            AutoHealTriggers triggers = default;
+            AutoHealActions actions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutoHealRules(triggers.Value, actions.Value, serializedAdditionalRawData);
+            return new AutoHealRules(triggers, actions, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutoHealRules>.Write(ModelReaderWriterOptions options)

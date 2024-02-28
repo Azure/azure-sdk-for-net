@@ -133,19 +133,19 @@ namespace Azure.ResourceManager.Synapse
             {
                 return null;
             }
-            Optional<string> kind = default;
-            Optional<AzureLocation> location = default;
+            string kind = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> securityEnabledAccess = default;
-            Optional<string> proxyDnsName = default;
-            Optional<string> proxyPort = default;
-            Optional<string> visibility = default;
-            Optional<string> useServerDefault = default;
-            Optional<string> redirectionState = default;
-            Optional<string> state = default;
+            SystemData systemData = default;
+            string securityEnabledAccess = default;
+            string proxyDnsName = default;
+            string proxyPort = default;
+            string visibility = default;
+            string useServerDefault = default;
+            string redirectionState = default;
+            string state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -245,16 +245,16 @@ namespace Azure.ResourceManager.Synapse
                 id,
                 name,
                 type,
-                systemData.Value,
-                kind.Value,
-                Optional.ToNullable(location),
-                securityEnabledAccess.Value,
-                proxyDnsName.Value,
-                proxyPort.Value,
-                visibility.Value,
-                useServerDefault.Value,
-                redirectionState.Value,
-                state.Value,
+                systemData,
+                kind,
+                location,
+                securityEnabledAccess,
+                proxyDnsName,
+                proxyPort,
+                visibility,
+                useServerDefault,
+                redirectionState,
+                state,
                 serializedAdditionalRawData);
         }
 

@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             IList<StreamAnalyticsQueryInput> inputs = default;
             IList<StreamAnalyticsQueryFunction> functions = default;
             StreamingJobType jobType = default;
-            Optional<StreamingJobCompatibilityLevel> compatibilityLevel = default;
+            StreamingJobCompatibilityLevel? compatibilityLevel = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 inputs ?? new ChangeTrackingList<StreamAnalyticsQueryInput>(),
                 functions ?? new ChangeTrackingList<StreamAnalyticsQueryFunction>(),
                 jobType,
-                Optional.ToNullable(compatibilityLevel),
+                compatibilityLevel,
                 serializedAdditionalRawData);
         }
 

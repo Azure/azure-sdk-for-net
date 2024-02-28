@@ -20,12 +20,12 @@ namespace Azure.AI.TextAnalytics.Legacy
             {
                 return null;
             }
-            Optional<HealthcareAssertion> assertion = default;
-            Optional<string> name = default;
+            HealthcareAssertion assertion = default;
+            string name = default;
             IReadOnlyList<HealthcareEntityLink> links = default;
             string text = default;
             HealthcareEntityCategory category = default;
-            Optional<string> subcategory = default;
+            string subcategory = default;
             int offset = default;
             int length = default;
             double confidenceScore = default;
@@ -93,12 +93,12 @@ namespace Azure.AI.TextAnalytics.Legacy
             return new HealthcareEntity(
                 text,
                 category,
-                subcategory.Value,
+                subcategory,
                 offset,
                 length,
                 confidenceScore,
-                assertion.Value,
-                name.Value,
+                assertion,
+                name,
                 links ?? new ChangeTrackingList<HealthcareEntityLink>());
         }
     }

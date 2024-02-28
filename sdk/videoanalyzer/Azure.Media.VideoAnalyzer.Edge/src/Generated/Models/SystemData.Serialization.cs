@@ -35,8 +35,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> createdAt = default;
-            Optional<DateTimeOffset> lastModifiedAt = default;
+            DateTimeOffset? createdAt = default;
+            DateTimeOffset? lastModifiedAt = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("createdAt"u8))
@@ -58,7 +58,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new SystemData(Optional.ToNullable(createdAt), Optional.ToNullable(lastModifiedAt));
+            return new SystemData(createdAt, lastModifiedAt);
         }
     }
 }

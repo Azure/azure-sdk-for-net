@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             string bindingType = default;
-            Optional<string> executeEndpoint = default;
-            Optional<StreamingJobFunctionUdfType> udfType = default;
+            string executeEndpoint = default;
+            StreamingJobFunctionUdfType? udfType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningServiceFunctionRetrieveDefaultDefinitionContent(bindingType, serializedAdditionalRawData, executeEndpoint.Value, Optional.ToNullable(udfType));
+            return new MachineLearningServiceFunctionRetrieveDefaultDefinitionContent(bindingType, serializedAdditionalRawData, executeEndpoint, udfType);
         }
 
         BinaryData IPersistableModel<MachineLearningServiceFunctionRetrieveDefaultDefinitionContent>.Write(ModelReaderWriterOptions options)

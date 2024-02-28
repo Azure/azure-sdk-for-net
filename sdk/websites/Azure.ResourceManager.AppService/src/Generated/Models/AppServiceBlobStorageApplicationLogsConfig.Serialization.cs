@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<WebAppLogLevel> level = default;
-            Optional<Uri> sasUrl = default;
-            Optional<int> retentionInDays = default;
+            WebAppLogLevel? level = default;
+            Uri sasUrl = default;
+            int? retentionInDays = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceBlobStorageApplicationLogsConfig(Optional.ToNullable(level), sasUrl.Value, Optional.ToNullable(retentionInDays), serializedAdditionalRawData);
+            return new AppServiceBlobStorageApplicationLogsConfig(level, sasUrl, retentionInDays, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceBlobStorageApplicationLogsConfig>.Write(ModelReaderWriterOptions options)

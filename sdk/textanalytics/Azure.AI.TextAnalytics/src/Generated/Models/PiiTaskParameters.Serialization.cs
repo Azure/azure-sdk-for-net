@@ -56,11 +56,11 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 return null;
             }
-            Optional<PiiDomain> domain = default;
+            PiiDomain? domain = default;
             IList<PiiEntityCategory> piiCategories = default;
-            Optional<StringIndexType> stringIndexType = default;
-            Optional<string> modelVersion = default;
-            Optional<bool> loggingOptOut = default;
+            StringIndexType? stringIndexType = default;
+            string modelVersion = default;
+            bool? loggingOptOut = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("domain"u8))
@@ -110,7 +110,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new PiiTaskParameters(Optional.ToNullable(loggingOptOut), modelVersion.Value, Optional.ToNullable(domain), piiCategories ?? new ChangeTrackingList<PiiEntityCategory>(), Optional.ToNullable(stringIndexType));
+            return new PiiTaskParameters(loggingOptOut, modelVersion, domain, piiCategories ?? new ChangeTrackingList<PiiEntityCategory>(), stringIndexType);
         }
     }
 }

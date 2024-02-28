@@ -95,17 +95,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<SecureInputOutputPolicy> policy = default;
+            SecureInputOutputPolicy policy = default;
             string name = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<ActivityState> state = default;
-            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
+            string description = default;
+            ActivityState? state = default;
+            ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
             IList<ActivityDependency> dependsOn = default;
             IList<UserProperty> userProperties = default;
-            Optional<string> variableName = default;
-            Optional<object> value = default;
-            Optional<bool> setSystemVariable = default;
+            string variableName = default;
+            object value = default;
+            bool? setSystemVariable = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -221,16 +221,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new SetVariableActivity(
                 name,
                 type,
-                description.Value,
-                Optional.ToNullable(state),
-                Optional.ToNullable(onInactiveMarkAs),
+                description,
+                state,
+                onInactiveMarkAs,
                 dependsOn ?? new ChangeTrackingList<ActivityDependency>(),
                 userProperties ?? new ChangeTrackingList<UserProperty>(),
                 additionalProperties,
-                policy.Value,
-                variableName.Value,
-                value.Value,
-                Optional.ToNullable(setSystemVariable));
+                policy,
+                variableName,
+                value,
+                setSystemVariable);
         }
 
         internal partial class SetVariableActivityConverter : JsonConverter<SetVariableActivity>

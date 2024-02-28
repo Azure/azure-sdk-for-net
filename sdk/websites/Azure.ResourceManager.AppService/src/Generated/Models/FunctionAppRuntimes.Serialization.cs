@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<FunctionAppRuntimeSettings> linuxRuntimeSettings = default;
-            Optional<FunctionAppRuntimeSettings> windowsRuntimeSettings = default;
+            FunctionAppRuntimeSettings linuxRuntimeSettings = default;
+            FunctionAppRuntimeSettings windowsRuntimeSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FunctionAppRuntimes(linuxRuntimeSettings.Value, windowsRuntimeSettings.Value, serializedAdditionalRawData);
+            return new FunctionAppRuntimes(linuxRuntimeSettings, windowsRuntimeSettings, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FunctionAppRuntimes>.Write(ModelReaderWriterOptions options)

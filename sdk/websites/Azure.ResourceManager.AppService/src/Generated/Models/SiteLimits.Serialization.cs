@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<double> maxPercentageCpu = default;
-            Optional<long> maxMemoryInMb = default;
-            Optional<long> maxDiskSizeInMb = default;
+            double? maxPercentageCpu = default;
+            long? maxMemoryInMb = default;
+            long? maxDiskSizeInMb = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteLimits(Optional.ToNullable(maxPercentageCpu), Optional.ToNullable(maxMemoryInMb), Optional.ToNullable(maxDiskSizeInMb), serializedAdditionalRawData);
+            return new SiteLimits(maxPercentageCpu, maxMemoryInMb, maxDiskSizeInMb, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteLimits>.Write(ModelReaderWriterOptions options)

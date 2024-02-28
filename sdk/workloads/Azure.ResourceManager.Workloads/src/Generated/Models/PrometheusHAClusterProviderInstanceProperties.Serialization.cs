@@ -96,12 +96,12 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<Uri> prometheusUrl = default;
-            Optional<string> hostname = default;
-            Optional<string> sid = default;
-            Optional<string> clusterName = default;
-            Optional<SapSslPreference> sslPreference = default;
-            Optional<Uri> sslCertificateUri = default;
+            Uri prometheusUrl = default;
+            string hostname = default;
+            string sid = default;
+            string clusterName = default;
+            SapSslPreference? sslPreference = default;
+            Uri sslCertificateUri = default;
             string providerType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -163,12 +163,12 @@ namespace Azure.ResourceManager.Workloads.Models
             return new PrometheusHAClusterProviderInstanceProperties(
                 providerType,
                 serializedAdditionalRawData,
-                prometheusUrl.Value,
-                hostname.Value,
-                sid.Value,
-                clusterName.Value,
-                Optional.ToNullable(sslPreference),
-                sslCertificateUri.Value);
+                prometheusUrl,
+                hostname,
+                sid,
+                clusterName,
+                sslPreference,
+                sslCertificateUri);
         }
 
         BinaryData IPersistableModel<PrometheusHAClusterProviderInstanceProperties>.Write(ModelReaderWriterOptions options)

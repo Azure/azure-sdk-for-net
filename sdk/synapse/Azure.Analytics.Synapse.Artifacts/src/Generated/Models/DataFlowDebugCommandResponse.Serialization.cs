@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -21,8 +20,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> status = default;
-            Optional<string> data = default;
+            string status = default;
+            string data = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -36,7 +35,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new DataFlowDebugCommandResponse(status.Value, data.Value);
+            return new DataFlowDebugCommandResponse(status, data);
         }
 
         internal partial class DataFlowDebugCommandResponseConverter : JsonConverter<DataFlowDebugCommandResponse>

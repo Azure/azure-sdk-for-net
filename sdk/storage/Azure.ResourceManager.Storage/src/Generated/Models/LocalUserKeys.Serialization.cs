@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Storage.Models
                 return null;
             }
             IReadOnlyList<StorageSshPublicKey> sshAuthorizedKeys = default;
-            Optional<string> sharedKey = default;
+            string sharedKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LocalUserKeys(sshAuthorizedKeys ?? new ChangeTrackingList<StorageSshPublicKey>(), sharedKey.Value, serializedAdditionalRawData);
+            return new LocalUserKeys(sshAuthorizedKeys ?? new ChangeTrackingList<StorageSshPublicKey>(), sharedKey, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LocalUserKeys>.Write(ModelReaderWriterOptions options)

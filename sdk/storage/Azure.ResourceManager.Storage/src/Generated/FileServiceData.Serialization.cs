@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.Storage
             {
                 return null;
             }
-            Optional<StorageSku> sku = default;
+            StorageSku sku = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<StorageCorsRules> cors = default;
-            Optional<DeleteRetentionPolicy> shareDeleteRetentionPolicy = default;
-            Optional<ProtocolSettings> protocolSettings = default;
+            SystemData systemData = default;
+            StorageCorsRules cors = default;
+            DeleteRetentionPolicy shareDeleteRetentionPolicy = default;
+            ProtocolSettings protocolSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -203,11 +203,11 @@ namespace Azure.ResourceManager.Storage
                 id,
                 name,
                 type,
-                systemData.Value,
-                sku.Value,
-                cors.Value,
-                shareDeleteRetentionPolicy.Value,
-                protocolSettings.Value,
+                systemData,
+                sku,
+                cors,
+                shareDeleteRetentionPolicy,
+                protocolSettings,
                 serializedAdditionalRawData);
         }
 
