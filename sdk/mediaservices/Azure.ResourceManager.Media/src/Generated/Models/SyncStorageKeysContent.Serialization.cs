@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<string> id = default;
+            string id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SyncStorageKeysContent(id.Value, serializedAdditionalRawData);
+            return new SyncStorageKeysContent(id, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SyncStorageKeysContent>.Write(ModelReaderWriterOptions options)

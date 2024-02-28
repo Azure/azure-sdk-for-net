@@ -123,16 +123,16 @@ namespace Azure.ResourceManager.MobileNetwork
             {
                 return null;
             }
-            Optional<MobileNetworkManagedServiceIdentity> identity = default;
+            MobileNetworkManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<MobileNetworkProvisioningState> provisioningState = default;
-            Optional<KeyVaultKey> encryptionKey = default;
-            Optional<WritableSubResource> mobileNetwork = default;
+            SystemData systemData = default;
+            MobileNetworkProvisioningState? provisioningState = default;
+            KeyVaultKey encryptionKey = default;
+            WritableSubResource mobileNetwork = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -238,12 +238,12 @@ namespace Azure.ResourceManager.MobileNetwork
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                identity.Value,
-                Optional.ToNullable(provisioningState),
-                encryptionKey.Value,
+                identity,
+                provisioningState,
+                encryptionKey,
                 mobileNetwork,
                 serializedAdditionalRawData);
         }

@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 return null;
             }
-            Optional<string> value = default;
-            Optional<string> contentType = default;
-            Optional<SecretAttributes> attributes = default;
-            Optional<Uri> secretUri = default;
-            Optional<string> secretUriWithVersion = default;
+            string value = default;
+            string contentType = default;
+            SecretAttributes attributes = default;
+            Uri secretUri = default;
+            string secretUriWithVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,11 +138,11 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SecretProperties(
-                value.Value,
-                contentType.Value,
-                attributes.Value,
-                secretUri.Value,
-                secretUriWithVersion.Value,
+                value,
+                contentType,
+                attributes,
+                secretUri,
+                secretUriWithVersion,
                 serializedAdditionalRawData);
         }
 

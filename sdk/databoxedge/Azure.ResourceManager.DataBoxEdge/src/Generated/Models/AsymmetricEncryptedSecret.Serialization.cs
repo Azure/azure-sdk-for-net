@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 return null;
             }
             string value = default;
-            Optional<string> encryptionCertThumbprint = default;
+            string encryptionCertThumbprint = default;
             DataBoxEdgeEncryptionAlgorithm encryptionAlgorithm = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AsymmetricEncryptedSecret(value, encryptionCertThumbprint.Value, encryptionAlgorithm, serializedAdditionalRawData);
+            return new AsymmetricEncryptedSecret(value, encryptionCertThumbprint, encryptionAlgorithm, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AsymmetricEncryptedSecret>.Write(ModelReaderWriterOptions options)

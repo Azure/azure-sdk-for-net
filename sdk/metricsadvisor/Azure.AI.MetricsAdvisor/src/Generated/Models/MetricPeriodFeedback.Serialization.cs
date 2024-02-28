@@ -36,9 +36,9 @@ namespace Azure.AI.MetricsAdvisor
             }
             PeriodFeedbackValue value = default;
             MetricFeedbackKind feedbackType = default;
-            Optional<string> feedbackId = default;
-            Optional<DateTimeOffset> createdTime = default;
-            Optional<string> userPrincipal = default;
+            string feedbackId = default;
+            DateTimeOffset? createdTime = default;
+            string userPrincipal = default;
             string metricId = default;
             FeedbackFilter dimensionFilter = default;
             foreach (var property in element.EnumerateObject())
@@ -85,9 +85,9 @@ namespace Azure.AI.MetricsAdvisor
             }
             return new MetricPeriodFeedback(
                 feedbackType,
-                feedbackId.Value,
-                Optional.ToNullable(createdTime),
-                userPrincipal.Value,
+                feedbackId,
+                createdTime,
+                userPrincipal,
                 metricId,
                 dimensionFilter,
                 value);

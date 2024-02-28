@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<DateTimeOffset> nbf = default;
-            Optional<DateTimeOffset> exp = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<DateTimeOffset> updated = default;
+            bool? enabled = default;
+            DateTimeOffset? nbf = default;
+            DateTimeOffset? exp = default;
+            DateTimeOffset? created = default;
+            DateTimeOffset? updated = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,11 +150,11 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SecretAttributes(
-                Optional.ToNullable(enabled),
-                Optional.ToNullable(nbf),
-                Optional.ToNullable(exp),
-                Optional.ToNullable(created),
-                Optional.ToNullable(updated),
+                enabled,
+                nbf,
+                exp,
+                created,
+                updated,
                 serializedAdditionalRawData);
         }
 

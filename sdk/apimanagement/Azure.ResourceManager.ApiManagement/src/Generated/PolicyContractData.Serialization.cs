@@ -102,9 +102,9 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> value = default;
-            Optional<PolicyContentFormat> format = default;
+            SystemData systemData = default;
+            string value = default;
+            PolicyContentFormat? format = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -169,9 +169,9 @@ namespace Azure.ResourceManager.ApiManagement
                 id,
                 name,
                 type,
-                systemData.Value,
-                value.Value,
-                Optional.ToNullable(format),
+                systemData,
+                value,
+                format,
                 serializedAdditionalRawData);
         }
 

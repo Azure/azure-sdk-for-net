@@ -95,11 +95,11 @@ namespace Azure.ResourceManager.IotHub.Models
             }
             Uri exportBlobContainerUri = default;
             bool excludeKeys = default;
-            Optional<string> exportBlobName = default;
-            Optional<IotHubAuthenticationType> authenticationType = default;
-            Optional<ManagedIdentity> identity = default;
-            Optional<bool> includeConfigurations = default;
-            Optional<string> configurationsBlobName = default;
+            string exportBlobName = default;
+            IotHubAuthenticationType? authenticationType = default;
+            ManagedIdentity identity = default;
+            bool? includeConfigurations = default;
+            string configurationsBlobName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,11 +160,11 @@ namespace Azure.ResourceManager.IotHub.Models
             return new ExportDevicesContent(
                 exportBlobContainerUri,
                 excludeKeys,
-                exportBlobName.Value,
-                Optional.ToNullable(authenticationType),
-                identity.Value,
-                Optional.ToNullable(includeConfigurations),
-                configurationsBlobName.Value,
+                exportBlobName,
+                authenticationType,
+                identity,
+                includeConfigurations,
+                configurationsBlobName,
                 serializedAdditionalRawData);
         }
 

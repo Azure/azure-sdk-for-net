@@ -97,12 +97,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Optional<string> name = default;
+            string name = default;
             int priority = default;
-            Optional<CustomRuleEnabledState> enabledState = default;
+            CustomRuleEnabledState? enabledState = default;
             WebApplicationRuleType ruleType = default;
-            Optional<int> rateLimitDurationInMinutes = default;
-            Optional<int> rateLimitThreshold = default;
+            int? rateLimitDurationInMinutes = default;
+            int? rateLimitThreshold = default;
             IList<WebApplicationRuleMatchCondition> matchConditions = default;
             RuleMatchActionType action = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -173,12 +173,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new WebApplicationCustomRule(
-                name.Value,
+                name,
                 priority,
-                Optional.ToNullable(enabledState),
+                enabledState,
                 ruleType,
-                Optional.ToNullable(rateLimitDurationInMinutes),
-                Optional.ToNullable(rateLimitThreshold),
+                rateLimitDurationInMinutes,
+                rateLimitThreshold,
                 matchConditions,
                 action,
                 serializedAdditionalRawData);

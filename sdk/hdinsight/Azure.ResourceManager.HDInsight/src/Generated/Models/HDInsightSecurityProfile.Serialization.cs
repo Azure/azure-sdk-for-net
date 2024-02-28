@@ -124,15 +124,15 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<AuthenticationDirectoryType> directoryType = default;
-            Optional<string> domain = default;
-            Optional<string> organizationalUnitDN = default;
+            AuthenticationDirectoryType? directoryType = default;
+            string domain = default;
+            string organizationalUnitDN = default;
             IList<Uri> ldapsUrls = default;
-            Optional<string> domainUsername = default;
-            Optional<string> domainUserPassword = default;
+            string domainUsername = default;
+            string domainUserPassword = default;
             IList<string> clusterUsersGroupDNs = default;
-            Optional<ResourceIdentifier> aaddsResourceId = default;
-            Optional<ResourceIdentifier> msiResourceId = default;
+            ResourceIdentifier aaddsResourceId = default;
+            ResourceIdentifier msiResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -226,15 +226,15 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new HDInsightSecurityProfile(
-                Optional.ToNullable(directoryType),
-                domain.Value,
-                organizationalUnitDN.Value,
+                directoryType,
+                domain,
+                organizationalUnitDN,
                 ldapsUrls ?? new ChangeTrackingList<Uri>(),
-                domainUsername.Value,
-                domainUserPassword.Value,
+                domainUsername,
+                domainUserPassword,
                 clusterUsersGroupDNs ?? new ChangeTrackingList<string>(),
-                aaddsResourceId.Value,
-                msiResourceId.Value,
+                aaddsResourceId,
+                msiResourceId,
                 serializedAdditionalRawData);
         }
 

@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<int> sizeInGB = default;
-            Optional<HostCaching> hostCaching = default;
-            Optional<GalleryDiskImageSource> source = default;
+            int? sizeInGB = default;
+            HostCaching? hostCaching = default;
+            GalleryDiskImageSource source = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GalleryOSDiskImage(Optional.ToNullable(sizeInGB), Optional.ToNullable(hostCaching), source.Value, serializedAdditionalRawData);
+            return new GalleryOSDiskImage(sizeInGB, hostCaching, source, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GalleryOSDiskImage>.Write(ModelReaderWriterOptions options)

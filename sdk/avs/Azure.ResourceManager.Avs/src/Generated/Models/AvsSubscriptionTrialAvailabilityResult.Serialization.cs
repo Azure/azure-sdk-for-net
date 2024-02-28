@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Optional<AvsSubscriptionTrialStatus> status = default;
-            Optional<int> availableHosts = default;
+            AvsSubscriptionTrialStatus? status = default;
+            int? availableHosts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvsSubscriptionTrialAvailabilityResult(Optional.ToNullable(status), Optional.ToNullable(availableHosts), serializedAdditionalRawData);
+            return new AvsSubscriptionTrialAvailabilityResult(status, availableHosts, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvsSubscriptionTrialAvailabilityResult>.Write(ModelReaderWriterOptions options)

@@ -95,11 +95,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<ContainerRegistryWebhookEventContent> content = default;
+            ContainerRegistryWebhookEventContent content = default;
             IReadOnlyDictionary<string, string> headers = default;
-            Optional<string> method = default;
-            Optional<Uri> requestUri = default;
-            Optional<string> version = default;
+            string method = default;
+            Uri requestUri = default;
+            string version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -153,11 +153,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ContainerRegistryWebhookEventRequestMessage(
-                content.Value,
+                content,
                 headers ?? new ChangeTrackingDictionary<string, string>(),
-                method.Value,
-                requestUri.Value,
-                version.Value,
+                method,
+                requestUri,
+                version,
                 serializedAdditionalRawData);
         }
 

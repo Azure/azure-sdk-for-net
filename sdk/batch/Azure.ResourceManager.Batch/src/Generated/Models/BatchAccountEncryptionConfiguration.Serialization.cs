@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<BatchAccountKeySource> keySource = default;
-            Optional<KeyVaultProperties> keyVaultProperties = default;
+            BatchAccountKeySource? keySource = default;
+            KeyVaultProperties keyVaultProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchAccountEncryptionConfiguration(Optional.ToNullable(keySource), keyVaultProperties.Value, serializedAdditionalRawData);
+            return new BatchAccountEncryptionConfiguration(keySource, keyVaultProperties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchAccountEncryptionConfiguration>.Write(ModelReaderWriterOptions options)

@@ -177,26 +177,26 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 return null;
             }
-            Optional<WebTestKind> kind = default;
+            WebTestKind? kind = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> syntheticMonitorId = default;
-            Optional<string> name0 = default;
-            Optional<string> description = default;
-            Optional<bool> enabled = default;
-            Optional<int> frequency = default;
-            Optional<int> timeout = default;
-            Optional<WebTestKind> kind0 = default;
-            Optional<bool> retryEnabled = default;
+            SystemData systemData = default;
+            string syntheticMonitorId = default;
+            string name0 = default;
+            string description = default;
+            bool? enabled = default;
+            int? frequency = default;
+            int? timeout = default;
+            WebTestKind? kind0 = default;
+            bool? retryEnabled = default;
             IList<WebTestGeolocation> locations = default;
-            Optional<WebTestPropertiesConfiguration> configuration = default;
-            Optional<string> provisioningState = default;
-            Optional<WebTestPropertiesRequest> request = default;
-            Optional<WebTestPropertiesValidationRules> validationRules = default;
+            WebTestPropertiesConfiguration configuration = default;
+            string provisioningState = default;
+            WebTestPropertiesRequest request = default;
+            WebTestPropertiesValidationRules validationRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -381,23 +381,23 @@ namespace Azure.ResourceManager.ApplicationInsights
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                Optional.ToNullable(kind),
-                syntheticMonitorId.Value,
-                name0.Value,
-                description.Value,
-                Optional.ToNullable(enabled),
-                Optional.ToNullable(frequency),
-                Optional.ToNullable(timeout),
-                Optional.ToNullable(kind0),
-                Optional.ToNullable(retryEnabled),
+                kind,
+                syntheticMonitorId,
+                name0,
+                description,
+                enabled,
+                frequency,
+                timeout,
+                kind0,
+                retryEnabled,
                 locations ?? new ChangeTrackingList<WebTestGeolocation>(),
-                configuration.Value,
-                provisioningState.Value,
-                request.Value,
-                validationRules.Value,
+                configuration,
+                provisioningState,
+                request,
+                validationRules,
                 serializedAdditionalRawData);
         }
 

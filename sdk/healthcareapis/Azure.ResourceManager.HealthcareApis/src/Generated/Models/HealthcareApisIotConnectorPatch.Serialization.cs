@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();

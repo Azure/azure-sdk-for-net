@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             string odataType = "Unknown";
-            Optional<RuleDataSource> dataSource = default;
+            RuleDataSource dataSource = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownRuleCondition(odataType, dataSource.Value, serializedAdditionalRawData);
+            return new UnknownRuleCondition(odataType, dataSource, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AlertRuleCondition>.Write(ModelReaderWriterOptions options)

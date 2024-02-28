@@ -86,8 +86,8 @@ namespace Azure.ResourceManager.Confluent.Models
             {
                 return null;
             }
-            Optional<string> firstName = default;
-            Optional<string> lastName = default;
+            string firstName = default;
+            string lastName = default;
             string emailAddress = default;
             Optional<string> userPrincipalName = default;
             Optional<string> aadEmail = default;
@@ -126,13 +126,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConfluentUserDetail(
-                firstName.Value,
-                lastName.Value,
-                emailAddress,
-                userPrincipalName.Value,
-                aadEmail.Value,
-                serializedAdditionalRawData);
+            return new ConfluentUserDetail(firstName, lastName, emailAddress, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConfluentUserDetail>.Write(ModelReaderWriterOptions options)

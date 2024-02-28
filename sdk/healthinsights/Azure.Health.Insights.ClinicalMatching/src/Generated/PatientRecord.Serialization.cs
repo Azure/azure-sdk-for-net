@@ -83,7 +83,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 return null;
             }
             string id = default;
-            Optional<PatientInfo> info = default;
+            PatientInfo info = default;
             IList<PatientDocument> data = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -123,7 +123,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PatientRecord(id, info.Value, data ?? new ChangeTrackingList<PatientDocument>(), serializedAdditionalRawData);
+            return new PatientRecord(id, info, data ?? new ChangeTrackingList<PatientDocument>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PatientRecord>.Write(ModelReaderWriterOptions options)

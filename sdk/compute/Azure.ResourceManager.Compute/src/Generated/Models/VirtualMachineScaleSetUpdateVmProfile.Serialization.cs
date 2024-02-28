@@ -119,17 +119,17 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<VirtualMachineScaleSetUpdateOSProfile> osProfile = default;
-            Optional<VirtualMachineScaleSetUpdateStorageProfile> storageProfile = default;
-            Optional<VirtualMachineScaleSetUpdateNetworkProfile> networkProfile = default;
-            Optional<SecurityProfile> securityProfile = default;
-            Optional<DiagnosticsProfile> diagnosticsProfile = default;
-            Optional<VirtualMachineScaleSetExtensionProfile> extensionProfile = default;
-            Optional<string> licenseType = default;
-            Optional<BillingProfile> billingProfile = default;
-            Optional<ComputeScheduledEventsProfile> scheduledEventsProfile = default;
-            Optional<string> userData = default;
-            Optional<VirtualMachineScaleSetHardwareProfile> hardwareProfile = default;
+            VirtualMachineScaleSetUpdateOSProfile osProfile = default;
+            VirtualMachineScaleSetUpdateStorageProfile storageProfile = default;
+            VirtualMachineScaleSetUpdateNetworkProfile networkProfile = default;
+            SecurityProfile securityProfile = default;
+            DiagnosticsProfile diagnosticsProfile = default;
+            VirtualMachineScaleSetExtensionProfile extensionProfile = default;
+            string licenseType = default;
+            BillingProfile billingProfile = default;
+            ComputeScheduledEventsProfile scheduledEventsProfile = default;
+            string userData = default;
+            VirtualMachineScaleSetHardwareProfile hardwareProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -232,17 +232,17 @@ namespace Azure.ResourceManager.Compute.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new VirtualMachineScaleSetUpdateVmProfile(
-                osProfile.Value,
-                storageProfile.Value,
-                networkProfile.Value,
-                securityProfile.Value,
-                diagnosticsProfile.Value,
-                extensionProfile.Value,
-                licenseType.Value,
-                billingProfile.Value,
-                scheduledEventsProfile.Value,
-                userData.Value,
-                hardwareProfile.Value,
+                osProfile,
+                storageProfile,
+                networkProfile,
+                securityProfile,
+                diagnosticsProfile,
+                extensionProfile,
+                licenseType,
+                billingProfile,
+                scheduledEventsProfile,
+                userData,
+                hardwareProfile,
                 serializedAdditionalRawData);
         }
 

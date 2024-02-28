@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> clientId = default;
-            Optional<ResourceIdentifier> resourceId = default;
+            string clientId = default;
+            ResourceIdentifier resourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningWorkspaceConnectionManagedIdentity(clientId.Value, resourceId.Value, serializedAdditionalRawData);
+            return new MachineLearningWorkspaceConnectionManagedIdentity(clientId, resourceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningWorkspaceConnectionManagedIdentity>.Write(ModelReaderWriterOptions options)

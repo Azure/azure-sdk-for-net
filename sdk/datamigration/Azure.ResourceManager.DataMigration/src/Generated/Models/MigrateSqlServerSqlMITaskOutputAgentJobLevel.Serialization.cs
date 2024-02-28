@@ -111,14 +111,14 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<bool> isEnabled = default;
-            Optional<MigrationState> state = default;
-            Optional<DateTimeOffset> startedOn = default;
-            Optional<DateTimeOffset> endedOn = default;
-            Optional<string> message = default;
+            string name = default;
+            bool? isEnabled = default;
+            MigrationState? state = default;
+            DateTimeOffset? startedOn = default;
+            DateTimeOffset? endedOn = default;
+            string message = default;
             IReadOnlyList<ReportableException> exceptionsAndWarnings = default;
-            Optional<string> id = default;
+            string id = default;
             string resultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -201,15 +201,15 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MigrateSqlServerSqlMITaskOutputAgentJobLevel(
-                id.Value,
+                id,
                 resultType,
                 serializedAdditionalRawData,
-                name.Value,
-                Optional.ToNullable(isEnabled),
-                Optional.ToNullable(state),
-                Optional.ToNullable(startedOn),
-                Optional.ToNullable(endedOn),
-                message.Value,
+                name,
+                isEnabled,
+                state,
+                startedOn,
+                endedOn,
+                message,
                 exceptionsAndWarnings ?? new ChangeTrackingList<ReportableException>());
         }
 

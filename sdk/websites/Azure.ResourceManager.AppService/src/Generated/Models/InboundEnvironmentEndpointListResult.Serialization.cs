@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             IReadOnlyList<InboundEnvironmentEndpoint> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InboundEnvironmentEndpointListResult(value, nextLink.Value, serializedAdditionalRawData);
+            return new InboundEnvironmentEndpointListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InboundEnvironmentEndpointListResult>.Write(ModelReaderWriterOptions options)

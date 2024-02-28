@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> category = default;
-            Optional<string> type = default;
-            Optional<int> order = default;
-            Optional<string> resourceType = default;
+            string name = default;
+            string category = default;
+            string type = default;
+            int? order = default;
+            string resourceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,11 +134,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new WorkbookTemplateGallery(
-                name.Value,
-                category.Value,
-                type.Value,
-                Optional.ToNullable(order),
-                resourceType.Value,
+                name,
+                category,
+                type,
+                order,
+                resourceType,
                 serializedAdditionalRawData);
         }
 

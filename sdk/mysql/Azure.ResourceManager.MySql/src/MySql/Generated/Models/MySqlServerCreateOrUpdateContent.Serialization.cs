@@ -90,8 +90,8 @@ namespace Azure.ResourceManager.MySql.Models
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<MySqlSku> sku = default;
+            ManagedServiceIdentity identity = default;
+            MySqlSku sku = default;
             MySqlServerPropertiesForCreate properties = default;
             AzureLocation location = default;
             IDictionary<string, string> tags = default;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.MySql.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MySqlServerCreateOrUpdateContent(
                 identity,
-                sku.Value,
+                sku,
                 properties,
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),

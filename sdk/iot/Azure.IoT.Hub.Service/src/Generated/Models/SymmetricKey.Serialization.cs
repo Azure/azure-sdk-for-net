@@ -34,8 +34,8 @@ namespace Azure.IoT.Hub.Service.Models
             {
                 return null;
             }
-            Optional<string> primaryKey = default;
-            Optional<string> secondaryKey = default;
+            string primaryKey = default;
+            string secondaryKey = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryKey"u8))
@@ -49,7 +49,7 @@ namespace Azure.IoT.Hub.Service.Models
                     continue;
                 }
             }
-            return new SymmetricKey(primaryKey.Value, secondaryKey.Value);
+            return new SymmetricKey(primaryKey, secondaryKey);
         }
     }
 }

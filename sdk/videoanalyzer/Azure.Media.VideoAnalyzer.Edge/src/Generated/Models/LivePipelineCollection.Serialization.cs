@@ -41,7 +41,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 return null;
             }
             IList<LivePipeline> value = default;
-            Optional<string> continuationToken = default;
+            string continuationToken = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -64,7 +64,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new LivePipelineCollection(value ?? new ChangeTrackingList<LivePipeline>(), continuationToken.Value);
+            return new LivePipelineCollection(value ?? new ChangeTrackingList<LivePipeline>(), continuationToken);
         }
     }
 }

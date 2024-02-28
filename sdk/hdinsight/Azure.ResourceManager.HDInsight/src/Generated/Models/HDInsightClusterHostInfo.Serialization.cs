@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> fqdn = default;
-            Optional<Uri> effectiveDiskEncryptionKeyUrl = default;
+            string name = default;
+            string fqdn = default;
+            Uri effectiveDiskEncryptionKeyUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightClusterHostInfo(name.Value, fqdn.Value, effectiveDiskEncryptionKeyUrl.Value, serializedAdditionalRawData);
+            return new HDInsightClusterHostInfo(name, fqdn, effectiveDiskEncryptionKeyUrl, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightClusterHostInfo>.Write(ModelReaderWriterOptions options)

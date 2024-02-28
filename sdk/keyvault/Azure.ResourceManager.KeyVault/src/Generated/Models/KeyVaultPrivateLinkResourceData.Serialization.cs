@@ -129,13 +129,13 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             IReadOnlyDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> groupId = default;
+            SystemData systemData = default;
+            string groupId = default;
             IReadOnlyList<string> requiredMembers = default;
             IList<string> requiredZoneNames = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -244,11 +244,11 @@ namespace Azure.ResourceManager.KeyVault.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                groupId.Value,
+                systemData,
+                groupId,
                 requiredMembers ?? new ChangeTrackingList<string>(),
                 requiredZoneNames ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(location),
+                location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }

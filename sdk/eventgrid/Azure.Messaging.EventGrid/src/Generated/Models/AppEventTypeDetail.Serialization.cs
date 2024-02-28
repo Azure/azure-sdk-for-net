@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -18,7 +17,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<AppAction> action = default;
+            AppAction? action = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("action"u8))
@@ -31,7 +30,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AppEventTypeDetail(Optional.ToNullable(action));
+            return new AppEventTypeDetail(action);
         }
     }
 }

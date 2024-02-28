@@ -86,8 +86,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<MachineLearningSkuPatch> sku = default;
+            ManagedServiceIdentity identity = default;
+            MachineLearningSkuPatch sku = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningRegistryPatch(identity, sku.Value, tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new MachineLearningRegistryPatch(identity, sku, tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningRegistryPatch>.Write(ModelReaderWriterOptions options)

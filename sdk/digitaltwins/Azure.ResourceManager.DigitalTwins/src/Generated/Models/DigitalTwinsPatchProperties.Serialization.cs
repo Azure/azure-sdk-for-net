@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             {
                 return null;
             }
-            Optional<DigitalTwinsPublicNetworkAccess?> publicNetworkAccess = default;
+            DigitalTwinsPublicNetworkAccess? publicNetworkAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DigitalTwinsPatchProperties(Optional.ToNullable(publicNetworkAccess), serializedAdditionalRawData);
+            return new DigitalTwinsPatchProperties(publicNetworkAccess, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DigitalTwinsPatchProperties>.Write(ModelReaderWriterOptions options)

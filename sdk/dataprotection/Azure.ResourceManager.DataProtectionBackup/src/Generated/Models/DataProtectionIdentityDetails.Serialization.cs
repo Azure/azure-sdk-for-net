@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<bool> useSystemAssignedIdentity = default;
-            Optional<Uri> userAssignedIdentityArmUrl = default;
+            bool? useSystemAssignedIdentity = default;
+            Uri userAssignedIdentityArmUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataProtectionIdentityDetails(Optional.ToNullable(useSystemAssignedIdentity), userAssignedIdentityArmUrl.Value, serializedAdditionalRawData);
+            return new DataProtectionIdentityDetails(useSystemAssignedIdentity, userAssignedIdentityArmUrl, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataProtectionIdentityDetails>.Write(ModelReaderWriterOptions options)

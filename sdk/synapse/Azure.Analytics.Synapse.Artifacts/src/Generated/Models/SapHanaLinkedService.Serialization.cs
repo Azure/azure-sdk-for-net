@@ -102,16 +102,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
             IDictionary<string, ParameterSpecification> parameters = default;
             IList<object> annotations = default;
-            Optional<object> connectionString = default;
+            object connectionString = default;
             object server = default;
-            Optional<SapHanaAuthenticationType> authenticationType = default;
-            Optional<object> userName = default;
-            Optional<SecretBase> password = default;
-            Optional<object> encryptedCredential = default;
+            SapHanaAuthenticationType? authenticationType = default;
+            object userName = default;
+            SecretBase password = default;
+            object encryptedCredential = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -237,17 +237,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new SapHanaLinkedService(
                 type,
-                connectVia.Value,
-                description.Value,
+                connectVia,
+                description,
                 parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
                 annotations ?? new ChangeTrackingList<object>(),
                 additionalProperties,
-                connectionString.Value,
+                connectionString,
                 server,
-                Optional.ToNullable(authenticationType),
-                userName.Value,
-                password.Value,
-                encryptedCredential.Value);
+                authenticationType,
+                userName,
+                password,
+                encryptedCredential);
         }
 
         internal partial class SapHanaLinkedServiceConverter : JsonConverter<SapHanaLinkedService>

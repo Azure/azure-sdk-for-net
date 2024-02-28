@@ -158,17 +158,17 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             ResourceIdentifier adxResourceId = default;
             Uri adxEndpointUri = default;
             string adxDatabaseName = default;
-            Optional<string> adxTableName = default;
-            Optional<string> adxTwinLifecycleEventsTableName = default;
-            Optional<string> adxRelationshipLifecycleEventsTableName = default;
+            string adxTableName = default;
+            string adxTwinLifecycleEventsTableName = default;
+            string adxRelationshipLifecycleEventsTableName = default;
             Uri eventHubEndpointUri = default;
             string eventHubEntityPath = default;
             ResourceIdentifier eventHubNamespaceResourceId = default;
-            Optional<string> eventHubConsumerGroup = default;
-            Optional<RecordPropertyAndItemRemoval?> recordPropertyAndItemRemovals = default;
+            string eventHubConsumerGroup = default;
+            RecordPropertyAndItemRemoval? recordPropertyAndItemRemovals = default;
             ConnectionType connectionType = default;
-            Optional<TimeSeriesDatabaseConnectionState> provisioningState = default;
-            Optional<DigitalTwinsManagedIdentityReference> identity = default;
+            TimeSeriesDatabaseConnectionState? provisioningState = default;
+            DigitalTwinsManagedIdentityReference identity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -285,20 +285,20 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DataExplorerConnectionProperties(
                 connectionType,
-                Optional.ToNullable(provisioningState),
-                identity.Value,
+                provisioningState,
+                identity,
                 serializedAdditionalRawData,
                 adxResourceId,
                 adxEndpointUri,
                 adxDatabaseName,
-                adxTableName.Value,
-                adxTwinLifecycleEventsTableName.Value,
-                adxRelationshipLifecycleEventsTableName.Value,
+                adxTableName,
+                adxTwinLifecycleEventsTableName,
+                adxRelationshipLifecycleEventsTableName,
                 eventHubEndpointUri,
                 eventHubEntityPath,
                 eventHubNamespaceResourceId,
-                eventHubConsumerGroup.Value,
-                Optional.ToNullable(recordPropertyAndItemRemovals));
+                eventHubConsumerGroup,
+                recordPropertyAndItemRemovals);
         }
 
         BinaryData IPersistableModel<DataExplorerConnectionProperties>.Write(ModelReaderWriterOptions options)

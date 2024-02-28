@@ -154,18 +154,18 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<ContainerServiceNetworkPlugin> networkPlugin = default;
-            Optional<ContainerServiceNetworkPluginMode> networkPluginMode = default;
-            Optional<ContainerServiceNetworkPolicy> networkPolicy = default;
-            Optional<ContainerServiceNetworkMode> networkMode = default;
-            Optional<NetworkDataplane> networkDataplane = default;
-            Optional<string> podCidr = default;
-            Optional<string> serviceCidr = default;
-            Optional<string> dnsServiceIP = default;
-            Optional<ContainerServiceOutboundType> outboundType = default;
-            Optional<ContainerServiceLoadBalancerSku> loadBalancerSku = default;
-            Optional<ManagedClusterLoadBalancerProfile> loadBalancerProfile = default;
-            Optional<ManagedClusterNatGatewayProfile> natGatewayProfile = default;
+            ContainerServiceNetworkPlugin? networkPlugin = default;
+            ContainerServiceNetworkPluginMode? networkPluginMode = default;
+            ContainerServiceNetworkPolicy? networkPolicy = default;
+            ContainerServiceNetworkMode? networkMode = default;
+            NetworkDataplane? networkDataplane = default;
+            string podCidr = default;
+            string serviceCidr = default;
+            string dnsServiceIP = default;
+            ContainerServiceOutboundType? outboundType = default;
+            ContainerServiceLoadBalancerSku? loadBalancerSku = default;
+            ManagedClusterLoadBalancerProfile loadBalancerProfile = default;
+            ManagedClusterNatGatewayProfile natGatewayProfile = default;
             IList<string> podCidrs = default;
             IList<string> serviceCidrs = default;
             IList<IPFamily> ipFamilies = default;
@@ -318,18 +318,18 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ContainerServiceNetworkProfile(
-                Optional.ToNullable(networkPlugin),
-                Optional.ToNullable(networkPluginMode),
-                Optional.ToNullable(networkPolicy),
-                Optional.ToNullable(networkMode),
-                Optional.ToNullable(networkDataplane),
-                podCidr.Value,
-                serviceCidr.Value,
-                dnsServiceIP.Value,
-                Optional.ToNullable(outboundType),
-                Optional.ToNullable(loadBalancerSku),
-                loadBalancerProfile.Value,
-                natGatewayProfile.Value,
+                networkPlugin,
+                networkPluginMode,
+                networkPolicy,
+                networkMode,
+                networkDataplane,
+                podCidr,
+                serviceCidr,
+                dnsServiceIP,
+                outboundType,
+                loadBalancerSku,
+                loadBalancerProfile,
+                natGatewayProfile,
                 podCidrs ?? new ChangeTrackingList<string>(),
                 serviceCidrs ?? new ChangeTrackingList<string>(),
                 ipFamilies ?? new ChangeTrackingList<IPFamily>(),

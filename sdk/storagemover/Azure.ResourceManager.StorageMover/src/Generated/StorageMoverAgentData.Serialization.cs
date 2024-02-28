@@ -146,19 +146,19 @@ namespace Azure.ResourceManager.StorageMover
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<string> agentVersion = default;
+            SystemData systemData = default;
+            string description = default;
+            string agentVersion = default;
             string arcResourceId = default;
             string arcVmUuid = default;
-            Optional<StorageMoverAgentStatus> agentStatus = default;
-            Optional<DateTimeOffset> lastStatusUpdate = default;
-            Optional<string> localIPAddress = default;
-            Optional<long> memoryInMB = default;
-            Optional<long> numberOfCores = default;
-            Optional<long> uptimeInSeconds = default;
-            Optional<StorageMoverAgentPropertiesErrorDetails> errorDetails = default;
-            Optional<StorageMoverProvisioningState> provisioningState = default;
+            StorageMoverAgentStatus? agentStatus = default;
+            DateTimeOffset? lastStatusUpdate = default;
+            string localIPAddress = default;
+            long? memoryInMB = default;
+            long? numberOfCores = default;
+            long? uptimeInSeconds = default;
+            StorageMoverAgentPropertiesErrorDetails errorDetails = default;
+            StorageMoverProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -297,19 +297,19 @@ namespace Azure.ResourceManager.StorageMover
                 id,
                 name,
                 type,
-                systemData.Value,
-                description.Value,
-                agentVersion.Value,
+                systemData,
+                description,
+                agentVersion,
                 arcResourceId,
                 arcVmUuid,
-                Optional.ToNullable(agentStatus),
-                Optional.ToNullable(lastStatusUpdate),
-                localIPAddress.Value,
-                Optional.ToNullable(memoryInMB),
-                Optional.ToNullable(numberOfCores),
-                Optional.ToNullable(uptimeInSeconds),
-                errorDetails.Value,
-                Optional.ToNullable(provisioningState),
+                agentStatus,
+                lastStatusUpdate,
+                localIPAddress,
+                memoryInMB,
+                numberOfCores,
+                uptimeInSeconds,
+                errorDetails,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<int> totalResources = default;
+            ResourceIdentifier resourceId = default;
+            int? totalResources = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IfNotExistsEvaluationDetails(resourceId.Value, Optional.ToNullable(totalResources), serializedAdditionalRawData);
+            return new IfNotExistsEvaluationDetails(resourceId, totalResources, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IfNotExistsEvaluationDetails>.Write(ModelReaderWriterOptions options)

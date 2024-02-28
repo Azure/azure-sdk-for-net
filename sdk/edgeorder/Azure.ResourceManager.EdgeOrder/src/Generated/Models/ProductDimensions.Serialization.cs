@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Optional<double> length = default;
-            Optional<double> height = default;
-            Optional<double> width = default;
-            Optional<ProductLengthHeightWidthUnit> lengthHeightUnit = default;
-            Optional<double> weight = default;
-            Optional<double> depth = default;
-            Optional<ProductWeightMeasurementUnit> weightUnit = default;
+            double? length = default;
+            double? height = default;
+            double? width = default;
+            ProductLengthHeightWidthUnit? lengthHeightUnit = default;
+            double? weight = default;
+            double? depth = default;
+            ProductWeightMeasurementUnit? weightUnit = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -180,13 +180,13 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ProductDimensions(
-                Optional.ToNullable(length),
-                Optional.ToNullable(height),
-                Optional.ToNullable(width),
-                Optional.ToNullable(lengthHeightUnit),
-                Optional.ToNullable(weight),
-                Optional.ToNullable(depth),
-                Optional.ToNullable(weightUnit),
+                length,
+                height,
+                width,
+                lengthHeightUnit,
+                weight,
+                depth,
+                weightUnit,
                 serializedAdditionalRawData);
         }
 

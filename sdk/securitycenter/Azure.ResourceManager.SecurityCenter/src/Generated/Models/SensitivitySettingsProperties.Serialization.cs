@@ -90,9 +90,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 return null;
             }
             IReadOnlyList<Guid> sensitiveInfoTypesIds = default;
-            Optional<float> sensitivityThresholdLabelOrder = default;
-            Optional<Guid> sensitivityThresholdLabelId = default;
-            Optional<GetSensitivitySettingsResponsePropertiesMipInformation> mipInformation = default;
+            float? sensitivityThresholdLabelOrder = default;
+            Guid? sensitivityThresholdLabelId = default;
+            GetSensitivitySettingsResponsePropertiesMipInformation mipInformation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SensitivitySettingsProperties(sensitiveInfoTypesIds ?? new ChangeTrackingList<Guid>(), Optional.ToNullable(sensitivityThresholdLabelOrder), Optional.ToNullable(sensitivityThresholdLabelId), mipInformation.Value, serializedAdditionalRawData);
+            return new SensitivitySettingsProperties(sensitiveInfoTypesIds ?? new ChangeTrackingList<Guid>(), sensitivityThresholdLabelOrder, sensitivityThresholdLabelId, mipInformation, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SensitivitySettingsProperties>.Write(ModelReaderWriterOptions options)

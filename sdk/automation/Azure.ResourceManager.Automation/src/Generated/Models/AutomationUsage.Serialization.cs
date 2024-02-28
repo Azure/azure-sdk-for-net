@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<AutomationUsageCounterName> name = default;
-            Optional<string> unit = default;
-            Optional<double> currentValue = default;
-            Optional<long> limit = default;
-            Optional<string> throttleStatus = default;
+            string id = default;
+            AutomationUsageCounterName name = default;
+            string unit = default;
+            double? currentValue = default;
+            long? limit = default;
+            string throttleStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -153,12 +153,12 @@ namespace Azure.ResourceManager.Automation.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AutomationUsage(
-                id.Value,
-                name.Value,
-                unit.Value,
-                Optional.ToNullable(currentValue),
-                Optional.ToNullable(limit),
-                throttleStatus.Value,
+                id,
+                name,
+                unit,
+                currentValue,
+                limit,
+                throttleStatus,
                 serializedAdditionalRawData);
         }
 

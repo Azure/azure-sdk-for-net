@@ -156,22 +156,22 @@ namespace Azure.ResourceManager.Resources
             {
                 return null;
             }
-            Optional<ArmPlan> plan = default;
-            Optional<BinaryData> properties = default;
-            Optional<string> kind = default;
-            Optional<string> managedBy = default;
-            Optional<ResourcesSku> sku = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<DateTimeOffset> createdTime = default;
-            Optional<DateTimeOffset> changedTime = default;
-            Optional<string> provisioningState = default;
-            Optional<ExtendedLocation> extendedLocation = default;
+            ArmPlan plan = default;
+            BinaryData properties = default;
+            string kind = default;
+            string managedBy = default;
+            ResourcesSku sku = default;
+            ManagedServiceIdentity identity = default;
+            DateTimeOffset? createdTime = default;
+            DateTimeOffset? changedTime = default;
+            string provisioningState = default;
+            ExtendedLocation extendedLocation = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -307,20 +307,20 @@ namespace Azure.ResourceManager.Resources
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 extendedLocation,
                 serializedAdditionalRawData,
                 plan,
-                properties.Value,
-                kind.Value,
-                managedBy.Value,
-                sku.Value,
+                properties,
+                kind,
+                managedBy,
+                sku,
                 identity,
-                Optional.ToNullable(createdTime),
-                Optional.ToNullable(changedTime),
-                provisioningState.Value);
+                createdTime,
+                changedTime,
+                provisioningState);
         }
 
         BinaryData IPersistableModel<GenericResourceData>.Write(ModelReaderWriterOptions options)

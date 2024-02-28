@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<ContainerAppOpenIdConnectClientCredentialMethod> method = default;
-            Optional<string> clientSecretSettingName = default;
+            ContainerAppOpenIdConnectClientCredentialMethod? method = default;
+            string clientSecretSettingName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppOpenIdConnectClientCredential(Optional.ToNullable(method), clientSecretSettingName.Value, serializedAdditionalRawData);
+            return new ContainerAppOpenIdConnectClientCredential(method, clientSecretSettingName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppOpenIdConnectClientCredential>.Write(ModelReaderWriterOptions options)

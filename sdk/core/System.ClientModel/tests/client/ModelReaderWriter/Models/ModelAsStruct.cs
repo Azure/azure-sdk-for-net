@@ -71,7 +71,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             return DeserializeInputAdditionalPropertiesModelStruct(doc.RootElement, options);
         }
 
-        internal static ModelAsStruct DeserializeInputAdditionalPropertiesModelStruct(JsonElement element, ModelReaderWriterOptions options = default)
+        internal static ModelAsStruct DeserializeInputAdditionalPropertiesModelStruct(JsonElement element, ModelReaderWriterOptions? options = default)
         {
             options ??= ModelReaderWriterHelper.WireOptions;
 

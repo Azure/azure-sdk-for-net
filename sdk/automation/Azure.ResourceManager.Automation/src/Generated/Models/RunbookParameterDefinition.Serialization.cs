@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> type = default;
-            Optional<bool> isMandatory = default;
-            Optional<int> position = default;
-            Optional<string> defaultValue = default;
+            string type = default;
+            bool? isMandatory = default;
+            int? position = default;
+            string defaultValue = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RunbookParameterDefinition(type.Value, Optional.ToNullable(isMandatory), Optional.ToNullable(position), defaultValue.Value, serializedAdditionalRawData);
+            return new RunbookParameterDefinition(type, isMandatory, position, defaultValue, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RunbookParameterDefinition>.Write(ModelReaderWriterOptions options)

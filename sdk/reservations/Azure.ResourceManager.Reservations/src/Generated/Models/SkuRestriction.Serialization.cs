@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<string> type = default;
+            string type = default;
             IReadOnlyList<string> values = default;
-            Optional<string> reasonCode = default;
+            string reasonCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SkuRestriction(type.Value, values ?? new ChangeTrackingList<string>(), reasonCode.Value, serializedAdditionalRawData);
+            return new SkuRestriction(type, values ?? new ChangeTrackingList<string>(), reasonCode, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SkuRestriction>.Write(ModelReaderWriterOptions options)

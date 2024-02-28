@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<DiffDiskOption> option = default;
-            Optional<DiffDiskPlacement> placement = default;
+            DiffDiskOption? option = default;
+            DiffDiskPlacement? placement = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiffDiskSettings(Optional.ToNullable(option), Optional.ToNullable(placement), serializedAdditionalRawData);
+            return new DiffDiskSettings(option, placement, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiffDiskSettings>.Write(ModelReaderWriterOptions options)

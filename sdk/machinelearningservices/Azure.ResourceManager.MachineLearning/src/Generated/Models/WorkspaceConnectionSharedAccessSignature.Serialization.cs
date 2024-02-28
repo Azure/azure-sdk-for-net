@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> sas = default;
+            string sas = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkspaceConnectionSharedAccessSignature(sas.Value, serializedAdditionalRawData);
+            return new WorkspaceConnectionSharedAccessSignature(sas, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkspaceConnectionSharedAccessSignature>.Write(ModelReaderWriterOptions options)

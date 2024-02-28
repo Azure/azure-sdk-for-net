@@ -133,15 +133,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = default;
-            Optional<string> description = default;
-            Optional<DataFactoryElement<IList<DatasetDataElement>>> structure = default;
-            Optional<DataFactoryElement<IList<DatasetSchemaDataElement>>> schema = default;
+            string description = default;
+            DataFactoryElement<IList<DatasetDataElement>> structure = default;
+            DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default;
             DataFactoryLinkedServiceReference linkedServiceName = default;
             IDictionary<string, EntityParameterSpecification> parameters = default;
             IList<BinaryData> annotations = default;
-            Optional<DatasetFolder> folder = default;
-            Optional<DatasetLocation> location = default;
-            Optional<DataFactoryElement<string>> orcCompressionCodec = default;
+            DatasetFolder folder = default;
+            DatasetLocation location = default;
+            DataFactoryElement<string> orcCompressionCodec = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -258,16 +258,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new OrcDataset(
                 type,
-                description.Value,
-                structure.Value,
-                schema.Value,
+                description,
+                structure,
+                schema,
                 linkedServiceName,
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 annotations ?? new ChangeTrackingList<BinaryData>(),
-                folder.Value,
+                folder,
                 additionalProperties,
-                location.Value,
-                orcCompressionCodec.Value);
+                location,
+                orcCompressionCodec);
         }
 
         BinaryData IPersistableModel<OrcDataset>.Write(ModelReaderWriterOptions options)

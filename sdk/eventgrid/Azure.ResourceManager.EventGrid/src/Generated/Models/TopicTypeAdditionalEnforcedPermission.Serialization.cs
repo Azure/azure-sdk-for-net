@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<string> permissionName = default;
-            Optional<bool> isDataAction = default;
+            string permissionName = default;
+            bool? isDataAction = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TopicTypeAdditionalEnforcedPermission(permissionName.Value, Optional.ToNullable(isDataAction), serializedAdditionalRawData);
+            return new TopicTypeAdditionalEnforcedPermission(permissionName, isDataAction, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TopicTypeAdditionalEnforcedPermission>.Write(ModelReaderWriterOptions options)

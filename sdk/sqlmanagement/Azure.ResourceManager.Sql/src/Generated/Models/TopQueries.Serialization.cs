@@ -104,12 +104,12 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<int> numberOfQueries = default;
-            Optional<string> aggregationFunction = default;
-            Optional<string> observationMetric = default;
-            Optional<QueryTimeGrainType> intervalType = default;
-            Optional<string> startTime = default;
-            Optional<string> endTime = default;
+            int? numberOfQueries = default;
+            string aggregationFunction = default;
+            string observationMetric = default;
+            QueryTimeGrainType? intervalType = default;
+            string startTime = default;
+            string endTime = default;
             IReadOnlyList<QueryStatisticsProperties> queries = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -174,12 +174,12 @@ namespace Azure.ResourceManager.Sql.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new TopQueries(
-                Optional.ToNullable(numberOfQueries),
-                aggregationFunction.Value,
-                observationMetric.Value,
-                Optional.ToNullable(intervalType),
-                startTime.Value,
-                endTime.Value,
+                numberOfQueries,
+                aggregationFunction,
+                observationMetric,
+                intervalType,
+                startTime,
+                endTime,
                 queries ?? new ChangeTrackingList<QueryStatisticsProperties>(),
                 serializedAdditionalRawData);
         }

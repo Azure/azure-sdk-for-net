@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 return null;
             }
             IReadOnlyList<SynapseRestorePointData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseRestorePointListResult(value ?? new ChangeTrackingList<SynapseRestorePointData>(), nextLink.Value, serializedAdditionalRawData);
+            return new SynapseRestorePointListResult(value ?? new ChangeTrackingList<SynapseRestorePointData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseRestorePointListResult>.Write(ModelReaderWriterOptions options)

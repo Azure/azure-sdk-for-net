@@ -92,11 +92,11 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             DateTimeOffset timeStamp = default;
-            Optional<double> average = default;
-            Optional<double> minimum = default;
-            Optional<double> maximum = default;
-            Optional<double> total = default;
-            Optional<double> count = default;
+            double? average = default;
+            double? minimum = default;
+            double? maximum = default;
+            double? total = default;
+            double? count = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -159,11 +159,11 @@ namespace Azure.ResourceManager.Monitor.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MonitorMetricValue(
                 timeStamp,
-                Optional.ToNullable(average),
-                Optional.ToNullable(minimum),
-                Optional.ToNullable(maximum),
-                Optional.ToNullable(total),
-                Optional.ToNullable(count),
+                average,
+                minimum,
+                maximum,
+                total,
+                count,
                 serializedAdditionalRawData);
         }
 

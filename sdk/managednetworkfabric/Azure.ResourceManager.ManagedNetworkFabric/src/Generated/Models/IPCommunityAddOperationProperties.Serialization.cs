@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IPCommunityIdList> @add = default;
+            IPCommunityIdList @add = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IPCommunityAddOperationProperties(@add.Value, serializedAdditionalRawData);
+            return new IPCommunityAddOperationProperties(@add, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IPCommunityAddOperationProperties>.Write(ModelReaderWriterOptions options)

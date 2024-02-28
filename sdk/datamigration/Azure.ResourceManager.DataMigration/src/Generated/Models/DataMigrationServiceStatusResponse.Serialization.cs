@@ -101,10 +101,10 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> agentVersion = default;
-            Optional<BinaryData> agentConfiguration = default;
-            Optional<string> status = default;
-            Optional<string> vmSize = default;
+            string agentVersion = default;
+            BinaryData agentConfiguration = default;
+            string status = default;
+            string vmSize = default;
             IReadOnlyList<string> supportedTaskTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -155,10 +155,10 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DataMigrationServiceStatusResponse(
-                agentVersion.Value,
-                agentConfiguration.Value,
-                status.Value,
-                vmSize.Value,
+                agentVersion,
+                agentConfiguration,
+                status,
+                vmSize,
                 supportedTaskTypes ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }

@@ -20,10 +20,10 @@ namespace Azure.Maps.Search.Models
             {
                 return null;
             }
-            Optional<MapsAddress> address = default;
-            Optional<string> position = default;
+            MapsAddress address = default;
+            string position = default;
             IReadOnlyList<RoadKind> roadUse = default;
-            Optional<MapsSearchMatchType> matchType = default;
+            MapsSearchMatchType? matchType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("address"u8))
@@ -64,7 +64,7 @@ namespace Azure.Maps.Search.Models
                     continue;
                 }
             }
-            return new ReverseSearchAddressItem(address.Value, position.Value, roadUse ?? new ChangeTrackingList<RoadKind>(), Optional.ToNullable(matchType));
+            return new ReverseSearchAddressItem(address, position, roadUse ?? new ChangeTrackingList<RoadKind>(), matchType);
         }
     }
 }

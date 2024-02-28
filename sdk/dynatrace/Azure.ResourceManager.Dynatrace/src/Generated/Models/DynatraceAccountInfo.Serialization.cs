@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Dynatrace.Models
             {
                 return null;
             }
-            Optional<string> accountId = default;
-            Optional<string> regionId = default;
+            string accountId = default;
+            string regionId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DynatraceAccountInfo(accountId.Value, regionId.Value, serializedAdditionalRawData);
+            return new DynatraceAccountInfo(accountId, regionId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DynatraceAccountInfo>.Write(ModelReaderWriterOptions options)

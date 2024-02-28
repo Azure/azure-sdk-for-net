@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<ContainerAppAppleRegistrationConfiguration> registration = default;
-            Optional<LoginScopes> login = default;
+            bool? enabled = default;
+            ContainerAppAppleRegistrationConfiguration registration = default;
+            LoginScopes login = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppAppleConfiguration(Optional.ToNullable(enabled), registration.Value, login.Value, serializedAdditionalRawData);
+            return new ContainerAppAppleConfiguration(enabled, registration, login, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppAppleConfiguration>.Write(ModelReaderWriterOptions options)

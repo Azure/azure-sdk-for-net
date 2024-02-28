@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> date = default;
-            Optional<IotSeverityMetrics> devicesMetrics = default;
+            DateTimeOffset? date = default;
+            IotSeverityMetrics devicesMetrics = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotSecuritySolutionAnalyticsModelDevicesMetrics(Optional.ToNullable(date), devicesMetrics.Value, serializedAdditionalRawData);
+            return new IotSecuritySolutionAnalyticsModelDevicesMetrics(date, devicesMetrics, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotSecuritySolutionAnalyticsModelDevicesMetrics>.Write(ModelReaderWriterOptions options)

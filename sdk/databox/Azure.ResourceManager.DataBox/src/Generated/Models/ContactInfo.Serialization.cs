@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             string contactName = default;
             string phone = default;
-            Optional<string> phoneExtension = default;
-            Optional<string> mobile = default;
+            string phoneExtension = default;
+            string mobile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContactInfo(contactName, phone, phoneExtension.Value, mobile.Value, serializedAdditionalRawData);
+            return new ContactInfo(contactName, phone, phoneExtension, mobile, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContactInfo>.Write(ModelReaderWriterOptions options)

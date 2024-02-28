@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             {
                 return null;
             }
-            Optional<ResponseError> error = default;
+            ResponseError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ErrorResponse(error.Value, serializedAdditionalRawData);
+            return new ErrorResponse(error, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ErrorResponse>.Write(ModelReaderWriterOptions options)

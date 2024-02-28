@@ -101,13 +101,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> eventType = default;
-            Optional<string> category = default;
-            Optional<string> component = default;
-            Optional<string> correctiveAction = default;
-            Optional<string> details = default;
-            Optional<string> summary = default;
-            Optional<string> siteName = default;
+            string eventType = default;
+            string category = default;
+            string component = default;
+            string correctiveAction = default;
+            string details = default;
+            string summary = default;
+            string siteName = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -162,13 +162,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMageAzureV2EventDetails(
                 instanceType,
                 serializedAdditionalRawData,
-                eventType.Value,
-                category.Value,
-                component.Value,
-                correctiveAction.Value,
-                details.Value,
-                summary.Value,
-                siteName.Value);
+                eventType,
+                category,
+                component,
+                correctiveAction,
+                details,
+                summary,
+                siteName);
         }
 
         BinaryData IPersistableModel<InMageAzureV2EventDetails>.Write(ModelReaderWriterOptions options)

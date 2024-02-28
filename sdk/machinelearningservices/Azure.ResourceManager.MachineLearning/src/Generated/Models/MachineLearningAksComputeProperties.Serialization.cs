@@ -163,15 +163,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> clusterFqdn = default;
+            string clusterFqdn = default;
             IReadOnlyList<MachineLearningComputeSystemService> systemServices = default;
-            Optional<int?> agentCount = default;
-            Optional<string> agentVmSize = default;
-            Optional<MachineLearningClusterPurpose> clusterPurpose = default;
-            Optional<MachineLearningSslConfiguration> sslConfiguration = default;
-            Optional<MachineLearningAksNetworkingConfiguration> aksNetworkingConfiguration = default;
-            Optional<MachineLearningLoadBalancerType> loadBalancerType = default;
-            Optional<string> loadBalancerSubnet = default;
+            int? agentCount = default;
+            string agentVmSize = default;
+            MachineLearningClusterPurpose? clusterPurpose = default;
+            MachineLearningSslConfiguration sslConfiguration = default;
+            MachineLearningAksNetworkingConfiguration aksNetworkingConfiguration = default;
+            MachineLearningLoadBalancerType? loadBalancerType = default;
+            string loadBalancerSubnet = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -276,15 +276,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MachineLearningAksComputeProperties(
-                clusterFqdn.Value,
+                clusterFqdn,
                 systemServices ?? new ChangeTrackingList<MachineLearningComputeSystemService>(),
-                Optional.ToNullable(agentCount),
-                agentVmSize.Value,
-                Optional.ToNullable(clusterPurpose),
-                sslConfiguration.Value,
-                aksNetworkingConfiguration.Value,
-                Optional.ToNullable(loadBalancerType),
-                loadBalancerSubnet.Value,
+                agentCount,
+                agentVmSize,
+                clusterPurpose,
+                sslConfiguration,
+                aksNetworkingConfiguration,
+                loadBalancerType,
+                loadBalancerSubnet,
                 serializedAdditionalRawData);
         }
 

@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<Uri> serviceUri = default;
+            Uri serviceUri = default;
             IDictionary<string, string> properties = default;
             string odataType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RuleWebhookAction(odataType, serializedAdditionalRawData, serviceUri.Value, properties ?? new ChangeTrackingDictionary<string, string>());
+            return new RuleWebhookAction(odataType, serializedAdditionalRawData, serviceUri, properties ?? new ChangeTrackingDictionary<string, string>());
         }
 
         BinaryData IPersistableModel<RuleWebhookAction>.Write(ModelReaderWriterOptions options)

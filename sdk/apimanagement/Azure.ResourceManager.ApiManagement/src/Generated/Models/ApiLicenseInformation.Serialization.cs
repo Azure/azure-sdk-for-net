@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<Uri> uri = default;
+            string name = default;
+            Uri uri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiLicenseInformation(name.Value, uri.Value, serializedAdditionalRawData);
+            return new ApiLicenseInformation(name, uri, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiLicenseInformation>.Write(ModelReaderWriterOptions options)

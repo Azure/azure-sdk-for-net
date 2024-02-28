@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<ManagedClusterSecurityProfileDefender> defender = default;
-            Optional<ManagedClusterSecurityProfileKeyVaultKms> azureKeyVaultKms = default;
-            Optional<ManagedClusterSecurityProfileWorkloadIdentity> workloadIdentity = default;
-            Optional<ManagedClusterSecurityProfileImageCleaner> imageCleaner = default;
+            ManagedClusterSecurityProfileDefender defender = default;
+            ManagedClusterSecurityProfileKeyVaultKms azureKeyVaultKms = default;
+            ManagedClusterSecurityProfileWorkloadIdentity workloadIdentity = default;
+            ManagedClusterSecurityProfileImageCleaner imageCleaner = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterSecurityProfile(defender.Value, azureKeyVaultKms.Value, workloadIdentity.Value, imageCleaner.Value, serializedAdditionalRawData);
+            return new ManagedClusterSecurityProfile(defender, azureKeyVaultKms, workloadIdentity, imageCleaner, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterSecurityProfile>.Write(ModelReaderWriterOptions options)

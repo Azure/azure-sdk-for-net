@@ -237,30 +237,30 @@ namespace Azure.ResourceManager.NetworkCloud
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             string adminUsername = default;
-            Optional<string> availabilityZone = default;
-            Optional<ResourceIdentifier> bareMetalMachineId = default;
-            Optional<VirtualMachineBootMethod> bootMethod = default;
+            string availabilityZone = default;
+            ResourceIdentifier bareMetalMachineId = default;
+            VirtualMachineBootMethod? bootMethod = default;
             NetworkAttachment cloudServicesNetworkAttachment = default;
-            Optional<ResourceIdentifier> clusterId = default;
+            ResourceIdentifier clusterId = default;
             long cpuCores = default;
-            Optional<VirtualMachineDetailedStatus> detailedStatus = default;
-            Optional<string> detailedStatusMessage = default;
-            Optional<VirtualMachineIsolateEmulatorThread> isolateEmulatorThread = default;
+            VirtualMachineDetailedStatus? detailedStatus = default;
+            string detailedStatusMessage = default;
+            VirtualMachineIsolateEmulatorThread? isolateEmulatorThread = default;
             long memorySizeGB = default;
             IList<NetworkAttachment> networkAttachments = default;
-            Optional<string> networkData = default;
+            string networkData = default;
             IList<VirtualMachinePlacementHint> placementHints = default;
-            Optional<VirtualMachinePowerState> powerState = default;
-            Optional<VirtualMachineProvisioningState> provisioningState = default;
+            VirtualMachinePowerState? powerState = default;
+            VirtualMachineProvisioningState? provisioningState = default;
             IList<NetworkCloudSshPublicKey> sshPublicKeys = default;
             NetworkCloudStorageProfile storageProfile = default;
-            Optional<string> userData = default;
-            Optional<VirtualMachineVirtioInterfaceType> virtioInterface = default;
-            Optional<VirtualMachineDeviceModelType> vmDeviceModel = default;
+            string userData = default;
+            VirtualMachineVirtioInterfaceType? virtioInterface = default;
+            VirtualMachineDeviceModelType? vmDeviceModel = default;
             string vmImage = default;
-            Optional<ImageRepositoryCredentials> vmImageRepositoryCredentials = default;
+            ImageRepositoryCredentials vmImageRepositoryCredentials = default;
             IReadOnlyList<ResourceIdentifier> volumes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -539,33 +539,33 @@ namespace Azure.ResourceManager.NetworkCloud
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 extendedLocation,
                 adminUsername,
-                availabilityZone.Value,
-                bareMetalMachineId.Value,
-                Optional.ToNullable(bootMethod),
+                availabilityZone,
+                bareMetalMachineId,
+                bootMethod,
                 cloudServicesNetworkAttachment,
-                clusterId.Value,
+                clusterId,
                 cpuCores,
-                Optional.ToNullable(detailedStatus),
-                detailedStatusMessage.Value,
-                Optional.ToNullable(isolateEmulatorThread),
+                detailedStatus,
+                detailedStatusMessage,
+                isolateEmulatorThread,
                 memorySizeGB,
                 networkAttachments ?? new ChangeTrackingList<NetworkAttachment>(),
-                networkData.Value,
+                networkData,
                 placementHints ?? new ChangeTrackingList<VirtualMachinePlacementHint>(),
-                Optional.ToNullable(powerState),
-                Optional.ToNullable(provisioningState),
+                powerState,
+                provisioningState,
                 sshPublicKeys ?? new ChangeTrackingList<NetworkCloudSshPublicKey>(),
                 storageProfile,
-                userData.Value,
-                Optional.ToNullable(virtioInterface),
-                Optional.ToNullable(vmDeviceModel),
+                userData,
+                virtioInterface,
+                vmDeviceModel,
                 vmImage,
-                vmImageRepositoryCredentials.Value,
+                vmImageRepositoryCredentials,
                 volumes ?? new ChangeTrackingList<ResourceIdentifier>(),
                 serializedAdditionalRawData);
         }

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> stacksetName = default;
+            string stacksetName = default;
             IList<string> excludedAccountIds = default;
             OrganizationMembershipType organizationMembershipType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AwsOrganizationalDataMaster(organizationMembershipType, serializedAdditionalRawData, stacksetName.Value, excludedAccountIds ?? new ChangeTrackingList<string>());
+            return new AwsOrganizationalDataMaster(organizationMembershipType, serializedAdditionalRawData, stacksetName, excludedAccountIds ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<AwsOrganizationalDataMaster>.Write(ModelReaderWriterOptions options)

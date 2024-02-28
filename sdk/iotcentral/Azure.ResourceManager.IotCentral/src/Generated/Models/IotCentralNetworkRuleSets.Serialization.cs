@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.IotCentral.Models
             {
                 return null;
             }
-            Optional<bool> applyToDevices = default;
-            Optional<bool> applyToIoTCentral = default;
-            Optional<IotCentralNetworkAction> defaultAction = default;
+            bool? applyToDevices = default;
+            bool? applyToIoTCentral = default;
+            IotCentralNetworkAction? defaultAction = default;
             IList<IotCentralNetworkRuleSetIPRule> ipRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.IotCentral.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotCentralNetworkRuleSets(Optional.ToNullable(applyToDevices), Optional.ToNullable(applyToIoTCentral), Optional.ToNullable(defaultAction), ipRules ?? new ChangeTrackingList<IotCentralNetworkRuleSetIPRule>(), serializedAdditionalRawData);
+            return new IotCentralNetworkRuleSets(applyToDevices, applyToIoTCentral, defaultAction, ipRules ?? new ChangeTrackingList<IotCentralNetworkRuleSetIPRule>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotCentralNetworkRuleSets>.Write(ModelReaderWriterOptions options)

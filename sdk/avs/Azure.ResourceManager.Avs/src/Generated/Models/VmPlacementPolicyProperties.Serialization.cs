@@ -98,9 +98,9 @@ namespace Azure.ResourceManager.Avs.Models
             IList<ResourceIdentifier> vmMembers = default;
             AvsPlacementPolicyAffinityType affinityType = default;
             PlacementPolicyType type = default;
-            Optional<PlacementPolicyState> state = default;
-            Optional<string> displayName = default;
-            Optional<PlacementPolicyProvisioningState> provisioningState = default;
+            PlacementPolicyState? state = default;
+            string displayName = default;
+            PlacementPolicyProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -163,9 +163,9 @@ namespace Azure.ResourceManager.Avs.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new VmPlacementPolicyProperties(
                 type,
-                Optional.ToNullable(state),
-                displayName.Value,
-                Optional.ToNullable(provisioningState),
+                state,
+                displayName,
+                provisioningState,
                 serializedAdditionalRawData,
                 vmMembers,
                 affinityType);

@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 return null;
             }
             int statusCode = default;
-            Optional<string> description = default;
+            string description = default;
             IList<RepresentationContract> representations = default;
             IList<ParameterContract> headers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResponseContract(statusCode, description.Value, representations ?? new ChangeTrackingList<RepresentationContract>(), headers ?? new ChangeTrackingList<ParameterContract>(), serializedAdditionalRawData);
+            return new ResponseContract(statusCode, description, representations ?? new ChangeTrackingList<RepresentationContract>(), headers ?? new ChangeTrackingList<ParameterContract>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResponseContract>.Write(ModelReaderWriterOptions options)

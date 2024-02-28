@@ -134,18 +134,18 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 return null;
             }
             CapacitySku sku = default;
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
+            string id = default;
+            string name = default;
+            string type = default;
             AzureLocation location = default;
             IDictionary<string, string> tags = default;
-            Optional<SystemData> systemData = default;
-            Optional<DedicatedCapacityAdministrators> administration = default;
-            Optional<Mode> mode = default;
-            Optional<Guid> tenantId = default;
-            Optional<string> friendlyName = default;
-            Optional<State> state = default;
-            Optional<CapacityProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            DedicatedCapacityAdministrators administration = default;
+            Mode? mode = default;
+            Guid? tenantId = default;
+            string friendlyName = default;
+            State? state = default;
+            CapacityProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -267,20 +267,20 @@ namespace Azure.ResourceManager.PowerBIDedicated
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DedicatedCapacityData(
-                id.Value,
-                name.Value,
-                type.Value,
+                id,
+                name,
+                type,
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                systemData.Value,
+                systemData,
                 serializedAdditionalRawData,
                 sku,
-                administration.Value,
-                Optional.ToNullable(mode),
-                Optional.ToNullable(tenantId),
-                friendlyName.Value,
-                Optional.ToNullable(state),
-                Optional.ToNullable(provisioningState));
+                administration,
+                mode,
+                tenantId,
+                friendlyName,
+                state,
+                provisioningState);
         }
 
         BinaryData IPersistableModel<DedicatedCapacityData>.Write(ModelReaderWriterOptions options)

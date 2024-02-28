@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 return null;
             }
-            Optional<string> title = default;
-            Optional<string> service = default;
-            Optional<string> region = default;
-            Optional<string> incidentType = default;
+            string title = default;
+            string service = default;
+            string region = default;
+            string incidentType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceImpactingEventIncidentProperties(title.Value, service.Value, region.Value, incidentType.Value, serializedAdditionalRawData);
+            return new ServiceImpactingEventIncidentProperties(title, service, region, incidentType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceImpactingEventIncidentProperties>.Write(ModelReaderWriterOptions options)

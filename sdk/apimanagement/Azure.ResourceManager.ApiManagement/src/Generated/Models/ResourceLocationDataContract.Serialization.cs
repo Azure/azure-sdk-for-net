@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 return null;
             }
             string name = default;
-            Optional<string> city = default;
-            Optional<string> district = default;
-            Optional<string> countryOrRegion = default;
+            string city = default;
+            string district = default;
+            string countryOrRegion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceLocationDataContract(name, city.Value, district.Value, countryOrRegion.Value, serializedAdditionalRawData);
+            return new ResourceLocationDataContract(name, city, district, countryOrRegion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceLocationDataContract>.Write(ModelReaderWriterOptions options)

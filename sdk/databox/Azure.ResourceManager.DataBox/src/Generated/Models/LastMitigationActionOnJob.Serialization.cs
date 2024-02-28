@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> actionDateTimeInUtc = default;
-            Optional<bool> isPerformedByCustomer = default;
-            Optional<CustomerResolutionCode> customerResolution = default;
+            DateTimeOffset? actionDateTimeInUtc = default;
+            bool? isPerformedByCustomer = default;
+            CustomerResolutionCode? customerResolution = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LastMitigationActionOnJob(Optional.ToNullable(actionDateTimeInUtc), Optional.ToNullable(isPerformedByCustomer), Optional.ToNullable(customerResolution), serializedAdditionalRawData);
+            return new LastMitigationActionOnJob(actionDateTimeInUtc, isPerformedByCustomer, customerResolution, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LastMitigationActionOnJob>.Write(ModelReaderWriterOptions options)

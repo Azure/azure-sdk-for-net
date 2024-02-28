@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             EventSerializationType type = default;
-            Optional<string> fieldDelimiter = default;
-            Optional<StreamAnalyticsDataSerializationEncoding> encoding = default;
+            string fieldDelimiter = default;
+            StreamAnalyticsDataSerializationEncoding? encoding = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CsvFormatSerialization(type, serializedAdditionalRawData, fieldDelimiter.Value, Optional.ToNullable(encoding));
+            return new CsvFormatSerialization(type, serializedAdditionalRawData, fieldDelimiter, encoding);
         }
 
         BinaryData IPersistableModel<CsvFormatSerialization>.Write(ModelReaderWriterOptions options)

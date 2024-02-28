@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<string> description = default;
-            Optional<string> key = default;
+            string description = default;
+            string key = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageSshPublicKey(description.Value, key.Value, serializedAdditionalRawData);
+            return new StorageSshPublicKey(description, key, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageSshPublicKey>.Write(ModelReaderWriterOptions options)

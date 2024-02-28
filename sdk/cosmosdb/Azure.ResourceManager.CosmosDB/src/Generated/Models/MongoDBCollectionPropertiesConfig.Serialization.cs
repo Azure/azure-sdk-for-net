@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<int> throughput = default;
-            Optional<AutoscaleSettings> autoscaleSettings = default;
+            int? throughput = default;
+            AutoscaleSettings autoscaleSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MongoDBCollectionPropertiesConfig(Optional.ToNullable(throughput), autoscaleSettings.Value, serializedAdditionalRawData);
+            return new MongoDBCollectionPropertiesConfig(throughput, autoscaleSettings, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MongoDBCollectionPropertiesConfig>.Write(ModelReaderWriterOptions options)

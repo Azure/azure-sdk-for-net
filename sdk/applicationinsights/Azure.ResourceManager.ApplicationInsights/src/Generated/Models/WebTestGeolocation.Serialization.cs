@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<AzureLocation> id = default;
+            AzureLocation? id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebTestGeolocation(Optional.ToNullable(id), serializedAdditionalRawData);
+            return new WebTestGeolocation(id, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebTestGeolocation>.Write(ModelReaderWriterOptions options)

@@ -93,9 +93,9 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<DataBoxValidationInputDiscriminator> validationType = default;
-            Optional<ResponseError> error = default;
-            Optional<AddressValidationStatus> validationStatus = default;
+            DataBoxValidationInputDiscriminator? validationType = default;
+            ResponseError error = default;
+            AddressValidationStatus? validationStatus = default;
             IReadOnlyList<DataBoxShippingAddress> alternateAddresses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AddressValidationOutput(Optional.ToNullable(validationType), error.Value, Optional.ToNullable(validationStatus), alternateAddresses ?? new ChangeTrackingList<DataBoxShippingAddress>(), serializedAdditionalRawData);
+            return new AddressValidationOutput(validationType, error, validationStatus, alternateAddresses ?? new ChangeTrackingList<DataBoxShippingAddress>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AddressValidationOutput>.Write(ModelReaderWriterOptions options)

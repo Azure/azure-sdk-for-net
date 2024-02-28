@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<string> offerId = default;
-            Optional<string> displayName = default;
-            Optional<bool> isEntire = default;
-            Optional<long> messageCode = default;
-            Optional<Uri> icon = default;
+            string offerId = default;
+            string displayName = default;
+            bool? isEntire = default;
+            long? messageCode = default;
+            Uri icon = default;
             IReadOnlyList<PlanNotificationDetails> plans = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -167,11 +167,11 @@ namespace Azure.ResourceManager.Marketplace.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new StopSellNotifications(
-                offerId.Value,
-                displayName.Value,
-                Optional.ToNullable(isEntire),
-                Optional.ToNullable(messageCode),
-                icon.Value,
+                offerId,
+                displayName,
+                isEntire,
+                messageCode,
+                icon,
                 plans ?? new ChangeTrackingList<PlanNotificationDetails>(),
                 serializedAdditionalRawData);
         }

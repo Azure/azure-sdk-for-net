@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<string> groupId = default;
+            string groupId = default;
             IReadOnlyList<string> requiredMembers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedInstancePrivateLinkProperties(groupId.Value, requiredMembers ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new ManagedInstancePrivateLinkProperties(groupId, requiredMembers ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedInstancePrivateLinkProperties>.Write(ModelReaderWriterOptions options)

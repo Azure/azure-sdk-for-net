@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             string participantName = default;
             IDictionary<string, string> displayName = default;
             IDictionary<string, string> description = default;
-            Optional<string> role = default;
+            string role = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 participantName,
                 displayName ?? new ChangeTrackingDictionary<string, string>(),
                 description ?? new ChangeTrackingDictionary<string, string>(),
-                role.Value,
+                role,
                 serializedAdditionalRawData);
         }
 

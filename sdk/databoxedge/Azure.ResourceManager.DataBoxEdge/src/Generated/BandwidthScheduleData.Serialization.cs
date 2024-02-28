@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             TimeSpan start = default;
             TimeSpan stop = default;
             int rateInMbps = default;
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 start,
                 stop,
                 rateInMbps,

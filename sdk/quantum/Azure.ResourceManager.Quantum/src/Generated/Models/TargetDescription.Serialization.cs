@@ -99,9 +99,9 @@ namespace Azure.ResourceManager.Quantum.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
+            string id = default;
+            string name = default;
+            string description = default;
             IReadOnlyList<string> acceptedDataFormats = default;
             IReadOnlyList<string> acceptedContentEncodings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -158,9 +158,9 @@ namespace Azure.ResourceManager.Quantum.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new TargetDescription(
-                id.Value,
-                name.Value,
-                description.Value,
+                id,
+                name,
+                description,
                 acceptedDataFormats ?? new ChangeTrackingList<string>(),
                 acceptedContentEncodings ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);

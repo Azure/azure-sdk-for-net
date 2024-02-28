@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Attestation.Models
             {
                 return null;
             }
-            Optional<AttestationPrivateEndpointServiceConnectionStatus> status = default;
-            Optional<string> description = default;
-            Optional<string> actionsRequired = default;
+            AttestationPrivateEndpointServiceConnectionStatus? status = default;
+            string description = default;
+            string actionsRequired = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Attestation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AttestationPrivateLinkServiceConnectionState(Optional.ToNullable(status), description.Value, actionsRequired.Value, serializedAdditionalRawData);
+            return new AttestationPrivateLinkServiceConnectionState(status, description, actionsRequired, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AttestationPrivateLinkServiceConnectionState>.Write(ModelReaderWriterOptions options)

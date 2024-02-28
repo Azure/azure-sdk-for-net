@@ -104,14 +104,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> java11Runtime = default;
-            Optional<string> java8Runtime = default;
-            Optional<bool> isPreview = default;
-            Optional<bool> isDeprecated = default;
-            Optional<bool> isHidden = default;
-            Optional<DateTimeOffset> endOfLifeDate = default;
-            Optional<bool> isAutoUpdate = default;
-            Optional<bool> isEarlyAccess = default;
+            string java11Runtime = default;
+            string java8Runtime = default;
+            bool? isPreview = default;
+            bool? isDeprecated = default;
+            bool? isHidden = default;
+            DateTimeOffset? endOfLifeDate = default;
+            bool? isAutoUpdate = default;
+            bool? isEarlyAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -187,14 +187,14 @@ namespace Azure.ResourceManager.AppService.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new LinuxJavaContainerSettings(
-                java11Runtime.Value,
-                java8Runtime.Value,
-                Optional.ToNullable(isPreview),
-                Optional.ToNullable(isDeprecated),
-                Optional.ToNullable(isHidden),
-                Optional.ToNullable(endOfLifeDate),
-                Optional.ToNullable(isAutoUpdate),
-                Optional.ToNullable(isEarlyAccess),
+                java11Runtime,
+                java8Runtime,
+                isPreview,
+                isDeprecated,
+                isHidden,
+                endOfLifeDate,
+                isAutoUpdate,
+                isEarlyAccess,
                 serializedAdditionalRawData);
         }
 

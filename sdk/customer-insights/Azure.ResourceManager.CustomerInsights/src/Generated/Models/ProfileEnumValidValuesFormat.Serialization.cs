@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<int> value = default;
+            int? value = default;
             IDictionary<string, string> localizedValueNames = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProfileEnumValidValuesFormat(Optional.ToNullable(value), localizedValueNames ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new ProfileEnumValidValuesFormat(value, localizedValueNames ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProfileEnumValidValuesFormat>.Write(ModelReaderWriterOptions options)

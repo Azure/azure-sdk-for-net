@@ -134,18 +134,18 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> vnetResourceId = default;
-            Optional<string> certThumbprint = default;
-            Optional<string> certBlob = default;
+            SystemData systemData = default;
+            ResourceIdentifier vnetResourceId = default;
+            string certThumbprint = default;
+            string certBlob = default;
             IReadOnlyList<AppServiceVirtualNetworkRoute> routes = default;
-            Optional<bool> resyncRequired = default;
-            Optional<string> dnsServers = default;
-            Optional<bool> isSwift = default;
+            bool? resyncRequired = default;
+            string dnsServers = default;
+            bool? isSwift = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -257,15 +257,15 @@ namespace Azure.ResourceManager.AppService
                 id,
                 name,
                 type,
-                systemData.Value,
-                vnetResourceId.Value,
-                certThumbprint.Value,
-                certBlob.Value,
+                systemData,
+                vnetResourceId,
+                certThumbprint,
+                certBlob,
                 routes ?? new ChangeTrackingList<AppServiceVirtualNetworkRoute>(),
-                Optional.ToNullable(resyncRequired),
-                dnsServers.Value,
-                Optional.ToNullable(isSwift),
-                kind.Value,
+                resyncRequired,
+                dnsServers,
+                isSwift,
+                kind,
                 serializedAdditionalRawData);
         }
 

@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Optional<string> pathPattern = default;
-            Optional<string> dateFormat = default;
-            Optional<string> timeFormat = default;
-            Optional<string> refreshInterval = default;
-            Optional<DataRefreshType> refreshType = default;
+            string pathPattern = default;
+            string dateFormat = default;
+            string timeFormat = default;
+            string refreshInterval = default;
+            DataRefreshType? refreshType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,11 +134,11 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new StreamingJobRefreshConfiguration(
-                pathPattern.Value,
-                dateFormat.Value,
-                timeFormat.Value,
-                refreshInterval.Value,
-                Optional.ToNullable(refreshType),
+                pathPattern,
+                dateFormat,
+                timeFormat,
+                refreshInterval,
+                refreshType,
                 serializedAdditionalRawData);
         }
 

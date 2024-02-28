@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<BinaryData> body = default;
+            BinaryData body = default;
             IList<string> statusCodes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayProbeHealthResponseMatch(body.Value, statusCodes ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new ApplicationGatewayProbeHealthResponseMatch(body, statusCodes ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayProbeHealthResponseMatch>.Write(ModelReaderWriterOptions options)

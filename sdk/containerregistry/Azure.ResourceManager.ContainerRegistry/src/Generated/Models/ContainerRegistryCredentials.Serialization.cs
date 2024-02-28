@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<SourceRegistryCredentials> sourceRegistry = default;
+            SourceRegistryCredentials sourceRegistry = default;
             IDictionary<string, CustomRegistryCredentials> customRegistries = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryCredentials(sourceRegistry.Value, customRegistries ?? new ChangeTrackingDictionary<string, CustomRegistryCredentials>(), serializedAdditionalRawData);
+            return new ContainerRegistryCredentials(sourceRegistry, customRegistries ?? new ChangeTrackingDictionary<string, CustomRegistryCredentials>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryCredentials>.Write(ModelReaderWriterOptions options)

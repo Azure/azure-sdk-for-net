@@ -109,15 +109,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> state = default;
-            Optional<string> primaryNetworkFriendlyName = default;
-            Optional<ResourceIdentifier> primaryNetworkId = default;
-            Optional<string> primaryFabricFriendlyName = default;
-            Optional<string> recoveryNetworkFriendlyName = default;
-            Optional<ResourceIdentifier> recoveryNetworkId = default;
-            Optional<ResourceIdentifier> recoveryFabricArmId = default;
-            Optional<string> recoveryFabricFriendlyName = default;
-            Optional<NetworkMappingFabricSpecificSettings> fabricSpecificSettings = default;
+            string state = default;
+            string primaryNetworkFriendlyName = default;
+            ResourceIdentifier primaryNetworkId = default;
+            string primaryFabricFriendlyName = default;
+            string recoveryNetworkFriendlyName = default;
+            ResourceIdentifier recoveryNetworkId = default;
+            ResourceIdentifier recoveryFabricArmId = default;
+            string recoveryFabricFriendlyName = default;
+            NetworkMappingFabricSpecificSettings fabricSpecificSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -190,15 +190,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SiteRecoveryNetworkMappingProperties(
-                state.Value,
-                primaryNetworkFriendlyName.Value,
-                primaryNetworkId.Value,
-                primaryFabricFriendlyName.Value,
-                recoveryNetworkFriendlyName.Value,
-                recoveryNetworkId.Value,
-                recoveryFabricArmId.Value,
-                recoveryFabricFriendlyName.Value,
-                fabricSpecificSettings.Value,
+                state,
+                primaryNetworkFriendlyName,
+                primaryNetworkId,
+                primaryFabricFriendlyName,
+                recoveryNetworkFriendlyName,
+                recoveryNetworkId,
+                recoveryFabricArmId,
+                recoveryFabricFriendlyName,
+                fabricSpecificSettings,
                 serializedAdditionalRawData);
         }
 

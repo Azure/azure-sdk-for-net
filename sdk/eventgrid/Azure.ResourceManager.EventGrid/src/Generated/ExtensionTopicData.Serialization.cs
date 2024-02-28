@@ -101,9 +101,9 @@ namespace Azure.ResourceManager.EventGrid
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<string> systemTopic = default;
+            SystemData systemData = default;
+            string description = default;
+            string systemTopic = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,9 +164,9 @@ namespace Azure.ResourceManager.EventGrid
                 id,
                 name,
                 type,
-                systemData.Value,
-                description.Value,
-                systemTopic.Value,
+                systemData,
+                description,
+                systemTopic,
                 serializedAdditionalRawData);
         }
 

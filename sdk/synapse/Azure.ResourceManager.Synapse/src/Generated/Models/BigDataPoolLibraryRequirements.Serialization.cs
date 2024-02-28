@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> time = default;
-            Optional<string> content = default;
-            Optional<string> filename = default;
+            DateTimeOffset? time = default;
+            string content = default;
+            string filename = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BigDataPoolLibraryRequirements(Optional.ToNullable(time), content.Value, filename.Value, serializedAdditionalRawData);
+            return new BigDataPoolLibraryRequirements(time, content, filename, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BigDataPoolLibraryRequirements>.Write(ModelReaderWriterOptions options)

@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> value = default;
-            Optional<string> source = default;
+            string name = default;
+            string value = default;
+            string source = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlFlexibleServerConfigurationForBatchUpdate(name.Value, value.Value, source.Value, serializedAdditionalRawData);
+            return new MySqlFlexibleServerConfigurationForBatchUpdate(name, value, source, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlFlexibleServerConfigurationForBatchUpdate>.Write(ModelReaderWriterOptions options)

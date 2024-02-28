@@ -137,21 +137,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> self = default;
-            Optional<string> rid = default;
-            Optional<float> ts = default;
-            Optional<ETag> etag = default;
+            string self = default;
+            string rid = default;
+            float? ts = default;
+            ETag? etag = default;
             string id = default;
-            Optional<CosmosDBIndexingPolicy> indexingPolicy = default;
-            Optional<CosmosDBContainerPartitionKey> partitionKey = default;
-            Optional<int> defaultTtl = default;
-            Optional<CosmosDBUniqueKeyPolicy> uniqueKeyPolicy = default;
-            Optional<ConflictResolutionPolicy> conflictResolutionPolicy = default;
-            Optional<CosmosDBClientEncryptionPolicy> clientEncryptionPolicy = default;
-            Optional<long> analyticalStorageTtl = default;
-            Optional<ResourceRestoreParameters> restoreParameters = default;
-            Optional<CosmosDBAccountCreateMode> createMode = default;
-            Optional<MaterializedViewDefinition> materializedViewDefinition = default;
+            CosmosDBIndexingPolicy indexingPolicy = default;
+            CosmosDBContainerPartitionKey partitionKey = default;
+            int? defaultTtl = default;
+            CosmosDBUniqueKeyPolicy uniqueKeyPolicy = default;
+            ConflictResolutionPolicy conflictResolutionPolicy = default;
+            CosmosDBClientEncryptionPolicy clientEncryptionPolicy = default;
+            long? analyticalStorageTtl = default;
+            ResourceRestoreParameters restoreParameters = default;
+            CosmosDBAccountCreateMode? createMode = default;
+            MaterializedViewDefinition materializedViewDefinition = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -287,21 +287,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new RestorableSqlContainerPropertiesResourceContainer(
                 id,
-                indexingPolicy.Value,
-                partitionKey.Value,
-                Optional.ToNullable(defaultTtl),
-                uniqueKeyPolicy.Value,
-                conflictResolutionPolicy.Value,
-                clientEncryptionPolicy.Value,
-                Optional.ToNullable(analyticalStorageTtl),
-                restoreParameters.Value,
-                Optional.ToNullable(createMode),
-                materializedViewDefinition.Value,
+                indexingPolicy,
+                partitionKey,
+                defaultTtl,
+                uniqueKeyPolicy,
+                conflictResolutionPolicy,
+                clientEncryptionPolicy,
+                analyticalStorageTtl,
+                restoreParameters,
+                createMode,
+                materializedViewDefinition,
                 serializedAdditionalRawData,
-                self.Value,
-                rid.Value,
-                Optional.ToNullable(ts),
-                Optional.ToNullable(etag));
+                self,
+                rid,
+                ts,
+                etag);
         }
 
         BinaryData IPersistableModel<RestorableSqlContainerPropertiesResourceContainer>.Write(ModelReaderWriterOptions options)

@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Network.Models
             ResourceIdentifier targetResourceId = default;
             string sourceIPAddress = default;
             string destinationIPAddress = default;
-            Optional<ResourceIdentifier> targetNicResourceId = default;
+            ResourceIdentifier targetNicResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NextHopContent(targetResourceId, sourceIPAddress, destinationIPAddress, targetNicResourceId.Value, serializedAdditionalRawData);
+            return new NextHopContent(targetResourceId, sourceIPAddress, destinationIPAddress, targetNicResourceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NextHopContent>.Write(ModelReaderWriterOptions options)

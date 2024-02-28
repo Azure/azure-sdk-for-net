@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> instanceType = default;
+            string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProtectionContainerFabricSpecificDetails(instanceType.Value, serializedAdditionalRawData);
+            return new ProtectionContainerFabricSpecificDetails(instanceType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProtectionContainerFabricSpecificDetails>.Write(ModelReaderWriterOptions options)

@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            Optional<SolutionResourceProperties> properties = default;
+            SolutionResourceProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SolutionResourcePatch(properties.Value, serializedAdditionalRawData);
+            return new SolutionResourcePatch(properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SolutionResourcePatch>.Write(ModelReaderWriterOptions options)

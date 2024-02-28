@@ -104,14 +104,14 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<ImmutabilityPolicyUpdateType> update = default;
-            Optional<int> immutabilityPeriodSinceCreationInDays = default;
-            Optional<DateTimeOffset> timestamp = default;
-            Optional<string> objectIdentifier = default;
-            Optional<Guid> tenantId = default;
-            Optional<string> upn = default;
-            Optional<bool> allowProtectedAppendWrites = default;
-            Optional<bool> allowProtectedAppendWritesAll = default;
+            ImmutabilityPolicyUpdateType? update = default;
+            int? immutabilityPeriodSinceCreationInDays = default;
+            DateTimeOffset? timestamp = default;
+            string objectIdentifier = default;
+            Guid? tenantId = default;
+            string upn = default;
+            bool? allowProtectedAppendWrites = default;
+            bool? allowProtectedAppendWritesAll = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -187,14 +187,14 @@ namespace Azure.ResourceManager.Storage.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new UpdateHistoryEntry(
-                Optional.ToNullable(update),
-                Optional.ToNullable(immutabilityPeriodSinceCreationInDays),
-                Optional.ToNullable(timestamp),
-                objectIdentifier.Value,
-                Optional.ToNullable(tenantId),
-                upn.Value,
-                Optional.ToNullable(allowProtectedAppendWrites),
-                Optional.ToNullable(allowProtectedAppendWritesAll),
+                update,
+                immutabilityPeriodSinceCreationInDays,
+                timestamp,
+                objectIdentifier,
+                tenantId,
+                upn,
+                allowProtectedAppendWrites,
+                allowProtectedAppendWritesAll,
                 serializedAdditionalRawData);
         }
 

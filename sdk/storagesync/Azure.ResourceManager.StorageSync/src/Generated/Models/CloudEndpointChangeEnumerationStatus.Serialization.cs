@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> lastUpdatedTimestamp = default;
-            Optional<CloudEndpointLastChangeEnumerationStatus> lastEnumerationStatus = default;
-            Optional<CloudEndpointChangeEnumerationActivity> activity = default;
+            DateTimeOffset? lastUpdatedTimestamp = default;
+            CloudEndpointLastChangeEnumerationStatus lastEnumerationStatus = default;
+            CloudEndpointChangeEnumerationActivity activity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudEndpointChangeEnumerationStatus(Optional.ToNullable(lastUpdatedTimestamp), lastEnumerationStatus.Value, activity.Value, serializedAdditionalRawData);
+            return new CloudEndpointChangeEnumerationStatus(lastUpdatedTimestamp, lastEnumerationStatus, activity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudEndpointChangeEnumerationStatus>.Write(ModelReaderWriterOptions options)

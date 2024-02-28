@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.Storage.Models
                 return null;
             }
             bool enabled = default;
-            Optional<int> days = default;
-            Optional<DateTimeOffset> lastEnabledTime = default;
-            Optional<DateTimeOffset> minRestoreTime = default;
+            int? days = default;
+            DateTimeOffset? lastEnabledTime = default;
+            DateTimeOffset? minRestoreTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RestorePolicy(enabled, Optional.ToNullable(days), Optional.ToNullable(lastEnabledTime), Optional.ToNullable(minRestoreTime), serializedAdditionalRawData);
+            return new RestorePolicy(enabled, days, lastEnabledTime, minRestoreTime, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RestorePolicy>.Write(ModelReaderWriterOptions options)

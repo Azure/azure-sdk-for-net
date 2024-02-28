@@ -86,8 +86,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<BackupRetentionPolicy> retentionPolicy = default;
-            Optional<int> protectedItemsCount = default;
+            BackupRetentionPolicy retentionPolicy = default;
+            int? protectedItemsCount = default;
             string backupManagementType = default;
             IList<string> resourceGuardOperationRequests = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlProtectionPolicy(Optional.ToNullable(protectedItemsCount), backupManagementType, resourceGuardOperationRequests ?? new ChangeTrackingList<string>(), serializedAdditionalRawData, retentionPolicy.Value);
+            return new SqlProtectionPolicy(protectedItemsCount, backupManagementType, resourceGuardOperationRequests ?? new ChangeTrackingList<string>(), serializedAdditionalRawData, retentionPolicy);
         }
 
         BinaryData IPersistableModel<SqlProtectionPolicy>.Write(ModelReaderWriterOptions options)

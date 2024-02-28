@@ -125,18 +125,18 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<long> scriptExecutionId = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<string> status = default;
-            Optional<string> operation = default;
+            long? scriptExecutionId = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            string status = default;
+            string operation = default;
             IReadOnlyList<ScriptActionExecutionSummary> executionSummary = default;
-            Optional<string> debugInformation = default;
+            string debugInformation = default;
             string name = default;
             Uri uri = default;
-            Optional<string> parameters = default;
+            string parameters = default;
             IList<string> roles = default;
-            Optional<string> applicationName = default;
+            string applicationName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -236,17 +236,17 @@ namespace Azure.ResourceManager.HDInsight.Models
             return new RuntimeScriptActionDetail(
                 name,
                 uri,
-                parameters.Value,
+                parameters,
                 roles,
-                applicationName.Value,
+                applicationName,
                 serializedAdditionalRawData,
-                Optional.ToNullable(scriptExecutionId),
-                Optional.ToNullable(startTime),
-                Optional.ToNullable(endTime),
-                status.Value,
-                operation.Value,
+                scriptExecutionId,
+                startTime,
+                endTime,
+                status,
+                operation,
                 executionSummary ?? new ChangeTrackingList<ScriptActionExecutionSummary>(),
-                debugInformation.Value);
+                debugInformation);
         }
 
         BinaryData IPersistableModel<RuntimeScriptActionDetail>.Write(ModelReaderWriterOptions options)

@@ -96,11 +96,11 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<RuleQueryStringCachingBehavior> queryStringCachingBehavior = default;
-            Optional<string> queryParameters = default;
-            Optional<RuleIsCompressionEnabled> isCompressionEnabled = default;
-            Optional<RuleCacheBehavior> cacheBehavior = default;
-            Optional<TimeSpan?> cacheDuration = default;
+            RuleQueryStringCachingBehavior? queryStringCachingBehavior = default;
+            string queryParameters = default;
+            RuleIsCompressionEnabled? isCompressionEnabled = default;
+            RuleCacheBehavior? cacheBehavior = default;
+            TimeSpan? cacheDuration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -154,11 +154,11 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new CacheConfiguration(
-                Optional.ToNullable(queryStringCachingBehavior),
-                queryParameters.Value,
-                Optional.ToNullable(isCompressionEnabled),
-                Optional.ToNullable(cacheBehavior),
-                Optional.ToNullable(cacheDuration),
+                queryStringCachingBehavior,
+                queryParameters,
+                isCompressionEnabled,
+                cacheBehavior,
+                cacheDuration,
                 serializedAdditionalRawData);
         }
 

@@ -126,8 +126,8 @@ namespace Azure.ResourceManager.WebPubSub.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> groupId = default;
+            SystemData systemData = default;
+            string groupId = default;
             IList<string> requiredMembers = default;
             IList<string> requiredZoneNames = default;
             IList<ShareablePrivateLinkType> shareablePrivateLinkResourceTypes = default;
@@ -228,8 +228,8 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                groupId.Value,
+                systemData,
+                groupId,
                 requiredMembers ?? new ChangeTrackingList<string>(),
                 requiredZoneNames ?? new ChangeTrackingList<string>(),
                 shareablePrivateLinkResourceTypes ?? new ChangeTrackingList<ShareablePrivateLinkType>(),

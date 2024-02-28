@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> category = default;
+            string category = default;
             IReadOnlyList<AppServiceEndpointDependency> endpoints = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OutboundEnvironmentEndpoint(category.Value, endpoints ?? new ChangeTrackingList<AppServiceEndpointDependency>(), serializedAdditionalRawData);
+            return new OutboundEnvironmentEndpoint(category, endpoints ?? new ChangeTrackingList<AppServiceEndpointDependency>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OutboundEnvironmentEndpoint>.Write(ModelReaderWriterOptions options)

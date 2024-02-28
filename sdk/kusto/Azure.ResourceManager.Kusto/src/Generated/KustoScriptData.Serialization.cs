@@ -122,13 +122,13 @@ namespace Azure.ResourceManager.Kusto
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Uri> scriptUrl = default;
-            Optional<string> scriptUrlSasToken = default;
-            Optional<string> scriptContent = default;
-            Optional<string> forceUpdateTag = default;
-            Optional<bool> continueOnErrors = default;
-            Optional<KustoProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            Uri scriptUrl = default;
+            string scriptUrlSasToken = default;
+            string scriptContent = default;
+            string forceUpdateTag = default;
+            bool? continueOnErrors = default;
+            KustoProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -221,13 +221,13 @@ namespace Azure.ResourceManager.Kusto
                 id,
                 name,
                 type,
-                systemData.Value,
-                scriptUrl.Value,
-                scriptUrlSasToken.Value,
-                scriptContent.Value,
-                forceUpdateTag.Value,
-                Optional.ToNullable(continueOnErrors),
-                Optional.ToNullable(provisioningState),
+                systemData,
+                scriptUrl,
+                scriptUrlSasToken,
+                scriptContent,
+                forceUpdateTag,
+                continueOnErrors,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

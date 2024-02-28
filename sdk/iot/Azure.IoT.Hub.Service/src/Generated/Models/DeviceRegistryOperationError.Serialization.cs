@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.IoT.Hub.Service.Models
 {
@@ -18,11 +17,11 @@ namespace Azure.IoT.Hub.Service.Models
             {
                 return null;
             }
-            Optional<string> deviceId = default;
-            Optional<DeviceRegistryOperationErrorCode> errorCode = default;
-            Optional<string> errorStatus = default;
-            Optional<string> moduleId = default;
-            Optional<string> operation = default;
+            string deviceId = default;
+            DeviceRegistryOperationErrorCode? errorCode = default;
+            string errorStatus = default;
+            string moduleId = default;
+            string operation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deviceId"u8))
@@ -55,7 +54,7 @@ namespace Azure.IoT.Hub.Service.Models
                     continue;
                 }
             }
-            return new DeviceRegistryOperationError(deviceId.Value, Optional.ToNullable(errorCode), errorStatus.Value, moduleId.Value, operation.Value);
+            return new DeviceRegistryOperationError(deviceId, errorCode, errorStatus, moduleId, operation);
         }
     }
 }

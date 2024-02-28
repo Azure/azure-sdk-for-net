@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<string> uniqueName = default;
-            Optional<Guid> aadTenantId = default;
-            Optional<string> servicePrincipalClientId = default;
-            Optional<string> audience = default;
+            string uniqueName = default;
+            Guid? aadTenantId = default;
+            string servicePrincipalClientId = default;
+            string audience = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerIdentityInfo(uniqueName.Value, Optional.ToNullable(aadTenantId), servicePrincipalClientId.Value, audience.Value, serializedAdditionalRawData);
+            return new ContainerIdentityInfo(uniqueName, aadTenantId, servicePrincipalClientId, audience, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerIdentityInfo>.Write(ModelReaderWriterOptions options)

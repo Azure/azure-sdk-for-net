@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             string periodKey = default;
             DateTimeOffset periodStartTime = default;
             DateTimeOffset periodEndTime = default;
-            Optional<QuotaCounterValueContractProperties> value = default;
+            QuotaCounterValueContractProperties value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 periodKey,
                 periodStartTime,
                 periodEndTime,
-                value.Value,
+                value,
                 serializedAdditionalRawData);
         }
 

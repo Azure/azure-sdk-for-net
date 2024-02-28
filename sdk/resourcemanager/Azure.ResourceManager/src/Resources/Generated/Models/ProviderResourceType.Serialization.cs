@@ -150,15 +150,15 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<string> resourceType = default;
+            string resourceType = default;
             IReadOnlyList<string> locations = default;
             IReadOnlyList<ProviderExtendedLocation> locationMappings = default;
             IReadOnlyList<ResourceTypeAlias> aliases = default;
             IReadOnlyList<string> apiVersions = default;
-            Optional<string> defaultApiVersion = default;
+            string defaultApiVersion = default;
             IReadOnlyList<ZoneMapping> zoneMappings = default;
             IReadOnlyList<ApiProfile> apiProfiles = default;
-            Optional<string> capabilities = default;
+            string capabilities = default;
             IReadOnlyDictionary<string, string> properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -284,15 +284,15 @@ namespace Azure.ResourceManager.Resources.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ProviderResourceType(
-                resourceType.Value,
+                resourceType,
                 locations ?? new ChangeTrackingList<string>(),
                 locationMappings ?? new ChangeTrackingList<ProviderExtendedLocation>(),
                 aliases ?? new ChangeTrackingList<ResourceTypeAlias>(),
                 apiVersions ?? new ChangeTrackingList<string>(),
-                defaultApiVersion.Value,
+                defaultApiVersion,
                 zoneMappings ?? new ChangeTrackingList<ZoneMapping>(),
                 apiProfiles ?? new ChangeTrackingList<ApiProfile>(),
-                capabilities.Value,
+                capabilities,
                 properties ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }

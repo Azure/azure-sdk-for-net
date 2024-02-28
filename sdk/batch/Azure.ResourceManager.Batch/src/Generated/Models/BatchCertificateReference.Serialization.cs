@@ -87,8 +87,8 @@ namespace Azure.ResourceManager.Batch.Models
                 return null;
             }
             ResourceIdentifier id = default;
-            Optional<BatchCertificateStoreLocation> storeLocation = default;
-            Optional<string> storeName = default;
+            BatchCertificateStoreLocation? storeLocation = default;
+            string storeName = default;
             IList<BatchCertificateVisibility> visibility = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchCertificateReference(id, Optional.ToNullable(storeLocation), storeName.Value, visibility ?? new ChangeTrackingList<BatchCertificateVisibility>(), serializedAdditionalRawData);
+            return new BatchCertificateReference(id, storeLocation, storeName, visibility ?? new ChangeTrackingList<BatchCertificateVisibility>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchCertificateReference>.Write(ModelReaderWriterOptions options)

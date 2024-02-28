@@ -78,8 +78,8 @@ namespace Azure.AI.DocumentIntelligence
                 return null;
             }
             double amount = default;
-            Optional<string> currencySymbol = default;
-            Optional<string> currencyCode = default;
+            string currencySymbol = default;
+            string currencyCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +105,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CurrencyValue(amount, currencySymbol.Value, currencyCode.Value, serializedAdditionalRawData);
+            return new CurrencyValue(amount, currencySymbol, currencyCode, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CurrencyValue>.Write(ModelReaderWriterOptions options)

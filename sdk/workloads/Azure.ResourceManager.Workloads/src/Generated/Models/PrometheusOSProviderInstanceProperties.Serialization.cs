@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<Uri> prometheusUrl = default;
-            Optional<SapSslPreference> sslPreference = default;
-            Optional<Uri> sslCertificateUri = default;
-            Optional<string> sapSid = default;
+            Uri prometheusUrl = default;
+            SapSslPreference? sslPreference = default;
+            Uri sslCertificateUri = default;
+            string sapSid = default;
             string providerType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -141,10 +141,10 @@ namespace Azure.ResourceManager.Workloads.Models
             return new PrometheusOSProviderInstanceProperties(
                 providerType,
                 serializedAdditionalRawData,
-                prometheusUrl.Value,
-                Optional.ToNullable(sslPreference),
-                sslCertificateUri.Value,
-                sapSid.Value);
+                prometheusUrl,
+                sslPreference,
+                sslCertificateUri,
+                sapSid);
         }
 
         BinaryData IPersistableModel<PrometheusOSProviderInstanceProperties>.Write(ModelReaderWriterOptions options)

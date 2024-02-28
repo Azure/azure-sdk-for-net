@@ -221,36 +221,36 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<string> odataId = default;
-            Optional<string> odataContext = default;
-            Optional<DateTimeOffset> timestamp = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<ResourceIdentifier> policyAssignmentId = default;
-            Optional<ResourceIdentifier> policyDefinitionId = default;
-            Optional<string> effectiveParameters = default;
-            Optional<bool> isCompliant = default;
-            Optional<string> subscriptionId = default;
-            Optional<string> resourceType = default;
-            Optional<AzureLocation> resourceLocation = default;
-            Optional<string> resourceGroup = default;
-            Optional<string> resourceTags = default;
-            Optional<string> policyAssignmentName = default;
-            Optional<string> policyAssignmentOwner = default;
-            Optional<string> policyAssignmentParameters = default;
-            Optional<string> policyAssignmentScope = default;
-            Optional<string> policyDefinitionName = default;
-            Optional<string> policyDefinitionAction = default;
-            Optional<string> policyDefinitionCategory = default;
-            Optional<ResourceIdentifier> policySetDefinitionId = default;
-            Optional<string> policySetDefinitionName = default;
-            Optional<string> policySetDefinitionOwner = default;
-            Optional<string> policySetDefinitionCategory = default;
-            Optional<string> policySetDefinitionParameters = default;
-            Optional<string> managementGroupIds = default;
-            Optional<string> policyDefinitionReferenceId = default;
-            Optional<string> complianceState = default;
-            Optional<Guid> tenantId = default;
-            Optional<string> principalOid = default;
+            string odataId = default;
+            string odataContext = default;
+            DateTimeOffset? timestamp = default;
+            ResourceIdentifier resourceId = default;
+            ResourceIdentifier policyAssignmentId = default;
+            ResourceIdentifier policyDefinitionId = default;
+            string effectiveParameters = default;
+            bool? isCompliant = default;
+            string subscriptionId = default;
+            string resourceType = default;
+            AzureLocation? resourceLocation = default;
+            string resourceGroup = default;
+            string resourceTags = default;
+            string policyAssignmentName = default;
+            string policyAssignmentOwner = default;
+            string policyAssignmentParameters = default;
+            string policyAssignmentScope = default;
+            string policyDefinitionName = default;
+            string policyDefinitionAction = default;
+            string policyDefinitionCategory = default;
+            ResourceIdentifier policySetDefinitionId = default;
+            string policySetDefinitionName = default;
+            string policySetDefinitionOwner = default;
+            string policySetDefinitionCategory = default;
+            string policySetDefinitionParameters = default;
+            string managementGroupIds = default;
+            string policyDefinitionReferenceId = default;
+            string complianceState = default;
+            Guid? tenantId = default;
+            string principalOid = default;
             IReadOnlyList<ComponentEventDetails> components = default;
             IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -456,36 +456,36 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new PolicyEvent(
-                odataId.Value,
-                odataContext.Value,
-                Optional.ToNullable(timestamp),
-                resourceId.Value,
-                policyAssignmentId.Value,
-                policyDefinitionId.Value,
-                effectiveParameters.Value,
-                Optional.ToNullable(isCompliant),
-                subscriptionId.Value,
-                resourceType.Value,
-                Optional.ToNullable(resourceLocation),
-                resourceGroup.Value,
-                resourceTags.Value,
-                policyAssignmentName.Value,
-                policyAssignmentOwner.Value,
-                policyAssignmentParameters.Value,
-                policyAssignmentScope.Value,
-                policyDefinitionName.Value,
-                policyDefinitionAction.Value,
-                policyDefinitionCategory.Value,
-                policySetDefinitionId.Value,
-                policySetDefinitionName.Value,
-                policySetDefinitionOwner.Value,
-                policySetDefinitionCategory.Value,
-                policySetDefinitionParameters.Value,
-                managementGroupIds.Value,
-                policyDefinitionReferenceId.Value,
-                complianceState.Value,
-                Optional.ToNullable(tenantId),
-                principalOid.Value,
+                odataId,
+                odataContext,
+                timestamp,
+                resourceId,
+                policyAssignmentId,
+                policyDefinitionId,
+                effectiveParameters,
+                isCompliant,
+                subscriptionId,
+                resourceType,
+                resourceLocation,
+                resourceGroup,
+                resourceTags,
+                policyAssignmentName,
+                policyAssignmentOwner,
+                policyAssignmentParameters,
+                policyAssignmentScope,
+                policyDefinitionName,
+                policyDefinitionAction,
+                policyDefinitionCategory,
+                policySetDefinitionId,
+                policySetDefinitionName,
+                policySetDefinitionOwner,
+                policySetDefinitionCategory,
+                policySetDefinitionParameters,
+                managementGroupIds,
+                policyDefinitionReferenceId,
+                complianceState,
+                tenantId,
+                principalOid,
                 components ?? new ChangeTrackingList<ComponentEventDetails>(),
                 additionalProperties);
         }

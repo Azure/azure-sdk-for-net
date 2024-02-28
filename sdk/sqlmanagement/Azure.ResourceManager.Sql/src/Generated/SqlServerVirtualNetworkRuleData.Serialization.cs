@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> virtualNetworkSubnetId = default;
-            Optional<bool> ignoreMissingVnetServiceEndpoint = default;
-            Optional<SqlServerVirtualNetworkRuleState> state = default;
+            SystemData systemData = default;
+            ResourceIdentifier virtualNetworkSubnetId = default;
+            bool? ignoreMissingVnetServiceEndpoint = default;
+            SqlServerVirtualNetworkRuleState? state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -188,10 +188,10 @@ namespace Azure.ResourceManager.Sql
                 id,
                 name,
                 type,
-                systemData.Value,
-                virtualNetworkSubnetId.Value,
-                Optional.ToNullable(ignoreMissingVnetServiceEndpoint),
-                Optional.ToNullable(state),
+                systemData,
+                virtualNetworkSubnetId,
+                ignoreMissingVnetServiceEndpoint,
+                state,
                 serializedAdditionalRawData);
         }
 

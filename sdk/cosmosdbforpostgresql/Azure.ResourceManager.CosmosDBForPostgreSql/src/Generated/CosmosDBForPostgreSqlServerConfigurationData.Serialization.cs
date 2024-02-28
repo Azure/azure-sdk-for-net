@@ -132,15 +132,15 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> value = default;
-            Optional<string> source = default;
-            Optional<string> description = default;
-            Optional<string> defaultValue = default;
-            Optional<CosmosDBForPostgreSqlConfigurationDataType> dataType = default;
-            Optional<string> allowedValues = default;
-            Optional<bool> requiresRestart = default;
-            Optional<CosmosDBForPostgreSqlProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            string value = default;
+            string source = default;
+            string description = default;
+            string defaultValue = default;
+            CosmosDBForPostgreSqlConfigurationDataType? dataType = default;
+            string allowedValues = default;
+            bool? requiresRestart = default;
+            CosmosDBForPostgreSqlProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -243,15 +243,15 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 id,
                 name,
                 type,
-                systemData.Value,
-                value.Value,
-                source.Value,
-                description.Value,
-                defaultValue.Value,
-                Optional.ToNullable(dataType),
-                allowedValues.Value,
-                Optional.ToNullable(requiresRestart),
-                Optional.ToNullable(provisioningState),
+                systemData,
+                value,
+                source,
+                description,
+                defaultValue,
+                dataType,
+                allowedValues,
+                requiresRestart,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

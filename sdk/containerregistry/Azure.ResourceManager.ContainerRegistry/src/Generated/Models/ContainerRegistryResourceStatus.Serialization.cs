@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<string> displayStatus = default;
-            Optional<string> message = default;
-            Optional<DateTimeOffset> timestamp = default;
+            string displayStatus = default;
+            string message = default;
+            DateTimeOffset? timestamp = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryResourceStatus(displayStatus.Value, message.Value, Optional.ToNullable(timestamp), serializedAdditionalRawData);
+            return new ContainerRegistryResourceStatus(displayStatus, message, timestamp, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryResourceStatus>.Write(ModelReaderWriterOptions options)

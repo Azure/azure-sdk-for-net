@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Optional<bool> nameAvailable = default;
-            Optional<string> name = default;
-            Optional<string> message = default;
-            Optional<KustoNameUnavailableReason> reason = default;
+            bool? nameAvailable = default;
+            string name = default;
+            string message = default;
+            KustoNameUnavailableReason? reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KustoNameAvailabilityResult(Optional.ToNullable(nameAvailable), name.Value, message.Value, Optional.ToNullable(reason), serializedAdditionalRawData);
+            return new KustoNameAvailabilityResult(nameAvailable, name, message, reason, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KustoNameAvailabilityResult>.Write(ModelReaderWriterOptions options)

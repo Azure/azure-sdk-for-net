@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<DataTableResponseObject> table = default;
-            Optional<DiagnosticDataRendering> renderingProperties = default;
+            DataTableResponseObject table = default;
+            DiagnosticDataRendering renderingProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiagnosticDataset(table.Value, renderingProperties.Value, serializedAdditionalRawData);
+            return new DiagnosticDataset(table, renderingProperties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiagnosticDataset>.Write(ModelReaderWriterOptions options)

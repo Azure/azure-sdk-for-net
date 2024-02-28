@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.MySql.Models
             }
             string status = default;
             string description = default;
-            Optional<string> actionsRequired = default;
+            string actionsRequired = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.MySql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlPrivateLinkServiceConnectionStateProperty(status, description, actionsRequired.Value, serializedAdditionalRawData);
+            return new MySqlPrivateLinkServiceConnectionStateProperty(status, description, actionsRequired, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlPrivateLinkServiceConnectionStateProperty>.Write(ModelReaderWriterOptions options)

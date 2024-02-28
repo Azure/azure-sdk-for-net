@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             string keyId = default;
             WritableSubResource secretSource = default;
-            Optional<string> secretVersion = default;
+            string secretVersion = default;
             SecretType type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UriSigningKeyProperties(type, serializedAdditionalRawData, keyId, secretSource, secretVersion.Value);
+            return new UriSigningKeyProperties(type, serializedAdditionalRawData, keyId, secretSource, secretVersion);
         }
 
         BinaryData IPersistableModel<UriSigningKeyProperties>.Write(ModelReaderWriterOptions options)

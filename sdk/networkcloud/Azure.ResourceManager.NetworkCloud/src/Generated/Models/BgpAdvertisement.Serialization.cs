@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<AdvertiseToFabric> advertiseToFabric = default;
+            AdvertiseToFabric? advertiseToFabric = default;
             IList<string> communities = default;
             IList<string> ipAddressPools = default;
             IList<string> peers = default;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BgpAdvertisement(Optional.ToNullable(advertiseToFabric), communities ?? new ChangeTrackingList<string>(), ipAddressPools, peers ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new BgpAdvertisement(advertiseToFabric, communities ?? new ChangeTrackingList<string>(), ipAddressPools, peers ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BgpAdvertisement>.Write(ModelReaderWriterOptions options)

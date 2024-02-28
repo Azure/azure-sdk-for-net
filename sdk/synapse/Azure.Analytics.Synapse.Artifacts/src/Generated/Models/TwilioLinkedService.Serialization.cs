@@ -79,8 +79,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
             IDictionary<string, ParameterSpecification> parameters = default;
             IList<object> annotations = default;
             object userName = default;
@@ -170,8 +170,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new TwilioLinkedService(
                 type,
-                connectVia.Value,
-                description.Value,
+                connectVia,
+                description,
                 parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
                 annotations ?? new ChangeTrackingList<object>(),
                 additionalProperties,

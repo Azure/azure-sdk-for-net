@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> fabricType = default;
+            string fabricType = default;
             IReadOnlyList<SiteRecoverySubnet> subnets = default;
-            Optional<string> friendlyName = default;
-            Optional<string> networkType = default;
+            string friendlyName = default;
+            string networkType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryNetworkProperties(fabricType.Value, subnets ?? new ChangeTrackingList<SiteRecoverySubnet>(), friendlyName.Value, networkType.Value, serializedAdditionalRawData);
+            return new SiteRecoveryNetworkProperties(fabricType, subnets ?? new ChangeTrackingList<SiteRecoverySubnet>(), friendlyName, networkType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryNetworkProperties>.Write(ModelReaderWriterOptions options)

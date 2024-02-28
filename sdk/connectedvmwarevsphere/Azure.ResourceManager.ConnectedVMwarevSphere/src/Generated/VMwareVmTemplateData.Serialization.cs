@@ -223,33 +223,33 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             {
                 return null;
             }
-            Optional<ExtendedLocation> extendedLocation = default;
-            Optional<string> kind = default;
+            ExtendedLocation extendedLocation = default;
+            string kind = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> uuid = default;
-            Optional<string> vCenterId = default;
-            Optional<string> moRefId = default;
-            Optional<string> inventoryItemId = default;
-            Optional<string> moName = default;
-            Optional<int> memorySizeMB = default;
-            Optional<int> numCpus = default;
-            Optional<int> numCoresPerSocket = default;
-            Optional<VMwareOSType> osType = default;
-            Optional<string> osName = default;
-            Optional<string> folderPath = default;
+            SystemData systemData = default;
+            string uuid = default;
+            string vCenterId = default;
+            string moRefId = default;
+            string inventoryItemId = default;
+            string moName = default;
+            int? memorySizeMB = default;
+            int? numCpus = default;
+            int? numCoresPerSocket = default;
+            VMwareOSType? osType = default;
+            string osName = default;
+            string folderPath = default;
             IReadOnlyList<VMwareNetworkInterface> networkInterfaces = default;
             IReadOnlyList<VMwareVirtualDisk> disks = default;
-            Optional<string> customResourceName = default;
-            Optional<string> toolsVersionStatus = default;
-            Optional<string> toolsVersion = default;
-            Optional<VMwareFirmwareType> firmwareType = default;
+            string customResourceName = default;
+            string toolsVersionStatus = default;
+            string toolsVersion = default;
+            VMwareFirmwareType? firmwareType = default;
             IReadOnlyList<VMwareResourceStatus> statuses = default;
-            Optional<VMwareResourceProvisioningState> provisioningState = default;
+            VMwareResourceProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -479,30 +479,30 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 extendedLocation,
-                kind.Value,
-                uuid.Value,
-                vCenterId.Value,
-                moRefId.Value,
-                inventoryItemId.Value,
-                moName.Value,
-                Optional.ToNullable(memorySizeMB),
-                Optional.ToNullable(numCpus),
-                Optional.ToNullable(numCoresPerSocket),
-                Optional.ToNullable(osType),
-                osName.Value,
-                folderPath.Value,
+                kind,
+                uuid,
+                vCenterId,
+                moRefId,
+                inventoryItemId,
+                moName,
+                memorySizeMB,
+                numCpus,
+                numCoresPerSocket,
+                osType,
+                osName,
+                folderPath,
                 networkInterfaces ?? new ChangeTrackingList<VMwareNetworkInterface>(),
                 disks ?? new ChangeTrackingList<VMwareVirtualDisk>(),
-                customResourceName.Value,
-                toolsVersionStatus.Value,
-                toolsVersion.Value,
-                Optional.ToNullable(firmwareType),
+                customResourceName,
+                toolsVersionStatus,
+                toolsVersion,
+                firmwareType,
                 statuses ?? new ChangeTrackingList<VMwareResourceStatus>(),
-                Optional.ToNullable(provisioningState),
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Sphere.Models
             {
                 return null;
             }
-            Optional<string> image = default;
+            string image = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Sphere.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SignedCapabilityImageResponse(image.Value, serializedAdditionalRawData);
+            return new SignedCapabilityImageResponse(image, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SignedCapabilityImageResponse>.Write(ModelReaderWriterOptions options)

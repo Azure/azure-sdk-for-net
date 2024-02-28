@@ -29,7 +29,7 @@ namespace Azure.Communication.MediaComposition
             {
                 return null;
             }
-            Optional<StreamStatus> status = default;
+            StreamStatus? status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -42,7 +42,7 @@ namespace Azure.Communication.MediaComposition
                     continue;
                 }
             }
-            return new CompositionStreamState(Optional.ToNullable(status));
+            return new CompositionStreamState(status);
         }
     }
 }

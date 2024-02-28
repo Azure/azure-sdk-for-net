@@ -20,7 +20,7 @@ namespace Azure.Containers.ContainerRegistry
                 return null;
             }
             IReadOnlyList<string> repositories = default;
-            Optional<string> link = default;
+            string link = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("repositories"u8))
@@ -43,7 +43,7 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new Repositories(repositories ?? new ChangeTrackingList<string>(), link.Value);
+            return new Repositories(repositories ?? new ChangeTrackingList<string>(), link);
         }
     }
 }

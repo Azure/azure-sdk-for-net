@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<bool> propagateStaticRoutes = default;
-            Optional<VnetLocalRouteOverrideCriterion> vnetLocalRouteOverrideCriteria = default;
+            bool? propagateStaticRoutes = default;
+            VnetLocalRouteOverrideCriterion? vnetLocalRouteOverrideCriteria = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StaticRoutesConfig(Optional.ToNullable(propagateStaticRoutes), Optional.ToNullable(vnetLocalRouteOverrideCriteria), serializedAdditionalRawData);
+            return new StaticRoutesConfig(propagateStaticRoutes, vnetLocalRouteOverrideCriteria, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StaticRoutesConfig>.Write(ModelReaderWriterOptions options)

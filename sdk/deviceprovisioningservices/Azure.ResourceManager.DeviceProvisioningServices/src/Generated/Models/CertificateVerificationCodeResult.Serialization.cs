@@ -96,12 +96,12 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<CertificateVerificationCodeProperties> properties = default;
+            ETag? etag = default;
+            CertificateVerificationCodeProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -158,9 +158,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(etag),
-                properties.Value,
+                systemData,
+                etag,
+                properties,
                 serializedAdditionalRawData);
         }
 

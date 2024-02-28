@@ -86,11 +86,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<string> backupManagementType = default;
-            Optional<string> workloadType = default;
+            string backupManagementType = default;
+            string workloadType = default;
             string workloadItemType = "Unknown";
-            Optional<string> friendlyName = default;
-            Optional<BackupProtectionStatus> protectionState = default;
+            string friendlyName = default;
+            BackupProtectionStatus? protectionState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -131,11 +131,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new UnknownWorkloadItem(
-                backupManagementType.Value,
-                workloadType.Value,
+                backupManagementType,
+                workloadType,
                 workloadItemType,
-                friendlyName.Value,
-                Optional.ToNullable(protectionState),
+                friendlyName,
+                protectionState,
                 serializedAdditionalRawData);
         }
 

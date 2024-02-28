@@ -141,16 +141,16 @@ namespace Azure.ResourceManager.IotCentral.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<IotCentralAppSkuInfo> sku = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IotCentralProvisioningState> provisioningState = default;
-            Optional<Guid> applicationId = default;
-            Optional<string> displayName = default;
-            Optional<string> subdomain = default;
-            Optional<string> template = default;
-            Optional<IotCentralAppState> state = default;
-            Optional<IotCentralPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<IotCentralNetworkRuleSets> networkRuleSets = default;
+            IotCentralAppSkuInfo sku = default;
+            ManagedServiceIdentity identity = default;
+            IotCentralProvisioningState? provisioningState = default;
+            Guid? applicationId = default;
+            string displayName = default;
+            string subdomain = default;
+            string template = default;
+            IotCentralAppState? state = default;
+            IotCentralPublicNetworkAccess? publicNetworkAccess = default;
+            IotCentralNetworkRuleSets networkRuleSets = default;
             IReadOnlyList<IotCentralPrivateEndpointConnectionData> privateEndpointConnections = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -282,16 +282,16 @@ namespace Azure.ResourceManager.IotCentral.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new IotCentralAppPatch(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                sku.Value,
+                sku,
                 identity,
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(applicationId),
-                displayName.Value,
-                subdomain.Value,
-                template.Value,
-                Optional.ToNullable(state),
-                Optional.ToNullable(publicNetworkAccess),
-                networkRuleSets.Value,
+                provisioningState,
+                applicationId,
+                displayName,
+                subdomain,
+                template,
+                state,
+                publicNetworkAccess,
+                networkRuleSets,
                 privateEndpointConnections ?? new ChangeTrackingList<IotCentralPrivateEndpointConnectionData>(),
                 serializedAdditionalRawData);
         }

@@ -167,23 +167,23 @@ namespace Azure.ResourceManager.Hci
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<HciProvisioningState> provisioningState = default;
-            Optional<DateTimeOffset> timeStarted = default;
-            Optional<DateTimeOffset> lastUpdatedTime = default;
-            Optional<string> duration = default;
-            Optional<UpdateRunPropertiesState> state = default;
-            Optional<string> name0 = default;
-            Optional<string> description = default;
-            Optional<string> errorMessage = default;
-            Optional<string> status = default;
-            Optional<DateTimeOffset> startTimeUtc = default;
-            Optional<DateTimeOffset> endTimeUtc = default;
-            Optional<DateTimeOffset> lastUpdatedTimeUtc = default;
+            SystemData systemData = default;
+            HciProvisioningState? provisioningState = default;
+            DateTimeOffset? timeStarted = default;
+            DateTimeOffset? lastUpdatedTime = default;
+            string duration = default;
+            UpdateRunPropertiesState? state = default;
+            string name0 = default;
+            string description = default;
+            string errorMessage = default;
+            string status = default;
+            DateTimeOffset? startTimeUtc = default;
+            DateTimeOffset? endTimeUtc = default;
+            DateTimeOffset? lastUpdatedTimeUtc = default;
             IList<HciUpdateStep> steps = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -358,20 +358,20 @@ namespace Azure.ResourceManager.Hci
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(location),
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(timeStarted),
-                Optional.ToNullable(lastUpdatedTime),
-                duration.Value,
-                Optional.ToNullable(state),
-                name0.Value,
-                description.Value,
-                errorMessage.Value,
-                status.Value,
-                Optional.ToNullable(startTimeUtc),
-                Optional.ToNullable(endTimeUtc),
-                Optional.ToNullable(lastUpdatedTimeUtc),
+                systemData,
+                location,
+                provisioningState,
+                timeStarted,
+                lastUpdatedTime,
+                duration,
+                state,
+                name0,
+                description,
+                errorMessage,
+                status,
+                startTimeUtc,
+                endTimeUtc,
+                lastUpdatedTimeUtc,
                 steps ?? new ChangeTrackingList<HciUpdateStep>(),
                 serializedAdditionalRawData);
         }

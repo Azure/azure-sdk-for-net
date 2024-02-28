@@ -81,10 +81,10 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<NetAppEndpointType> endpointType = default;
-            Optional<NetAppReplicationSchedule> replicationSchedule = default;
+            NetAppEndpointType? endpointType = default;
+            NetAppReplicationSchedule? replicationSchedule = default;
             ResourceIdentifier remoteVolumeResourceId = default;
-            Optional<string> remoteVolumeRegion = default;
+            string remoteVolumeRegion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppVolumeReplication(Optional.ToNullable(endpointType), Optional.ToNullable(replicationSchedule), remoteVolumeResourceId, remoteVolumeRegion.Value, serializedAdditionalRawData);
+            return new NetAppVolumeReplication(endpointType, replicationSchedule, remoteVolumeResourceId, remoteVolumeRegion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppVolumeReplication>.Write(ModelReaderWriterOptions options)

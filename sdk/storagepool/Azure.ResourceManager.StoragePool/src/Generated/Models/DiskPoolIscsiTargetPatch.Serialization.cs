@@ -123,12 +123,12 @@ namespace Azure.ResourceManager.StoragePool.Models
             {
                 return null;
             }
-            Optional<string> managedBy = default;
+            string managedBy = default;
             IList<string> managedByExtended = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IList<DiskPoolIscsiTargetPortalGroupAcl> staticAcls = default;
             IList<ManagedDiskIscsiLun> luns = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -228,8 +228,8 @@ namespace Azure.ResourceManager.StoragePool.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                managedBy.Value,
+                systemData,
+                managedBy,
                 managedByExtended ?? new ChangeTrackingList<string>(),
                 staticAcls ?? new ChangeTrackingList<DiskPoolIscsiTargetPortalGroupAcl>(),
                 luns ?? new ChangeTrackingList<ManagedDiskIscsiLun>(),

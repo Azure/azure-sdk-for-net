@@ -19,7 +19,7 @@ namespace Azure.Maps.Search.Models
             {
                 return null;
             }
-            Optional<string> mode = default;
+            string mode = default;
             IReadOnlyList<OperatingHoursTimeRange> timeRanges = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -43,7 +43,7 @@ namespace Azure.Maps.Search.Models
                     continue;
                 }
             }
-            return new OperatingHours(mode.Value, timeRanges ?? new ChangeTrackingList<OperatingHoursTimeRange>());
+            return new OperatingHours(mode, timeRanges ?? new ChangeTrackingList<OperatingHoursTimeRange>());
         }
     }
 }

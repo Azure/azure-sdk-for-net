@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -18,7 +17,7 @@ namespace Azure.AI.FormRecognizer.Models
             {
                 return null;
             }
-            Optional<string> label = default;
+            string label = default;
             KeyValueElement key = default;
             KeyValueElement value = default;
             float confidence = default;
@@ -45,7 +44,7 @@ namespace Azure.AI.FormRecognizer.Models
                     continue;
                 }
             }
-            return new KeyValuePair(label.Value, key, value, confidence);
+            return new KeyValuePair(label, key, value, confidence);
         }
     }
 }

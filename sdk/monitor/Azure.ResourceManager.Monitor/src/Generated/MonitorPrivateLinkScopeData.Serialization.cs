@@ -124,8 +124,8 @@ namespace Azure.ResourceManager.Monitor
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> provisioningState = default;
+            SystemData systemData = default;
+            string provisioningState = default;
             IReadOnlyList<MonitorPrivateEndpointConnectionData> privateEndpointConnections = default;
             MonitorPrivateLinkAccessModeSettings accessModeSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -221,10 +221,10 @@ namespace Azure.ResourceManager.Monitor
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                provisioningState.Value,
+                provisioningState,
                 privateEndpointConnections ?? new ChangeTrackingList<MonitorPrivateEndpointConnectionData>(),
                 accessModeSettings,
                 serializedAdditionalRawData);

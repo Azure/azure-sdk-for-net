@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IReadOnlyList<MachineLearningSkuDetail> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SkuResourceArmPaginatedResult(nextLink.Value, value ?? new ChangeTrackingList<MachineLearningSkuDetail>(), serializedAdditionalRawData);
+            return new SkuResourceArmPaginatedResult(nextLink, value ?? new ChangeTrackingList<MachineLearningSkuDetail>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SkuResourceArmPaginatedResult>.Write(ModelReaderWriterOptions options)

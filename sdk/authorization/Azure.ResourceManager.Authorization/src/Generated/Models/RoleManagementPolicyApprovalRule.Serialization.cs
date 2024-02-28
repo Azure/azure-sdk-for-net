@@ -81,10 +81,10 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            Optional<RoleManagementApprovalSettings> setting = default;
-            Optional<string> id = default;
+            RoleManagementApprovalSettings setting = default;
+            string id = default;
             RoleManagementPolicyRuleType ruleType = default;
-            Optional<RoleManagementPolicyRuleTarget> target = default;
+            RoleManagementPolicyRuleTarget target = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoleManagementPolicyApprovalRule(id.Value, ruleType, target.Value, serializedAdditionalRawData, setting.Value);
+            return new RoleManagementPolicyApprovalRule(id, ruleType, target, serializedAdditionalRawData, setting);
         }
 
         BinaryData IPersistableModel<RoleManagementPolicyApprovalRule>.Write(ModelReaderWriterOptions options)

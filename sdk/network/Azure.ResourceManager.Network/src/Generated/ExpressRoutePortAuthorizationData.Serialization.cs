@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<string> authorizationKey = default;
-            Optional<ExpressRoutePortAuthorizationUseStatus> authorizationUseStatus = default;
-            Optional<Uri> circuitResourceUri = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            string authorizationKey = default;
+            ExpressRoutePortAuthorizationUseStatus? authorizationUseStatus = default;
+            Uri circuitResourceUri = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -204,15 +204,15 @@ namespace Azure.ResourceManager.Network
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ExpressRoutePortAuthorizationData(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
+                id,
+                name,
+                type,
                 serializedAdditionalRawData,
-                Optional.ToNullable(etag),
-                authorizationKey.Value,
-                Optional.ToNullable(authorizationUseStatus),
-                circuitResourceUri.Value,
-                Optional.ToNullable(provisioningState));
+                etag,
+                authorizationKey,
+                authorizationUseStatus,
+                circuitResourceUri,
+                provisioningState);
         }
 
         BinaryData IPersistableModel<ExpressRoutePortAuthorizationData>.Write(ModelReaderWriterOptions options)

@@ -38,8 +38,8 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 return null;
             }
-            Optional<double> lowerBound = default;
-            Optional<double> upperBound = default;
+            double? lowerBound = default;
+            double? upperBound = default;
             AnomalyDetectorDirection anomalyDetectorDirection = default;
             SuppressCondition suppressCondition = default;
             foreach (var property in element.EnumerateObject())
@@ -73,7 +73,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new HardThresholdCondition(Optional.ToNullable(lowerBound), Optional.ToNullable(upperBound), anomalyDetectorDirection, suppressCondition);
+            return new HardThresholdCondition(lowerBound, upperBound, anomalyDetectorDirection, suppressCondition);
         }
     }
 }

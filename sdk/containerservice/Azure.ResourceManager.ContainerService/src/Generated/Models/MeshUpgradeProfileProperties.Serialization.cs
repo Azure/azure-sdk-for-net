@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<string> revision = default;
+            string revision = default;
             IList<string> upgrades = default;
             IList<CompatibleVersions> compatibleWith = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MeshUpgradeProfileProperties(revision.Value, upgrades ?? new ChangeTrackingList<string>(), compatibleWith ?? new ChangeTrackingList<CompatibleVersions>(), serializedAdditionalRawData);
+            return new MeshUpgradeProfileProperties(revision, upgrades ?? new ChangeTrackingList<string>(), compatibleWith ?? new ChangeTrackingList<CompatibleVersions>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MeshUpgradeProfileProperties>.Write(ModelReaderWriterOptions options)

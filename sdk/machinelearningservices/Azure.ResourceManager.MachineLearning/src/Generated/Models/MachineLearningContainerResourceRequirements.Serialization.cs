@@ -88,8 +88,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<MachineLearningContainerResourceSettings> containerResourceLimits = default;
-            Optional<MachineLearningContainerResourceSettings> containerResourceRequests = default;
+            MachineLearningContainerResourceSettings containerResourceLimits = default;
+            MachineLearningContainerResourceSettings containerResourceRequests = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningContainerResourceRequirements(containerResourceLimits.Value, containerResourceRequests.Value, serializedAdditionalRawData);
+            return new MachineLearningContainerResourceRequirements(containerResourceLimits, containerResourceRequests, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningContainerResourceRequirements>.Write(ModelReaderWriterOptions options)

@@ -121,10 +121,10 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> tenantId = default;
-            Optional<Guid> principalId = default;
-            Optional<Guid> clientId = default;
+            SystemData systemData = default;
+            Guid? tenantId = default;
+            Guid? principalId = default;
+            Guid? clientId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -221,12 +221,12 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                Optional.ToNullable(tenantId),
-                Optional.ToNullable(principalId),
-                Optional.ToNullable(clientId),
+                tenantId,
+                principalId,
+                clientId,
                 serializedAdditionalRawData);
         }
 

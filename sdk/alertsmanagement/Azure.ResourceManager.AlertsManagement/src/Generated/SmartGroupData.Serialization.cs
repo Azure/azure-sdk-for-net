@@ -197,13 +197,13 @@ namespace Azure.ResourceManager.AlertsManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<long> alertsCount = default;
-            Optional<SmartGroupState> smartGroupState = default;
-            Optional<ServiceAlertSeverity> severity = default;
-            Optional<DateTimeOffset> startDateTime = default;
-            Optional<DateTimeOffset> lastModifiedDateTime = default;
-            Optional<string> lastModifiedUserName = default;
+            SystemData systemData = default;
+            long? alertsCount = default;
+            SmartGroupState? smartGroupState = default;
+            ServiceAlertSeverity? severity = default;
+            DateTimeOffset? startDateTime = default;
+            DateTimeOffset? lastModifiedDateTime = default;
+            string lastModifiedUserName = default;
             IList<SmartGroupAggregatedProperty> resources = default;
             IList<SmartGroupAggregatedProperty> resourceTypes = default;
             IList<SmartGroupAggregatedProperty> resourceGroups = default;
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.AlertsManagement
             IList<SmartGroupAggregatedProperty> monitorConditions = default;
             IList<SmartGroupAggregatedProperty> alertStates = default;
             IList<SmartGroupAggregatedProperty> alertSeverities = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -415,13 +415,13 @@ namespace Azure.ResourceManager.AlertsManagement
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(alertsCount),
-                Optional.ToNullable(smartGroupState),
-                Optional.ToNullable(severity),
-                Optional.ToNullable(startDateTime),
-                Optional.ToNullable(lastModifiedDateTime),
-                lastModifiedUserName.Value,
+                systemData,
+                alertsCount,
+                smartGroupState,
+                severity,
+                startDateTime,
+                lastModifiedDateTime,
+                lastModifiedUserName,
                 resources ?? new ChangeTrackingList<SmartGroupAggregatedProperty>(),
                 resourceTypes ?? new ChangeTrackingList<SmartGroupAggregatedProperty>(),
                 resourceGroups ?? new ChangeTrackingList<SmartGroupAggregatedProperty>(),
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 monitorConditions ?? new ChangeTrackingList<SmartGroupAggregatedProperty>(),
                 alertStates ?? new ChangeTrackingList<SmartGroupAggregatedProperty>(),
                 alertSeverities ?? new ChangeTrackingList<SmartGroupAggregatedProperty>(),
-                nextLink.Value,
+                nextLink,
                 serializedAdditionalRawData);
         }
 

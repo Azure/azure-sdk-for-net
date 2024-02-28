@@ -274,33 +274,33 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             {
                 return null;
             }
-            Optional<string> appName = default;
-            Optional<string> artifactName = default;
-            Optional<int> appPort = default;
-            Optional<string> appType = default;
+            string appName = default;
+            string artifactName = default;
+            int? appPort = default;
+            string appType = default;
             IList<SpringBootAppApplicationConfigurationsItem> applicationConfigurations = default;
             IList<int> bindingPorts = default;
-            Optional<string> buildJdkVersion = default;
+            string buildJdkVersion = default;
             IList<string> certificates = default;
-            Optional<string> checksum = default;
+            string checksum = default;
             IList<string> dependencies = default;
             IList<string> environments = default;
-            Optional<int> instanceCount = default;
-            Optional<string> jarFileLocation = default;
-            Optional<int> jvmMemoryInMB = default;
+            int? instanceCount = default;
+            string jarFileLocation = default;
+            int? jvmMemoryInMB = default;
             IList<string> jvmOptions = default;
             IList<SpringBootAppMiscsItem> miscs = default;
             IList<SpringBootAppInstancesItem> instances = default;
-            Optional<string> runtimeJdkVersion = default;
+            string runtimeJdkVersion = default;
             IList<string> servers = default;
             IList<ResourceIdentifier> machineArmIds = default;
-            Optional<string> siteName = default;
-            Optional<string> springBootVersion = default;
+            string siteName = default;
+            string springBootVersion = default;
             IList<string> staticContentLocations = default;
             IList<string> connectionStrings = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<DateTimeOffset> lastUpdatedTime = default;
-            Optional<SpringAppDiscoveryProvisioningState> provisioningState = default;
+            DateTimeOffset? lastModifiedTime = default;
+            DateTimeOffset? lastUpdatedTime = default;
+            SpringAppDiscoveryProvisioningState? provisioningState = default;
             IList<SpringBootSiteError> errors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -601,33 +601,33 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SpringBootAppProperties(
-                appName.Value,
-                artifactName.Value,
-                Optional.ToNullable(appPort),
-                appType.Value,
+                appName,
+                artifactName,
+                appPort,
+                appType,
                 applicationConfigurations ?? new ChangeTrackingList<SpringBootAppApplicationConfigurationsItem>(),
                 bindingPorts ?? new ChangeTrackingList<int>(),
-                buildJdkVersion.Value,
+                buildJdkVersion,
                 certificates ?? new ChangeTrackingList<string>(),
-                checksum.Value,
+                checksum,
                 dependencies ?? new ChangeTrackingList<string>(),
                 environments ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(instanceCount),
-                jarFileLocation.Value,
-                Optional.ToNullable(jvmMemoryInMB),
+                instanceCount,
+                jarFileLocation,
+                jvmMemoryInMB,
                 jvmOptions ?? new ChangeTrackingList<string>(),
                 miscs ?? new ChangeTrackingList<SpringBootAppMiscsItem>(),
                 instances ?? new ChangeTrackingList<SpringBootAppInstancesItem>(),
-                runtimeJdkVersion.Value,
+                runtimeJdkVersion,
                 servers ?? new ChangeTrackingList<string>(),
                 machineArmIds ?? new ChangeTrackingList<ResourceIdentifier>(),
-                siteName.Value,
-                springBootVersion.Value,
+                siteName,
+                springBootVersion,
                 staticContentLocations ?? new ChangeTrackingList<string>(),
                 connectionStrings ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(lastModifiedTime),
-                Optional.ToNullable(lastUpdatedTime),
-                Optional.ToNullable(provisioningState),
+                lastModifiedTime,
+                lastUpdatedTime,
+                provisioningState,
                 errors ?? new ChangeTrackingList<SpringBootSiteError>(),
                 serializedAdditionalRawData);
         }

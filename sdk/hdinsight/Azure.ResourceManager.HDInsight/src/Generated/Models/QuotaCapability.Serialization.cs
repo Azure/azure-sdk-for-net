@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<long> coresUsed = default;
-            Optional<long> maxCoresAllowed = default;
+            long? coresUsed = default;
+            long? maxCoresAllowed = default;
             IReadOnlyList<RegionalQuotaCapability> regionalQuotas = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QuotaCapability(Optional.ToNullable(coresUsed), Optional.ToNullable(maxCoresAllowed), regionalQuotas ?? new ChangeTrackingList<RegionalQuotaCapability>(), serializedAdditionalRawData);
+            return new QuotaCapability(coresUsed, maxCoresAllowed, regionalQuotas ?? new ChangeTrackingList<RegionalQuotaCapability>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QuotaCapability>.Write(ModelReaderWriterOptions options)

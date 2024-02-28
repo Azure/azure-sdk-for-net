@@ -177,24 +177,24 @@ namespace Azure.ResourceManager.Compute
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> timeCreated = default;
-            Optional<ResourceIdentifier> sourceResourceId = default;
-            Optional<SupportedOperatingSystemType> osType = default;
-            Optional<HyperVGeneration> hyperVGeneration = default;
-            Optional<DiskPurchasePlan> purchasePlan = default;
-            Optional<SupportedCapabilities> supportedCapabilities = default;
-            Optional<string> familyId = default;
-            Optional<string> sourceUniqueId = default;
-            Optional<DiskEncryption> encryption = default;
-            Optional<bool> supportsHibernation = default;
-            Optional<NetworkAccessPolicy> networkAccessPolicy = default;
-            Optional<DiskPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<ResourceIdentifier> diskAccessId = default;
-            Optional<float> completionPercent = default;
-            Optional<string> replicationState = default;
-            Optional<AzureLocation> sourceResourceLocation = default;
-            Optional<DiskSecurityProfile> securityProfile = default;
+            SystemData systemData = default;
+            DateTimeOffset? timeCreated = default;
+            ResourceIdentifier sourceResourceId = default;
+            SupportedOperatingSystemType? osType = default;
+            HyperVGeneration? hyperVGeneration = default;
+            DiskPurchasePlan purchasePlan = default;
+            SupportedCapabilities supportedCapabilities = default;
+            string familyId = default;
+            string sourceUniqueId = default;
+            DiskEncryption encryption = default;
+            bool? supportsHibernation = default;
+            NetworkAccessPolicy? networkAccessPolicy = default;
+            DiskPublicNetworkAccess? publicNetworkAccess = default;
+            ResourceIdentifier diskAccessId = default;
+            float? completionPercent = default;
+            string replicationState = default;
+            AzureLocation? sourceResourceLocation = default;
+            DiskSecurityProfile securityProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -386,24 +386,24 @@ namespace Azure.ResourceManager.Compute
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(timeCreated),
-                sourceResourceId.Value,
-                Optional.ToNullable(osType),
-                Optional.ToNullable(hyperVGeneration),
-                purchasePlan.Value,
-                supportedCapabilities.Value,
-                familyId.Value,
-                sourceUniqueId.Value,
-                encryption.Value,
-                Optional.ToNullable(supportsHibernation),
-                Optional.ToNullable(networkAccessPolicy),
-                Optional.ToNullable(publicNetworkAccess),
-                diskAccessId.Value,
-                Optional.ToNullable(completionPercent),
-                replicationState.Value,
-                Optional.ToNullable(sourceResourceLocation),
-                securityProfile.Value,
+                systemData,
+                timeCreated,
+                sourceResourceId,
+                osType,
+                hyperVGeneration,
+                purchasePlan,
+                supportedCapabilities,
+                familyId,
+                sourceUniqueId,
+                encryption,
+                supportsHibernation,
+                networkAccessPolicy,
+                publicNetworkAccess,
+                diskAccessId,
+                completionPercent,
+                replicationState,
+                sourceResourceLocation,
+                securityProfile,
                 serializedAdditionalRawData);
         }
 

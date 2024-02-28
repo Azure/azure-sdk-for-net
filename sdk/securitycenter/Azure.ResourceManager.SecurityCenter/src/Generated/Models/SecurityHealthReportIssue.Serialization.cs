@@ -108,11 +108,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 return null;
             }
             string issueKey = default;
-            Optional<string> issueName = default;
+            string issueName = default;
             IList<string> securityValues = default;
-            Optional<string> issueDescription = default;
-            Optional<string> remediationSteps = default;
-            Optional<string> remediationScript = default;
+            string issueDescription = default;
+            string remediationSteps = default;
+            string remediationScript = default;
             IDictionary<string, string> issueAdditionalData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -179,11 +179,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SecurityHealthReportIssue(
                 issueKey,
-                issueName.Value,
+                issueName,
                 securityValues ?? new ChangeTrackingList<string>(),
-                issueDescription.Value,
-                remediationSteps.Value,
-                remediationScript.Value,
+                issueDescription,
+                remediationSteps,
+                remediationScript,
                 issueAdditionalData ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }

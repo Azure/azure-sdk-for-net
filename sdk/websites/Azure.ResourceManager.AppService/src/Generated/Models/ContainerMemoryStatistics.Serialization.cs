@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<long> usage = default;
-            Optional<long> maxUsage = default;
-            Optional<long> limit = default;
+            long? usage = default;
+            long? maxUsage = default;
+            long? limit = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerMemoryStatistics(Optional.ToNullable(usage), Optional.ToNullable(maxUsage), Optional.ToNullable(limit), serializedAdditionalRawData);
+            return new ContainerMemoryStatistics(usage, maxUsage, limit, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerMemoryStatistics>.Write(ModelReaderWriterOptions options)

@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 return null;
             }
-            Optional<string> billingFrequency = default;
-            Optional<int> quantity = default;
-            Optional<string> targetProductTypeId = default;
-            Optional<string> targetSkuId = default;
-            Optional<TimeSpan> termDuration = default;
+            string billingFrequency = default;
+            int? quantity = default;
+            string targetProductTypeId = default;
+            string targetSkuId = default;
+            TimeSpan? termDuration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,11 +138,11 @@ namespace Azure.ResourceManager.Billing.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new BillingSubscriptionSplitContent(
-                billingFrequency.Value,
-                Optional.ToNullable(quantity),
-                targetProductTypeId.Value,
-                targetSkuId.Value,
-                Optional.ToNullable(termDuration),
+                billingFrequency,
+                quantity,
+                targetProductTypeId,
+                targetSkuId,
+                termDuration,
                 serializedAdditionalRawData);
         }
 

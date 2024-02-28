@@ -151,10 +151,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             IList<BlockedTransformer> blockedTransformers = default;
             IDictionary<string, string> columnNameAndTypes = default;
-            Optional<bool> enableDnnFeaturization = default;
-            Optional<MachineLearningFeaturizationMode> mode = default;
+            bool? enableDnnFeaturization = default;
+            MachineLearningFeaturizationMode? mode = default;
             IDictionary<string, IList<ColumnTransformer>> transformerParams = default;
-            Optional<string> datasetLanguage = default;
+            string datasetLanguage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -251,12 +251,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new TableVerticalFeaturizationSettings(
-                datasetLanguage.Value,
+                datasetLanguage,
                 serializedAdditionalRawData,
                 blockedTransformers ?? new ChangeTrackingList<BlockedTransformer>(),
                 columnNameAndTypes ?? new ChangeTrackingDictionary<string, string>(),
-                Optional.ToNullable(enableDnnFeaturization),
-                Optional.ToNullable(mode),
+                enableDnnFeaturization,
+                mode,
                 transformerParams ?? new ChangeTrackingDictionary<string, IList<ColumnTransformer>>());
         }
 

@@ -144,19 +144,19 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> migrationState = default;
-            Optional<SqlBackupSetInfo> fullBackupSetInfo = default;
-            Optional<SqlBackupSetInfo> lastRestoredBackupSetInfo = default;
+            string migrationState = default;
+            SqlBackupSetInfo fullBackupSetInfo = default;
+            SqlBackupSetInfo lastRestoredBackupSetInfo = default;
             IReadOnlyList<SqlBackupSetInfo> activeBackupSets = default;
             IReadOnlyList<string> invalidFiles = default;
-            Optional<string> blobContainerName = default;
-            Optional<bool> isFullBackupRestored = default;
-            Optional<string> restoreBlockingReason = default;
-            Optional<string> completeRestoreErrorMessage = default;
+            string blobContainerName = default;
+            bool? isFullBackupRestored = default;
+            string restoreBlockingReason = default;
+            string completeRestoreErrorMessage = default;
             IReadOnlyList<string> fileUploadBlockingErrors = default;
-            Optional<string> currentRestoringFilename = default;
-            Optional<string> lastRestoredFilename = default;
-            Optional<int> pendingLogBackupsCount = default;
+            string currentRestoringFilename = default;
+            string lastRestoredFilename = default;
+            int? pendingLogBackupsCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -276,19 +276,19 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MigrationStatusDetails(
-                migrationState.Value,
-                fullBackupSetInfo.Value,
-                lastRestoredBackupSetInfo.Value,
+                migrationState,
+                fullBackupSetInfo,
+                lastRestoredBackupSetInfo,
                 activeBackupSets ?? new ChangeTrackingList<SqlBackupSetInfo>(),
                 invalidFiles ?? new ChangeTrackingList<string>(),
-                blobContainerName.Value,
-                Optional.ToNullable(isFullBackupRestored),
-                restoreBlockingReason.Value,
-                completeRestoreErrorMessage.Value,
+                blobContainerName,
+                isFullBackupRestored,
+                restoreBlockingReason,
+                completeRestoreErrorMessage,
                 fileUploadBlockingErrors ?? new ChangeTrackingList<string>(),
-                currentRestoringFilename.Value,
-                lastRestoredFilename.Value,
-                Optional.ToNullable(pendingLogBackupsCount),
+                currentRestoringFilename,
+                lastRestoredFilename,
+                pendingLogBackupsCount,
                 serializedAdditionalRawData);
         }
 

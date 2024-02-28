@@ -114,14 +114,14 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<Guid> reportId = default;
-            Optional<GuestConfigurationAssignmentInfo> assignment = default;
-            Optional<GuestConfigurationVmInfo> vm = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<AssignedGuestConfigurationMachineComplianceStatus> complianceStatus = default;
-            Optional<GuestConfigurationAssignmentReportType> operationType = default;
+            ResourceIdentifier id = default;
+            Guid? reportId = default;
+            GuestConfigurationAssignmentInfo assignment = default;
+            GuestConfigurationVmInfo vm = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            AssignedGuestConfigurationMachineComplianceStatus? complianceStatus = default;
+            GuestConfigurationAssignmentReportType? operationType = default;
             IList<AssignmentReportResourceInfo> resources = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -220,14 +220,14 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new GuestConfigurationAssignmentReportInfo(
-                id.Value,
-                Optional.ToNullable(reportId),
-                assignment.Value,
-                vm.Value,
-                Optional.ToNullable(startTime),
-                Optional.ToNullable(endTime),
-                Optional.ToNullable(complianceStatus),
-                Optional.ToNullable(operationType),
+                id,
+                reportId,
+                assignment,
+                vm,
+                startTime,
+                endTime,
+                complianceStatus,
+                operationType,
                 resources ?? new ChangeTrackingList<AssignmentReportResourceInfo>(),
                 serializedAdditionalRawData);
         }

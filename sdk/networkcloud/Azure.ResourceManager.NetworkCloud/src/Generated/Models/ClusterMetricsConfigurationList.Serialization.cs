@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IReadOnlyList<NetworkCloudClusterMetricsConfigurationData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterMetricsConfigurationList(nextLink.Value, value ?? new ChangeTrackingList<NetworkCloudClusterMetricsConfigurationData>(), serializedAdditionalRawData);
+            return new ClusterMetricsConfigurationList(nextLink, value ?? new ChangeTrackingList<NetworkCloudClusterMetricsConfigurationData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterMetricsConfigurationList>.Write(ModelReaderWriterOptions options)

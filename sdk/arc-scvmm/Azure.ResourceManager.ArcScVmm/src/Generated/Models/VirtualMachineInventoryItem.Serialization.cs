@@ -116,16 +116,16 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             {
                 return null;
             }
-            Optional<OSType> osType = default;
-            Optional<string> osName = default;
-            Optional<string> powerState = default;
+            OSType? osType = default;
+            string osName = default;
+            string powerState = default;
             IList<string> ipAddresses = default;
-            Optional<InventoryItemDetails> cloud = default;
+            InventoryItemDetails cloud = default;
             InventoryType inventoryType = default;
-            Optional<string> managedResourceId = default;
-            Optional<string> uuid = default;
-            Optional<string> inventoryItemName = default;
-            Optional<string> provisioningState = default;
+            string managedResourceId = default;
+            string uuid = default;
+            string inventoryItemName = default;
+            string provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -205,16 +205,16 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new VirtualMachineInventoryItem(
                 inventoryType,
-                managedResourceId.Value,
-                uuid.Value,
-                inventoryItemName.Value,
-                provisioningState.Value,
+                managedResourceId,
+                uuid,
+                inventoryItemName,
+                provisioningState,
                 serializedAdditionalRawData,
-                Optional.ToNullable(osType),
-                osName.Value,
-                powerState.Value,
+                osType,
+                osName,
+                powerState,
                 ipAddresses ?? new ChangeTrackingList<string>(),
-                cloud.Value);
+                cloud);
         }
 
         BinaryData IPersistableModel<VirtualMachineInventoryItem>.Write(ModelReaderWriterOptions options)

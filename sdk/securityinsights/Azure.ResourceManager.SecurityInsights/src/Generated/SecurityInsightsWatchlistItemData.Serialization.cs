@@ -159,21 +159,21 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> watchlistItemType = default;
-            Optional<string> watchlistItemId = default;
-            Optional<Guid> tenantId = default;
-            Optional<bool> isDeleted = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<DateTimeOffset> updated = default;
-            Optional<SecurityInsightsUserInfo> createdBy = default;
-            Optional<SecurityInsightsUserInfo> updatedBy = default;
-            Optional<BinaryData> itemsKeyValue = default;
-            Optional<BinaryData> entityMapping = default;
+            SystemData systemData = default;
+            string watchlistItemType = default;
+            string watchlistItemId = default;
+            Guid? tenantId = default;
+            bool? isDeleted = default;
+            DateTimeOffset? created = default;
+            DateTimeOffset? updated = default;
+            SecurityInsightsUserInfo createdBy = default;
+            SecurityInsightsUserInfo updatedBy = default;
+            BinaryData itemsKeyValue = default;
+            BinaryData entityMapping = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -315,18 +315,18 @@ namespace Azure.ResourceManager.SecurityInsights
                 id,
                 name,
                 type,
-                systemData.Value,
-                watchlistItemType.Value,
-                watchlistItemId.Value,
-                Optional.ToNullable(tenantId),
-                Optional.ToNullable(isDeleted),
-                Optional.ToNullable(created),
-                Optional.ToNullable(updated),
-                createdBy.Value,
-                updatedBy.Value,
-                itemsKeyValue.Value,
-                entityMapping.Value,
-                Optional.ToNullable(etag),
+                systemData,
+                watchlistItemType,
+                watchlistItemId,
+                tenantId,
+                isDeleted,
+                created,
+                updated,
+                createdBy,
+                updatedBy,
+                itemsKeyValue,
+                entityMapping,
+                etag,
                 serializedAdditionalRawData);
         }
 

@@ -162,18 +162,18 @@ namespace Azure.ResourceManager.DevTestLabs
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DevTestLabEnableStatus> status = default;
-            Optional<string> taskType = default;
-            Optional<DevTestLabWeekDetails> weeklyRecurrence = default;
-            Optional<DayDetails> dailyRecurrence = default;
-            Optional<HourDetails> hourlyRecurrence = default;
-            Optional<string> timeZoneId = default;
-            Optional<DevTestLabNotificationSettings> notificationSettings = default;
-            Optional<DateTimeOffset> createdDate = default;
-            Optional<string> targetResourceId = default;
-            Optional<string> provisioningState = default;
-            Optional<Guid> uniqueIdentifier = default;
+            SystemData systemData = default;
+            DevTestLabEnableStatus? status = default;
+            string taskType = default;
+            DevTestLabWeekDetails weeklyRecurrence = default;
+            DayDetails dailyRecurrence = default;
+            HourDetails hourlyRecurrence = default;
+            string timeZoneId = default;
+            DevTestLabNotificationSettings notificationSettings = default;
+            DateTimeOffset? createdDate = default;
+            string targetResourceId = default;
+            string provisioningState = default;
+            Guid? uniqueIdentifier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -326,20 +326,20 @@ namespace Azure.ResourceManager.DevTestLabs
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                Optional.ToNullable(status),
-                taskType.Value,
-                weeklyRecurrence.Value,
-                dailyRecurrence.Value,
-                hourlyRecurrence.Value,
-                timeZoneId.Value,
-                notificationSettings.Value,
-                Optional.ToNullable(createdDate),
-                targetResourceId.Value,
-                provisioningState.Value,
-                Optional.ToNullable(uniqueIdentifier),
+                status,
+                taskType,
+                weeklyRecurrence,
+                dailyRecurrence,
+                hourlyRecurrence,
+                timeZoneId,
+                notificationSettings,
+                createdDate,
+                targetResourceId,
+                provisioningState,
+                uniqueIdentifier,
                 serializedAdditionalRawData);
         }
 

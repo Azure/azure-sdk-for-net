@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.Logic.Models
             bool needMdn = default;
             bool signMdn = default;
             bool sendMdnAsynchronously = default;
-            Optional<Uri> receiptDeliveryUrl = default;
-            Optional<string> dispositionNotificationTo = default;
+            Uri receiptDeliveryUrl = default;
+            string dispositionNotificationTo = default;
             bool signOutboundMdnIfOptional = default;
-            Optional<string> mdnText = default;
+            string mdnText = default;
             bool sendInboundMdnToMessageBox = default;
             AS2HashingAlgorithm micHashingAlgorithm = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -163,10 +163,10 @@ namespace Azure.ResourceManager.Logic.Models
                 needMdn,
                 signMdn,
                 sendMdnAsynchronously,
-                receiptDeliveryUrl.Value,
-                dispositionNotificationTo.Value,
+                receiptDeliveryUrl,
+                dispositionNotificationTo,
                 signOutboundMdnIfOptional,
-                mdnText.Value,
+                mdnText,
                 sendInboundMdnToMessageBox,
                 micHashingAlgorithm,
                 serializedAdditionalRawData);

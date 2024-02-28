@@ -138,12 +138,12 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<WritableSubResource> subnet = default;
-            Optional<bool> primary = default;
-            Optional<VirtualMachineScaleSetUpdatePublicIPAddressConfiguration> publicIPAddressConfiguration = default;
-            Optional<IPVersion> privateIPAddressVersion = default;
+            string name = default;
+            ResourceIdentifier id = default;
+            WritableSubResource subnet = default;
+            bool? primary = default;
+            VirtualMachineScaleSetUpdatePublicIPAddressConfiguration publicIPAddressConfiguration = default;
+            IPVersion? privateIPAddressVersion = default;
             IList<WritableSubResource> applicationGatewayBackendAddressPools = default;
             IList<WritableSubResource> applicationSecurityGroups = default;
             IList<WritableSubResource> loadBalancerBackendAddressPools = default;
@@ -277,13 +277,13 @@ namespace Azure.ResourceManager.Compute.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new VirtualMachineScaleSetUpdateIPConfiguration(
-                id.Value,
+                id,
                 serializedAdditionalRawData,
-                name.Value,
+                name,
                 subnet,
-                Optional.ToNullable(primary),
-                publicIPAddressConfiguration.Value,
-                Optional.ToNullable(privateIPAddressVersion),
+                primary,
+                publicIPAddressConfiguration,
+                privateIPAddressVersion,
                 applicationGatewayBackendAddressPools ?? new ChangeTrackingList<WritableSubResource>(),
                 applicationSecurityGroups ?? new ChangeTrackingList<WritableSubResource>(),
                 loadBalancerBackendAddressPools ?? new ChangeTrackingList<WritableSubResource>(),

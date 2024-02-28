@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            Optional<MonitoringStatus> monitoringStatus = default;
+            MonitoringStatus? monitoringStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorUpdateProperties(Optional.ToNullable(monitoringStatus), serializedAdditionalRawData);
+            return new MonitorUpdateProperties(monitoringStatus, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorUpdateProperties>.Write(ModelReaderWriterOptions options)
