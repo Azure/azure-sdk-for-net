@@ -19,8 +19,10 @@ stages:
       - deployment: SignPackage
         environment: esrp
         pool:
-          name: $(WINDOWSPOOL)
-          vmImage: $(WINDOWSVMIMAGE)
+          # name: $(WINDOWSPOOL)
+          name: azsdk-pool-mms-win-2022-1es-pt
+          # vmImage: $(WINDOWSVMIMAGE)
+          vmImage: azsdk-pool-mms-win-2022-1espt
           os: windows
 
         strategy:
