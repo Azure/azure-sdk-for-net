@@ -142,17 +142,17 @@ namespace Azure.ResourceManager.DataShare
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> consumerEmail = default;
-            Optional<string> consumerName = default;
-            Optional<string> consumerTenantName = default;
-            Optional<DateTimeOffset> createdAt = default;
-            Optional<DateTimeOffset> expirationDate = default;
-            Optional<string> providerEmail = default;
-            Optional<string> providerName = default;
-            Optional<DateTimeOffset> sharedAt = default;
-            Optional<string> shareSubscriptionObjectId = default;
-            Optional<ShareSubscriptionStatus> shareSubscriptionStatus = default;
+            SystemData systemData = default;
+            string consumerEmail = default;
+            string consumerName = default;
+            string consumerTenantName = default;
+            DateTimeOffset? createdAt = default;
+            DateTimeOffset? expirationDate = default;
+            string providerEmail = default;
+            string providerName = default;
+            DateTimeOffset? sharedAt = default;
+            string shareSubscriptionObjectId = default;
+            ShareSubscriptionStatus? shareSubscriptionStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -269,17 +269,17 @@ namespace Azure.ResourceManager.DataShare
                 id,
                 name,
                 type,
-                systemData.Value,
-                consumerEmail.Value,
-                consumerName.Value,
-                consumerTenantName.Value,
-                Optional.ToNullable(createdAt),
-                Optional.ToNullable(expirationDate),
-                providerEmail.Value,
-                providerName.Value,
-                Optional.ToNullable(sharedAt),
-                shareSubscriptionObjectId.Value,
-                Optional.ToNullable(shareSubscriptionStatus),
+                systemData,
+                consumerEmail,
+                consumerName,
+                consumerTenantName,
+                createdAt,
+                expirationDate,
+                providerEmail,
+                providerName,
+                sharedAt,
+                shareSubscriptionObjectId,
+                shareSubscriptionStatus,
                 serializedAdditionalRawData);
         }
 

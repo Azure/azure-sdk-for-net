@@ -129,13 +129,13 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IPAddress> serviceIPAddress = default;
-            Optional<IPAddress> internalIPAddress = default;
+            SystemData systemData = default;
+            IPAddress serviceIPAddress = default;
+            IPAddress internalIPAddress = default;
             IList<IPAddress> outboundIPAddresses = default;
             IList<VirtualIPMapping> vipMappings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -246,12 +246,12 @@ namespace Azure.ResourceManager.AppService.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                serviceIPAddress.Value,
-                internalIPAddress.Value,
+                systemData,
+                serviceIPAddress,
+                internalIPAddress,
                 outboundIPAddresses ?? new ChangeTrackingList<IPAddress>(),
                 vipMappings ?? new ChangeTrackingList<VirtualIPMapping>(),
-                kind.Value,
+                kind,
                 serializedAdditionalRawData);
         }
 

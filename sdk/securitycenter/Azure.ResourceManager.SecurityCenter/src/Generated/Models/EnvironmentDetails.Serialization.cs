@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> nativeResourceId = default;
-            Optional<string> environmentHierarchyId = default;
-            Optional<string> organizationalHierarchyId = default;
-            Optional<string> subscriptionId = default;
-            Optional<Guid> tenantId = default;
+            ResourceIdentifier nativeResourceId = default;
+            string environmentHierarchyId = default;
+            string organizationalHierarchyId = default;
+            string subscriptionId = default;
+            Guid? tenantId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,11 +138,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new EnvironmentDetails(
-                nativeResourceId.Value,
-                environmentHierarchyId.Value,
-                organizationalHierarchyId.Value,
-                subscriptionId.Value,
-                Optional.ToNullable(tenantId),
+                nativeResourceId,
+                environmentHierarchyId,
+                organizationalHierarchyId,
+                subscriptionId,
+                tenantId,
                 serializedAdditionalRawData);
         }
 

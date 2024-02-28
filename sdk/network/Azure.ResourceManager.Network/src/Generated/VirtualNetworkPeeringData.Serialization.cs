@@ -160,24 +160,24 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<bool> allowVirtualNetworkAccess = default;
-            Optional<bool> allowForwardedTraffic = default;
-            Optional<bool> allowGatewayTransit = default;
-            Optional<bool> useRemoteGateways = default;
-            Optional<WritableSubResource> remoteVirtualNetwork = default;
-            Optional<AddressSpace> remoteAddressSpace = default;
-            Optional<AddressSpace> remoteVirtualNetworkAddressSpace = default;
-            Optional<VirtualNetworkBgpCommunities> remoteBgpCommunities = default;
-            Optional<VirtualNetworkEncryption> remoteVirtualNetworkEncryption = default;
-            Optional<VirtualNetworkPeeringState> peeringState = default;
-            Optional<VirtualNetworkPeeringLevel> peeringSyncLevel = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<bool> doNotVerifyRemoteGateways = default;
-            Optional<Guid> resourceGuid = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            bool? allowVirtualNetworkAccess = default;
+            bool? allowForwardedTraffic = default;
+            bool? allowGatewayTransit = default;
+            bool? useRemoteGateways = default;
+            WritableSubResource remoteVirtualNetwork = default;
+            AddressSpace remoteAddressSpace = default;
+            AddressSpace remoteVirtualNetworkAddressSpace = default;
+            VirtualNetworkBgpCommunities remoteBgpCommunities = default;
+            VirtualNetworkEncryption remoteVirtualNetworkEncryption = default;
+            VirtualNetworkPeeringState? peeringState = default;
+            VirtualNetworkPeeringLevel? peeringSyncLevel = default;
+            NetworkProvisioningState? provisioningState = default;
+            bool? doNotVerifyRemoteGateways = default;
+            Guid? resourceGuid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -359,25 +359,25 @@ namespace Azure.ResourceManager.Network
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new VirtualNetworkPeeringData(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
+                id,
+                name,
+                type,
                 serializedAdditionalRawData,
-                Optional.ToNullable(etag),
-                Optional.ToNullable(allowVirtualNetworkAccess),
-                Optional.ToNullable(allowForwardedTraffic),
-                Optional.ToNullable(allowGatewayTransit),
-                Optional.ToNullable(useRemoteGateways),
+                etag,
+                allowVirtualNetworkAccess,
+                allowForwardedTraffic,
+                allowGatewayTransit,
+                useRemoteGateways,
                 remoteVirtualNetwork,
-                remoteAddressSpace.Value,
-                remoteVirtualNetworkAddressSpace.Value,
-                remoteBgpCommunities.Value,
-                remoteVirtualNetworkEncryption.Value,
-                Optional.ToNullable(peeringState),
-                Optional.ToNullable(peeringSyncLevel),
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(doNotVerifyRemoteGateways),
-                Optional.ToNullable(resourceGuid));
+                remoteAddressSpace,
+                remoteVirtualNetworkAddressSpace,
+                remoteBgpCommunities,
+                remoteVirtualNetworkEncryption,
+                peeringState,
+                peeringSyncLevel,
+                provisioningState,
+                doNotVerifyRemoteGateways,
+                resourceGuid);
         }
 
         BinaryData IPersistableModel<VirtualNetworkPeeringData>.Write(ModelReaderWriterOptions options)

@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Cdn.Models
             string resourceGroupName = default;
             string vaultName = default;
             string secretName = default;
-            Optional<string> secretVersion = default;
+            string secretVersion = default;
             CertificateUpdateAction updateRule = default;
             CertificateDeleteAction deleteRule = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 resourceGroupName,
                 vaultName,
                 secretName,
-                secretVersion.Value,
+                secretVersion,
                 updateRule,
                 deleteRule,
                 serializedAdditionalRawData);

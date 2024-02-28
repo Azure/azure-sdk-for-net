@@ -122,12 +122,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<MigrateSqlServerSqlMISyncTaskInput> input = default;
+            MigrateSqlServerSqlMISyncTaskInput input = default;
             IReadOnlyList<MigrateSqlServerSqlMISyncTaskOutput> output = default;
-            Optional<string> createdOn = default;
+            string createdOn = default;
             TaskType taskType = default;
             IReadOnlyList<ODataError> errors = default;
-            Optional<TaskState> state = default;
+            TaskState? state = default;
             IReadOnlyList<CommandProperties> commands = default;
             IDictionary<string, string> clientData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -227,13 +227,13 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateSqlServerSqlMISyncTaskProperties(
                 taskType,
                 errors ?? new ChangeTrackingList<ODataError>(),
-                Optional.ToNullable(state),
+                state,
                 commands ?? new ChangeTrackingList<CommandProperties>(),
                 clientData ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
-                input.Value,
+                input,
                 output ?? new ChangeTrackingList<MigrateSqlServerSqlMISyncTaskOutput>(),
-                createdOn.Value);
+                createdOn);
         }
 
         BinaryData IPersistableModel<MigrateSqlServerSqlMISyncTaskProperties>.Write(ModelReaderWriterOptions options)

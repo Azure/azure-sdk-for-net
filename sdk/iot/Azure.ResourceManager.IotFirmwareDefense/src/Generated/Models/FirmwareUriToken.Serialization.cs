@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            Optional<Uri> uri = default;
+            Uri uri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirmwareUriToken(uri.Value, serializedAdditionalRawData);
+            return new FirmwareUriToken(uri, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirmwareUriToken>.Write(ModelReaderWriterOptions options)

@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             IList<MapperTable> targetEntities = default;
-            Optional<MapperConnection> connection = default;
+            MapperConnection connection = default;
             IList<DataMapperMapping> dataMapperMappings = default;
             IList<BinaryData> relationships = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MapperTargetConnectionsInfo(targetEntities ?? new ChangeTrackingList<MapperTable>(), connection.Value, dataMapperMappings ?? new ChangeTrackingList<DataMapperMapping>(), relationships ?? new ChangeTrackingList<BinaryData>(), serializedAdditionalRawData);
+            return new MapperTargetConnectionsInfo(targetEntities ?? new ChangeTrackingList<MapperTable>(), connection, dataMapperMappings ?? new ChangeTrackingList<DataMapperMapping>(), relationships ?? new ChangeTrackingList<BinaryData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MapperTargetConnectionsInfo>.Write(ModelReaderWriterOptions options)

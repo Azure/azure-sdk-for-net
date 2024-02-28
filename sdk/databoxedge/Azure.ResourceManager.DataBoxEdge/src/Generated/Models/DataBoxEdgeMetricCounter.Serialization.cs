@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 return null;
             }
             string name = default;
-            Optional<string> instance = default;
+            string instance = default;
             IList<DataBoxEdgeMetricDimension> dimensionFilter = default;
             IList<DataBoxEdgeMetricDimension> additionalDimensions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeMetricCounter(name, instance.Value, dimensionFilter ?? new ChangeTrackingList<DataBoxEdgeMetricDimension>(), additionalDimensions ?? new ChangeTrackingList<DataBoxEdgeMetricDimension>(), serializedAdditionalRawData);
+            return new DataBoxEdgeMetricCounter(name, instance, dimensionFilter ?? new ChangeTrackingList<DataBoxEdgeMetricDimension>(), additionalDimensions ?? new ChangeTrackingList<DataBoxEdgeMetricDimension>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeMetricCounter>.Write(ModelReaderWriterOptions options)

@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<Guid> tenantId = default;
+            Guid? tenantId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedByTenant(Optional.ToNullable(tenantId), serializedAdditionalRawData);
+            return new ManagedByTenant(tenantId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedByTenant>.Write(ModelReaderWriterOptions options)

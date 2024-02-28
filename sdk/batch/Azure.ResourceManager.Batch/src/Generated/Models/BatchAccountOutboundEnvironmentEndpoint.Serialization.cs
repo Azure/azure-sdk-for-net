@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<string> category = default;
+            string category = default;
             IReadOnlyList<BatchAccountEndpointDependency> endpoints = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchAccountOutboundEnvironmentEndpoint(category.Value, endpoints ?? new ChangeTrackingList<BatchAccountEndpointDependency>(), serializedAdditionalRawData);
+            return new BatchAccountOutboundEnvironmentEndpoint(category, endpoints ?? new ChangeTrackingList<BatchAccountEndpointDependency>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchAccountOutboundEnvironmentEndpoint>.Write(ModelReaderWriterOptions options)

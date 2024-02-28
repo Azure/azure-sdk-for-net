@@ -29,7 +29,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 return null;
             }
-            Optional<string> connectionString = default;
+            string connectionString = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("connectionString"u8))
@@ -38,7 +38,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new AzureSQLConnectionStringParam(connectionString.Value);
+            return new AzureSQLConnectionStringParam(connectionString);
         }
     }
 }

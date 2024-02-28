@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 return null;
             }
             IotSecurityRecommendationType recommendationType = default;
-            Optional<string> name = default;
+            string name = default;
             RecommendationConfigStatus status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecommendationConfigurationProperties(recommendationType, name.Value, status, serializedAdditionalRawData);
+            return new RecommendationConfigurationProperties(recommendationType, name, status, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecommendationConfigurationProperties>.Write(ModelReaderWriterOptions options)

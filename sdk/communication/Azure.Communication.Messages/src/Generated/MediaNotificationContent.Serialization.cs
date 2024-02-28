@@ -83,7 +83,7 @@ namespace Azure.Communication.Messages
             {
                 return null;
             }
-            Optional<string> content = default;
+            string content = default;
             Uri mediaUri = default;
             Guid channelRegistrationId = default;
             IList<string> to = default;
@@ -133,7 +133,7 @@ namespace Azure.Communication.Messages
                 to,
                 kind,
                 serializedAdditionalRawData,
-                content.Value,
+                content,
                 mediaUri);
         }
 

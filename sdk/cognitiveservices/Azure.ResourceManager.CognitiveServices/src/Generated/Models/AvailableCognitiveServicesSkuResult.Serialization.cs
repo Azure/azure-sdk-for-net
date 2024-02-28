@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 return null;
             }
             IReadOnlyList<AvailableCognitiveServicesSku> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailableCognitiveServicesSkuResult(value, nextLink.Value, serializedAdditionalRawData);
+            return new AvailableCognitiveServicesSkuResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailableCognitiveServicesSkuResult>.Write(ModelReaderWriterOptions options)

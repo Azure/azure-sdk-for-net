@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<ImageMappingRuleProfile> imageMappingRuleProfile = default;
-            Optional<ApplicationEnablement> applicationEnablement = default;
+            ImageMappingRuleProfile imageMappingRuleProfile = default;
+            ApplicationEnablement? applicationEnablement = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureOperatorNexusImageDeployMappingRuleProfile(Optional.ToNullable(applicationEnablement), serializedAdditionalRawData, imageMappingRuleProfile.Value);
+            return new AzureOperatorNexusImageDeployMappingRuleProfile(applicationEnablement, serializedAdditionalRawData, imageMappingRuleProfile);
         }
 
         BinaryData IPersistableModel<AzureOperatorNexusImageDeployMappingRuleProfile>.Write(ModelReaderWriterOptions options)

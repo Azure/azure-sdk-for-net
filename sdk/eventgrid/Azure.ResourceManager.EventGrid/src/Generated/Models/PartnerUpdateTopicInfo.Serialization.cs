@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<PartnerTopicEventTypeInfo> eventTypeInfo = default;
+            PartnerTopicEventTypeInfo eventTypeInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PartnerUpdateTopicInfo(eventTypeInfo.Value, serializedAdditionalRawData);
+            return new PartnerUpdateTopicInfo(eventTypeInfo, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PartnerUpdateTopicInfo>.Write(ModelReaderWriterOptions options)

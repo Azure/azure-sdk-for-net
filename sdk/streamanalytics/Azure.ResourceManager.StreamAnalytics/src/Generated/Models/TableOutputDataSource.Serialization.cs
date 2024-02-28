@@ -110,13 +110,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             string type = default;
-            Optional<string> accountName = default;
-            Optional<string> accountKey = default;
-            Optional<string> table = default;
-            Optional<string> partitionKey = default;
-            Optional<string> rowKey = default;
+            string accountName = default;
+            string accountKey = default;
+            string table = default;
+            string partitionKey = default;
+            string rowKey = default;
             IList<string> columnsToRemove = default;
-            Optional<int> batchSize = default;
+            int? batchSize = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -195,13 +195,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             return new TableOutputDataSource(
                 type,
                 serializedAdditionalRawData,
-                accountName.Value,
-                accountKey.Value,
-                table.Value,
-                partitionKey.Value,
-                rowKey.Value,
+                accountName,
+                accountKey,
+                table,
+                partitionKey,
+                rowKey,
                 columnsToRemove ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(batchSize));
+                batchSize);
         }
 
         BinaryData IPersistableModel<TableOutputDataSource>.Write(ModelReaderWriterOptions options)

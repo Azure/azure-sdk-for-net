@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<ServiceTagDestination> destination = default;
-            Optional<OutboundRuleCategory> category = default;
-            Optional<OutboundRuleStatus> status = default;
+            ServiceTagDestination destination = default;
+            OutboundRuleCategory? category = default;
+            OutboundRuleStatus? status = default;
             OutboundRuleType type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceTagOutboundRule(Optional.ToNullable(category), Optional.ToNullable(status), type, serializedAdditionalRawData, destination.Value);
+            return new ServiceTagOutboundRule(category, status, type, serializedAdditionalRawData, destination);
         }
 
         BinaryData IPersistableModel<ServiceTagOutboundRule>.Write(ModelReaderWriterOptions options)

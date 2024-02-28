@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             string ruleSetType = default;
             string ruleSetVersion = default;
-            Optional<int> anomalyScore = default;
+            int? anomalyScore = default;
             IList<ManagedRuleGroupOverrideSetting> ruleGroupOverrides = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WafPolicyManagedRuleSet(ruleSetType, ruleSetVersion, Optional.ToNullable(anomalyScore), ruleGroupOverrides ?? new ChangeTrackingList<ManagedRuleGroupOverrideSetting>(), serializedAdditionalRawData);
+            return new WafPolicyManagedRuleSet(ruleSetType, ruleSetVersion, anomalyScore, ruleGroupOverrides ?? new ChangeTrackingList<ManagedRuleGroupOverrideSetting>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WafPolicyManagedRuleSet>.Write(ModelReaderWriterOptions options)

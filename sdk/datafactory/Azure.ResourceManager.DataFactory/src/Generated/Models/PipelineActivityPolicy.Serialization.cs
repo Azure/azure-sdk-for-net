@@ -87,11 +87,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryElement<string>> timeout = default;
-            Optional<DataFactoryElement<int>> retry = default;
-            Optional<int> retryIntervalInSeconds = default;
-            Optional<bool> secureInput = default;
-            Optional<bool> secureOutput = default;
+            DataFactoryElement<string> timeout = default;
+            DataFactoryElement<int> retry = default;
+            int? retryIntervalInSeconds = default;
+            bool? secureInput = default;
+            bool? secureOutput = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -145,11 +145,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new PipelineActivityPolicy(
-                timeout.Value,
-                retry.Value,
-                Optional.ToNullable(retryIntervalInSeconds),
-                Optional.ToNullable(secureInput),
-                Optional.ToNullable(secureOutput),
+                timeout,
+                retry,
+                retryIntervalInSeconds,
+                secureInput,
+                secureOutput,
                 additionalProperties);
         }
 

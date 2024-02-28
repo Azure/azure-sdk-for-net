@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> oldestRecoveryPoint = default;
-            Optional<DateTimeOffset> oldestRecoveryPointInVault = default;
-            Optional<DateTimeOffset> oldestRecoveryPointInArchive = default;
-            Optional<DateTimeOffset> newestRecoveryPointInArchive = default;
-            Optional<int> recoveryPointCount = default;
-            Optional<string> policyState = default;
-            Optional<string> recoveryModel = default;
+            DateTimeOffset? oldestRecoveryPoint = default;
+            DateTimeOffset? oldestRecoveryPointInVault = default;
+            DateTimeOffset? oldestRecoveryPointInArchive = default;
+            DateTimeOffset? newestRecoveryPointInArchive = default;
+            int? recoveryPointCount = default;
+            string policyState = default;
+            string recoveryModel = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -172,13 +172,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new VmWorkloadProtectedItemExtendedInfo(
-                Optional.ToNullable(oldestRecoveryPoint),
-                Optional.ToNullable(oldestRecoveryPointInVault),
-                Optional.ToNullable(oldestRecoveryPointInArchive),
-                Optional.ToNullable(newestRecoveryPointInArchive),
-                Optional.ToNullable(recoveryPointCount),
-                policyState.Value,
-                recoveryModel.Value,
+                oldestRecoveryPoint,
+                oldestRecoveryPointInVault,
+                oldestRecoveryPointInArchive,
+                newestRecoveryPointInArchive,
+                recoveryPointCount,
+                policyState,
+                recoveryModel,
                 serializedAdditionalRawData);
         }
 

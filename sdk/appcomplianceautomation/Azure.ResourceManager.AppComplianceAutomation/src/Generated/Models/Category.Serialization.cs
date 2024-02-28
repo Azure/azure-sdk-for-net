@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 return null;
             }
-            Optional<string> categoryName = default;
-            Optional<CategoryType> categoryType = default;
-            Optional<CategoryStatus> categoryStatus = default;
+            string categoryName = default;
+            CategoryType? categoryType = default;
+            CategoryStatus? categoryStatus = default;
             IReadOnlyList<ControlFamily> controlFamilies = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new Category(categoryName.Value, Optional.ToNullable(categoryType), Optional.ToNullable(categoryStatus), controlFamilies ?? new ChangeTrackingList<ControlFamily>(), serializedAdditionalRawData);
+            return new Category(categoryName, categoryType, categoryStatus, controlFamilies ?? new ChangeTrackingList<ControlFamily>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<Category>.Write(ModelReaderWriterOptions options)

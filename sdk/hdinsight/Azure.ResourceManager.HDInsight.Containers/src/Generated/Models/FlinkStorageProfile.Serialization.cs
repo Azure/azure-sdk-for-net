@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 return null;
             }
             string storageUri = default;
-            Optional<string> storagekey = default;
+            string storagekey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FlinkStorageProfile(storageUri, storagekey.Value, serializedAdditionalRawData);
+            return new FlinkStorageProfile(storageUri, storagekey, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FlinkStorageProfile>.Write(ModelReaderWriterOptions options)

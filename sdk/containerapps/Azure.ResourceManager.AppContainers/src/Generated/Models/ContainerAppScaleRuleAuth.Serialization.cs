@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> secretRef = default;
-            Optional<string> triggerParameter = default;
+            string secretRef = default;
+            string triggerParameter = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppScaleRuleAuth(secretRef.Value, triggerParameter.Value, serializedAdditionalRawData);
+            return new ContainerAppScaleRuleAuth(secretRef, triggerParameter, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppScaleRuleAuth>.Write(ModelReaderWriterOptions options)

@@ -191,18 +191,18 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> binaryHardeningId = default;
-            Optional<string> architecture = default;
-            Optional<string> filePath = default;
-            Optional<string> @class = default;
-            Optional<string> runpath = default;
-            Optional<string> rpath = default;
-            Optional<bool> nx = default;
-            Optional<bool> pie = default;
-            Optional<bool> relro = default;
-            Optional<bool> canary = default;
-            Optional<bool> stripped = default;
+            SystemData systemData = default;
+            string binaryHardeningId = default;
+            string architecture = default;
+            string filePath = default;
+            string @class = default;
+            string runpath = default;
+            string rpath = default;
+            bool? nx = default;
+            bool? pie = default;
+            bool? relro = default;
+            bool? canary = default;
+            bool? stripped = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -370,18 +370,18 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                binaryHardeningId.Value,
-                architecture.Value,
-                filePath.Value,
-                @class.Value,
-                runpath.Value,
-                rpath.Value,
-                Optional.ToNullable(nx),
-                Optional.ToNullable(pie),
-                Optional.ToNullable(relro),
-                Optional.ToNullable(canary),
-                Optional.ToNullable(stripped),
+                systemData,
+                binaryHardeningId,
+                architecture,
+                filePath,
+                @class,
+                runpath,
+                rpath,
+                nx,
+                pie,
+                relro,
+                canary,
+                stripped,
                 serializedAdditionalRawData);
         }
 

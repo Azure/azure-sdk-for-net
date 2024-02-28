@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<AppPlatformMonitoringSettingState> provisioningState = default;
-            Optional<AppPlatformErrorInfo> error = default;
-            Optional<bool> traceEnabled = default;
-            Optional<string> appInsightsInstrumentationKey = default;
-            Optional<double> appInsightsSamplingRate = default;
-            Optional<ApplicationInsightsAgentVersions> appInsightsAgentVersions = default;
+            AppPlatformMonitoringSettingState? provisioningState = default;
+            AppPlatformErrorInfo error = default;
+            bool? traceEnabled = default;
+            string appInsightsInstrumentationKey = default;
+            double? appInsightsSamplingRate = default;
+            ApplicationInsightsAgentVersions appInsightsAgentVersions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -161,12 +161,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AppPlatformMonitoringSettingProperties(
-                Optional.ToNullable(provisioningState),
-                error.Value,
-                Optional.ToNullable(traceEnabled),
-                appInsightsInstrumentationKey.Value,
-                Optional.ToNullable(appInsightsSamplingRate),
-                appInsightsAgentVersions.Value,
+                provisioningState,
+                error,
+                traceEnabled,
+                appInsightsInstrumentationKey,
+                appInsightsSamplingRate,
+                appInsightsAgentVersions,
                 serializedAdditionalRawData);
         }
 

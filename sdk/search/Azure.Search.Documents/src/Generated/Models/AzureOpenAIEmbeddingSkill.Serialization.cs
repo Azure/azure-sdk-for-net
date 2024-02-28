@@ -84,14 +84,14 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<Uri> resourceUri = default;
-            Optional<string> deploymentId = default;
-            Optional<string> apiKey = default;
-            Optional<SearchIndexerDataIdentity> authIdentity = default;
+            Uri resourceUri = default;
+            string deploymentId = default;
+            string apiKey = default;
+            SearchIndexerDataIdentity authIdentity = default;
             string odataType = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<string> context = default;
+            string name = default;
+            string description = default;
+            string context = default;
             IList<InputFieldMappingEntry> inputs = default;
             IList<OutputFieldMappingEntry> outputs = default;
             foreach (var property in element.EnumerateObject())
@@ -168,15 +168,15 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             return new AzureOpenAIEmbeddingSkill(
                 odataType,
-                name.Value,
-                description.Value,
-                context.Value,
+                name,
+                description,
+                context,
                 inputs,
                 outputs,
-                resourceUri.Value,
-                deploymentId.Value,
-                apiKey.Value,
-                authIdentity.Value);
+                resourceUri,
+                deploymentId,
+                apiKey,
+                authIdentity);
         }
     }
 }

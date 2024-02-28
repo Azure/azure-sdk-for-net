@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             SslProtocolMatchConditionType typeName = default;
             SslProtocolOperator @operator = default;
-            Optional<bool> negateCondition = default;
+            bool? negateCondition = default;
             IList<DeliveryRuleSslProtocol> matchValues = default;
             IList<PreTransformCategory> transforms = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Cdn.Models
             return new DeliveryRuleSslProtocolMatchCondition(
                 typeName,
                 @operator,
-                Optional.ToNullable(negateCondition),
+                negateCondition,
                 matchValues ?? new ChangeTrackingList<DeliveryRuleSslProtocol>(),
                 transforms ?? new ChangeTrackingList<PreTransformCategory>(),
                 serializedAdditionalRawData);

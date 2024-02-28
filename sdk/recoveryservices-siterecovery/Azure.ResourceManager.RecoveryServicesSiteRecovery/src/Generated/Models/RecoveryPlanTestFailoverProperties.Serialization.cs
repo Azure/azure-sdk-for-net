@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             PossibleOperationsDirection failoverDirection = default;
             string networkType = default;
-            Optional<ResourceIdentifier> networkId = default;
+            ResourceIdentifier networkId = default;
             IList<RecoveryPlanProviderSpecificFailoverContent> providerSpecificDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecoveryPlanTestFailoverProperties(failoverDirection, networkType, networkId.Value, providerSpecificDetails ?? new ChangeTrackingList<RecoveryPlanProviderSpecificFailoverContent>(), serializedAdditionalRawData);
+            return new RecoveryPlanTestFailoverProperties(failoverDirection, networkType, networkId, providerSpecificDetails ?? new ChangeTrackingList<RecoveryPlanProviderSpecificFailoverContent>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecoveryPlanTestFailoverProperties>.Write(ModelReaderWriterOptions options)

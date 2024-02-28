@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
             IList<RulesEngineHeaderAction> requestHeaderActions = default;
             IList<RulesEngineHeaderAction> responseHeaderActions = default;
-            Optional<RouteConfiguration> routeConfigurationOverride = default;
+            RouteConfiguration routeConfigurationOverride = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RulesEngineAction(requestHeaderActions ?? new ChangeTrackingList<RulesEngineHeaderAction>(), responseHeaderActions ?? new ChangeTrackingList<RulesEngineHeaderAction>(), routeConfigurationOverride.Value, serializedAdditionalRawData);
+            return new RulesEngineAction(requestHeaderActions ?? new ChangeTrackingList<RulesEngineHeaderAction>(), responseHeaderActions ?? new ChangeTrackingList<RulesEngineHeaderAction>(), routeConfigurationOverride, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RulesEngineAction>.Write(ModelReaderWriterOptions options)

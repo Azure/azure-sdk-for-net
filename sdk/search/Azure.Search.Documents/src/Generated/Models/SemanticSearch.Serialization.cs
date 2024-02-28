@@ -40,7 +40,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<string> defaultConfiguration = default;
+            string defaultConfiguration = default;
             IList<SemanticConfiguration> configurations = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -64,7 +64,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SemanticSearch(defaultConfiguration.Value, configurations ?? new ChangeTrackingList<SemanticConfiguration>());
+            return new SemanticSearch(defaultConfiguration, configurations ?? new ChangeTrackingList<SemanticConfiguration>());
         }
     }
 }

@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> operationId = default;
-            Optional<ArmDeploymentOperationProperties> properties = default;
+            string id = default;
+            string operationId = default;
+            ArmDeploymentOperationProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmDeploymentOperation(id.Value, operationId.Value, properties.Value, serializedAdditionalRawData);
+            return new ArmDeploymentOperation(id, operationId, properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArmDeploymentOperation>.Write(ModelReaderWriterOptions options)

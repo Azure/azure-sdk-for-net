@@ -166,17 +166,17 @@ namespace Azure.ResourceManager.Logic
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<LogicWorkflowStatus> status = default;
-            Optional<string> code = default;
-            Optional<BinaryData> error = default;
-            Optional<Guid> trackingId = default;
-            Optional<LogicWorkflowRunActionCorrelation> correlation = default;
-            Optional<LogicContentLink> inputsLink = default;
-            Optional<LogicContentLink> outputsLink = default;
-            Optional<BinaryData> trackedProperties = default;
+            SystemData systemData = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            LogicWorkflowStatus? status = default;
+            string code = default;
+            BinaryData error = default;
+            Guid? trackingId = default;
+            LogicWorkflowRunActionCorrelation correlation = default;
+            LogicContentLink inputsLink = default;
+            LogicContentLink outputsLink = default;
+            BinaryData trackedProperties = default;
             IReadOnlyList<LogicWorkRetryHistory> retryHistory = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -328,17 +328,17 @@ namespace Azure.ResourceManager.Logic
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(startTime),
-                Optional.ToNullable(endTime),
-                Optional.ToNullable(status),
-                code.Value,
-                error.Value,
-                Optional.ToNullable(trackingId),
-                correlation.Value,
-                inputsLink.Value,
-                outputsLink.Value,
-                trackedProperties.Value,
+                systemData,
+                startTime,
+                endTime,
+                status,
+                code,
+                error,
+                trackingId,
+                correlation,
+                inputsLink,
+                outputsLink,
+                trackedProperties,
                 retryHistory ?? new ChangeTrackingList<LogicWorkRetryHistory>(),
                 serializedAdditionalRawData);
         }

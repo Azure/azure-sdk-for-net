@@ -99,8 +99,8 @@ namespace Azure.ResourceManager.HybridContainerService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<HybridContainerServiceResourceProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            HybridContainerServiceResourceProvisioningState? provisioningState = default;
             ProvisionedClusterPoolUpgradeProfile controlPlaneProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -166,8 +166,8 @@ namespace Azure.ResourceManager.HybridContainerService
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(provisioningState),
+                systemData,
+                provisioningState,
                 controlPlaneProfile,
                 serializedAdditionalRawData);
         }

@@ -167,22 +167,22 @@ namespace Azure.ResourceManager.CustomerInsights
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> connectorName = default;
-            Optional<ConnectorType> connectorType = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<DateTimeOffset> lastModified = default;
-            Optional<EntityType> entityType = default;
-            Optional<string> entityTypeName = default;
-            Optional<string> connectorMappingName = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<string> dataFormatId = default;
-            Optional<ConnectorMappingProperties> mappingProperties = default;
-            Optional<DateTimeOffset> nextRunTime = default;
-            Optional<string> runId = default;
-            Optional<ConnectorMappingState> state = default;
-            Optional<Guid> tenantId = default;
+            SystemData systemData = default;
+            string connectorName = default;
+            ConnectorType? connectorType = default;
+            DateTimeOffset? created = default;
+            DateTimeOffset? lastModified = default;
+            EntityType? entityType = default;
+            string entityTypeName = default;
+            string connectorMappingName = default;
+            string displayName = default;
+            string description = default;
+            string dataFormatId = default;
+            ConnectorMappingProperties mappingProperties = default;
+            DateTimeOffset? nextRunTime = default;
+            string runId = default;
+            ConnectorMappingState? state = default;
+            Guid? tenantId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -340,22 +340,22 @@ namespace Azure.ResourceManager.CustomerInsights
                 id,
                 name,
                 type,
-                systemData.Value,
-                connectorName.Value,
-                Optional.ToNullable(connectorType),
-                Optional.ToNullable(created),
-                Optional.ToNullable(lastModified),
-                Optional.ToNullable(entityType),
-                entityTypeName.Value,
-                connectorMappingName.Value,
-                displayName.Value,
-                description.Value,
-                dataFormatId.Value,
-                mappingProperties.Value,
-                Optional.ToNullable(nextRunTime),
-                runId.Value,
-                Optional.ToNullable(state),
-                Optional.ToNullable(tenantId),
+                systemData,
+                connectorName,
+                connectorType,
+                created,
+                lastModified,
+                entityType,
+                entityTypeName,
+                connectorMappingName,
+                displayName,
+                description,
+                dataFormatId,
+                mappingProperties,
+                nextRunTime,
+                runId,
+                state,
+                tenantId,
                 serializedAdditionalRawData);
         }
 

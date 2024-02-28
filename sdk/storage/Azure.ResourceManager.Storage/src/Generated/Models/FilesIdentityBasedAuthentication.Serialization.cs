@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.Storage.Models
                 return null;
             }
             DirectoryServiceOption directoryServiceOptions = default;
-            Optional<StorageActiveDirectoryProperties> activeDirectoryProperties = default;
-            Optional<DefaultSharePermission> defaultSharePermission = default;
+            StorageActiveDirectoryProperties activeDirectoryProperties = default;
+            DefaultSharePermission? defaultSharePermission = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FilesIdentityBasedAuthentication(directoryServiceOptions, activeDirectoryProperties.Value, Optional.ToNullable(defaultSharePermission), serializedAdditionalRawData);
+            return new FilesIdentityBasedAuthentication(directoryServiceOptions, activeDirectoryProperties, defaultSharePermission, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FilesIdentityBasedAuthentication>.Write(ModelReaderWriterOptions options)

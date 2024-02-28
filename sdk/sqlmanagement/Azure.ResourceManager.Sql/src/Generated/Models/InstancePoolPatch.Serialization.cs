@@ -108,13 +108,13 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<SqlSku> sku = default;
+            SqlSku sku = default;
             IDictionary<string, string> tags = default;
-            Optional<ResourceIdentifier> subnetId = default;
-            Optional<int> vCores = default;
-            Optional<InstancePoolLicenseType> licenseType = default;
-            Optional<string> dnsZone = default;
-            Optional<ResourceIdentifier> maintenanceConfigurationId = default;
+            ResourceIdentifier subnetId = default;
+            int? vCores = default;
+            InstancePoolLicenseType? licenseType = default;
+            string dnsZone = default;
+            ResourceIdentifier maintenanceConfigurationId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -202,13 +202,13 @@ namespace Azure.ResourceManager.Sql.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new InstancePoolPatch(
-                sku.Value,
+                sku,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                subnetId.Value,
-                Optional.ToNullable(vCores),
-                Optional.ToNullable(licenseType),
-                dnsZone.Value,
-                maintenanceConfigurationId.Value,
+                subnetId,
+                vCores,
+                licenseType,
+                dnsZone,
+                maintenanceConfigurationId,
                 serializedAdditionalRawData);
         }
 

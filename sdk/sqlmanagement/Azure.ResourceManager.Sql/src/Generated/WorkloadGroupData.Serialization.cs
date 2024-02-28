@@ -121,13 +121,13 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> minResourcePercent = default;
-            Optional<int> maxResourcePercent = default;
-            Optional<double> minResourcePercentPerRequest = default;
-            Optional<double> maxResourcePercentPerRequest = default;
-            Optional<string> importance = default;
-            Optional<int> queryExecutionTimeout = default;
+            SystemData systemData = default;
+            int? minResourcePercent = default;
+            int? maxResourcePercent = default;
+            double? minResourcePercentPerRequest = default;
+            double? maxResourcePercentPerRequest = default;
+            string importance = default;
+            int? queryExecutionTimeout = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -228,13 +228,13 @@ namespace Azure.ResourceManager.Sql
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(minResourcePercent),
-                Optional.ToNullable(maxResourcePercent),
-                Optional.ToNullable(minResourcePercentPerRequest),
-                Optional.ToNullable(maxResourcePercentPerRequest),
-                importance.Value,
-                Optional.ToNullable(queryExecutionTimeout),
+                systemData,
+                minResourcePercent,
+                maxResourcePercent,
+                minResourcePercentPerRequest,
+                maxResourcePercentPerRequest,
+                importance,
+                queryExecutionTimeout,
                 serializedAdditionalRawData);
         }
 

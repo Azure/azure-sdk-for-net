@@ -138,17 +138,17 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
             IList<WritableSubResource> frontendEndpoints = default;
             IList<FrontDoorProtocol> acceptedProtocols = default;
             IList<string> patternsToMatch = default;
-            Optional<RoutingRuleEnabledState> enabledState = default;
-            Optional<RouteConfiguration> routeConfiguration = default;
-            Optional<WritableSubResource> rulesEngine = default;
-            Optional<WritableSubResource> webApplicationFirewallPolicyLink = default;
-            Optional<FrontDoorResourceState> resourceState = default;
+            RoutingRuleEnabledState? enabledState = default;
+            RouteConfiguration routeConfiguration = default;
+            WritableSubResource rulesEngine = default;
+            WritableSubResource webApplicationFirewallPolicyLink = default;
+            FrontDoorResourceState? resourceState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -282,18 +282,18 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new RoutingRuleData(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
+                id,
+                name,
+                type,
                 serializedAdditionalRawData,
                 frontendEndpoints ?? new ChangeTrackingList<WritableSubResource>(),
                 acceptedProtocols ?? new ChangeTrackingList<FrontDoorProtocol>(),
                 patternsToMatch ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(enabledState),
-                routeConfiguration.Value,
+                enabledState,
+                routeConfiguration,
                 rulesEngine,
                 webApplicationFirewallPolicyLink,
-                Optional.ToNullable(resourceState));
+                resourceState);
         }
 
         BinaryData IPersistableModel<RoutingRuleData>.Write(ModelReaderWriterOptions options)

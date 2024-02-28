@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<LldpNeighbor> lldpNeighbor = default;
-            Optional<string> macAddress = default;
-            Optional<string> name = default;
+            LldpNeighbor lldpNeighbor = default;
+            string macAddress = default;
+            string name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudNic(lldpNeighbor.Value, macAddress.Value, name.Value, serializedAdditionalRawData);
+            return new NetworkCloudNic(lldpNeighbor, macAddress, name, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudNic>.Write(ModelReaderWriterOptions options)

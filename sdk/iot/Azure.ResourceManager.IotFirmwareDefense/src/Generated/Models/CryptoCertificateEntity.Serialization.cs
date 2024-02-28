@@ -124,11 +124,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            Optional<string> commonName = default;
-            Optional<string> organization = default;
-            Optional<string> organizationalUnit = default;
-            Optional<string> state = default;
-            Optional<string> country = default;
+            string commonName = default;
+            string organization = default;
+            string organizationalUnit = default;
+            string state = default;
+            string country = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -190,11 +190,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new CryptoCertificateEntity(
-                commonName.Value,
-                organization.Value,
-                organizationalUnit.Value,
-                state.Value,
-                country.Value,
+                commonName,
+                organization,
+                organizationalUnit,
+                state,
+                country,
                 serializedAdditionalRawData);
         }
 

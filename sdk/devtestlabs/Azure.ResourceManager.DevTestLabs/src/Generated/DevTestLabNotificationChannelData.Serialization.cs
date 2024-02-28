@@ -152,15 +152,15 @@ namespace Azure.ResourceManager.DevTestLabs
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Uri> webHookUrl = default;
-            Optional<string> emailRecipient = default;
-            Optional<string> notificationLocale = default;
-            Optional<string> description = default;
+            SystemData systemData = default;
+            Uri webHookUrl = default;
+            string emailRecipient = default;
+            string notificationLocale = default;
+            string description = default;
             IList<DevTestLabNotificationChannelEvent> events = default;
-            Optional<DateTimeOffset> createdDate = default;
-            Optional<string> provisioningState = default;
-            Optional<Guid> uniqueIdentifier = default;
+            DateTimeOffset? createdDate = default;
+            string provisioningState = default;
+            Guid? uniqueIdentifier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -291,17 +291,17 @@ namespace Azure.ResourceManager.DevTestLabs
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                webHookUrl.Value,
-                emailRecipient.Value,
-                notificationLocale.Value,
-                description.Value,
+                webHookUrl,
+                emailRecipient,
+                notificationLocale,
+                description,
                 events ?? new ChangeTrackingList<DevTestLabNotificationChannelEvent>(),
-                Optional.ToNullable(createdDate),
-                provisioningState.Value,
-                Optional.ToNullable(uniqueIdentifier),
+                createdDate,
+                provisioningState,
+                uniqueIdentifier,
                 serializedAdditionalRawData);
         }
 

@@ -99,8 +99,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ServerVulnerabilityAssessmentsAzureSettingSelectedProvider> selectedProvider = default;
+            SystemData systemData = default;
+            ServerVulnerabilityAssessmentsAzureSettingSelectedProvider? selectedProvider = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,10 +165,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 kind,
                 serializedAdditionalRawData,
-                Optional.ToNullable(selectedProvider));
+                selectedProvider);
         }
 
         BinaryData IPersistableModel<AzureServersSetting>.Write(ModelReaderWriterOptions options)

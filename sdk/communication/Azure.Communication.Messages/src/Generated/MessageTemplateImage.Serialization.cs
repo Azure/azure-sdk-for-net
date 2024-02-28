@@ -82,8 +82,8 @@ namespace Azure.Communication.Messages
                 return null;
             }
             Uri url = default;
-            Optional<string> caption = default;
-            Optional<string> fileName = default;
+            string caption = default;
+            string fileName = default;
             string name = default;
             string kind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -126,8 +126,8 @@ namespace Azure.Communication.Messages
                 kind,
                 serializedAdditionalRawData,
                 url,
-                caption.Value,
-                fileName.Value);
+                caption,
+                fileName);
         }
 
         BinaryData IPersistableModel<MessageTemplateImage>.Write(ModelReaderWriterOptions options)

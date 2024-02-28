@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> primaryMasterKey = default;
-            Optional<string> secondaryMasterKey = default;
-            Optional<string> primaryReadonlyMasterKey = default;
-            Optional<string> secondaryReadonlyMasterKey = default;
+            string primaryMasterKey = default;
+            string secondaryMasterKey = default;
+            string primaryReadonlyMasterKey = default;
+            string secondaryReadonlyMasterKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBAccountKeyList(primaryReadonlyMasterKey.Value, secondaryReadonlyMasterKey.Value, serializedAdditionalRawData, primaryMasterKey.Value, secondaryMasterKey.Value);
+            return new CosmosDBAccountKeyList(primaryReadonlyMasterKey, secondaryReadonlyMasterKey, serializedAdditionalRawData, primaryMasterKey, secondaryMasterKey);
         }
 
         BinaryData IPersistableModel<CosmosDBAccountKeyList>.Write(ModelReaderWriterOptions options)

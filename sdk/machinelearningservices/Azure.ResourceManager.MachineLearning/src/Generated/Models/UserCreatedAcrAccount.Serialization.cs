@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<ArmResourceId> armResourceId = default;
+            ArmResourceId armResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UserCreatedAcrAccount(armResourceId.Value, serializedAdditionalRawData);
+            return new UserCreatedAcrAccount(armResourceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UserCreatedAcrAccount>.Write(ModelReaderWriterOptions options)

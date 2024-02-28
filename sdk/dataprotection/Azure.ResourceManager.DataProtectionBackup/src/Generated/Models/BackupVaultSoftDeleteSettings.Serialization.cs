@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<BackupVaultSoftDeleteState> state = default;
-            Optional<double> retentionDurationInDays = default;
+            BackupVaultSoftDeleteState? state = default;
+            double? retentionDurationInDays = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupVaultSoftDeleteSettings(Optional.ToNullable(state), Optional.ToNullable(retentionDurationInDays), serializedAdditionalRawData);
+            return new BackupVaultSoftDeleteSettings(state, retentionDurationInDays, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupVaultSoftDeleteSettings>.Write(ModelReaderWriterOptions options)

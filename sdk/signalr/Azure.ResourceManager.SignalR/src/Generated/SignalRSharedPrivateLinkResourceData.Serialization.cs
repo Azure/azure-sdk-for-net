@@ -117,12 +117,12 @@ namespace Azure.ResourceManager.SignalR
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> groupId = default;
-            Optional<ResourceIdentifier> privateLinkResourceId = default;
-            Optional<SignalRProvisioningState> provisioningState = default;
-            Optional<string> requestMessage = default;
-            Optional<SignalRSharedPrivateLinkResourceStatus> status = default;
+            SystemData systemData = default;
+            string groupId = default;
+            ResourceIdentifier privateLinkResourceId = default;
+            SignalRProvisioningState? provisioningState = default;
+            string requestMessage = default;
+            SignalRSharedPrivateLinkResourceStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -210,12 +210,12 @@ namespace Azure.ResourceManager.SignalR
                 id,
                 name,
                 type,
-                systemData.Value,
-                groupId.Value,
-                privateLinkResourceId.Value,
-                Optional.ToNullable(provisioningState),
-                requestMessage.Value,
-                Optional.ToNullable(status),
+                systemData,
+                groupId,
+                privateLinkResourceId,
+                provisioningState,
+                requestMessage,
+                status,
                 serializedAdditionalRawData);
         }
 

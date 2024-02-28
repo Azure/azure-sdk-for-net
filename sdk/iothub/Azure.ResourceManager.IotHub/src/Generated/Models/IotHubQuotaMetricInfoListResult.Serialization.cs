@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 return null;
             }
             IReadOnlyList<IotHubQuotaMetricInfo> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotHubQuotaMetricInfoListResult(value ?? new ChangeTrackingList<IotHubQuotaMetricInfo>(), nextLink.Value, serializedAdditionalRawData);
+            return new IotHubQuotaMetricInfoListResult(value ?? new ChangeTrackingList<IotHubQuotaMetricInfo>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotHubQuotaMetricInfoListResult>.Write(ModelReaderWriterOptions options)

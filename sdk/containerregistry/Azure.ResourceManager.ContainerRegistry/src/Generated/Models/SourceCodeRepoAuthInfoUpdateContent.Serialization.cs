@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<SourceCodeRepoAuthTokenType> tokenType = default;
-            Optional<string> token = default;
-            Optional<string> refreshToken = default;
-            Optional<string> scope = default;
-            Optional<int> expiresIn = default;
+            SourceCodeRepoAuthTokenType? tokenType = default;
+            string token = default;
+            string refreshToken = default;
+            string scope = default;
+            int? expiresIn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,11 +138,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SourceCodeRepoAuthInfoUpdateContent(
-                Optional.ToNullable(tokenType),
-                token.Value,
-                refreshToken.Value,
-                scope.Value,
-                Optional.ToNullable(expiresIn),
+                tokenType,
+                token,
+                refreshToken,
+                scope,
+                expiresIn,
                 serializedAdditionalRawData);
         }
 

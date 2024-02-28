@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<BlobInventoryPolicyFilter> filters = default;
+            BlobInventoryPolicyFilter filters = default;
             BlobInventoryPolicyFormat format = default;
             BlobInventoryPolicySchedule schedule = default;
             BlobInventoryPolicyObjectType objectType = default;
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new BlobInventoryPolicyDefinition(
-                filters.Value,
+                filters,
                 format,
                 schedule,
                 objectType,

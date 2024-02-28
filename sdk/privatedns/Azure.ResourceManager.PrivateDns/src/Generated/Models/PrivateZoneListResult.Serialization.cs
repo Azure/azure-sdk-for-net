@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
                 return null;
             }
             IReadOnlyList<PrivateDnsZoneData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateZoneListResult(value ?? new ChangeTrackingList<PrivateDnsZoneData>(), nextLink.Value, serializedAdditionalRawData);
+            return new PrivateZoneListResult(value ?? new ChangeTrackingList<PrivateDnsZoneData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateZoneListResult>.Write(ModelReaderWriterOptions options)

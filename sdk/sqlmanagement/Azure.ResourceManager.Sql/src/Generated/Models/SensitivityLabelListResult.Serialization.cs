@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Sql.Models
                 return null;
             }
             IReadOnlyList<SensitivityLabelData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SensitivityLabelListResult(value ?? new ChangeTrackingList<SensitivityLabelData>(), nextLink.Value, serializedAdditionalRawData);
+            return new SensitivityLabelListResult(value ?? new ChangeTrackingList<SensitivityLabelData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SensitivityLabelListResult>.Write(ModelReaderWriterOptions options)

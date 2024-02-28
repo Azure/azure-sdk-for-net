@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<Guid> aadClientId = default;
-            Optional<Guid> aadTenantId = default;
-            Optional<Guid> aadServicePrincipalObjectId = default;
-            Optional<Guid> aadApplicationObjectId = default;
+            Guid? aadClientId = default;
+            Guid? aadTenantId = default;
+            Guid? aadServicePrincipalObjectId = default;
+            Guid? aadApplicationObjectId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HciClusterIdentityResult(Optional.ToNullable(aadClientId), Optional.ToNullable(aadTenantId), Optional.ToNullable(aadServicePrincipalObjectId), Optional.ToNullable(aadApplicationObjectId), serializedAdditionalRawData);
+            return new HciClusterIdentityResult(aadClientId, aadTenantId, aadServicePrincipalObjectId, aadApplicationObjectId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HciClusterIdentityResult>.Write(ModelReaderWriterOptions options)

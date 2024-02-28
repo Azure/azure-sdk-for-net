@@ -95,12 +95,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Optional<RecoveryServicesPrivateEndpointConnection> properties = default;
-            Optional<AzureLocation> location = default;
+            RecoveryServicesPrivateEndpointConnection properties = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,9 +157,9 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                properties.Value,
-                Optional.ToNullable(location),
+                systemData,
+                properties,
+                location,
                 serializedAdditionalRawData);
         }
 

@@ -92,12 +92,12 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<NetworkConfiguration> networkConfiguration = default;
-            Optional<SapDatabaseType> databaseType = default;
+            NetworkConfiguration networkConfiguration = default;
+            SapDatabaseType? databaseType = default;
             ResourceIdentifier subnetId = default;
             SapVirtualMachineConfiguration virtualMachineConfiguration = default;
-            Optional<DiskConfiguration> dbDiskConfiguration = default;
-            Optional<SingleServerCustomResourceNames> customResourceNames = default;
+            DiskConfiguration dbDiskConfiguration = default;
+            SingleServerCustomResourceNames customResourceNames = default;
             SapDeploymentType deploymentType = default;
             string appResourceGroup = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -170,12 +170,12 @@ namespace Azure.ResourceManager.Workloads.Models
                 deploymentType,
                 appResourceGroup,
                 serializedAdditionalRawData,
-                networkConfiguration.Value,
-                Optional.ToNullable(databaseType),
+                networkConfiguration,
+                databaseType,
                 subnetId,
                 virtualMachineConfiguration,
-                dbDiskConfiguration.Value,
-                customResourceNames.Value);
+                dbDiskConfiguration,
+                customResourceNames);
         }
 
         BinaryData IPersistableModel<SingleServerConfiguration>.Write(ModelReaderWriterOptions options)

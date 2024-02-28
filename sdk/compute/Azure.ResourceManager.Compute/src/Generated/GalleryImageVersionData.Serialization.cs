@@ -137,13 +137,13 @@ namespace Azure.ResourceManager.Compute
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<GalleryImageVersionPublishingProfile> publishingProfile = default;
-            Optional<GalleryProvisioningState> provisioningState = default;
-            Optional<GalleryImageVersionStorageProfile> storageProfile = default;
-            Optional<GalleryImageVersionSafetyProfile> safetyProfile = default;
-            Optional<ReplicationStatus> replicationStatus = default;
-            Optional<ImageVersionSecurityProfile> securityProfile = default;
+            SystemData systemData = default;
+            GalleryImageVersionPublishingProfile publishingProfile = default;
+            GalleryProvisioningState? provisioningState = default;
+            GalleryImageVersionStorageProfile storageProfile = default;
+            GalleryImageVersionSafetyProfile safetyProfile = default;
+            ReplicationStatus replicationStatus = default;
+            ImageVersionSecurityProfile securityProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -267,15 +267,15 @@ namespace Azure.ResourceManager.Compute
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                publishingProfile.Value,
-                Optional.ToNullable(provisioningState),
-                storageProfile.Value,
-                safetyProfile.Value,
-                replicationStatus.Value,
-                securityProfile.Value,
+                publishingProfile,
+                provisioningState,
+                storageProfile,
+                safetyProfile,
+                replicationStatus,
+                securityProfile,
                 serializedAdditionalRawData);
         }
 

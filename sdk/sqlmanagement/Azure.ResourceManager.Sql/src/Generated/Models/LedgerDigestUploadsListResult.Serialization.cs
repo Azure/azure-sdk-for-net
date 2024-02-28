@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Sql.Models
                 return null;
             }
             IReadOnlyList<LedgerDigestUploadData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LedgerDigestUploadsListResult(value ?? new ChangeTrackingList<LedgerDigestUploadData>(), nextLink.Value, serializedAdditionalRawData);
+            return new LedgerDigestUploadsListResult(value ?? new ChangeTrackingList<LedgerDigestUploadData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LedgerDigestUploadsListResult>.Write(ModelReaderWriterOptions options)

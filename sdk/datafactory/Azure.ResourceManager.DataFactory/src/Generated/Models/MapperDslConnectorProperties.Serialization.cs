@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<BinaryData> value = default;
+            string name = default;
+            BinaryData value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MapperDslConnectorProperties(name.Value, value.Value, serializedAdditionalRawData);
+            return new MapperDslConnectorProperties(name, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MapperDslConnectorProperties>.Write(ModelReaderWriterOptions options)

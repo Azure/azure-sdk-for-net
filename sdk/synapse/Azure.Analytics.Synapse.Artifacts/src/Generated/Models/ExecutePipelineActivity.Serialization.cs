@@ -100,14 +100,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             string name = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<ActivityState> state = default;
-            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
+            string description = default;
+            ActivityState? state = default;
+            ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
             IList<ActivityDependency> dependsOn = default;
             IList<UserProperty> userProperties = default;
             PipelineReference pipeline = default;
             IDictionary<string, object> parameters = default;
-            Optional<bool> waitOnCompletion = default;
+            bool? waitOnCompletion = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -226,15 +226,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new ExecutePipelineActivity(
                 name,
                 type,
-                description.Value,
-                Optional.ToNullable(state),
-                Optional.ToNullable(onInactiveMarkAs),
+                description,
+                state,
+                onInactiveMarkAs,
                 dependsOn ?? new ChangeTrackingList<ActivityDependency>(),
                 userProperties ?? new ChangeTrackingList<UserProperty>(),
                 additionalProperties,
                 pipeline,
                 parameters ?? new ChangeTrackingDictionary<string, object>(),
-                Optional.ToNullable(waitOnCompletion));
+                waitOnCompletion);
         }
 
         internal partial class ExecutePipelineActivityConverter : JsonConverter<ExecutePipelineActivity>

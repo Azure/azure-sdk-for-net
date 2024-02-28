@@ -171,20 +171,20 @@ namespace Azure.ResourceManager.Monitor
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
+            SystemData systemData = default;
+            string description = default;
             int severity = default;
             bool enabled = default;
             IList<string> scopes = default;
             TimeSpan evaluationFrequency = default;
             TimeSpan windowSize = default;
-            Optional<ResourceType> targetResourceType = default;
-            Optional<AzureLocation> targetResourceRegion = default;
+            ResourceType? targetResourceType = default;
+            AzureLocation? targetResourceRegion = default;
             MetricAlertCriteria criteria = default;
-            Optional<bool> autoMitigate = default;
+            bool? autoMitigate = default;
             IList<MetricAlertAction> actions = default;
-            Optional<DateTimeOffset> lastUpdatedTime = default;
-            Optional<bool> isMigrated = default;
+            DateTimeOffset? lastUpdatedTime = default;
+            bool? isMigrated = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -358,22 +358,22 @@ namespace Azure.ResourceManager.Monitor
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                description.Value,
+                description,
                 severity,
                 enabled,
                 scopes,
                 evaluationFrequency,
                 windowSize,
-                Optional.ToNullable(targetResourceType),
-                Optional.ToNullable(targetResourceRegion),
+                targetResourceType,
+                targetResourceRegion,
                 criteria,
-                Optional.ToNullable(autoMitigate),
+                autoMitigate,
                 actions ?? new ChangeTrackingList<MetricAlertAction>(),
-                Optional.ToNullable(lastUpdatedTime),
-                Optional.ToNullable(isMigrated),
+                lastUpdatedTime,
+                isMigrated,
                 serializedAdditionalRawData);
         }
 

@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> meterId = default;
-            Optional<long> quantity = default;
-            Optional<string> extendedUnit = default;
+            string meterId = default;
+            long? quantity = default;
+            string extendedUnit = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementSkuCosts(meterId.Value, Optional.ToNullable(quantity), extendedUnit.Value, serializedAdditionalRawData);
+            return new ApiManagementSkuCosts(meterId, quantity, extendedUnit, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementSkuCosts>.Write(ModelReaderWriterOptions options)

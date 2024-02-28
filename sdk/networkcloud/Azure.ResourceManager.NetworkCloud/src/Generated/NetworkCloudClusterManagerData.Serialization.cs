@@ -164,17 +164,17 @@ namespace Azure.ResourceManager.NetworkCloud
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> analyticsWorkspaceId = default;
+            SystemData systemData = default;
+            ResourceIdentifier analyticsWorkspaceId = default;
             IList<string> availabilityZones = default;
             IReadOnlyList<ClusterAvailableVersion> clusterVersions = default;
-            Optional<ClusterManagerDetailedStatus> detailedStatus = default;
-            Optional<string> detailedStatusMessage = default;
+            ClusterManagerDetailedStatus? detailedStatus = default;
+            string detailedStatusMessage = default;
             ResourceIdentifier fabricControllerId = default;
-            Optional<ManagedResourceGroupConfiguration> managedResourceGroupConfiguration = default;
-            Optional<ExtendedLocation> managerExtendedLocation = default;
-            Optional<ClusterManagerProvisioningState> provisioningState = default;
-            Optional<string> vmSize = default;
+            ManagedResourceGroupConfiguration managedResourceGroupConfiguration = default;
+            ExtendedLocation managerExtendedLocation = default;
+            ClusterManagerProvisioningState? provisioningState = default;
+            string vmSize = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -332,19 +332,19 @@ namespace Azure.ResourceManager.NetworkCloud
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                analyticsWorkspaceId.Value,
+                analyticsWorkspaceId,
                 availabilityZones ?? new ChangeTrackingList<string>(),
                 clusterVersions ?? new ChangeTrackingList<ClusterAvailableVersion>(),
-                Optional.ToNullable(detailedStatus),
-                detailedStatusMessage.Value,
+                detailedStatus,
+                detailedStatusMessage,
                 fabricControllerId,
-                managedResourceGroupConfiguration.Value,
-                managerExtendedLocation.Value,
-                Optional.ToNullable(provisioningState),
-                vmSize.Value,
+                managedResourceGroupConfiguration,
+                managerExtendedLocation,
+                provisioningState,
+                vmSize,
                 serializedAdditionalRawData);
         }
 

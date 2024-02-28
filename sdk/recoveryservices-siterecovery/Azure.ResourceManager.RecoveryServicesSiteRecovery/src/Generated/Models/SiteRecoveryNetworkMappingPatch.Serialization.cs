@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<UpdateNetworkMappingProperties> properties = default;
+            UpdateNetworkMappingProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryNetworkMappingPatch(properties.Value, serializedAdditionalRawData);
+            return new SiteRecoveryNetworkMappingPatch(properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryNetworkMappingPatch>.Write(ModelReaderWriterOptions options)

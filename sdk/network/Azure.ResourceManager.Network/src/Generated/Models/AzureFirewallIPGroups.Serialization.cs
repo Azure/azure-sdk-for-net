@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> changeNumber = default;
+            ResourceIdentifier id = default;
+            string changeNumber = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureFirewallIPGroups(id.Value, changeNumber.Value, serializedAdditionalRawData);
+            return new AzureFirewallIPGroups(id, changeNumber, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureFirewallIPGroups>.Write(ModelReaderWriterOptions options)

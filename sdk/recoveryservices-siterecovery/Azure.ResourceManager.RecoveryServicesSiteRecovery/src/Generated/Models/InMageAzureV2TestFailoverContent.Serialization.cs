@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> recoveryPointId = default;
-            Optional<string> osUpgradeVersion = default;
+            ResourceIdentifier recoveryPointId = default;
+            string osUpgradeVersion = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageAzureV2TestFailoverContent(instanceType, serializedAdditionalRawData, recoveryPointId.Value, osUpgradeVersion.Value);
+            return new InMageAzureV2TestFailoverContent(instanceType, serializedAdditionalRawData, recoveryPointId, osUpgradeVersion);
         }
 
         BinaryData IPersistableModel<InMageAzureV2TestFailoverContent>.Write(ModelReaderWriterOptions options)

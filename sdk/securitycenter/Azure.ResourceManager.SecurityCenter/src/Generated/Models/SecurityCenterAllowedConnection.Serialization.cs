@@ -108,12 +108,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> calculatedDateTime = default;
+            SystemData systemData = default;
+            DateTimeOffset? calculatedDateTime = default;
             IReadOnlyList<ConnectableResourceInfo> connectableResources = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -197,10 +197,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(calculatedDateTime),
+                systemData,
+                calculatedDateTime,
                 connectableResources ?? new ChangeTrackingList<ConnectableResourceInfo>(),
-                Optional.ToNullable(location),
+                location,
                 serializedAdditionalRawData);
         }
 

@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<Uri> blobContainerUri = default;
-            Optional<DataFactorySecretString> sasToken = default;
+            Uri blobContainerUri = default;
+            DataFactorySecretString sasToken = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationRuntimeCustomSetupScriptProperties(blobContainerUri.Value, sasToken, serializedAdditionalRawData);
+            return new IntegrationRuntimeCustomSetupScriptProperties(blobContainerUri, sasToken, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationRuntimeCustomSetupScriptProperties>.Write(ModelReaderWriterOptions options)

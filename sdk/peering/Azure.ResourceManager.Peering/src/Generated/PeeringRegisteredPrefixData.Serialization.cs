@@ -117,12 +117,12 @@ namespace Azure.ResourceManager.Peering
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> prefix = default;
-            Optional<PeeringPrefixValidationState> prefixValidationState = default;
-            Optional<string> peeringServicePrefixKey = default;
-            Optional<string> errorMessage = default;
-            Optional<PeeringProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            string prefix = default;
+            PeeringPrefixValidationState? prefixValidationState = default;
+            string peeringServicePrefixKey = default;
+            string errorMessage = default;
+            PeeringProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -206,12 +206,12 @@ namespace Azure.ResourceManager.Peering
                 id,
                 name,
                 type,
-                systemData.Value,
-                prefix.Value,
-                Optional.ToNullable(prefixValidationState),
-                peeringServicePrefixKey.Value,
-                errorMessage.Value,
-                Optional.ToNullable(provisioningState),
+                systemData,
+                prefix,
+                prefixValidationState,
+                peeringServicePrefixKey,
+                errorMessage,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             AzureLocation storageLocation = default;
             DataBoxSkuName skuName = default;
-            Optional<string> country = default;
+            string country = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HeavyScheduleAvailabilityContent(storageLocation, skuName, country.Value, serializedAdditionalRawData);
+            return new HeavyScheduleAvailabilityContent(storageLocation, skuName, country, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HeavyScheduleAvailabilityContent>.Write(ModelReaderWriterOptions options)

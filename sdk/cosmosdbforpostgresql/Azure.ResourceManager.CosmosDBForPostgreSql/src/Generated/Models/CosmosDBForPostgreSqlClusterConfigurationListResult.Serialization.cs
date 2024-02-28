@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                 return null;
             }
             IReadOnlyList<CosmosDBForPostgreSqlConfigurationData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBForPostgreSqlClusterConfigurationListResult(value ?? new ChangeTrackingList<CosmosDBForPostgreSqlConfigurationData>(), nextLink.Value, serializedAdditionalRawData);
+            return new CosmosDBForPostgreSqlClusterConfigurationListResult(value ?? new ChangeTrackingList<CosmosDBForPostgreSqlConfigurationData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBForPostgreSqlClusterConfigurationListResult>.Write(ModelReaderWriterOptions options)

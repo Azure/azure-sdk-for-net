@@ -105,12 +105,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 return null;
             }
             IReadOnlyList<ConnectivityHop> hops = default;
-            Optional<ConnectionStatus> connectionStatus = default;
-            Optional<long> avgLatencyInMs = default;
-            Optional<long> minLatencyInMs = default;
-            Optional<long> maxLatencyInMs = default;
-            Optional<long> probesSent = default;
-            Optional<long> probesFailed = default;
+            ConnectionStatus? connectionStatus = default;
+            long? avgLatencyInMs = default;
+            long? minLatencyInMs = default;
+            long? maxLatencyInMs = default;
+            long? probesSent = default;
+            long? probesFailed = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -191,12 +191,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ConnectivityCheckResult(
                 hops ?? new ChangeTrackingList<ConnectivityHop>(),
-                Optional.ToNullable(connectionStatus),
-                Optional.ToNullable(avgLatencyInMs),
-                Optional.ToNullable(minLatencyInMs),
-                Optional.ToNullable(maxLatencyInMs),
-                Optional.ToNullable(probesSent),
-                Optional.ToNullable(probesFailed),
+                connectionStatus,
+                avgLatencyInMs,
+                minLatencyInMs,
+                maxLatencyInMs,
+                probesSent,
+                probesFailed,
                 serializedAdditionalRawData);
         }
 

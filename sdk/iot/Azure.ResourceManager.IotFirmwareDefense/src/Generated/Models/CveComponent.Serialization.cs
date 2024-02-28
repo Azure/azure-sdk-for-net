@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            Optional<string> componentId = default;
-            Optional<string> name = default;
-            Optional<string> version = default;
+            string componentId = default;
+            string name = default;
+            string version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CveComponent(componentId.Value, name.Value, version.Value, serializedAdditionalRawData);
+            return new CveComponent(componentId, name, version, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CveComponent>.Write(ModelReaderWriterOptions options)

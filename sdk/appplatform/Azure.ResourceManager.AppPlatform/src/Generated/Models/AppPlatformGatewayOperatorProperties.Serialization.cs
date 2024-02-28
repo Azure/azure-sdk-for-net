@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<AppPlatformGatewayOperatorResourceRequirements> resourceRequests = default;
+            AppPlatformGatewayOperatorResourceRequirements resourceRequests = default;
             IReadOnlyList<AppPlatformGatewayInstance> instances = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformGatewayOperatorProperties(resourceRequests.Value, instances ?? new ChangeTrackingList<AppPlatformGatewayInstance>(), serializedAdditionalRawData);
+            return new AppPlatformGatewayOperatorProperties(resourceRequests, instances ?? new ChangeTrackingList<AppPlatformGatewayInstance>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformGatewayOperatorProperties>.Write(ModelReaderWriterOptions options)

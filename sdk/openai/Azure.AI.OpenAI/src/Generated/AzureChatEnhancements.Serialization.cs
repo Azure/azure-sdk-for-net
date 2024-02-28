@@ -70,7 +70,7 @@ namespace Azure.AI.OpenAI
             {
                 return null;
             }
-            Optional<AzureGroundingEnhancement> grounding = default;
+            AzureGroundingEnhancement grounding = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -90,7 +90,7 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureChatEnhancements(grounding.Value, serializedAdditionalRawData);
+            return new AzureChatEnhancements(grounding, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureChatEnhancements>.Write(ModelReaderWriterOptions options)

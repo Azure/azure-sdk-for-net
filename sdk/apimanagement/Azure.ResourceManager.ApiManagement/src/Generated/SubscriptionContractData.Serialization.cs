@@ -157,20 +157,20 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> ownerId = default;
-            Optional<string> scope = default;
-            Optional<string> displayName = default;
-            Optional<SubscriptionState> state = default;
-            Optional<DateTimeOffset> createdDate = default;
-            Optional<DateTimeOffset> startDate = default;
-            Optional<DateTimeOffset> expirationDate = default;
-            Optional<DateTimeOffset> endDate = default;
-            Optional<DateTimeOffset> notificationDate = default;
-            Optional<string> primaryKey = default;
-            Optional<string> secondaryKey = default;
-            Optional<string> stateComment = default;
-            Optional<bool> allowTracing = default;
+            SystemData systemData = default;
+            string ownerId = default;
+            string scope = default;
+            string displayName = default;
+            SubscriptionState? state = default;
+            DateTimeOffset? createdDate = default;
+            DateTimeOffset? startDate = default;
+            DateTimeOffset? expirationDate = default;
+            DateTimeOffset? endDate = default;
+            DateTimeOffset? notificationDate = default;
+            string primaryKey = default;
+            string secondaryKey = default;
+            string stateComment = default;
+            bool? allowTracing = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -314,20 +314,20 @@ namespace Azure.ResourceManager.ApiManagement
                 id,
                 name,
                 type,
-                systemData.Value,
-                ownerId.Value,
-                scope.Value,
-                displayName.Value,
-                Optional.ToNullable(state),
-                Optional.ToNullable(createdDate),
-                Optional.ToNullable(startDate),
-                Optional.ToNullable(expirationDate),
-                Optional.ToNullable(endDate),
-                Optional.ToNullable(notificationDate),
-                primaryKey.Value,
-                secondaryKey.Value,
-                stateComment.Value,
-                Optional.ToNullable(allowTracing),
+                systemData,
+                ownerId,
+                scope,
+                displayName,
+                state,
+                createdDate,
+                startDate,
+                expirationDate,
+                endDate,
+                notificationDate,
+                primaryKey,
+                secondaryKey,
+                stateComment,
+                allowTracing,
                 serializedAdditionalRawData);
         }
 

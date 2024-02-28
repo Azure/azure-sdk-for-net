@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Subscription.Models
                 return null;
             }
             string displayName = default;
-            Optional<string> managementGroupId = default;
+            string managementGroupId = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Subscription.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AcceptOwnershipRequestProperties(displayName, managementGroupId.Value, tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new AcceptOwnershipRequestProperties(displayName, managementGroupId, tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AcceptOwnershipRequestProperties>.Write(ModelReaderWriterOptions options)

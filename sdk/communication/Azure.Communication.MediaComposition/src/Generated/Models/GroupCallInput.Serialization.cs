@@ -35,7 +35,7 @@ namespace Azure.Communication.MediaComposition
             }
             string id = default;
             MediaInputType kind = default;
-            Optional<string> placeholderImageUri = default;
+            string placeholderImageUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -54,7 +54,7 @@ namespace Azure.Communication.MediaComposition
                     continue;
                 }
             }
-            return new GroupCallInput(kind, placeholderImageUri.Value, id);
+            return new GroupCallInput(kind, placeholderImageUri, id);
         }
     }
 }

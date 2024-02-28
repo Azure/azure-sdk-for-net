@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<VirtualMachineSizeProperties> vmSizeProperties = default;
+            VirtualMachineSizeProperties vmSizeProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineScaleSetHardwareProfile(vmSizeProperties.Value, serializedAdditionalRawData);
+            return new VirtualMachineScaleSetHardwareProfile(vmSizeProperties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineScaleSetHardwareProfile>.Write(ModelReaderWriterOptions options)

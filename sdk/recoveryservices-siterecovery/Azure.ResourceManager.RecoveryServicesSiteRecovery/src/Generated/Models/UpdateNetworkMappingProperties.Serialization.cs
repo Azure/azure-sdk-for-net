@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> recoveryFabricName = default;
-            Optional<ResourceIdentifier> recoveryNetworkId = default;
-            Optional<FabricSpecificUpdateNetworkMappingContent> fabricSpecificDetails = default;
+            string recoveryFabricName = default;
+            ResourceIdentifier recoveryNetworkId = default;
+            FabricSpecificUpdateNetworkMappingContent fabricSpecificDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UpdateNetworkMappingProperties(recoveryFabricName.Value, recoveryNetworkId.Value, fabricSpecificDetails.Value, serializedAdditionalRawData);
+            return new UpdateNetworkMappingProperties(recoveryFabricName, recoveryNetworkId, fabricSpecificDetails, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UpdateNetworkMappingProperties>.Write(ModelReaderWriterOptions options)

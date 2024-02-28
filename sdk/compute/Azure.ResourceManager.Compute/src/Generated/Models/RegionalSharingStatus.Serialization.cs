@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> region = default;
-            Optional<SharingState> state = default;
-            Optional<string> details = default;
+            string region = default;
+            SharingState? state = default;
+            string details = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RegionalSharingStatus(region.Value, Optional.ToNullable(state), details.Value, serializedAdditionalRawData);
+            return new RegionalSharingStatus(region, state, details, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RegionalSharingStatus>.Write(ModelReaderWriterOptions options)

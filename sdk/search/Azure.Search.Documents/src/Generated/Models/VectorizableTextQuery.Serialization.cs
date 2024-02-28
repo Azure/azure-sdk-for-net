@@ -50,10 +50,10 @@ namespace Azure.Search.Documents.Models
             }
             string text = default;
             VectorQueryKind kind = default;
-            Optional<int> k = default;
-            Optional<string> fields = default;
-            Optional<bool> exhaustive = default;
-            Optional<double> oversampling = default;
+            int? k = default;
+            string fields = default;
+            bool? exhaustive = default;
+            double? oversampling = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("text"u8))
@@ -101,10 +101,10 @@ namespace Azure.Search.Documents.Models
             }
             return new VectorizableTextQuery(
                 kind,
-                Optional.ToNullable(k),
-                fields.Value,
-                Optional.ToNullable(exhaustive),
-                Optional.ToNullable(oversampling),
+                k,
+                fields,
+                exhaustive,
+                oversampling,
                 text);
         }
     }

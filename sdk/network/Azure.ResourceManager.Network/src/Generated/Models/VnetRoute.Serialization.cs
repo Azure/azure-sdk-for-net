@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<StaticRoutesConfig> staticRoutesConfig = default;
+            StaticRoutesConfig staticRoutesConfig = default;
             IList<StaticRoute> staticRoutes = default;
             IReadOnlyList<WritableSubResource> bgpConnections = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VnetRoute(staticRoutesConfig.Value, staticRoutes ?? new ChangeTrackingList<StaticRoute>(), bgpConnections ?? new ChangeTrackingList<WritableSubResource>(), serializedAdditionalRawData);
+            return new VnetRoute(staticRoutesConfig, staticRoutes ?? new ChangeTrackingList<StaticRoute>(), bgpConnections ?? new ChangeTrackingList<WritableSubResource>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VnetRoute>.Write(ModelReaderWriterOptions options)

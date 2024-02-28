@@ -149,16 +149,16 @@ namespace Azure.ResourceManager.Blueprint
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<string> blueprintId = default;
-            Optional<string> scope = default;
+            SystemData systemData = default;
+            string displayName = default;
+            string description = default;
+            string blueprintId = default;
+            string scope = default;
             IDictionary<string, ParameterValue> parameters = default;
             IDictionary<string, ResourceGroupValue> resourceGroups = default;
-            Optional<AssignmentStatus> status = default;
-            Optional<AssignmentLockSettings> locks = default;
-            Optional<AssignmentProvisioningState> provisioningState = default;
+            AssignmentStatus status = default;
+            AssignmentLockSettings locks = default;
+            AssignmentProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -286,17 +286,17 @@ namespace Azure.ResourceManager.Blueprint
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 identity,
-                displayName.Value,
-                description.Value,
-                blueprintId.Value,
-                scope.Value,
+                displayName,
+                description,
+                blueprintId,
+                scope,
                 parameters,
                 resourceGroups,
-                status.Value,
-                locks.Value,
-                Optional.ToNullable(provisioningState),
+                status,
+                locks,
+                provisioningState,
                 location,
                 serializedAdditionalRawData);
         }

@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<Guid> id = default;
-            Optional<DateTimeOffset> timestamp = default;
+            Guid? id = default;
+            DateTimeOffset? timestamp = default;
             IList<ContainerRegistryImageDescriptor> images = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryImageUpdateTrigger(Optional.ToNullable(id), Optional.ToNullable(timestamp), images ?? new ChangeTrackingList<ContainerRegistryImageDescriptor>(), serializedAdditionalRawData);
+            return new ContainerRegistryImageUpdateTrigger(id, timestamp, images ?? new ChangeTrackingList<ContainerRegistryImageDescriptor>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryImageUpdateTrigger>.Write(ModelReaderWriterOptions options)

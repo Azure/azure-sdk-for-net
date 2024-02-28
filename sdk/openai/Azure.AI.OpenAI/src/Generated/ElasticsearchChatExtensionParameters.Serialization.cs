@@ -109,16 +109,16 @@ namespace Azure.AI.OpenAI
             {
                 return null;
             }
-            Optional<OnYourDataAuthenticationOptions> authentication = default;
-            Optional<int> topNDocuments = default;
-            Optional<bool> inScope = default;
-            Optional<int> strictness = default;
-            Optional<string> roleInformation = default;
+            OnYourDataAuthenticationOptions authentication = default;
+            int? topNDocuments = default;
+            bool? inScope = default;
+            int? strictness = default;
+            string roleInformation = default;
             Uri endpoint = default;
             string indexName = default;
-            Optional<ElasticsearchIndexFieldMappingOptions> fieldsMapping = default;
-            Optional<ElasticsearchQueryType> queryType = default;
-            Optional<OnYourDataVectorizationSource> embeddingDependency = default;
+            ElasticsearchIndexFieldMappingOptions fieldsMapping = default;
+            ElasticsearchQueryType? queryType = default;
+            OnYourDataVectorizationSource embeddingDependency = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -208,16 +208,16 @@ namespace Azure.AI.OpenAI
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ElasticsearchChatExtensionParameters(
-                authentication.Value,
-                Optional.ToNullable(topNDocuments),
-                Optional.ToNullable(inScope),
-                Optional.ToNullable(strictness),
-                roleInformation.Value,
+                authentication,
+                topNDocuments,
+                inScope,
+                strictness,
+                roleInformation,
                 endpoint,
                 indexName,
-                fieldsMapping.Value,
-                Optional.ToNullable(queryType),
-                embeddingDependency.Value,
+                fieldsMapping,
+                queryType,
+                embeddingDependency,
                 serializedAdditionalRawData);
         }
 

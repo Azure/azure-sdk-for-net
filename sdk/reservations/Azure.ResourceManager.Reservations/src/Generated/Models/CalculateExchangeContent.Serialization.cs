@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<CalculateExchangeContentProperties> properties = default;
+            CalculateExchangeContentProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CalculateExchangeContent(properties.Value, serializedAdditionalRawData);
+            return new CalculateExchangeContent(properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CalculateExchangeContent>.Write(ModelReaderWriterOptions options)

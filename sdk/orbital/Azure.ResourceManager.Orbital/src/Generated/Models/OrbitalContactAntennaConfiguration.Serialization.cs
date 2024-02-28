@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Orbital.Models
             {
                 return null;
             }
-            Optional<IPAddress> destinationIP = default;
+            IPAddress destinationIP = default;
             IReadOnlyList<IPAddress> sourceIPs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Orbital.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OrbitalContactAntennaConfiguration(destinationIP.Value, sourceIPs ?? new ChangeTrackingList<IPAddress>(), serializedAdditionalRawData);
+            return new OrbitalContactAntennaConfiguration(destinationIP, sourceIPs ?? new ChangeTrackingList<IPAddress>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OrbitalContactAntennaConfiguration>.Write(ModelReaderWriterOptions options)

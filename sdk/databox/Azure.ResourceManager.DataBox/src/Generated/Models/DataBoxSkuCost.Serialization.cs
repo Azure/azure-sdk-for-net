@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<Guid> meterId = default;
-            Optional<string> meterType = default;
-            Optional<double> multiplier = default;
+            Guid? meterId = default;
+            string meterType = default;
+            double? multiplier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxSkuCost(Optional.ToNullable(meterId), meterType.Value, Optional.ToNullable(multiplier), serializedAdditionalRawData);
+            return new DataBoxSkuCost(meterId, meterType, multiplier, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxSkuCost>.Write(ModelReaderWriterOptions options)

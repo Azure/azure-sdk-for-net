@@ -109,15 +109,15 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Optional<string> operationId = default;
-            Optional<DateTimeOffset> startTimeUtc = default;
-            Optional<DateTimeOffset> lastUpdatedTimeUtc = default;
-            Optional<DateTimeOffset> endTimeUtc = default;
-            Optional<VaultUpgradeState> status = default;
-            Optional<string> message = default;
-            Optional<VaultUpgradeTriggerType> triggerType = default;
-            Optional<ResourceIdentifier> upgradedResourceId = default;
-            Optional<ResourceIdentifier> previousResourceId = default;
+            string operationId = default;
+            DateTimeOffset? startTimeUtc = default;
+            DateTimeOffset? lastUpdatedTimeUtc = default;
+            DateTimeOffset? endTimeUtc = default;
+            VaultUpgradeState? status = default;
+            string message = default;
+            VaultUpgradeTriggerType? triggerType = default;
+            ResourceIdentifier upgradedResourceId = default;
+            ResourceIdentifier previousResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -202,15 +202,15 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new VaultUpgradeDetails(
-                operationId.Value,
-                Optional.ToNullable(startTimeUtc),
-                Optional.ToNullable(lastUpdatedTimeUtc),
-                Optional.ToNullable(endTimeUtc),
-                Optional.ToNullable(status),
-                message.Value,
-                Optional.ToNullable(triggerType),
-                upgradedResourceId.Value,
-                previousResourceId.Value,
+                operationId,
+                startTimeUtc,
+                lastUpdatedTimeUtc,
+                endTimeUtc,
+                status,
+                message,
+                triggerType,
+                upgradedResourceId,
+                previousResourceId,
                 serializedAdditionalRawData);
         }
 

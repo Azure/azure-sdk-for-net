@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<int> maxConcurrentTrials = default;
-            Optional<int> maxNodes = default;
-            Optional<int> maxTrials = default;
-            Optional<TimeSpan> timeout = default;
-            Optional<TimeSpan> trialTimeout = default;
+            int? maxConcurrentTrials = default;
+            int? maxNodes = default;
+            int? maxTrials = default;
+            TimeSpan? timeout = default;
+            TimeSpan? trialTimeout = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,11 +150,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new NlpVerticalLimitSettings(
-                Optional.ToNullable(maxConcurrentTrials),
-                Optional.ToNullable(maxNodes),
-                Optional.ToNullable(maxTrials),
-                Optional.ToNullable(timeout),
-                Optional.ToNullable(trialTimeout),
+                maxConcurrentTrials,
+                maxNodes,
+                maxTrials,
+                timeout,
+                trialTimeout,
                 serializedAdditionalRawData);
         }
 

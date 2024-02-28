@@ -21,9 +21,9 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
             }
             string code = default;
             string message = default;
-            Optional<string> target = default;
+            string target = default;
             IReadOnlyList<ErrorDetail> details = default;
-            Optional<InnerError> innererror = default;
+            InnerError innererror = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -65,7 +65,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
                     continue;
                 }
             }
-            return new ErrorDetail(code, message, target.Value, details ?? new ChangeTrackingList<ErrorDetail>(), innererror.Value);
+            return new ErrorDetail(code, message, target, details ?? new ChangeTrackingList<ErrorDetail>(), innererror);
         }
     }
 }

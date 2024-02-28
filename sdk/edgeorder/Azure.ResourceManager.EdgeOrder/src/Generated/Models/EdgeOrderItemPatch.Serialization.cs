@@ -99,8 +99,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<EdgeOrderItemAddressProperties> forwardAddress = default;
-            Optional<OrderItemPreferences> preferences = default;
+            EdgeOrderItemAddressProperties forwardAddress = default;
+            OrderItemPreferences preferences = default;
             IList<string> notificationEmailList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeOrderItemPatch(tags ?? new ChangeTrackingDictionary<string, string>(), forwardAddress.Value, preferences.Value, notificationEmailList ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new EdgeOrderItemPatch(tags ?? new ChangeTrackingDictionary<string, string>(), forwardAddress, preferences, notificationEmailList ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeOrderItemPatch>.Write(ModelReaderWriterOptions options)

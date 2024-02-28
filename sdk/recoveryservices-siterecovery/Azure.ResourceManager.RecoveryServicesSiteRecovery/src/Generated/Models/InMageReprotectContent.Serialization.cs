@@ -102,9 +102,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string masterTargetId = default;
             Guid processServerId = default;
             string retentionDrive = default;
-            Optional<string> runAsAccountId = default;
-            Optional<string> datastoreName = default;
-            Optional<InMageDiskExclusionContent> diskExclusionContent = default;
+            string runAsAccountId = default;
+            string datastoreName = default;
+            InMageDiskExclusionContent diskExclusionContent = default;
             string profileId = default;
             IList<string> disksToInclude = default;
             string instanceType = default;
@@ -182,9 +182,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 masterTargetId,
                 processServerId,
                 retentionDrive,
-                runAsAccountId.Value,
-                datastoreName.Value,
-                diskExclusionContent.Value,
+                runAsAccountId,
+                datastoreName,
+                diskExclusionContent,
                 profileId,
                 disksToInclude ?? new ChangeTrackingList<string>());
         }

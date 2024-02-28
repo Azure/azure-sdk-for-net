@@ -114,16 +114,16 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> @alias = default;
-            Optional<string> domain = default;
-            Optional<string> baseUserDN = default;
-            Optional<string> baseGroupDN = default;
-            Optional<Uri> primaryServer = default;
-            Optional<Uri> secondaryServer = default;
-            Optional<SslCertificateStatus> ssl = default;
-            Optional<string> username = default;
-            Optional<string> password = default;
+            string name = default;
+            string @alias = default;
+            string domain = default;
+            string baseUserDN = default;
+            string baseGroupDN = default;
+            Uri primaryServer = default;
+            Uri secondaryServer = default;
+            SslCertificateStatus? ssl = default;
+            string username = default;
+            string password = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -197,16 +197,16 @@ namespace Azure.ResourceManager.Avs.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SingleSignOnIdentitySource(
-                name.Value,
-                @alias.Value,
-                domain.Value,
-                baseUserDN.Value,
-                baseGroupDN.Value,
-                primaryServer.Value,
-                secondaryServer.Value,
-                Optional.ToNullable(ssl),
-                username.Value,
-                password.Value,
+                name,
+                @alias,
+                domain,
+                baseUserDN,
+                baseGroupDN,
+                primaryServer,
+                secondaryServer,
+                ssl,
+                username,
+                password,
                 serializedAdditionalRawData);
         }
 

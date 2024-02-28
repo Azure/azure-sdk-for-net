@@ -132,15 +132,15 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<string> assessmentType = default;
-            Optional<string> assessmentDetailsLink = default;
-            Optional<RegulatoryComplianceState> state = default;
-            Optional<int> passedResources = default;
-            Optional<int> failedResources = default;
-            Optional<int> skippedResources = default;
-            Optional<int> unsupportedResources = default;
+            SystemData systemData = default;
+            string description = default;
+            string assessmentType = default;
+            string assessmentDetailsLink = default;
+            RegulatoryComplianceState? state = default;
+            int? passedResources = default;
+            int? failedResources = default;
+            int? skippedResources = default;
+            int? unsupportedResources = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -251,15 +251,15 @@ namespace Azure.ResourceManager.SecurityCenter
                 id,
                 name,
                 type,
-                systemData.Value,
-                description.Value,
-                assessmentType.Value,
-                assessmentDetailsLink.Value,
-                Optional.ToNullable(state),
-                Optional.ToNullable(passedResources),
-                Optional.ToNullable(failedResources),
-                Optional.ToNullable(skippedResources),
-                Optional.ToNullable(unsupportedResources),
+                systemData,
+                description,
+                assessmentType,
+                assessmentDetailsLink,
+                state,
+                passedResources,
+                failedResources,
+                skippedResources,
+                unsupportedResources,
                 serializedAdditionalRawData);
         }
 

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
@@ -18,8 +17,8 @@ namespace Azure.IoT.TimeSeriesInsights
             {
                 return null;
             }
-            Optional<TimeSeriesHierarchy> hierarchy = default;
-            Optional<TimeSeriesOperationError> error = default;
+            TimeSeriesHierarchy hierarchy = default;
+            TimeSeriesOperationError error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hierarchy"u8))
@@ -41,7 +40,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     continue;
                 }
             }
-            return new TimeSeriesHierarchyOperationResult(hierarchy.Value, error.Value);
+            return new TimeSeriesHierarchyOperationResult(hierarchy, error);
         }
     }
 }

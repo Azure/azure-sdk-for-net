@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            Optional<FirmwareProvisioningState> provisioningState = default;
+            FirmwareProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirmwareAnalysisWorkspacePatch(Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new FirmwareAnalysisWorkspacePatch(provisioningState, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirmwareAnalysisWorkspacePatch>.Write(ModelReaderWriterOptions options)

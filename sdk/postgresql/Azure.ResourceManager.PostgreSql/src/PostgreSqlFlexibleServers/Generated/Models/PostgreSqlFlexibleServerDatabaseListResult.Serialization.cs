@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 return null;
             }
             IReadOnlyList<PostgreSqlFlexibleServerDatabaseData> value = default;
-            Optional<Uri> nextLink = default;
+            Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlFlexibleServerDatabaseListResult(value ?? new ChangeTrackingList<PostgreSqlFlexibleServerDatabaseData>(), nextLink.Value, serializedAdditionalRawData);
+            return new PostgreSqlFlexibleServerDatabaseListResult(value ?? new ChangeTrackingList<PostgreSqlFlexibleServerDatabaseData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlFlexibleServerDatabaseListResult>.Write(ModelReaderWriterOptions options)

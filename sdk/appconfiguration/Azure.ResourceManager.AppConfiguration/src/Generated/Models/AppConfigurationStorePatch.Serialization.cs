@@ -109,13 +109,13 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<AppConfigurationSku> sku = default;
+            ManagedServiceIdentity identity = default;
+            AppConfigurationSku sku = default;
             IDictionary<string, string> tags = default;
-            Optional<AppConfigurationStoreEncryptionProperties> encryption = default;
-            Optional<bool> disableLocalAuth = default;
-            Optional<AppConfigurationPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<bool> enablePurgeProtection = default;
+            AppConfigurationStoreEncryptionProperties encryption = default;
+            bool? disableLocalAuth = default;
+            AppConfigurationPublicNetworkAccess? publicNetworkAccess = default;
+            bool? enablePurgeProtection = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -208,12 +208,12 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AppConfigurationStorePatch(
                 identity,
-                sku.Value,
+                sku,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                encryption.Value,
-                Optional.ToNullable(disableLocalAuth),
-                Optional.ToNullable(publicNetworkAccess),
-                Optional.ToNullable(enablePurgeProtection),
+                encryption,
+                disableLocalAuth,
+                publicNetworkAccess,
+                enablePurgeProtection,
                 serializedAdditionalRawData);
         }
 

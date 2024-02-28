@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 return null;
             }
             string vmProfile = default;
-            Optional<long> memoryInBytes = default;
-            Optional<int> processorCount = default;
+            long? memoryInBytes = default;
+            int? processorCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeKubernetesRoleCompute(vmProfile, Optional.ToNullable(memoryInBytes), Optional.ToNullable(processorCount), serializedAdditionalRawData);
+            return new EdgeKubernetesRoleCompute(vmProfile, memoryInBytes, processorCount, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeKubernetesRoleCompute>.Write(ModelReaderWriterOptions options)

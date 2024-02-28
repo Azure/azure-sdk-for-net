@@ -169,24 +169,24 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
             IDictionary<string, EntityParameterSpecification> parameters = default;
             IList<BinaryData> annotations = default;
             DataFactoryElement<string> host = default;
             DataFactoryElement<string> serverVersion = default;
             DataFactoryElement<string> catalog = default;
-            Optional<DataFactoryElement<int>> port = default;
+            DataFactoryElement<int> port = default;
             PrestoAuthenticationType authenticationType = default;
-            Optional<DataFactoryElement<string>> username = default;
-            Optional<DataFactorySecretBaseDefinition> password = default;
-            Optional<DataFactoryElement<bool>> enableSsl = default;
-            Optional<DataFactoryElement<string>> trustedCertPath = default;
-            Optional<DataFactoryElement<bool>> useSystemTrustStore = default;
-            Optional<DataFactoryElement<bool>> allowHostNameCNMismatch = default;
-            Optional<DataFactoryElement<bool>> allowSelfSignedServerCert = default;
-            Optional<DataFactoryElement<string>> timeZoneId = default;
-            Optional<string> encryptedCredential = default;
+            DataFactoryElement<string> username = default;
+            DataFactorySecretBaseDefinition password = default;
+            DataFactoryElement<bool> enableSsl = default;
+            DataFactoryElement<string> trustedCertPath = default;
+            DataFactoryElement<bool> useSystemTrustStore = default;
+            DataFactoryElement<bool> allowHostNameCNMismatch = default;
+            DataFactoryElement<bool> allowSelfSignedServerCert = default;
+            DataFactoryElement<string> timeZoneId = default;
+            string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -368,25 +368,25 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new PrestoLinkedService(
                 type,
-                connectVia.Value,
-                description.Value,
+                connectVia,
+                description,
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 annotations ?? new ChangeTrackingList<BinaryData>(),
                 additionalProperties,
                 host,
                 serverVersion,
                 catalog,
-                port.Value,
+                port,
                 authenticationType,
-                username.Value,
+                username,
                 password,
-                enableSsl.Value,
-                trustedCertPath.Value,
-                useSystemTrustStore.Value,
-                allowHostNameCNMismatch.Value,
-                allowSelfSignedServerCert.Value,
-                timeZoneId.Value,
-                encryptedCredential.Value);
+                enableSsl,
+                trustedCertPath,
+                useSystemTrustStore,
+                allowHostNameCNMismatch,
+                allowSelfSignedServerCert,
+                timeZoneId,
+                encryptedCredential);
         }
 
         BinaryData IPersistableModel<PrestoLinkedService>.Write(ModelReaderWriterOptions options)

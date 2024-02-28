@@ -95,19 +95,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> sqlReaderQuery = default;
-            Optional<object> sqlReaderStoredProcedureName = default;
-            Optional<object> storedProcedureParameters = default;
-            Optional<object> isolationLevel = default;
-            Optional<object> produceAdditionalTypes = default;
-            Optional<object> partitionOption = default;
-            Optional<SqlPartitionSettings> partitionSettings = default;
-            Optional<object> queryTimeout = default;
-            Optional<object> additionalColumns = default;
+            object sqlReaderQuery = default;
+            object sqlReaderStoredProcedureName = default;
+            object storedProcedureParameters = default;
+            object isolationLevel = default;
+            object produceAdditionalTypes = default;
+            object partitionOption = default;
+            SqlPartitionSettings partitionSettings = default;
+            object queryTimeout = default;
+            object additionalColumns = default;
             string type = default;
-            Optional<object> sourceRetryCount = default;
-            Optional<object> sourceRetryWait = default;
-            Optional<object> maxConcurrentConnections = default;
+            object sourceRetryCount = default;
+            object sourceRetryWait = default;
+            object maxConcurrentConnections = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -230,19 +230,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new SqlServerSource(
                 type,
-                sourceRetryCount.Value,
-                sourceRetryWait.Value,
-                maxConcurrentConnections.Value,
+                sourceRetryCount,
+                sourceRetryWait,
+                maxConcurrentConnections,
                 additionalProperties,
-                queryTimeout.Value,
-                additionalColumns.Value,
-                sqlReaderQuery.Value,
-                sqlReaderStoredProcedureName.Value,
-                storedProcedureParameters.Value,
-                isolationLevel.Value,
-                produceAdditionalTypes.Value,
-                partitionOption.Value,
-                partitionSettings.Value);
+                queryTimeout,
+                additionalColumns,
+                sqlReaderQuery,
+                sqlReaderStoredProcedureName,
+                storedProcedureParameters,
+                isolationLevel,
+                produceAdditionalTypes,
+                partitionOption,
+                partitionSettings);
         }
 
         internal partial class SqlServerSourceConverter : JsonConverter<SqlServerSource>

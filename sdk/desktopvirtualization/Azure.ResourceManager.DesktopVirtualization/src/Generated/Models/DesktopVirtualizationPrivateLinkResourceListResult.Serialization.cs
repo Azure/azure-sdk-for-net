@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 return null;
             }
             IReadOnlyList<DesktopVirtualizationPrivateLinkResourceData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DesktopVirtualizationPrivateLinkResourceListResult(value ?? new ChangeTrackingList<DesktopVirtualizationPrivateLinkResourceData>(), nextLink.Value, serializedAdditionalRawData);
+            return new DesktopVirtualizationPrivateLinkResourceListResult(value ?? new ChangeTrackingList<DesktopVirtualizationPrivateLinkResourceData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DesktopVirtualizationPrivateLinkResourceListResult>.Write(ModelReaderWriterOptions options)

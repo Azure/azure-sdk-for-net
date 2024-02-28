@@ -161,21 +161,21 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<ProviderHubMetadata> providerHubMetadata = default;
-            Optional<ProviderHubProvisioningState> provisioningState = default;
-            Optional<SubscriptionLifecycleNotificationSpecifications> subscriptionLifecycleNotificationSpecifications = default;
-            Optional<ResourceProviderAuthentication> providerAuthentication = default;
+            ProviderHubMetadata providerHubMetadata = default;
+            ProviderHubProvisioningState? provisioningState = default;
+            SubscriptionLifecycleNotificationSpecifications subscriptionLifecycleNotificationSpecifications = default;
+            ResourceProviderAuthentication providerAuthentication = default;
             IList<ResourceProviderAuthorization> providerAuthorizations = default;
-            Optional<string> @namespace = default;
-            Optional<string> providerVersion = default;
-            Optional<ResourceProviderType> providerType = default;
+            string @namespace = default;
+            string providerVersion = default;
+            ResourceProviderType? providerType = default;
             IList<string> requiredFeatures = default;
-            Optional<FeaturesRule> featuresRule = default;
-            Optional<RequestHeaderOptions> requestHeaderOptions = default;
-            Optional<ResourceProviderManagement> management = default;
+            FeaturesRule featuresRule = default;
+            RequestHeaderOptions requestHeaderOptions = default;
+            ResourceProviderManagement management = default;
             IList<ResourceProviderCapabilities> capabilities = default;
-            Optional<BinaryData> metadata = default;
-            Optional<TemplateDeploymentOptions> templateDeploymentOptions = default;
+            BinaryData metadata = default;
+            TemplateDeploymentOptions templateDeploymentOptions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -329,22 +329,22 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ProviderRegistrationProperties(
-                providerAuthentication.Value,
+                providerAuthentication,
                 providerAuthorizations ?? new ChangeTrackingList<ResourceProviderAuthorization>(),
-                @namespace.Value,
-                providerVersion.Value,
-                Optional.ToNullable(providerType),
+                @namespace,
+                providerVersion,
+                providerType,
                 requiredFeatures ?? new ChangeTrackingList<string>(),
-                featuresRule.Value,
-                requestHeaderOptions.Value,
-                management.Value,
+                featuresRule,
+                requestHeaderOptions,
+                management,
                 capabilities ?? new ChangeTrackingList<ResourceProviderCapabilities>(),
-                metadata.Value,
-                templateDeploymentOptions.Value,
+                metadata,
+                templateDeploymentOptions,
                 serializedAdditionalRawData,
-                providerHubMetadata.Value,
-                Optional.ToNullable(provisioningState),
-                subscriptionLifecycleNotificationSpecifications.Value);
+                providerHubMetadata,
+                provisioningState,
+                subscriptionLifecycleNotificationSpecifications);
         }
 
         BinaryData IPersistableModel<ProviderRegistrationProperties>.Write(ModelReaderWriterOptions options)

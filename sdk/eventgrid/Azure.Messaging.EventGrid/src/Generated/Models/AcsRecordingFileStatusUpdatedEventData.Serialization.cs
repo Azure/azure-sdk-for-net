@@ -21,13 +21,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<AcsRecordingStorageInfoProperties> recordingStorageInfo = default;
-            Optional<DateTimeOffset> recordingStartTime = default;
-            Optional<long> recordingDurationMs = default;
-            Optional<AcsRecordingContentType> recordingContentType = default;
-            Optional<AcsRecordingChannelType> recordingChannelType = default;
-            Optional<AcsRecordingFormatType> recordingFormatType = default;
-            Optional<string> sessionEndReason = default;
+            AcsRecordingStorageInfoProperties recordingStorageInfo = default;
+            DateTimeOffset? recordingStartTime = default;
+            long? recordingDurationMs = default;
+            AcsRecordingContentType? recordingContentType = default;
+            AcsRecordingChannelType? recordingChannelType = default;
+            AcsRecordingFormatType? recordingFormatType = default;
+            string sessionEndReason = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recordingStorageInfo"u8))
@@ -91,13 +91,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             return new AcsRecordingFileStatusUpdatedEventData(
-                recordingStorageInfo.Value,
-                Optional.ToNullable(recordingStartTime),
-                Optional.ToNullable(recordingDurationMs),
-                Optional.ToNullable(recordingContentType),
-                Optional.ToNullable(recordingChannelType),
-                Optional.ToNullable(recordingFormatType),
-                sessionEndReason.Value);
+                recordingStorageInfo,
+                recordingStartTime,
+                recordingDurationMs,
+                recordingContentType,
+                recordingChannelType,
+                recordingFormatType,
+                sessionEndReason);
         }
 
         internal partial class AcsRecordingFileStatusUpdatedEventDataConverter : JsonConverter<AcsRecordingFileStatusUpdatedEventData>

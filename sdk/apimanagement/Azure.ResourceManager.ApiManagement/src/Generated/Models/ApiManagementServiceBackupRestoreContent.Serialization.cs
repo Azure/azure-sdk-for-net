@@ -88,9 +88,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             string storageAccount = default;
             string containerName = default;
             string backupName = default;
-            Optional<StorageAccountAccessType> accessType = default;
-            Optional<string> accessKey = default;
-            Optional<string> clientId = default;
+            StorageAccountAccessType? accessType = default;
+            string accessKey = default;
+            string clientId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -139,9 +139,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 storageAccount,
                 containerName,
                 backupName,
-                Optional.ToNullable(accessType),
-                accessKey.Value,
-                clientId.Value,
+                accessType,
+                accessKey,
+                clientId,
                 serializedAdditionalRawData);
         }
 

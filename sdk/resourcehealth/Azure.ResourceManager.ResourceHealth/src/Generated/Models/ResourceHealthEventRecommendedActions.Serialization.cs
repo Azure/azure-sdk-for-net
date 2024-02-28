@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 return null;
             }
-            Optional<string> message = default;
+            string message = default;
             IReadOnlyList<ResourceHealthEventRecommendedActionsItem> actions = default;
-            Optional<string> localeCode = default;
+            string localeCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceHealthEventRecommendedActions(message.Value, actions ?? new ChangeTrackingList<ResourceHealthEventRecommendedActionsItem>(), localeCode.Value, serializedAdditionalRawData);
+            return new ResourceHealthEventRecommendedActions(message, actions ?? new ChangeTrackingList<ResourceHealthEventRecommendedActionsItem>(), localeCode, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceHealthEventRecommendedActions>.Write(ModelReaderWriterOptions options)

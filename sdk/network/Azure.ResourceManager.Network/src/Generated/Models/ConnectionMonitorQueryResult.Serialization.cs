@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ConnectionMonitorSourceStatus> sourceStatus = default;
+            ConnectionMonitorSourceStatus? sourceStatus = default;
             IReadOnlyList<ConnectionStateSnapshot> states = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectionMonitorQueryResult(Optional.ToNullable(sourceStatus), states ?? new ChangeTrackingList<ConnectionStateSnapshot>(), serializedAdditionalRawData);
+            return new ConnectionMonitorQueryResult(sourceStatus, states ?? new ChangeTrackingList<ConnectionStateSnapshot>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectionMonitorQueryResult>.Write(ModelReaderWriterOptions options)

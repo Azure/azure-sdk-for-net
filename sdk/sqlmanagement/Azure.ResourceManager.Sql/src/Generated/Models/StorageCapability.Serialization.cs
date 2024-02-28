@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<StorageCapabilityStorageAccountType> storageAccountType = default;
-            Optional<SqlCapabilityStatus> status = default;
-            Optional<string> reason = default;
+            StorageCapabilityStorageAccountType? storageAccountType = default;
+            SqlCapabilityStatus? status = default;
+            string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageCapability(Optional.ToNullable(storageAccountType), Optional.ToNullable(status), reason.Value, serializedAdditionalRawData);
+            return new StorageCapability(storageAccountType, status, reason, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageCapability>.Write(ModelReaderWriterOptions options)

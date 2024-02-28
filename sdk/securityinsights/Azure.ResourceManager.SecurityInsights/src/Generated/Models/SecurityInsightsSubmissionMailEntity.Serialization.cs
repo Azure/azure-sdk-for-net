@@ -173,19 +173,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IReadOnlyDictionary<string, BinaryData> additionalData = default;
-            Optional<string> friendlyName = default;
-            Optional<Guid> networkMessageId = default;
-            Optional<Guid> submissionId = default;
-            Optional<string> submitter = default;
-            Optional<DateTimeOffset> submissionDate = default;
-            Optional<DateTimeOffset> timestamp = default;
-            Optional<string> recipient = default;
-            Optional<string> sender = default;
-            Optional<IPAddress> senderIP = default;
-            Optional<string> subject = default;
-            Optional<string> reportType = default;
+            string friendlyName = default;
+            Guid? networkMessageId = default;
+            Guid? submissionId = default;
+            string submitter = default;
+            DateTimeOffset? submissionDate = default;
+            DateTimeOffset? timestamp = default;
+            string recipient = default;
+            string sender = default;
+            IPAddress senderIP = default;
+            string subject = default;
+            string reportType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -337,21 +337,21 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 kind,
                 serializedAdditionalRawData,
                 additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                friendlyName.Value,
-                Optional.ToNullable(networkMessageId),
-                Optional.ToNullable(submissionId),
-                submitter.Value,
-                Optional.ToNullable(submissionDate),
-                Optional.ToNullable(timestamp),
-                recipient.Value,
-                sender.Value,
-                senderIP.Value,
-                subject.Value,
-                reportType.Value);
+                friendlyName,
+                networkMessageId,
+                submissionId,
+                submitter,
+                submissionDate,
+                timestamp,
+                recipient,
+                sender,
+                senderIP,
+                subject,
+                reportType);
         }
 
         BinaryData IPersistableModel<SecurityInsightsSubmissionMailEntity>.Write(ModelReaderWriterOptions options)

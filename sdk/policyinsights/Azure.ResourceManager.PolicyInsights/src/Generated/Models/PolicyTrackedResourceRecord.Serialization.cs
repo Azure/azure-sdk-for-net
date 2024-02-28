@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> trackedResourceId = default;
-            Optional<PolicyDetails> policyDetails = default;
-            Optional<TrackedResourceModificationDetails> createdBy = default;
-            Optional<TrackedResourceModificationDetails> lastModifiedBy = default;
-            Optional<DateTimeOffset> lastUpdateUtc = default;
+            ResourceIdentifier trackedResourceId = default;
+            PolicyDetails policyDetails = default;
+            TrackedResourceModificationDetails createdBy = default;
+            TrackedResourceModificationDetails lastModifiedBy = default;
+            DateTimeOffset? lastUpdateUtc = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,11 +150,11 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new PolicyTrackedResourceRecord(
-                trackedResourceId.Value,
-                policyDetails.Value,
-                createdBy.Value,
-                lastModifiedBy.Value,
-                Optional.ToNullable(lastUpdateUtc),
+                trackedResourceId,
+                policyDetails,
+                createdBy,
+                lastModifiedBy,
+                lastUpdateUtc,
                 serializedAdditionalRawData);
         }
 

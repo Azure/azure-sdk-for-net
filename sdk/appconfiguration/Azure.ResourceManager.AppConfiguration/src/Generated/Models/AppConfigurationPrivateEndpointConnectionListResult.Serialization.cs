@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 return null;
             }
             IReadOnlyList<AppConfigurationPrivateEndpointConnectionData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppConfigurationPrivateEndpointConnectionListResult(value ?? new ChangeTrackingList<AppConfigurationPrivateEndpointConnectionData>(), nextLink.Value, serializedAdditionalRawData);
+            return new AppConfigurationPrivateEndpointConnectionListResult(value ?? new ChangeTrackingList<AppConfigurationPrivateEndpointConnectionData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppConfigurationPrivateEndpointConnectionListResult>.Write(ModelReaderWriterOptions options)

@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> subscriptionId = default;
-            Optional<string> dataFactoryName = default;
-            Optional<AzureLocation> dataFactoryLocation = default;
-            Optional<DateTimeOffset> createTime = default;
+            string name = default;
+            string subscriptionId = default;
+            string dataFactoryName = default;
+            AzureLocation? dataFactoryLocation = default;
+            DateTimeOffset? createTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,11 +138,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new LinkedIntegrationRuntime(
-                name.Value,
-                subscriptionId.Value,
-                dataFactoryName.Value,
-                Optional.ToNullable(dataFactoryLocation),
-                Optional.ToNullable(createTime),
+                name,
+                subscriptionId,
+                dataFactoryName,
+                dataFactoryLocation,
+                createTime,
                 serializedAdditionalRawData);
         }
 

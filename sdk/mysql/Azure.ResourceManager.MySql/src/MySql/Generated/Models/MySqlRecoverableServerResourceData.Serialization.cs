@@ -121,13 +121,13 @@ namespace Azure.ResourceManager.MySql.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> lastAvailableBackupDateTime = default;
-            Optional<string> serviceLevelObjective = default;
-            Optional<string> edition = default;
-            Optional<int> vCore = default;
-            Optional<string> hardwareGeneration = default;
-            Optional<string> version = default;
+            SystemData systemData = default;
+            DateTimeOffset? lastAvailableBackupDateTime = default;
+            string serviceLevelObjective = default;
+            string edition = default;
+            int? vCore = default;
+            string hardwareGeneration = default;
+            string version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -216,13 +216,13 @@ namespace Azure.ResourceManager.MySql.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(lastAvailableBackupDateTime),
-                serviceLevelObjective.Value,
-                edition.Value,
-                Optional.ToNullable(vCore),
-                hardwareGeneration.Value,
-                version.Value,
+                systemData,
+                lastAvailableBackupDateTime,
+                serviceLevelObjective,
+                edition,
+                vCore,
+                hardwareGeneration,
+                version,
                 serializedAdditionalRawData);
         }
 

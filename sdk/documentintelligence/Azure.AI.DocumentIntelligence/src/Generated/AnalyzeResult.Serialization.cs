@@ -178,7 +178,7 @@ namespace Azure.AI.DocumentIntelligence
             string apiVersion = default;
             string modelId = default;
             StringIndexType stringIndexType = default;
-            Optional<ContentFormat> contentFormat = default;
+            ContentFormat? contentFormat = default;
             string content = default;
             IReadOnlyList<DocumentPage> pages = default;
             IReadOnlyList<DocumentParagraph> paragraphs = default;
@@ -369,7 +369,7 @@ namespace Azure.AI.DocumentIntelligence
                 apiVersion,
                 modelId,
                 stringIndexType,
-                Optional.ToNullable(contentFormat),
+                contentFormat,
                 content,
                 pages,
                 paragraphs ?? new ChangeTrackingList<DocumentParagraph>(),

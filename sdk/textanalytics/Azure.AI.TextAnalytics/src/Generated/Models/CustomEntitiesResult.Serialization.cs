@@ -51,7 +51,7 @@ namespace Azure.AI.TextAnalytics.Models
             }
             IList<CustomEntitiesResultDocumentsItem> documents = default;
             IList<DocumentError> errors = default;
-            Optional<TextDocumentBatchStatistics> statistics = default;
+            TextDocumentBatchStatistics statistics = default;
             string projectName = default;
             string deploymentName = default;
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new CustomEntitiesResult(errors, statistics.Value, projectName, deploymentName, documents);
+            return new CustomEntitiesResult(errors, statistics, projectName, deploymentName, documents);
         }
     }
 }

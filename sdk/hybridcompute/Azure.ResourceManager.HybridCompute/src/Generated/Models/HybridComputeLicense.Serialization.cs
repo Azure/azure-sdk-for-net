@@ -126,11 +126,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<HybridComputeProvisioningState> provisioningState = default;
-            Optional<Guid> tenantId = default;
-            Optional<HybridComputeLicenseType> licenseType = default;
-            Optional<HybridComputeLicenseDetails> licenseDetails = default;
+            SystemData systemData = default;
+            HybridComputeProvisioningState? provisioningState = default;
+            Guid? tenantId = default;
+            HybridComputeLicenseType? licenseType = default;
+            HybridComputeLicenseDetails licenseDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -236,13 +236,13 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(tenantId),
-                Optional.ToNullable(licenseType),
-                licenseDetails.Value,
+                provisioningState,
+                tenantId,
+                licenseType,
+                licenseDetails,
                 serializedAdditionalRawData);
         }
 

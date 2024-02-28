@@ -162,15 +162,15 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<string> sku = default;
-            Optional<ETag> eTag = default;
+            AzureLocation? location = default;
+            string sku = default;
+            ETag? eTag = default;
             IReadOnlyDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> nextLink = default;
+            SystemData systemData = default;
+            string nextLink = default;
             IReadOnlyList<QueryColumn> columns = default;
             IReadOnlyList<IList<BinaryData>> rows = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -312,13 +312,13 @@ namespace Azure.ResourceManager.CostManagement.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                nextLink.Value,
+                systemData,
+                nextLink,
                 columns ?? new ChangeTrackingList<QueryColumn>(),
                 rows ?? new ChangeTrackingList<IList<BinaryData>>(),
-                Optional.ToNullable(location),
-                sku.Value,
-                Optional.ToNullable(eTag),
+                location,
+                sku,
+                eTag,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }

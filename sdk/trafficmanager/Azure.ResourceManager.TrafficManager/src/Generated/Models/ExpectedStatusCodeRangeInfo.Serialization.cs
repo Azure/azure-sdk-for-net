@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.TrafficManager.Models
             {
                 return null;
             }
-            Optional<int> min = default;
-            Optional<int> max = default;
+            int? min = default;
+            int? max = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExpectedStatusCodeRangeInfo(Optional.ToNullable(min), Optional.ToNullable(max), serializedAdditionalRawData);
+            return new ExpectedStatusCodeRangeInfo(min, max, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExpectedStatusCodeRangeInfo>.Write(ModelReaderWriterOptions options)

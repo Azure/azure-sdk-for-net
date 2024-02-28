@@ -194,24 +194,24 @@ namespace Azure.AI.OpenAI
             }
             IList<ChatRequestMessage> messages = default;
             IList<FunctionDefinition> functions = default;
-            Optional<FunctionDefinition> functionCall = default;
-            Optional<int> maxTokens = default;
-            Optional<float> temperature = default;
-            Optional<float> topP = default;
+            FunctionDefinition functionCall = default;
+            int? maxTokens = default;
+            float? temperature = default;
+            float? topP = default;
             IDictionary<int, int> logitBias = default;
-            Optional<string> user = default;
-            Optional<int> n = default;
+            string user = default;
+            int? n = default;
             IList<string> stop = default;
-            Optional<float> presencePenalty = default;
-            Optional<float> frequencyPenalty = default;
-            Optional<bool> stream = default;
-            Optional<string> model = default;
+            float? presencePenalty = default;
+            float? frequencyPenalty = default;
+            bool? stream = default;
+            string model = default;
             IList<AzureChatExtensionConfiguration> dataSources = default;
-            Optional<AzureChatEnhancementConfiguration> enhancements = default;
-            Optional<long> seed = default;
-            Optional<ChatCompletionsResponseFormat> responseFormat = default;
+            AzureChatEnhancementConfiguration enhancements = default;
+            long? seed = default;
+            ChatCompletionsResponseFormat responseFormat = default;
             IList<ChatCompletionsToolDefinition> tools = default;
-            Optional<BinaryData> toolChoice = default;
+            BinaryData toolChoice = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -414,24 +414,24 @@ namespace Azure.AI.OpenAI
             return new ChatCompletionsOptions(
                 messages,
                 functions ?? new ChangeTrackingList<FunctionDefinition>(),
-                functionCall.Value,
-                Optional.ToNullable(maxTokens),
-                Optional.ToNullable(temperature),
-                Optional.ToNullable(topP),
+                functionCall,
+                maxTokens,
+                temperature,
+                topP,
                 logitBias ?? new ChangeTrackingDictionary<int, int>(),
-                user.Value,
-                Optional.ToNullable(n),
+                user,
+                n,
                 stop ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(presencePenalty),
-                Optional.ToNullable(frequencyPenalty),
-                Optional.ToNullable(stream),
-                model.Value,
+                presencePenalty,
+                frequencyPenalty,
+                stream,
+                model,
                 dataSources ?? new ChangeTrackingList<AzureChatExtensionConfiguration>(),
-                enhancements.Value,
-                Optional.ToNullable(seed),
-                responseFormat.Value,
+                enhancements,
+                seed,
+                responseFormat,
                 tools ?? new ChangeTrackingList<ChatCompletionsToolDefinition>(),
-                toolChoice.Value,
+                toolChoice,
                 serializedAdditionalRawData);
         }
 

@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 return null;
             }
-            Optional<MobileNetworkPlatformType> platformType = default;
-            Optional<MobileNetworkVersionState> versionState = default;
-            Optional<string> minimumPlatformSoftwareVersion = default;
-            Optional<string> maximumPlatformSoftwareVersion = default;
-            Optional<MobileNetworkRecommendedVersion> recommendedVersion = default;
-            Optional<MobileNetworkObsoleteVersion> obsoleteVersion = default;
+            MobileNetworkPlatformType? platformType = default;
+            MobileNetworkVersionState? versionState = default;
+            string minimumPlatformSoftwareVersion = default;
+            string maximumPlatformSoftwareVersion = default;
+            MobileNetworkRecommendedVersion? recommendedVersion = default;
+            MobileNetworkObsoleteVersion? obsoleteVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,12 +157,12 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MobileNetworkPlatform(
-                Optional.ToNullable(platformType),
-                Optional.ToNullable(versionState),
-                minimumPlatformSoftwareVersion.Value,
-                maximumPlatformSoftwareVersion.Value,
-                Optional.ToNullable(recommendedVersion),
-                Optional.ToNullable(obsoleteVersion),
+                platformType,
+                versionState,
+                minimumPlatformSoftwareVersion,
+                maximumPlatformSoftwareVersion,
+                recommendedVersion,
+                obsoleteVersion,
                 serializedAdditionalRawData);
         }
 

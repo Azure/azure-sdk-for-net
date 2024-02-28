@@ -213,24 +213,24 @@ namespace Azure.ResourceManager.NetworkCloud
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<NetworkCloudAadConfiguration> aadConfiguration = default;
-            Optional<AdministratorConfiguration> administratorConfiguration = default;
+            SystemData systemData = default;
+            NetworkCloudAadConfiguration aadConfiguration = default;
+            AdministratorConfiguration administratorConfiguration = default;
             IReadOnlyList<ResourceIdentifier> attachedNetworkIds = default;
             IReadOnlyList<AvailableUpgrade> availableUpgrades = default;
-            Optional<ResourceIdentifier> clusterId = default;
-            Optional<ResourceIdentifier> connectedClusterId = default;
-            Optional<string> controlPlaneKubernetesVersion = default;
+            ResourceIdentifier clusterId = default;
+            ResourceIdentifier connectedClusterId = default;
+            string controlPlaneKubernetesVersion = default;
             ControlPlaneNodeConfiguration controlPlaneNodeConfiguration = default;
-            Optional<KubernetesClusterDetailedStatus> detailedStatus = default;
-            Optional<string> detailedStatusMessage = default;
+            KubernetesClusterDetailedStatus? detailedStatus = default;
+            string detailedStatusMessage = default;
             IReadOnlyList<FeatureStatus> featureStatuses = default;
             IList<InitialAgentPoolConfiguration> initialAgentPoolConfigurations = default;
             string kubernetesVersion = default;
-            Optional<ManagedResourceGroupConfiguration> managedResourceGroupConfiguration = default;
+            ManagedResourceGroupConfiguration managedResourceGroupConfiguration = default;
             KubernetesClusterNetworkConfiguration networkConfiguration = default;
             IReadOnlyList<KubernetesClusterNode> nodes = default;
-            Optional<KubernetesClusterProvisioningState> provisioningState = default;
+            KubernetesClusterProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -466,27 +466,27 @@ namespace Azure.ResourceManager.NetworkCloud
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 extendedLocation,
-                aadConfiguration.Value,
-                administratorConfiguration.Value,
+                aadConfiguration,
+                administratorConfiguration,
                 attachedNetworkIds ?? new ChangeTrackingList<ResourceIdentifier>(),
                 availableUpgrades ?? new ChangeTrackingList<AvailableUpgrade>(),
-                clusterId.Value,
-                connectedClusterId.Value,
-                controlPlaneKubernetesVersion.Value,
+                clusterId,
+                connectedClusterId,
+                controlPlaneKubernetesVersion,
                 controlPlaneNodeConfiguration,
-                Optional.ToNullable(detailedStatus),
-                detailedStatusMessage.Value,
+                detailedStatus,
+                detailedStatusMessage,
                 featureStatuses ?? new ChangeTrackingList<FeatureStatus>(),
                 initialAgentPoolConfigurations,
                 kubernetesVersion,
-                managedResourceGroupConfiguration.Value,
+                managedResourceGroupConfiguration,
                 networkConfiguration,
                 nodes ?? new ChangeTrackingList<KubernetesClusterNode>(),
-                Optional.ToNullable(provisioningState),
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

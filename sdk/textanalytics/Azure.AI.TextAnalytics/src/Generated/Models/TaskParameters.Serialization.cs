@@ -29,7 +29,7 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 return null;
             }
-            Optional<bool> loggingOptOut = default;
+            bool? loggingOptOut = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("loggingOptOut"u8))
@@ -42,7 +42,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new TaskParameters(Optional.ToNullable(loggingOptOut));
+            return new TaskParameters(loggingOptOut);
         }
     }
 }

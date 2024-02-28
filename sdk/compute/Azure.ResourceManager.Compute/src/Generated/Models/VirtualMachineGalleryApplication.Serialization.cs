@@ -91,12 +91,12 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> tags = default;
-            Optional<int> order = default;
+            string tags = default;
+            int? order = default;
             string packageReferenceId = default;
-            Optional<string> configurationReference = default;
-            Optional<bool> treatFailureAsDeploymentFailure = default;
-            Optional<bool> enableAutomaticUpgrade = default;
+            string configurationReference = default;
+            bool? treatFailureAsDeploymentFailure = default;
+            bool? enableAutomaticUpgrade = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,12 +150,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new VirtualMachineGalleryApplication(
-                tags.Value,
-                Optional.ToNullable(order),
+                tags,
+                order,
                 packageReferenceId,
-                configurationReference.Value,
-                Optional.ToNullable(treatFailureAsDeploymentFailure),
-                Optional.ToNullable(enableAutomaticUpgrade),
+                configurationReference,
+                treatFailureAsDeploymentFailure,
+                enableAutomaticUpgrade,
                 serializedAdditionalRawData);
         }
 

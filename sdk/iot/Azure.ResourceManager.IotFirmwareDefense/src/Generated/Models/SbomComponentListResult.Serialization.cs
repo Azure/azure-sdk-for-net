@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 return null;
             }
             IReadOnlyList<SbomComponentResult> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SbomComponentListResult(value ?? new ChangeTrackingList<SbomComponentResult>(), nextLink.Value, serializedAdditionalRawData);
+            return new SbomComponentListResult(value ?? new ChangeTrackingList<SbomComponentResult>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SbomComponentListResult>.Write(ModelReaderWriterOptions options)

@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<EventGridSkuName> name = default;
-            Optional<int> capacity = default;
+            EventGridSkuName? name = default;
+            int? capacity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NamespaceSku(Optional.ToNullable(name), Optional.ToNullable(capacity), serializedAdditionalRawData);
+            return new NamespaceSku(name, capacity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NamespaceSku>.Write(ModelReaderWriterOptions options)

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
@@ -18,8 +17,8 @@ namespace Azure.IoT.TimeSeriesInsights
             {
                 return null;
             }
-            Optional<TimeSeriesInstance> instance = default;
-            Optional<TimeSeriesOperationError> error = default;
+            TimeSeriesInstance instance = default;
+            TimeSeriesOperationError error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("instance"u8))
@@ -41,7 +40,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     continue;
                 }
             }
-            return new InstancesOperationResult(instance.Value, error.Value);
+            return new InstancesOperationResult(instance, error);
         }
     }
 }

@@ -99,12 +99,12 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> serviceSupportedRegion = default;
-            Optional<string> communityName = default;
-            Optional<string> communityValue = default;
+            string serviceSupportedRegion = default;
+            string communityName = default;
+            string communityValue = default;
             IList<string> communityPrefixes = default;
-            Optional<bool> isAuthorizedToUse = default;
-            Optional<string> serviceGroup = default;
+            bool? isAuthorizedToUse = default;
+            string serviceGroup = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -159,12 +159,12 @@ namespace Azure.ResourceManager.Network.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new BgpCommunity(
-                serviceSupportedRegion.Value,
-                communityName.Value,
-                communityValue.Value,
+                serviceSupportedRegion,
+                communityName,
+                communityValue,
                 communityPrefixes ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(isAuthorizedToUse),
-                serviceGroup.Value,
+                isAuthorizedToUse,
+                serviceGroup,
                 serializedAdditionalRawData);
         }
 

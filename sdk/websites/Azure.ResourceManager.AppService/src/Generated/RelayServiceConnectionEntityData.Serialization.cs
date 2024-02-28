@@ -123,17 +123,17 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> entityName = default;
-            Optional<string> entityConnectionString = default;
-            Optional<string> resourceConnectionString = default;
-            Optional<string> hostname = default;
-            Optional<int> port = default;
-            Optional<Uri> biztalkUri = default;
+            SystemData systemData = default;
+            string entityName = default;
+            string entityConnectionString = default;
+            string resourceConnectionString = default;
+            string hostname = default;
+            int? port = default;
+            Uri biztalkUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -227,14 +227,14 @@ namespace Azure.ResourceManager.AppService
                 id,
                 name,
                 type,
-                systemData.Value,
-                entityName.Value,
-                entityConnectionString.Value,
-                resourceConnectionString.Value,
-                hostname.Value,
-                Optional.ToNullable(port),
-                biztalkUri.Value,
-                kind.Value,
+                systemData,
+                entityName,
+                entityConnectionString,
+                resourceConnectionString,
+                hostname,
+                port,
+                biztalkUri,
+                kind,
                 serializedAdditionalRawData);
         }
 

@@ -170,13 +170,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<BinaryData> componentSpec = default;
-            Optional<RegistryAssetProvisioningState> provisioningState = default;
-            Optional<string> stage = default;
-            Optional<AutoDeleteSetting> autoDeleteSetting = default;
-            Optional<bool> isAnonymous = default;
-            Optional<bool> isArchived = default;
-            Optional<string> description = default;
+            BinaryData componentSpec = default;
+            RegistryAssetProvisioningState? provisioningState = default;
+            string stage = default;
+            AutoDeleteSetting autoDeleteSetting = default;
+            bool? isAnonymous = default;
+            bool? isArchived = default;
+            string description = default;
             IDictionary<string, string> properties = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -287,16 +287,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MachineLearningComponentVersionProperties(
-                description.Value,
+                description,
                 properties ?? new ChangeTrackingDictionary<string, string>(),
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
-                autoDeleteSetting.Value,
-                Optional.ToNullable(isAnonymous),
-                Optional.ToNullable(isArchived),
-                componentSpec.Value,
-                Optional.ToNullable(provisioningState),
-                stage.Value);
+                autoDeleteSetting,
+                isAnonymous,
+                isArchived,
+                componentSpec,
+                provisioningState,
+                stage);
         }
 
         BinaryData IPersistableModel<MachineLearningComponentVersionProperties>.Write(ModelReaderWriterOptions options)

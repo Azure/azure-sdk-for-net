@@ -197,15 +197,15 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> cryptoKeyId = default;
-            Optional<string> keyType = default;
-            Optional<long?> keySize = default;
-            Optional<string> keyAlgorithm = default;
+            SystemData systemData = default;
+            string cryptoKeyId = default;
+            string keyType = default;
+            long? keySize = default;
+            string keyAlgorithm = default;
             IList<string> usage = default;
             IReadOnlyList<string> filePaths = default;
-            Optional<CryptoPairedKey> pairedKey = default;
-            Optional<bool?> isShortKeySize = default;
+            CryptoPairedKey pairedKey = default;
+            bool? isShortKeySize = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -344,15 +344,15 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                cryptoKeyId.Value,
-                keyType.Value,
-                Optional.ToNullable(keySize),
-                keyAlgorithm.Value,
+                systemData,
+                cryptoKeyId,
+                keyType,
+                keySize,
+                keyAlgorithm,
                 usage ?? new ChangeTrackingList<string>(),
                 filePaths ?? new ChangeTrackingList<string>(),
-                pairedKey.Value,
-                Optional.ToNullable(isShortKeySize),
+                pairedKey,
+                isShortKeySize,
                 serializedAdditionalRawData);
         }
 

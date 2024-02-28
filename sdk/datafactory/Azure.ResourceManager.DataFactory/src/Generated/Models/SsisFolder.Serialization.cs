@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             SsisObjectMetadataType type = default;
-            Optional<long> id = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
+            long? id = default;
+            string name = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SsisFolder(type, Optional.ToNullable(id), name.Value, description.Value, serializedAdditionalRawData);
+            return new SsisFolder(type, id, name, description, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SsisFolder>.Write(ModelReaderWriterOptions options)

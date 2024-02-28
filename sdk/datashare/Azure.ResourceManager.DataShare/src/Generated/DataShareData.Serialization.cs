@@ -127,14 +127,14 @@ namespace Azure.ResourceManager.DataShare
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> createdAt = default;
-            Optional<string> description = default;
-            Optional<DataShareProvisioningState> provisioningState = default;
-            Optional<DataShareKind> shareKind = default;
-            Optional<string> terms = default;
-            Optional<string> userEmail = default;
-            Optional<string> userName = default;
+            SystemData systemData = default;
+            DateTimeOffset? createdAt = default;
+            string description = default;
+            DataShareProvisioningState? provisioningState = default;
+            DataShareKind? shareKind = default;
+            string terms = default;
+            string userEmail = default;
+            string userName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -232,14 +232,14 @@ namespace Azure.ResourceManager.DataShare
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(createdAt),
-                description.Value,
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(shareKind),
-                terms.Value,
-                userEmail.Value,
-                userName.Value,
+                systemData,
+                createdAt,
+                description,
+                provisioningState,
+                shareKind,
+                terms,
+                userEmail,
+                userName,
                 serializedAdditionalRawData);
         }
 

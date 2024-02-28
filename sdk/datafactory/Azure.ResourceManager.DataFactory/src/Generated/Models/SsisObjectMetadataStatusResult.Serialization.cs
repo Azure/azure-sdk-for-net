@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<string> status = default;
-            Optional<string> name = default;
-            Optional<string> properties = default;
-            Optional<string> error = default;
+            string status = default;
+            string name = default;
+            string properties = default;
+            string error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SsisObjectMetadataStatusResult(status.Value, name.Value, properties.Value, error.Value, serializedAdditionalRawData);
+            return new SsisObjectMetadataStatusResult(status, name, properties, error, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SsisObjectMetadataStatusResult>.Write(ModelReaderWriterOptions options)

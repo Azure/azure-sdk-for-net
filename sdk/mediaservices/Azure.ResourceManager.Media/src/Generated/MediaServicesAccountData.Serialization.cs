@@ -176,22 +176,22 @@ namespace Azure.ResourceManager.Media
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> mediaServiceId = default;
+            SystemData systemData = default;
+            Guid? mediaServiceId = default;
             IList<MediaServicesStorageAccount> storageAccounts = default;
-            Optional<MediaStorageAuthentication?> storageAuthentication = default;
-            Optional<AccountEncryption> encryption = default;
-            Optional<MediaKeyDelivery> keyDelivery = default;
-            Optional<MediaServicesPublicNetworkAccess?> publicNetworkAccess = default;
-            Optional<MediaServicesProvisioningState> provisioningState = default;
+            MediaStorageAuthentication? storageAuthentication = default;
+            AccountEncryption encryption = default;
+            MediaKeyDelivery keyDelivery = default;
+            MediaServicesPublicNetworkAccess? publicNetworkAccess = default;
+            MediaServicesProvisioningState? provisioningState = default;
             IReadOnlyList<MediaServicesPrivateEndpointConnectionData> privateEndpointConnections = default;
-            Optional<MediaServicesMinimumTlsVersion> minimumTlsVersion = default;
+            MediaServicesMinimumTlsVersion? minimumTlsVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -363,19 +363,19 @@ namespace Azure.ResourceManager.Media
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 identity,
-                Optional.ToNullable(mediaServiceId),
+                mediaServiceId,
                 storageAccounts ?? new ChangeTrackingList<MediaServicesStorageAccount>(),
-                Optional.ToNullable(storageAuthentication),
-                encryption.Value,
-                keyDelivery.Value,
-                Optional.ToNullable(publicNetworkAccess),
-                Optional.ToNullable(provisioningState),
+                storageAuthentication,
+                encryption,
+                keyDelivery,
+                publicNetworkAccess,
+                provisioningState,
                 privateEndpointConnections ?? new ChangeTrackingList<MediaServicesPrivateEndpointConnectionData>(),
-                Optional.ToNullable(minimumTlsVersion),
+                minimumTlsVersion,
                 serializedAdditionalRawData);
         }
 
