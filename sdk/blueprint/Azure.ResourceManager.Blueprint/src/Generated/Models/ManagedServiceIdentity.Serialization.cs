@@ -89,8 +89,8 @@ namespace Azure.ResourceManager.Blueprint.Models
                 return null;
             }
             ManagedServiceIdentityType type = default;
-            Optional<string> principalId = default;
-            Optional<Guid> tenantId = default;
+            string principalId = default;
+            Guid? tenantId = default;
             IDictionary<string, UserAssignedIdentity> userAssignedIdentities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedServiceIdentity(type, principalId.Value, Optional.ToNullable(tenantId), userAssignedIdentities ?? new ChangeTrackingDictionary<string, UserAssignedIdentity>(), serializedAdditionalRawData);
+            return new ManagedServiceIdentity(type, principalId, tenantId, userAssignedIdentities ?? new ChangeTrackingDictionary<string, UserAssignedIdentity>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedServiceIdentity>.Write(ModelReaderWriterOptions options)

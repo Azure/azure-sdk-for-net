@@ -137,12 +137,12 @@ namespace Azure.ResourceManager.Monitor
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IList<string> scopes = default;
-            Optional<AlertRuleAllOfCondition> condition = default;
-            Optional<ActionList> actions = default;
-            Optional<bool> enabled = default;
-            Optional<string> description = default;
+            AlertRuleAllOfCondition condition = default;
+            ActionList actions = default;
+            bool? enabled = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -258,14 +258,14 @@ namespace Azure.ResourceManager.Monitor
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 scopes ?? new ChangeTrackingList<string>(),
-                condition.Value,
-                actions.Value,
-                Optional.ToNullable(enabled),
-                description.Value,
+                condition,
+                actions,
+                enabled,
+                description,
                 serializedAdditionalRawData);
         }
 

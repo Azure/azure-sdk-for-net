@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 return null;
             }
             IReadOnlyList<PostgreSqlServerKeyData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlServerKeyListResult(value ?? new ChangeTrackingList<PostgreSqlServerKeyData>(), nextLink.Value, serializedAdditionalRawData);
+            return new PostgreSqlServerKeyListResult(value ?? new ChangeTrackingList<PostgreSqlServerKeyData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlServerKeyListResult>.Write(ModelReaderWriterOptions options)

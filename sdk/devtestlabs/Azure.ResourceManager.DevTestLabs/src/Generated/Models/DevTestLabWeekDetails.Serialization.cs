@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 return null;
             }
             IList<string> weekdays = default;
-            Optional<string> time = default;
+            string time = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabWeekDetails(weekdays ?? new ChangeTrackingList<string>(), time.Value, serializedAdditionalRawData);
+            return new DevTestLabWeekDetails(weekdays ?? new ChangeTrackingList<string>(), time, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabWeekDetails>.Write(ModelReaderWriterOptions options)

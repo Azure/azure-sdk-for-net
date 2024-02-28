@@ -107,8 +107,8 @@ namespace Azure.ResourceManager.Monitor
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<MonitorCategoryType> categoryType = default;
+            SystemData systemData = default;
+            MonitorCategoryType? categoryType = default;
             IList<string> categoryGroups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -183,8 +183,8 @@ namespace Azure.ResourceManager.Monitor
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(categoryType),
+                systemData,
+                categoryType,
                 categoryGroups ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }

@@ -103,12 +103,12 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             {
                 return null;
             }
-            Optional<CapacitySku> sku = default;
+            CapacitySku sku = default;
             IDictionary<string, string> tags = default;
-            Optional<DedicatedCapacityAdministrators> administration = default;
-            Optional<Mode> mode = default;
-            Optional<Guid> tenantId = default;
-            Optional<string> friendlyName = default;
+            DedicatedCapacityAdministrators administration = default;
+            Mode? mode = default;
+            Guid? tenantId = default;
+            string friendlyName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -187,12 +187,12 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DedicatedCapacityPatch(
-                sku.Value,
+                sku,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                administration.Value,
-                Optional.ToNullable(mode),
-                Optional.ToNullable(tenantId),
-                friendlyName.Value,
+                administration,
+                mode,
+                tenantId,
+                friendlyName,
                 serializedAdditionalRawData);
         }
 

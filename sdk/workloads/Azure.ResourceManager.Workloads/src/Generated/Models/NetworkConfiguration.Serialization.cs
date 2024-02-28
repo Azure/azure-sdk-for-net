@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<bool> isSecondaryIPEnabled = default;
+            bool? isSecondaryIPEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkConfiguration(Optional.ToNullable(isSecondaryIPEnabled), serializedAdditionalRawData);
+            return new NetworkConfiguration(isSecondaryIPEnabled, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkConfiguration>.Write(ModelReaderWriterOptions options)

@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<string> prometheusQueryEndpoint = default;
-            Optional<string> internalId = default;
+            string prometheusQueryEndpoint = default;
+            string internalId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorWorkspaceMetricProperties(prometheusQueryEndpoint.Value, internalId.Value, serializedAdditionalRawData);
+            return new MonitorWorkspaceMetricProperties(prometheusQueryEndpoint, internalId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorWorkspaceMetricProperties>.Write(ModelReaderWriterOptions options)

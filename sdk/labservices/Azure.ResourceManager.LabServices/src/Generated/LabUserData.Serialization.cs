@@ -129,15 +129,15 @@ namespace Azure.ResourceManager.LabServices
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<TimeSpan> additionalUsageQuota = default;
-            Optional<LabServicesProvisioningState> provisioningState = default;
-            Optional<string> displayName = default;
+            SystemData systemData = default;
+            TimeSpan? additionalUsageQuota = default;
+            LabServicesProvisioningState? provisioningState = default;
+            string displayName = default;
             string email = default;
-            Optional<LabUserRegistrationState> registrationState = default;
-            Optional<LabUserInvitationState> invitationState = default;
-            Optional<DateTimeOffset> invitationSent = default;
-            Optional<TimeSpan> totalUsage = default;
+            LabUserRegistrationState? registrationState = default;
+            LabUserInvitationState? invitationState = default;
+            DateTimeOffset? invitationSent = default;
+            TimeSpan? totalUsage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -252,15 +252,15 @@ namespace Azure.ResourceManager.LabServices
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(additionalUsageQuota),
-                Optional.ToNullable(provisioningState),
-                displayName.Value,
+                systemData,
+                additionalUsageQuota,
+                provisioningState,
+                displayName,
                 email,
-                Optional.ToNullable(registrationState),
-                Optional.ToNullable(invitationState),
-                Optional.ToNullable(invitationSent),
-                Optional.ToNullable(totalUsage),
+                registrationState,
+                invitationState,
+                invitationSent,
+                totalUsage,
                 serializedAdditionalRawData);
         }
 

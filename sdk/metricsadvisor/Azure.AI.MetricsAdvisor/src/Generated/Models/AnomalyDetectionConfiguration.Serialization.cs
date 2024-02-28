@@ -56,9 +56,9 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 return null;
             }
-            Optional<string> anomalyDetectionConfigurationId = default;
+            string anomalyDetectionConfigurationId = default;
             string name = default;
-            Optional<string> description = default;
+            string description = default;
             string metricId = default;
             MetricWholeSeriesDetectionCondition wholeMetricConfiguration = default;
             IList<MetricSeriesGroupDetectionCondition> dimensionGroupOverrideConfigurations = default;
@@ -120,9 +120,9 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
             }
             return new AnomalyDetectionConfiguration(
-                anomalyDetectionConfigurationId.Value,
+                anomalyDetectionConfigurationId,
                 name,
-                description.Value,
+                description,
                 metricId,
                 wholeMetricConfiguration,
                 dimensionGroupOverrideConfigurations ?? new ChangeTrackingList<MetricSeriesGroupDetectionCondition>(),

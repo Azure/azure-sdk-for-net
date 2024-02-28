@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<ComputeRuntimeDto> computeRuntime = default;
-            Optional<string> offlineStoreConnectionName = default;
-            Optional<string> onlineStoreConnectionName = default;
+            ComputeRuntimeDto computeRuntime = default;
+            string offlineStoreConnectionName = default;
+            string onlineStoreConnectionName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FeatureStoreSettings(computeRuntime.Value, offlineStoreConnectionName.Value, onlineStoreConnectionName.Value, serializedAdditionalRawData);
+            return new FeatureStoreSettings(computeRuntime, offlineStoreConnectionName, onlineStoreConnectionName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FeatureStoreSettings>.Write(ModelReaderWriterOptions options)

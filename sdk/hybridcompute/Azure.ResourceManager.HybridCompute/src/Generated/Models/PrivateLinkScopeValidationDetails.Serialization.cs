@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<HybridComputePublicNetworkAccessType> publicNetworkAccess = default;
+            ResourceIdentifier id = default;
+            HybridComputePublicNetworkAccessType? publicNetworkAccess = default;
             IReadOnlyList<HybridComputeConnectionDetail> connectionDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateLinkScopeValidationDetails(id.Value, Optional.ToNullable(publicNetworkAccess), connectionDetails ?? new ChangeTrackingList<HybridComputeConnectionDetail>(), serializedAdditionalRawData);
+            return new PrivateLinkScopeValidationDetails(id, publicNetworkAccess, connectionDetails ?? new ChangeTrackingList<HybridComputeConnectionDetail>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateLinkScopeValidationDetails>.Write(ModelReaderWriterOptions options)

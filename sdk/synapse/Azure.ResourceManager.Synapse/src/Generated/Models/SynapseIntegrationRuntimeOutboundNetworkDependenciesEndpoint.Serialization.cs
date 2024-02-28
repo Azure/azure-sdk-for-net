@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<string> domainName = default;
+            string domainName = default;
             IReadOnlyList<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails> endpointDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint(domainName.Value, endpointDetails ?? new ChangeTrackingList<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails>(), serializedAdditionalRawData);
+            return new SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint(domainName, endpointDetails ?? new ChangeTrackingList<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint>.Write(ModelReaderWriterOptions options)

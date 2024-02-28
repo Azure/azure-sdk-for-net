@@ -163,21 +163,21 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
             IDictionary<string, EntityParameterSpecification> parameters = default;
             IList<BinaryData> annotations = default;
             DataFactoryElement<string> host = default;
-            Optional<DataFactoryElement<int>> port = default;
-            Optional<SftpAuthenticationType> authenticationType = default;
-            Optional<DataFactoryElement<string>> userName = default;
-            Optional<DataFactorySecretBaseDefinition> password = default;
-            Optional<string> encryptedCredential = default;
-            Optional<DataFactoryElement<string>> privateKeyPath = default;
-            Optional<DataFactorySecretBaseDefinition> privateKeyContent = default;
-            Optional<DataFactorySecretBaseDefinition> passPhrase = default;
-            Optional<DataFactoryElement<bool>> skipHostKeyValidation = default;
-            Optional<DataFactoryElement<string>> hostKeyFingerprint = default;
+            DataFactoryElement<int> port = default;
+            SftpAuthenticationType? authenticationType = default;
+            DataFactoryElement<string> userName = default;
+            DataFactorySecretBaseDefinition password = default;
+            string encryptedCredential = default;
+            DataFactoryElement<string> privateKeyPath = default;
+            DataFactorySecretBaseDefinition privateKeyContent = default;
+            DataFactorySecretBaseDefinition passPhrase = default;
+            DataFactoryElement<bool> skipHostKeyValidation = default;
+            DataFactoryElement<string> hostKeyFingerprint = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -344,22 +344,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new SftpServerLinkedService(
                 type,
-                connectVia.Value,
-                description.Value,
+                connectVia,
+                description,
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 annotations ?? new ChangeTrackingList<BinaryData>(),
                 additionalProperties,
                 host,
-                port.Value,
-                Optional.ToNullable(authenticationType),
-                userName.Value,
+                port,
+                authenticationType,
+                userName,
                 password,
-                encryptedCredential.Value,
-                privateKeyPath.Value,
+                encryptedCredential,
+                privateKeyPath,
                 privateKeyContent,
                 passPhrase,
-                skipHostKeyValidation.Value,
-                hostKeyFingerprint.Value);
+                skipHostKeyValidation,
+                hostKeyFingerprint);
         }
 
         BinaryData IPersistableModel<SftpServerLinkedService>.Write(ModelReaderWriterOptions options)

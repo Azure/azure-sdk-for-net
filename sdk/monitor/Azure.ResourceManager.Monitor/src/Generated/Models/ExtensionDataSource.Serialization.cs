@@ -105,9 +105,9 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             IList<ExtensionDataSourceStream> streams = default;
             string extensionName = default;
-            Optional<BinaryData> extensionSettings = default;
+            BinaryData extensionSettings = default;
             IList<string> inputDataSources = default;
-            Optional<string> name = default;
+            string name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -168,9 +168,9 @@ namespace Azure.ResourceManager.Monitor.Models
             return new ExtensionDataSource(
                 streams ?? new ChangeTrackingList<ExtensionDataSourceStream>(),
                 extensionName,
-                extensionSettings.Value,
+                extensionSettings,
                 inputDataSources ?? new ChangeTrackingList<string>(),
-                name.Value,
+                name,
                 serializedAdditionalRawData);
         }
 

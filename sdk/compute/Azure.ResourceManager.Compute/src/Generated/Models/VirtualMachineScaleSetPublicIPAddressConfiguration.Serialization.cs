@@ -111,13 +111,13 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             string name = default;
-            Optional<ComputePublicIPAddressSku> sku = default;
-            Optional<int> idleTimeoutInMinutes = default;
-            Optional<VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings> dnsSettings = default;
+            ComputePublicIPAddressSku sku = default;
+            int? idleTimeoutInMinutes = default;
+            VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings dnsSettings = default;
             IList<VirtualMachineScaleSetIPTag> ipTags = default;
-            Optional<WritableSubResource> publicIPPrefix = default;
-            Optional<IPVersion> publicIPAddressVersion = default;
-            Optional<ComputeDeleteOption> deleteOption = default;
+            WritableSubResource publicIPPrefix = default;
+            IPVersion? publicIPAddressVersion = default;
+            ComputeDeleteOption? deleteOption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -215,13 +215,13 @@ namespace Azure.ResourceManager.Compute.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new VirtualMachineScaleSetPublicIPAddressConfiguration(
                 name,
-                sku.Value,
-                Optional.ToNullable(idleTimeoutInMinutes),
-                dnsSettings.Value,
+                sku,
+                idleTimeoutInMinutes,
+                dnsSettings,
                 ipTags ?? new ChangeTrackingList<VirtualMachineScaleSetIPTag>(),
                 publicIPPrefix,
-                Optional.ToNullable(publicIPAddressVersion),
-                Optional.ToNullable(deleteOption),
+                publicIPAddressVersion,
+                deleteOption,
                 serializedAdditionalRawData);
         }
 

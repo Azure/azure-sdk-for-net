@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Optional<Uri> keyUri = default;
+            Uri keyUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CmkKeyVaultProperties(keyUri.Value, serializedAdditionalRawData);
+            return new CmkKeyVaultProperties(keyUri, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CmkKeyVaultProperties>.Write(ModelReaderWriterOptions options)

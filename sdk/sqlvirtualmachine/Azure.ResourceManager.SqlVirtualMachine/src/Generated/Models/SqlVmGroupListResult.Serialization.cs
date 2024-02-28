@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 return null;
             }
             IReadOnlyList<SqlVmGroupData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlVmGroupListResult(value ?? new ChangeTrackingList<SqlVmGroupData>(), nextLink.Value, serializedAdditionalRawData);
+            return new SqlVmGroupListResult(value ?? new ChangeTrackingList<SqlVmGroupData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlVmGroupListResult>.Write(ModelReaderWriterOptions options)

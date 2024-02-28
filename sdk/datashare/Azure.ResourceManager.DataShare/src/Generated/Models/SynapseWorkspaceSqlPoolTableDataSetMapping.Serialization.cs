@@ -108,10 +108,10 @@ namespace Azure.ResourceManager.DataShare.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             Guid dataSetId = default;
-            Optional<DataSetMappingStatus> dataSetMappingStatus = default;
-            Optional<DataShareProvisioningState> provisioningState = default;
+            DataSetMappingStatus? dataSetMappingStatus = default;
+            DataShareProvisioningState? provisioningState = default;
             ResourceIdentifier synapseWorkspaceSqlPoolTableResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -196,12 +196,12 @@ namespace Azure.ResourceManager.DataShare.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 kind,
                 serializedAdditionalRawData,
                 dataSetId,
-                Optional.ToNullable(dataSetMappingStatus),
-                Optional.ToNullable(provisioningState),
+                dataSetMappingStatus,
+                provisioningState,
                 synapseWorkspaceSqlPoolTableResourceId);
         }
 

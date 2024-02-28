@@ -159,16 +159,16 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IReadOnlyList<IPAddress> windowsOutboundIPAddresses = default;
             IReadOnlyList<IPAddress> linuxOutboundIPAddresses = default;
             IReadOnlyList<IPAddress> externalInboundIPAddresses = default;
             IReadOnlyList<IPAddress> internalInboundIPAddresses = default;
-            Optional<bool> allowNewPrivateEndpointConnections = default;
+            bool? allowNewPrivateEndpointConnections = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -317,13 +317,13 @@ namespace Azure.ResourceManager.AppService
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 windowsOutboundIPAddresses ?? new ChangeTrackingList<IPAddress>(),
                 linuxOutboundIPAddresses ?? new ChangeTrackingList<IPAddress>(),
                 externalInboundIPAddresses ?? new ChangeTrackingList<IPAddress>(),
                 internalInboundIPAddresses ?? new ChangeTrackingList<IPAddress>(),
-                Optional.ToNullable(allowNewPrivateEndpointConnections),
-                kind.Value,
+                allowNewPrivateEndpointConnections,
+                kind,
                 serializedAdditionalRawData);
         }
 

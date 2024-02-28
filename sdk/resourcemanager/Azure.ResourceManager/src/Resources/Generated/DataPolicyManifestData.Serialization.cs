@@ -165,10 +165,10 @@ namespace Azure.ResourceManager.Resources
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IReadOnlyList<string> namespaces = default;
-            Optional<string> policyMode = default;
-            Optional<bool> isBuiltInOnly = default;
+            string policyMode = default;
+            bool? isBuiltInOnly = default;
             IReadOnlyList<ResourceTypeAliases> resourceTypeAliases = default;
             IReadOnlyList<DataPolicyManifestEffect> effects = default;
             IReadOnlyList<string> fieldValues = default;
@@ -334,10 +334,10 @@ namespace Azure.ResourceManager.Resources
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 namespaces ?? new ChangeTrackingList<string>(),
-                policyMode.Value,
-                Optional.ToNullable(isBuiltInOnly),
+                policyMode,
+                isBuiltInOnly,
                 resourceTypeAliases ?? new ChangeTrackingList<ResourceTypeAliases>(),
                 effects ?? new ChangeTrackingList<DataPolicyManifestEffect>(),
                 fieldValues ?? new ChangeTrackingList<string>(),

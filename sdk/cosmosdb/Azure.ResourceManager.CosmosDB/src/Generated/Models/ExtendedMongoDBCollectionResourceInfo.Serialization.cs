@@ -118,15 +118,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> rid = default;
-            Optional<float> ts = default;
-            Optional<ETag> etag = default;
+            string rid = default;
+            float? ts = default;
+            ETag? etag = default;
             string id = default;
             IDictionary<string, string> shardKey = default;
             IList<MongoDBIndex> indexes = default;
-            Optional<int> analyticalStorageTtl = default;
-            Optional<ResourceRestoreParameters> restoreParameters = default;
-            Optional<CosmosDBAccountCreateMode> createMode = default;
+            int? analyticalStorageTtl = default;
+            ResourceRestoreParameters restoreParameters = default;
+            CosmosDBAccountCreateMode? createMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -224,13 +224,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 id,
                 shardKey ?? new ChangeTrackingDictionary<string, string>(),
                 indexes ?? new ChangeTrackingList<MongoDBIndex>(),
-                Optional.ToNullable(analyticalStorageTtl),
-                restoreParameters.Value,
-                Optional.ToNullable(createMode),
+                analyticalStorageTtl,
+                restoreParameters,
+                createMode,
                 serializedAdditionalRawData,
-                rid.Value,
-                Optional.ToNullable(ts),
-                Optional.ToNullable(etag));
+                rid,
+                ts,
+                etag);
         }
 
         BinaryData IPersistableModel<ExtendedMongoDBCollectionResourceInfo>.Write(ModelReaderWriterOptions options)

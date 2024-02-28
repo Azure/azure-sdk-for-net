@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 return null;
             }
             ServiceBusSkuName name = default;
-            Optional<ServiceBusSkuTier> tier = default;
-            Optional<int> capacity = default;
+            ServiceBusSkuTier? tier = default;
+            int? capacity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceBusSku(name, Optional.ToNullable(tier), Optional.ToNullable(capacity), serializedAdditionalRawData);
+            return new ServiceBusSku(name, tier, capacity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceBusSku>.Write(ModelReaderWriterOptions options)

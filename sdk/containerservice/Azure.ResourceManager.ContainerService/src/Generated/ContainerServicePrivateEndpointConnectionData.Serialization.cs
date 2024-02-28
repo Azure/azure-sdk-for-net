@@ -108,10 +108,10 @@ namespace Azure.ResourceManager.ContainerService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ContainerServicePrivateEndpointConnectionProvisioningState> provisioningState = default;
-            Optional<WritableSubResource> privateEndpoint = default;
-            Optional<ContainerServicePrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
+            SystemData systemData = default;
+            ContainerServicePrivateEndpointConnectionProvisioningState? provisioningState = default;
+            WritableSubResource privateEndpoint = default;
+            ContainerServicePrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -189,10 +189,10 @@ namespace Azure.ResourceManager.ContainerService
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(provisioningState),
+                systemData,
+                provisioningState,
                 privateEndpoint,
-                privateLinkServiceConnectionState.Value,
+                privateLinkServiceConnectionState,
                 serializedAdditionalRawData);
         }
 

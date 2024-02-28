@@ -146,15 +146,15 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> author = default;
-            Optional<DateTimeOffset> createdDate = default;
-            Optional<string> description = default;
-            Optional<DevTestLabGalleryImageReference> imageReference = default;
-            Optional<string> icon = default;
-            Optional<bool> enabled = default;
-            Optional<string> planId = default;
-            Optional<bool> isPlanAuthorized = default;
+            SystemData systemData = default;
+            string author = default;
+            DateTimeOffset? createdDate = default;
+            string description = default;
+            DevTestLabGalleryImageReference imageReference = default;
+            string icon = default;
+            bool? enabled = default;
+            string planId = default;
+            bool? isPlanAuthorized = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -280,17 +280,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                author.Value,
-                Optional.ToNullable(createdDate),
-                description.Value,
-                imageReference.Value,
-                icon.Value,
-                Optional.ToNullable(enabled),
-                planId.Value,
-                Optional.ToNullable(isPlanAuthorized),
+                author,
+                createdDate,
+                description,
+                imageReference,
+                icon,
+                enabled,
+                planId,
+                isPlanAuthorized,
                 serializedAdditionalRawData);
         }
 

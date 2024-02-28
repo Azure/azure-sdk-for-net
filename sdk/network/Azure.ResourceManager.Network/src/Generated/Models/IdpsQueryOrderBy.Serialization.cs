@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> field = default;
-            Optional<FirewallPolicyIdpsQuerySortOrder> order = default;
+            string field = default;
+            FirewallPolicyIdpsQuerySortOrder? order = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IdpsQueryOrderBy(field.Value, Optional.ToNullable(order), serializedAdditionalRawData);
+            return new IdpsQueryOrderBy(field, order, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IdpsQueryOrderBy>.Write(ModelReaderWriterOptions options)

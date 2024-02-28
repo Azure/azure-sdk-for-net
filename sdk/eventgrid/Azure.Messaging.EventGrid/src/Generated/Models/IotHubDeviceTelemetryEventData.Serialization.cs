@@ -22,7 +22,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<object> body = default;
+            object body = default;
             IReadOnlyDictionary<string, string> properties = default;
             IReadOnlyDictionary<string, string> systemProperties = default;
             foreach (var property in element.EnumerateObject())
@@ -65,7 +65,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new IotHubDeviceTelemetryEventData(body.Value, properties ?? new ChangeTrackingDictionary<string, string>(), systemProperties ?? new ChangeTrackingDictionary<string, string>());
+            return new IotHubDeviceTelemetryEventData(body, properties ?? new ChangeTrackingDictionary<string, string>(), systemProperties ?? new ChangeTrackingDictionary<string, string>());
         }
 
         internal partial class IotHubDeviceTelemetryEventDataConverter : JsonConverter<IotHubDeviceTelemetryEventData>

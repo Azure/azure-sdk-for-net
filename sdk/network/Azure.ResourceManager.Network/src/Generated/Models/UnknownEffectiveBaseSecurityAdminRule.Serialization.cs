@@ -101,9 +101,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> configurationDescription = default;
-            Optional<string> ruleCollectionDescription = default;
+            ResourceIdentifier id = default;
+            string configurationDescription = default;
+            string ruleCollectionDescription = default;
             IReadOnlyList<NetworkManagerSecurityGroupItem> ruleCollectionAppliesToGroups = default;
             IReadOnlyList<NetworkConfigurationGroup> ruleGroups = default;
             EffectiveAdminRuleKind kind = "Unknown";
@@ -170,9 +170,9 @@ namespace Azure.ResourceManager.Network.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new UnknownEffectiveBaseSecurityAdminRule(
-                id.Value,
-                configurationDescription.Value,
-                ruleCollectionDescription.Value,
+                id,
+                configurationDescription,
+                ruleCollectionDescription,
                 ruleCollectionAppliesToGroups ?? new ChangeTrackingList<NetworkManagerSecurityGroupItem>(),
                 ruleGroups ?? new ChangeTrackingList<NetworkConfigurationGroup>(),
                 kind,

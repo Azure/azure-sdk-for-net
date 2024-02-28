@@ -129,13 +129,13 @@ namespace Azure.ResourceManager.Hci.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<string> cloudManagementEndpoint = default;
-            Optional<Guid> aadClientId = default;
-            Optional<Guid> aadTenantId = default;
-            Optional<HciClusterDesiredProperties> desiredProperties = default;
-            Optional<Guid> principalId = default;
-            Optional<Guid> tenantId = default;
-            Optional<HciManagedServiceIdentityType> type = default;
+            string cloudManagementEndpoint = default;
+            Guid? aadClientId = default;
+            Guid? aadTenantId = default;
+            HciClusterDesiredProperties desiredProperties = default;
+            Guid? principalId = default;
+            Guid? tenantId = default;
+            HciManagedServiceIdentityType? type = default;
             IDictionary<string, UserAssignedIdentity> userAssignedIdentities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -260,13 +260,13 @@ namespace Azure.ResourceManager.Hci.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new HciClusterPatch(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                cloudManagementEndpoint.Value,
-                Optional.ToNullable(aadClientId),
-                Optional.ToNullable(aadTenantId),
-                desiredProperties.Value,
-                Optional.ToNullable(principalId),
-                Optional.ToNullable(tenantId),
-                Optional.ToNullable(type),
+                cloudManagementEndpoint,
+                aadClientId,
+                aadTenantId,
+                desiredProperties,
+                principalId,
+                tenantId,
+                type,
                 userAssignedIdentities ?? new ChangeTrackingDictionary<string, UserAssignedIdentity>(),
                 serializedAdditionalRawData);
         }

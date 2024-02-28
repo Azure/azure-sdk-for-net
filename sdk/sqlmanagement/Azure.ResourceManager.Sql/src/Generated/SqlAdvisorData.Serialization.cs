@@ -134,17 +134,17 @@ namespace Azure.ResourceManager.Sql
             {
                 return null;
             }
-            Optional<string> kind = default;
-            Optional<AzureLocation> location = default;
+            string kind = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SqlAdvisorStatus> advisorStatus = default;
-            Optional<AutoExecuteStatus> autoExecuteStatus = default;
-            Optional<AutoExecuteStatusInheritedFrom> autoExecuteStatusInheritedFrom = default;
-            Optional<string> recommendationsStatus = default;
-            Optional<DateTimeOffset> lastChecked = default;
+            SystemData systemData = default;
+            SqlAdvisorStatus? advisorStatus = default;
+            AutoExecuteStatus? autoExecuteStatus = default;
+            AutoExecuteStatusInheritedFrom? autoExecuteStatusInheritedFrom = default;
+            string recommendationsStatus = default;
+            DateTimeOffset? lastChecked = default;
             IReadOnlyList<RecommendedActionData> recommendedActions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -265,14 +265,14 @@ namespace Azure.ResourceManager.Sql
                 id,
                 name,
                 type,
-                systemData.Value,
-                kind.Value,
-                Optional.ToNullable(location),
-                Optional.ToNullable(advisorStatus),
-                Optional.ToNullable(autoExecuteStatus),
-                Optional.ToNullable(autoExecuteStatusInheritedFrom),
-                recommendationsStatus.Value,
-                Optional.ToNullable(lastChecked),
+                systemData,
+                kind,
+                location,
+                advisorStatus,
+                autoExecuteStatus,
+                autoExecuteStatusInheritedFrom,
+                recommendationsStatus,
+                lastChecked,
                 recommendedActions ?? new ChangeTrackingList<RecommendedActionData>(),
                 serializedAdditionalRawData);
         }

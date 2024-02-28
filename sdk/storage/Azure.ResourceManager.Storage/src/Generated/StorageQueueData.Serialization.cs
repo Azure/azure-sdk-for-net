@@ -107,9 +107,9 @@ namespace Azure.ResourceManager.Storage
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, string> metadata = default;
-            Optional<int> approximateMessageCount = default;
+            int? approximateMessageCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -183,9 +183,9 @@ namespace Azure.ResourceManager.Storage
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 metadata ?? new ChangeTrackingDictionary<string, string>(),
-                Optional.ToNullable(approximateMessageCount),
+                approximateMessageCount,
                 serializedAdditionalRawData);
         }
 

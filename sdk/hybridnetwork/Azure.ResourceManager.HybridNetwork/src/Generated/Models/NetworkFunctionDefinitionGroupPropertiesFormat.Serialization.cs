@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<string> description = default;
+            ProvisioningState? provisioningState = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkFunctionDefinitionGroupPropertiesFormat(Optional.ToNullable(provisioningState), description.Value, serializedAdditionalRawData);
+            return new NetworkFunctionDefinitionGroupPropertiesFormat(provisioningState, description, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkFunctionDefinitionGroupPropertiesFormat>.Write(ModelReaderWriterOptions options)

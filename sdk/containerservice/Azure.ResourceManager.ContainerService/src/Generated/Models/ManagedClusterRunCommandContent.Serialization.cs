@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             string command = default;
-            Optional<string> context = default;
-            Optional<string> clusterToken = default;
+            string context = default;
+            string clusterToken = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterRunCommandContent(command, context.Value, clusterToken.Value, serializedAdditionalRawData);
+            return new ManagedClusterRunCommandContent(command, context, clusterToken, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterRunCommandContent>.Write(ModelReaderWriterOptions options)

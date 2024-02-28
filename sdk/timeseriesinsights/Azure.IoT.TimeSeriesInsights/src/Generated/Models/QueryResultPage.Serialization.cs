@@ -22,8 +22,8 @@ namespace Azure.IoT.TimeSeriesInsights
             }
             IReadOnlyList<DateTimeOffset> timestamps = default;
             IReadOnlyList<PropertyValues> properties = default;
-            Optional<double> progress = default;
-            Optional<string> continuationToken = default;
+            double? progress = default;
+            string continuationToken = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timestamps"u8))
@@ -69,7 +69,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     continue;
                 }
             }
-            return new QueryResultPage(continuationToken.Value, timestamps ?? new ChangeTrackingList<DateTimeOffset>(), properties ?? new ChangeTrackingList<PropertyValues>(), Optional.ToNullable(progress));
+            return new QueryResultPage(continuationToken, timestamps ?? new ChangeTrackingList<DateTimeOffset>(), properties ?? new ChangeTrackingList<PropertyValues>(), progress);
         }
     }
 }

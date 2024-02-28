@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -18,10 +17,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> rawId = default;
-            Optional<CommunicationUserIdentifierModel> communicationUser = default;
-            Optional<PhoneNumberIdentifierModel> phoneNumber = default;
-            Optional<MicrosoftTeamsUserIdentifierModel> microsoftTeamsUser = default;
+            string rawId = default;
+            CommunicationUserIdentifierModel communicationUser = default;
+            PhoneNumberIdentifierModel phoneNumber = default;
+            MicrosoftTeamsUserIdentifierModel microsoftTeamsUser = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rawId"u8))
@@ -57,7 +56,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new CommunicationIdentifierModel(rawId.Value, communicationUser.Value, phoneNumber.Value, microsoftTeamsUser.Value);
+            return new CommunicationIdentifierModel(rawId, communicationUser, phoneNumber, microsoftTeamsUser);
         }
     }
 }

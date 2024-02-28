@@ -101,14 +101,14 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<string> nodeName = default;
-            Optional<int> availableMemoryInMB = default;
-            Optional<int> cpuUtilization = default;
-            Optional<int> concurrentJobsLimit = default;
-            Optional<int> concurrentJobsRunning = default;
-            Optional<int> maxConcurrentJobs = default;
-            Optional<float> sentBytes = default;
-            Optional<float> receivedBytes = default;
+            string nodeName = default;
+            int? availableMemoryInMB = default;
+            int? cpuUtilization = default;
+            int? concurrentJobsLimit = default;
+            int? concurrentJobsRunning = default;
+            int? maxConcurrentJobs = default;
+            float? sentBytes = default;
+            float? receivedBytes = default;
             IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -185,14 +185,14 @@ namespace Azure.ResourceManager.Synapse.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new SynapseIntegrationRuntimeNodeMonitoringResult(
-                nodeName.Value,
-                Optional.ToNullable(availableMemoryInMB),
-                Optional.ToNullable(cpuUtilization),
-                Optional.ToNullable(concurrentJobsLimit),
-                Optional.ToNullable(concurrentJobsRunning),
-                Optional.ToNullable(maxConcurrentJobs),
-                Optional.ToNullable(sentBytes),
-                Optional.ToNullable(receivedBytes),
+                nodeName,
+                availableMemoryInMB,
+                cpuUtilization,
+                concurrentJobsLimit,
+                concurrentJobsRunning,
+                maxConcurrentJobs,
+                sentBytes,
+                receivedBytes,
                 additionalProperties);
         }
 

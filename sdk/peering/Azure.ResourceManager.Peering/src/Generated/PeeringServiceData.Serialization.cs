@@ -137,19 +137,19 @@ namespace Azure.ResourceManager.Peering
             {
                 return null;
             }
-            Optional<PeeringServiceSku> sku = default;
+            PeeringServiceSku sku = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> peeringServiceLocation = default;
-            Optional<string> peeringServiceProvider = default;
-            Optional<PeeringProvisioningState> provisioningState = default;
-            Optional<string> providerPrimaryPeeringLocation = default;
-            Optional<string> providerBackupPeeringLocation = default;
-            Optional<PeeringLogAnalyticsWorkspaceProperties> logAnalyticsWorkspaceProperties = default;
+            SystemData systemData = default;
+            string peeringServiceLocation = default;
+            string peeringServiceProvider = default;
+            PeeringProvisioningState? provisioningState = default;
+            string providerPrimaryPeeringLocation = default;
+            string providerBackupPeeringLocation = default;
+            PeeringLogAnalyticsWorkspaceProperties logAnalyticsWorkspaceProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -266,16 +266,16 @@ namespace Azure.ResourceManager.Peering
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                sku.Value,
-                peeringServiceLocation.Value,
-                peeringServiceProvider.Value,
-                Optional.ToNullable(provisioningState),
-                providerPrimaryPeeringLocation.Value,
-                providerBackupPeeringLocation.Value,
-                logAnalyticsWorkspaceProperties.Value,
+                sku,
+                peeringServiceLocation,
+                peeringServiceProvider,
+                provisioningState,
+                providerPrimaryPeeringLocation,
+                providerBackupPeeringLocation,
+                logAnalyticsWorkspaceProperties,
                 serializedAdditionalRawData);
         }
 

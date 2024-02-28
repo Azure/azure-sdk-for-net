@@ -90,9 +90,9 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<ResourceGroupProperties> properties = default;
-            Optional<string> managedBy = default;
+            string name = default;
+            ResourceGroupProperties properties = default;
+            string managedBy = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceGroupPatch(name.Value, properties.Value, managedBy.Value, tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new ResourceGroupPatch(name, properties, managedBy, tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceGroupPatch>.Write(ModelReaderWriterOptions options)

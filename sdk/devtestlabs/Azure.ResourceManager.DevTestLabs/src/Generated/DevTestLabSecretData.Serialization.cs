@@ -121,10 +121,10 @@ namespace Azure.ResourceManager.DevTestLabs
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> value = default;
-            Optional<string> provisioningState = default;
-            Optional<Guid> uniqueIdentifier = default;
+            SystemData systemData = default;
+            string value = default;
+            string provisioningState = default;
+            Guid? uniqueIdentifier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -213,12 +213,12 @@ namespace Azure.ResourceManager.DevTestLabs
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                value.Value,
-                provisioningState.Value,
-                Optional.ToNullable(uniqueIdentifier),
+                value,
+                provisioningState,
+                uniqueIdentifier,
                 serializedAdditionalRawData);
         }
 

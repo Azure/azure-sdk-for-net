@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<BackupPolicyMigrationStatus> status = default;
-            Optional<BackupPolicyType> targetType = default;
-            Optional<DateTimeOffset> startTime = default;
+            BackupPolicyMigrationStatus? status = default;
+            BackupPolicyType? targetType = default;
+            DateTimeOffset? startTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupPolicyMigrationState(Optional.ToNullable(status), Optional.ToNullable(targetType), Optional.ToNullable(startTime), serializedAdditionalRawData);
+            return new BackupPolicyMigrationState(status, targetType, startTime, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupPolicyMigrationState>.Write(ModelReaderWriterOptions options)

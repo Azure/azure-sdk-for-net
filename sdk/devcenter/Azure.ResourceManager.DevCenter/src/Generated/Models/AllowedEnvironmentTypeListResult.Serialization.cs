@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 return null;
             }
             IReadOnlyList<AllowedEnvironmentTypeData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AllowedEnvironmentTypeListResult(value ?? new ChangeTrackingList<AllowedEnvironmentTypeData>(), nextLink.Value, serializedAdditionalRawData);
+            return new AllowedEnvironmentTypeListResult(value ?? new ChangeTrackingList<AllowedEnvironmentTypeData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AllowedEnvironmentTypeListResult>.Write(ModelReaderWriterOptions options)

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 return null;
             }
             IReadOnlyList<NetworkFabricSkuData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkFabricSkusListResult(value ?? new ChangeTrackingList<NetworkFabricSkuData>(), nextLink.Value, serializedAdditionalRawData);
+            return new NetworkFabricSkusListResult(value ?? new ChangeTrackingList<NetworkFabricSkuData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkFabricSkusListResult>.Write(ModelReaderWriterOptions options)

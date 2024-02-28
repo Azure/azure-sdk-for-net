@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -21,7 +20,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<ErrorResponse> error = default;
+            ErrorResponse error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("error"u8))
@@ -34,7 +33,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new ErrorContract(error.Value);
+            return new ErrorContract(error);
         }
 
         internal partial class ErrorContractConverter : JsonConverter<ErrorContract>

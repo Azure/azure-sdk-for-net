@@ -95,11 +95,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<SubProtectionPolicyType> policyType = default;
-            Optional<BackupSchedulePolicy> schedulePolicy = default;
-            Optional<BackupRetentionPolicy> retentionPolicy = default;
+            SubProtectionPolicyType? policyType = default;
+            BackupSchedulePolicy schedulePolicy = default;
+            BackupRetentionPolicy retentionPolicy = default;
             IDictionary<string, BackupTieringPolicy> tieringPolicy = default;
-            Optional<SnapshotBackupAdditionalDetails> snapshotBackupAdditionalDetails = default;
+            SnapshotBackupAdditionalDetails snapshotBackupAdditionalDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -161,11 +161,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SubProtectionPolicy(
-                Optional.ToNullable(policyType),
-                schedulePolicy.Value,
-                retentionPolicy.Value,
+                policyType,
+                schedulePolicy,
+                retentionPolicy,
                 tieringPolicy ?? new ChangeTrackingDictionary<string, BackupTieringPolicy>(),
-                snapshotBackupAdditionalDetails.Value,
+                snapshotBackupAdditionalDetails,
                 serializedAdditionalRawData);
         }
 

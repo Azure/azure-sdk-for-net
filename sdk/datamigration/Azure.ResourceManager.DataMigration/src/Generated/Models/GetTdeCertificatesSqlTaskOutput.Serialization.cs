@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> base64EncodedCertificates = default;
+            string base64EncodedCertificates = default;
             IReadOnlyList<ReportableException> validationErrors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GetTdeCertificatesSqlTaskOutput(base64EncodedCertificates.Value, validationErrors ?? new ChangeTrackingList<ReportableException>(), serializedAdditionalRawData);
+            return new GetTdeCertificatesSqlTaskOutput(base64EncodedCertificates, validationErrors ?? new ChangeTrackingList<ReportableException>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GetTdeCertificatesSqlTaskOutput>.Write(ModelReaderWriterOptions options)

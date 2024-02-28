@@ -153,8 +153,8 @@ namespace Azure.ResourceManager.Network.Models
             IList<string> sourceIPGroups = default;
             IList<string> destinationIPGroups = default;
             IList<string> destinationFqdns = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
+            string name = default;
+            string description = default;
             FirewallPolicyRuleType ruleType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -280,8 +280,8 @@ namespace Azure.ResourceManager.Network.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new NetworkRule(
-                name.Value,
-                description.Value,
+                name,
+                description,
                 ruleType,
                 serializedAdditionalRawData,
                 ipProtocols ?? new ChangeTrackingList<FirewallPolicyRuleNetworkProtocol>(),

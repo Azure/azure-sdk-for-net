@@ -161,23 +161,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<LinkedServiceReference> linkedServiceName = default;
-            Optional<ActivityPolicy> policy = default;
+            LinkedServiceReference linkedServiceName = default;
+            ActivityPolicy policy = default;
             string name = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<ActivityState> state = default;
-            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
+            string description = default;
+            ActivityState? state = default;
+            ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
             IList<ActivityDependency> dependsOn = default;
             IList<UserProperty> userProperties = default;
             IList<LinkedServiceReference> storageLinkedServices = default;
             IList<object> arguments = default;
-            Optional<HDInsightActivityDebugInfoOption> getDebugInfo = default;
-            Optional<object> scriptPath = default;
-            Optional<LinkedServiceReference> scriptLinkedService = default;
+            HDInsightActivityDebugInfoOption? getDebugInfo = default;
+            object scriptPath = default;
+            LinkedServiceReference scriptLinkedService = default;
             IDictionary<string, object> defines = default;
             IList<object> variables = default;
-            Optional<int> queryTimeout = default;
+            int? queryTimeout = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -392,22 +392,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new HDInsightHiveActivity(
                 name,
                 type,
-                description.Value,
-                Optional.ToNullable(state),
-                Optional.ToNullable(onInactiveMarkAs),
+                description,
+                state,
+                onInactiveMarkAs,
                 dependsOn ?? new ChangeTrackingList<ActivityDependency>(),
                 userProperties ?? new ChangeTrackingList<UserProperty>(),
                 additionalProperties,
-                linkedServiceName.Value,
-                policy.Value,
+                linkedServiceName,
+                policy,
                 storageLinkedServices ?? new ChangeTrackingList<LinkedServiceReference>(),
                 arguments ?? new ChangeTrackingList<object>(),
-                Optional.ToNullable(getDebugInfo),
-                scriptPath.Value,
-                scriptLinkedService.Value,
+                getDebugInfo,
+                scriptPath,
+                scriptLinkedService,
                 defines ?? new ChangeTrackingDictionary<string, object>(),
                 variables ?? new ChangeTrackingList<object>(),
-                Optional.ToNullable(queryTimeout));
+                queryTimeout);
         }
 
         internal partial class HDInsightHiveActivityConverter : JsonConverter<HDInsightHiveActivity>

@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 return null;
             }
             SynapseSkuName name = default;
-            Optional<int> capacity = default;
+            int? capacity = default;
             KustoPoolSkuSize size = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseDataSourceSku(name, Optional.ToNullable(capacity), size, serializedAdditionalRawData);
+            return new SynapseDataSourceSku(name, capacity, size, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseDataSourceSku>.Write(ModelReaderWriterOptions options)

@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<long> startupMemoryMB = default;
-            Optional<long> currentMemoryUsageMB = default;
+            long? startupMemoryMB = default;
+            long? currentMemoryUsageMB = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeVmMemory(Optional.ToNullable(startupMemoryMB), Optional.ToNullable(currentMemoryUsageMB), serializedAdditionalRawData);
+            return new DataBoxEdgeVmMemory(startupMemoryMB, currentMemoryUsageMB, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeVmMemory>.Write(ModelReaderWriterOptions options)

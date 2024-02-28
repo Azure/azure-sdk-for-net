@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Optional<int> errorCode = default;
-            Optional<long> fileCount = default;
+            int? errorCode = default;
+            long? fileCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FilesNotTieringError(Optional.ToNullable(errorCode), Optional.ToNullable(fileCount), serializedAdditionalRawData);
+            return new FilesNotTieringError(errorCode, fileCount, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FilesNotTieringError>.Write(ModelReaderWriterOptions options)

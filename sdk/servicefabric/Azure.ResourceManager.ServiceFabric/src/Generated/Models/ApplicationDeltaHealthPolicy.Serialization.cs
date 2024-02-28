@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 return null;
             }
-            Optional<ServiceTypeDeltaHealthPolicy> defaultServiceTypeDeltaHealthPolicy = default;
+            ServiceTypeDeltaHealthPolicy defaultServiceTypeDeltaHealthPolicy = default;
             IDictionary<string, ServiceTypeDeltaHealthPolicy> serviceTypeDeltaHealthPolicies = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationDeltaHealthPolicy(defaultServiceTypeDeltaHealthPolicy.Value, serviceTypeDeltaHealthPolicies ?? new ChangeTrackingDictionary<string, ServiceTypeDeltaHealthPolicy>(), serializedAdditionalRawData);
+            return new ApplicationDeltaHealthPolicy(defaultServiceTypeDeltaHealthPolicy, serviceTypeDeltaHealthPolicies ?? new ChangeTrackingDictionary<string, ServiceTypeDeltaHealthPolicy>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationDeltaHealthPolicy>.Write(ModelReaderWriterOptions options)

@@ -192,15 +192,15 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<string> status = default;
-            Optional<string> linkerName = default;
-            Optional<bool?> isConnectionAvailable = default;
-            Optional<DateTimeOffset?> reportStartTimeUtc = default;
-            Optional<DateTimeOffset?> reportEndTimeUtc = default;
-            Optional<ResourceIdentifier> sourceId = default;
-            Optional<ResourceIdentifier> targetId = default;
-            Optional<LinkerAuthType?> authType = default;
+            ResourceIdentifier resourceId = default;
+            string status = default;
+            string linkerName = default;
+            bool? isConnectionAvailable = default;
+            DateTimeOffset? reportStartTimeUtc = default;
+            DateTimeOffset? reportEndTimeUtc = default;
+            ResourceIdentifier sourceId = default;
+            ResourceIdentifier targetId = default;
+            LinkerAuthType? authType = default;
             IReadOnlyList<LinkerValidationResultItemInfo> validationDetail = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -330,15 +330,15 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new LinkerValidateOperationResult(
-                resourceId.Value,
-                status.Value,
-                linkerName.Value,
-                Optional.ToNullable(isConnectionAvailable),
-                Optional.ToNullable(reportStartTimeUtc),
-                Optional.ToNullable(reportEndTimeUtc),
-                sourceId.Value,
-                targetId.Value,
-                Optional.ToNullable(authType),
+                resourceId,
+                status,
+                linkerName,
+                isConnectionAvailable,
+                reportStartTimeUtc,
+                reportEndTimeUtc,
+                sourceId,
+                targetId,
+                authType,
                 validationDetail ?? new ChangeTrackingList<LinkerValidationResultItemInfo>(),
                 serializedAdditionalRawData);
         }

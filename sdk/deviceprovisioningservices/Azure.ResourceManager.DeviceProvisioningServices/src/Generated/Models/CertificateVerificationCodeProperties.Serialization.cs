@@ -118,14 +118,14 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             {
                 return null;
             }
-            Optional<string> verificationCode = default;
-            Optional<string> subject = default;
-            Optional<DateTimeOffset> expiry = default;
-            Optional<BinaryData> thumbprint = default;
-            Optional<bool> isVerified = default;
-            Optional<BinaryData> certificate = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<DateTimeOffset> updated = default;
+            string verificationCode = default;
+            string subject = default;
+            DateTimeOffset? expiry = default;
+            BinaryData thumbprint = default;
+            bool? isVerified = default;
+            BinaryData certificate = default;
+            DateTimeOffset? created = default;
+            DateTimeOffset? updated = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -201,14 +201,14 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new CertificateVerificationCodeProperties(
-                verificationCode.Value,
-                subject.Value,
-                Optional.ToNullable(expiry),
-                thumbprint.Value,
-                Optional.ToNullable(isVerified),
-                certificate.Value,
-                Optional.ToNullable(created),
-                Optional.ToNullable(updated),
+                verificationCode,
+                subject,
+                expiry,
+                thumbprint,
+                isVerified,
+                certificate,
+                created,
+                updated,
                 serializedAdditionalRawData);
         }
 

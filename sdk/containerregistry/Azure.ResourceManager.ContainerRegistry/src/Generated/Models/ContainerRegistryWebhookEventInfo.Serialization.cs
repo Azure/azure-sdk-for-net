@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<Guid> id = default;
+            Guid? id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryWebhookEventInfo(Optional.ToNullable(id), serializedAdditionalRawData);
+            return new ContainerRegistryWebhookEventInfo(id, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryWebhookEventInfo>.Write(ModelReaderWriterOptions options)

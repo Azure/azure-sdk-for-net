@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Optional<StorageSyncPrivateEndpointServiceConnectionStatus> status = default;
-            Optional<string> description = default;
-            Optional<string> actionsRequired = default;
+            StorageSyncPrivateEndpointServiceConnectionStatus? status = default;
+            string description = default;
+            string actionsRequired = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageSyncPrivateLinkServiceConnectionState(Optional.ToNullable(status), description.Value, actionsRequired.Value, serializedAdditionalRawData);
+            return new StorageSyncPrivateLinkServiceConnectionState(status, description, actionsRequired, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageSyncPrivateLinkServiceConnectionState>.Write(ModelReaderWriterOptions options)

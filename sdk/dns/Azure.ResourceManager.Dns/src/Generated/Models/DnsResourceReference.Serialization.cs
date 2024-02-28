@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Dns.Models
                 return null;
             }
             IReadOnlyList<WritableSubResource> dnsResources = default;
-            Optional<WritableSubResource> targetResource = default;
+            WritableSubResource targetResource = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

@@ -153,21 +153,21 @@ namespace Azure.ResourceManager.StorageMover
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
+            SystemData systemData = default;
+            string description = default;
             StorageMoverCopyMode copyMode = default;
             string sourceName = default;
-            Optional<ResourceIdentifier> sourceResourceId = default;
-            Optional<string> sourceSubpath = default;
+            ResourceIdentifier sourceResourceId = default;
+            string sourceSubpath = default;
             string targetName = default;
-            Optional<ResourceIdentifier> targetResourceId = default;
-            Optional<string> targetSubpath = default;
-            Optional<string> latestJobRunName = default;
-            Optional<ResourceIdentifier> latestJobRunResourceId = default;
-            Optional<JobRunStatus> latestJobRunStatus = default;
-            Optional<string> agentName = default;
-            Optional<ResourceIdentifier> agentResourceId = default;
-            Optional<StorageMoverProvisioningState> provisioningState = default;
+            ResourceIdentifier targetResourceId = default;
+            string targetSubpath = default;
+            string latestJobRunName = default;
+            ResourceIdentifier latestJobRunResourceId = default;
+            JobRunStatus? latestJobRunStatus = default;
+            string agentName = default;
+            ResourceIdentifier agentResourceId = default;
+            StorageMoverProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -312,21 +312,21 @@ namespace Azure.ResourceManager.StorageMover
                 id,
                 name,
                 type,
-                systemData.Value,
-                description.Value,
+                systemData,
+                description,
                 copyMode,
                 sourceName,
-                sourceResourceId.Value,
-                sourceSubpath.Value,
+                sourceResourceId,
+                sourceSubpath,
                 targetName,
-                targetResourceId.Value,
-                targetSubpath.Value,
-                latestJobRunName.Value,
-                latestJobRunResourceId.Value,
-                Optional.ToNullable(latestJobRunStatus),
-                agentName.Value,
-                agentResourceId.Value,
-                Optional.ToNullable(provisioningState),
+                targetResourceId,
+                targetSubpath,
+                latestJobRunName,
+                latestJobRunResourceId,
+                latestJobRunStatus,
+                agentName,
+                agentResourceId,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

@@ -208,27 +208,27 @@ namespace Azure.ResourceManager.Resources
             {
                 return null;
             }
-            Optional<string> managedBy = default;
-            Optional<ArmApplicationSku> sku = default;
+            string managedBy = default;
+            ArmApplicationSku sku = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             ArmApplicationLockLevel lockLevel = default;
-            Optional<string> displayName = default;
-            Optional<bool> isEnabled = default;
+            string displayName = default;
+            bool? isEnabled = default;
             IList<ArmApplicationAuthorization> authorizations = default;
             IList<ArmApplicationDefinitionArtifact> artifacts = default;
-            Optional<string> description = default;
-            Optional<Uri> packageFileUri = default;
-            Optional<BinaryData> mainTemplate = default;
-            Optional<BinaryData> createUiDefinition = default;
-            Optional<ArmApplicationNotificationPolicy> notificationPolicy = default;
-            Optional<ArmApplicationPackageLockingPolicy> lockingPolicy = default;
-            Optional<ArmApplicationDeploymentPolicy> deploymentPolicy = default;
-            Optional<ArmApplicationManagementPolicy> managementPolicy = default;
+            string description = default;
+            Uri packageFileUri = default;
+            BinaryData mainTemplate = default;
+            BinaryData createUiDefinition = default;
+            ArmApplicationNotificationPolicy notificationPolicy = default;
+            ArmApplicationPackageLockingPolicy lockingPolicy = default;
+            ArmApplicationDeploymentPolicy deploymentPolicy = default;
+            ArmApplicationManagementPolicy managementPolicy = default;
             IList<ArmApplicationPolicy> policies = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -442,25 +442,25 @@ namespace Azure.ResourceManager.Resources
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                managedBy.Value,
-                sku.Value,
+                managedBy,
+                sku,
                 serializedAdditionalRawData,
                 lockLevel,
-                displayName.Value,
-                Optional.ToNullable(isEnabled),
+                displayName,
+                isEnabled,
                 authorizations ?? new ChangeTrackingList<ArmApplicationAuthorization>(),
                 artifacts ?? new ChangeTrackingList<ArmApplicationDefinitionArtifact>(),
-                description.Value,
-                packageFileUri.Value,
-                mainTemplate.Value,
-                createUiDefinition.Value,
-                notificationPolicy.Value,
-                lockingPolicy.Value,
-                deploymentPolicy.Value,
-                managementPolicy.Value,
+                description,
+                packageFileUri,
+                mainTemplate,
+                createUiDefinition,
+                notificationPolicy,
+                lockingPolicy,
+                deploymentPolicy,
+                managementPolicy,
                 policies ?? new ChangeTrackingList<ArmApplicationPolicy>());
         }
 

@@ -127,13 +127,13 @@ namespace Azure.ResourceManager.Marketplace
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> offerId = default;
-            Optional<string> offerDisplayName = default;
-            Optional<string> publisherId = default;
+            SystemData systemData = default;
+            string offerId = default;
+            string offerDisplayName = default;
+            string publisherId = default;
             IList<PrivateStorePlanDetails> plansDetails = default;
-            Optional<bool> isClosed = default;
-            Optional<long> messageCode = default;
+            bool? isClosed = default;
+            long? messageCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -231,13 +231,13 @@ namespace Azure.ResourceManager.Marketplace
                 id,
                 name,
                 type,
-                systemData.Value,
-                offerId.Value,
-                offerDisplayName.Value,
-                publisherId.Value,
+                systemData,
+                offerId,
+                offerDisplayName,
+                publisherId,
                 plansDetails ?? new ChangeTrackingList<PrivateStorePlanDetails>(),
-                Optional.ToNullable(isClosed),
-                Optional.ToNullable(messageCode),
+                isClosed,
+                messageCode,
                 serializedAdditionalRawData);
         }
 

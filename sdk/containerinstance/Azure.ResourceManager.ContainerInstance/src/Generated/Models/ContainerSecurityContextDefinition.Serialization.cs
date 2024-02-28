@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            Optional<bool> privileged = default;
-            Optional<bool> allowPrivilegeEscalation = default;
-            Optional<ContainerSecurityContextCapabilitiesDefinition> capabilities = default;
-            Optional<int> runAsGroup = default;
-            Optional<int> runAsUser = default;
-            Optional<string> seccompProfile = default;
+            bool? privileged = default;
+            bool? allowPrivilegeEscalation = default;
+            ContainerSecurityContextCapabilitiesDefinition capabilities = default;
+            int? runAsGroup = default;
+            int? runAsUser = default;
+            string seccompProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -161,12 +161,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ContainerSecurityContextDefinition(
-                Optional.ToNullable(privileged),
-                Optional.ToNullable(allowPrivilegeEscalation),
-                capabilities.Value,
-                Optional.ToNullable(runAsGroup),
-                Optional.ToNullable(runAsUser),
-                seccompProfile.Value,
+                privileged,
+                allowPrivilegeEscalation,
+                capabilities,
+                runAsGroup,
+                runAsUser,
+                seccompProfile,
                 serializedAdditionalRawData);
         }
 

@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -21,9 +20,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<ResourceNotificationsResourceUpdatedDetails> resourceInfo = default;
-            Optional<ResourceNotificationsOperationalDetails> operationalInfo = default;
-            Optional<string> apiVersion = default;
+            ResourceNotificationsResourceUpdatedDetails resourceInfo = default;
+            ResourceNotificationsOperationalDetails operationalInfo = default;
+            string apiVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceInfo"u8))
@@ -50,7 +49,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new ResourceNotificationsResourceManagementCreatedOrUpdatedEventData(resourceInfo.Value, operationalInfo.Value, apiVersion.Value);
+            return new ResourceNotificationsResourceManagementCreatedOrUpdatedEventData(resourceInfo, operationalInfo, apiVersion);
         }
 
         internal partial class ResourceNotificationsResourceManagementCreatedOrUpdatedEventDataConverter : JsonConverter<ResourceNotificationsResourceManagementCreatedOrUpdatedEventData>

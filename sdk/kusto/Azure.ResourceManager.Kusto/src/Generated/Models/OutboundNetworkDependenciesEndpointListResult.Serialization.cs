@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 return null;
             }
             IReadOnlyList<OutboundNetworkDependenciesEndpoint> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OutboundNetworkDependenciesEndpointListResult(value, nextLink.Value, serializedAdditionalRawData);
+            return new OutboundNetworkDependenciesEndpointListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OutboundNetworkDependenciesEndpointListResult>.Write(ModelReaderWriterOptions options)

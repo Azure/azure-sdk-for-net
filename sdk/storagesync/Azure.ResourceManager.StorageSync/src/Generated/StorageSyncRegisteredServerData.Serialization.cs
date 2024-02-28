@@ -214,30 +214,30 @@ namespace Azure.ResourceManager.StorageSync
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<BinaryData> serverCertificate = default;
-            Optional<string> agentVersion = default;
-            Optional<RegisteredServerAgentVersionStatus> agentVersionStatus = default;
-            Optional<DateTimeOffset> agentVersionExpirationDate = default;
-            Optional<string> serverOSVersion = default;
-            Optional<int> serverManagementErrorCode = default;
-            Optional<string> lastHeartbeat = default;
-            Optional<string> provisioningState = default;
-            Optional<string> serverRole = default;
-            Optional<Guid> clusterId = default;
-            Optional<string> clusterName = default;
-            Optional<Guid> serverId = default;
-            Optional<Guid> storageSyncServiceUid = default;
-            Optional<string> lastWorkflowId = default;
-            Optional<string> lastOperationName = default;
-            Optional<Uri> discoveryEndpointUri = default;
-            Optional<AzureLocation> resourceLocation = default;
-            Optional<AzureLocation> serviceLocation = default;
-            Optional<string> friendlyName = default;
-            Optional<Uri> managementEndpointUri = default;
-            Optional<Uri> monitoringEndpointUri = default;
-            Optional<string> monitoringConfiguration = default;
-            Optional<string> serverName = default;
+            SystemData systemData = default;
+            BinaryData serverCertificate = default;
+            string agentVersion = default;
+            RegisteredServerAgentVersionStatus? agentVersionStatus = default;
+            DateTimeOffset? agentVersionExpirationDate = default;
+            string serverOSVersion = default;
+            int? serverManagementErrorCode = default;
+            string lastHeartbeat = default;
+            string provisioningState = default;
+            string serverRole = default;
+            Guid? clusterId = default;
+            string clusterName = default;
+            Guid? serverId = default;
+            Guid? storageSyncServiceUid = default;
+            string lastWorkflowId = default;
+            string lastOperationName = default;
+            Uri discoveryEndpointUri = default;
+            AzureLocation? resourceLocation = default;
+            AzureLocation? serviceLocation = default;
+            string friendlyName = default;
+            Uri managementEndpointUri = default;
+            Uri monitoringEndpointUri = default;
+            string monitoringConfiguration = default;
+            string serverName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -451,30 +451,30 @@ namespace Azure.ResourceManager.StorageSync
                 id,
                 name,
                 type,
-                systemData.Value,
-                serverCertificate.Value,
-                agentVersion.Value,
-                Optional.ToNullable(agentVersionStatus),
-                Optional.ToNullable(agentVersionExpirationDate),
-                serverOSVersion.Value,
-                Optional.ToNullable(serverManagementErrorCode),
-                lastHeartbeat.Value,
-                provisioningState.Value,
-                serverRole.Value,
-                Optional.ToNullable(clusterId),
-                clusterName.Value,
-                Optional.ToNullable(serverId),
-                Optional.ToNullable(storageSyncServiceUid),
-                lastWorkflowId.Value,
-                lastOperationName.Value,
-                discoveryEndpointUri.Value,
-                Optional.ToNullable(resourceLocation),
-                Optional.ToNullable(serviceLocation),
-                friendlyName.Value,
-                managementEndpointUri.Value,
-                monitoringEndpointUri.Value,
-                monitoringConfiguration.Value,
-                serverName.Value,
+                systemData,
+                serverCertificate,
+                agentVersion,
+                agentVersionStatus,
+                agentVersionExpirationDate,
+                serverOSVersion,
+                serverManagementErrorCode,
+                lastHeartbeat,
+                provisioningState,
+                serverRole,
+                clusterId,
+                clusterName,
+                serverId,
+                storageSyncServiceUid,
+                lastWorkflowId,
+                lastOperationName,
+                discoveryEndpointUri,
+                resourceLocation,
+                serviceLocation,
+                friendlyName,
+                managementEndpointUri,
+                monitoringEndpointUri,
+                monitoringConfiguration,
+                serverName,
                 serializedAdditionalRawData);
         }
 

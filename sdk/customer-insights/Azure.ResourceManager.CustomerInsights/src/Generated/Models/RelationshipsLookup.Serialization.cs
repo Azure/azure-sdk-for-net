@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<string> profileName = default;
+            string profileName = default;
             IReadOnlyList<ParticipantProfilePropertyReference> profilePropertyReferences = default;
-            Optional<string> relatedProfileName = default;
+            string relatedProfileName = default;
             IReadOnlyList<ParticipantProfilePropertyReference> relatedProfilePropertyReferences = default;
-            Optional<string> existingRelationshipName = default;
+            string existingRelationshipName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -158,11 +158,11 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new RelationshipsLookup(
-                profileName.Value,
+                profileName,
                 profilePropertyReferences ?? new ChangeTrackingList<ParticipantProfilePropertyReference>(),
-                relatedProfileName.Value,
+                relatedProfileName,
                 relatedProfilePropertyReferences ?? new ChangeTrackingList<ParticipantProfilePropertyReference>(),
-                existingRelationshipName.Value,
+                existingRelationshipName,
                 serializedAdditionalRawData);
         }
 

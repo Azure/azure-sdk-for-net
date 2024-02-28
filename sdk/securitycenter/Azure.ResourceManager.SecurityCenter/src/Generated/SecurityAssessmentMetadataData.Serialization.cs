@@ -192,21 +192,21 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<ResourceIdentifier> policyDefinitionId = default;
-            Optional<string> description = default;
-            Optional<string> remediationDescription = default;
+            SystemData systemData = default;
+            string displayName = default;
+            ResourceIdentifier policyDefinitionId = default;
+            string description = default;
+            string remediationDescription = default;
             IList<SecurityAssessmentResourceCategory> categories = default;
-            Optional<SecurityAssessmentSeverity> severity = default;
-            Optional<SecurityAssessmentUserImpact> userImpact = default;
-            Optional<ImplementationEffort> implementationEffort = default;
+            SecurityAssessmentSeverity? severity = default;
+            SecurityAssessmentUserImpact? userImpact = default;
+            ImplementationEffort? implementationEffort = default;
             IList<SecurityThreat> threats = default;
-            Optional<bool> preview = default;
-            Optional<SecurityAssessmentType> assessmentType = default;
-            Optional<SecurityAssessmentMetadataPartner> partnerData = default;
-            Optional<SecurityAssessmentPublishDates> publishDates = default;
-            Optional<string> plannedDeprecationDate = default;
+            bool? preview = default;
+            SecurityAssessmentType? assessmentType = default;
+            SecurityAssessmentMetadataPartner partnerData = default;
+            SecurityAssessmentPublishDates publishDates = default;
+            string plannedDeprecationDate = default;
             IList<SecurityAssessmentTactic> tactics = default;
             IList<SecurityAssessmentTechnique> techniques = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -403,21 +403,21 @@ namespace Azure.ResourceManager.SecurityCenter
                 id,
                 name,
                 type,
-                systemData.Value,
-                displayName.Value,
-                policyDefinitionId.Value,
-                description.Value,
-                remediationDescription.Value,
+                systemData,
+                displayName,
+                policyDefinitionId,
+                description,
+                remediationDescription,
                 categories ?? new ChangeTrackingList<SecurityAssessmentResourceCategory>(),
-                Optional.ToNullable(severity),
-                Optional.ToNullable(userImpact),
-                Optional.ToNullable(implementationEffort),
+                severity,
+                userImpact,
+                implementationEffort,
                 threats ?? new ChangeTrackingList<SecurityThreat>(),
-                Optional.ToNullable(preview),
-                Optional.ToNullable(assessmentType),
-                partnerData.Value,
-                publishDates.Value,
-                plannedDeprecationDate.Value,
+                preview,
+                assessmentType,
+                partnerData,
+                publishDates,
+                plannedDeprecationDate,
                 tactics ?? new ChangeTrackingList<SecurityAssessmentTactic>(),
                 techniques ?? new ChangeTrackingList<SecurityAssessmentTechnique>(),
                 serializedAdditionalRawData);

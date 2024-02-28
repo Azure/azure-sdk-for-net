@@ -92,9 +92,9 @@ namespace Azure.ResourceManager.Logic.Models
             }
             string batchGroupName = default;
             IntegrationAccountBatchReleaseCriteria releaseCriteria = default;
-            Optional<DateTimeOffset> createdTime = default;
-            Optional<DateTimeOffset> changedTime = default;
-            Optional<BinaryData> metadata = default;
+            DateTimeOffset? createdTime = default;
+            DateTimeOffset? changedTime = default;
+            BinaryData metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -143,9 +143,9 @@ namespace Azure.ResourceManager.Logic.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new IntegrationAccountBatchConfigurationProperties(
-                Optional.ToNullable(createdTime),
-                Optional.ToNullable(changedTime),
-                metadata.Value,
+                createdTime,
+                changedTime,
+                metadata,
                 serializedAdditionalRawData,
                 batchGroupName,
                 releaseCriteria);

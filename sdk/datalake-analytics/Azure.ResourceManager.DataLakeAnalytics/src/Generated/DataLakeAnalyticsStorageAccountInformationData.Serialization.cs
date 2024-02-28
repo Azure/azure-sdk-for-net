@@ -96,8 +96,8 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> suffix = default;
+            SystemData systemData = default;
+            string suffix = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -153,8 +153,8 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 id,
                 name,
                 type,
-                systemData.Value,
-                suffix.Value,
+                systemData,
+                suffix,
                 serializedAdditionalRawData);
         }
 

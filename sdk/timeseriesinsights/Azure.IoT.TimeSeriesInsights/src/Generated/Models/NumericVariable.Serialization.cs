@@ -41,10 +41,10 @@ namespace Azure.IoT.TimeSeriesInsights
                 return null;
             }
             TimeSeriesExpression value = default;
-            Optional<TimeSeriesInterpolation> interpolation = default;
+            TimeSeriesInterpolation interpolation = default;
             TimeSeriesExpression aggregation = default;
             string kind = default;
-            Optional<TimeSeriesExpression> filter = default;
+            TimeSeriesExpression filter = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -81,7 +81,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     continue;
                 }
             }
-            return new NumericVariable(kind, filter.Value, value, interpolation.Value, aggregation);
+            return new NumericVariable(kind, filter, value, interpolation, aggregation);
         }
     }
 }

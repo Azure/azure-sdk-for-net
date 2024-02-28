@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<byte[]> key = default;
+            byte[] key = default;
             IReadOnlyList<MediaAssetFileEncryptionMetadata> assetFileEncryptionMetadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageEncryptedAssetDecryptionInfo(key.Value, assetFileEncryptionMetadata ?? new ChangeTrackingList<MediaAssetFileEncryptionMetadata>(), serializedAdditionalRawData);
+            return new StorageEncryptedAssetDecryptionInfo(key, assetFileEncryptionMetadata ?? new ChangeTrackingList<MediaAssetFileEncryptionMetadata>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageEncryptedAssetDecryptionInfo>.Write(ModelReaderWriterOptions options)

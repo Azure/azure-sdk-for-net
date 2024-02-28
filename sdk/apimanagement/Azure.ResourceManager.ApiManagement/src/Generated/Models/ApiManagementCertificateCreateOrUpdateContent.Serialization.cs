@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> data = default;
-            Optional<string> password = default;
-            Optional<KeyVaultContractCreateProperties> keyVault = default;
+            string data = default;
+            string password = default;
+            KeyVaultContractCreateProperties keyVault = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementCertificateCreateOrUpdateContent(data.Value, password.Value, keyVault.Value, serializedAdditionalRawData);
+            return new ApiManagementCertificateCreateOrUpdateContent(data, password, keyVault, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementCertificateCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Sql.Models
                 return null;
             }
             IReadOnlyList<SqlServerVirtualNetworkRuleData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualNetworkRuleListResult(value ?? new ChangeTrackingList<SqlServerVirtualNetworkRuleData>(), nextLink.Value, serializedAdditionalRawData);
+            return new VirtualNetworkRuleListResult(value ?? new ChangeTrackingList<SqlServerVirtualNetworkRuleData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualNetworkRuleListResult>.Write(ModelReaderWriterOptions options)

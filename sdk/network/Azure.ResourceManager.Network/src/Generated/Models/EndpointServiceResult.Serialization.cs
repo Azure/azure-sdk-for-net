@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<ResourceIdentifier> id = default;
+            string name = default;
+            ResourceType? type = default;
+            ResourceIdentifier id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EndpointServiceResult(name.Value, Optional.ToNullable(type), id.Value, serializedAdditionalRawData);
+            return new EndpointServiceResult(name, type, id, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EndpointServiceResult>.Write(ModelReaderWriterOptions options)

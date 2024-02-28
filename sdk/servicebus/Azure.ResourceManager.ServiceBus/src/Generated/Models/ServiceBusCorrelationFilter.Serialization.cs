@@ -126,15 +126,15 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 return null;
             }
             IDictionary<string, object> properties = default;
-            Optional<string> correlationId = default;
-            Optional<string> messageId = default;
-            Optional<string> to = default;
-            Optional<string> replyTo = default;
-            Optional<string> label = default;
-            Optional<string> sessionId = default;
-            Optional<string> replyToSessionId = default;
-            Optional<string> contentType = default;
-            Optional<bool> requiresPreprocessing = default;
+            string correlationId = default;
+            string messageId = default;
+            string to = default;
+            string replyTo = default;
+            string label = default;
+            string sessionId = default;
+            string replyToSessionId = default;
+            string contentType = default;
+            bool? requiresPreprocessing = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -217,15 +217,15 @@ namespace Azure.ResourceManager.ServiceBus.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ServiceBusCorrelationFilter(
                 properties ?? new ChangeTrackingDictionary<string, object>(),
-                correlationId.Value,
-                messageId.Value,
-                to.Value,
-                replyTo.Value,
-                label.Value,
-                sessionId.Value,
-                replyToSessionId.Value,
-                contentType.Value,
-                Optional.ToNullable(requiresPreprocessing),
+                correlationId,
+                messageId,
+                to,
+                replyTo,
+                label,
+                sessionId,
+                replyToSessionId,
+                contentType,
+                requiresPreprocessing,
                 serializedAdditionalRawData);
         }
 

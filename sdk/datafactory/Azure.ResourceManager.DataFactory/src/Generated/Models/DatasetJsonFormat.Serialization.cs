@@ -113,14 +113,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<BinaryData> filePattern = default;
-            Optional<DataFactoryElement<string>> nestingSeparator = default;
-            Optional<DataFactoryElement<string>> encodingName = default;
-            Optional<DataFactoryElement<string>> jsonNodeReference = default;
-            Optional<BinaryData> jsonPathDefinition = default;
+            BinaryData filePattern = default;
+            DataFactoryElement<string> nestingSeparator = default;
+            DataFactoryElement<string> encodingName = default;
+            DataFactoryElement<string> jsonNodeReference = default;
+            BinaryData jsonPathDefinition = default;
             string type = default;
-            Optional<DataFactoryElement<string>> serializer = default;
-            Optional<DataFactoryElement<string>> deserializer = default;
+            DataFactoryElement<string> serializer = default;
+            DataFactoryElement<string> deserializer = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -198,14 +198,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new DatasetJsonFormat(
                 type,
-                serializer.Value,
-                deserializer.Value,
+                serializer,
+                deserializer,
                 additionalProperties,
-                filePattern.Value,
-                nestingSeparator.Value,
-                encodingName.Value,
-                jsonNodeReference.Value,
-                jsonPathDefinition.Value);
+                filePattern,
+                nestingSeparator,
+                encodingName,
+                jsonNodeReference,
+                jsonPathDefinition);
         }
 
         BinaryData IPersistableModel<DatasetJsonFormat>.Write(ModelReaderWriterOptions options)

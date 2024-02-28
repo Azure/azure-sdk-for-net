@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<int?> processCountPerInstance = default;
+            int? processCountPerInstance = default;
             DistributionType distributionType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PyTorchDistributionConfiguration(distributionType, serializedAdditionalRawData, Optional.ToNullable(processCountPerInstance));
+            return new PyTorchDistributionConfiguration(distributionType, serializedAdditionalRawData, processCountPerInstance);
         }
 
         BinaryData IPersistableModel<PyTorchDistributionConfiguration>.Write(ModelReaderWriterOptions options)

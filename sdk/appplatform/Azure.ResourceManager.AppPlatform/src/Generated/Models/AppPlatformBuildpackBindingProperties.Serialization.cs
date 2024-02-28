@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<BuildpackBindingType> bindingType = default;
-            Optional<BuildpackBindingProvisioningState> provisioningState = default;
-            Optional<BuildpackBindingLaunchProperties> launchProperties = default;
+            BuildpackBindingType? bindingType = default;
+            BuildpackBindingProvisioningState? provisioningState = default;
+            BuildpackBindingLaunchProperties launchProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformBuildpackBindingProperties(Optional.ToNullable(bindingType), Optional.ToNullable(provisioningState), launchProperties.Value, serializedAdditionalRawData);
+            return new AppPlatformBuildpackBindingProperties(bindingType, provisioningState, launchProperties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformBuildpackBindingProperties>.Write(ModelReaderWriterOptions options)

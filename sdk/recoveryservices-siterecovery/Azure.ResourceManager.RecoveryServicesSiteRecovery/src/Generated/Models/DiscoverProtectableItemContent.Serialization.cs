@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<DiscoverProtectableItemProperties> properties = default;
+            DiscoverProtectableItemProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiscoverProtectableItemContent(properties.Value, serializedAdditionalRawData);
+            return new DiscoverProtectableItemContent(properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiscoverProtectableItemContent>.Write(ModelReaderWriterOptions options)

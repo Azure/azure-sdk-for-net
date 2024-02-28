@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Optional<int> failedJobs = default;
-            Optional<int> suspendedJobs = default;
-            Optional<int> inProgressJobs = default;
+            int? failedJobs = default;
+            int? suspendedJobs = default;
+            int? inProgressJobs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReplicationJobSummary(Optional.ToNullable(failedJobs), Optional.ToNullable(suspendedJobs), Optional.ToNullable(inProgressJobs), serializedAdditionalRawData);
+            return new ReplicationJobSummary(failedJobs, suspendedJobs, inProgressJobs, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReplicationJobSummary>.Write(ModelReaderWriterOptions options)

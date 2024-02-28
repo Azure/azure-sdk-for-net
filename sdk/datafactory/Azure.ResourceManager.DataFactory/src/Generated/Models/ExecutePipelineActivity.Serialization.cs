@@ -138,17 +138,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<ExecutePipelineActivityPolicy> policy = default;
+            ExecutePipelineActivityPolicy policy = default;
             string name = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<PipelineActivityState> state = default;
-            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
+            string description = default;
+            PipelineActivityState? state = default;
+            ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
             IList<PipelineActivityDependency> dependsOn = default;
             IList<PipelineActivityUserProperty> userProperties = default;
             DataFactoryPipelineReference pipeline = default;
             IDictionary<string, BinaryData> parameters = default;
-            Optional<bool> waitOnCompletion = default;
+            bool? waitOnCompletion = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -276,16 +276,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new ExecutePipelineActivity(
                 name,
                 type,
-                description.Value,
-                Optional.ToNullable(state),
-                Optional.ToNullable(onInactiveMarkAs),
+                description,
+                state,
+                onInactiveMarkAs,
                 dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(),
                 userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(),
                 additionalProperties,
-                policy.Value,
+                policy,
                 pipeline,
                 parameters ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                Optional.ToNullable(waitOnCompletion));
+                waitOnCompletion);
         }
 
         BinaryData IPersistableModel<ExecutePipelineActivity>.Write(ModelReaderWriterOptions options)

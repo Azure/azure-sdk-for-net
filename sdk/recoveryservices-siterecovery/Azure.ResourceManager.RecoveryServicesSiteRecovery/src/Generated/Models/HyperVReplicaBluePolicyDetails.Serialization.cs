@@ -121,17 +121,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<int> replicationFrequencyInSeconds = default;
-            Optional<int> recoveryPoints = default;
-            Optional<int> applicationConsistentSnapshotFrequencyInHours = default;
-            Optional<string> compression = default;
-            Optional<string> initialReplicationMethod = default;
-            Optional<string> onlineReplicationStartTime = default;
-            Optional<string> offlineReplicationImportPath = default;
-            Optional<string> offlineReplicationExportPath = default;
-            Optional<int> replicationPort = default;
-            Optional<int> allowedAuthenticationType = default;
-            Optional<string> replicaDeletionOption = default;
+            int? replicationFrequencyInSeconds = default;
+            int? recoveryPoints = default;
+            int? applicationConsistentSnapshotFrequencyInHours = default;
+            string compression = default;
+            string initialReplicationMethod = default;
+            string onlineReplicationStartTime = default;
+            string offlineReplicationImportPath = default;
+            string offlineReplicationExportPath = default;
+            int? replicationPort = default;
+            int? allowedAuthenticationType = default;
+            string replicaDeletionOption = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -226,17 +226,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new HyperVReplicaBluePolicyDetails(
                 instanceType,
                 serializedAdditionalRawData,
-                Optional.ToNullable(replicationFrequencyInSeconds),
-                Optional.ToNullable(recoveryPoints),
-                Optional.ToNullable(applicationConsistentSnapshotFrequencyInHours),
-                compression.Value,
-                initialReplicationMethod.Value,
-                onlineReplicationStartTime.Value,
-                offlineReplicationImportPath.Value,
-                offlineReplicationExportPath.Value,
-                Optional.ToNullable(replicationPort),
-                Optional.ToNullable(allowedAuthenticationType),
-                replicaDeletionOption.Value);
+                replicationFrequencyInSeconds,
+                recoveryPoints,
+                applicationConsistentSnapshotFrequencyInHours,
+                compression,
+                initialReplicationMethod,
+                onlineReplicationStartTime,
+                offlineReplicationImportPath,
+                offlineReplicationExportPath,
+                replicationPort,
+                allowedAuthenticationType,
+                replicaDeletionOption);
         }
 
         BinaryData IPersistableModel<HyperVReplicaBluePolicyDetails>.Write(ModelReaderWriterOptions options)

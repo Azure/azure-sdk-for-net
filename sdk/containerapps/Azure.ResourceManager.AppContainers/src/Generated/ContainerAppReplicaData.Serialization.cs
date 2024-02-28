@@ -127,10 +127,10 @@ namespace Azure.ResourceManager.AppContainers
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> createdTime = default;
-            Optional<ContainerAppReplicaRunningState> runningState = default;
-            Optional<string> runningStateDetails = default;
+            SystemData systemData = default;
+            DateTimeOffset? createdTime = default;
+            ContainerAppReplicaRunningState? runningState = default;
+            string runningStateDetails = default;
             IList<ContainerAppReplicaContainer> containers = default;
             IList<ContainerAppReplicaContainer> initContainers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -234,10 +234,10 @@ namespace Azure.ResourceManager.AppContainers
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(createdTime),
-                Optional.ToNullable(runningState),
-                runningStateDetails.Value,
+                systemData,
+                createdTime,
+                runningState,
+                runningStateDetails,
                 containers ?? new ChangeTrackingList<ContainerAppReplicaContainer>(),
                 initContainers ?? new ChangeTrackingList<ContainerAppReplicaContainer>(),
                 serializedAdditionalRawData);

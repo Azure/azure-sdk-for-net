@@ -21,10 +21,10 @@ namespace Azure.Monitor.Query.Models
             }
             string code = default;
             string message = default;
-            Optional<string> target = default;
-            Optional<string> value = default;
+            string target = default;
+            string value = default;
             IReadOnlyList<string> resources = default;
-            Optional<object> additionalProperties = default;
+            object additionalProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -74,10 +74,10 @@ namespace Azure.Monitor.Query.Models
             return new ErrorDetail(
                 code,
                 message,
-                target.Value,
-                value.Value,
+                target,
+                value,
                 resources ?? new ChangeTrackingList<string>(),
-                additionalProperties.Value);
+                additionalProperties);
         }
     }
 }

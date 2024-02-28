@@ -57,10 +57,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             IList<string> wordList = default;
-            Optional<int> minWordSize = default;
-            Optional<int> minSubwordSize = default;
-            Optional<int> maxSubwordSize = default;
-            Optional<bool> onlyLongestMatch = default;
+            int? minWordSize = default;
+            int? minSubwordSize = default;
+            int? maxSubwordSize = default;
+            bool? onlyLongestMatch = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -126,10 +126,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 odataType,
                 name,
                 wordList,
-                Optional.ToNullable(minWordSize),
-                Optional.ToNullable(minSubwordSize),
-                Optional.ToNullable(maxSubwordSize),
-                Optional.ToNullable(onlyLongestMatch));
+                minWordSize,
+                minSubwordSize,
+                maxSubwordSize,
+                onlyLongestMatch);
         }
     }
 }

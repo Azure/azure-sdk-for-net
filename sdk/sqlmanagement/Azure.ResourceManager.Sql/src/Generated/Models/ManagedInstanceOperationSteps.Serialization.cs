@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<string> totalSteps = default;
-            Optional<int> currentStep = default;
+            string totalSteps = default;
+            int? currentStep = default;
             IReadOnlyList<UpsertManagedServerOperationStep> stepsList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedInstanceOperationSteps(totalSteps.Value, Optional.ToNullable(currentStep), stepsList ?? new ChangeTrackingList<UpsertManagedServerOperationStep>(), serializedAdditionalRawData);
+            return new ManagedInstanceOperationSteps(totalSteps, currentStep, stepsList ?? new ChangeTrackingList<UpsertManagedServerOperationStep>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedInstanceOperationSteps>.Write(ModelReaderWriterOptions options)

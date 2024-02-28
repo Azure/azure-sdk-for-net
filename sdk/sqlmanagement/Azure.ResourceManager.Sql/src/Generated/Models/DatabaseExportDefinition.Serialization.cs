@@ -89,8 +89,8 @@ namespace Azure.ResourceManager.Sql.Models
             Uri storageUri = default;
             string administratorLogin = default;
             string administratorLoginPassword = default;
-            Optional<string> authenticationType = default;
-            Optional<NetworkIsolationSettings> networkIsolation = default;
+            string authenticationType = default;
+            NetworkIsolationSettings networkIsolation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,8 +146,8 @@ namespace Azure.ResourceManager.Sql.Models
                 storageUri,
                 administratorLogin,
                 administratorLoginPassword,
-                authenticationType.Value,
-                networkIsolation.Value,
+                authenticationType,
+                networkIsolation,
                 serializedAdditionalRawData);
         }
 

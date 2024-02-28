@@ -122,14 +122,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<string> resourceName = default;
-            Optional<string> resourceType = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<string> key = default;
+            string resourceName = default;
+            string resourceType = default;
+            ResourceIdentifier resourceId = default;
+            string key = default;
             IDictionary<string, BinaryData> bindingParameters = default;
-            Optional<string> generatedProperties = default;
-            Optional<DateTimeOffset> createdAt = default;
-            Optional<DateTimeOffset> updatedAt = default;
+            string generatedProperties = default;
+            DateTimeOffset? createdAt = default;
+            DateTimeOffset? updatedAt = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -209,14 +209,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AppPlatformBindingProperties(
-                resourceName.Value,
-                resourceType.Value,
-                resourceId.Value,
-                key.Value,
+                resourceName,
+                resourceType,
+                resourceId,
+                key,
                 bindingParameters ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                generatedProperties.Value,
-                Optional.ToNullable(createdAt),
-                Optional.ToNullable(updatedAt),
+                generatedProperties,
+                createdAt,
+                updatedAt,
                 serializedAdditionalRawData);
         }
 

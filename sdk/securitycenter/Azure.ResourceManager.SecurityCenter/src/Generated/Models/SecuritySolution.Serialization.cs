@@ -113,15 +113,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SecurityFamily> securityFamily = default;
-            Optional<SecurityFamilyProvisioningState> provisioningState = default;
-            Optional<string> template = default;
-            Optional<string> protectionStatus = default;
+            SystemData systemData = default;
+            SecurityFamily? securityFamily = default;
+            SecurityFamilyProvisioningState? provisioningState = default;
+            string template = default;
+            string protectionStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -209,12 +209,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(securityFamily),
-                Optional.ToNullable(provisioningState),
-                template.Value,
-                protectionStatus.Value,
-                Optional.ToNullable(location),
+                systemData,
+                securityFamily,
+                provisioningState,
+                template,
+                protectionStatus,
+                location,
                 serializedAdditionalRawData);
         }
 

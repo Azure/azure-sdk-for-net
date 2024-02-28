@@ -52,10 +52,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> quoteAllText = default;
+            object quoteAllText = default;
             object fileExtension = default;
-            Optional<object> maxRowsPerFile = default;
-            Optional<object> fileNamePrefix = default;
+            object maxRowsPerFile = default;
+            object fileNamePrefix = default;
             string type = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
@@ -104,10 +104,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new DelimitedTextWriteSettings(
                 type,
                 additionalProperties,
-                quoteAllText.Value,
+                quoteAllText,
                 fileExtension,
-                maxRowsPerFile.Value,
-                fileNamePrefix.Value);
+                maxRowsPerFile,
+                fileNamePrefix);
         }
 
         internal partial class DelimitedTextWriteSettingsConverter : JsonConverter<DelimitedTextWriteSettings>

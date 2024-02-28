@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 return null;
             }
             string key = default;
-            Optional<string> value = default;
+            string value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SpringBootAppApplicationConfigurationsItem(key, value.Value, serializedAdditionalRawData);
+            return new SpringBootAppApplicationConfigurationsItem(key, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SpringBootAppApplicationConfigurationsItem>.Write(ModelReaderWriterOptions options)

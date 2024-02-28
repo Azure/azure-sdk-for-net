@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<ManagedClusterSkuName> name = default;
-            Optional<ManagedClusterSkuTier> tier = default;
+            ManagedClusterSkuName? name = default;
+            ManagedClusterSkuTier? tier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterSku(Optional.ToNullable(name), Optional.ToNullable(tier), serializedAdditionalRawData);
+            return new ManagedClusterSku(name, tier, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterSku>.Write(ModelReaderWriterOptions options)

@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<TagPatchMode> operation = default;
-            Optional<Tag> properties = default;
+            TagPatchMode? operation = default;
+            Tag properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TagResourcePatch(Optional.ToNullable(operation), properties.Value, serializedAdditionalRawData);
+            return new TagResourcePatch(operation, properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TagResourcePatch>.Write(ModelReaderWriterOptions options)

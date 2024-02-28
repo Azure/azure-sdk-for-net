@@ -160,12 +160,12 @@ namespace Azure.ResourceManager.StoragePool
             {
                 return null;
             }
-            Optional<string> managedBy = default;
+            string managedBy = default;
             IReadOnlyList<string> managedByExtended = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             DiskPoolIscsiTargetAclMode aclMode = default;
             IList<DiskPoolIscsiTargetPortalGroupAcl> staticAcls = default;
             IList<ManagedDiskIscsiLun> luns = default;
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.StoragePool
             DiskPoolIscsiTargetProvisioningState provisioningState = default;
             StoragePoolOperationalStatus status = default;
             IList<string> endpoints = default;
-            Optional<int> port = default;
+            int? port = default;
             IReadOnlyList<string> sessions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -329,8 +329,8 @@ namespace Azure.ResourceManager.StoragePool
                 id,
                 name,
                 type,
-                systemData.Value,
-                managedBy.Value,
+                systemData,
+                managedBy,
                 managedByExtended ?? new ChangeTrackingList<string>(),
                 aclMode,
                 staticAcls ?? new ChangeTrackingList<DiskPoolIscsiTargetPortalGroupAcl>(),
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.StoragePool
                 provisioningState,
                 status,
                 endpoints ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(port),
+                port,
                 sessions ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }

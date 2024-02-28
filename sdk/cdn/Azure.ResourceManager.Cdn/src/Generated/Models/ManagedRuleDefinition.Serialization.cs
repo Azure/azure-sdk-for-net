@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<string> ruleId = default;
-            Optional<string> description = default;
+            string ruleId = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedRuleDefinition(ruleId.Value, description.Value, serializedAdditionalRawData);
+            return new ManagedRuleDefinition(ruleId, description, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedRuleDefinition>.Write(ModelReaderWriterOptions options)

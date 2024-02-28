@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
+            bool? enabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebAppEnabledConfig(Optional.ToNullable(enabled), serializedAdditionalRawData);
+            return new WebAppEnabledConfig(enabled, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebAppEnabledConfig>.Write(ModelReaderWriterOptions options)

@@ -164,19 +164,19 @@ namespace Azure.ResourceManager.DigitalTwins
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> createdTime = default;
-            Optional<DateTimeOffset> lastUpdatedTime = default;
-            Optional<DigitalTwinsProvisioningState> provisioningState = default;
-            Optional<string> hostName = default;
+            SystemData systemData = default;
+            DateTimeOffset? createdTime = default;
+            DateTimeOffset? lastUpdatedTime = default;
+            DigitalTwinsProvisioningState? provisioningState = default;
+            string hostName = default;
             IList<DigitalTwinsPrivateEndpointConnectionData> privateEndpointConnections = default;
-            Optional<DigitalTwinsPublicNetworkAccess?> publicNetworkAccess = default;
+            DigitalTwinsPublicNetworkAccess? publicNetworkAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -318,15 +318,15 @@ namespace Azure.ResourceManager.DigitalTwins
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                Optional.ToNullable(createdTime),
-                Optional.ToNullable(lastUpdatedTime),
-                Optional.ToNullable(provisioningState),
-                hostName.Value,
+                createdTime,
+                lastUpdatedTime,
+                provisioningState,
+                hostName,
                 privateEndpointConnections ?? new ChangeTrackingList<DigitalTwinsPrivateEndpointConnectionData>(),
-                Optional.ToNullable(publicNetworkAccess),
+                publicNetworkAccess,
                 identity,
                 serializedAdditionalRawData);
         }

@@ -128,17 +128,17 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<SqlSku> sku = default;
+            SqlSku sku = default;
             IDictionary<string, string> tags = default;
-            Optional<long> maxSizeBytes = default;
-            Optional<double> minCapacity = default;
-            Optional<ElasticPoolPerDatabaseSettings> perDatabaseSettings = default;
-            Optional<bool> zoneRedundant = default;
-            Optional<ElasticPoolLicenseType> licenseType = default;
-            Optional<ResourceIdentifier> maintenanceConfigurationId = default;
-            Optional<int> highAvailabilityReplicaCount = default;
-            Optional<SqlAlwaysEncryptedEnclaveType> preferredEnclaveType = default;
-            Optional<SqlAvailabilityZoneType> availabilityZone = default;
+            long? maxSizeBytes = default;
+            double? minCapacity = default;
+            ElasticPoolPerDatabaseSettings perDatabaseSettings = default;
+            bool? zoneRedundant = default;
+            ElasticPoolLicenseType? licenseType = default;
+            ResourceIdentifier maintenanceConfigurationId = default;
+            int? highAvailabilityReplicaCount = default;
+            SqlAlwaysEncryptedEnclaveType? preferredEnclaveType = default;
+            SqlAvailabilityZoneType? availabilityZone = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -266,17 +266,17 @@ namespace Azure.ResourceManager.Sql.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ElasticPoolPatch(
-                sku.Value,
+                sku,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                Optional.ToNullable(maxSizeBytes),
-                Optional.ToNullable(minCapacity),
-                perDatabaseSettings.Value,
-                Optional.ToNullable(zoneRedundant),
-                Optional.ToNullable(licenseType),
-                maintenanceConfigurationId.Value,
-                Optional.ToNullable(highAvailabilityReplicaCount),
-                Optional.ToNullable(preferredEnclaveType),
-                Optional.ToNullable(availabilityZone),
+                maxSizeBytes,
+                minCapacity,
+                perDatabaseSettings,
+                zoneRedundant,
+                licenseType,
+                maintenanceConfigurationId,
+                highAvailabilityReplicaCount,
+                preferredEnclaveType,
+                availabilityZone,
                 serializedAdditionalRawData);
         }
 

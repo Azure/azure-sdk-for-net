@@ -96,12 +96,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 return null;
             }
-            Optional<SiteRecoveryNetworkProperties> properties = default;
-            Optional<AzureLocation> location = default;
+            SiteRecoveryNetworkProperties properties = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -158,9 +158,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 id,
                 name,
                 type,
-                systemData.Value,
-                properties.Value,
-                Optional.ToNullable(location),
+                systemData,
+                properties,
+                location,
                 serializedAdditionalRawData);
         }
 

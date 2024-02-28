@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryLinkedServiceReference> linkedService = default;
-            Optional<string> linkedServiceType = default;
+            DataFactoryLinkedServiceReference linkedService = default;
+            string linkedServiceType = default;
             MapperConnectionType type = default;
-            Optional<bool> isInlineDataset = default;
+            bool? isInlineDataset = default;
             IList<MapperDslConnectorProperties> commonDslConnectorProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -151,9 +151,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MapperConnection(
                 linkedService,
-                linkedServiceType.Value,
+                linkedServiceType,
                 type,
-                Optional.ToNullable(isInlineDataset),
+                isInlineDataset,
                 commonDslConnectorProperties ?? new ChangeTrackingList<MapperDslConnectorProperties>(),
                 serializedAdditionalRawData);
         }

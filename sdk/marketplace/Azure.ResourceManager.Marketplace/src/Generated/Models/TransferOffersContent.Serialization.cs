@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 return null;
             }
             IList<string> targetCollections = default;
-            Optional<string> operation = default;
+            string operation = default;
             IList<string> offerIdsList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TransferOffersContent(targetCollections ?? new ChangeTrackingList<string>(), operation.Value, offerIdsList ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new TransferOffersContent(targetCollections ?? new ChangeTrackingList<string>(), operation, offerIdsList ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TransferOffersContent>.Write(ModelReaderWriterOptions options)

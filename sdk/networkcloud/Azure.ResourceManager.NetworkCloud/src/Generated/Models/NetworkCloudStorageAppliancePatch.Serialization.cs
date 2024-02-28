@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<string> serialNumber = default;
+            string serialNumber = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudStorageAppliancePatch(tags ?? new ChangeTrackingDictionary<string, string>(), serialNumber.Value, serializedAdditionalRawData);
+            return new NetworkCloudStorageAppliancePatch(tags ?? new ChangeTrackingDictionary<string, string>(), serialNumber, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudStorageAppliancePatch>.Write(ModelReaderWriterOptions options)

@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> description = default;
+            string description = default;
             IDictionary<string, string> properties = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningResourceBase(description.Value, properties ?? new ChangeTrackingDictionary<string, string>(), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new MachineLearningResourceBase(description, properties ?? new ChangeTrackingDictionary<string, string>(), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningResourceBase>.Write(ModelReaderWriterOptions options)

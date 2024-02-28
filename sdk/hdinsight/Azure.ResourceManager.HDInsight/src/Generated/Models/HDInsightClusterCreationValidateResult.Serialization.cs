@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
             IReadOnlyList<HDInsightClusterValidationErrorInfo> validationErrors = default;
             IReadOnlyList<HDInsightClusterValidationErrorInfo> validationWarnings = default;
-            Optional<TimeSpan> estimatedCreationDuration = default;
+            TimeSpan? estimatedCreationDuration = default;
             IReadOnlyList<HDInsightClusterAaddsDetail> aaddsResourcesDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightClusterCreationValidateResult(validationErrors ?? new ChangeTrackingList<HDInsightClusterValidationErrorInfo>(), validationWarnings ?? new ChangeTrackingList<HDInsightClusterValidationErrorInfo>(), Optional.ToNullable(estimatedCreationDuration), aaddsResourcesDetails ?? new ChangeTrackingList<HDInsightClusterAaddsDetail>(), serializedAdditionalRawData);
+            return new HDInsightClusterCreationValidateResult(validationErrors ?? new ChangeTrackingList<HDInsightClusterValidationErrorInfo>(), validationWarnings ?? new ChangeTrackingList<HDInsightClusterValidationErrorInfo>(), estimatedCreationDuration, aaddsResourcesDetails ?? new ChangeTrackingList<HDInsightClusterAaddsDetail>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightClusterCreationValidateResult>.Write(ModelReaderWriterOptions options)

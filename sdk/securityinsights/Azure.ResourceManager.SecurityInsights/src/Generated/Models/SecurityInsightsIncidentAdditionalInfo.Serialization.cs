@@ -99,9 +99,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<int> alertsCount = default;
-            Optional<int> bookmarksCount = default;
-            Optional<int> commentsCount = default;
+            int? alertsCount = default;
+            int? bookmarksCount = default;
+            int? commentsCount = default;
             IReadOnlyList<string> alertProductNames = default;
             IReadOnlyList<SecurityInsightsAttackTactic> tactics = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -170,9 +170,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SecurityInsightsIncidentAdditionalInfo(
-                Optional.ToNullable(alertsCount),
-                Optional.ToNullable(bookmarksCount),
-                Optional.ToNullable(commentsCount),
+                alertsCount,
+                bookmarksCount,
+                commentsCount,
                 alertProductNames ?? new ChangeTrackingList<string>(),
                 tactics ?? new ChangeTrackingList<SecurityInsightsAttackTactic>(),
                 serializedAdditionalRawData);

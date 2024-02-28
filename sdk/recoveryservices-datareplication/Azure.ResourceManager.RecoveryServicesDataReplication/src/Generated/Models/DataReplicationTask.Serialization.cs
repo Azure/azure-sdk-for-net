@@ -100,11 +100,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 return null;
             }
-            Optional<string> taskName = default;
-            Optional<DataReplicationTaskState> state = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<TaskModelCustomProperties> customProperties = default;
+            string taskName = default;
+            DataReplicationTaskState? state = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            TaskModelCustomProperties customProperties = default;
             IReadOnlyList<DataReplicationWorkflowData> childrenWorkflows = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -172,11 +172,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DataReplicationTask(
-                taskName.Value,
-                Optional.ToNullable(state),
-                Optional.ToNullable(startTime),
-                Optional.ToNullable(endTime),
-                customProperties.Value,
+                taskName,
+                state,
+                startTime,
+                endTime,
+                customProperties,
                 childrenWorkflows ?? new ChangeTrackingList<DataReplicationWorkflowData>(),
                 serializedAdditionalRawData);
         }

@@ -137,16 +137,16 @@ namespace Azure.ResourceManager.Media
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> assetId = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<DateTimeOffset> lastModified = default;
-            Optional<string> alternateId = default;
-            Optional<string> description = default;
-            Optional<string> container = default;
-            Optional<string> storageAccountName = default;
-            Optional<MediaAssetStorageEncryptionFormat> storageEncryptionFormat = default;
-            Optional<string> encryptionScope = default;
+            SystemData systemData = default;
+            Guid? assetId = default;
+            DateTimeOffset? created = default;
+            DateTimeOffset? lastModified = default;
+            string alternateId = default;
+            string description = default;
+            string container = default;
+            string storageAccountName = default;
+            MediaAssetStorageEncryptionFormat? storageEncryptionFormat = default;
+            string encryptionScope = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -258,16 +258,16 @@ namespace Azure.ResourceManager.Media
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(assetId),
-                Optional.ToNullable(created),
-                Optional.ToNullable(lastModified),
-                alternateId.Value,
-                description.Value,
-                container.Value,
-                storageAccountName.Value,
-                Optional.ToNullable(storageEncryptionFormat),
-                encryptionScope.Value,
+                systemData,
+                assetId,
+                created,
+                lastModified,
+                alternateId,
+                description,
+                container,
+                storageAccountName,
+                storageEncryptionFormat,
+                encryptionScope,
                 serializedAdditionalRawData);
         }
 

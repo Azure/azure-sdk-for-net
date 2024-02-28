@@ -30,11 +30,11 @@ namespace Azure.Security.KeyVault.Storage.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<DateTimeOffset> updated = default;
-            Optional<int> recoverableDays = default;
-            Optional<DeletionRecoveryLevel> recoveryLevel = default;
+            bool? enabled = default;
+            DateTimeOffset? created = default;
+            DateTimeOffset? updated = default;
+            int? recoverableDays = default;
+            DeletionRecoveryLevel? recoveryLevel = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -83,7 +83,7 @@ namespace Azure.Security.KeyVault.Storage.Models
                     continue;
                 }
             }
-            return new StorageAccountAttributes(Optional.ToNullable(enabled), Optional.ToNullable(created), Optional.ToNullable(updated), Optional.ToNullable(recoverableDays), Optional.ToNullable(recoveryLevel));
+            return new StorageAccountAttributes(enabled, created, updated, recoverableDays, recoveryLevel);
         }
     }
 }

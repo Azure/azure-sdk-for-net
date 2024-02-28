@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<ProvisionedClusterLoadBalancerProfile> loadBalancerProfile = default;
-            Optional<ProvisionedClusterNetworkPolicy> networkPolicy = default;
-            Optional<string> podCidr = default;
+            ProvisionedClusterLoadBalancerProfile loadBalancerProfile = default;
+            ProvisionedClusterNetworkPolicy? networkPolicy = default;
+            string podCidr = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProvisionedClusterNetworkProfile(loadBalancerProfile.Value, Optional.ToNullable(networkPolicy), podCidr.Value, serializedAdditionalRawData);
+            return new ProvisionedClusterNetworkProfile(loadBalancerProfile, networkPolicy, podCidr, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProvisionedClusterNetworkProfile>.Write(ModelReaderWriterOptions options)

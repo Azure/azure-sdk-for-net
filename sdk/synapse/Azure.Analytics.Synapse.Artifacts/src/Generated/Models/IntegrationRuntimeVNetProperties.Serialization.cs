@@ -53,8 +53,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> vNetId = default;
-            Optional<string> subnet = default;
+            string vNetId = default;
+            string subnet = default;
             IList<string> publicIPs = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
@@ -87,7 +87,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new IntegrationRuntimeVNetProperties(vNetId.Value, subnet.Value, publicIPs ?? new ChangeTrackingList<string>(), additionalProperties);
+            return new IntegrationRuntimeVNetProperties(vNetId, subnet, publicIPs ?? new ChangeTrackingList<string>(), additionalProperties);
         }
 
         internal partial class IntegrationRuntimeVNetPropertiesConverter : JsonConverter<IntegrationRuntimeVNetProperties>

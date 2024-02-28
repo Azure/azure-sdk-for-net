@@ -123,11 +123,11 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> edition = default;
-            Optional<string> serviceLevelObjective = default;
-            Optional<string> elasticPoolName = default;
-            Optional<DateTimeOffset> lastAvailableBackupDate = default;
+            SystemData systemData = default;
+            string edition = default;
+            string serviceLevelObjective = default;
+            string elasticPoolName = default;
+            DateTimeOffset? lastAvailableBackupDate = default;
             IDictionary<string, SqlDatabaseKey> keys = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -217,11 +217,11 @@ namespace Azure.ResourceManager.Sql
                 id,
                 name,
                 type,
-                systemData.Value,
-                edition.Value,
-                serviceLevelObjective.Value,
-                elasticPoolName.Value,
-                Optional.ToNullable(lastAvailableBackupDate),
+                systemData,
+                edition,
+                serviceLevelObjective,
+                elasticPoolName,
+                lastAvailableBackupDate,
                 keys ?? new ChangeTrackingDictionary<string, SqlDatabaseKey>(),
                 serializedAdditionalRawData);
         }

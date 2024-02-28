@@ -78,8 +78,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<WritableSubResource> publicIPAddress = default;
+            string id = default;
+            WritableSubResource publicIPAddress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LoadBalancerVipSwapRequestFrontendIPConfiguration(id.Value, publicIPAddress, serializedAdditionalRawData);
+            return new LoadBalancerVipSwapRequestFrontendIPConfiguration(id, publicIPAddress, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LoadBalancerVipSwapRequestFrontendIPConfiguration>.Write(ModelReaderWriterOptions options)

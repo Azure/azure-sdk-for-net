@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<string> name = default;
+            string name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LoadBalancerBackendAddressPoolResourceSettings(name.Value, serializedAdditionalRawData);
+            return new LoadBalancerBackendAddressPoolResourceSettings(name, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LoadBalancerBackendAddressPoolResourceSettings>.Write(ModelReaderWriterOptions options)

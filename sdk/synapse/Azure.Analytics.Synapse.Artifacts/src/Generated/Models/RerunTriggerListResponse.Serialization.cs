@@ -36,7 +36,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             IList<RerunTriggerResource> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -55,7 +55,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new RerunTriggerListResponse(value, nextLink.Value);
+            return new RerunTriggerListResponse(value, nextLink);
         }
 
         internal partial class RerunTriggerListResponseConverter : JsonConverter<RerunTriggerListResponse>

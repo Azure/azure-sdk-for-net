@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> offerName = default;
-            Optional<int> valueInMbps = default;
+            string offerName = default;
+            int? valueInMbps = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExpressRouteServiceProviderBandwidthsOffered(offerName.Value, Optional.ToNullable(valueInMbps), serializedAdditionalRawData);
+            return new ExpressRouteServiceProviderBandwidthsOffered(offerName, valueInMbps, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExpressRouteServiceProviderBandwidthsOffered>.Write(ModelReaderWriterOptions options)

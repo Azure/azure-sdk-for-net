@@ -126,9 +126,9 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> subnetId = default;
-            Optional<string> version = default;
+            SystemData systemData = default;
+            ResourceIdentifier subnetId = default;
+            string version = default;
             IReadOnlyList<string> childResources = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -227,11 +227,11 @@ namespace Azure.ResourceManager.Sql
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                subnetId.Value,
-                version.Value,
+                subnetId,
+                version,
                 childResources ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }

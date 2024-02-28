@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             string domainNameLabel = default;
-            Optional<DomainNameLabelScopeType> domainNameLabelScope = default;
+            DomainNameLabelScopeType? domainNameLabelScope = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachinePublicIPAddressDnsSettingsConfiguration(domainNameLabel, Optional.ToNullable(domainNameLabelScope), serializedAdditionalRawData);
+            return new VirtualMachinePublicIPAddressDnsSettingsConfiguration(domainNameLabel, domainNameLabelScope, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachinePublicIPAddressDnsSettingsConfiguration>.Write(ModelReaderWriterOptions options)

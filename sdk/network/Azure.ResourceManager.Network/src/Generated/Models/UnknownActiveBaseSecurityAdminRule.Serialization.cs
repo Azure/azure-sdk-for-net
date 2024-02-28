@@ -111,11 +111,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<DateTimeOffset> commitTime = default;
-            Optional<string> region = default;
-            Optional<string> configurationDescription = default;
-            Optional<string> ruleCollectionDescription = default;
+            string id = default;
+            DateTimeOffset? commitTime = default;
+            string region = default;
+            string configurationDescription = default;
+            string ruleCollectionDescription = default;
             IReadOnlyList<NetworkManagerSecurityGroupItem> ruleCollectionAppliesToGroups = default;
             IReadOnlyList<NetworkConfigurationGroup> ruleGroups = default;
             EffectiveAdminRuleKind kind = "Unknown";
@@ -192,11 +192,11 @@ namespace Azure.ResourceManager.Network.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new UnknownActiveBaseSecurityAdminRule(
-                id.Value,
-                Optional.ToNullable(commitTime),
-                region.Value,
-                configurationDescription.Value,
-                ruleCollectionDescription.Value,
+                id,
+                commitTime,
+                region,
+                configurationDescription,
+                ruleCollectionDescription,
                 ruleCollectionAppliesToGroups ?? new ChangeTrackingList<NetworkManagerSecurityGroupItem>(),
                 ruleGroups ?? new ChangeTrackingList<NetworkConfigurationGroup>(),
                 kind,

@@ -142,15 +142,15 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IList<ParameterContract> templateParameters = default;
-            Optional<string> description = default;
-            Optional<RequestContract> request = default;
+            string description = default;
+            RequestContract request = default;
             IList<ResponseContract> responses = default;
-            Optional<string> policies = default;
-            Optional<string> displayName = default;
-            Optional<string> method = default;
-            Optional<string> uriTemplate = default;
+            string policies = default;
+            string displayName = default;
+            string method = default;
+            string uriTemplate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -263,15 +263,15 @@ namespace Azure.ResourceManager.ApiManagement
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 templateParameters ?? new ChangeTrackingList<ParameterContract>(),
-                description.Value,
-                request.Value,
+                description,
+                request,
                 responses ?? new ChangeTrackingList<ResponseContract>(),
-                policies.Value,
-                displayName.Value,
-                method.Value,
-                uriTemplate.Value,
+                policies,
+                displayName,
+                method,
+                uriTemplate,
                 serializedAdditionalRawData);
         }
 

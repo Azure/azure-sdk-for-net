@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -18,8 +17,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> primaryThumbprint = default;
-            Optional<string> secondaryThumbprint = default;
+            string primaryThumbprint = default;
+            string secondaryThumbprint = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryThumbprint"u8))
@@ -33,7 +32,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new DeviceTwinInfoX509Thumbprint(primaryThumbprint.Value, secondaryThumbprint.Value);
+            return new DeviceTwinInfoX509Thumbprint(primaryThumbprint, secondaryThumbprint);
         }
     }
 }

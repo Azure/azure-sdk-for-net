@@ -83,11 +83,11 @@ namespace Azure.ResourceManager.Redis.Models
             {
                 return null;
             }
-            Optional<string> format = default;
+            string format = default;
             string prefix = default;
             string container = default;
-            Optional<string> preferredDataArchiveAuthMethod = default;
-            Optional<string> storageSubscriptionId = default;
+            string preferredDataArchiveAuthMethod = default;
+            string storageSubscriptionId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,11 +124,11 @@ namespace Azure.ResourceManager.Redis.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ExportRdbContent(
-                format.Value,
+                format,
                 prefix,
                 container,
-                preferredDataArchiveAuthMethod.Value,
-                storageSubscriptionId.Value,
+                preferredDataArchiveAuthMethod,
+                storageSubscriptionId,
                 serializedAdditionalRawData);
         }
 

@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<string> deploymentStatus = default;
-            Optional<int> artifactsApplied = default;
-            Optional<int> totalArtifacts = default;
+            string deploymentStatus = default;
+            int? artifactsApplied = default;
+            int? totalArtifacts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabArtifactDeploymentStatus(deploymentStatus.Value, Optional.ToNullable(artifactsApplied), Optional.ToNullable(totalArtifacts), serializedAdditionalRawData);
+            return new DevTestLabArtifactDeploymentStatus(deploymentStatus, artifactsApplied, totalArtifacts, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabArtifactDeploymentStatus>.Write(ModelReaderWriterOptions options)

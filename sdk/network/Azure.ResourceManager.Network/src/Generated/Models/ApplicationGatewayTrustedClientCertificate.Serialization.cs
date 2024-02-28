@@ -122,14 +122,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<BinaryData> data = default;
-            Optional<BinaryData> validatedCertData = default;
-            Optional<string> clientCertIssuerDN = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            BinaryData data = default;
+            BinaryData validatedCertData = default;
+            string clientCertIssuerDN = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -217,15 +217,15 @@ namespace Azure.ResourceManager.Network.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ApplicationGatewayTrustedClientCertificate(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
+                id,
+                name,
+                type,
                 serializedAdditionalRawData,
-                Optional.ToNullable(etag),
-                data.Value,
-                validatedCertData.Value,
-                clientCertIssuerDN.Value,
-                Optional.ToNullable(provisioningState));
+                etag,
+                data,
+                validatedCertData,
+                clientCertIssuerDN,
+                provisioningState);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayTrustedClientCertificate>.Write(ModelReaderWriterOptions options)

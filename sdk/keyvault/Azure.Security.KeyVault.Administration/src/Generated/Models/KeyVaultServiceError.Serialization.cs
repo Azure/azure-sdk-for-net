@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
@@ -18,9 +17,9 @@ namespace Azure.Security.KeyVault.Administration.Models
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<string> message = default;
-            Optional<KeyVaultServiceError> innererror = default;
+            string code = default;
+            string message = default;
+            KeyVaultServiceError innererror = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -44,7 +43,7 @@ namespace Azure.Security.KeyVault.Administration.Models
                     continue;
                 }
             }
-            return new KeyVaultServiceError(code.Value, message.Value, innererror.Value);
+            return new KeyVaultServiceError(code, message, innererror);
         }
     }
 }

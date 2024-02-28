@@ -21,9 +21,9 @@ namespace Azure.Communication.PhoneNumbers
             }
             string code = default;
             string message = default;
-            Optional<string> target = default;
+            string target = default;
             IReadOnlyList<CommunicationError> details = default;
-            Optional<CommunicationError> innererror = default;
+            CommunicationError innererror = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -65,7 +65,7 @@ namespace Azure.Communication.PhoneNumbers
                     continue;
                 }
             }
-            return new CommunicationError(code, message, target.Value, details ?? new ChangeTrackingList<CommunicationError>(), innererror.Value);
+            return new CommunicationError(code, message, target, details ?? new ChangeTrackingList<CommunicationError>(), innererror);
         }
     }
 }

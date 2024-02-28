@@ -117,8 +117,8 @@ namespace Azure.ResourceManager.ResourceHealth
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> refreshTimestamp = default;
+            SystemData systemData = default;
+            DateTimeOffset? refreshTimestamp = default;
             IReadOnlyList<EmergingIssueBannerType> statusBanners = default;
             IReadOnlyList<EmergingIssueActiveEventType> statusActiveEvents = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -208,8 +208,8 @@ namespace Azure.ResourceManager.ResourceHealth
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(refreshTimestamp),
+                systemData,
+                refreshTimestamp,
                 statusBanners ?? new ChangeTrackingList<EmergingIssueBannerType>(),
                 statusActiveEvents ?? new ChangeTrackingList<EmergingIssueActiveEventType>(),
                 serializedAdditionalRawData);

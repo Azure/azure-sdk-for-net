@@ -87,8 +87,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
             string contactName = default;
             string phone = default;
-            Optional<string> phoneExtension = default;
-            Optional<string> mobile = default;
+            string phoneExtension = default;
+            string mobile = default;
             IList<string> emailList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -133,8 +133,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new EdgeOrderAddressContactDetails(
                 contactName,
                 phone,
-                phoneExtension.Value,
-                mobile.Value,
+                phoneExtension,
+                mobile,
                 emailList,
                 serializedAdditionalRawData);
         }

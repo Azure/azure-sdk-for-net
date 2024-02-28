@@ -56,10 +56,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<string> activationEvaluationWindow = default;
-            Optional<string> activationSignalOffset = default;
-            Optional<string> minimumActivationTime = default;
-            Optional<string> maximumActivationTime = default;
+            string activationEvaluationWindow = default;
+            string activationSignalOffset = default;
+            string minimumActivationTime = default;
+            string maximumActivationTime = default;
             string type = default;
             string name = default;
             IList<NodeInput> inputs = default;
@@ -110,10 +110,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 type,
                 name,
                 inputs,
-                activationEvaluationWindow.Value,
-                activationSignalOffset.Value,
-                minimumActivationTime.Value,
-                maximumActivationTime.Value);
+                activationEvaluationWindow,
+                activationSignalOffset,
+                minimumActivationTime,
+                maximumActivationTime);
         }
     }
 }

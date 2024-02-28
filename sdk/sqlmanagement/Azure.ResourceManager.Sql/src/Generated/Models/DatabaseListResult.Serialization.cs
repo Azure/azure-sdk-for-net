@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Sql.Models
                 return null;
             }
             IReadOnlyList<SqlDatabaseData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatabaseListResult(value ?? new ChangeTrackingList<SqlDatabaseData>(), nextLink.Value, serializedAdditionalRawData);
+            return new DatabaseListResult(value ?? new ChangeTrackingList<SqlDatabaseData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatabaseListResult>.Write(ModelReaderWriterOptions options)

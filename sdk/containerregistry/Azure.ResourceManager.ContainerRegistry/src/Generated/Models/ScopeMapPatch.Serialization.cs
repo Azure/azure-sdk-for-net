@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<string> description = default;
+            string description = default;
             IList<string> actions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScopeMapPatch(description.Value, actions ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new ScopeMapPatch(description, actions ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScopeMapPatch>.Write(ModelReaderWriterOptions options)

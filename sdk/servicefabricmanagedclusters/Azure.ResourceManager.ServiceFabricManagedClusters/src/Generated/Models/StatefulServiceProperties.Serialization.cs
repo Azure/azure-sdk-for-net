@@ -170,24 +170,24 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 return null;
             }
-            Optional<bool> hasPersistedState = default;
-            Optional<int> targetReplicaSetSize = default;
-            Optional<int> minReplicaSetSize = default;
-            Optional<TimeSpan> replicaRestartWaitDuration = default;
-            Optional<TimeSpan> quorumLossWaitDuration = default;
-            Optional<TimeSpan> standByReplicaKeepDuration = default;
-            Optional<TimeSpan> servicePlacementTimeLimit = default;
-            Optional<string> provisioningState = default;
+            bool? hasPersistedState = default;
+            int? targetReplicaSetSize = default;
+            int? minReplicaSetSize = default;
+            TimeSpan? replicaRestartWaitDuration = default;
+            TimeSpan? quorumLossWaitDuration = default;
+            TimeSpan? standByReplicaKeepDuration = default;
+            TimeSpan? servicePlacementTimeLimit = default;
+            string provisioningState = default;
             ServiceKind serviceKind = default;
             string serviceTypeName = default;
             ManagedServicePartitionScheme partitionDescription = default;
-            Optional<ManagedServicePackageActivationMode> servicePackageActivationMode = default;
-            Optional<string> serviceDnsName = default;
-            Optional<string> placementConstraints = default;
+            ManagedServicePackageActivationMode? servicePackageActivationMode = default;
+            string serviceDnsName = default;
+            string placementConstraints = default;
             IList<ManagedServiceCorrelation> correlationScheme = default;
             IList<ManagedServiceLoadMetric> serviceLoadMetrics = default;
             IList<ManagedServicePlacementPolicy> servicePlacementPolicies = default;
-            Optional<ServiceFabricManagedServiceMoveCost> defaultMoveCost = default;
+            ServiceFabricManagedServiceMoveCost? defaultMoveCost = default;
             IList<ManagedServiceScalingPolicy> scalingPolicies = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -367,26 +367,26 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new StatefulServiceProperties(
-                placementConstraints.Value,
+                placementConstraints,
                 correlationScheme ?? new ChangeTrackingList<ManagedServiceCorrelation>(),
                 serviceLoadMetrics ?? new ChangeTrackingList<ManagedServiceLoadMetric>(),
                 servicePlacementPolicies ?? new ChangeTrackingList<ManagedServicePlacementPolicy>(),
-                Optional.ToNullable(defaultMoveCost),
+                defaultMoveCost,
                 scalingPolicies ?? new ChangeTrackingList<ManagedServiceScalingPolicy>(),
                 serializedAdditionalRawData,
-                provisioningState.Value,
+                provisioningState,
                 serviceKind,
                 serviceTypeName,
                 partitionDescription,
-                Optional.ToNullable(servicePackageActivationMode),
-                serviceDnsName.Value,
-                Optional.ToNullable(hasPersistedState),
-                Optional.ToNullable(targetReplicaSetSize),
-                Optional.ToNullable(minReplicaSetSize),
-                Optional.ToNullable(replicaRestartWaitDuration),
-                Optional.ToNullable(quorumLossWaitDuration),
-                Optional.ToNullable(standByReplicaKeepDuration),
-                Optional.ToNullable(servicePlacementTimeLimit));
+                servicePackageActivationMode,
+                serviceDnsName,
+                hasPersistedState,
+                targetReplicaSetSize,
+                minReplicaSetSize,
+                replicaRestartWaitDuration,
+                quorumLossWaitDuration,
+                standByReplicaKeepDuration,
+                servicePlacementTimeLimit);
         }
 
         BinaryData IPersistableModel<StatefulServiceProperties>.Write(ModelReaderWriterOptions options)

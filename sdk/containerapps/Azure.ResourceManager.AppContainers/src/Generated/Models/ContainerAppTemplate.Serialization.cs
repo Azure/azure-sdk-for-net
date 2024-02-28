@@ -119,11 +119,11 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> revisionSuffix = default;
-            Optional<long> terminationGracePeriodSeconds = default;
+            string revisionSuffix = default;
+            long? terminationGracePeriodSeconds = default;
             IList<ContainerAppInitContainer> initContainers = default;
             IList<ContainerAppContainer> containers = default;
-            Optional<ContainerAppScale> scale = default;
+            ContainerAppScale scale = default;
             IList<ContainerAppVolume> volumes = default;
             IList<ContainerAppServiceBind> serviceBinds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -216,11 +216,11 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ContainerAppTemplate(
-                revisionSuffix.Value,
-                Optional.ToNullable(terminationGracePeriodSeconds),
+                revisionSuffix,
+                terminationGracePeriodSeconds,
                 initContainers ?? new ChangeTrackingList<ContainerAppInitContainer>(),
                 containers ?? new ChangeTrackingList<ContainerAppContainer>(),
-                scale.Value,
+                scale,
                 volumes ?? new ChangeTrackingList<ContainerAppVolume>(),
                 serviceBinds ?? new ChangeTrackingList<ContainerAppServiceBind>(),
                 serializedAdditionalRawData);

@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<HttpMessageDiagnostic> request = default;
-            Optional<HttpMessageDiagnostic> response = default;
+            HttpMessageDiagnostic request = default;
+            HttpMessageDiagnostic response = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PipelineDiagnosticSettings(request.Value, response.Value, serializedAdditionalRawData);
+            return new PipelineDiagnosticSettings(request, response, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PipelineDiagnosticSettings>.Write(ModelReaderWriterOptions options)

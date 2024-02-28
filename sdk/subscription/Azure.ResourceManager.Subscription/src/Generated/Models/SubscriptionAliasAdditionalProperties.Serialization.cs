@@ -90,9 +90,9 @@ namespace Azure.ResourceManager.Subscription.Models
             {
                 return null;
             }
-            Optional<string> managementGroupId = default;
-            Optional<Guid> subscriptionTenantId = default;
-            Optional<string> subscriptionOwnerId = default;
+            string managementGroupId = default;
+            Guid? subscriptionTenantId = default;
+            string subscriptionOwnerId = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Subscription.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubscriptionAliasAdditionalProperties(managementGroupId.Value, Optional.ToNullable(subscriptionTenantId), subscriptionOwnerId.Value, tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new SubscriptionAliasAdditionalProperties(managementGroupId, subscriptionTenantId, subscriptionOwnerId, tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubscriptionAliasAdditionalProperties>.Write(ModelReaderWriterOptions options)

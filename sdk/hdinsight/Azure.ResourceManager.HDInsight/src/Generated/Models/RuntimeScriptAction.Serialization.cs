@@ -87,9 +87,9 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
             string name = default;
             Uri uri = default;
-            Optional<string> parameters = default;
+            string parameters = default;
             IList<string> roles = default;
-            Optional<string> applicationName = default;
+            string applicationName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,9 +133,9 @@ namespace Azure.ResourceManager.HDInsight.Models
             return new RuntimeScriptAction(
                 name,
                 uri,
-                parameters.Value,
+                parameters,
                 roles,
-                applicationName.Value,
+                applicationName,
                 serializedAdditionalRawData);
         }
 

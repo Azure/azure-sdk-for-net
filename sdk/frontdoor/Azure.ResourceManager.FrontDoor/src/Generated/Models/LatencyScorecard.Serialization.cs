@@ -156,15 +156,15 @@ namespace Azure.ResourceManager.FrontDoor.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> id0 = default;
-            Optional<string> name0 = default;
-            Optional<string> description = default;
-            Optional<Uri> endpointA = default;
-            Optional<Uri> endpointB = default;
-            Optional<DateTimeOffset> startDateTimeUtc = default;
-            Optional<DateTimeOffset> endDateTimeUtc = default;
-            Optional<string> country = default;
+            SystemData systemData = default;
+            string id0 = default;
+            string name0 = default;
+            string description = default;
+            Uri endpointA = default;
+            Uri endpointB = default;
+            DateTimeOffset? startDateTimeUtc = default;
+            DateTimeOffset? endDateTimeUtc = default;
+            string country = default;
             IList<LatencyMetric> latencyMetrics = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -305,17 +305,17 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                id0.Value,
-                name0.Value,
-                description.Value,
-                endpointA.Value,
-                endpointB.Value,
-                Optional.ToNullable(startDateTimeUtc),
-                Optional.ToNullable(endDateTimeUtc),
-                country.Value,
+                id0,
+                name0,
+                description,
+                endpointA,
+                endpointB,
+                startDateTimeUtc,
+                endDateTimeUtc,
+                country,
                 latencyMetrics ?? new ChangeTrackingList<LatencyMetric>(),
                 serializedAdditionalRawData);
         }

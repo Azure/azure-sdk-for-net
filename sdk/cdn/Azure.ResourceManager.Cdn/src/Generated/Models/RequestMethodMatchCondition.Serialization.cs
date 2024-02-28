@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             RequestMethodMatchConditionType typeName = default;
             RequestMethodOperator @operator = default;
-            Optional<bool> negateCondition = default;
+            bool? negateCondition = default;
             IList<PreTransformCategory> transforms = default;
             IList<RequestMethodMatchConditionMatchValue> matchValues = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Cdn.Models
             return new RequestMethodMatchCondition(
                 typeName,
                 @operator,
-                Optional.ToNullable(negateCondition),
+                negateCondition,
                 transforms ?? new ChangeTrackingList<PreTransformCategory>(),
                 matchValues ?? new ChangeTrackingList<RequestMethodMatchConditionMatchValue>(),
                 serializedAdditionalRawData);

@@ -97,12 +97,12 @@ namespace Azure.ResourceManager.DataMigration
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ProjectTaskProperties> properties = default;
+            ETag? etag = default;
+            ProjectTaskProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             Core.ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -159,9 +159,9 @@ namespace Azure.ResourceManager.DataMigration
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(etag),
-                properties.Value,
+                systemData,
+                etag,
+                properties,
                 serializedAdditionalRawData);
         }
 

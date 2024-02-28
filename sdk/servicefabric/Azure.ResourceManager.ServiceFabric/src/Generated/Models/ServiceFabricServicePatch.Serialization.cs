@@ -152,19 +152,19 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> placementConstraints = default;
+            SystemData systemData = default;
+            string placementConstraints = default;
             IList<ServiceCorrelationDescription> correlationScheme = default;
             IList<ServiceLoadMetricDescription> serviceLoadMetrics = default;
             IList<ServicePlacementPolicyDescription> servicePlacementPolicies = default;
-            Optional<ApplicationMoveCost> defaultMoveCost = default;
-            Optional<ApplicationServiceKind> serviceKind = default;
+            ApplicationMoveCost? defaultMoveCost = default;
+            ApplicationServiceKind? serviceKind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -308,16 +308,16 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                placementConstraints.Value,
+                placementConstraints,
                 correlationScheme ?? new ChangeTrackingList<ServiceCorrelationDescription>(),
                 serviceLoadMetrics ?? new ChangeTrackingList<ServiceLoadMetricDescription>(),
                 servicePlacementPolicies ?? new ChangeTrackingList<ServicePlacementPolicyDescription>(),
-                Optional.ToNullable(defaultMoveCost),
-                Optional.ToNullable(serviceKind),
-                Optional.ToNullable(etag),
+                defaultMoveCost,
+                serviceKind,
+                etag,
                 serializedAdditionalRawData);
         }
 

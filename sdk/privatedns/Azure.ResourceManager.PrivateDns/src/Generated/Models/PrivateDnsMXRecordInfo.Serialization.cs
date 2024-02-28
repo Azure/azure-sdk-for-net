@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.PrivateDns.Models
             {
                 return null;
             }
-            Optional<int> preference = default;
-            Optional<string> exchange = default;
+            int? preference = default;
+            string exchange = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateDnsMXRecordInfo(Optional.ToNullable(preference), exchange.Value, serializedAdditionalRawData);
+            return new PrivateDnsMXRecordInfo(preference, exchange, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateDnsMXRecordInfo>.Write(ModelReaderWriterOptions options)

@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<ConflictResolutionMode> mode = default;
-            Optional<string> conflictResolutionPath = default;
-            Optional<string> conflictResolutionProcedure = default;
+            ConflictResolutionMode? mode = default;
+            string conflictResolutionPath = default;
+            string conflictResolutionProcedure = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConflictResolutionPolicy(Optional.ToNullable(mode), conflictResolutionPath.Value, conflictResolutionProcedure.Value, serializedAdditionalRawData);
+            return new ConflictResolutionPolicy(mode, conflictResolutionPath, conflictResolutionProcedure, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConflictResolutionPolicy>.Write(ModelReaderWriterOptions options)

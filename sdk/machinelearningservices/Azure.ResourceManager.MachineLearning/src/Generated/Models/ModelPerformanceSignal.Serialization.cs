@@ -112,11 +112,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<MonitoringDataSegment> dataSegment = default;
+            MonitoringDataSegment dataSegment = default;
             ModelPerformanceMetricThresholdBase metricThreshold = default;
             IList<MonitoringInputDataBase> productionData = default;
             MonitoringInputDataBase referenceData = default;
-            Optional<MonitoringNotificationMode> mode = default;
+            MonitoringNotificationMode? mode = default;
             IDictionary<string, string> properties = default;
             MonitoringSignalType signalType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -189,11 +189,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ModelPerformanceSignal(
-                Optional.ToNullable(mode),
+                mode,
                 properties ?? new ChangeTrackingDictionary<string, string>(),
                 signalType,
                 serializedAdditionalRawData,
-                dataSegment.Value,
+                dataSegment,
                 metricThreshold,
                 productionData,
                 referenceData);
