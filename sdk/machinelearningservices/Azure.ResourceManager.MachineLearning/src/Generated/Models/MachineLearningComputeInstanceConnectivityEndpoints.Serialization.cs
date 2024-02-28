@@ -88,8 +88,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> publicIPAddress = default;
-            Optional<string> privateIPAddress = default;
+            string publicIPAddress = default;
+            string privateIPAddress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningComputeInstanceConnectivityEndpoints(publicIPAddress.Value, privateIPAddress.Value, serializedAdditionalRawData);
+            return new MachineLearningComputeInstanceConnectivityEndpoints(publicIPAddress, privateIPAddress, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningComputeInstanceConnectivityEndpoints>.Write(ModelReaderWriterOptions options)

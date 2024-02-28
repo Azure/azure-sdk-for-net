@@ -126,12 +126,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> labeledAssetName = default;
-            Optional<DateTimeOffset?> endDateTime = default;
-            Optional<long?> exportedRowCount = default;
+            string labeledAssetName = default;
+            DateTimeOffset? endDateTime = default;
+            long? exportedRowCount = default;
             ExportFormatType format = default;
-            Optional<string> labelingJobId = default;
-            Optional<DateTimeOffset?> startDateTime = default;
+            string labelingJobId = default;
+            DateTimeOffset? startDateTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -198,13 +198,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DatasetExportSummary(
-                Optional.ToNullable(endDateTime),
-                Optional.ToNullable(exportedRowCount),
+                endDateTime,
+                exportedRowCount,
                 format,
-                labelingJobId.Value,
-                Optional.ToNullable(startDateTime),
+                labelingJobId,
+                startDateTime,
                 serializedAdditionalRawData,
-                labeledAssetName.Value);
+                labeledAssetName);
         }
 
         BinaryData IPersistableModel<DatasetExportSummary>.Write(ModelReaderWriterOptions options)

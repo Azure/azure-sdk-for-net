@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 return null;
             }
             IReadOnlyList<OperationalizationClusterData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PaginatedOperationalizationClustersList(value ?? new ChangeTrackingList<OperationalizationClusterData>(), nextLink.Value, serializedAdditionalRawData);
+            return new PaginatedOperationalizationClustersList(value ?? new ChangeTrackingList<OperationalizationClusterData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PaginatedOperationalizationClustersList>.Write(ModelReaderWriterOptions options)

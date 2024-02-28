@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<BinaryData> content = default;
-            Optional<string> contentLink = default;
+            BinaryData content = default;
+            string contentLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicApiResourcePolicies(content.Value, contentLink.Value, serializedAdditionalRawData);
+            return new LogicApiResourcePolicies(content, contentLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicApiResourcePolicies>.Write(ModelReaderWriterOptions options)

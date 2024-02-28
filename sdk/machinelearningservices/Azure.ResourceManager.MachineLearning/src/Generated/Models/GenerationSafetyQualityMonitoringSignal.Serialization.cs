@@ -130,8 +130,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             IList<GenerationSafetyQualityMetricThreshold> metricThresholds = default;
             IList<MonitoringInputDataBase> productionData = default;
             double samplingRate = default;
-            Optional<string> workspaceConnectionId = default;
-            Optional<MonitoringNotificationMode> mode = default;
+            string workspaceConnectionId = default;
+            MonitoringNotificationMode? mode = default;
             IDictionary<string, string> properties = default;
             MonitoringSignalType signalType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -214,14 +214,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new GenerationSafetyQualityMonitoringSignal(
-                Optional.ToNullable(mode),
+                mode,
                 properties ?? new ChangeTrackingDictionary<string, string>(),
                 signalType,
                 serializedAdditionalRawData,
                 metricThresholds,
                 productionData ?? new ChangeTrackingList<MonitoringInputDataBase>(),
                 samplingRate,
-                workspaceConnectionId.Value);
+                workspaceConnectionId);
         }
 
         BinaryData IPersistableModel<GenerationSafetyQualityMonitoringSignal>.Write(ModelReaderWriterOptions options)

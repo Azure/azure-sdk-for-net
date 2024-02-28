@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 return null;
             }
             MultiFactorAuthProvider multiFactorAuthProvider = default;
-            Optional<TimeSpan> maximumActivationDuration = default;
+            TimeSpan? maximumActivationDuration = default;
             IList<ManagedServicesEligibleApprover> managedByTenantApprovers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedServicesJustInTimeAccessPolicy(multiFactorAuthProvider, Optional.ToNullable(maximumActivationDuration), managedByTenantApprovers ?? new ChangeTrackingList<ManagedServicesEligibleApprover>(), serializedAdditionalRawData);
+            return new ManagedServicesJustInTimeAccessPolicy(multiFactorAuthProvider, maximumActivationDuration, managedByTenantApprovers ?? new ChangeTrackingList<ManagedServicesEligibleApprover>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedServicesJustInTimeAccessPolicy>.Write(ModelReaderWriterOptions options)

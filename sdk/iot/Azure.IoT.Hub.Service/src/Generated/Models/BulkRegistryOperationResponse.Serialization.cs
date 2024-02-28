@@ -19,7 +19,7 @@ namespace Azure.IoT.Hub.Service.Models
             {
                 return null;
             }
-            Optional<bool> isSuccessful = default;
+            bool? isSuccessful = default;
             IReadOnlyList<DeviceRegistryOperationError> errors = default;
             IReadOnlyList<DeviceRegistryOperationWarning> warnings = default;
             foreach (var property in element.EnumerateObject())
@@ -62,7 +62,7 @@ namespace Azure.IoT.Hub.Service.Models
                     continue;
                 }
             }
-            return new BulkRegistryOperationResponse(Optional.ToNullable(isSuccessful), errors ?? new ChangeTrackingList<DeviceRegistryOperationError>(), warnings ?? new ChangeTrackingList<DeviceRegistryOperationWarning>());
+            return new BulkRegistryOperationResponse(isSuccessful, errors ?? new ChangeTrackingList<DeviceRegistryOperationError>(), warnings ?? new ChangeTrackingList<DeviceRegistryOperationWarning>());
         }
     }
 }

@@ -97,10 +97,10 @@ namespace Azure.ResourceManager.Media.Models
                 return null;
             }
             Guid id = default;
-            Optional<StreamingLocatorContentKeyType> type = default;
-            Optional<string> labelReferenceInStreamingPolicy = default;
-            Optional<string> value = default;
-            Optional<string> policyName = default;
+            StreamingLocatorContentKeyType? type = default;
+            string labelReferenceInStreamingPolicy = default;
+            string value = default;
+            string policyName = default;
             IReadOnlyList<MediaTrackSelection> tracks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -157,10 +157,10 @@ namespace Azure.ResourceManager.Media.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new StreamingLocatorContentKey(
                 id,
-                Optional.ToNullable(type),
-                labelReferenceInStreamingPolicy.Value,
-                value.Value,
-                policyName.Value,
+                type,
+                labelReferenceInStreamingPolicy,
+                value,
+                policyName,
                 tracks ?? new ChangeTrackingList<MediaTrackSelection>(),
                 serializedAdditionalRawData);
         }

@@ -20,7 +20,7 @@ namespace Azure.Security.KeyVault.Storage.Models
                 return null;
             }
             IReadOnlyList<DeletedStorageAccountItem> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.Security.KeyVault.Storage.Models
                     continue;
                 }
             }
-            return new DeletedStorageListResult(value ?? new ChangeTrackingList<DeletedStorageAccountItem>(), nextLink.Value);
+            return new DeletedStorageListResult(value ?? new ChangeTrackingList<DeletedStorageAccountItem>(), nextLink);
         }
     }
 }

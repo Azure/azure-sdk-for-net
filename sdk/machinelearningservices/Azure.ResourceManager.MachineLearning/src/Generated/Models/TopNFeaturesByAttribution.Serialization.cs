@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<int> top = default;
+            int? top = default;
             MonitoringFeatureFilterType filterType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TopNFeaturesByAttribution(filterType, serializedAdditionalRawData, Optional.ToNullable(top));
+            return new TopNFeaturesByAttribution(filterType, serializedAdditionalRawData, top);
         }
 
         BinaryData IPersistableModel<TopNFeaturesByAttribution>.Write(ModelReaderWriterOptions options)

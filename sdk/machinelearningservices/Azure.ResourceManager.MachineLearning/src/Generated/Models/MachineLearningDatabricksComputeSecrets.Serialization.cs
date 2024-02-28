@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> databricksAccessToken = default;
+            string databricksAccessToken = default;
             ComputeType computeType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningDatabricksComputeSecrets(computeType, serializedAdditionalRawData, databricksAccessToken.Value);
+            return new MachineLearningDatabricksComputeSecrets(computeType, serializedAdditionalRawData, databricksAccessToken);
         }
 
         BinaryData IPersistableModel<MachineLearningDatabricksComputeSecrets>.Write(ModelReaderWriterOptions options)

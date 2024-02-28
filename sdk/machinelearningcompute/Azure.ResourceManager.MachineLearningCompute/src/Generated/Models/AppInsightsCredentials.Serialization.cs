@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             {
                 return null;
             }
-            Optional<string> appId = default;
-            Optional<string> instrumentationKey = default;
+            string appId = default;
+            string instrumentationKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppInsightsCredentials(appId.Value, instrumentationKey.Value, serializedAdditionalRawData);
+            return new AppInsightsCredentials(appId, instrumentationKey, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppInsightsCredentials>.Write(ModelReaderWriterOptions options)

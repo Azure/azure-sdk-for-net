@@ -99,9 +99,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<string> matchConfigurationName = default;
-            Optional<long> sequenceNumber = default;
-            Optional<NetworkFabricIPAddressType> ipAddressType = default;
+            string matchConfigurationName = default;
+            long? sequenceNumber = default;
+            NetworkFabricIPAddressType? ipAddressType = default;
             IList<AccessControlListMatchCondition> matchConditions = default;
             IList<AccessControlListAction> actions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -166,9 +166,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AccessControlListMatchConfiguration(
-                matchConfigurationName.Value,
-                Optional.ToNullable(sequenceNumber),
-                Optional.ToNullable(ipAddressType),
+                matchConfigurationName,
+                sequenceNumber,
+                ipAddressType,
                 matchConditions ?? new ChangeTrackingList<AccessControlListMatchCondition>(),
                 actions ?? new ChangeTrackingList<AccessControlListAction>(),
                 serializedAdditionalRawData);
