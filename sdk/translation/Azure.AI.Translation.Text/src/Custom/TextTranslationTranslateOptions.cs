@@ -8,6 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Translation.Text
 {
     /// <summary> Client options for TextTranslationClient.Translate </summary>
+    [CodeGenSuppress("ClientTraceId", typeof(string))]
     public partial class TextTranslationTranslateOptions
     {
         /// <summary>
