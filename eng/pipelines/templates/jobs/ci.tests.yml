@@ -1,29 +1,31 @@
 parameters:
-- name: SDKType
-  type: string
-  default: all
-- name: TestSetupSteps
-  type: stepList
-  default: []
-- name: TestTimeoutInMinutes
-  type: number
-- name: Matrix
-  type: string
-- name: DependsOn
-  type: string
-  default: ''
-- name: UsePlatformContainer
-  type: boolean
-  default: false
-- name: CloudConfig
-  type: object
-  default: {}
-- name: ProjectListOverrideFilePropertyName
-  type: string
-  default: ''
-- name: ServiceDirectory
-  type: string
-  default: ''
+  - name: SDKType
+    type: string
+    default: all
+  - name: TestSetupSteps
+    type: stepList
+    default: []
+  - name: TestTimeoutInMinutes
+    type: number
+  - name: Matrix
+    type: string
+  - name: DependsOn
+    type: string
+    default: ''
+  - name: UsePlatformContainer
+    type: boolean
+    default: false
+  - name: CloudConfig
+    type: object
+    default: {}
+  - name: ProjectListOverrideFilePropertyName
+    type: string
+    default: ''
+  - name: ServiceDirectory
+    type: string
+    default: ''
+  - name: OSName
+    type: string
 
 jobs:
   - job:
@@ -36,6 +38,7 @@ jobs:
     pool:
       vmImage: $(OSVmImage)
       name: $(Pool)
+      os: ${{ parameters.OSName }}
     ${{ if eq(parameters.UsePlatformContainer, 'true') }}:
       # Add a default so the job doesn't fail when the matrix is empty
       container: $[ variables['Container'] ]
@@ -59,7 +62,6 @@ jobs:
             artifact: DependencyTestProjectReferences
             patterns: "**/$(${{ parameters.ProjectListOverrideFilePropertyName }})"
             path: $(Build.SourcesDirectory)
-
       - pwsh: |
           $(Build.SourcesDirectory)/eng/common/scripts/trust-proxy-certificate.ps1
         displayName: 'Language Specific Certificate Trust'
@@ -69,7 +71,7 @@ jobs:
         displayName: 'Configure Kestrel Environment Variables'
       - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
         parameters:
-          AgentImage: $(OSVmImage)
+          AgentImage: ${{ parameters.OSName }}
       - ${{ each step in parameters.TestSetupSteps }}:
         - ${{ each pair in step }}:
             ${{ pair.key }}: ${{ pair.value }}
@@ -112,7 +114,7 @@ jobs:
         displayName: "Publish Results ($(TestTargetFramework))"
         inputs:
           testResultsFiles: "**/$(TestTargetFramework)*.trx"
-          testRunTitle: "$(OSName) $(TestTargetFramework)"
+          testRunTitle: "${{ parameters.OSName }} $(TestTargetFramework)"
           testResultsFormat: "VSTest"
           mergeTestResults: true
       - template: /eng/common/pipelines/templates/steps/publish-artifact.yml
@@ -141,3 +143,4 @@ jobs:
         inputs:
           codeCoverageTool: Cobertura
           summaryFileLocation: $(Build.ArtifactStagingDirectory)\coverage\Cobertura.xml
+
