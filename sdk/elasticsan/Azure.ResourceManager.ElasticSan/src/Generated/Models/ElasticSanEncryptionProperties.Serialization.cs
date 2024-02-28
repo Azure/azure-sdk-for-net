@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ElasticSan.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(KeyVaultProperties))
+            if (KeyVaultProperties != null)
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
                 writer.WriteObjectValue(KeyVaultProperties);
             }
-            if (Optional.IsDefined(EncryptionIdentity))
+            if (EncryptionIdentity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(EncryptionIdentity);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ElasticSan.Models
             {
                 return null;
             }
-            Optional<ElasticSanKeyVaultProperties> keyVaultProperties = default;
-            Optional<EncryptionIdentity> identity = default;
+            ElasticSanKeyVaultProperties keyVaultProperties = default;
+            EncryptionIdentity identity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     {
                         continue;
                     }
-                    keyVaultProperties = ElasticSanKeyVaultProperties.DeserializeElasticSanKeyVaultProperties(property.Value);
+                    keyVaultProperties = ElasticSanKeyVaultProperties.DeserializeElasticSanKeyVaultProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     {
                         continue;
                     }
-                    identity = EncryptionIdentity.DeserializeEncryptionIdentity(property.Value);
+                    identity = EncryptionIdentity.DeserializeEncryptionIdentity(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ElasticSanEncryptionProperties(keyVaultProperties.Value, identity.Value, serializedAdditionalRawData);
+            return new ElasticSanEncryptionProperties(keyVaultProperties, identity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticSanEncryptionProperties>.Write(ModelReaderWriterOptions options)

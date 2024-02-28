@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.Translation.Text
 {
@@ -54,10 +53,22 @@ namespace Azure.AI.Translation.Text
         /// <exception cref="ArgumentNullException"> <paramref name="code"/>, <paramref name="name"/>, <paramref name="nativeName"/> or <paramref name="dir"/> is null. </exception>
         internal CommonScriptModel(string code, string name, string nativeName, string dir)
         {
-            Argument.AssertNotNull(code, nameof(code));
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(nativeName, nameof(nativeName));
-            Argument.AssertNotNull(dir, nameof(dir));
+            if (code == null)
+            {
+                throw new ArgumentNullException(nameof(code));
+            }
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (nativeName == null)
+            {
+                throw new ArgumentNullException(nameof(nativeName));
+            }
+            if (dir == null)
+            {
+                throw new ArgumentNullException(nameof(dir));
+            }
 
             Code = code;
             Name = name;

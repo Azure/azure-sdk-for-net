@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ServiceBus.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IPMask))
+            if (IPMask != null)
             {
                 writer.WritePropertyName("ipMask"u8);
                 writer.WriteStringValue(IPMask);
             }
-            if (Optional.IsDefined(Action))
+            if (Action.HasValue)
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action.Value.ToString());
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ServiceBus.Models
             {
                 return null;
             }
-            Optional<string> ipMask = default;
-            Optional<ServiceBusNetworkRuleIPAction> action = default;
+            string ipMask = default;
+            ServiceBusNetworkRuleIPAction? action = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceBusNetworkRuleSetIPRules(ipMask.Value, Optional.ToNullable(action), serializedAdditionalRawData);
+            return new ServiceBusNetworkRuleSetIPRules(ipMask, action, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceBusNetworkRuleSetIPRules>.Write(ModelReaderWriterOptions options)

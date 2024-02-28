@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Namespace))
+            if (Namespace != null)
             {
                 writer.WritePropertyName("namespace"u8);
                 writer.WriteStringValue(Namespace);
             }
-            if (Optional.IsDefined(DesiredNumberOfPods))
+            if (DesiredNumberOfPods.HasValue)
             {
                 writer.WritePropertyName("desired"u8);
                 writer.WriteNumberValue(DesiredNumberOfPods.Value);
             }
-            if (Optional.IsDefined(ReadyNumberOfPods))
+            if (ReadyNumberOfPods.HasValue)
             {
                 writer.WritePropertyName("ready"u8);
                 writer.WriteNumberValue(ReadyNumberOfPods.Value);
             }
-            if (Optional.IsDefined(CurrentNumberOfPods))
+            if (CurrentNumberOfPods.HasValue)
             {
                 writer.WritePropertyName("current"u8);
                 writer.WriteNumberValue(CurrentNumberOfPods.Value);
             }
-            if (Optional.IsDefined(CreatedOn))
+            if (CreatedOn.HasValue)
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> @namespace = default;
-            Optional<int> desired = default;
-            Optional<int> ready = default;
-            Optional<int> current = default;
-            Optional<DateTimeOffset> creationTime = default;
+            string name = default;
+            string @namespace = default;
+            int? desired = default;
+            int? ready = default;
+            int? current = default;
+            DateTimeOffset? creationTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -156,7 +156,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesReplicaSet(name.Value, @namespace.Value, Optional.ToNullable(desired), Optional.ToNullable(ready), Optional.ToNullable(current), Optional.ToNullable(creationTime), serializedAdditionalRawData);
+            return new KubernetesReplicaSet(
+                name,
+                @namespace,
+                desired,
+                ready,
+                current,
+                creationTime,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesReplicaSet>.Write(ModelReaderWriterOptions options)

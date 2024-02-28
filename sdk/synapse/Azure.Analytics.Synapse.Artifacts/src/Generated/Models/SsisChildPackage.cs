@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -19,8 +18,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="packagePath"/> or <paramref name="packageContent"/> is null. </exception>
         public SsisChildPackage(object packagePath, object packageContent)
         {
-            Argument.AssertNotNull(packagePath, nameof(packagePath));
-            Argument.AssertNotNull(packageContent, nameof(packageContent));
+            if (packagePath == null)
+            {
+                throw new ArgumentNullException(nameof(packagePath));
+            }
+            if (packageContent == null)
+            {
+                throw new ArgumentNullException(nameof(packageContent));
+            }
 
             PackagePath = packagePath;
             PackageContent = packageContent;

@@ -195,7 +195,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<Response<PolicySignaturesOverridesForIdpsResource>> UpdateAsync(PolicySignaturesOverridesForIdpsData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _policySignaturesOverridesForIdpsFirewallPolicyIdpsSignaturesOverridesClientDiagnostics.CreateScope("PolicySignaturesOverridesForIdpsResource.Update");
             scope.Start();
@@ -237,7 +240,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual Response<PolicySignaturesOverridesForIdpsResource> Update(PolicySignaturesOverridesForIdpsData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _policySignaturesOverridesForIdpsFirewallPolicyIdpsSignaturesOverridesClientDiagnostics.CreateScope("PolicySignaturesOverridesForIdpsResource.Update");
             scope.Start();
@@ -280,7 +286,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<PolicySignaturesOverridesForIdpsResource>> CreateOrUpdateAsync(WaitUntil waitUntil, PolicySignaturesOverridesForIdpsData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _policySignaturesOverridesForIdpsFirewallPolicyIdpsSignaturesOverridesClientDiagnostics.CreateScope("PolicySignaturesOverridesForIdpsResource.CreateOrUpdate");
             scope.Start();
@@ -326,7 +335,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<PolicySignaturesOverridesForIdpsResource> CreateOrUpdate(WaitUntil waitUntil, PolicySignaturesOverridesForIdpsData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _policySignaturesOverridesForIdpsFirewallPolicyIdpsSignaturesOverridesClientDiagnostics.CreateScope("PolicySignaturesOverridesForIdpsResource.CreateOrUpdate");
             scope.Start();

@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<NetworkVirtualApplianceConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string connectionName, NetworkVirtualApplianceConnectionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (connectionName == null)
+            {
+                throw new ArgumentNullException(nameof(connectionName));
+            }
+            if (connectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _networkVirtualApplianceConnectionClientDiagnostics.CreateScope("NetworkVirtualApplianceConnectionCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<NetworkVirtualApplianceConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string connectionName, NetworkVirtualApplianceConnectionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (connectionName == null)
+            {
+                throw new ArgumentNullException(nameof(connectionName));
+            }
+            if (connectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _networkVirtualApplianceConnectionClientDiagnostics.CreateScope("NetworkVirtualApplianceConnectionCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         public virtual async Task<Response<NetworkVirtualApplianceConnectionResource>> GetAsync(string connectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
+            if (connectionName == null)
+            {
+                throw new ArgumentNullException(nameof(connectionName));
+            }
+            if (connectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionName));
+            }
 
             using var scope = _networkVirtualApplianceConnectionClientDiagnostics.CreateScope("NetworkVirtualApplianceConnectionCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         public virtual Response<NetworkVirtualApplianceConnectionResource> Get(string connectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
+            if (connectionName == null)
+            {
+                throw new ArgumentNullException(nameof(connectionName));
+            }
+            if (connectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionName));
+            }
 
             using var scope = _networkVirtualApplianceConnectionClientDiagnostics.CreateScope("NetworkVirtualApplianceConnectionCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string connectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
+            if (connectionName == null)
+            {
+                throw new ArgumentNullException(nameof(connectionName));
+            }
+            if (connectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionName));
+            }
 
             using var scope = _networkVirtualApplianceConnectionClientDiagnostics.CreateScope("NetworkVirtualApplianceConnectionCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         public virtual Response<bool> Exists(string connectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
+            if (connectionName == null)
+            {
+                throw new ArgumentNullException(nameof(connectionName));
+            }
+            if (connectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionName));
+            }
 
             using var scope = _networkVirtualApplianceConnectionClientDiagnostics.CreateScope("NetworkVirtualApplianceConnectionCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         public virtual async Task<NullableResponse<NetworkVirtualApplianceConnectionResource>> GetIfExistsAsync(string connectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
+            if (connectionName == null)
+            {
+                throw new ArgumentNullException(nameof(connectionName));
+            }
+            if (connectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionName));
+            }
 
             using var scope = _networkVirtualApplianceConnectionClientDiagnostics.CreateScope("NetworkVirtualApplianceConnectionCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         public virtual NullableResponse<NetworkVirtualApplianceConnectionResource> GetIfExists(string connectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
+            if (connectionName == null)
+            {
+                throw new ArgumentNullException(nameof(connectionName));
+            }
+            if (connectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionName));
+            }
 
             using var scope = _networkVirtualApplianceConnectionClientDiagnostics.CreateScope("NetworkVirtualApplianceConnectionCollection.GetIfExists");
             scope.Start();

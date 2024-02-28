@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -21,10 +20,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<HealthcareFhirResourceType> resourceType = default;
-            Optional<string> resourceFhirAccount = default;
-            Optional<string> resourceFhirId = default;
-            Optional<long> resourceVersionId = default;
+            HealthcareFhirResourceType? resourceType = default;
+            string resourceFhirAccount = default;
+            string resourceFhirId = default;
+            long? resourceVersionId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"u8))
@@ -56,7 +55,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new HealthcareFhirResourceCreatedEventData(Optional.ToNullable(resourceType), resourceFhirAccount.Value, resourceFhirId.Value, Optional.ToNullable(resourceVersionId));
+            return new HealthcareFhirResourceCreatedEventData(resourceType, resourceFhirAccount, resourceFhirId, resourceVersionId);
         }
 
         internal partial class HealthcareFhirResourceCreatedEventDataConverter : JsonConverter<HealthcareFhirResourceCreatedEventData>

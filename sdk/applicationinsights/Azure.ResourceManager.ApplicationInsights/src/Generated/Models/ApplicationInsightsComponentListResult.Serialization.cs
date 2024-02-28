@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 return null;
             }
             IReadOnlyList<ApplicationInsightsComponentData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     List<ApplicationInsightsComponentData> array = new List<ApplicationInsightsComponentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationInsightsComponentData.DeserializeApplicationInsightsComponentData(item));
+                        array.Add(ApplicationInsightsComponentData.DeserializeApplicationInsightsComponentData(item, options));
                     }
                     value = array;
                     continue;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationInsightsComponentListResult(value, nextLink.Value, serializedAdditionalRawData);
+            return new ApplicationInsightsComponentListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationInsightsComponentListResult>.Write(ModelReaderWriterOptions options)

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name.HasValue)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Value))
+            if (Value != null)
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<ContainerRegistryPasswordName> name = default;
-            Optional<string> value = default;
+            ContainerRegistryPasswordName? name = default;
+            string value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryPassword(Optional.ToNullable(name), value.Value, serializedAdditionalRawData);
+            return new ContainerRegistryPassword(name, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryPassword>.Write(ModelReaderWriterOptions options)

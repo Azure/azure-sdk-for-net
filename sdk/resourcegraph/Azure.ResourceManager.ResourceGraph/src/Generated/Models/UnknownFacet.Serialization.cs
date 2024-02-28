@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownFacet(document.RootElement, options);
+            return DeserializeFacet(document.RootElement, options);
         }
 
         internal static UnknownFacet DeserializeUnknownFacet(JsonElement element, ModelReaderWriterOptions options = null)
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownFacet(document.RootElement, options);
+                        return DeserializeFacet(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(Facet)} does not support '{options.Format}' format.");

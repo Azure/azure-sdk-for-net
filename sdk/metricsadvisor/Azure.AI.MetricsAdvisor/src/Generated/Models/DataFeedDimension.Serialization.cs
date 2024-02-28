@@ -17,7 +17,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStartObject();
             writer.WritePropertyName("dimensionName"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("dimensionDisplayName"u8);
                 writer.WriteStringValue(DisplayName);
@@ -32,7 +32,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 return null;
             }
             string dimensionName = default;
-            Optional<string> dimensionDisplayName = default;
+            string dimensionDisplayName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dimensionName"u8))
@@ -46,7 +46,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new DataFeedDimension(dimensionName, dimensionDisplayName.Value);
+            return new DataFeedDimension(dimensionName, dimensionDisplayName);
         }
     }
 }

@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ApplicationId))
+            if (ApplicationId != null)
             {
                 writer.WritePropertyName("applicationId"u8);
                 writer.WriteStringValue(ApplicationId);
             }
-            if (Optional.IsDefined(AppKey))
+            if (AppKey != null)
             {
                 writer.WritePropertyName("appKey"u8);
                 writer.WriteStringValue(AppKey);
             }
-            if (Optional.IsDefined(TenantId))
+            if (TenantId.HasValue)
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (Optional.IsDefined(IgnoreAzurePermissions))
+            if (IgnoreAzurePermissions.HasValue)
             {
                 writer.WritePropertyName("ignoreAzurePermissions"u8);
                 writer.WriteBooleanValue(IgnoreAzurePermissions.Value);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> applicationId = default;
-            Optional<string> appKey = default;
-            Optional<Guid> tenantId = default;
-            Optional<bool> ignoreAzurePermissions = default;
+            string applicationId = default;
+            string appKey = default;
+            Guid? tenantId = default;
+            bool? ignoreAzurePermissions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureActiveDirectoryApp(applicationId.Value, appKey.Value, Optional.ToNullable(tenantId), Optional.ToNullable(ignoreAzurePermissions), serializedAdditionalRawData);
+            return new AzureActiveDirectoryApp(applicationId, appKey, tenantId, ignoreAzurePermissions, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureActiveDirectoryApp>.Write(ModelReaderWriterOptions options)

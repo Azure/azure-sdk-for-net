@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-05-01</description>
+        /// <description>2023-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-05-01</description>
+        /// <description>2023-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-05-01</description>
+        /// <description>2023-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-05-01</description>
+        /// <description>2023-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary>
-        /// Update the state of the specified private endpoint connection associated with the configuration store.
+        /// Update the state of the specified private endpoint connection associated with the configuration store. This operation cannot be used to create a private endpoint connection. Private endpoint connections must be created with the Network resource provider.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-05-01</description>
+        /// <description>2023-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -281,7 +281,10 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AppConfigurationPrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, AppConfigurationPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _appConfigurationPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("AppConfigurationPrivateEndpointConnectionResource.Update");
             scope.Start();
@@ -301,7 +304,7 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary>
-        /// Update the state of the specified private endpoint connection associated with the configuration store.
+        /// Update the state of the specified private endpoint connection associated with the configuration store. This operation cannot be used to create a private endpoint connection. Private endpoint connections must be created with the Network resource provider.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -313,7 +316,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-05-01</description>
+        /// <description>2023-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -327,7 +330,10 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AppConfigurationPrivateEndpointConnectionResource> Update(WaitUntil waitUntil, AppConfigurationPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _appConfigurationPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("AppConfigurationPrivateEndpointConnectionResource.Update");
             scope.Start();

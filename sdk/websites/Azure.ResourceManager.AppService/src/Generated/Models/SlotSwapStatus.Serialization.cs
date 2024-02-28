@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(TimestampUtc))
+            if (options.Format != "W" && TimestampUtc.HasValue)
             {
                 writer.WritePropertyName("timestampUtc"u8);
                 writer.WriteStringValue(TimestampUtc.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(SourceSlotName))
+            if (options.Format != "W" && SourceSlotName != null)
             {
                 writer.WritePropertyName("sourceSlotName"u8);
                 writer.WriteStringValue(SourceSlotName);
             }
-            if (options.Format != "W" && Optional.IsDefined(DestinationSlotName))
+            if (options.Format != "W" && DestinationSlotName != null)
             {
                 writer.WritePropertyName("destinationSlotName"u8);
                 writer.WriteStringValue(DestinationSlotName);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> timestampUtc = default;
-            Optional<string> sourceSlotName = default;
-            Optional<string> destinationSlotName = default;
+            DateTimeOffset? timestampUtc = default;
+            string sourceSlotName = default;
+            string destinationSlotName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SlotSwapStatus(Optional.ToNullable(timestampUtc), sourceSlotName.Value, destinationSlotName.Value, serializedAdditionalRawData);
+            return new SlotSwapStatus(timestampUtc, sourceSlotName, destinationSlotName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SlotSwapStatus>.Write(ModelReaderWriterOptions options)

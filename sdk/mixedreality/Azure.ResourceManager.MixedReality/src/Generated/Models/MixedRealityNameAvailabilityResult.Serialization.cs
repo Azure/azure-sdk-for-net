@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.MixedReality.Models
             writer.WriteStartObject();
             writer.WritePropertyName("nameAvailable"u8);
             writer.WriteBooleanValue(IsNameAvailable);
-            if (Optional.IsDefined(Reason))
+            if (Reason.HasValue)
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason.Value.ToString());
             }
-            if (Optional.IsDefined(Message))
+            if (Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.MixedReality.Models
                 return null;
             }
             bool nameAvailable = default;
-            Optional<MixedRealityNameUnavailableReason> reason = default;
-            Optional<string> message = default;
+            MixedRealityNameUnavailableReason? reason = default;
+            string message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.MixedReality.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MixedRealityNameAvailabilityResult(nameAvailable, Optional.ToNullable(reason), message.Value, serializedAdditionalRawData);
+            return new MixedRealityNameAvailabilityResult(nameAvailable, reason, message, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MixedRealityNameAvailabilityResult>.Write(ModelReaderWriterOptions options)

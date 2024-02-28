@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -52,7 +51,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <exception cref="ArgumentNullException"> <paramref name="errorMessage"/> is null. </exception>
         public CopyCompletionError(CopyCompletionErrorReason errorCode, string errorMessage)
         {
-            Argument.AssertNotNull(errorMessage, nameof(errorMessage));
+            if (errorMessage == null)
+            {
+                throw new ArgumentNullException(nameof(errorMessage));
+            }
 
             ErrorCode = errorCode;
             ErrorMessage = errorMessage;

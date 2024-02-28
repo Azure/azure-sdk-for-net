@@ -58,7 +58,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="timeZone"/> is null. </exception>
         public ScalingPlanData(AzureLocation location, string timeZone) : base(location)
         {
-            Argument.AssertNotNull(timeZone, nameof(timeZone));
+            if (timeZone == null)
+            {
+                throw new ArgumentNullException(nameof(timeZone));
+            }
 
             TimeZone = timeZone;
             Schedules = new ChangeTrackingList<ScalingSchedule>();

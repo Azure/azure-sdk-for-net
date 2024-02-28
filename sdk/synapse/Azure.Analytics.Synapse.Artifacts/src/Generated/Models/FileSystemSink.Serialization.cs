@@ -19,34 +19,34 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CopyBehavior))
+            if (CopyBehavior != null)
             {
                 writer.WritePropertyName("copyBehavior"u8);
                 writer.WriteObjectValue(CopyBehavior);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Optional.IsDefined(WriteBatchSize))
+            if (WriteBatchSize != null)
             {
                 writer.WritePropertyName("writeBatchSize"u8);
                 writer.WriteObjectValue(WriteBatchSize);
             }
-            if (Optional.IsDefined(WriteBatchTimeout))
+            if (WriteBatchTimeout != null)
             {
                 writer.WritePropertyName("writeBatchTimeout"u8);
                 writer.WriteObjectValue(WriteBatchTimeout);
             }
-            if (Optional.IsDefined(SinkRetryCount))
+            if (SinkRetryCount != null)
             {
                 writer.WritePropertyName("sinkRetryCount"u8);
                 writer.WriteObjectValue(SinkRetryCount);
             }
-            if (Optional.IsDefined(SinkRetryWait))
+            if (SinkRetryWait != null)
             {
                 writer.WritePropertyName("sinkRetryWait"u8);
                 writer.WriteObjectValue(SinkRetryWait);
             }
-            if (Optional.IsDefined(MaxConcurrentConnections))
+            if (MaxConcurrentConnections != null)
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 writer.WriteObjectValue(MaxConcurrentConnections);
@@ -65,13 +65,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> copyBehavior = default;
+            object copyBehavior = default;
             string type = default;
-            Optional<object> writeBatchSize = default;
-            Optional<object> writeBatchTimeout = default;
-            Optional<object> sinkRetryCount = default;
-            Optional<object> sinkRetryWait = default;
-            Optional<object> maxConcurrentConnections = default;
+            object writeBatchSize = default;
+            object writeBatchTimeout = default;
+            object sinkRetryCount = default;
+            object sinkRetryWait = default;
+            object maxConcurrentConnections = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -138,7 +138,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new FileSystemSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, copyBehavior.Value);
+            return new FileSystemSink(
+                type,
+                writeBatchSize,
+                writeBatchTimeout,
+                sinkRetryCount,
+                sinkRetryWait,
+                maxConcurrentConnections,
+                additionalProperties,
+                copyBehavior);
         }
 
         internal partial class FileSystemSinkConverter : JsonConverter<FileSystemSink>

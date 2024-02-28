@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Value))
+            if (options.Format != "W" && Value.HasValue)
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteNumberValue(Value.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Unit))
+            if (options.Format != "W" && Unit.HasValue)
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit.Value.ToString());
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<double> value = default;
-            Optional<PerformanceLevelUnit> unit = default;
+            double? value = default;
+            PerformanceLevelUnit? unit = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PerformanceLevelCapability(Optional.ToNullable(value), Optional.ToNullable(unit), serializedAdditionalRawData);
+            return new PerformanceLevelCapability(value, unit, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PerformanceLevelCapability>.Write(ModelReaderWriterOptions options)

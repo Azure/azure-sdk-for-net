@@ -15,22 +15,22 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(BitRateLimit))
+            if (BitRateLimit.HasValue)
             {
                 writer.WritePropertyName("bitRateLimit"u8);
                 writer.WriteNumberValue(BitRateLimit.Value);
             }
-            if (Optional.IsDefined(EncodingInterval))
+            if (EncodingInterval.HasValue)
             {
                 writer.WritePropertyName("encodingInterval"u8);
                 writer.WriteNumberValue(EncodingInterval.Value);
             }
-            if (Optional.IsDefined(FrameRateLimit))
+            if (FrameRateLimit.HasValue)
             {
                 writer.WritePropertyName("frameRateLimit"u8);
                 writer.WriteNumberValue(FrameRateLimit.Value);
             }
-            if (Optional.IsDefined(GuaranteedFrameRate))
+            if (GuaranteedFrameRate.HasValue)
             {
                 writer.WritePropertyName("guaranteedFrameRate"u8);
                 writer.WriteBooleanValue(GuaranteedFrameRate.Value);
@@ -44,10 +44,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<float> bitRateLimit = default;
-            Optional<float> encodingInterval = default;
-            Optional<float> frameRateLimit = default;
-            Optional<bool> guaranteedFrameRate = default;
+            float? bitRateLimit = default;
+            float? encodingInterval = default;
+            float? frameRateLimit = default;
+            bool? guaranteedFrameRate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("bitRateLimit"u8))
@@ -87,7 +87,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new RateControl(Optional.ToNullable(bitRateLimit), Optional.ToNullable(encodingInterval), Optional.ToNullable(frameRateLimit), Optional.ToNullable(guaranteedFrameRate));
+            return new RateControl(bitRateLimit, encodingInterval, frameRateLimit, guaranteedFrameRate);
         }
     }
 }

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsReadyForMove))
+            if (IsReadyForMove.HasValue)
             {
                 writer.WritePropertyName("isReadyForMove"u8);
                 writer.WriteBooleanValue(IsReadyForMove.Value);
             }
-            if (Optional.IsDefined(AdditionalInfo))
+            if (AdditionalInfo != null)
             {
                 writer.WritePropertyName("additionalInfo"u8);
                 writer.WriteStringValue(AdditionalInfo);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<bool> isReadyForMove = default;
-            Optional<string> additionalInfo = default;
+            bool? isReadyForMove = default;
+            string additionalInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecoveryPointMoveReadinessInfo(Optional.ToNullable(isReadyForMove), additionalInfo.Value, serializedAdditionalRawData);
+            return new RecoveryPointMoveReadinessInfo(isReadyForMove, additionalInfo, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecoveryPointMoveReadinessInfo>.Write(ModelReaderWriterOptions options)

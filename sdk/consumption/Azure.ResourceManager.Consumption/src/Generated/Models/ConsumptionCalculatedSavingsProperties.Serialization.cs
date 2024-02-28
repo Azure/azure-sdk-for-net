@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.Consumption.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(OnDemandCost))
+            if (options.Format != "W" && OnDemandCost.HasValue)
             {
                 writer.WritePropertyName("onDemandCost"u8);
                 writer.WriteNumberValue(OnDemandCost.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(OverageCost))
+            if (options.Format != "W" && OverageCost.HasValue)
             {
                 writer.WritePropertyName("overageCost"u8);
                 writer.WriteNumberValue(OverageCost.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Quantity))
+            if (options.Format != "W" && Quantity.HasValue)
             {
                 writer.WritePropertyName("quantity"u8);
                 writer.WriteNumberValue(Quantity.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ReservationCost))
+            if (options.Format != "W" && ReservationCost.HasValue)
             {
                 writer.WritePropertyName("reservationCost"u8);
                 writer.WriteNumberValue(ReservationCost.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(TotalReservationCost))
+            if (options.Format != "W" && TotalReservationCost.HasValue)
             {
                 writer.WritePropertyName("totalReservationCost"u8);
                 writer.WriteNumberValue(TotalReservationCost.Value);
             }
-            if (Optional.IsDefined(ReservedUnitCount))
+            if (ReservedUnitCount.HasValue)
             {
                 writer.WritePropertyName("reservedUnitCount"u8);
                 writer.WriteNumberValue(ReservedUnitCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Savings))
+            if (options.Format != "W" && Savings.HasValue)
             {
                 writer.WritePropertyName("savings"u8);
                 writer.WriteNumberValue(Savings.Value);
@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<float> onDemandCost = default;
-            Optional<float> overageCost = default;
-            Optional<float> quantity = default;
-            Optional<float> reservationCost = default;
-            Optional<float> totalReservationCost = default;
-            Optional<float> reservedUnitCount = default;
-            Optional<float> savings = default;
+            float? onDemandCost = default;
+            float? overageCost = default;
+            float? quantity = default;
+            float? reservationCost = default;
+            float? totalReservationCost = default;
+            float? reservedUnitCount = default;
+            float? savings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,7 +179,15 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionCalculatedSavingsProperties(Optional.ToNullable(onDemandCost), Optional.ToNullable(overageCost), Optional.ToNullable(quantity), Optional.ToNullable(reservationCost), Optional.ToNullable(totalReservationCost), Optional.ToNullable(reservedUnitCount), Optional.ToNullable(savings), serializedAdditionalRawData);
+            return new ConsumptionCalculatedSavingsProperties(
+                onDemandCost,
+                overageCost,
+                quantity,
+                reservationCost,
+                totalReservationCost,
+                reservedUnitCount,
+                savings,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumptionCalculatedSavingsProperties>.Write(ModelReaderWriterOptions options)

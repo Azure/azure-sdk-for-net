@@ -28,42 +28,42 @@ namespace Azure.ResourceManager.BotService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Resource))
+            if (Resource != null)
             {
                 writer.WritePropertyName("resource"u8);
                 writer.WriteObjectValue(Resource);
             }
-            if (Optional.IsDefined(Setting))
+            if (Setting != null)
             {
                 writer.WritePropertyName("setting"u8);
                 writer.WriteObjectValue(Setting);
             }
-            if (Optional.IsDefined(ProvisioningState))
+            if (ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (Optional.IsDefined(EntityTag))
+            if (EntityTag != null)
             {
                 writer.WritePropertyName("entityTag"u8);
                 writer.WriteStringValue(EntityTag);
             }
-            if (Optional.IsDefined(ChangedTime))
+            if (ChangedTime != null)
             {
                 writer.WritePropertyName("changedTime"u8);
                 writer.WriteStringValue(ChangedTime);
             }
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsDefined(Kind))
+            if (Kind.HasValue)
             {
                 if (Kind != null)
                 {
@@ -75,12 +75,12 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("kind");
                 }
             }
-            if (Optional.IsDefined(ETag))
+            if (ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Zones))
+            if (options.Format != "W" && !(Zones is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -161,22 +161,22 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Optional<BotChannelProperties> resource = default;
-            Optional<BotChannelSettings> setting = default;
-            Optional<string> provisioningState = default;
-            Optional<string> entityTag = default;
-            Optional<string> changedTime = default;
-            Optional<BotChannelProperties> properties = default;
-            Optional<BotServiceSku> sku = default;
-            Optional<BotServiceKind?> kind = default;
-            Optional<ETag> etag = default;
-            Optional<IReadOnlyList<string>> zones = default;
-            Optional<IDictionary<string, string>> tags = default;
+            BotChannelProperties resource = default;
+            BotChannelSettings setting = default;
+            string provisioningState = default;
+            string entityTag = default;
+            string changedTime = default;
+            BotChannelProperties properties = default;
+            BotServiceSku sku = default;
+            BotServiceKind? kind = default;
+            ETag? etag = default;
+            IReadOnlyList<string> zones = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.BotService.Models
                     {
                         continue;
                     }
-                    resource = BotChannelProperties.DeserializeBotChannelProperties(property.Value);
+                    resource = BotChannelProperties.DeserializeBotChannelProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("setting"u8))
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.BotService.Models
                     {
                         continue;
                     }
-                    setting = BotChannelSettings.DeserializeBotChannelSettings(property.Value);
+                    setting = BotChannelSettings.DeserializeBotChannelSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.BotService.Models
                     {
                         continue;
                     }
-                    properties = BotChannelProperties.DeserializeBotChannelProperties(property.Value);
+                    properties = BotChannelProperties.DeserializeBotChannelProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.BotService.Models
                     {
                         continue;
                     }
-                    sku = BotServiceSku.DeserializeBotServiceSku(property.Value);
+                    sku = BotServiceSku.DeserializeBotServiceSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -314,7 +314,24 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BotChannelGetWithKeysResult(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, resource.Value, setting.Value, provisioningState.Value, entityTag.Value, changedTime.Value, properties.Value, sku.Value, Optional.ToNullable(kind), Optional.ToNullable(etag), Optional.ToList(zones), serializedAdditionalRawData);
+            return new BotChannelGetWithKeysResult(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                resource,
+                setting,
+                provisioningState,
+                entityTag,
+                changedTime,
+                properties,
+                sku,
+                kind,
+                etag,
+                zones ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BotChannelGetWithKeysResult>.Write(ModelReaderWriterOptions options)

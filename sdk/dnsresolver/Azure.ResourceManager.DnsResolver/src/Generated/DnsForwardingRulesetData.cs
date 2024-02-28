@@ -60,7 +60,10 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentNullException"> <paramref name="dnsResolverOutboundEndpoints"/> is null. </exception>
         public DnsForwardingRulesetData(AzureLocation location, IEnumerable<WritableSubResource> dnsResolverOutboundEndpoints) : base(location)
         {
-            Argument.AssertNotNull(dnsResolverOutboundEndpoints, nameof(dnsResolverOutboundEndpoints));
+            if (dnsResolverOutboundEndpoints == null)
+            {
+                throw new ArgumentNullException(nameof(dnsResolverOutboundEndpoints));
+            }
 
             DnsResolverOutboundEndpoints = dnsResolverOutboundEndpoints.ToList();
         }

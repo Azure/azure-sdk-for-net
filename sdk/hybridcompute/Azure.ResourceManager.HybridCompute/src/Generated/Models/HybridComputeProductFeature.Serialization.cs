@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(SubscriptionStatus))
+            if (SubscriptionStatus.HasValue)
             {
                 writer.WritePropertyName("subscriptionStatus"u8);
                 writer.WriteStringValue(SubscriptionStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(BillingStartOn))
+            if (options.Format != "W" && BillingStartOn.HasValue)
             {
                 writer.WritePropertyName("billingStartDate"u8);
                 writer.WriteStringValue(BillingStartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EnrollmentOn))
+            if (options.Format != "W" && EnrollmentOn.HasValue)
             {
                 writer.WritePropertyName("enrollmentDate"u8);
                 writer.WriteStringValue(EnrollmentOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(DisenrollmentOn))
+            if (options.Format != "W" && DisenrollmentOn.HasValue)
             {
                 writer.WritePropertyName("disenrollmentDate"u8);
                 writer.WriteStringValue(DisenrollmentOn.Value, "O");
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<LicenseProfileSubscriptionStatus> subscriptionStatus = default;
-            Optional<DateTimeOffset> billingStartDate = default;
-            Optional<DateTimeOffset> enrollmentDate = default;
-            Optional<DateTimeOffset> disenrollmentDate = default;
+            string name = default;
+            LicenseProfileSubscriptionStatus? subscriptionStatus = default;
+            DateTimeOffset? billingStartDate = default;
+            DateTimeOffset? enrollmentDate = default;
+            DateTimeOffset? disenrollmentDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -145,7 +145,13 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridComputeProductFeature(name.Value, Optional.ToNullable(subscriptionStatus), Optional.ToNullable(billingStartDate), Optional.ToNullable(enrollmentDate), Optional.ToNullable(disenrollmentDate), serializedAdditionalRawData);
+            return new HybridComputeProductFeature(
+                name,
+                subscriptionStatus,
+                billingStartDate,
+                enrollmentDate,
+                disenrollmentDate,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridComputeProductFeature>.Write(ModelReaderWriterOptions options)

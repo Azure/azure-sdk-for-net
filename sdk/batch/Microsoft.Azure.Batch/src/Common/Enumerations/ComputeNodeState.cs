@@ -100,6 +100,11 @@ namespace Microsoft.Azure.Batch.Common
         /// This can only occurr on nodes where <see cref="ComputeNode.IsDedicated"/> is false.
         /// </para>
         /// </remarks>
-        Preempted
+        Preempted,
+
+        /// <summary>
+        /// The Compute Node is undergoing an OS upgrade operation.
+        /// </summary>
+        UpgradingOS
     }
 }

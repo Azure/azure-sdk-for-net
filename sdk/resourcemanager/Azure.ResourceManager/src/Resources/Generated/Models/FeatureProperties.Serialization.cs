@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(State))
+            if (State != null)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<string> state = default;
+            string state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FeatureProperties(state.Value, serializedAdditionalRawData);
+            return new FeatureProperties(state, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FeatureProperties>.Write(ModelReaderWriterOptions options)

@@ -59,6 +59,7 @@ namespace Microsoft.Azure.Batch
             public readonly PropertyAccessor<Common.NodeCommunicationMode?> TargetNodeCommunicationModeProperty;
             public readonly PropertyAccessor<TaskSchedulingPolicy> TaskSchedulingPolicyProperty;
             public readonly PropertyAccessor<int?> TaskSlotsPerNodeProperty;
+            public readonly PropertyAccessor<UpgradePolicy> UpgradePolicyProperty;
             public readonly PropertyAccessor<string> UrlProperty;
             public readonly PropertyAccessor<IList<UserAccount>> UserAccountsProperty;
             public readonly PropertyAccessor<VirtualMachineConfiguration> VirtualMachineConfigurationProperty;
@@ -101,6 +102,7 @@ namespace Microsoft.Azure.Batch
                 this.TargetNodeCommunicationModeProperty = this.CreatePropertyAccessor<Common.NodeCommunicationMode?>(nameof(TargetNodeCommunicationMode), BindingAccess.Read | BindingAccess.Write);
                 this.TaskSchedulingPolicyProperty = this.CreatePropertyAccessor<TaskSchedulingPolicy>(nameof(TaskSchedulingPolicy), BindingAccess.Read | BindingAccess.Write);
                 this.TaskSlotsPerNodeProperty = this.CreatePropertyAccessor<int?>(nameof(TaskSlotsPerNode), BindingAccess.Read | BindingAccess.Write);
+                this.UpgradePolicyProperty = this.CreatePropertyAccessor<UpgradePolicy>(nameof(UpgradePolicy), BindingAccess.Read | BindingAccess.Write);
                 this.UrlProperty = this.CreatePropertyAccessor<string>(nameof(Url), BindingAccess.None);
                 this.UserAccountsProperty = this.CreatePropertyAccessor<IList<UserAccount>>(nameof(UserAccounts), BindingAccess.Read | BindingAccess.Write);
                 this.VirtualMachineConfigurationProperty = this.CreatePropertyAccessor<VirtualMachineConfiguration>(nameof(VirtualMachineConfiguration), BindingAccess.Read | BindingAccess.Write);
@@ -249,6 +251,10 @@ namespace Microsoft.Azure.Batch
                     protocolObject.TaskSlotsPerNode,
                     nameof(TaskSlotsPerNode),
                     BindingAccess.Read);
+                this.UpgradePolicyProperty = this.CreatePropertyAccessor(
+                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.UpgradePolicy, o => new UpgradePolicy(o)),
+                    nameof(UpgradePolicy),
+                    BindingAccess.Read | BindingAccess.Write);
                 this.UrlProperty = this.CreatePropertyAccessor(
                     protocolObject.Url,
                     nameof(Url),
@@ -714,6 +720,15 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
+        /// Gets or sets the upgrade policy for the pool.
+        /// </summary>
+        public UpgradePolicy UpgradePolicy
+        {
+            get { return this.propertyContainer.UpgradePolicyProperty.Value; }
+            set { this.propertyContainer.UpgradePolicyProperty.Value = value; }
+        }
+
+        /// <summary>
         /// Gets the URL of the pool.
         /// </summary>
         public string Url
@@ -802,6 +817,7 @@ namespace Microsoft.Azure.Batch
                 TargetNodeCommunicationMode = UtilitiesInternal.MapNullableEnum<Common.NodeCommunicationMode, Models.NodeCommunicationMode>(this.TargetNodeCommunicationMode),
                 TaskSchedulingPolicy = UtilitiesInternal.CreateObjectWithNullCheck(this.TaskSchedulingPolicy, (o) => o.GetTransportObject()),
                 TaskSlotsPerNode = this.TaskSlotsPerNode,
+                UpgradePolicy = UtilitiesInternal.CreateObjectWithNullCheck(this.UpgradePolicy, (o) => o.GetTransportObject()),
                 UserAccounts = UtilitiesInternal.ConvertToProtocolCollection(this.UserAccounts),
                 VirtualMachineConfiguration = UtilitiesInternal.CreateObjectWithNullCheck(this.VirtualMachineConfiguration, (o) => o.GetTransportObject()),
                 VmSize = this.VirtualMachineSize,

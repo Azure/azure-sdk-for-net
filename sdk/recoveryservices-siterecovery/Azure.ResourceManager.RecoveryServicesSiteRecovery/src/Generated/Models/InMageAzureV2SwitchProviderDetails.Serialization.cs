@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(TargetVaultId))
+            if (options.Format != "W" && TargetVaultId != null)
             {
                 writer.WritePropertyName("targetVaultId"u8);
                 writer.WriteStringValue(TargetVaultId);
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetResourceId))
+            if (options.Format != "W" && TargetResourceId != null)
             {
                 writer.WritePropertyName("targetResourceId"u8);
                 writer.WriteStringValue(TargetResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetFabricId))
+            if (options.Format != "W" && TargetFabricId != null)
             {
                 writer.WritePropertyName("targetFabricId"u8);
                 writer.WriteStringValue(TargetFabricId);
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetApplianceId))
+            if (options.Format != "W" && TargetApplianceId != null)
             {
                 writer.WritePropertyName("targetApplianceId"u8);
                 writer.WriteStringValue(TargetApplianceId);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> targetVaultId = default;
-            Optional<ResourceIdentifier> targetResourceId = default;
-            Optional<ResourceIdentifier> targetFabricId = default;
-            Optional<string> targetApplianceId = default;
+            ResourceIdentifier targetVaultId = default;
+            ResourceIdentifier targetResourceId = default;
+            ResourceIdentifier targetFabricId = default;
+            string targetApplianceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageAzureV2SwitchProviderDetails(targetVaultId.Value, targetResourceId.Value, targetFabricId.Value, targetApplianceId.Value, serializedAdditionalRawData);
+            return new InMageAzureV2SwitchProviderDetails(targetVaultId, targetResourceId, targetFabricId, targetApplianceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InMageAzureV2SwitchProviderDetails>.Write(ModelReaderWriterOptions options)

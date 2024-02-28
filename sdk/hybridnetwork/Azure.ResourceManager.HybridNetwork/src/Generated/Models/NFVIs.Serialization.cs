@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -75,12 +75,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureArcKubernetes": return AzureArcK8SClusterNfviDetails.DeserializeAzureArcK8SClusterNfviDetails(element);
-                    case "AzureCore": return AzureCoreNfviDetails.DeserializeAzureCoreNfviDetails(element);
-                    case "AzureOperatorNexus": return AzureOperatorNexusClusterNfviDetails.DeserializeAzureOperatorNexusClusterNfviDetails(element);
+                    case "AzureArcKubernetes": return AzureArcK8SClusterNfviDetails.DeserializeAzureArcK8SClusterNfviDetails(element, options);
+                    case "AzureCore": return AzureCoreNfviDetails.DeserializeAzureCoreNfviDetails(element, options);
+                    case "AzureOperatorNexus": return AzureOperatorNexusClusterNfviDetails.DeserializeAzureOperatorNexusClusterNfviDetails(element, options);
                 }
             }
-            return UnknownNFVIs.DeserializeUnknownNFVIs(element);
+            return UnknownNFVIs.DeserializeUnknownNFVIs(element, options);
         }
 
         BinaryData IPersistableModel<NFVIs>.Write(ModelReaderWriterOptions options)

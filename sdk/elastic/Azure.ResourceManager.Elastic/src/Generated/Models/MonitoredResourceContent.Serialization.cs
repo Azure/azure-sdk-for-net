@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Elastic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(SendingLogs))
+            if (SendingLogs.HasValue)
             {
                 writer.WritePropertyName("sendingLogs"u8);
                 writer.WriteStringValue(SendingLogs.Value.ToString());
             }
-            if (Optional.IsDefined(ReasonForLogsStatus))
+            if (ReasonForLogsStatus != null)
             {
                 writer.WritePropertyName("reasonForLogsStatus"u8);
                 writer.WriteStringValue(ReasonForLogsStatus);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Elastic.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<SendingLog> sendingLogs = default;
-            Optional<string> reasonForLogsStatus = default;
+            string id = default;
+            SendingLog? sendingLogs = default;
+            string reasonForLogsStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Elastic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitoredResourceContent(id.Value, Optional.ToNullable(sendingLogs), reasonForLogsStatus.Value, serializedAdditionalRawData);
+            return new MonitoredResourceContent(id, sendingLogs, reasonForLogsStatus, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitoredResourceContent>.Write(ModelReaderWriterOptions options)

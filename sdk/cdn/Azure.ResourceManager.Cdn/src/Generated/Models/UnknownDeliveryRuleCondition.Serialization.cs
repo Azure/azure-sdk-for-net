@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownDeliveryRuleCondition(document.RootElement, options);
+            return DeserializeDeliveryRuleCondition(document.RootElement, options);
         }
 
         internal static UnknownDeliveryRuleCondition DeserializeUnknownDeliveryRuleCondition(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownDeliveryRuleCondition(document.RootElement, options);
+                        return DeserializeDeliveryRuleCondition(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(DeliveryRuleCondition)} does not support '{options.Format}' format.");

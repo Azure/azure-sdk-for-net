@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(KeyVault))
+            if (KeyVault != null)
             {
                 writer.WritePropertyName("keyVault"u8);
                 writer.WriteObjectValue(KeyVault);
             }
-            if (Optional.IsDefined(KeyName))
+            if (KeyName != null)
             {
                 writer.WritePropertyName("keyName"u8);
                 writer.WriteStringValue(KeyName);
             }
-            if (Optional.IsDefined(KeyVersion))
+            if (KeyVersion != null)
             {
                 writer.WritePropertyName("keyVersion"u8);
                 writer.WriteStringValue(KeyVersion);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<LogicResourceReference> keyVault = default;
-            Optional<string> keyName = default;
-            Optional<string> keyVersion = default;
+            LogicResourceReference keyVault = default;
+            string keyName = default;
+            string keyVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    keyVault = LogicResourceReference.DeserializeLogicResourceReference(property.Value);
+                    keyVault = LogicResourceReference.DeserializeLogicResourceReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("keyName"u8))
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationServiceEnvironmenEncryptionKeyReference(keyVault.Value, keyName.Value, keyVersion.Value, serializedAdditionalRawData);
+            return new IntegrationServiceEnvironmenEncryptionKeyReference(keyVault, keyName, keyVersion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationServiceEnvironmenEncryptionKeyReference>.Write(ModelReaderWriterOptions options)

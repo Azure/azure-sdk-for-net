@@ -58,9 +58,9 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <param name="dependencyType"> Defines the dependency type. </param>
         /// <param name="manualResolution"> Defines the properties for manual resolution. </param>
         /// <param name="automaticResolution"> Defines the properties for automatic resolution. </param>
-        /// <param name="isOptional"> Gets or sets a value indicating whether the dependency is optional. </param>
+        /// <param name="isDependencyOptional"> Gets or sets a value indicating whether the dependency is optional. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MoverResourceDependency(ResourceIdentifier id, string resolutionStatus, MoverResourceResolutionType? resolutionType, MoverDependencyType? dependencyType, ManualResolutionProperties manualResolution, AutomaticResolutionProperties automaticResolution, bool? isOptional, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MoverResourceDependency(ResourceIdentifier id, string resolutionStatus, MoverResourceResolutionType? resolutionType, MoverDependencyType? dependencyType, ManualResolutionProperties manualResolution, AutomaticResolutionProperties automaticResolution, string isDependencyOptional, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             ResolutionStatus = resolutionStatus;
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             DependencyType = dependencyType;
             ManualResolution = manualResolution;
             AutomaticResolution = automaticResolution;
-            IsOptional = isOptional;
+            IsDependencyOptional = isDependencyOptional;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -100,6 +100,6 @@ namespace Azure.ResourceManager.ResourceMover.Models
         }
 
         /// <summary> Gets or sets a value indicating whether the dependency is optional. </summary>
-        public bool? IsOptional { get; }
+        public string IsDependencyOptional { get; }
     }
 }

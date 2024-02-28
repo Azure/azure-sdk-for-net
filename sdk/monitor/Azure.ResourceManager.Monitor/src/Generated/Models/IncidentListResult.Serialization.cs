@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<MonitorIncident> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MonitorIncident>> value = default;
+            IReadOnlyList<MonitorIncident> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MonitorIncident> array = new List<MonitorIncident>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorIncident.DeserializeMonitorIncident(item));
+                        array.Add(MonitorIncident.DeserializeMonitorIncident(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IncidentListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new IncidentListResult(value ?? new ChangeTrackingList<MonitorIncident>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IncidentListResult>.Write(ModelReaderWriterOptions options)

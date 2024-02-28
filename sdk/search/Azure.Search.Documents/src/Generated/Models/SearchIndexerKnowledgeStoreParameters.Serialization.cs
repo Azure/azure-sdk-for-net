@@ -16,7 +16,7 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SynthesizeGeneratedKeyName))
+            if (SynthesizeGeneratedKeyName.HasValue)
             {
                 writer.WritePropertyName("synthesizeGeneratedKeyName"u8);
                 writer.WriteBooleanValue(SynthesizeGeneratedKeyName.Value);
@@ -35,7 +35,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<bool> synthesizeGeneratedKeyName = default;
+            bool? synthesizeGeneratedKeyName = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -52,7 +52,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SearchIndexerKnowledgeStoreParameters(Optional.ToNullable(synthesizeGeneratedKeyName), additionalProperties);
+            return new SearchIndexerKnowledgeStoreParameters(synthesizeGeneratedKeyName, additionalProperties);
         }
     }
 }

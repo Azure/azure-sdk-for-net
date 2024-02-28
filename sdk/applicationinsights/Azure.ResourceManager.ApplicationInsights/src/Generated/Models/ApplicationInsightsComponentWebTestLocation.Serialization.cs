@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(DisplayName))
+            if (options.Format != "W" && DisplayName != null)
             {
                 writer.WritePropertyName("DisplayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Tag))
+            if (options.Format != "W" && Tag != null)
             {
                 writer.WritePropertyName("Tag"u8);
                 writer.WriteStringValue(Tag);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<string> displayName = default;
-            Optional<string> tag = default;
+            string displayName = default;
+            string tag = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationInsightsComponentWebTestLocation(displayName.Value, tag.Value, serializedAdditionalRawData);
+            return new ApplicationInsightsComponentWebTestLocation(displayName, tag, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationInsightsComponentWebTestLocation>.Write(ModelReaderWriterOptions options)

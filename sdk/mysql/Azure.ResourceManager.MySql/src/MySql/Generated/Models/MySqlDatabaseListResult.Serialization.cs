@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.MySql.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<MySqlDatabaseData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.MySql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MySqlDatabaseData>> value = default;
+            IReadOnlyList<MySqlDatabaseData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.MySql.Models
                     List<MySqlDatabaseData> array = new List<MySqlDatabaseData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MySqlDatabaseData.DeserializeMySqlDatabaseData(item));
+                        array.Add(MySqlDatabaseData.DeserializeMySqlDatabaseData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.MySql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlDatabaseListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new MySqlDatabaseListResult(value ?? new ChangeTrackingList<MySqlDatabaseData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlDatabaseListResult>.Write(ModelReaderWriterOptions options)

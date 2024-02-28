@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Properties))
+            if (options.Format != "W" && Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 return null;
             }
-            Optional<EventHubsNspAccessRuleProperties> properties = default;
+            EventHubsNspAccessRuleProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     {
                         continue;
                     }
-                    properties = EventHubsNspAccessRuleProperties.DeserializeEventHubsNspAccessRuleProperties(property.Value);
+                    properties = EventHubsNspAccessRuleProperties.DeserializeEventHubsNspAccessRuleProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -138,7 +138,13 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventHubsNspAccessRule(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new EventHubsNspAccessRule(
+                id,
+                name,
+                type,
+                systemData,
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventHubsNspAccessRule>.Write(ModelReaderWriterOptions options)

@@ -17,22 +17,22 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStartObject();
             writer.WritePropertyName("group"u8);
             writer.WriteObjectValue(SeriesGroupKey);
-            if (Optional.IsDefined(ConditionOperator))
+            if (ConditionOperator.HasValue)
             {
                 writer.WritePropertyName("conditionOperator"u8);
                 writer.WriteStringValue(ConditionOperator.Value.ToString());
             }
-            if (Optional.IsDefined(SmartDetectionCondition))
+            if (SmartDetectionCondition != null)
             {
                 writer.WritePropertyName("smartDetectionCondition"u8);
                 writer.WriteObjectValue(SmartDetectionCondition);
             }
-            if (Optional.IsDefined(HardThresholdCondition))
+            if (HardThresholdCondition != null)
             {
                 writer.WritePropertyName("hardThresholdCondition"u8);
                 writer.WriteObjectValue(HardThresholdCondition);
             }
-            if (Optional.IsDefined(ChangeThresholdCondition))
+            if (ChangeThresholdCondition != null)
             {
                 writer.WritePropertyName("changeThresholdCondition"u8);
                 writer.WriteObjectValue(ChangeThresholdCondition);
@@ -47,10 +47,10 @@ namespace Azure.AI.MetricsAdvisor.Models
                 return null;
             }
             DimensionKey group = default;
-            Optional<DetectionConditionOperator> conditionOperator = default;
-            Optional<SmartDetectionCondition> smartDetectionCondition = default;
-            Optional<HardThresholdCondition> hardThresholdCondition = default;
-            Optional<ChangeThresholdCondition> changeThresholdCondition = default;
+            DetectionConditionOperator? conditionOperator = default;
+            SmartDetectionCondition smartDetectionCondition = default;
+            HardThresholdCondition hardThresholdCondition = default;
+            ChangeThresholdCondition changeThresholdCondition = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("group"u8))
@@ -95,7 +95,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new MetricSeriesGroupDetectionCondition(Optional.ToNullable(conditionOperator), smartDetectionCondition.Value, hardThresholdCondition.Value, changeThresholdCondition.Value, group);
+            return new MetricSeriesGroupDetectionCondition(conditionOperator, smartDetectionCondition, hardThresholdCondition, changeThresholdCondition, group);
         }
     }
 }

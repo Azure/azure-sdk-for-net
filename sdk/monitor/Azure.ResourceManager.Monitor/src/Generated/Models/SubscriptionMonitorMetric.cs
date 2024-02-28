@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -56,10 +55,22 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="subscriptionScopeMetricType"/>, <paramref name="name"/> or <paramref name="timeseries"/> is null. </exception>
         internal SubscriptionMonitorMetric(string id, string subscriptionScopeMetricType, MonitorLocalizableString name, MonitorMetricUnit unit, IEnumerable<MonitorTimeSeriesElement> timeseries)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(subscriptionScopeMetricType, nameof(subscriptionScopeMetricType));
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(timeseries, nameof(timeseries));
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (subscriptionScopeMetricType == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionScopeMetricType));
+            }
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (timeseries == null)
+            {
+                throw new ArgumentNullException(nameof(timeseries));
+            }
 
             Id = id;
             SubscriptionScopeMetricType = subscriptionScopeMetricType;

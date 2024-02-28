@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TargetDiskNetworkAccessOption))
+            if (TargetDiskNetworkAccessOption.HasValue)
             {
                 writer.WritePropertyName("targetDiskNetworkAccessOption"u8);
                 writer.WriteStringValue(TargetDiskNetworkAccessOption.Value.ToSerialString());
             }
-            if (Optional.IsDefined(TargetDiskAccessId))
+            if (TargetDiskAccessId != null)
             {
                 writer.WritePropertyName("targetDiskAccessId"u8);
                 writer.WriteStringValue(TargetDiskAccessId);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<BackupTargetDiskNetworkAccessOption> targetDiskNetworkAccessOption = default;
-            Optional<ResourceIdentifier> targetDiskAccessId = default;
+            BackupTargetDiskNetworkAccessOption? targetDiskNetworkAccessOption = default;
+            ResourceIdentifier targetDiskAccessId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupTargetDiskNetworkAccessSettings(Optional.ToNullable(targetDiskNetworkAccessOption), targetDiskAccessId.Value, serializedAdditionalRawData);
+            return new BackupTargetDiskNetworkAccessSettings(targetDiskNetworkAccessOption, targetDiskAccessId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupTargetDiskNetworkAccessSettings>.Write(ModelReaderWriterOptions options)

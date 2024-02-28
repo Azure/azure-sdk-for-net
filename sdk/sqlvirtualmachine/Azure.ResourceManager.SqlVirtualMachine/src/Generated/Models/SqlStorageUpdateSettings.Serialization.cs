@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DiskCount))
+            if (DiskCount.HasValue)
             {
                 writer.WritePropertyName("diskCount"u8);
                 writer.WriteNumberValue(DiskCount.Value);
             }
-            if (Optional.IsDefined(StartingDeviceId))
+            if (StartingDeviceId.HasValue)
             {
                 writer.WritePropertyName("startingDeviceId"u8);
                 writer.WriteNumberValue(StartingDeviceId.Value);
             }
-            if (Optional.IsDefined(DiskConfigurationType))
+            if (DiskConfigurationType.HasValue)
             {
                 writer.WritePropertyName("diskConfigurationType"u8);
                 writer.WriteStringValue(DiskConfigurationType.Value.ToString());
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             {
                 return null;
             }
-            Optional<int> diskCount = default;
-            Optional<int> startingDeviceId = default;
-            Optional<SqlVmDiskConfigurationType> diskConfigurationType = default;
+            int? diskCount = default;
+            int? startingDeviceId = default;
+            SqlVmDiskConfigurationType? diskConfigurationType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlStorageUpdateSettings(Optional.ToNullable(diskCount), Optional.ToNullable(startingDeviceId), Optional.ToNullable(diskConfigurationType), serializedAdditionalRawData);
+            return new SqlStorageUpdateSettings(diskCount, startingDeviceId, diskConfigurationType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlStorageUpdateSettings>.Write(ModelReaderWriterOptions options)

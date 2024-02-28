@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(WatermarkMode))
+            if (WatermarkMode.HasValue)
             {
                 writer.WritePropertyName("watermarkMode"u8);
                 writer.WriteStringValue(WatermarkMode.Value.ToString());
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Optional<StreamingJobInputWatermarkMode> watermarkMode = default;
+            StreamingJobInputWatermarkMode? watermarkMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamingJobInputWatermarkProperties(Optional.ToNullable(watermarkMode), serializedAdditionalRawData);
+            return new StreamingJobInputWatermarkProperties(watermarkMode, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamingJobInputWatermarkProperties>.Write(ModelReaderWriterOptions options)

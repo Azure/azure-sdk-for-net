@@ -28,69 +28,69 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(FrontendIPConfiguration))
+            if (FrontendIPConfiguration != null)
             {
                 writer.WritePropertyName("frontendIPConfiguration"u8);
                 JsonSerializer.Serialize(writer, FrontendIPConfiguration);
             }
-            if (Optional.IsDefined(FrontendPort))
+            if (FrontendPort != null)
             {
                 writer.WritePropertyName("frontendPort"u8);
                 JsonSerializer.Serialize(writer, FrontendPort);
             }
-            if (Optional.IsDefined(Protocol))
+            if (Protocol.HasValue)
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (Optional.IsDefined(HostName))
+            if (HostName != null)
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (Optional.IsDefined(SslCertificate))
+            if (SslCertificate != null)
             {
                 writer.WritePropertyName("sslCertificate"u8);
                 JsonSerializer.Serialize(writer, SslCertificate);
             }
-            if (Optional.IsDefined(SslProfile))
+            if (SslProfile != null)
             {
                 writer.WritePropertyName("sslProfile"u8);
                 JsonSerializer.Serialize(writer, SslProfile);
             }
-            if (Optional.IsDefined(RequireServerNameIndication))
+            if (RequireServerNameIndication.HasValue)
             {
                 writer.WritePropertyName("requireServerNameIndication"u8);
                 writer.WriteBooleanValue(RequireServerNameIndication.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(CustomErrorConfigurations))
+            if (!(CustomErrorConfigurations is ChangeTrackingList<ApplicationGatewayCustomError> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("customErrorConfigurations"u8);
                 writer.WriteStartArray();
@@ -100,12 +100,12 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(FirewallPolicy))
+            if (FirewallPolicy != null)
             {
                 writer.WritePropertyName("firewallPolicy"u8);
                 JsonSerializer.Serialize(writer, FirewallPolicy);
             }
-            if (Optional.IsCollectionDefined(HostNames))
+            if (!(HostNames is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("hostNames"u8);
                 writer.WriteStartArray();
@@ -154,21 +154,21 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<WritableSubResource> frontendIPConfiguration = default;
-            Optional<WritableSubResource> frontendPort = default;
-            Optional<ApplicationGatewayProtocol> protocol = default;
-            Optional<string> hostName = default;
-            Optional<WritableSubResource> sslCertificate = default;
-            Optional<WritableSubResource> sslProfile = default;
-            Optional<bool> requireServerNameIndication = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<IList<ApplicationGatewayCustomError>> customErrorConfigurations = default;
-            Optional<WritableSubResource> firewallPolicy = default;
-            Optional<IList<string>> hostNames = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            WritableSubResource frontendIPConfiguration = default;
+            WritableSubResource frontendPort = default;
+            ApplicationGatewayProtocol? protocol = default;
+            string hostName = default;
+            WritableSubResource sslCertificate = default;
+            WritableSubResource sslProfile = default;
+            bool? requireServerNameIndication = default;
+            NetworkProvisioningState? provisioningState = default;
+            IList<ApplicationGatewayCustomError> customErrorConfigurations = default;
+            WritableSubResource firewallPolicy = default;
+            IList<string> hostNames = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<ApplicationGatewayCustomError> array = new List<ApplicationGatewayCustomError>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationGatewayCustomError.DeserializeApplicationGatewayCustomError(item));
+                                array.Add(ApplicationGatewayCustomError.DeserializeApplicationGatewayCustomError(item, options));
                             }
                             customErrorConfigurations = array;
                             continue;
@@ -328,7 +328,23 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayHttpListener(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), frontendIPConfiguration, frontendPort, Optional.ToNullable(protocol), hostName.Value, sslCertificate, sslProfile, Optional.ToNullable(requireServerNameIndication), Optional.ToNullable(provisioningState), Optional.ToList(customErrorConfigurations), firewallPolicy, Optional.ToList(hostNames));
+            return new ApplicationGatewayHttpListener(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                etag,
+                frontendIPConfiguration,
+                frontendPort,
+                protocol,
+                hostName,
+                sslCertificate,
+                sslProfile,
+                requireServerNameIndication,
+                provisioningState,
+                customErrorConfigurations ?? new ChangeTrackingList<ApplicationGatewayCustomError>(),
+                firewallPolicy,
+                hostNames ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<ApplicationGatewayHttpListener>.Write(ModelReaderWriterOptions options)

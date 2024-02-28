@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Label))
+            if (Label != null)
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
-            if (Optional.IsDefined(PolicyName))
+            if (PolicyName != null)
             {
                 writer.WritePropertyName("policyName"u8);
                 writer.WriteStringValue(PolicyName);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<string> label = default;
-            Optional<string> policyName = default;
+            string label = default;
+            string policyName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EncryptionSchemeDefaultKey(label.Value, policyName.Value, serializedAdditionalRawData);
+            return new EncryptionSchemeDefaultKey(label, policyName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EncryptionSchemeDefaultKey>.Write(ModelReaderWriterOptions options)

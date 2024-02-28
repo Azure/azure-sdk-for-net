@@ -17,7 +17,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(Query))
+            if (Query != null)
             {
                 writer.WritePropertyName("query"u8);
                 writer.WriteStringValue(Query);
@@ -32,7 +32,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             string name = default;
-            Optional<string> query = default;
+            string query = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -46,7 +46,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SearchIndexerDataContainer(name, query.Value);
+            return new SearchIndexerDataContainer(name, query);
         }
     }
 }

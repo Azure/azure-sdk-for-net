@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             writer.WritePropertyName("failoverDirection"u8);
             writer.WriteStringValue(FailoverDirection.ToString());
-            if (Optional.IsCollectionDefined(ProviderSpecificDetails))
+            if (!(ProviderSpecificDetails is ChangeTrackingList<RecoveryPlanProviderSpecificFailoverContent> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("providerSpecificDetails"u8);
                 writer.WriteStartArray();
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 return null;
             }
             PossibleOperationsDirection failoverDirection = default;
-            Optional<IList<RecoveryPlanProviderSpecificFailoverContent>> providerSpecificDetails = default;
+            IList<RecoveryPlanProviderSpecificFailoverContent> providerSpecificDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<RecoveryPlanProviderSpecificFailoverContent> array = new List<RecoveryPlanProviderSpecificFailoverContent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RecoveryPlanProviderSpecificFailoverContent.DeserializeRecoveryPlanProviderSpecificFailoverContent(item));
+                        array.Add(RecoveryPlanProviderSpecificFailoverContent.DeserializeRecoveryPlanProviderSpecificFailoverContent(item, options));
                     }
                     providerSpecificDetails = array;
                     continue;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecoveryPlanPlannedFailoverProperties(failoverDirection, Optional.ToList(providerSpecificDetails), serializedAdditionalRawData);
+            return new RecoveryPlanPlannedFailoverProperties(failoverDirection, providerSpecificDetails ?? new ChangeTrackingList<RecoveryPlanProviderSpecificFailoverContent>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecoveryPlanPlannedFailoverProperties>.Write(ModelReaderWriterOptions options)

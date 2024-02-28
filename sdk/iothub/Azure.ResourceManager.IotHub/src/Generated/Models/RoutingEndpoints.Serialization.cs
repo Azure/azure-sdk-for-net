@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.IotHub.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ServiceBusQueues))
+            if (!(ServiceBusQueues is ChangeTrackingList<RoutingServiceBusQueueEndpointProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("serviceBusQueues"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ServiceBusTopics))
+            if (!(ServiceBusTopics is ChangeTrackingList<RoutingServiceBusTopicEndpointProperties> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("serviceBusTopics"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(EventHubs))
+            if (!(EventHubs is ChangeTrackingList<RoutingEventHubProperties> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("eventHubs"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(StorageContainers))
+            if (!(StorageContainers is ChangeTrackingList<RoutingStorageContainerProperties> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("storageContainers"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(CosmosDBSqlContainers))
+            if (!(CosmosDBSqlContainers is ChangeTrackingList<RoutingCosmosDBSqlApiProperties> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("cosmosDBSqlContainers"u8);
                 writer.WriteStartArray();
@@ -114,11 +114,11 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<IList<RoutingServiceBusQueueEndpointProperties>> serviceBusQueues = default;
-            Optional<IList<RoutingServiceBusTopicEndpointProperties>> serviceBusTopics = default;
-            Optional<IList<RoutingEventHubProperties>> eventHubs = default;
-            Optional<IList<RoutingStorageContainerProperties>> storageContainers = default;
-            Optional<IList<RoutingCosmosDBSqlApiProperties>> cosmosDBSqlContainers = default;
+            IList<RoutingServiceBusQueueEndpointProperties> serviceBusQueues = default;
+            IList<RoutingServiceBusTopicEndpointProperties> serviceBusTopics = default;
+            IList<RoutingEventHubProperties> eventHubs = default;
+            IList<RoutingStorageContainerProperties> storageContainers = default;
+            IList<RoutingCosmosDBSqlApiProperties> cosmosDBSqlContainers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     List<RoutingServiceBusQueueEndpointProperties> array = new List<RoutingServiceBusQueueEndpointProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RoutingServiceBusQueueEndpointProperties.DeserializeRoutingServiceBusQueueEndpointProperties(item));
+                        array.Add(RoutingServiceBusQueueEndpointProperties.DeserializeRoutingServiceBusQueueEndpointProperties(item, options));
                     }
                     serviceBusQueues = array;
                     continue;
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     List<RoutingServiceBusTopicEndpointProperties> array = new List<RoutingServiceBusTopicEndpointProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RoutingServiceBusTopicEndpointProperties.DeserializeRoutingServiceBusTopicEndpointProperties(item));
+                        array.Add(RoutingServiceBusTopicEndpointProperties.DeserializeRoutingServiceBusTopicEndpointProperties(item, options));
                     }
                     serviceBusTopics = array;
                     continue;
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     List<RoutingEventHubProperties> array = new List<RoutingEventHubProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RoutingEventHubProperties.DeserializeRoutingEventHubProperties(item));
+                        array.Add(RoutingEventHubProperties.DeserializeRoutingEventHubProperties(item, options));
                     }
                     eventHubs = array;
                     continue;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     List<RoutingStorageContainerProperties> array = new List<RoutingStorageContainerProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RoutingStorageContainerProperties.DeserializeRoutingStorageContainerProperties(item));
+                        array.Add(RoutingStorageContainerProperties.DeserializeRoutingStorageContainerProperties(item, options));
                     }
                     storageContainers = array;
                     continue;
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     List<RoutingCosmosDBSqlApiProperties> array = new List<RoutingCosmosDBSqlApiProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RoutingCosmosDBSqlApiProperties.DeserializeRoutingCosmosDBSqlApiProperties(item));
+                        array.Add(RoutingCosmosDBSqlApiProperties.DeserializeRoutingCosmosDBSqlApiProperties(item, options));
                     }
                     cosmosDBSqlContainers = array;
                     continue;
@@ -199,7 +199,13 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoutingEndpoints(Optional.ToList(serviceBusQueues), Optional.ToList(serviceBusTopics), Optional.ToList(eventHubs), Optional.ToList(storageContainers), Optional.ToList(cosmosDBSqlContainers), serializedAdditionalRawData);
+            return new RoutingEndpoints(
+                serviceBusQueues ?? new ChangeTrackingList<RoutingServiceBusQueueEndpointProperties>(),
+                serviceBusTopics ?? new ChangeTrackingList<RoutingServiceBusTopicEndpointProperties>(),
+                eventHubs ?? new ChangeTrackingList<RoutingEventHubProperties>(),
+                storageContainers ?? new ChangeTrackingList<RoutingStorageContainerProperties>(),
+                cosmosDBSqlContainers ?? new ChangeTrackingList<RoutingCosmosDBSqlApiProperties>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoutingEndpoints>.Write(ModelReaderWriterOptions options)

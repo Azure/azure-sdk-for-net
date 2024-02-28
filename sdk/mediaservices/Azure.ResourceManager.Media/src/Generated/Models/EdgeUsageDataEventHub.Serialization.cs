@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Namespace))
+            if (Namespace != null)
             {
                 writer.WritePropertyName("namespace"u8);
                 writer.WriteStringValue(Namespace);
             }
-            if (Optional.IsDefined(Token))
+            if (Token != null)
             {
                 writer.WritePropertyName("token"u8);
                 writer.WriteStringValue(Token);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> @namespace = default;
-            Optional<string> token = default;
+            string name = default;
+            string @namespace = default;
+            string token = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeUsageDataEventHub(name.Value, @namespace.Value, token.Value, serializedAdditionalRawData);
+            return new EdgeUsageDataEventHub(name, @namespace, token, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeUsageDataEventHub>.Write(ModelReaderWriterOptions options)

@@ -59,8 +59,14 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="extendedLocation"/> or <paramref name="sshPublicKey"/> is null. </exception>
         public NetworkCloudVirtualMachineConsoleData(AzureLocation location, ExtendedLocation extendedLocation, ConsoleEnabled enabled, NetworkCloudSshPublicKey sshPublicKey) : base(location)
         {
-            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
-            Argument.AssertNotNull(sshPublicKey, nameof(sshPublicKey));
+            if (extendedLocation == null)
+            {
+                throw new ArgumentNullException(nameof(extendedLocation));
+            }
+            if (sshPublicKey == null)
+            {
+                throw new ArgumentNullException(nameof(sshPublicKey));
+            }
 
             ExtendedLocation = extendedLocation;
             Enabled = enabled;

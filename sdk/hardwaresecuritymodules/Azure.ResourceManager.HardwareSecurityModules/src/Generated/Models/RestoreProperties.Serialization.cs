@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Foldername))
+            if (Foldername != null)
             {
                 writer.WritePropertyName("foldername"u8);
                 writer.WriteStringValue(Foldername);
             }
-            if (Optional.IsDefined(AzureStorageResourceUri))
+            if (AzureStorageResourceUri != null)
             {
                 writer.WritePropertyName("azureStorageResourceUri"u8);
                 writer.WriteStringValue(AzureStorageResourceUri.AbsoluteUri);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             {
                 return null;
             }
-            Optional<string> foldername = default;
-            Optional<Uri> azureStorageResourceUri = default;
+            string foldername = default;
+            Uri azureStorageResourceUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RestoreProperties(foldername.Value, azureStorageResourceUri.Value, serializedAdditionalRawData);
+            return new RestoreProperties(foldername, azureStorageResourceUri, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RestoreProperties>.Write(ModelReaderWriterOptions options)

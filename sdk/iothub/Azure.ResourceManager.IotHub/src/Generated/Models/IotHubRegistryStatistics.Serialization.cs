@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.IotHub.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(TotalDeviceCount))
+            if (options.Format != "W" && TotalDeviceCount.HasValue)
             {
                 writer.WritePropertyName("totalDeviceCount"u8);
                 writer.WriteNumberValue(TotalDeviceCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(EnabledDeviceCount))
+            if (options.Format != "W" && EnabledDeviceCount.HasValue)
             {
                 writer.WritePropertyName("enabledDeviceCount"u8);
                 writer.WriteNumberValue(EnabledDeviceCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(DisabledDeviceCount))
+            if (options.Format != "W" && DisabledDeviceCount.HasValue)
             {
                 writer.WritePropertyName("disabledDeviceCount"u8);
                 writer.WriteNumberValue(DisabledDeviceCount.Value);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<long> totalDeviceCount = default;
-            Optional<long> enabledDeviceCount = default;
-            Optional<long> disabledDeviceCount = default;
+            long? totalDeviceCount = default;
+            long? enabledDeviceCount = default;
+            long? disabledDeviceCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotHubRegistryStatistics(Optional.ToNullable(totalDeviceCount), Optional.ToNullable(enabledDeviceCount), Optional.ToNullable(disabledDeviceCount), serializedAdditionalRawData);
+            return new IotHubRegistryStatistics(totalDeviceCount, enabledDeviceCount, disabledDeviceCount, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotHubRegistryStatistics>.Write(ModelReaderWriterOptions options)

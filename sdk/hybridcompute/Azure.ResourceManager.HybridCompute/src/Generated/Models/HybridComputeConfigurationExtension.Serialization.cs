@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Publisher))
+            if (options.Format != "W" && Publisher != null)
             {
                 writer.WritePropertyName("publisher"u8);
                 writer.WriteStringValue(Publisher);
             }
-            if (options.Format != "W" && Optional.IsDefined(ConfigurationExtensionType))
+            if (options.Format != "W" && ConfigurationExtensionType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ConfigurationExtensionType);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<string> publisher = default;
-            Optional<string> type = default;
+            string publisher = default;
+            string type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridComputeConfigurationExtension(publisher.Value, type.Value, serializedAdditionalRawData);
+            return new HybridComputeConfigurationExtension(publisher, type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridComputeConfigurationExtension>.Write(ModelReaderWriterOptions options)

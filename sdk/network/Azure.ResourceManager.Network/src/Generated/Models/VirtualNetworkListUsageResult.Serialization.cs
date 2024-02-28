@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<VirtualNetworkUsage> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<VirtualNetworkUsage>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<VirtualNetworkUsage> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<VirtualNetworkUsage> array = new List<VirtualNetworkUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualNetworkUsage.DeserializeVirtualNetworkUsage(item));
+                        array.Add(VirtualNetworkUsage.DeserializeVirtualNetworkUsage(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualNetworkListUsageResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new VirtualNetworkListUsageResult(value ?? new ChangeTrackingList<VirtualNetworkUsage>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualNetworkListUsageResult>.Write(ModelReaderWriterOptions options)

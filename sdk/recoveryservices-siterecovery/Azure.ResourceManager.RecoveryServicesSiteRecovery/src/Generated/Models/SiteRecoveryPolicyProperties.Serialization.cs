@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FriendlyName))
+            if (FriendlyName != null)
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Optional.IsDefined(ProviderSpecificDetails))
+            if (ProviderSpecificDetails != null)
             {
                 writer.WritePropertyName("providerSpecificDetails"u8);
                 writer.WriteObjectValue(ProviderSpecificDetails);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> friendlyName = default;
-            Optional<PolicyProviderSpecificDetails> providerSpecificDetails = default;
+            string friendlyName = default;
+            PolicyProviderSpecificDetails providerSpecificDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    providerSpecificDetails = PolicyProviderSpecificDetails.DeserializePolicyProviderSpecificDetails(property.Value);
+                    providerSpecificDetails = PolicyProviderSpecificDetails.DeserializePolicyProviderSpecificDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryPolicyProperties(friendlyName.Value, providerSpecificDetails.Value, serializedAdditionalRawData);
+            return new SiteRecoveryPolicyProperties(friendlyName, providerSpecificDetails, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryPolicyProperties>.Write(ModelReaderWriterOptions options)

@@ -26,29 +26,29 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrincipalId))
+            if (PrincipalId != null)
             {
                 writer.WritePropertyName("principalId"u8);
                 writer.WriteStringValue(PrincipalId);
             }
-            if (Optional.IsDefined(RoleDefinitionId))
+            if (RoleDefinitionId != null)
             {
                 writer.WritePropertyName("roleDefinitionId"u8);
                 writer.WriteStringValue(RoleDefinitionId);
             }
-            if (Optional.IsDefined(Scope))
+            if (Scope != null)
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
@@ -92,11 +92,11 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<string> principalId = default;
-            Optional<ResourceIdentifier> roleDefinitionId = default;
-            Optional<ResourceIdentifier> scope = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            string principalId = default;
+            ResourceIdentifier roleDefinitionId = default;
+            ResourceIdentifier scope = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -156,7 +156,13 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BillingBenefitsRoleAssignmentEntity(id.Value, name.Value, principalId.Value, roleDefinitionId.Value, scope.Value, serializedAdditionalRawData);
+            return new BillingBenefitsRoleAssignmentEntity(
+                id,
+                name,
+                principalId,
+                roleDefinitionId,
+                scope,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BillingBenefitsRoleAssignmentEntity>.Write(ModelReaderWriterOptions options)

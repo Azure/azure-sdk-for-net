@@ -19,8 +19,8 @@ namespace Azure.Search.Documents.Models
             {
                 return null;
             }
-            Optional<string> text = default;
-            Optional<string> highlights = default;
+            string text = default;
+            string highlights = default;
             IReadOnlyDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -43,7 +43,7 @@ namespace Azure.Search.Documents.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new QueryCaptionResult(text.Value, highlights.Value, additionalProperties);
+            return new QueryCaptionResult(text, highlights, additionalProperties);
         }
     }
 }

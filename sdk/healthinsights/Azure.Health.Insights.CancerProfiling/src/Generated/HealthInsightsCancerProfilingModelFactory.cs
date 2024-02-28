@@ -37,7 +37,14 @@ namespace Azure.Health.Insights.CancerProfiling
         /// <returns> A new <see cref="CancerProfiling.PatientDocument"/> instance for mocking. </returns>
         public static PatientDocument PatientDocument(DocumentType type = default, ClinicalDocumentType? clinicalType = null, string id = null, string language = null, DateTimeOffset? createdDateTime = null, DocumentContent content = null)
         {
-            return new PatientDocument(type, clinicalType, id, language, createdDateTime, content, serializedAdditionalRawData: null);
+            return new PatientDocument(
+                type,
+                clinicalType,
+                id,
+                language,
+                createdDateTime,
+                content,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CancerProfiling.OncoPhenotypeResults"/>. </summary>
@@ -74,7 +81,14 @@ namespace Azure.Health.Insights.CancerProfiling
         {
             evidence ??= new List<InferenceEvidence>();
 
-            return new OncoPhenotypeInference(type, value, description, confidenceScore, evidence?.ToList(), caseId, serializedAdditionalRawData: null);
+            return new OncoPhenotypeInference(
+                type,
+                value,
+                description,
+                confidenceScore,
+                evidence?.ToList(),
+                caseId,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CancerProfiling.InferenceEvidence"/>. </summary>

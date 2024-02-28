@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TotalCertificates))
+            if (TotalCertificates.HasValue)
             {
                 writer.WritePropertyName("totalCertificates"u8);
                 writer.WriteNumberValue(TotalCertificates.Value);
             }
-            if (Optional.IsDefined(PairedKeys))
+            if (PairedKeys.HasValue)
             {
                 writer.WritePropertyName("pairedKeys"u8);
                 writer.WriteNumberValue(PairedKeys.Value);
             }
-            if (Optional.IsDefined(Expired))
+            if (Expired.HasValue)
             {
                 writer.WritePropertyName("expired"u8);
                 writer.WriteNumberValue(Expired.Value);
             }
-            if (Optional.IsDefined(ExpiringSoon))
+            if (ExpiringSoon.HasValue)
             {
                 writer.WritePropertyName("expiringSoon"u8);
                 writer.WriteNumberValue(ExpiringSoon.Value);
             }
-            if (Optional.IsDefined(WeakSignature))
+            if (WeakSignature.HasValue)
             {
                 writer.WritePropertyName("weakSignature"u8);
                 writer.WriteNumberValue(WeakSignature.Value);
             }
-            if (Optional.IsDefined(SelfSigned))
+            if (SelfSigned.HasValue)
             {
                 writer.WritePropertyName("selfSigned"u8);
                 writer.WriteNumberValue(SelfSigned.Value);
             }
-            if (Optional.IsDefined(ShortKeySize))
+            if (ShortKeySize.HasValue)
             {
                 writer.WritePropertyName("shortKeySize"u8);
                 writer.WriteNumberValue(ShortKeySize.Value);
@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            Optional<long> totalCertificates = default;
-            Optional<long> pairedKeys = default;
-            Optional<long> expired = default;
-            Optional<long> expiringSoon = default;
-            Optional<long> weakSignature = default;
-            Optional<long> selfSigned = default;
-            Optional<long> shortKeySize = default;
+            long? totalCertificates = default;
+            long? pairedKeys = default;
+            long? expired = default;
+            long? expiringSoon = default;
+            long? weakSignature = default;
+            long? selfSigned = default;
+            long? shortKeySize = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,7 +179,15 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirmwareCryptoCertificateSummary(Optional.ToNullable(totalCertificates), Optional.ToNullable(pairedKeys), Optional.ToNullable(expired), Optional.ToNullable(expiringSoon), Optional.ToNullable(weakSignature), Optional.ToNullable(selfSigned), Optional.ToNullable(shortKeySize), serializedAdditionalRawData);
+            return new FirmwareCryptoCertificateSummary(
+                totalCertificates,
+                pairedKeys,
+                expired,
+                expiringSoon,
+                weakSignature,
+                selfSigned,
+                shortKeySize,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirmwareCryptoCertificateSummary>.Write(ModelReaderWriterOptions options)

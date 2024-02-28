@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Datadog.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
@@ -85,9 +85,9 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            Optional<MonitorUpdateProperties> properties = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<ResourceSku> sku = default;
+            MonitorUpdateProperties properties = default;
+            IDictionary<string, string> tags = default;
+            ResourceSku sku = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     {
                         continue;
                     }
-                    properties = MonitorUpdateProperties.DeserializeMonitorUpdateProperties(property.Value);
+                    properties = MonitorUpdateProperties.DeserializeMonitorUpdateProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     {
                         continue;
                     }
-                    sku = ResourceSku.DeserializeResourceSku(property.Value);
+                    sku = ResourceSku.DeserializeResourceSku(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatadogMonitorResourcePatch(properties.Value, Optional.ToDictionary(tags), sku.Value, serializedAdditionalRawData);
+            return new DatadogMonitorResourcePatch(properties, tags ?? new ChangeTrackingDictionary<string, string>(), sku, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatadogMonitorResourcePatch>.Write(ModelReaderWriterOptions options)

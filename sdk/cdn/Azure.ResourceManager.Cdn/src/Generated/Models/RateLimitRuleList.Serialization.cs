@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Rules))
+            if (!(Rules is ChangeTrackingList<RateLimitRule> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<IList<RateLimitRule>> rules = default;
+            IList<RateLimitRule> rules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<RateLimitRule> array = new List<RateLimitRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RateLimitRule.DeserializeRateLimitRule(item));
+                        array.Add(RateLimitRule.DeserializeRateLimitRule(item, options));
                     }
                     rules = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RateLimitRuleList(Optional.ToList(rules), serializedAdditionalRawData);
+            return new RateLimitRuleList(rules ?? new ChangeTrackingList<RateLimitRule>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RateLimitRuleList>.Write(ModelReaderWriterOptions options)

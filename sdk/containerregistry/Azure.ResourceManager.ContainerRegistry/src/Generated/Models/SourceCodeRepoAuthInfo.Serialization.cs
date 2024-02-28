@@ -30,17 +30,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteStringValue(TokenType.ToString());
             writer.WritePropertyName("token"u8);
             writer.WriteStringValue(Token);
-            if (Optional.IsDefined(RefreshToken))
+            if (RefreshToken != null)
             {
                 writer.WritePropertyName("refreshToken"u8);
                 writer.WriteStringValue(RefreshToken);
             }
-            if (Optional.IsDefined(Scope))
+            if (Scope != null)
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
-            if (Optional.IsDefined(ExpireInSeconds))
+            if (ExpireInSeconds.HasValue)
             {
                 writer.WritePropertyName("expiresIn"u8);
                 writer.WriteNumberValue(ExpireInSeconds.Value);
@@ -85,9 +85,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             SourceCodeRepoAuthTokenType tokenType = default;
             string token = default;
-            Optional<string> refreshToken = default;
-            Optional<string> scope = default;
-            Optional<int> expiresIn = default;
+            string refreshToken = default;
+            string scope = default;
+            int? expiresIn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -127,7 +127,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SourceCodeRepoAuthInfo(tokenType, token, refreshToken.Value, scope.Value, Optional.ToNullable(expiresIn), serializedAdditionalRawData);
+            return new SourceCodeRepoAuthInfo(
+                tokenType,
+                token,
+                refreshToken,
+                scope,
+                expiresIn,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SourceCodeRepoAuthInfo>.Write(ModelReaderWriterOptions options)

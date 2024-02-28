@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MinMatchingValue))
+            if (MinMatchingValue != null)
             {
                 writer.WritePropertyName("minMatchingValue"u8);
                 writer.WriteStringValue(MinMatchingValue);
             }
-            if (Optional.IsDefined(MaxMatchingValue))
+            if (MaxMatchingValue != null)
             {
                 writer.WritePropertyName("maxMatchingValue"u8);
                 writer.WriteStringValue(MaxMatchingValue);
@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<string> minMatchingValue = default;
-            Optional<string> maxMatchingValue = default;
+            string minMatchingValue = default;
+            string maxMatchingValue = default;
             string objectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RangeBasedItemLevelRestoreCriteria(objectType, serializedAdditionalRawData, minMatchingValue.Value, maxMatchingValue.Value);
+            return new RangeBasedItemLevelRestoreCriteria(objectType, serializedAdditionalRawData, minMatchingValue, maxMatchingValue);
         }
 
         BinaryData IPersistableModel<RangeBasedItemLevelRestoreCriteria>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FunctionAlias))
+            if (FunctionAlias != null)
             {
                 writer.WritePropertyName("functionAlias"u8);
                 writer.WriteStringValue(FunctionAlias);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<string> functionAlias = default;
+            string functionAlias = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationInsightsComponentAnalyticsItemProperties(functionAlias.Value, serializedAdditionalRawData);
+            return new ApplicationInsightsComponentAnalyticsItemProperties(functionAlias, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationInsightsComponentAnalyticsItemProperties>.Write(ModelReaderWriterOptions options)

@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(CustomDomainVerificationId))
+            if (options.Format != "W" && CustomDomainVerificationId != null)
             {
                 writer.WritePropertyName("customDomainVerificationId"u8);
                 writer.WriteStringValue(CustomDomainVerificationId);
             }
-            if (Optional.IsDefined(DnsSuffix))
+            if (DnsSuffix != null)
             {
                 writer.WritePropertyName("dnsSuffix"u8);
                 writer.WriteStringValue(DnsSuffix);
             }
-            if (Optional.IsDefined(CertificateValue))
+            if (CertificateValue != null)
             {
                 writer.WritePropertyName("certificateValue"u8);
                 writer.WriteBase64StringValue(CertificateValue, "D");
             }
-            if (Optional.IsDefined(CertificatePassword))
+            if (CertificatePassword != null)
             {
                 writer.WritePropertyName("certificatePassword"u8);
                 writer.WriteStringValue(CertificatePassword);
             }
-            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
+            if (options.Format != "W" && ExpireOn.HasValue)
             {
                 writer.WritePropertyName("expirationDate"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(Thumbprint))
+            if (options.Format != "W" && Thumbprint != null)
             {
                 writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(Thumbprint);
             }
-            if (options.Format != "W" && Optional.IsDefined(SubjectName))
+            if (options.Format != "W" && SubjectName != null)
             {
                 writer.WritePropertyName("subjectName"u8);
                 writer.WriteStringValue(SubjectName);
@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> customDomainVerificationId = default;
-            Optional<string> dnsSuffix = default;
-            Optional<byte[]> certificateValue = default;
-            Optional<string> certificatePassword = default;
-            Optional<DateTimeOffset> expirationDate = default;
-            Optional<string> thumbprint = default;
-            Optional<string> subjectName = default;
+            string customDomainVerificationId = default;
+            string dnsSuffix = default;
+            byte[] certificateValue = default;
+            string certificatePassword = default;
+            DateTimeOffset? expirationDate = default;
+            string thumbprint = default;
+            string subjectName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -159,7 +159,15 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppCustomDomainConfiguration(customDomainVerificationId.Value, dnsSuffix.Value, certificateValue.Value, certificatePassword.Value, Optional.ToNullable(expirationDate), thumbprint.Value, subjectName.Value, serializedAdditionalRawData);
+            return new ContainerAppCustomDomainConfiguration(
+                customDomainVerificationId,
+                dnsSuffix,
+                certificateValue,
+                certificatePassword,
+                expirationDate,
+                thumbprint,
+                subjectName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppCustomDomainConfiguration>.Write(ModelReaderWriterOptions options)

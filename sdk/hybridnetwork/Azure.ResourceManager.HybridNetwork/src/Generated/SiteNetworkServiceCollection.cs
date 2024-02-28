@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="siteNetworkServiceName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SiteNetworkServiceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string siteNetworkServiceName, SiteNetworkServiceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(siteNetworkServiceName, nameof(siteNetworkServiceName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (siteNetworkServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(siteNetworkServiceName));
+            }
+            if (siteNetworkServiceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(siteNetworkServiceName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _siteNetworkServiceClientDiagnostics.CreateScope("SiteNetworkServiceCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="siteNetworkServiceName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SiteNetworkServiceResource> CreateOrUpdate(WaitUntil waitUntil, string siteNetworkServiceName, SiteNetworkServiceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(siteNetworkServiceName, nameof(siteNetworkServiceName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (siteNetworkServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(siteNetworkServiceName));
+            }
+            if (siteNetworkServiceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(siteNetworkServiceName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _siteNetworkServiceClientDiagnostics.CreateScope("SiteNetworkServiceCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="siteNetworkServiceName"/> is null. </exception>
         public virtual async Task<Response<SiteNetworkServiceResource>> GetAsync(string siteNetworkServiceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(siteNetworkServiceName, nameof(siteNetworkServiceName));
+            if (siteNetworkServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(siteNetworkServiceName));
+            }
+            if (siteNetworkServiceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(siteNetworkServiceName));
+            }
 
             using var scope = _siteNetworkServiceClientDiagnostics.CreateScope("SiteNetworkServiceCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="siteNetworkServiceName"/> is null. </exception>
         public virtual Response<SiteNetworkServiceResource> Get(string siteNetworkServiceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(siteNetworkServiceName, nameof(siteNetworkServiceName));
+            if (siteNetworkServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(siteNetworkServiceName));
+            }
+            if (siteNetworkServiceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(siteNetworkServiceName));
+            }
 
             using var scope = _siteNetworkServiceClientDiagnostics.CreateScope("SiteNetworkServiceCollection.Get");
             scope.Start();
@@ -329,7 +363,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="siteNetworkServiceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string siteNetworkServiceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(siteNetworkServiceName, nameof(siteNetworkServiceName));
+            if (siteNetworkServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(siteNetworkServiceName));
+            }
+            if (siteNetworkServiceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(siteNetworkServiceName));
+            }
 
             using var scope = _siteNetworkServiceClientDiagnostics.CreateScope("SiteNetworkServiceCollection.Exists");
             scope.Start();
@@ -372,7 +413,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="siteNetworkServiceName"/> is null. </exception>
         public virtual Response<bool> Exists(string siteNetworkServiceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(siteNetworkServiceName, nameof(siteNetworkServiceName));
+            if (siteNetworkServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(siteNetworkServiceName));
+            }
+            if (siteNetworkServiceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(siteNetworkServiceName));
+            }
 
             using var scope = _siteNetworkServiceClientDiagnostics.CreateScope("SiteNetworkServiceCollection.Exists");
             scope.Start();
@@ -415,7 +463,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="siteNetworkServiceName"/> is null. </exception>
         public virtual async Task<NullableResponse<SiteNetworkServiceResource>> GetIfExistsAsync(string siteNetworkServiceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(siteNetworkServiceName, nameof(siteNetworkServiceName));
+            if (siteNetworkServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(siteNetworkServiceName));
+            }
+            if (siteNetworkServiceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(siteNetworkServiceName));
+            }
 
             using var scope = _siteNetworkServiceClientDiagnostics.CreateScope("SiteNetworkServiceCollection.GetIfExists");
             scope.Start();
@@ -460,7 +515,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="siteNetworkServiceName"/> is null. </exception>
         public virtual NullableResponse<SiteNetworkServiceResource> GetIfExists(string siteNetworkServiceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(siteNetworkServiceName, nameof(siteNetworkServiceName));
+            if (siteNetworkServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(siteNetworkServiceName));
+            }
+            if (siteNetworkServiceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(siteNetworkServiceName));
+            }
 
             using var scope = _siteNetworkServiceClientDiagnostics.CreateScope("SiteNetworkServiceCollection.GetIfExists");
             scope.Start();

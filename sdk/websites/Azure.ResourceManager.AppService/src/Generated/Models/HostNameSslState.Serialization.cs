@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(SslState))
+            if (SslState.HasValue)
             {
                 writer.WritePropertyName("sslState"u8);
                 writer.WriteStringValue(SslState.Value.ToSerialString());
             }
-            if (Optional.IsDefined(VirtualIP))
+            if (VirtualIP != null)
             {
                 writer.WritePropertyName("virtualIP"u8);
                 writer.WriteStringValue(VirtualIP);
             }
-            if (Optional.IsDefined(ThumbprintString))
+            if (ThumbprintString != null)
             {
                 writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(ThumbprintString);
             }
-            if (Optional.IsDefined(ToUpdate))
+            if (ToUpdate.HasValue)
             {
                 if (ToUpdate != null)
                 {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.AppService.Models
                     writer.WriteNull("toUpdate");
                 }
             }
-            if (Optional.IsDefined(HostType))
+            if (HostType.HasValue)
             {
                 writer.WritePropertyName("hostType"u8);
                 writer.WriteStringValue(HostType.Value.ToSerialString());
@@ -101,12 +101,12 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<HostNameBindingSslState> sslState = default;
-            Optional<string> virtualIP = default;
-            Optional<string> thumbprint = default;
-            Optional<bool?> toUpdate = default;
-            Optional<AppServiceHostType> hostType = default;
+            string name = default;
+            HostNameBindingSslState? sslState = default;
+            string virtualIP = default;
+            string thumbprint = default;
+            bool? toUpdate = default;
+            AppServiceHostType? hostType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HostNameSslState(name.Value, Optional.ToNullable(sslState), virtualIP.Value, thumbprint.Value, Optional.ToNullable(toUpdate), Optional.ToNullable(hostType), serializedAdditionalRawData);
+            return new HostNameSslState(
+                name,
+                sslState,
+                virtualIP,
+                thumbprint,
+                toUpdate,
+                hostType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HostNameSslState>.Write(ModelReaderWriterOptions options)

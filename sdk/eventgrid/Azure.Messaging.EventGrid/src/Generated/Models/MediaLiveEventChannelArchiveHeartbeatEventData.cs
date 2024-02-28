@@ -5,9 +5,6 @@
 
 #nullable disable
 
-using System;
-using Azure.Core;
-
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Channel Archive heartbeat event data. Schema of the data property of an EventGridEvent for a Microsoft.Media.LiveEventChannelArchiveHeartbeat event. </summary>
@@ -16,12 +13,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Initializes a new instance of <see cref="MediaLiveEventChannelArchiveHeartbeatEventData"/>. </summary>
         /// <param name="channelLatencyMsInternal"> Gets the channel latency in ms. </param>
         /// <param name="latencyResultCode"> Gets the latency result code. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="channelLatencyMsInternal"/> or <paramref name="latencyResultCode"/> is null. </exception>
         internal MediaLiveEventChannelArchiveHeartbeatEventData(string channelLatencyMsInternal, string latencyResultCode)
         {
-            Argument.AssertNotNull(channelLatencyMsInternal, nameof(channelLatencyMsInternal));
-            Argument.AssertNotNull(latencyResultCode, nameof(latencyResultCode));
-
             ChannelLatencyMsInternal = channelLatencyMsInternal;
             LatencyResultCode = latencyResultCode;
         }

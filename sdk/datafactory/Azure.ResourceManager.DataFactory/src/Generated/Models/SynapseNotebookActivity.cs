@@ -21,8 +21,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="notebook"/> is null. </exception>
         public SynapseNotebookActivity(string name, SynapseNotebookReference notebook) : base(name)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(notebook, nameof(notebook));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (notebook == null)
+            {
+                throw new ArgumentNullException(nameof(notebook));
+            }
 
             Notebook = notebook;
             Parameters = new ChangeTrackingDictionary<string, NotebookParameter>();
@@ -64,6 +70,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             TargetSparkConfiguration = targetSparkConfiguration;
             SparkConfig = sparkConfig;
             ActivityType = activityType ?? "SynapseNotebook";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SynapseNotebookActivity"/> for deserialization. </summary>
+        internal SynapseNotebookActivity()
+        {
         }
 
         /// <summary> Synapse notebook reference. </summary>

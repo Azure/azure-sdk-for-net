@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(InternalName))
+            if (InternalName != null)
             {
                 writer.WritePropertyName("internalName"u8);
                 writer.WriteStringValue(InternalName);
             }
-            if (Optional.IsDefined(IsToBeExportedForShoebox))
+            if (IsToBeExportedForShoebox.HasValue)
             {
                 writer.WritePropertyName("toBeExportedForShoebox"u8);
                 writer.WriteBooleanValue(IsToBeExportedForShoebox.Value);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> displayName = default;
-            Optional<string> internalName = default;
-            Optional<bool> toBeExportedForShoebox = default;
+            string name = default;
+            string displayName = default;
+            string internalName = default;
+            bool? toBeExportedForShoebox = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MetricDimension(name.Value, displayName.Value, internalName.Value, Optional.ToNullable(toBeExportedForShoebox), serializedAdditionalRawData);
+            return new MetricDimension(name, displayName, internalName, toBeExportedForShoebox, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MetricDimension>.Write(ModelReaderWriterOptions options)

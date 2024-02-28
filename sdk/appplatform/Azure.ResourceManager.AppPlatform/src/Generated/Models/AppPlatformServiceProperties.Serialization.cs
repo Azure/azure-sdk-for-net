@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(NetworkProfile))
+            if (NetworkProfile != null)
             {
                 writer.WritePropertyName("networkProfile"u8);
                 writer.WriteObjectValue(NetworkProfile);
             }
-            if (Optional.IsDefined(VnetAddons))
+            if (VnetAddons != null)
             {
                 writer.WritePropertyName("vnetAddons"u8);
                 writer.WriteObjectValue(VnetAddons);
             }
-            if (options.Format != "W" && Optional.IsDefined(Version))
+            if (options.Format != "W" && Version.HasValue)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteNumberValue(Version.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ServiceInstanceId))
+            if (options.Format != "W" && ServiceInstanceId != null)
             {
                 writer.WritePropertyName("serviceId"u8);
                 writer.WriteStringValue(ServiceInstanceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(PowerState))
+            if (options.Format != "W" && PowerState.HasValue)
             {
                 writer.WritePropertyName("powerState"u8);
                 writer.WriteStringValue(PowerState.Value.ToString());
             }
-            if (Optional.IsDefined(IsZoneRedundant))
+            if (IsZoneRedundant.HasValue)
             {
                 writer.WritePropertyName("zoneRedundant"u8);
                 writer.WriteBooleanValue(IsZoneRedundant.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Fqdn))
+            if (options.Format != "W" && Fqdn != null)
             {
                 writer.WritePropertyName("fqdn"u8);
                 writer.WriteStringValue(Fqdn);
@@ -104,14 +104,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<AppPlatformServiceProvisioningState> provisioningState = default;
-            Optional<AppPlatformServiceNetworkProfile> networkProfile = default;
-            Optional<ServiceVnetAddons> vnetAddons = default;
-            Optional<int> version = default;
-            Optional<string> serviceId = default;
-            Optional<AppPlatformServicePowerState> powerState = default;
-            Optional<bool> zoneRedundant = default;
-            Optional<string> fqdn = default;
+            AppPlatformServiceProvisioningState? provisioningState = default;
+            AppPlatformServiceNetworkProfile networkProfile = default;
+            ServiceVnetAddons vnetAddons = default;
+            int? version = default;
+            string serviceId = default;
+            AppPlatformServicePowerState? powerState = default;
+            bool? zoneRedundant = default;
+            string fqdn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    networkProfile = AppPlatformServiceNetworkProfile.DeserializeAppPlatformServiceNetworkProfile(property.Value);
+                    networkProfile = AppPlatformServiceNetworkProfile.DeserializeAppPlatformServiceNetworkProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("vnetAddons"u8))
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    vnetAddons = ServiceVnetAddons.DeserializeServiceVnetAddons(property.Value);
+                    vnetAddons = ServiceVnetAddons.DeserializeServiceVnetAddons(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("version"u8))
@@ -186,7 +186,16 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformServiceProperties(Optional.ToNullable(provisioningState), networkProfile.Value, vnetAddons.Value, Optional.ToNullable(version), serviceId.Value, Optional.ToNullable(powerState), Optional.ToNullable(zoneRedundant), fqdn.Value, serializedAdditionalRawData);
+            return new AppPlatformServiceProperties(
+                provisioningState,
+                networkProfile,
+                vnetAddons,
+                version,
+                serviceId,
+                powerState,
+                zoneRedundant,
+                fqdn,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformServiceProperties>.Write(ModelReaderWriterOptions options)

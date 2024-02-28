@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceId))
+            if (ResourceId != null)
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Optional.IsDefined(Address))
+            if (Address != null)
             {
                 writer.WritePropertyName("address"u8);
                 writer.WriteStringValue(Address);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<string> address = default;
+            ResourceIdentifier resourceId = default;
+            string address = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IPAddressInfo(resourceId.Value, address.Value, serializedAdditionalRawData);
+            return new IPAddressInfo(resourceId, address, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IPAddressInfo>.Write(ModelReaderWriterOptions options)

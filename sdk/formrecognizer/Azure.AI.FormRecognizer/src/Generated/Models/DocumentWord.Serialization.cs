@@ -20,7 +20,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 return null;
             }
             string content = default;
-            Optional<IReadOnlyList<float>> polygon = default;
+            IReadOnlyList<float> polygon = default;
             DocumentSpan span = default;
             float confidence = default;
             foreach (var property in element.EnumerateObject())
@@ -55,7 +55,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new DocumentWord(content, Optional.ToList(polygon), span, confidence);
+            return new DocumentWord(content, polygon ?? new ChangeTrackingList<float>(), span, confidence);
         }
     }
 }

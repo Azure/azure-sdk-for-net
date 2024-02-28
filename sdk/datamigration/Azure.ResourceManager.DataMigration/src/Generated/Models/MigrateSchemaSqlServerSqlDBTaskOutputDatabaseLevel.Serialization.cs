@@ -26,57 +26,57 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(DatabaseName))
+            if (options.Format != "W" && DatabaseName != null)
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W" && State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Stage))
+            if (options.Format != "W" && Stage.HasValue)
             {
                 writer.WritePropertyName("stage"u8);
                 writer.WriteStringValue(Stage.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(StartedOn))
+            if (options.Format != "W" && StartedOn.HasValue)
             {
                 writer.WritePropertyName("startedOn"u8);
                 writer.WriteStringValue(StartedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EndedOn))
+            if (options.Format != "W" && EndedOn.HasValue)
             {
                 writer.WritePropertyName("endedOn"u8);
                 writer.WriteStringValue(EndedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(DatabaseErrorResultPrefix))
+            if (options.Format != "W" && DatabaseErrorResultPrefix != null)
             {
                 writer.WritePropertyName("databaseErrorResultPrefix"u8);
                 writer.WriteStringValue(DatabaseErrorResultPrefix);
             }
-            if (options.Format != "W" && Optional.IsDefined(SchemaErrorResultPrefix))
+            if (options.Format != "W" && SchemaErrorResultPrefix != null)
             {
                 writer.WritePropertyName("schemaErrorResultPrefix"u8);
                 writer.WriteStringValue(SchemaErrorResultPrefix);
             }
-            if (options.Format != "W" && Optional.IsDefined(NumberOfSuccessfulOperations))
+            if (options.Format != "W" && NumberOfSuccessfulOperations.HasValue)
             {
                 writer.WritePropertyName("numberOfSuccessfulOperations"u8);
                 writer.WriteNumberValue(NumberOfSuccessfulOperations.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(NumberOfFailedOperations))
+            if (options.Format != "W" && NumberOfFailedOperations.HasValue)
             {
                 writer.WritePropertyName("numberOfFailedOperations"u8);
                 writer.WriteNumberValue(NumberOfFailedOperations.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(FileId))
+            if (options.Format != "W" && FileId != null)
             {
                 writer.WritePropertyName("fileId"u8);
                 writer.WriteStringValue(FileId);
             }
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -121,17 +121,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> databaseName = default;
-            Optional<MigrationState> state = default;
-            Optional<SchemaMigrationStage> stage = default;
-            Optional<DateTimeOffset> startedOn = default;
-            Optional<DateTimeOffset> endedOn = default;
-            Optional<string> databaseErrorResultPrefix = default;
-            Optional<string> schemaErrorResultPrefix = default;
-            Optional<long> numberOfSuccessfulOperations = default;
-            Optional<long> numberOfFailedOperations = default;
-            Optional<string> fileId = default;
-            Optional<string> id = default;
+            string databaseName = default;
+            MigrationState? state = default;
+            SchemaMigrationStage? stage = default;
+            DateTimeOffset? startedOn = default;
+            DateTimeOffset? endedOn = default;
+            string databaseErrorResultPrefix = default;
+            string schemaErrorResultPrefix = default;
+            long? numberOfSuccessfulOperations = default;
+            long? numberOfFailedOperations = default;
+            string fileId = default;
+            string id = default;
             string resultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -227,7 +227,20 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel(id.Value, resultType, serializedAdditionalRawData, databaseName.Value, Optional.ToNullable(state), Optional.ToNullable(stage), Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), databaseErrorResultPrefix.Value, schemaErrorResultPrefix.Value, Optional.ToNullable(numberOfSuccessfulOperations), Optional.ToNullable(numberOfFailedOperations), fileId.Value);
+            return new MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel(
+                id,
+                resultType,
+                serializedAdditionalRawData,
+                databaseName,
+                state,
+                stage,
+                startedOn,
+                endedOn,
+                databaseErrorResultPrefix,
+                schemaErrorResultPrefix,
+                numberOfSuccessfulOperations,
+                numberOfFailedOperations,
+                fileId);
         }
 
         BinaryData IPersistableModel<MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel>.Write(ModelReaderWriterOptions options)

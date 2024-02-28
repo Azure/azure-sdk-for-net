@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Consumption.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(Value))
+            if (options.Format != "W" && Value.HasValue)
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteNumberValue(Value.Value);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<decimal> value = default;
+            string name = default;
+            decimal? value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionBalanceAdjustmentDetail(name.Value, Optional.ToNullable(value), serializedAdditionalRawData);
+            return new ConsumptionBalanceAdjustmentDetail(name, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumptionBalanceAdjustmentDetail>.Write(ModelReaderWriterOptions options)

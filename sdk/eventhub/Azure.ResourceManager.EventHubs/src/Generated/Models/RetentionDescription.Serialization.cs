@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.EventHubs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CleanupPolicy))
+            if (CleanupPolicy.HasValue)
             {
                 writer.WritePropertyName("cleanupPolicy"u8);
                 writer.WriteStringValue(CleanupPolicy.Value.ToString());
             }
-            if (Optional.IsDefined(RetentionTimeInHours))
+            if (RetentionTimeInHours.HasValue)
             {
                 writer.WritePropertyName("retentionTimeInHours"u8);
                 writer.WriteNumberValue(RetentionTimeInHours.Value);
             }
-            if (Optional.IsDefined(TombstoneRetentionTimeInHours))
+            if (TombstoneRetentionTimeInHours.HasValue)
             {
                 writer.WritePropertyName("tombstoneRetentionTimeInHours"u8);
                 writer.WriteNumberValue(TombstoneRetentionTimeInHours.Value);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 return null;
             }
-            Optional<CleanupPolicyRetentionDescription> cleanupPolicy = default;
-            Optional<long> retentionTimeInHours = default;
-            Optional<int> tombstoneRetentionTimeInHours = default;
+            CleanupPolicyRetentionDescription? cleanupPolicy = default;
+            long? retentionTimeInHours = default;
+            int? tombstoneRetentionTimeInHours = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RetentionDescription(Optional.ToNullable(cleanupPolicy), Optional.ToNullable(retentionTimeInHours), Optional.ToNullable(tombstoneRetentionTimeInHours), serializedAdditionalRawData);
+            return new RetentionDescription(cleanupPolicy, retentionTimeInHours, tombstoneRetentionTimeInHours, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RetentionDescription>.Write(ModelReaderWriterOptions options)

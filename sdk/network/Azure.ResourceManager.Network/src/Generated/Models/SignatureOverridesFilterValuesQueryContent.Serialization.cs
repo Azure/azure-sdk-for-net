@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FilterName))
+            if (FilterName != null)
             {
                 writer.WritePropertyName("filterName"u8);
                 writer.WriteStringValue(FilterName);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> filterName = default;
+            string filterName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SignatureOverridesFilterValuesQueryContent(filterName.Value, serializedAdditionalRawData);
+            return new SignatureOverridesFilterValuesQueryContent(filterName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SignatureOverridesFilterValuesQueryContent>.Write(ModelReaderWriterOptions options)

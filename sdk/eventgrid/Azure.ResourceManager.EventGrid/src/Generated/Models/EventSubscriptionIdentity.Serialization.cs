@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IdentityType))
+            if (IdentityType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(IdentityType.Value.ToString());
             }
-            if (Optional.IsDefined(UserAssignedIdentity))
+            if (UserAssignedIdentity != null)
             {
                 writer.WritePropertyName("userAssignedIdentity"u8);
                 writer.WriteStringValue(UserAssignedIdentity);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<EventSubscriptionIdentityType> type = default;
-            Optional<string> userAssignedIdentity = default;
+            EventSubscriptionIdentityType? type = default;
+            string userAssignedIdentity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventSubscriptionIdentity(Optional.ToNullable(type), userAssignedIdentity.Value, serializedAdditionalRawData);
+            return new EventSubscriptionIdentity(type, userAssignedIdentity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventSubscriptionIdentity>.Write(ModelReaderWriterOptions options)

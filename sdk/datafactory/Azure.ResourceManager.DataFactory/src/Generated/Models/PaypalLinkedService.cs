@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -21,8 +20,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="host"/> or <paramref name="clientId"/> is null. </exception>
         public PaypalLinkedService(DataFactoryElement<string> host, DataFactoryElement<string> clientId)
         {
-            Argument.AssertNotNull(host, nameof(host));
-            Argument.AssertNotNull(clientId, nameof(clientId));
+            if (host == null)
+            {
+                throw new ArgumentNullException(nameof(host));
+            }
+            if (clientId == null)
+            {
+                throw new ArgumentNullException(nameof(clientId));
+            }
 
             Host = host;
             ClientId = clientId;
@@ -53,6 +58,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             UsePeerVerification = usePeerVerification;
             EncryptedCredential = encryptedCredential;
             LinkedServiceType = linkedServiceType ?? "Paypal";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PaypalLinkedService"/> for deserialization. </summary>
+        internal PaypalLinkedService()
+        {
         }
 
         /// <summary> The URL of the PayPal instance. (i.e. api.sandbox.paypal.com). </summary>

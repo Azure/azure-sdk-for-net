@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -20,7 +19,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="host"/> is null. </exception>
         public CassandraLinkedService(DataFactoryElement<string> host)
         {
-            Argument.AssertNotNull(host, nameof(host));
+            if (host == null)
+            {
+                throw new ArgumentNullException(nameof(host));
+            }
 
             Host = host;
             LinkedServiceType = "Cassandra";
@@ -48,6 +50,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Password = password;
             EncryptedCredential = encryptedCredential;
             LinkedServiceType = linkedServiceType ?? "Cassandra";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CassandraLinkedService"/> for deserialization. </summary>
+        internal CassandraLinkedService()
+        {
         }
 
         /// <summary> Host name for connection. Type: string (or Expression with resultType string). </summary>

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 JsonSerializer.Serialize(writer, Properties);
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<ResponseError> properties = default;
+            ResponseError properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MoveResourceError(properties.Value, serializedAdditionalRawData);
+            return new MoveResourceError(properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MoveResourceError>.Write(ModelReaderWriterOptions options)

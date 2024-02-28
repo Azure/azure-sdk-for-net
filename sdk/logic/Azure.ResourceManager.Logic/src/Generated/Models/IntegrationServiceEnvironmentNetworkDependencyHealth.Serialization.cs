@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Error))
+            if (Error != null)
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);
             }
-            if (Optional.IsDefined(State))
+            if (State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<IntegrationServiceErrorInfo> error = default;
-            Optional<IntegrationServiceEnvironmentNetworkDependencyHealthState> state = default;
+            IntegrationServiceErrorInfo error = default;
+            IntegrationServiceEnvironmentNetworkDependencyHealthState? state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    error = IntegrationServiceErrorInfo.DeserializeIntegrationServiceErrorInfo(property.Value);
+                    error = IntegrationServiceErrorInfo.DeserializeIntegrationServiceErrorInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("state"u8))
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationServiceEnvironmentNetworkDependencyHealth(error.Value, Optional.ToNullable(state), serializedAdditionalRawData);
+            return new IntegrationServiceEnvironmentNetworkDependencyHealth(error, state, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationServiceEnvironmentNetworkDependencyHealth>.Write(ModelReaderWriterOptions options)

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -19,8 +18,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="s3LinkedServiceName"/> or <paramref name="bucketName"/> is null. </exception>
         public RedshiftUnloadSettings(LinkedServiceReference s3LinkedServiceName, object bucketName)
         {
-            Argument.AssertNotNull(s3LinkedServiceName, nameof(s3LinkedServiceName));
-            Argument.AssertNotNull(bucketName, nameof(bucketName));
+            if (s3LinkedServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(s3LinkedServiceName));
+            }
+            if (bucketName == null)
+            {
+                throw new ArgumentNullException(nameof(bucketName));
+            }
 
             S3LinkedServiceName = s3LinkedServiceName;
             BucketName = bucketName;

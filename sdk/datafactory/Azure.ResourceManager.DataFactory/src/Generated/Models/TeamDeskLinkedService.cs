@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -21,7 +20,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
         public TeamDeskLinkedService(TeamDeskAuthenticationType authenticationType, DataFactoryElement<string> uri)
         {
-            Argument.AssertNotNull(uri, nameof(uri));
+            if (uri == null)
+            {
+                throw new ArgumentNullException(nameof(uri));
+            }
 
             AuthenticationType = authenticationType;
             Uri = uri;
@@ -50,6 +52,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             ApiToken = apiToken;
             EncryptedCredential = encryptedCredential;
             LinkedServiceType = linkedServiceType ?? "TeamDesk";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TeamDeskLinkedService"/> for deserialization. </summary>
+        internal TeamDeskLinkedService()
+        {
         }
 
         /// <summary> The authentication type to use. </summary>

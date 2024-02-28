@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             writer.WriteStartObject();
             writer.WritePropertyName("billingType"u8);
             writer.WriteStringValue(BillingType.ToString());
-            if (options.Format != "W" && Optional.IsDefined(Multiplier))
+            if (options.Format != "W" && Multiplier.HasValue)
             {
                 writer.WritePropertyName("multiplier"u8);
                 writer.WriteNumberValue(Multiplier.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ChargingType))
+            if (options.Format != "W" && ChargingType.HasValue)
             {
                 writer.WritePropertyName("chargingType"u8);
                 writer.WriteStringValue(ChargingType.Value.ToString());
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownMeterDetails(document.RootElement, options);
+            return DeserializeEdgeOrderProductMeterDetails(document.RootElement, options);
         }
 
         internal static UnknownMeterDetails DeserializeUnknownMeterDetails(JsonElement element, ModelReaderWriterOptions options = null)
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 return null;
             }
             BillingType billingType = "Unknown";
-            Optional<double> multiplier = default;
-            Optional<EdgeOrderProductChargingType> chargingType = default;
+            double? multiplier = default;
+            EdgeOrderProductChargingType? chargingType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownMeterDetails(billingType, Optional.ToNullable(multiplier), Optional.ToNullable(chargingType), serializedAdditionalRawData);
+            return new UnknownMeterDetails(billingType, multiplier, chargingType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeOrderProductMeterDetails>.Write(ModelReaderWriterOptions options)
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownMeterDetails(document.RootElement, options);
+                        return DeserializeEdgeOrderProductMeterDetails(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(EdgeOrderProductMeterDetails)} does not support '{options.Format}' format.");

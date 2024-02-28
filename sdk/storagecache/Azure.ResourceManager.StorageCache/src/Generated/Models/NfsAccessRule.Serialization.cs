@@ -28,34 +28,34 @@ namespace Azure.ResourceManager.StorageCache.Models
             writer.WriteStartObject();
             writer.WritePropertyName("scope"u8);
             writer.WriteStringValue(Scope.ToString());
-            if (Optional.IsDefined(Filter))
+            if (Filter != null)
             {
                 writer.WritePropertyName("filter"u8);
                 writer.WriteStringValue(Filter);
             }
             writer.WritePropertyName("access"u8);
             writer.WriteStringValue(Access.ToString());
-            if (Optional.IsDefined(AllowSuid))
+            if (AllowSuid.HasValue)
             {
                 writer.WritePropertyName("suid"u8);
                 writer.WriteBooleanValue(AllowSuid.Value);
             }
-            if (Optional.IsDefined(AllowSubmountAccess))
+            if (AllowSubmountAccess.HasValue)
             {
                 writer.WritePropertyName("submountAccess"u8);
                 writer.WriteBooleanValue(AllowSubmountAccess.Value);
             }
-            if (Optional.IsDefined(EnableRootSquash))
+            if (EnableRootSquash.HasValue)
             {
                 writer.WritePropertyName("rootSquash"u8);
                 writer.WriteBooleanValue(EnableRootSquash.Value);
             }
-            if (Optional.IsDefined(AnonymousUID))
+            if (AnonymousUID != null)
             {
                 writer.WritePropertyName("anonymousUID"u8);
                 writer.WriteStringValue(AnonymousUID);
             }
-            if (Optional.IsDefined(AnonymousGID))
+            if (AnonymousGID != null)
             {
                 writer.WritePropertyName("anonymousGID"u8);
                 writer.WriteStringValue(AnonymousGID);
@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.StorageCache.Models
                 return null;
             }
             NfsAccessRuleScope scope = default;
-            Optional<string> filter = default;
+            string filter = default;
             NfsAccessRuleAccess access = default;
-            Optional<bool> suid = default;
-            Optional<bool> submountAccess = default;
-            Optional<bool> rootSquash = default;
-            Optional<string> anonymousUID = default;
-            Optional<string> anonymousGID = default;
+            bool? suid = default;
+            bool? submountAccess = default;
+            bool? rootSquash = default;
+            string anonymousUID = default;
+            string anonymousGID = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -168,7 +168,16 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NfsAccessRule(scope, filter.Value, access, Optional.ToNullable(suid), Optional.ToNullable(submountAccess), Optional.ToNullable(rootSquash), anonymousUID.Value, anonymousGID.Value, serializedAdditionalRawData);
+            return new NfsAccessRule(
+                scope,
+                filter,
+                access,
+                suid,
+                submountAccess,
+                rootSquash,
+                anonymousUID,
+                anonymousGID,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NfsAccessRule>.Write(ModelReaderWriterOptions options)

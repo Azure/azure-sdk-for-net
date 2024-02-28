@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ImageMappingRuleProfile))
+            if (ImageMappingRuleProfile != null)
             {
                 writer.WritePropertyName("imageMappingRuleProfile"u8);
                 writer.WriteObjectValue(ImageMappingRuleProfile);
             }
-            if (Optional.IsDefined(ApplicationEnablement))
+            if (ApplicationEnablement.HasValue)
             {
                 writer.WritePropertyName("applicationEnablement"u8);
                 writer.WriteStringValue(ApplicationEnablement.Value.ToString());
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<ImageMappingRuleProfile> imageMappingRuleProfile = default;
-            Optional<ApplicationEnablement> applicationEnablement = default;
+            ImageMappingRuleProfile imageMappingRuleProfile = default;
+            ApplicationEnablement? applicationEnablement = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    imageMappingRuleProfile = ImageMappingRuleProfile.DeserializeImageMappingRuleProfile(property.Value);
+                    imageMappingRuleProfile = ImageMappingRuleProfile.DeserializeImageMappingRuleProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("applicationEnablement"u8))
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureOperatorNexusImageDeployMappingRuleProfile(Optional.ToNullable(applicationEnablement), serializedAdditionalRawData, imageMappingRuleProfile.Value);
+            return new AzureOperatorNexusImageDeployMappingRuleProfile(applicationEnablement, serializedAdditionalRawData, imageMappingRuleProfile);
         }
 
         BinaryData IPersistableModel<AzureOperatorNexusImageDeployMappingRuleProfile>.Write(ModelReaderWriterOptions options)

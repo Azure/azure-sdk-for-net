@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             writer.WriteStartObject();
             writer.WritePropertyName("machineArmId"u8);
             writer.WriteStringValue(MachineArmId);
-            if (Optional.IsDefined(InstanceCount))
+            if (InstanceCount.HasValue)
             {
                 writer.WritePropertyName("instanceCount"u8);
                 writer.WriteNumberValue(InstanceCount.Value);
             }
-            if (Optional.IsDefined(JvmMemoryInMB))
+            if (JvmMemoryInMB.HasValue)
             {
                 writer.WritePropertyName("jvmMemoryInMB"u8);
                 writer.WriteNumberValue(JvmMemoryInMB.Value);
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 return null;
             }
             ResourceIdentifier machineArmId = default;
-            Optional<int> instanceCount = default;
-            Optional<int> jvmMemoryInMB = default;
+            int? instanceCount = default;
+            int? jvmMemoryInMB = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SpringBootAppInstancesItem(machineArmId, Optional.ToNullable(instanceCount), Optional.ToNullable(jvmMemoryInMB), serializedAdditionalRawData);
+            return new SpringBootAppInstancesItem(machineArmId, instanceCount, jvmMemoryInMB, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SpringBootAppInstancesItem>.Write(ModelReaderWriterOptions options)

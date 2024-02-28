@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Key1))
+            if (Key1.HasValue)
             {
                 writer.WritePropertyName("key1"u8);
                 writer.WriteStringValue(Key1.Value, "O");
             }
-            if (Optional.IsDefined(Key2))
+            if (Key2.HasValue)
             {
                 writer.WritePropertyName("key2"u8);
                 writer.WriteStringValue(Key2.Value, "O");
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> key1 = default;
-            Optional<DateTimeOffset> key2 = default;
+            DateTimeOffset? key1 = default;
+            DateTimeOffset? key2 = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageAccountKeyCreationTime(Optional.ToNullable(key1), Optional.ToNullable(key2), serializedAdditionalRawData);
+            return new StorageAccountKeyCreationTime(key1, key2, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageAccountKeyCreationTime>.Write(ModelReaderWriterOptions options)

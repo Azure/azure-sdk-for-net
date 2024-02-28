@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             writer.WritePropertyName("inputType"u8);
             writer.WriteStringValue(InputType.ToString());
-            if (Optional.IsDefined(Mode))
+            if (Mode.HasValue)
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (Optional.IsDefined(MountPath))
+            if (MountPath != null)
             {
                 if (MountPath != null)
                 {
@@ -86,8 +86,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             PackageInputType inputType = default;
-            Optional<PackageInputDeliveryMode> mode = default;
-            Optional<string> mountPath = default;
+            PackageInputDeliveryMode? mode = default;
+            string mountPath = default;
             PackageInputPathBase path = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("path"u8))
                 {
-                    path = PackageInputPathBase.DeserializePackageInputPathBase(property.Value);
+                    path = PackageInputPathBase.DeserializePackageInputPathBase(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ModelPackageInput(inputType, Optional.ToNullable(mode), mountPath.Value, path, serializedAdditionalRawData);
+            return new ModelPackageInput(inputType, mode, mountPath, path, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ModelPackageInput>.Write(ModelReaderWriterOptions options)

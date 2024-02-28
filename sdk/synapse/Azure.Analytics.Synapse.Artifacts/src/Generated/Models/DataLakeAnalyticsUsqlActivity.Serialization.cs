@@ -19,12 +19,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(LinkedServiceName))
+            if (LinkedServiceName != null)
             {
                 writer.WritePropertyName("linkedServiceName"u8);
                 writer.WriteObjectValue(LinkedServiceName);
             }
-            if (Optional.IsDefined(Policy))
+            if (Policy != null)
             {
                 writer.WritePropertyName("policy"u8);
                 writer.WriteObjectValue(Policy);
@@ -33,22 +33,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(State))
+            if (State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(OnInactiveMarkAs))
+            if (OnInactiveMarkAs.HasValue)
             {
                 writer.WritePropertyName("onInactiveMarkAs"u8);
                 writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(DependsOn))
+            if (!(DependsOn is ChangeTrackingList<ActivityDependency> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
@@ -58,7 +58,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(UserProperties))
+            if (!(UserProperties is ChangeTrackingList<UserProperty> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("userProperties"u8);
                 writer.WriteStartArray();
@@ -74,17 +74,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteObjectValue(ScriptPath);
             writer.WritePropertyName("scriptLinkedService"u8);
             writer.WriteObjectValue(ScriptLinkedService);
-            if (Optional.IsDefined(DegreeOfParallelism))
+            if (DegreeOfParallelism != null)
             {
                 writer.WritePropertyName("degreeOfParallelism"u8);
                 writer.WriteObjectValue(DegreeOfParallelism);
             }
-            if (Optional.IsDefined(Priority))
+            if (Priority != null)
             {
                 writer.WritePropertyName("priority"u8);
                 writer.WriteObjectValue(Priority);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingDictionary<string, object> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -100,12 +100,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(RuntimeVersion))
+            if (RuntimeVersion != null)
             {
                 writer.WritePropertyName("runtimeVersion"u8);
                 writer.WriteObjectValue(RuntimeVersion);
             }
-            if (Optional.IsDefined(CompilationMode))
+            if (CompilationMode != null)
             {
                 writer.WritePropertyName("compilationMode"u8);
                 writer.WriteObjectValue(CompilationMode);
@@ -125,22 +125,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<LinkedServiceReference> linkedServiceName = default;
-            Optional<ActivityPolicy> policy = default;
+            LinkedServiceReference linkedServiceName = default;
+            ActivityPolicy policy = default;
             string name = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<ActivityState> state = default;
-            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
-            Optional<IList<ActivityDependency>> dependsOn = default;
-            Optional<IList<UserProperty>> userProperties = default;
+            string description = default;
+            ActivityState? state = default;
+            ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
+            IList<ActivityDependency> dependsOn = default;
+            IList<UserProperty> userProperties = default;
             object scriptPath = default;
             LinkedServiceReference scriptLinkedService = default;
-            Optional<object> degreeOfParallelism = default;
-            Optional<object> priority = default;
-            Optional<IDictionary<string, object>> parameters = default;
-            Optional<object> runtimeVersion = default;
-            Optional<object> compilationMode = default;
+            object degreeOfParallelism = default;
+            object priority = default;
+            IDictionary<string, object> parameters = default;
+            object runtimeVersion = default;
+            object compilationMode = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -306,7 +306,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataLakeAnalyticsUsqlActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, scriptPath, scriptLinkedService, degreeOfParallelism.Value, priority.Value, Optional.ToDictionary(parameters), runtimeVersion.Value, compilationMode.Value);
+            return new DataLakeAnalyticsUsqlActivity(
+                name,
+                type,
+                description,
+                state,
+                onInactiveMarkAs,
+                dependsOn ?? new ChangeTrackingList<ActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<UserProperty>(),
+                additionalProperties,
+                linkedServiceName,
+                policy,
+                scriptPath,
+                scriptLinkedService,
+                degreeOfParallelism,
+                priority,
+                parameters ?? new ChangeTrackingDictionary<string, object>(),
+                runtimeVersion,
+                compilationMode);
         }
 
         internal partial class DataLakeAnalyticsUsqlActivityConverter : JsonConverter<DataLakeAnalyticsUsqlActivity>

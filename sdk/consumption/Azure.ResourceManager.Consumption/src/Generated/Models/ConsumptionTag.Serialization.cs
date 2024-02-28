@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Consumption.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Key))
+            if (Key != null)
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
             }
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<string> key = default;
-            Optional<IList<string>> value = default;
+            string key = default;
+            IList<string> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionTag(key.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new ConsumptionTag(key, value ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumptionTag>.Write(ModelReaderWriterOptions options)

@@ -30,47 +30,47 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStringValue(ReferenceInputDataSourceType);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Server))
+            if (Server != null)
             {
                 writer.WritePropertyName("server"u8);
                 writer.WriteStringValue(Server);
             }
-            if (Optional.IsDefined(Database))
+            if (Database != null)
             {
                 writer.WritePropertyName("database"u8);
                 writer.WriteStringValue(Database);
             }
-            if (Optional.IsDefined(User))
+            if (User != null)
             {
                 writer.WritePropertyName("user"u8);
                 writer.WriteStringValue(User);
             }
-            if (Optional.IsDefined(Password))
+            if (Password != null)
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (Optional.IsDefined(RefreshType))
+            if (RefreshType.HasValue)
             {
                 writer.WritePropertyName("refreshType"u8);
                 writer.WriteStringValue(RefreshType.Value.ToString());
             }
-            if (Optional.IsDefined(RefreshInterval))
+            if (RefreshInterval.HasValue)
             {
                 writer.WritePropertyName("refreshRate"u8);
                 writer.WriteStringValue(RefreshInterval.Value, "T");
             }
-            if (Optional.IsDefined(FullSnapshotQuery))
+            if (FullSnapshotQuery != null)
             {
                 writer.WritePropertyName("fullSnapshotQuery"u8);
                 writer.WriteStringValue(FullSnapshotQuery);
             }
-            if (Optional.IsDefined(DeltaSnapshotQuery))
+            if (DeltaSnapshotQuery != null)
             {
                 writer.WritePropertyName("deltaSnapshotQuery"u8);
                 writer.WriteStringValue(DeltaSnapshotQuery);
             }
-            if (Optional.IsDefined(AuthenticationMode))
+            if (AuthenticationMode.HasValue)
             {
                 writer.WritePropertyName("authenticationMode"u8);
                 writer.WriteStringValue(AuthenticationMode.Value.ToString());
@@ -115,15 +115,15 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             string type = default;
-            Optional<string> server = default;
-            Optional<string> database = default;
-            Optional<string> user = default;
-            Optional<string> password = default;
-            Optional<DataRefreshType> refreshType = default;
-            Optional<TimeSpan> refreshRate = default;
-            Optional<string> fullSnapshotQuery = default;
-            Optional<string> deltaSnapshotQuery = default;
-            Optional<StreamAnalyticsAuthenticationMode> authenticationMode = default;
+            string server = default;
+            string database = default;
+            string user = default;
+            string password = default;
+            DataRefreshType? refreshType = default;
+            TimeSpan? refreshRate = default;
+            string fullSnapshotQuery = default;
+            string deltaSnapshotQuery = default;
+            StreamAnalyticsAuthenticationMode? authenticationMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -208,7 +208,18 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlReferenceInputDataSource(type, serializedAdditionalRawData, server.Value, database.Value, user.Value, password.Value, Optional.ToNullable(refreshType), Optional.ToNullable(refreshRate), fullSnapshotQuery.Value, deltaSnapshotQuery.Value, Optional.ToNullable(authenticationMode));
+            return new SqlReferenceInputDataSource(
+                type,
+                serializedAdditionalRawData,
+                server,
+                database,
+                user,
+                password,
+                refreshType,
+                refreshRate,
+                fullSnapshotQuery,
+                deltaSnapshotQuery,
+                authenticationMode);
         }
 
         BinaryData IPersistableModel<SqlReferenceInputDataSource>.Write(ModelReaderWriterOptions options)

@@ -15,7 +15,7 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Length))
+            if (Length.HasValue)
             {
                 writer.WritePropertyName("length"u8);
                 writer.WriteNumberValue(Length.Value);
@@ -33,7 +33,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<int> length = default;
+            int? length = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -58,7 +58,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new TruncateTokenFilter(odataType, name, Optional.ToNullable(length));
+            return new TruncateTokenFilter(odataType, name, length);
         }
     }
 }

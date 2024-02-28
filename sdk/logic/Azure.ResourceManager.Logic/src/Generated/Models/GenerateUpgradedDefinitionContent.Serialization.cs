@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TargetSchemaVersion))
+            if (TargetSchemaVersion != null)
             {
                 writer.WritePropertyName("targetSchemaVersion"u8);
                 writer.WriteStringValue(TargetSchemaVersion);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<string> targetSchemaVersion = default;
+            string targetSchemaVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GenerateUpgradedDefinitionContent(targetSchemaVersion.Value, serializedAdditionalRawData);
+            return new GenerateUpgradedDefinitionContent(targetSchemaVersion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GenerateUpgradedDefinitionContent>.Write(ModelReaderWriterOptions options)

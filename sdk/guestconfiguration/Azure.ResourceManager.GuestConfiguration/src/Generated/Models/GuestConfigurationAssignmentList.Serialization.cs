@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<GuestConfigurationAssignmentData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<GuestConfigurationAssignmentData>> value = default;
+            IReadOnlyList<GuestConfigurationAssignmentData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     List<GuestConfigurationAssignmentData> array = new List<GuestConfigurationAssignmentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GuestConfigurationAssignmentData.DeserializeGuestConfigurationAssignmentData(item));
+                        array.Add(GuestConfigurationAssignmentData.DeserializeGuestConfigurationAssignmentData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GuestConfigurationAssignmentList(Optional.ToList(value), serializedAdditionalRawData);
+            return new GuestConfigurationAssignmentList(value ?? new ChangeTrackingList<GuestConfigurationAssignmentData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GuestConfigurationAssignmentList>.Write(ModelReaderWriterOptions options)

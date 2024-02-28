@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStringValue(CertificateSource.ToString());
             writer.WritePropertyName("protocolType"u8);
             writer.WriteStringValue(ProtocolType.ToString());
-            if (Optional.IsDefined(MinimumTlsVersion))
+            if (MinimumTlsVersion.HasValue)
             {
                 writer.WritePropertyName("minimumTlsVersion"u8);
                 writer.WriteStringValue(MinimumTlsVersion.Value.ToSerialString());
@@ -78,14 +78,14 @@ namespace Azure.ResourceManager.Cdn.Models
             CdnCertificateSource certificateSourceParameters = default;
             CertificateSource certificateSource = default;
             SecureDeliveryProtocolType protocolType = default;
-            Optional<CdnMinimumTlsVersion> minimumTlsVersion = default;
+            CdnMinimumTlsVersion? minimumTlsVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("certificateSourceParameters"u8))
                 {
-                    certificateSourceParameters = CdnCertificateSource.DeserializeCdnCertificateSource(property.Value);
+                    certificateSourceParameters = CdnCertificateSource.DeserializeCdnCertificateSource(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("certificateSource"u8))
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CdnManagedHttpsContent(certificateSource, protocolType, Optional.ToNullable(minimumTlsVersion), serializedAdditionalRawData, certificateSourceParameters);
+            return new CdnManagedHttpsContent(certificateSource, protocolType, minimumTlsVersion, serializedAdditionalRawData, certificateSourceParameters);
         }
 
         BinaryData IPersistableModel<CdnManagedHttpsContent>.Write(ModelReaderWriterOptions options)

@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ApiDeploymentParameterMetadataType))
+            if (ApiDeploymentParameterMetadataType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ApiDeploymentParameterMetadataType);
             }
-            if (Optional.IsDefined(IsRequired))
+            if (IsRequired.HasValue)
             {
                 writer.WritePropertyName("isRequired"u8);
                 writer.WriteBooleanValue(IsRequired.Value);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Visibility))
+            if (Visibility.HasValue)
             {
                 writer.WritePropertyName("visibility"u8);
                 writer.WriteStringValue(Visibility.Value.ToString());
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<string> type = default;
-            Optional<bool> isRequired = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<LogicApiDeploymentParameterVisibility> visibility = default;
+            string type = default;
+            bool? isRequired = default;
+            string displayName = default;
+            string description = default;
+            LogicApiDeploymentParameterVisibility? visibility = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicApiDeploymentParameterMetadata(type.Value, Optional.ToNullable(isRequired), displayName.Value, description.Value, Optional.ToNullable(visibility), serializedAdditionalRawData);
+            return new LogicApiDeploymentParameterMetadata(
+                type,
+                isRequired,
+                displayName,
+                description,
+                visibility,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicApiDeploymentParameterMetadata>.Write(ModelReaderWriterOptions options)

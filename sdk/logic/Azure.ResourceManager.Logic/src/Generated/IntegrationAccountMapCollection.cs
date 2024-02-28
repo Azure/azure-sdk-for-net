@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="mapName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<IntegrationAccountMapResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string mapName, IntegrationAccountMapData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(mapName, nameof(mapName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (mapName == null)
+            {
+                throw new ArgumentNullException(nameof(mapName));
+            }
+            if (mapName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(mapName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _integrationAccountMapClientDiagnostics.CreateScope("IntegrationAccountMapCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="mapName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<IntegrationAccountMapResource> CreateOrUpdate(WaitUntil waitUntil, string mapName, IntegrationAccountMapData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(mapName, nameof(mapName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (mapName == null)
+            {
+                throw new ArgumentNullException(nameof(mapName));
+            }
+            if (mapName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(mapName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _integrationAccountMapClientDiagnostics.CreateScope("IntegrationAccountMapCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="mapName"/> is null. </exception>
         public virtual async Task<Response<IntegrationAccountMapResource>> GetAsync(string mapName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(mapName, nameof(mapName));
+            if (mapName == null)
+            {
+                throw new ArgumentNullException(nameof(mapName));
+            }
+            if (mapName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(mapName));
+            }
 
             using var scope = _integrationAccountMapClientDiagnostics.CreateScope("IntegrationAccountMapCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="mapName"/> is null. </exception>
         public virtual Response<IntegrationAccountMapResource> Get(string mapName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(mapName, nameof(mapName));
+            if (mapName == null)
+            {
+                throw new ArgumentNullException(nameof(mapName));
+            }
+            if (mapName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(mapName));
+            }
 
             using var scope = _integrationAccountMapClientDiagnostics.CreateScope("IntegrationAccountMapCollection.Get");
             scope.Start();
@@ -332,7 +366,14 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="mapName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string mapName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(mapName, nameof(mapName));
+            if (mapName == null)
+            {
+                throw new ArgumentNullException(nameof(mapName));
+            }
+            if (mapName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(mapName));
+            }
 
             using var scope = _integrationAccountMapClientDiagnostics.CreateScope("IntegrationAccountMapCollection.Exists");
             scope.Start();
@@ -375,7 +416,14 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="mapName"/> is null. </exception>
         public virtual Response<bool> Exists(string mapName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(mapName, nameof(mapName));
+            if (mapName == null)
+            {
+                throw new ArgumentNullException(nameof(mapName));
+            }
+            if (mapName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(mapName));
+            }
 
             using var scope = _integrationAccountMapClientDiagnostics.CreateScope("IntegrationAccountMapCollection.Exists");
             scope.Start();
@@ -418,7 +466,14 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="mapName"/> is null. </exception>
         public virtual async Task<NullableResponse<IntegrationAccountMapResource>> GetIfExistsAsync(string mapName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(mapName, nameof(mapName));
+            if (mapName == null)
+            {
+                throw new ArgumentNullException(nameof(mapName));
+            }
+            if (mapName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(mapName));
+            }
 
             using var scope = _integrationAccountMapClientDiagnostics.CreateScope("IntegrationAccountMapCollection.GetIfExists");
             scope.Start();
@@ -463,7 +518,14 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="mapName"/> is null. </exception>
         public virtual NullableResponse<IntegrationAccountMapResource> GetIfExists(string mapName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(mapName, nameof(mapName));
+            if (mapName == null)
+            {
+                throw new ArgumentNullException(nameof(mapName));
+            }
+            if (mapName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(mapName));
+            }
 
             using var scope = _integrationAccountMapClientDiagnostics.CreateScope("IntegrationAccountMapCollection.GetIfExists");
             scope.Start();

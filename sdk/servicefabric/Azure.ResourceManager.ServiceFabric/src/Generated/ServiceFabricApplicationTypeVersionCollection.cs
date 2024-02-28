@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2023-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ServiceFabricApplicationTypeVersionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string version, ServiceFabricApplicationTypeVersionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
-            Argument.AssertNotNull(data, nameof(data));
+            if (version == null)
+            {
+                throw new ArgumentNullException(nameof(version));
+            }
+            if (version.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _serviceFabricApplicationTypeVersionApplicationTypeVersionsClientDiagnostics.CreateScope("ServiceFabricApplicationTypeVersionCollection.CreateOrUpdate");
             scope.Start();
@@ -115,7 +125,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2023-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ServiceFabricApplicationTypeVersionResource> CreateOrUpdate(WaitUntil waitUntil, string version, ServiceFabricApplicationTypeVersionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
-            Argument.AssertNotNull(data, nameof(data));
+            if (version == null)
+            {
+                throw new ArgumentNullException(nameof(version));
+            }
+            if (version.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _serviceFabricApplicationTypeVersionApplicationTypeVersionsClientDiagnostics.CreateScope("ServiceFabricApplicationTypeVersionCollection.CreateOrUpdate");
             scope.Start();
@@ -164,7 +184,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2023-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         public virtual async Task<Response<ServiceFabricApplicationTypeVersionResource>> GetAsync(string version, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            if (version == null)
+            {
+                throw new ArgumentNullException(nameof(version));
+            }
+            if (version.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
+            }
 
             using var scope = _serviceFabricApplicationTypeVersionApplicationTypeVersionsClientDiagnostics.CreateScope("ServiceFabricApplicationTypeVersionCollection.Get");
             scope.Start();
@@ -209,7 +236,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2023-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         public virtual Response<ServiceFabricApplicationTypeVersionResource> Get(string version, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            if (version == null)
+            {
+                throw new ArgumentNullException(nameof(version));
+            }
+            if (version.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
+            }
 
             using var scope = _serviceFabricApplicationTypeVersionApplicationTypeVersionsClientDiagnostics.CreateScope("ServiceFabricApplicationTypeVersionCollection.Get");
             scope.Start();
@@ -254,7 +288,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2023-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -267,7 +301,8 @@ namespace Azure.ResourceManager.ServiceFabric
         public virtual AsyncPageable<ServiceFabricApplicationTypeVersionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceFabricApplicationTypeVersionApplicationTypeVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ServiceFabricApplicationTypeVersionResource(Client, ServiceFabricApplicationTypeVersionData.DeserializeServiceFabricApplicationTypeVersionData(e)), _serviceFabricApplicationTypeVersionApplicationTypeVersionsClientDiagnostics, Pipeline, "ServiceFabricApplicationTypeVersionCollection.GetAll", "value", null, cancellationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceFabricApplicationTypeVersionApplicationTypeVersionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceFabricApplicationTypeVersionResource(Client, ServiceFabricApplicationTypeVersionData.DeserializeServiceFabricApplicationTypeVersionData(e)), _serviceFabricApplicationTypeVersionApplicationTypeVersionsClientDiagnostics, Pipeline, "ServiceFabricApplicationTypeVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -283,7 +318,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2023-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -296,7 +331,8 @@ namespace Azure.ResourceManager.ServiceFabric
         public virtual Pageable<ServiceFabricApplicationTypeVersionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceFabricApplicationTypeVersionApplicationTypeVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new ServiceFabricApplicationTypeVersionResource(Client, ServiceFabricApplicationTypeVersionData.DeserializeServiceFabricApplicationTypeVersionData(e)), _serviceFabricApplicationTypeVersionApplicationTypeVersionsClientDiagnostics, Pipeline, "ServiceFabricApplicationTypeVersionCollection.GetAll", "value", null, cancellationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceFabricApplicationTypeVersionApplicationTypeVersionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceFabricApplicationTypeVersionResource(Client, ServiceFabricApplicationTypeVersionData.DeserializeServiceFabricApplicationTypeVersionData(e)), _serviceFabricApplicationTypeVersionApplicationTypeVersionsClientDiagnostics, Pipeline, "ServiceFabricApplicationTypeVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -312,7 +348,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2023-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -326,7 +362,14 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string version, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            if (version == null)
+            {
+                throw new ArgumentNullException(nameof(version));
+            }
+            if (version.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
+            }
 
             using var scope = _serviceFabricApplicationTypeVersionApplicationTypeVersionsClientDiagnostics.CreateScope("ServiceFabricApplicationTypeVersionCollection.Exists");
             scope.Start();
@@ -355,7 +398,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2023-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -369,7 +412,14 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         public virtual Response<bool> Exists(string version, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            if (version == null)
+            {
+                throw new ArgumentNullException(nameof(version));
+            }
+            if (version.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
+            }
 
             using var scope = _serviceFabricApplicationTypeVersionApplicationTypeVersionsClientDiagnostics.CreateScope("ServiceFabricApplicationTypeVersionCollection.Exists");
             scope.Start();
@@ -398,7 +448,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2023-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -412,7 +462,14 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         public virtual async Task<NullableResponse<ServiceFabricApplicationTypeVersionResource>> GetIfExistsAsync(string version, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            if (version == null)
+            {
+                throw new ArgumentNullException(nameof(version));
+            }
+            if (version.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
+            }
 
             using var scope = _serviceFabricApplicationTypeVersionApplicationTypeVersionsClientDiagnostics.CreateScope("ServiceFabricApplicationTypeVersionCollection.GetIfExists");
             scope.Start();
@@ -443,7 +500,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2023-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -457,7 +514,14 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         public virtual NullableResponse<ServiceFabricApplicationTypeVersionResource> GetIfExists(string version, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            if (version == null)
+            {
+                throw new ArgumentNullException(nameof(version));
+            }
+            if (version.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
+            }
 
             using var scope = _serviceFabricApplicationTypeVersionApplicationTypeVersionsClientDiagnostics.CreateScope("ServiceFabricApplicationTypeVersionCollection.GetIfExists");
             scope.Start();

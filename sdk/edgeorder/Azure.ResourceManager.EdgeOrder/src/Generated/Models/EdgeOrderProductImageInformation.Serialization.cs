@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ImageType))
+            if (options.Format != "W" && ImageType.HasValue)
             {
                 writer.WritePropertyName("imageType"u8);
                 writer.WriteStringValue(ImageType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ImageUri))
+            if (options.Format != "W" && ImageUri != null)
             {
                 writer.WritePropertyName("imageUrl"u8);
                 writer.WriteStringValue(ImageUri.AbsoluteUri);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Optional<EdgeOrderProductImageType> imageType = default;
-            Optional<Uri> imageUrl = default;
+            EdgeOrderProductImageType? imageType = default;
+            Uri imageUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeOrderProductImageInformation(Optional.ToNullable(imageType), imageUrl.Value, serializedAdditionalRawData);
+            return new EdgeOrderProductImageInformation(imageType, imageUrl, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeOrderProductImageInformation>.Write(ModelReaderWriterOptions options)

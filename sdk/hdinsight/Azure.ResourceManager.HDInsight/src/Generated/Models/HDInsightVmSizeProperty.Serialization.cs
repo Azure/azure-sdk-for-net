@@ -26,52 +26,52 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Cores))
+            if (Cores.HasValue)
             {
                 writer.WritePropertyName("cores"u8);
                 writer.WriteNumberValue(Cores.Value);
             }
-            if (Optional.IsDefined(DataDiskStorageTier))
+            if (DataDiskStorageTier != null)
             {
                 writer.WritePropertyName("dataDiskStorageTier"u8);
                 writer.WriteStringValue(DataDiskStorageTier);
             }
-            if (Optional.IsDefined(Label))
+            if (Label != null)
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
-            if (Optional.IsDefined(MaxDataDiskCount))
+            if (MaxDataDiskCount.HasValue)
             {
                 writer.WritePropertyName("maxDataDiskCount"u8);
                 writer.WriteNumberValue(MaxDataDiskCount.Value);
             }
-            if (Optional.IsDefined(MemoryInMB))
+            if (MemoryInMB.HasValue)
             {
                 writer.WritePropertyName("memoryInMb"u8);
                 writer.WriteNumberValue(MemoryInMB.Value);
             }
-            if (Optional.IsDefined(IsSupportedByVirtualMachines))
+            if (IsSupportedByVirtualMachines.HasValue)
             {
                 writer.WritePropertyName("supportedByVirtualMachines"u8);
                 writer.WriteBooleanValue(IsSupportedByVirtualMachines.Value);
             }
-            if (Optional.IsDefined(IsSupportedByWebWorkerRoles))
+            if (IsSupportedByWebWorkerRoles.HasValue)
             {
                 writer.WritePropertyName("supportedByWebWorkerRoles"u8);
                 writer.WriteBooleanValue(IsSupportedByWebWorkerRoles.Value);
             }
-            if (Optional.IsDefined(VirtualMachineResourceDiskSizeInMB))
+            if (VirtualMachineResourceDiskSizeInMB.HasValue)
             {
                 writer.WritePropertyName("virtualMachineResourceDiskSizeInMb"u8);
                 writer.WriteNumberValue(VirtualMachineResourceDiskSizeInMB.Value);
             }
-            if (Optional.IsDefined(WebWorkerResourceDiskSizeInMB))
+            if (WebWorkerResourceDiskSizeInMB.HasValue)
             {
                 writer.WritePropertyName("webWorkerResourceDiskSizeInMb"u8);
                 writer.WriteNumberValue(WebWorkerResourceDiskSizeInMB.Value);
@@ -114,16 +114,16 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<int> cores = default;
-            Optional<string> dataDiskStorageTier = default;
-            Optional<string> label = default;
-            Optional<long> maxDataDiskCount = default;
-            Optional<long> memoryInMB = default;
-            Optional<bool> supportedByVirtualMachines = default;
-            Optional<bool> supportedByWebWorkerRoles = default;
-            Optional<long> virtualMachineResourceDiskSizeInMB = default;
-            Optional<long> webWorkerResourceDiskSizeInMB = default;
+            string name = default;
+            int? cores = default;
+            string dataDiskStorageTier = default;
+            string label = default;
+            long? maxDataDiskCount = default;
+            long? memoryInMB = default;
+            bool? supportedByVirtualMachines = default;
+            bool? supportedByWebWorkerRoles = default;
+            long? virtualMachineResourceDiskSizeInMB = default;
+            long? webWorkerResourceDiskSizeInMB = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -212,7 +212,18 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightVmSizeProperty(name.Value, Optional.ToNullable(cores), dataDiskStorageTier.Value, label.Value, Optional.ToNullable(maxDataDiskCount), Optional.ToNullable(memoryInMB), Optional.ToNullable(supportedByVirtualMachines), Optional.ToNullable(supportedByWebWorkerRoles), Optional.ToNullable(virtualMachineResourceDiskSizeInMB), Optional.ToNullable(webWorkerResourceDiskSizeInMB), serializedAdditionalRawData);
+            return new HDInsightVmSizeProperty(
+                name,
+                cores,
+                dataDiskStorageTier,
+                label,
+                maxDataDiskCount,
+                memoryInMB,
+                supportedByVirtualMachines,
+                supportedByWebWorkerRoles,
+                virtualMachineResourceDiskSizeInMB,
+                webWorkerResourceDiskSizeInMB,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightVmSizeProperty>.Write(ModelReaderWriterOptions options)

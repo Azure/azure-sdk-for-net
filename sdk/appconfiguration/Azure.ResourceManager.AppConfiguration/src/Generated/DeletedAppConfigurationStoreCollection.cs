@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-05-01</description>
+        /// <description>2023-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -86,7 +86,14 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> is null. </exception>
         public virtual async Task<Response<DeletedAppConfigurationStoreResource>> GetAsync(AzureLocation location, string configStoreName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configStoreName, nameof(configStoreName));
+            if (configStoreName == null)
+            {
+                throw new ArgumentNullException(nameof(configStoreName));
+            }
+            if (configStoreName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(configStoreName));
+            }
 
             using var scope = _deletedAppConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("DeletedAppConfigurationStoreCollection.Get");
             scope.Start();
@@ -117,7 +124,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-05-01</description>
+        /// <description>2023-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -132,7 +139,14 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> is null. </exception>
         public virtual Response<DeletedAppConfigurationStoreResource> Get(AzureLocation location, string configStoreName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configStoreName, nameof(configStoreName));
+            if (configStoreName == null)
+            {
+                throw new ArgumentNullException(nameof(configStoreName));
+            }
+            if (configStoreName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(configStoreName));
+            }
 
             using var scope = _deletedAppConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("DeletedAppConfigurationStoreCollection.Get");
             scope.Start();
@@ -163,7 +177,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-05-01</description>
+        /// <description>2023-03-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -189,7 +203,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-05-01</description>
+        /// <description>2023-03-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -215,7 +229,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-05-01</description>
+        /// <description>2023-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -230,7 +244,14 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(AzureLocation location, string configStoreName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configStoreName, nameof(configStoreName));
+            if (configStoreName == null)
+            {
+                throw new ArgumentNullException(nameof(configStoreName));
+            }
+            if (configStoreName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(configStoreName));
+            }
 
             using var scope = _deletedAppConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("DeletedAppConfigurationStoreCollection.Exists");
             scope.Start();
@@ -259,7 +280,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-05-01</description>
+        /// <description>2023-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -274,7 +295,14 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> is null. </exception>
         public virtual Response<bool> Exists(AzureLocation location, string configStoreName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configStoreName, nameof(configStoreName));
+            if (configStoreName == null)
+            {
+                throw new ArgumentNullException(nameof(configStoreName));
+            }
+            if (configStoreName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(configStoreName));
+            }
 
             using var scope = _deletedAppConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("DeletedAppConfigurationStoreCollection.Exists");
             scope.Start();
@@ -303,7 +331,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-05-01</description>
+        /// <description>2023-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -318,7 +346,14 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> is null. </exception>
         public virtual async Task<NullableResponse<DeletedAppConfigurationStoreResource>> GetIfExistsAsync(AzureLocation location, string configStoreName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configStoreName, nameof(configStoreName));
+            if (configStoreName == null)
+            {
+                throw new ArgumentNullException(nameof(configStoreName));
+            }
+            if (configStoreName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(configStoreName));
+            }
 
             using var scope = _deletedAppConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("DeletedAppConfigurationStoreCollection.GetIfExists");
             scope.Start();
@@ -349,7 +384,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-05-01</description>
+        /// <description>2023-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -364,7 +399,14 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> is null. </exception>
         public virtual NullableResponse<DeletedAppConfigurationStoreResource> GetIfExists(AzureLocation location, string configStoreName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configStoreName, nameof(configStoreName));
+            if (configStoreName == null)
+            {
+                throw new ArgumentNullException(nameof(configStoreName));
+            }
+            if (configStoreName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(configStoreName));
+            }
 
             using var scope = _deletedAppConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("DeletedAppConfigurationStoreCollection.GetIfExists");
             scope.Start();

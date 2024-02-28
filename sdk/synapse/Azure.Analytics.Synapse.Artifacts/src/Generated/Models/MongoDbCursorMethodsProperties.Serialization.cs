@@ -19,22 +19,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Project))
+            if (Project != null)
             {
                 writer.WritePropertyName("project"u8);
                 writer.WriteObjectValue(Project);
             }
-            if (Optional.IsDefined(Sort))
+            if (Sort != null)
             {
                 writer.WritePropertyName("sort"u8);
                 writer.WriteObjectValue(Sort);
             }
-            if (Optional.IsDefined(Skip))
+            if (Skip != null)
             {
                 writer.WritePropertyName("skip"u8);
                 writer.WriteObjectValue(Skip);
             }
-            if (Optional.IsDefined(Limit))
+            if (Limit != null)
             {
                 writer.WritePropertyName("limit"u8);
                 writer.WriteObjectValue(Limit);
@@ -53,10 +53,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> project = default;
-            Optional<object> sort = default;
-            Optional<object> skip = default;
-            Optional<object> limit = default;
+            object project = default;
+            object sort = default;
+            object skip = default;
+            object limit = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new MongoDbCursorMethodsProperties(project.Value, sort.Value, skip.Value, limit.Value, additionalProperties);
+            return new MongoDbCursorMethodsProperties(project, sort, skip, limit, additionalProperties);
         }
 
         internal partial class MongoDbCursorMethodsPropertiesConverter : JsonConverter<MongoDbCursorMethodsProperties>

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             writer.WritePropertyName("contextUri"u8);
             writer.WriteStringValue(ContextUri.AbsoluteUri);
-            if (Optional.IsDefined(DockerfilePath))
+            if (DockerfilePath != null)
             {
                 writer.WritePropertyName("dockerfilePath"u8);
                 writer.WriteStringValue(DockerfilePath);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             Uri contextUri = default;
-            Optional<string> dockerfilePath = default;
+            string dockerfilePath = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningBuildContext(contextUri, dockerfilePath.Value, serializedAdditionalRawData);
+            return new MachineLearningBuildContext(contextUri, dockerfilePath, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningBuildContext>.Write(ModelReaderWriterOptions options)

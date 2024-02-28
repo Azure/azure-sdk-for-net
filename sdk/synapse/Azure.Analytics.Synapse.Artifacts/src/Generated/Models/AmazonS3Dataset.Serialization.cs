@@ -21,24 +21,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Structure))
+            if (Structure != null)
             {
                 writer.WritePropertyName("structure"u8);
                 writer.WriteObjectValue(Structure);
             }
-            if (Optional.IsDefined(Schema))
+            if (Schema != null)
             {
                 writer.WritePropertyName("schema"u8);
                 writer.WriteObjectValue(Schema);
             }
             writer.WritePropertyName("linkedServiceName"u8);
             writer.WriteObjectValue(LinkedServiceName);
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingDictionary<string, ParameterSpecification> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -49,7 +49,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Annotations))
+            if (!(Annotations is ChangeTrackingList<object> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -64,7 +64,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Folder))
+            if (Folder != null)
             {
                 writer.WritePropertyName("folder"u8);
                 writer.WriteObjectValue(Folder);
@@ -73,37 +73,37 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("bucketName"u8);
             writer.WriteObjectValue(BucketName);
-            if (Optional.IsDefined(Key))
+            if (Key != null)
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteObjectValue(Key);
             }
-            if (Optional.IsDefined(Prefix))
+            if (Prefix != null)
             {
                 writer.WritePropertyName("prefix"u8);
                 writer.WriteObjectValue(Prefix);
             }
-            if (Optional.IsDefined(Version))
+            if (Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteObjectValue(Version);
             }
-            if (Optional.IsDefined(ModifiedDatetimeStart))
+            if (ModifiedDatetimeStart != null)
             {
                 writer.WritePropertyName("modifiedDatetimeStart"u8);
                 writer.WriteObjectValue(ModifiedDatetimeStart);
             }
-            if (Optional.IsDefined(ModifiedDatetimeEnd))
+            if (ModifiedDatetimeEnd != null)
             {
                 writer.WritePropertyName("modifiedDatetimeEnd"u8);
                 writer.WriteObjectValue(ModifiedDatetimeEnd);
             }
-            if (Optional.IsDefined(Format))
+            if (Format != null)
             {
                 writer.WritePropertyName("format"u8);
                 writer.WriteObjectValue(Format);
             }
-            if (Optional.IsDefined(Compression))
+            if (Compression != null)
             {
                 writer.WritePropertyName("compression"u8);
                 writer.WriteObjectValue(Compression);
@@ -124,21 +124,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<string> description = default;
-            Optional<object> structure = default;
-            Optional<object> schema = default;
+            string description = default;
+            object structure = default;
+            object schema = default;
             LinkedServiceReference linkedServiceName = default;
-            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<object>> annotations = default;
-            Optional<DatasetFolder> folder = default;
+            IDictionary<string, ParameterSpecification> parameters = default;
+            IList<object> annotations = default;
+            DatasetFolder folder = default;
             object bucketName = default;
-            Optional<object> key = default;
-            Optional<object> prefix = default;
-            Optional<object> version = default;
-            Optional<object> modifiedDatetimeStart = default;
-            Optional<object> modifiedDatetimeEnd = default;
-            Optional<DatasetStorageFormat> format = default;
-            Optional<DatasetCompression> compression = default;
+            object key = default;
+            object prefix = default;
+            object version = default;
+            object modifiedDatetimeStart = default;
+            object modifiedDatetimeEnd = default;
+            DatasetStorageFormat format = default;
+            DatasetCompression compression = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -303,7 +303,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AmazonS3Dataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties, bucketName, key.Value, prefix.Value, version.Value, modifiedDatetimeStart.Value, modifiedDatetimeEnd.Value, format.Value, compression.Value);
+            return new AmazonS3Dataset(
+                type,
+                description,
+                structure,
+                schema,
+                linkedServiceName,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                folder,
+                additionalProperties,
+                bucketName,
+                key,
+                prefix,
+                version,
+                modifiedDatetimeStart,
+                modifiedDatetimeEnd,
+                format,
+                compression);
         }
 
         internal partial class AmazonS3DatasetConverter : JsonConverter<AmazonS3Dataset>

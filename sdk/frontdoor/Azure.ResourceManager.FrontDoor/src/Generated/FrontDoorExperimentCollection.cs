@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.FrontDoor
         /// <exception cref="ArgumentNullException"> <paramref name="experimentName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<FrontDoorExperimentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string experimentName, FrontDoorExperimentData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(experimentName, nameof(experimentName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (experimentName == null)
+            {
+                throw new ArgumentNullException(nameof(experimentName));
+            }
+            if (experimentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(experimentName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _frontDoorExperimentExperimentsClientDiagnostics.CreateScope("FrontDoorExperimentCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.FrontDoor
         /// <exception cref="ArgumentNullException"> <paramref name="experimentName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<FrontDoorExperimentResource> CreateOrUpdate(WaitUntil waitUntil, string experimentName, FrontDoorExperimentData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(experimentName, nameof(experimentName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (experimentName == null)
+            {
+                throw new ArgumentNullException(nameof(experimentName));
+            }
+            if (experimentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(experimentName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _frontDoorExperimentExperimentsClientDiagnostics.CreateScope("FrontDoorExperimentCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.FrontDoor
         /// <exception cref="ArgumentNullException"> <paramref name="experimentName"/> is null. </exception>
         public virtual async Task<Response<FrontDoorExperimentResource>> GetAsync(string experimentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(experimentName, nameof(experimentName));
+            if (experimentName == null)
+            {
+                throw new ArgumentNullException(nameof(experimentName));
+            }
+            if (experimentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(experimentName));
+            }
 
             using var scope = _frontDoorExperimentExperimentsClientDiagnostics.CreateScope("FrontDoorExperimentCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.FrontDoor
         /// <exception cref="ArgumentNullException"> <paramref name="experimentName"/> is null. </exception>
         public virtual Response<FrontDoorExperimentResource> Get(string experimentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(experimentName, nameof(experimentName));
+            if (experimentName == null)
+            {
+                throw new ArgumentNullException(nameof(experimentName));
+            }
+            if (experimentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(experimentName));
+            }
 
             using var scope = _frontDoorExperimentExperimentsClientDiagnostics.CreateScope("FrontDoorExperimentCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.FrontDoor
         /// <exception cref="ArgumentNullException"> <paramref name="experimentName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string experimentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(experimentName, nameof(experimentName));
+            if (experimentName == null)
+            {
+                throw new ArgumentNullException(nameof(experimentName));
+            }
+            if (experimentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(experimentName));
+            }
 
             using var scope = _frontDoorExperimentExperimentsClientDiagnostics.CreateScope("FrontDoorExperimentCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.FrontDoor
         /// <exception cref="ArgumentNullException"> <paramref name="experimentName"/> is null. </exception>
         public virtual Response<bool> Exists(string experimentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(experimentName, nameof(experimentName));
+            if (experimentName == null)
+            {
+                throw new ArgumentNullException(nameof(experimentName));
+            }
+            if (experimentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(experimentName));
+            }
 
             using var scope = _frontDoorExperimentExperimentsClientDiagnostics.CreateScope("FrontDoorExperimentCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.FrontDoor
         /// <exception cref="ArgumentNullException"> <paramref name="experimentName"/> is null. </exception>
         public virtual async Task<NullableResponse<FrontDoorExperimentResource>> GetIfExistsAsync(string experimentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(experimentName, nameof(experimentName));
+            if (experimentName == null)
+            {
+                throw new ArgumentNullException(nameof(experimentName));
+            }
+            if (experimentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(experimentName));
+            }
 
             using var scope = _frontDoorExperimentExperimentsClientDiagnostics.CreateScope("FrontDoorExperimentCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.FrontDoor
         /// <exception cref="ArgumentNullException"> <paramref name="experimentName"/> is null. </exception>
         public virtual NullableResponse<FrontDoorExperimentResource> GetIfExists(string experimentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(experimentName, nameof(experimentName));
+            if (experimentName == null)
+            {
+                throw new ArgumentNullException(nameof(experimentName));
+            }
+            if (experimentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(experimentName));
+            }
 
             using var scope = _frontDoorExperimentExperimentsClientDiagnostics.CreateScope("FrontDoorExperimentCollection.GetIfExists");
             scope.Start();

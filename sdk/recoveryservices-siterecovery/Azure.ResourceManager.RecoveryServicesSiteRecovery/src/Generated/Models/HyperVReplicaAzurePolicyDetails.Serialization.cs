@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RecoveryPointHistoryDurationInHours))
+            if (RecoveryPointHistoryDurationInHours.HasValue)
             {
                 writer.WritePropertyName("recoveryPointHistoryDurationInHours"u8);
                 writer.WriteNumberValue(RecoveryPointHistoryDurationInHours.Value);
             }
-            if (Optional.IsDefined(ApplicationConsistentSnapshotFrequencyInHours))
+            if (ApplicationConsistentSnapshotFrequencyInHours.HasValue)
             {
                 writer.WritePropertyName("applicationConsistentSnapshotFrequencyInHours"u8);
                 writer.WriteNumberValue(ApplicationConsistentSnapshotFrequencyInHours.Value);
             }
-            if (Optional.IsDefined(ReplicationInterval))
+            if (ReplicationInterval.HasValue)
             {
                 writer.WritePropertyName("replicationInterval"u8);
                 writer.WriteNumberValue(ReplicationInterval.Value);
             }
-            if (Optional.IsDefined(OnlineReplicationStartTime))
+            if (OnlineReplicationStartTime != null)
             {
                 writer.WritePropertyName("onlineReplicationStartTime"u8);
                 writer.WriteStringValue(OnlineReplicationStartTime);
             }
-            if (Optional.IsDefined(Encryption))
+            if (Encryption != null)
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteStringValue(Encryption);
             }
-            if (Optional.IsDefined(ActiveStorageAccountId))
+            if (ActiveStorageAccountId != null)
             {
                 writer.WritePropertyName("activeStorageAccountId"u8);
                 writer.WriteStringValue(ActiveStorageAccountId);
@@ -96,12 +96,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<int> recoveryPointHistoryDurationInHours = default;
-            Optional<int> applicationConsistentSnapshotFrequencyInHours = default;
-            Optional<int> replicationInterval = default;
-            Optional<string> onlineReplicationStartTime = default;
-            Optional<string> encryption = default;
-            Optional<ResourceIdentifier> activeStorageAccountId = default;
+            int? recoveryPointHistoryDurationInHours = default;
+            int? applicationConsistentSnapshotFrequencyInHours = default;
+            int? replicationInterval = default;
+            string onlineReplicationStartTime = default;
+            string encryption = default;
+            ResourceIdentifier activeStorageAccountId = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -164,7 +164,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HyperVReplicaAzurePolicyDetails(instanceType, serializedAdditionalRawData, Optional.ToNullable(recoveryPointHistoryDurationInHours), Optional.ToNullable(applicationConsistentSnapshotFrequencyInHours), Optional.ToNullable(replicationInterval), onlineReplicationStartTime.Value, encryption.Value, activeStorageAccountId.Value);
+            return new HyperVReplicaAzurePolicyDetails(
+                instanceType,
+                serializedAdditionalRawData,
+                recoveryPointHistoryDurationInHours,
+                applicationConsistentSnapshotFrequencyInHours,
+                replicationInterval,
+                onlineReplicationStartTime,
+                encryption,
+                activeStorageAccountId);
         }
 
         BinaryData IPersistableModel<HyperVReplicaAzurePolicyDetails>.Write(ModelReaderWriterOptions options)

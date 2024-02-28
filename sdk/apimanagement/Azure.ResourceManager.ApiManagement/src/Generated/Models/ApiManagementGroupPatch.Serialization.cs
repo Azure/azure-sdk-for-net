@@ -28,22 +28,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(ApiManagementGroupType))
+            if (ApiManagementGroupType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ApiManagementGroupType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(ExternalId))
+            if (ExternalId != null)
             {
                 writer.WritePropertyName("externalId"u8);
                 writer.WriteStringValue(ExternalId);
@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<ApiManagementGroupType> type = default;
-            Optional<string> externalId = default;
+            string displayName = default;
+            string description = default;
+            ApiManagementGroupType? type = default;
+            string externalId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementGroupPatch(displayName.Value, description.Value, Optional.ToNullable(type), externalId.Value, serializedAdditionalRawData);
+            return new ApiManagementGroupPatch(displayName, description, type, externalId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementGroupPatch>.Write(ModelReaderWriterOptions options)

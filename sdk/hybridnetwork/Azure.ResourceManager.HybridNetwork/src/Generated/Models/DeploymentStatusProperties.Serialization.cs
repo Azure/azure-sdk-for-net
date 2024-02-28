@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(Resources))
+            if (Resources != null)
             {
                 writer.WritePropertyName("resources"u8);
                 writer.WriteObjectValue(Resources);
             }
-            if (Optional.IsDefined(NextExpectedUpdateOn))
+            if (NextExpectedUpdateOn.HasValue)
             {
                 writer.WritePropertyName("nextExpectedUpdateAt"u8);
                 writer.WriteStringValue(NextExpectedUpdateOn.Value, "O");
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<ComponentStatus> status = default;
-            Optional<ComponentKubernetesResources> resources = default;
-            Optional<DateTimeOffset> nextExpectedUpdateAt = default;
+            ComponentStatus? status = default;
+            ComponentKubernetesResources resources = default;
+            DateTimeOffset? nextExpectedUpdateAt = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    resources = ComponentKubernetesResources.DeserializeComponentKubernetesResources(property.Value);
+                    resources = ComponentKubernetesResources.DeserializeComponentKubernetesResources(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("nextExpectedUpdateAt"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeploymentStatusProperties(Optional.ToNullable(status), resources.Value, Optional.ToNullable(nextExpectedUpdateAt), serializedAdditionalRawData);
+            return new DeploymentStatusProperties(status, resources, nextExpectedUpdateAt, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeploymentStatusProperties>.Write(ModelReaderWriterOptions options)

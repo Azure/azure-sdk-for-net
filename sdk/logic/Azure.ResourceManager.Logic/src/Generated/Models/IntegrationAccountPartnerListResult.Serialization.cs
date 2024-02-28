@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<IntegrationAccountPartnerData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<IntegrationAccountPartnerData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<IntegrationAccountPartnerData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Logic.Models
                     List<IntegrationAccountPartnerData> array = new List<IntegrationAccountPartnerData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IntegrationAccountPartnerData.DeserializeIntegrationAccountPartnerData(item));
+                        array.Add(IntegrationAccountPartnerData.DeserializeIntegrationAccountPartnerData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationAccountPartnerListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new IntegrationAccountPartnerListResult(value ?? new ChangeTrackingList<IntegrationAccountPartnerData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationAccountPartnerListResult>.Write(ModelReaderWriterOptions options)

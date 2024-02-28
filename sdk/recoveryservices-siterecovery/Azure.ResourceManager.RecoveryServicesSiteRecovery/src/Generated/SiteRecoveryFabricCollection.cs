@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -89,8 +89,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="fabricName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<SiteRecoveryFabricResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string fabricName, SiteRecoveryFabricCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (fabricName == null)
+            {
+                throw new ArgumentNullException(nameof(fabricName));
+            }
+            if (fabricName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _siteRecoveryFabricReplicationFabricsClientDiagnostics.CreateScope("SiteRecoveryFabricCollection.CreateOrUpdate");
             scope.Start();
@@ -122,7 +132,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -138,8 +148,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="fabricName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<SiteRecoveryFabricResource> CreateOrUpdate(WaitUntil waitUntil, string fabricName, SiteRecoveryFabricCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (fabricName == null)
+            {
+                throw new ArgumentNullException(nameof(fabricName));
+            }
+            if (fabricName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _siteRecoveryFabricReplicationFabricsClientDiagnostics.CreateScope("SiteRecoveryFabricCollection.CreateOrUpdate");
             scope.Start();
@@ -171,7 +191,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -186,7 +206,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="fabricName"/> is null. </exception>
         public virtual async Task<Response<SiteRecoveryFabricResource>> GetAsync(string fabricName, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            if (fabricName == null)
+            {
+                throw new ArgumentNullException(nameof(fabricName));
+            }
+            if (fabricName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
+            }
 
             using var scope = _siteRecoveryFabricReplicationFabricsClientDiagnostics.CreateScope("SiteRecoveryFabricCollection.Get");
             scope.Start();
@@ -217,7 +244,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -232,7 +259,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="fabricName"/> is null. </exception>
         public virtual Response<SiteRecoveryFabricResource> Get(string fabricName, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            if (fabricName == null)
+            {
+                throw new ArgumentNullException(nameof(fabricName));
+            }
+            if (fabricName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
+            }
 
             using var scope = _siteRecoveryFabricReplicationFabricsClientDiagnostics.CreateScope("SiteRecoveryFabricCollection.Get");
             scope.Start();
@@ -263,7 +297,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -293,7 +327,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -323,7 +357,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -338,7 +372,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="fabricName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string fabricName, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            if (fabricName == null)
+            {
+                throw new ArgumentNullException(nameof(fabricName));
+            }
+            if (fabricName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
+            }
 
             using var scope = _siteRecoveryFabricReplicationFabricsClientDiagnostics.CreateScope("SiteRecoveryFabricCollection.Exists");
             scope.Start();
@@ -367,7 +408,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -382,7 +423,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="fabricName"/> is null. </exception>
         public virtual Response<bool> Exists(string fabricName, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            if (fabricName == null)
+            {
+                throw new ArgumentNullException(nameof(fabricName));
+            }
+            if (fabricName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
+            }
 
             using var scope = _siteRecoveryFabricReplicationFabricsClientDiagnostics.CreateScope("SiteRecoveryFabricCollection.Exists");
             scope.Start();
@@ -411,7 +459,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -426,7 +474,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="fabricName"/> is null. </exception>
         public virtual async Task<NullableResponse<SiteRecoveryFabricResource>> GetIfExistsAsync(string fabricName, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            if (fabricName == null)
+            {
+                throw new ArgumentNullException(nameof(fabricName));
+            }
+            if (fabricName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
+            }
 
             using var scope = _siteRecoveryFabricReplicationFabricsClientDiagnostics.CreateScope("SiteRecoveryFabricCollection.GetIfExists");
             scope.Start();
@@ -457,7 +512,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -472,7 +527,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="fabricName"/> is null. </exception>
         public virtual NullableResponse<SiteRecoveryFabricResource> GetIfExists(string fabricName, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            if (fabricName == null)
+            {
+                throw new ArgumentNullException(nameof(fabricName));
+            }
+            if (fabricName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
+            }
 
             using var scope = _siteRecoveryFabricReplicationFabricsClientDiagnostics.CreateScope("SiteRecoveryFabricCollection.GetIfExists");
             scope.Start();

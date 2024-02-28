@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.MySql.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(Message))
+            if (Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.MySql.Models
             {
                 return null;
             }
-            Optional<MySqlQueryPerformanceInsightResetDataResultState> status = default;
-            Optional<string> message = default;
+            MySqlQueryPerformanceInsightResetDataResultState? status = default;
+            string message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.MySql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlQueryPerformanceInsightResetDataResult(Optional.ToNullable(status), message.Value, serializedAdditionalRawData);
+            return new MySqlQueryPerformanceInsightResetDataResult(status, message, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlQueryPerformanceInsightResetDataResult>.Write(ModelReaderWriterOptions options)

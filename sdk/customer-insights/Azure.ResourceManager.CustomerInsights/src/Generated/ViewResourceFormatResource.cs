@@ -116,7 +116,10 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         public virtual async Task<Response<ViewResourceFormatResource>> GetAsync(string userId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(userId, nameof(userId));
+            if (userId == null)
+            {
+                throw new ArgumentNullException(nameof(userId));
+            }
 
             using var scope = _viewResourceFormatViewsClientDiagnostics.CreateScope("ViewResourceFormatResource.Get");
             scope.Start();
@@ -160,7 +163,10 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         public virtual Response<ViewResourceFormatResource> Get(string userId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(userId, nameof(userId));
+            if (userId == null)
+            {
+                throw new ArgumentNullException(nameof(userId));
+            }
 
             using var scope = _viewResourceFormatViewsClientDiagnostics.CreateScope("ViewResourceFormatResource.Get");
             scope.Start();
@@ -205,7 +211,10 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, string userId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(userId, nameof(userId));
+            if (userId == null)
+            {
+                throw new ArgumentNullException(nameof(userId));
+            }
 
             using var scope = _viewResourceFormatViewsClientDiagnostics.CreateScope("ViewResourceFormatResource.Delete");
             scope.Start();
@@ -251,7 +260,10 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         public virtual ArmOperation Delete(WaitUntil waitUntil, string userId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(userId, nameof(userId));
+            if (userId == null)
+            {
+                throw new ArgumentNullException(nameof(userId));
+            }
 
             using var scope = _viewResourceFormatViewsClientDiagnostics.CreateScope("ViewResourceFormatResource.Delete");
             scope.Start();
@@ -297,7 +309,10 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ViewResourceFormatResource>> UpdateAsync(WaitUntil waitUntil, ViewResourceFormatData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _viewResourceFormatViewsClientDiagnostics.CreateScope("ViewResourceFormatResource.Update");
             scope.Start();
@@ -343,7 +358,10 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ViewResourceFormatResource> Update(WaitUntil waitUntil, ViewResourceFormatData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _viewResourceFormatViewsClientDiagnostics.CreateScope("ViewResourceFormatResource.Update");
             scope.Start();

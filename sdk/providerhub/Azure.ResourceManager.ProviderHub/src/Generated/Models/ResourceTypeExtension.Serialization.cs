@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EndpointUri))
+            if (EndpointUri != null)
             {
                 writer.WritePropertyName("endpointUri"u8);
                 writer.WriteStringValue(EndpointUri.AbsoluteUri);
             }
-            if (Optional.IsCollectionDefined(ExtensionCategories))
+            if (!(ExtensionCategories is ChangeTrackingList<ResourceTypeExtensionCategory> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("extensionCategories"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Timeout))
+            if (Timeout.HasValue)
             {
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteStringValue(Timeout.Value, "P");
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<Uri> endpointUri = default;
-            Optional<IList<ResourceTypeExtensionCategory>> extensionCategories = default;
-            Optional<TimeSpan> timeout = default;
+            Uri endpointUri = default;
+            IList<ResourceTypeExtensionCategory> extensionCategories = default;
+            TimeSpan? timeout = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceTypeExtension(endpointUri.Value, Optional.ToList(extensionCategories), Optional.ToNullable(timeout), serializedAdditionalRawData);
+            return new ResourceTypeExtension(endpointUri, extensionCategories ?? new ChangeTrackingList<ResourceTypeExtensionCategory>(), timeout, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceTypeExtension>.Write(ModelReaderWriterOptions options)

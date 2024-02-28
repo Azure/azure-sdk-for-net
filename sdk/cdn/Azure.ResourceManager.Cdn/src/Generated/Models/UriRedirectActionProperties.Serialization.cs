@@ -30,27 +30,27 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStringValue(ActionType.ToString());
             writer.WritePropertyName("redirectType"u8);
             writer.WriteStringValue(RedirectType.ToString());
-            if (Optional.IsDefined(DestinationProtocol))
+            if (DestinationProtocol.HasValue)
             {
                 writer.WritePropertyName("destinationProtocol"u8);
                 writer.WriteStringValue(DestinationProtocol.Value.ToString());
             }
-            if (Optional.IsDefined(CustomPath))
+            if (CustomPath != null)
             {
                 writer.WritePropertyName("customPath"u8);
                 writer.WriteStringValue(CustomPath);
             }
-            if (Optional.IsDefined(CustomHostname))
+            if (CustomHostname != null)
             {
                 writer.WritePropertyName("customHostname"u8);
                 writer.WriteStringValue(CustomHostname);
             }
-            if (Optional.IsDefined(CustomQueryString))
+            if (CustomQueryString != null)
             {
                 writer.WritePropertyName("customQueryString"u8);
                 writer.WriteStringValue(CustomQueryString);
             }
-            if (Optional.IsDefined(CustomFragment))
+            if (CustomFragment != null)
             {
                 writer.WritePropertyName("customFragment"u8);
                 writer.WriteStringValue(CustomFragment);
@@ -95,11 +95,11 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             UriRedirectActionType typeName = default;
             RedirectType redirectType = default;
-            Optional<DestinationProtocol> destinationProtocol = default;
-            Optional<string> customPath = default;
-            Optional<string> customHostname = default;
-            Optional<string> customQueryString = default;
-            Optional<string> customFragment = default;
+            DestinationProtocol? destinationProtocol = default;
+            string customPath = default;
+            string customHostname = default;
+            string customQueryString = default;
+            string customFragment = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,15 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UriRedirectActionProperties(typeName, redirectType, Optional.ToNullable(destinationProtocol), customPath.Value, customHostname.Value, customQueryString.Value, customFragment.Value, serializedAdditionalRawData);
+            return new UriRedirectActionProperties(
+                typeName,
+                redirectType,
+                destinationProtocol,
+                customPath,
+                customHostname,
+                customQueryString,
+                customFragment,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UriRedirectActionProperties>.Write(ModelReaderWriterOptions options)

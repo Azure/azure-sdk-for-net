@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TargetInstanceCount))
+            if (TargetInstanceCount.HasValue)
             {
                 writer.WritePropertyName("targetInstanceCount"u8);
                 writer.WriteNumberValue(TargetInstanceCount.Value);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<int> targetInstanceCount = default;
+            int? targetInstanceCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightClusterResizeContent(Optional.ToNullable(targetInstanceCount), serializedAdditionalRawData);
+            return new HDInsightClusterResizeContent(targetInstanceCount, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightClusterResizeContent>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(UsageDataCollectionPolicy))
+            if (UsageDataCollectionPolicy != null)
             {
                 writer.WritePropertyName("usageDataCollectionPolicy"u8);
                 writer.WriteObjectValue(UsageDataCollectionPolicy);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<EdgeUsageDataCollectionPolicy> usageDataCollectionPolicy = default;
+            EdgeUsageDataCollectionPolicy usageDataCollectionPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    usageDataCollectionPolicy = EdgeUsageDataCollectionPolicy.DeserializeEdgeUsageDataCollectionPolicy(property.Value);
+                    usageDataCollectionPolicy = EdgeUsageDataCollectionPolicy.DeserializeEdgeUsageDataCollectionPolicy(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MediaServicesEdgePolicies(usageDataCollectionPolicy.Value, serializedAdditionalRawData);
+            return new MediaServicesEdgePolicies(usageDataCollectionPolicy, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MediaServicesEdgePolicies>.Write(ModelReaderWriterOptions options)

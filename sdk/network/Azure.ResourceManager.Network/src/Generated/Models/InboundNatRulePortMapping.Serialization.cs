@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(InboundNatRuleName))
+            if (options.Format != "W" && InboundNatRuleName != null)
             {
                 writer.WritePropertyName("inboundNatRuleName"u8);
                 writer.WriteStringValue(InboundNatRuleName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Protocol))
+            if (options.Format != "W" && Protocol.HasValue)
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(FrontendPort))
+            if (options.Format != "W" && FrontendPort.HasValue)
             {
                 writer.WritePropertyName("frontendPort"u8);
                 writer.WriteNumberValue(FrontendPort.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(BackendPort))
+            if (options.Format != "W" && BackendPort.HasValue)
             {
                 writer.WritePropertyName("backendPort"u8);
                 writer.WriteNumberValue(BackendPort.Value);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> inboundNatRuleName = default;
-            Optional<LoadBalancingTransportProtocol> protocol = default;
-            Optional<int> frontendPort = default;
-            Optional<int> backendPort = default;
+            string inboundNatRuleName = default;
+            LoadBalancingTransportProtocol? protocol = default;
+            int? frontendPort = default;
+            int? backendPort = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InboundNatRulePortMapping(inboundNatRuleName.Value, Optional.ToNullable(protocol), Optional.ToNullable(frontendPort), Optional.ToNullable(backendPort), serializedAdditionalRawData);
+            return new InboundNatRulePortMapping(inboundNatRuleName, protocol, frontendPort, backendPort, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InboundNatRulePortMapping>.Write(ModelReaderWriterOptions options)

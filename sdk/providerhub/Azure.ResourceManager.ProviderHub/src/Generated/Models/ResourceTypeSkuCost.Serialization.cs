@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStartObject();
             writer.WritePropertyName("meterId"u8);
             writer.WriteStringValue(MeterId);
-            if (Optional.IsDefined(Quantity))
+            if (Quantity.HasValue)
             {
                 writer.WritePropertyName("quantity"u8);
                 writer.WriteNumberValue(Quantity.Value);
             }
-            if (Optional.IsDefined(ExtendedUnit))
+            if (ExtendedUnit != null)
             {
                 writer.WritePropertyName("extendedUnit"u8);
                 writer.WriteStringValue(ExtendedUnit);
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 return null;
             }
             string meterId = default;
-            Optional<int> quantity = default;
-            Optional<string> extendedUnit = default;
+            int? quantity = default;
+            string extendedUnit = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceTypeSkuCost(meterId, Optional.ToNullable(quantity), extendedUnit.Value, serializedAdditionalRawData);
+            return new ResourceTypeSkuCost(meterId, quantity, extendedUnit, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceTypeSkuCost>.Write(ModelReaderWriterOptions options)

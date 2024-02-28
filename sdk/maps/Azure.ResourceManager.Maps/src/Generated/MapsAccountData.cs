@@ -57,7 +57,10 @@ namespace Azure.ResourceManager.Maps
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public MapsAccountData(AzureLocation location, MapsSku sku) : base(location)
         {
-            Argument.AssertNotNull(sku, nameof(sku));
+            if (sku == null)
+            {
+                throw new ArgumentNullException(nameof(sku));
+            }
 
             Sku = sku;
         }

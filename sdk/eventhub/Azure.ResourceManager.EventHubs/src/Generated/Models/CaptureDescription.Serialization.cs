@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.EventHubs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Enabled))
+            if (Enabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(Enabled.Value);
             }
-            if (Optional.IsDefined(Encoding))
+            if (Encoding.HasValue)
             {
                 writer.WritePropertyName("encoding"u8);
                 writer.WriteStringValue(Encoding.Value.ToSerialString());
             }
-            if (Optional.IsDefined(IntervalInSeconds))
+            if (IntervalInSeconds.HasValue)
             {
                 writer.WritePropertyName("intervalInSeconds"u8);
                 writer.WriteNumberValue(IntervalInSeconds.Value);
             }
-            if (Optional.IsDefined(SizeLimitInBytes))
+            if (SizeLimitInBytes.HasValue)
             {
                 writer.WritePropertyName("sizeLimitInBytes"u8);
                 writer.WriteNumberValue(SizeLimitInBytes.Value);
             }
-            if (Optional.IsDefined(Destination))
+            if (Destination != null)
             {
                 writer.WritePropertyName("destination"u8);
                 writer.WriteObjectValue(Destination);
             }
-            if (Optional.IsDefined(SkipEmptyArchives))
+            if (SkipEmptyArchives.HasValue)
             {
                 writer.WritePropertyName("skipEmptyArchives"u8);
                 writer.WriteBooleanValue(SkipEmptyArchives.Value);
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<EncodingCaptureDescription> encoding = default;
-            Optional<int> intervalInSeconds = default;
-            Optional<int> sizeLimitInBytes = default;
-            Optional<EventHubDestination> destination = default;
-            Optional<bool> skipEmptyArchives = default;
+            bool? enabled = default;
+            EncodingCaptureDescription? encoding = default;
+            int? intervalInSeconds = default;
+            int? sizeLimitInBytes = default;
+            EventHubDestination destination = default;
+            bool? skipEmptyArchives = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     {
                         continue;
                     }
-                    destination = EventHubDestination.DeserializeEventHubDestination(property.Value);
+                    destination = EventHubDestination.DeserializeEventHubDestination(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("skipEmptyArchives"u8))
@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CaptureDescription(Optional.ToNullable(enabled), Optional.ToNullable(encoding), Optional.ToNullable(intervalInSeconds), Optional.ToNullable(sizeLimitInBytes), destination.Value, Optional.ToNullable(skipEmptyArchives), serializedAdditionalRawData);
+            return new CaptureDescription(
+                enabled,
+                encoding,
+                intervalInSeconds,
+                sizeLimitInBytes,
+                destination,
+                skipEmptyArchives,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CaptureDescription>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(LabVmId))
+            if (LabVmId != null)
             {
                 writer.WritePropertyName("labVmId"u8);
                 writer.WriteStringValue(LabVmId);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<string> labVmId = default;
+            string labVmId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FormulaPropertiesFromVm(labVmId.Value, serializedAdditionalRawData);
+            return new FormulaPropertiesFromVm(labVmId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FormulaPropertiesFromVm>.Write(ModelReaderWriterOptions options)

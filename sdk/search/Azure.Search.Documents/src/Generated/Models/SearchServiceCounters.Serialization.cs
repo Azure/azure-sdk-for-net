@@ -74,7 +74,16 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SearchServiceCounters(aliasesCount, documentCount, indexesCount, indexersCount, dataSourcesCount, storageSize, synonymMaps, skillsetCount, vectorIndexSize);
+            return new SearchServiceCounters(
+                aliasesCount,
+                documentCount,
+                indexesCount,
+                indexersCount,
+                dataSourcesCount,
+                storageSize,
+                synonymMaps,
+                skillsetCount,
+                vectorIndexSize);
         }
     }
 }

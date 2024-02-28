@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteObjectValue(item.Value);
             }
             writer.WriteEndObject();
-            if (Optional.IsDefined(TargetRUs))
+            if (TargetRUs.HasValue)
             {
                 writer.WritePropertyName("targetRUs"u8);
                 writer.WriteNumberValue(TargetRUs.Value);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             IDictionary<string, MongoDBCollectionSettings> collections = default;
-            Optional<int> targetRUs = default;
+            int? targetRUs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     Dictionary<string, MongoDBCollectionSettings> dictionary = new Dictionary<string, MongoDBCollectionSettings>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, MongoDBCollectionSettings.DeserializeMongoDBCollectionSettings(property0.Value));
+                        dictionary.Add(property0.Name, MongoDBCollectionSettings.DeserializeMongoDBCollectionSettings(property0.Value, options));
                     }
                     collections = dictionary;
                     continue;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MongoDBDatabaseSettings(collections, Optional.ToNullable(targetRUs), serializedAdditionalRawData);
+            return new MongoDBDatabaseSettings(collections, targetRUs, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MongoDBDatabaseSettings>.Write(ModelReaderWriterOptions options)

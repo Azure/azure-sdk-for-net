@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<NetworkFabricInternetGatewayRuleData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<NetworkFabricInternetGatewayRuleData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<NetworkFabricInternetGatewayRuleData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<NetworkFabricInternetGatewayRuleData> array = new List<NetworkFabricInternetGatewayRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkFabricInternetGatewayRuleData.DeserializeNetworkFabricInternetGatewayRuleData(item));
+                        array.Add(NetworkFabricInternetGatewayRuleData.DeserializeNetworkFabricInternetGatewayRuleData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InternetGatewayRulesListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new InternetGatewayRulesListResult(value ?? new ChangeTrackingList<NetworkFabricInternetGatewayRuleData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InternetGatewayRulesListResult>.Write(ModelReaderWriterOptions options)

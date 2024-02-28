@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SystemCreatedAcrAccount))
+            if (SystemCreatedAcrAccount != null)
             {
                 if (SystemCreatedAcrAccount != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("systemCreatedAcrAccount");
                 }
             }
-            if (Optional.IsDefined(UserCreatedAcrAccount))
+            if (UserCreatedAcrAccount != null)
             {
                 if (UserCreatedAcrAccount != null)
                 {
@@ -88,8 +88,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<SystemCreatedAcrAccount> systemCreatedAcrAccount = default;
-            Optional<UserCreatedAcrAccount> userCreatedAcrAccount = default;
+            SystemCreatedAcrAccount systemCreatedAcrAccount = default;
+            UserCreatedAcrAccount userCreatedAcrAccount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         systemCreatedAcrAccount = null;
                         continue;
                     }
-                    systemCreatedAcrAccount = SystemCreatedAcrAccount.DeserializeSystemCreatedAcrAccount(property.Value);
+                    systemCreatedAcrAccount = SystemCreatedAcrAccount.DeserializeSystemCreatedAcrAccount(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("userCreatedAcrAccount"u8))
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         userCreatedAcrAccount = null;
                         continue;
                     }
-                    userCreatedAcrAccount = UserCreatedAcrAccount.DeserializeUserCreatedAcrAccount(property.Value);
+                    userCreatedAcrAccount = UserCreatedAcrAccount.DeserializeUserCreatedAcrAccount(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RegistryAcrDetails(systemCreatedAcrAccount.Value, userCreatedAcrAccount.Value, serializedAdditionalRawData);
+            return new RegistryAcrDetails(systemCreatedAcrAccount, userCreatedAcrAccount, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RegistryAcrDetails>.Write(ModelReaderWriterOptions options)

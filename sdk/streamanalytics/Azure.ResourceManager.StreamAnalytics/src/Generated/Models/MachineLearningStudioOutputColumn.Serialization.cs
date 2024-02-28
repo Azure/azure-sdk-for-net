@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(DataType))
+            if (DataType != null)
             {
                 writer.WritePropertyName("dataType"u8);
                 writer.WriteStringValue(DataType);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> dataType = default;
+            string name = default;
+            string dataType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningStudioOutputColumn(name.Value, dataType.Value, serializedAdditionalRawData);
+            return new MachineLearningStudioOutputColumn(name, dataType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningStudioOutputColumn>.Write(ModelReaderWriterOptions options)

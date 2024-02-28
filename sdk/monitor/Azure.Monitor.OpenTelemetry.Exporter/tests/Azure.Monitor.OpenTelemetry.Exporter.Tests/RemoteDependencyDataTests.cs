@@ -52,7 +52,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
 
             var remoteDependencyDataType = new RemoteDependencyData(2, activity, ref activityTagsProcessor).Type;
-            var expectedType = RemoteDependencyData.s_sqlDbs.Contains(dbSystem) ? "SQL" : dbSystem;
+            var expectedType = AzMonListExtensions.s_dbSystems.Contains(dbSystem) ? "SQL" : dbSystem;
 
             Assert.Equal(expectedType, remoteDependencyDataType);
         }

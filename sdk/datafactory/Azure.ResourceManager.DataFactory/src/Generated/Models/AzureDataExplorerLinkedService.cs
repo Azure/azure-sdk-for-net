@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -21,8 +20,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="database"/> is null. </exception>
         public AzureDataExplorerLinkedService(DataFactoryElement<string> endpoint, DataFactoryElement<string> database)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(database, nameof(database));
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
+            if (database == null)
+            {
+                throw new ArgumentNullException(nameof(database));
+            }
 
             Endpoint = endpoint;
             Database = database;
@@ -51,6 +56,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Tenant = tenant;
             Credential = credential;
             LinkedServiceType = linkedServiceType ?? "AzureDataExplorer";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureDataExplorerLinkedService"/> for deserialization. </summary>
+        internal AzureDataExplorerLinkedService()
+        {
         }
 
         /// <summary> The endpoint of Azure Data Explorer (the engine's endpoint). URL will be in the format https://&lt;clusterName&gt;.&lt;regionName&gt;.kusto.windows.net. Type: string (or Expression with resultType string). </summary>

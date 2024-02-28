@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 return null;
             }
             IReadOnlyList<ContainerAppCertificateData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppCertificateData> array = new List<ContainerAppCertificateData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppCertificateData.DeserializeContainerAppCertificateData(item));
+                        array.Add(ContainerAppCertificateData.DeserializeContainerAppCertificateData(item, options));
                     }
                     value = array;
                     continue;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CertificateCollection(value, nextLink.Value, serializedAdditionalRawData);
+            return new CertificateCollection(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CertificateCollection>.Write(ModelReaderWriterOptions options)

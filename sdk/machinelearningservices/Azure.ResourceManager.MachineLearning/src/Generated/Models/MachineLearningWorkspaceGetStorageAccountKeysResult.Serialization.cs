@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(UserStorageKey))
+            if (options.Format != "W" && UserStorageKey != null)
             {
                 writer.WritePropertyName("userStorageKey"u8);
                 writer.WriteStringValue(UserStorageKey);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> userStorageKey = default;
+            string userStorageKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningWorkspaceGetStorageAccountKeysResult(userStorageKey.Value, serializedAdditionalRawData);
+            return new MachineLearningWorkspaceGetStorageAccountKeysResult(userStorageKey, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningWorkspaceGetStorageAccountKeysResult>.Write(ModelReaderWriterOptions options)

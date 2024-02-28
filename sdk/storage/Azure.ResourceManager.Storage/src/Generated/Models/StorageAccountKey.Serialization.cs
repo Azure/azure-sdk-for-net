@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(KeyName))
+            if (options.Format != "W" && KeyName != null)
             {
                 writer.WritePropertyName("keyName"u8);
                 writer.WriteStringValue(KeyName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Value))
+            if (options.Format != "W" && Value != null)
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Permissions))
+            if (options.Format != "W" && Permissions.HasValue)
             {
                 writer.WritePropertyName("permissions"u8);
                 writer.WriteStringValue(Permissions.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<string> keyName = default;
-            Optional<string> value = default;
-            Optional<StorageAccountKeyPermission> permissions = default;
-            Optional<DateTimeOffset> creationTime = default;
+            string keyName = default;
+            string value = default;
+            StorageAccountKeyPermission? permissions = default;
+            DateTimeOffset? creationTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageAccountKey(keyName.Value, value.Value, Optional.ToNullable(permissions), Optional.ToNullable(creationTime), serializedAdditionalRawData);
+            return new StorageAccountKey(keyName, value, permissions, creationTime, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageAccountKey>.Write(ModelReaderWriterOptions options)

@@ -26,62 +26,62 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(FirstConsumptionOn))
+            if (options.Format != "W" && FirstConsumptionOn.HasValue)
             {
                 writer.WritePropertyName("firstConsumptionDate"u8);
                 writer.WriteStringValue(FirstConsumptionOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastConsumptionOn))
+            if (options.Format != "W" && LastConsumptionOn.HasValue)
             {
                 writer.WritePropertyName("lastConsumptionDate"u8);
                 writer.WriteStringValue(LastConsumptionOn.Value, "O");
             }
-            if (Optional.IsDefined(LookBackPeriod))
+            if (LookBackPeriod.HasValue)
             {
                 writer.WritePropertyName("lookBackPeriod"u8);
                 writer.WriteStringValue(LookBackPeriod.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(TotalHours))
+            if (options.Format != "W" && TotalHours.HasValue)
             {
                 writer.WritePropertyName("totalHours"u8);
                 writer.WriteNumberValue(TotalHours.Value);
             }
-            if (Optional.IsDefined(Usage))
+            if (Usage != null)
             {
                 writer.WritePropertyName("usage"u8);
                 writer.WriteObjectValue(Usage);
             }
-            if (options.Format != "W" && Optional.IsDefined(ArmSkuName))
+            if (options.Format != "W" && ArmSkuName != null)
             {
                 writer.WritePropertyName("armSkuName"u8);
                 writer.WriteStringValue(ArmSkuName);
             }
-            if (Optional.IsDefined(Term))
+            if (Term.HasValue)
             {
                 writer.WritePropertyName("term"u8);
                 writer.WriteStringValue(Term.Value.ToString());
             }
-            if (Optional.IsDefined(CommitmentGranularity))
+            if (CommitmentGranularity.HasValue)
             {
                 writer.WritePropertyName("commitmentGranularity"u8);
                 writer.WriteStringValue(CommitmentGranularity.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CurrencyCode))
+            if (options.Format != "W" && CurrencyCode != null)
             {
                 writer.WritePropertyName("currencyCode"u8);
                 writer.WriteStringValue(CurrencyCode);
             }
-            if (options.Format != "W" && Optional.IsDefined(CostWithoutBenefit))
+            if (options.Format != "W" && CostWithoutBenefit.HasValue)
             {
                 writer.WritePropertyName("costWithoutBenefit"u8);
                 writer.WriteNumberValue(CostWithoutBenefit.Value);
             }
-            if (Optional.IsDefined(RecommendationDetails))
+            if (RecommendationDetails != null)
             {
                 writer.WritePropertyName("recommendationDetails"u8);
                 writer.WriteObjectValue(RecommendationDetails);
             }
-            if (options.Format != "W" && Optional.IsDefined(AllRecommendationDetails))
+            if (options.Format != "W" && AllRecommendationDetails != null)
             {
                 writer.WritePropertyName("allRecommendationDetails"u8);
                 writer.WriteObjectValue(AllRecommendationDetails);
@@ -130,11 +130,11 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Shared": return SharedScopeBenefitRecommendationProperties.DeserializeSharedScopeBenefitRecommendationProperties(element);
-                    case "Single": return SingleScopeBenefitRecommendationProperties.DeserializeSingleScopeBenefitRecommendationProperties(element);
+                    case "Shared": return SharedScopeBenefitRecommendationProperties.DeserializeSharedScopeBenefitRecommendationProperties(element, options);
+                    case "Single": return SingleScopeBenefitRecommendationProperties.DeserializeSingleScopeBenefitRecommendationProperties(element, options);
                 }
             }
-            return UnknownBenefitRecommendationProperties.DeserializeUnknownBenefitRecommendationProperties(element);
+            return UnknownBenefitRecommendationProperties.DeserializeUnknownBenefitRecommendationProperties(element, options);
         }
 
         BinaryData IPersistableModel<BenefitRecommendationProperties>.Write(ModelReaderWriterOptions options)

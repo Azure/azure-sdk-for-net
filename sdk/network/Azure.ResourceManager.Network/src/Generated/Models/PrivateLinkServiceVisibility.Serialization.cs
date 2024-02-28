@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Visible))
+            if (Visible.HasValue)
             {
                 writer.WritePropertyName("visible"u8);
                 writer.WriteBooleanValue(Visible.Value);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<bool> visible = default;
+            bool? visible = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateLinkServiceVisibility(Optional.ToNullable(visible), serializedAdditionalRawData);
+            return new PrivateLinkServiceVisibility(visible, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateLinkServiceVisibility>.Write(ModelReaderWriterOptions options)

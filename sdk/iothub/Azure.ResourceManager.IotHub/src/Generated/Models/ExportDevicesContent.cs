@@ -52,7 +52,10 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <exception cref="ArgumentNullException"> <paramref name="exportBlobContainerUri"/> is null. </exception>
         public ExportDevicesContent(Uri exportBlobContainerUri, bool excludeKeys)
         {
-            Argument.AssertNotNull(exportBlobContainerUri, nameof(exportBlobContainerUri));
+            if (exportBlobContainerUri == null)
+            {
+                throw new ArgumentNullException(nameof(exportBlobContainerUri));
+            }
 
             ExportBlobContainerUri = exportBlobContainerUri;
             ExcludeKeys = excludeKeys;

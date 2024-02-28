@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -20,7 +19,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public HiveObjectDataset(DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
         {
-            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
+            if (linkedServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(linkedServiceName));
+            }
 
             DatasetType = "HiveObject";
         }
@@ -44,6 +46,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Table = table;
             SchemaTypePropertiesSchema = schemaTypePropertiesSchema;
             DatasetType = datasetType ?? "HiveObject";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HiveObjectDataset"/> for deserialization. </summary>
+        internal HiveObjectDataset()
+        {
         }
 
         /// <summary>

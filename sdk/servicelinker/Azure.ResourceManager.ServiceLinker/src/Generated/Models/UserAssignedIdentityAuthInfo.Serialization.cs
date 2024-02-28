@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ClientId))
+            if (ClientId != null)
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
-            if (Optional.IsDefined(SubscriptionId))
+            if (SubscriptionId != null)
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 return null;
             }
-            Optional<string> clientId = default;
-            Optional<string> subscriptionId = default;
+            string clientId = default;
+            string subscriptionId = default;
             LinkerAuthType authType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UserAssignedIdentityAuthInfo(authType, serializedAdditionalRawData, clientId.Value, subscriptionId.Value);
+            return new UserAssignedIdentityAuthInfo(authType, serializedAdditionalRawData, clientId, subscriptionId);
         }
 
         BinaryData IPersistableModel<UserAssignedIdentityAuthInfo>.Write(ModelReaderWriterOptions options)

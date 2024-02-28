@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-03</description>
+        /// <description>2023-07-03</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-03</description>
+        /// <description>2023-07-03</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-03</description>
+        /// <description>2023-07-03</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-03</description>
+        /// <description>2023-07-03</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-03</description>
+        /// <description>2023-07-03</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-03</description>
+        /// <description>2023-07-03</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-03</description>
+        /// <description>2023-07-03</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -354,7 +354,10 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<GalleryImageResource>> UpdateAsync(WaitUntil waitUntil, GalleryImagePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _galleryImageClientDiagnostics.CreateScope("GalleryImageResource.Update");
             scope.Start();
@@ -386,7 +389,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-03</description>
+        /// <description>2023-07-03</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -400,7 +403,10 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<GalleryImageResource> Update(WaitUntil waitUntil, GalleryImagePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _galleryImageClientDiagnostics.CreateScope("GalleryImageResource.Update");
             scope.Start();
@@ -432,7 +438,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-03</description>
+        /// <description>2023-07-03</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -446,8 +452,14 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<GalleryImageResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _galleryImageClientDiagnostics.CreateScope("GalleryImageResource.AddTag");
             scope.Start();
@@ -495,7 +507,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-03</description>
+        /// <description>2023-07-03</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -509,8 +521,14 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<GalleryImageResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _galleryImageClientDiagnostics.CreateScope("GalleryImageResource.AddTag");
             scope.Start();
@@ -558,7 +576,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-03</description>
+        /// <description>2023-07-03</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -571,7 +589,10 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<GalleryImageResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _galleryImageClientDiagnostics.CreateScope("GalleryImageResource.SetTags");
             scope.Start();
@@ -616,7 +637,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-03</description>
+        /// <description>2023-07-03</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -629,7 +650,10 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<GalleryImageResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _galleryImageClientDiagnostics.CreateScope("GalleryImageResource.SetTags");
             scope.Start();
@@ -674,7 +698,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-03</description>
+        /// <description>2023-07-03</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -687,7 +711,10 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<GalleryImageResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _galleryImageClientDiagnostics.CreateScope("GalleryImageResource.RemoveTag");
             scope.Start();
@@ -735,7 +762,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-03</description>
+        /// <description>2023-07-03</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -748,7 +775,10 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<GalleryImageResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _galleryImageClientDiagnostics.CreateScope("GalleryImageResource.RemoveTag");
             scope.Start();

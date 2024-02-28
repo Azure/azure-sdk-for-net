@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             writer.WriteNumberValue(MaxPercentUpgradeDomainDeltaUnhealthyNodes);
             writer.WritePropertyName("maxPercentDeltaUnhealthyApplications"u8);
             writer.WriteNumberValue(MaxPercentDeltaUnhealthyApplications);
-            if (Optional.IsCollectionDefined(ApplicationDeltaHealthPolicies))
+            if (!(ApplicationDeltaHealthPolicies is ChangeTrackingDictionary<string, ApplicationDeltaHealthPolicy> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("applicationDeltaHealthPolicies"u8);
                 writer.WriteStartObject();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             int maxPercentDeltaUnhealthyNodes = default;
             int maxPercentUpgradeDomainDeltaUnhealthyNodes = default;
             int maxPercentDeltaUnhealthyApplications = default;
-            Optional<IDictionary<string, ApplicationDeltaHealthPolicy>> applicationDeltaHealthPolicies = default;
+            IDictionary<string, ApplicationDeltaHealthPolicy> applicationDeltaHealthPolicies = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     Dictionary<string, ApplicationDeltaHealthPolicy> dictionary = new Dictionary<string, ApplicationDeltaHealthPolicy>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, ApplicationDeltaHealthPolicy.DeserializeApplicationDeltaHealthPolicy(property0.Value));
+                        dictionary.Add(property0.Name, ApplicationDeltaHealthPolicy.DeserializeApplicationDeltaHealthPolicy(property0.Value, options));
                     }
                     applicationDeltaHealthPolicies = dictionary;
                     continue;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterUpgradeDeltaHealthPolicy(maxPercentDeltaUnhealthyNodes, maxPercentUpgradeDomainDeltaUnhealthyNodes, maxPercentDeltaUnhealthyApplications, Optional.ToDictionary(applicationDeltaHealthPolicies), serializedAdditionalRawData);
+            return new ClusterUpgradeDeltaHealthPolicy(maxPercentDeltaUnhealthyNodes, maxPercentUpgradeDomainDeltaUnhealthyNodes, maxPercentDeltaUnhealthyApplications, applicationDeltaHealthPolicies ?? new ChangeTrackingDictionary<string, ApplicationDeltaHealthPolicy>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterUpgradeDeltaHealthPolicy>.Write(ModelReaderWriterOptions options)

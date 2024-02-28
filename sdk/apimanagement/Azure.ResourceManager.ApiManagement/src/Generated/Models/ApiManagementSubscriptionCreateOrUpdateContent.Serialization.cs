@@ -28,37 +28,37 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(OwnerId))
+            if (OwnerId != null)
             {
                 writer.WritePropertyName("ownerId"u8);
                 writer.WriteStringValue(OwnerId);
             }
-            if (Optional.IsDefined(Scope))
+            if (Scope != null)
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(PrimaryKey))
+            if (PrimaryKey != null)
             {
                 writer.WritePropertyName("primaryKey"u8);
                 writer.WriteStringValue(PrimaryKey);
             }
-            if (Optional.IsDefined(SecondaryKey))
+            if (SecondaryKey != null)
             {
                 writer.WritePropertyName("secondaryKey"u8);
                 writer.WriteStringValue(SecondaryKey);
             }
-            if (Optional.IsDefined(State))
+            if (State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToSerialString());
             }
-            if (Optional.IsDefined(AllowTracing))
+            if (AllowTracing.HasValue)
             {
                 writer.WritePropertyName("allowTracing"u8);
                 writer.WriteBooleanValue(AllowTracing.Value);
@@ -102,13 +102,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> ownerId = default;
-            Optional<string> scope = default;
-            Optional<string> displayName = default;
-            Optional<string> primaryKey = default;
-            Optional<string> secondaryKey = default;
-            Optional<SubscriptionState> state = default;
-            Optional<bool> allowTracing = default;
+            string ownerId = default;
+            string scope = default;
+            string displayName = default;
+            string primaryKey = default;
+            string secondaryKey = default;
+            SubscriptionState? state = default;
+            bool? allowTracing = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -174,7 +174,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementSubscriptionCreateOrUpdateContent(ownerId.Value, scope.Value, displayName.Value, primaryKey.Value, secondaryKey.Value, Optional.ToNullable(state), Optional.ToNullable(allowTracing), serializedAdditionalRawData);
+            return new ApiManagementSubscriptionCreateOrUpdateContent(
+                ownerId,
+                scope,
+                displayName,
+                primaryKey,
+                secondaryKey,
+                state,
+                allowTracing,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementSubscriptionCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

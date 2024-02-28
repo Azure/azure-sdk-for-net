@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(StorageAccountResourceId))
+            if (StorageAccountResourceId != null)
             {
                 writer.WritePropertyName("storageAccountResourceId"u8);
                 writer.WriteStringValue(StorageAccountResourceId);
             }
-            if (Optional.IsDefined(AccountKey))
+            if (AccountKey != null)
             {
                 writer.WritePropertyName("accountKey"u8);
                 writer.WriteStringValue(AccountKey);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> storageAccountResourceId = default;
-            Optional<string> accountKey = default;
+            string storageAccountResourceId = default;
+            string accountKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TargetLocation(storageAccountResourceId.Value, accountKey.Value, serializedAdditionalRawData);
+            return new TargetLocation(storageAccountResourceId, accountKey, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TargetLocation>.Write(ModelReaderWriterOptions options)

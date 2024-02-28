@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.SignalR.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrimaryKey))
+            if (PrimaryKey != null)
             {
                 writer.WritePropertyName("primaryKey"u8);
                 writer.WriteStringValue(PrimaryKey);
             }
-            if (Optional.IsDefined(SecondaryKey))
+            if (SecondaryKey != null)
             {
                 writer.WritePropertyName("secondaryKey"u8);
                 writer.WriteStringValue(SecondaryKey);
             }
-            if (Optional.IsDefined(PrimaryConnectionString))
+            if (PrimaryConnectionString != null)
             {
                 writer.WritePropertyName("primaryConnectionString"u8);
                 writer.WriteStringValue(PrimaryConnectionString);
             }
-            if (Optional.IsDefined(SecondaryConnectionString))
+            if (SecondaryConnectionString != null)
             {
                 writer.WritePropertyName("secondaryConnectionString"u8);
                 writer.WriteStringValue(SecondaryConnectionString);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.SignalR.Models
             {
                 return null;
             }
-            Optional<string> primaryKey = default;
-            Optional<string> secondaryKey = default;
-            Optional<string> primaryConnectionString = default;
-            Optional<string> secondaryConnectionString = default;
+            string primaryKey = default;
+            string secondaryKey = default;
+            string primaryConnectionString = default;
+            string secondaryConnectionString = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SignalRKeys(primaryKey.Value, secondaryKey.Value, primaryConnectionString.Value, secondaryConnectionString.Value, serializedAdditionalRawData);
+            return new SignalRKeys(primaryKey, secondaryKey, primaryConnectionString, secondaryConnectionString, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SignalRKeys>.Write(ModelReaderWriterOptions options)

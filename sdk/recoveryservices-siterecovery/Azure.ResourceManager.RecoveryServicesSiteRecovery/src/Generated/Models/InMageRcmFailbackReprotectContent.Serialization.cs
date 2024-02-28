@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             writer.WritePropertyName("processServerId"u8);
             writer.WriteStringValue(ProcessServerId);
-            if (Optional.IsDefined(RunAsAccountId))
+            if (RunAsAccountId != null)
             {
                 writer.WritePropertyName("runAsAccountId"u8);
                 writer.WriteStringValue(RunAsAccountId);
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 return null;
             }
             Guid processServerId = default;
-            Optional<string> runAsAccountId = default;
+            string runAsAccountId = default;
             ResourceIdentifier policyId = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageRcmFailbackReprotectContent(instanceType, serializedAdditionalRawData, processServerId, runAsAccountId.Value, policyId);
+            return new InMageRcmFailbackReprotectContent(instanceType, serializedAdditionalRawData, processServerId, runAsAccountId, policyId);
         }
 
         BinaryData IPersistableModel<InMageRcmFailbackReprotectContent>.Write(ModelReaderWriterOptions options)

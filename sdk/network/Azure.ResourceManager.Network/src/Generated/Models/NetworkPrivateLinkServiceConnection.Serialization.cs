@@ -27,39 +27,39 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(PrivateLinkServiceId))
+            if (PrivateLinkServiceId != null)
             {
                 writer.WritePropertyName("privateLinkServiceId"u8);
                 writer.WriteStringValue(PrivateLinkServiceId);
             }
-            if (Optional.IsCollectionDefined(GroupIds))
+            if (!(GroupIds is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("groupIds"u8);
                 writer.WriteStartArray();
@@ -69,12 +69,12 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(RequestMessage))
+            if (RequestMessage != null)
             {
                 writer.WritePropertyName("requestMessage"u8);
                 writer.WriteStringValue(RequestMessage);
             }
-            if (Optional.IsDefined(ConnectionState))
+            if (ConnectionState != null)
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
                 writer.WriteObjectValue(ConnectionState);
@@ -118,15 +118,15 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<ResourceIdentifier> privateLinkServiceId = default;
-            Optional<IList<string>> groupIds = default;
-            Optional<string> requestMessage = default;
-            Optional<NetworkPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            NetworkProvisioningState? provisioningState = default;
+            ResourceIdentifier privateLinkServiceId = default;
+            IList<string> groupIds = default;
+            string requestMessage = default;
+            NetworkPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = NetworkPrivateLinkServiceConnectionState.DeserializeNetworkPrivateLinkServiceConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = NetworkPrivateLinkServiceConnectionState.DeserializeNetworkPrivateLinkServiceConnectionState(property0.Value, options);
                             continue;
                         }
                     }
@@ -227,7 +227,17 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkPrivateLinkServiceConnection(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(provisioningState), privateLinkServiceId.Value, Optional.ToList(groupIds), requestMessage.Value, privateLinkServiceConnectionState.Value);
+            return new NetworkPrivateLinkServiceConnection(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                etag,
+                provisioningState,
+                privateLinkServiceId,
+                groupIds ?? new ChangeTrackingList<string>(),
+                requestMessage,
+                privateLinkServiceConnectionState);
         }
 
         BinaryData IPersistableModel<NetworkPrivateLinkServiceConnection>.Write(ModelReaderWriterOptions options)

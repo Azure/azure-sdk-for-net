@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.ManagedServices.Models
             writer.WriteStartObject();
             writer.WritePropertyName("multiFactorAuthProvider"u8);
             writer.WriteStringValue(MultiFactorAuthProvider.ToString());
-            if (Optional.IsDefined(MaximumActivationDuration))
+            if (MaximumActivationDuration.HasValue)
             {
                 writer.WritePropertyName("maximumActivationDuration"u8);
                 writer.WriteStringValue(MaximumActivationDuration.Value, "P");
             }
-            if (Optional.IsCollectionDefined(ManagedByTenantApprovers))
+            if (!(ManagedByTenantApprovers is ChangeTrackingList<ManagedServicesEligibleApprover> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("managedByTenantApprovers"u8);
                 writer.WriteStartArray();
@@ -82,8 +82,8 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 return null;
             }
             MultiFactorAuthProvider multiFactorAuthProvider = default;
-            Optional<TimeSpan> maximumActivationDuration = default;
-            Optional<IList<ManagedServicesEligibleApprover>> managedByTenantApprovers = default;
+            TimeSpan? maximumActivationDuration = default;
+            IList<ManagedServicesEligibleApprover> managedByTenantApprovers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                     List<ManagedServicesEligibleApprover> array = new List<ManagedServicesEligibleApprover>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedServicesEligibleApprover.DeserializeManagedServicesEligibleApprover(item));
+                        array.Add(ManagedServicesEligibleApprover.DeserializeManagedServicesEligibleApprover(item, options));
                     }
                     managedByTenantApprovers = array;
                     continue;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedServicesJustInTimeAccessPolicy(multiFactorAuthProvider, Optional.ToNullable(maximumActivationDuration), Optional.ToList(managedByTenantApprovers), serializedAdditionalRawData);
+            return new ManagedServicesJustInTimeAccessPolicy(multiFactorAuthProvider, maximumActivationDuration, managedByTenantApprovers ?? new ChangeTrackingList<ManagedServicesEligibleApprover>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedServicesJustInTimeAccessPolicy>.Write(ModelReaderWriterOptions options)

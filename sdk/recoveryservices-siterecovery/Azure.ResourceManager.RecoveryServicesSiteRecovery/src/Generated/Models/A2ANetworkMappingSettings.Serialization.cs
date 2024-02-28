@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrimaryFabricLocation))
+            if (PrimaryFabricLocation.HasValue)
             {
                 writer.WritePropertyName("primaryFabricLocation"u8);
                 writer.WriteStringValue(PrimaryFabricLocation.Value);
             }
-            if (Optional.IsDefined(RecoveryFabricLocation))
+            if (RecoveryFabricLocation.HasValue)
             {
                 writer.WritePropertyName("recoveryFabricLocation"u8);
                 writer.WriteStringValue(RecoveryFabricLocation.Value);
@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<AzureLocation> primaryFabricLocation = default;
-            Optional<AzureLocation> recoveryFabricLocation = default;
+            AzureLocation? primaryFabricLocation = default;
+            AzureLocation? recoveryFabricLocation = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new A2ANetworkMappingSettings(instanceType, serializedAdditionalRawData, Optional.ToNullable(primaryFabricLocation), Optional.ToNullable(recoveryFabricLocation));
+            return new A2ANetworkMappingSettings(instanceType, serializedAdditionalRawData, primaryFabricLocation, recoveryFabricLocation);
         }
 
         BinaryData IPersistableModel<A2ANetworkMappingSettings>.Write(ModelReaderWriterOptions options)

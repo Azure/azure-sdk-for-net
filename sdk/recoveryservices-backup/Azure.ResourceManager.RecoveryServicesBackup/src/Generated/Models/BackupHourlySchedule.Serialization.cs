@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Interval))
+            if (Interval.HasValue)
             {
                 writer.WritePropertyName("interval"u8);
                 writer.WriteNumberValue(Interval.Value);
             }
-            if (Optional.IsDefined(ScheduleWindowStartOn))
+            if (ScheduleWindowStartOn.HasValue)
             {
                 writer.WritePropertyName("scheduleWindowStartTime"u8);
                 writer.WriteStringValue(ScheduleWindowStartOn.Value, "O");
             }
-            if (Optional.IsDefined(ScheduleWindowDuration))
+            if (ScheduleWindowDuration.HasValue)
             {
                 writer.WritePropertyName("scheduleWindowDuration"u8);
                 writer.WriteNumberValue(ScheduleWindowDuration.Value);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<int> interval = default;
-            Optional<DateTimeOffset> scheduleWindowStartTime = default;
-            Optional<int> scheduleWindowDuration = default;
+            int? interval = default;
+            DateTimeOffset? scheduleWindowStartTime = default;
+            int? scheduleWindowDuration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupHourlySchedule(Optional.ToNullable(interval), Optional.ToNullable(scheduleWindowStartTime), Optional.ToNullable(scheduleWindowDuration), serializedAdditionalRawData);
+            return new BackupHourlySchedule(interval, scheduleWindowStartTime, scheduleWindowDuration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupHourlySchedule>.Write(ModelReaderWriterOptions options)

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
@@ -19,7 +18,10 @@ namespace Azure.Storage.Blobs.Models
         /// <exception cref="ArgumentNullException"> <paramref name="etag"/> is null. </exception>
         internal BlobPropertiesInternal(DateTimeOffset lastModified, string etag)
         {
-            Argument.AssertNotNull(etag, nameof(etag));
+            if (etag == null)
+            {
+                throw new ArgumentNullException(nameof(etag));
+            }
 
             LastModified = lastModified;
             Etag = etag;

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Begin))
+            if (Begin.HasValue)
             {
                 writer.WritePropertyName("begin"u8);
                 writer.WriteNumberValue(Begin.Value);
             }
-            if (Optional.IsDefined(End))
+            if (End.HasValue)
             {
                 writer.WritePropertyName("end"u8);
                 writer.WriteNumberValue(End.Value);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<int> begin = default;
-            Optional<int> end = default;
+            int? begin = default;
+            int? end = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HttpErrorRange(Optional.ToNullable(begin), Optional.ToNullable(end), serializedAdditionalRawData);
+            return new HttpErrorRange(begin, end, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HttpErrorRange>.Write(ModelReaderWriterOptions options)

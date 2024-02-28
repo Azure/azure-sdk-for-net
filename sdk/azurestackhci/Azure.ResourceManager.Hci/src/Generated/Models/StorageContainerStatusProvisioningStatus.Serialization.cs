@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(OperationId))
+            if (OperationId != null)
             {
                 writer.WritePropertyName("operationId"u8);
                 writer.WriteStringValue(OperationId);
             }
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<string> operationId = default;
-            Optional<HciClusterStatus> status = default;
+            string operationId = default;
+            HciClusterStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageContainerStatusProvisioningStatus(operationId.Value, Optional.ToNullable(status), serializedAdditionalRawData);
+            return new StorageContainerStatusProvisioningStatus(operationId, status, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageContainerStatusProvisioningStatus>.Write(ModelReaderWriterOptions options)

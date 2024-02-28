@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DatastoreId))
+            if (DatastoreId != null)
             {
                 if (DatastoreId != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("datastoreId");
                 }
             }
-            if (Optional.IsDefined(Path))
+            if (Path != null)
             {
                 if (Path != null)
                 {
@@ -90,8 +90,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> datastoreId = default;
-            Optional<string> path = default;
+            string datastoreId = default;
+            string path = default;
             ReferenceType referenceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningDataPathAssetReference(referenceType, serializedAdditionalRawData, datastoreId.Value, path.Value);
+            return new MachineLearningDataPathAssetReference(referenceType, serializedAdditionalRawData, datastoreId, path);
         }
 
         BinaryData IPersistableModel<MachineLearningDataPathAssetReference>.Write(ModelReaderWriterOptions options)

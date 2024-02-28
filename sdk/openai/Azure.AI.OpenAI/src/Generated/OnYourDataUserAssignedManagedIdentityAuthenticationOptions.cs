@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
@@ -19,7 +18,10 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="managedIdentityResourceId"/> is null. </exception>
         public OnYourDataUserAssignedManagedIdentityAuthenticationOptions(string managedIdentityResourceId)
         {
-            Argument.AssertNotNull(managedIdentityResourceId, nameof(managedIdentityResourceId));
+            if (managedIdentityResourceId == null)
+            {
+                throw new ArgumentNullException(nameof(managedIdentityResourceId));
+            }
 
             Type = OnYourDataAuthenticationType.UserAssignedManagedIdentity;
             ManagedIdentityResourceId = managedIdentityResourceId;

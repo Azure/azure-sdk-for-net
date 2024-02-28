@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TimeGrain))
+            if (TimeGrain != null)
             {
                 writer.WritePropertyName("timeGrain"u8);
                 writer.WriteStringValue(TimeGrain);
             }
-            if (Optional.IsDefined(BlobDuration))
+            if (BlobDuration.HasValue)
             {
                 writer.WritePropertyName("blobDuration"u8);
                 writer.WriteStringValue(BlobDuration.Value, "P");
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> timeGrain = default;
-            Optional<TimeSpan> blobDuration = default;
+            string timeGrain = default;
+            TimeSpan? blobDuration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MetricAvailability(timeGrain.Value, Optional.ToNullable(blobDuration), serializedAdditionalRawData);
+            return new MetricAvailability(timeGrain, blobDuration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MetricAvailability>.Write(ModelReaderWriterOptions options)

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -56,11 +55,26 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="secretName"/> or <paramref name="secretVersion"/> is null. </exception>
         public KeyVaultSigningKey(KeyVaultSigningKeyType keyType, string subscriptionId, string resourceGroupName, string vaultName, string secretName, string secretVersion)
         {
-            Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNull(vaultName, nameof(vaultName));
-            Argument.AssertNotNull(secretName, nameof(secretName));
-            Argument.AssertNotNull(secretVersion, nameof(secretVersion));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (vaultName == null)
+            {
+                throw new ArgumentNullException(nameof(vaultName));
+            }
+            if (secretName == null)
+            {
+                throw new ArgumentNullException(nameof(secretName));
+            }
+            if (secretVersion == null)
+            {
+                throw new ArgumentNullException(nameof(secretVersion));
+            }
 
             KeyType = keyType;
             SubscriptionId = subscriptionId;

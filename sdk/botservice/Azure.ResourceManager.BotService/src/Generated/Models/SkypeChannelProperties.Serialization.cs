@@ -26,47 +26,47 @@ namespace Azure.ResourceManager.BotService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsMessagingEnabled))
+            if (IsMessagingEnabled.HasValue)
             {
                 writer.WritePropertyName("enableMessaging"u8);
                 writer.WriteBooleanValue(IsMessagingEnabled.Value);
             }
-            if (Optional.IsDefined(IsMediaCardsEnabled))
+            if (IsMediaCardsEnabled.HasValue)
             {
                 writer.WritePropertyName("enableMediaCards"u8);
                 writer.WriteBooleanValue(IsMediaCardsEnabled.Value);
             }
-            if (Optional.IsDefined(IsVideoEnabled))
+            if (IsVideoEnabled.HasValue)
             {
                 writer.WritePropertyName("enableVideo"u8);
                 writer.WriteBooleanValue(IsVideoEnabled.Value);
             }
-            if (Optional.IsDefined(IsCallingEnabled))
+            if (IsCallingEnabled.HasValue)
             {
                 writer.WritePropertyName("enableCalling"u8);
                 writer.WriteBooleanValue(IsCallingEnabled.Value);
             }
-            if (Optional.IsDefined(IsScreenSharingEnabled))
+            if (IsScreenSharingEnabled.HasValue)
             {
                 writer.WritePropertyName("enableScreenSharing"u8);
                 writer.WriteBooleanValue(IsScreenSharingEnabled.Value);
             }
-            if (Optional.IsDefined(IsGroupsEnabled))
+            if (IsGroupsEnabled.HasValue)
             {
                 writer.WritePropertyName("enableGroups"u8);
                 writer.WriteBooleanValue(IsGroupsEnabled.Value);
             }
-            if (Optional.IsDefined(GroupsMode))
+            if (GroupsMode != null)
             {
                 writer.WritePropertyName("groupsMode"u8);
                 writer.WriteStringValue(GroupsMode);
             }
-            if (Optional.IsDefined(CallingWebHook))
+            if (CallingWebHook != null)
             {
                 writer.WritePropertyName("callingWebHook"u8);
                 writer.WriteStringValue(CallingWebHook);
             }
-            if (Optional.IsDefined(IncomingCallRoute))
+            if (IncomingCallRoute != null)
             {
                 writer.WritePropertyName("incomingCallRoute"u8);
                 writer.WriteStringValue(IncomingCallRoute);
@@ -111,15 +111,15 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Optional<bool> enableMessaging = default;
-            Optional<bool> enableMediaCards = default;
-            Optional<bool> enableVideo = default;
-            Optional<bool> enableCalling = default;
-            Optional<bool> enableScreenSharing = default;
-            Optional<bool> enableGroups = default;
-            Optional<string> groupsMode = default;
-            Optional<string> callingWebHook = default;
-            Optional<string> incomingCallRoute = default;
+            bool? enableMessaging = default;
+            bool? enableMediaCards = default;
+            bool? enableVideo = default;
+            bool? enableCalling = default;
+            bool? enableScreenSharing = default;
+            bool? enableGroups = default;
+            string groupsMode = default;
+            string callingWebHook = default;
+            string incomingCallRoute = default;
             bool isEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -205,7 +205,18 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SkypeChannelProperties(Optional.ToNullable(enableMessaging), Optional.ToNullable(enableMediaCards), Optional.ToNullable(enableVideo), Optional.ToNullable(enableCalling), Optional.ToNullable(enableScreenSharing), Optional.ToNullable(enableGroups), groupsMode.Value, callingWebHook.Value, incomingCallRoute.Value, isEnabled, serializedAdditionalRawData);
+            return new SkypeChannelProperties(
+                enableMessaging,
+                enableMediaCards,
+                enableVideo,
+                enableCalling,
+                enableScreenSharing,
+                enableGroups,
+                groupsMode,
+                callingWebHook,
+                incomingCallRoute,
+                isEnabled,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SkypeChannelProperties>.Write(ModelReaderWriterOptions options)

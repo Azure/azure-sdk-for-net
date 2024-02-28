@@ -27,6 +27,26 @@ namespace Azure.ResourceManager.Dns
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Metadata))
@@ -44,6 +64,11 @@ namespace Azure.ResourceManager.Dns
             {
                 writer.WritePropertyName("TTL"u8);
                 writer.WriteNumberValue(TtlInSeconds.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState);
             }
             if (Optional.IsDefined(TargetResource))
             {
@@ -118,7 +143,6 @@ namespace Azure.ResourceManager.Dns
                 {
                      if (property.Value.ValueKind == JsonValueKind.Null)
                      {
-                         property.ThrowNonNullablePropertyIsNull();
                          continue;
                      }
                      etag = new ETag(property.Value.GetString());
@@ -148,7 +172,6 @@ namespace Azure.ResourceManager.Dns
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
@@ -157,7 +180,6 @@ namespace Azure.ResourceManager.Dns
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -172,7 +194,6 @@ namespace Azure.ResourceManager.Dns
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             ttl = property0.Value.GetInt64();
@@ -192,7 +213,6 @@ namespace Azure.ResourceManager.Dns
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             targetResource = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
@@ -202,7 +222,6 @@ namespace Azure.ResourceManager.Dns
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<DnsCaaRecordInfo> array = new List<DnsCaaRecordInfo>();

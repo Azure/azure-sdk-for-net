@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (property.NameEquals("secrets"u8))
                 {
-                    secrets = KerberosPasswordSecrets.DeserializeKerberosPasswordSecrets(property.Value);
+                    secrets = KerberosPasswordSecrets.DeserializeKerberosPasswordSecrets(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kerberosKdcAddress"u8))
@@ -114,7 +114,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KerberosPasswordCredentials(credentialsType, serializedAdditionalRawData, secrets, kerberosKdcAddress, kerberosPrincipal, kerberosRealm);
+            return new KerberosPasswordCredentials(
+                credentialsType,
+                serializedAdditionalRawData,
+                secrets,
+                kerberosKdcAddress,
+                kerberosPrincipal,
+                kerberosRealm);
         }
 
         BinaryData IPersistableModel<KerberosPasswordCredentials>.Write(ModelReaderWriterOptions options)

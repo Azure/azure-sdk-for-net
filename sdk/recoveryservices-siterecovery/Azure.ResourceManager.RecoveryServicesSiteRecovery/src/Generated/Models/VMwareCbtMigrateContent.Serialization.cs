@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             writer.WritePropertyName("performShutdown"u8);
             writer.WriteStringValue(PerformShutdown);
-            if (Optional.IsDefined(OSUpgradeVersion))
+            if (OSUpgradeVersion != null)
             {
                 writer.WritePropertyName("osUpgradeVersion"u8);
                 writer.WriteStringValue(OSUpgradeVersion);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 return null;
             }
             string performShutdown = default;
-            Optional<string> osUpgradeVersion = default;
+            string osUpgradeVersion = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareCbtMigrateContent(instanceType, serializedAdditionalRawData, performShutdown, osUpgradeVersion.Value);
+            return new VMwareCbtMigrateContent(instanceType, serializedAdditionalRawData, performShutdown, osUpgradeVersion);
         }
 
         BinaryData IPersistableModel<VMwareCbtMigrateContent>.Write(ModelReaderWriterOptions options)

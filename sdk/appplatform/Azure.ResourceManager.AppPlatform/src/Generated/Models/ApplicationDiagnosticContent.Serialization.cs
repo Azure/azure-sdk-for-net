@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AppInstance))
+            if (AppInstance != null)
             {
                 writer.WritePropertyName("appInstance"u8);
                 writer.WriteStringValue(AppInstance);
             }
-            if (Optional.IsDefined(FilePath))
+            if (FilePath != null)
             {
                 writer.WritePropertyName("filePath"u8);
                 writer.WriteStringValue(FilePath);
             }
-            if (Optional.IsDefined(DurationValue))
+            if (DurationValue != null)
             {
                 writer.WritePropertyName("duration"u8);
                 writer.WriteStringValue(DurationValue);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<string> appInstance = default;
-            Optional<string> filePath = default;
-            Optional<string> duration = default;
+            string appInstance = default;
+            string filePath = default;
+            string duration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationDiagnosticContent(appInstance.Value, filePath.Value, duration.Value, serializedAdditionalRawData);
+            return new ApplicationDiagnosticContent(appInstance, filePath, duration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationDiagnosticContent>.Write(ModelReaderWriterOptions options)

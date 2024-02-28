@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<LogProfileData> array = new List<LogProfileData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LogProfileData.DeserializeLogProfileData(item));
+                        array.Add(LogProfileData.DeserializeLogProfileData(item, options));
                     }
                     value = array;
                     continue;

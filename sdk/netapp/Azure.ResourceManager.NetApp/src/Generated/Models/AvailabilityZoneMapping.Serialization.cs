@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AvailabilityZone))
+            if (AvailabilityZone != null)
             {
                 writer.WritePropertyName("availabilityZone"u8);
                 writer.WriteStringValue(AvailabilityZone);
             }
-            if (Optional.IsDefined(IsAvailable))
+            if (IsAvailable.HasValue)
             {
                 writer.WritePropertyName("isAvailable"u8);
                 writer.WriteBooleanValue(IsAvailable.Value);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<string> availabilityZone = default;
-            Optional<bool> isAvailable = default;
+            string availabilityZone = default;
+            bool? isAvailable = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailabilityZoneMapping(availabilityZone.Value, Optional.ToNullable(isAvailable), serializedAdditionalRawData);
+            return new AvailabilityZoneMapping(availabilityZone, isAvailable, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailabilityZoneMapping>.Write(ModelReaderWriterOptions options)

@@ -70,7 +70,14 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="roleEligibilityScheduleInstanceName"/> is null. </exception>
         public virtual async Task<Response<RoleEligibilityScheduleInstanceResource>> GetAsync(string roleEligibilityScheduleInstanceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(roleEligibilityScheduleInstanceName, nameof(roleEligibilityScheduleInstanceName));
+            if (roleEligibilityScheduleInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(roleEligibilityScheduleInstanceName));
+            }
+            if (roleEligibilityScheduleInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(roleEligibilityScheduleInstanceName));
+            }
 
             using var scope = _roleEligibilityScheduleInstanceClientDiagnostics.CreateScope("RoleEligibilityScheduleInstanceCollection.Get");
             scope.Start();
@@ -115,7 +122,14 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="roleEligibilityScheduleInstanceName"/> is null. </exception>
         public virtual Response<RoleEligibilityScheduleInstanceResource> Get(string roleEligibilityScheduleInstanceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(roleEligibilityScheduleInstanceName, nameof(roleEligibilityScheduleInstanceName));
+            if (roleEligibilityScheduleInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(roleEligibilityScheduleInstanceName));
+            }
+            if (roleEligibilityScheduleInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(roleEligibilityScheduleInstanceName));
+            }
 
             using var scope = _roleEligibilityScheduleInstanceClientDiagnostics.CreateScope("RoleEligibilityScheduleInstanceCollection.Get");
             scope.Start();
@@ -222,7 +236,14 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="roleEligibilityScheduleInstanceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string roleEligibilityScheduleInstanceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(roleEligibilityScheduleInstanceName, nameof(roleEligibilityScheduleInstanceName));
+            if (roleEligibilityScheduleInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(roleEligibilityScheduleInstanceName));
+            }
+            if (roleEligibilityScheduleInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(roleEligibilityScheduleInstanceName));
+            }
 
             using var scope = _roleEligibilityScheduleInstanceClientDiagnostics.CreateScope("RoleEligibilityScheduleInstanceCollection.Exists");
             scope.Start();
@@ -265,7 +286,14 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="roleEligibilityScheduleInstanceName"/> is null. </exception>
         public virtual Response<bool> Exists(string roleEligibilityScheduleInstanceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(roleEligibilityScheduleInstanceName, nameof(roleEligibilityScheduleInstanceName));
+            if (roleEligibilityScheduleInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(roleEligibilityScheduleInstanceName));
+            }
+            if (roleEligibilityScheduleInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(roleEligibilityScheduleInstanceName));
+            }
 
             using var scope = _roleEligibilityScheduleInstanceClientDiagnostics.CreateScope("RoleEligibilityScheduleInstanceCollection.Exists");
             scope.Start();
@@ -308,7 +336,14 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="roleEligibilityScheduleInstanceName"/> is null. </exception>
         public virtual async Task<NullableResponse<RoleEligibilityScheduleInstanceResource>> GetIfExistsAsync(string roleEligibilityScheduleInstanceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(roleEligibilityScheduleInstanceName, nameof(roleEligibilityScheduleInstanceName));
+            if (roleEligibilityScheduleInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(roleEligibilityScheduleInstanceName));
+            }
+            if (roleEligibilityScheduleInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(roleEligibilityScheduleInstanceName));
+            }
 
             using var scope = _roleEligibilityScheduleInstanceClientDiagnostics.CreateScope("RoleEligibilityScheduleInstanceCollection.GetIfExists");
             scope.Start();
@@ -353,7 +388,14 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="roleEligibilityScheduleInstanceName"/> is null. </exception>
         public virtual NullableResponse<RoleEligibilityScheduleInstanceResource> GetIfExists(string roleEligibilityScheduleInstanceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(roleEligibilityScheduleInstanceName, nameof(roleEligibilityScheduleInstanceName));
+            if (roleEligibilityScheduleInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(roleEligibilityScheduleInstanceName));
+            }
+            if (roleEligibilityScheduleInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(roleEligibilityScheduleInstanceName));
+            }
 
             using var scope = _roleEligibilityScheduleInstanceClientDiagnostics.CreateScope("RoleEligibilityScheduleInstanceCollection.GetIfExists");
             scope.Start();

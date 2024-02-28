@@ -44,14 +44,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(AdditionalData))
+            if (options.Format != "W" && !(AdditionalData is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("additionalData"u8);
                 writer.WriteStartObject();
@@ -74,27 +74,27 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsDefined(FriendlyName))
+            if (options.Format != "W" && FriendlyName != null)
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (options.Format != "W" && Optional.IsDefined(DnsServerIPEntityId))
+            if (options.Format != "W" && DnsServerIPEntityId != null)
             {
                 writer.WritePropertyName("dnsServerIpEntityId"u8);
                 writer.WriteStringValue(DnsServerIPEntityId);
             }
-            if (options.Format != "W" && Optional.IsDefined(DomainName))
+            if (options.Format != "W" && DomainName != null)
             {
                 writer.WritePropertyName("domainName"u8);
                 writer.WriteStringValue(DomainName);
             }
-            if (options.Format != "W" && Optional.IsDefined(HostIPAddressEntityId))
+            if (options.Format != "W" && HostIPAddressEntityId != null)
             {
                 writer.WritePropertyName("hostIpAddressEntityId"u8);
                 writer.WriteStringValue(HostIPAddressEntityId);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(IPAddressEntityIds))
+            if (options.Format != "W" && !(IPAddressEntityIds is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("ipAddressEntityIds"u8);
                 writer.WriteStartArray();
@@ -147,13 +147,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IReadOnlyDictionary<string, BinaryData>> additionalData = default;
-            Optional<string> friendlyName = default;
-            Optional<string> dnsServerIPEntityId = default;
-            Optional<string> domainName = default;
-            Optional<string> hostIPAddressEntityId = default;
-            Optional<IReadOnlyList<string>> ipAddressEntityIds = default;
+            SystemData systemData = default;
+            IReadOnlyDictionary<string, BinaryData> additionalData = default;
+            string friendlyName = default;
+            string dnsServerIPEntityId = default;
+            string domainName = default;
+            string hostIPAddressEntityId = default;
+            IReadOnlyList<string> ipAddressEntityIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -260,7 +260,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsDnsEntity(id, name, type, systemData.Value, kind, serializedAdditionalRawData, Optional.ToDictionary(additionalData), friendlyName.Value, dnsServerIPEntityId.Value, domainName.Value, hostIPAddressEntityId.Value, Optional.ToList(ipAddressEntityIds));
+            return new SecurityInsightsDnsEntity(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                serializedAdditionalRawData,
+                additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                friendlyName,
+                dnsServerIPEntityId,
+                domainName,
+                hostIPAddressEntityId,
+                ipAddressEntityIds ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<SecurityInsightsDnsEntity>.Write(ModelReaderWriterOptions options)

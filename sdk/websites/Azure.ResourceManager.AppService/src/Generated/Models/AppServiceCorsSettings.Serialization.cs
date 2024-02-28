@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AllowedOrigins))
+            if (!(AllowedOrigins is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("allowedOrigins"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsCredentialsSupported))
+            if (IsCredentialsSupported.HasValue)
             {
                 writer.WritePropertyName("supportCredentials"u8);
                 writer.WriteBooleanValue(IsCredentialsSupported.Value);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<IList<string>> allowedOrigins = default;
-            Optional<bool> supportCredentials = default;
+            IList<string> allowedOrigins = default;
+            bool? supportCredentials = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceCorsSettings(Optional.ToList(allowedOrigins), Optional.ToNullable(supportCredentials), serializedAdditionalRawData);
+            return new AppServiceCorsSettings(allowedOrigins ?? new ChangeTrackingList<string>(), supportCredentials, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceCorsSettings>.Write(ModelReaderWriterOptions options)

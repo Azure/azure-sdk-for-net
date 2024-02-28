@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ContentMatch))
+            if (ContentMatch != null)
             {
                 writer.WritePropertyName("ContentMatch"u8);
                 writer.WriteStringValue(ContentMatch);
             }
-            if (Optional.IsDefined(IgnoreCase))
+            if (IgnoreCase.HasValue)
             {
                 writer.WritePropertyName("IgnoreCase"u8);
                 writer.WriteBooleanValue(IgnoreCase.Value);
             }
-            if (Optional.IsDefined(PassIfTextFound))
+            if (PassIfTextFound.HasValue)
             {
                 writer.WritePropertyName("PassIfTextFound"u8);
                 writer.WriteBooleanValue(PassIfTextFound.Value);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<string> contentMatch = default;
-            Optional<bool> ignoreCase = default;
-            Optional<bool> passIfTextFound = default;
+            string contentMatch = default;
+            bool? ignoreCase = default;
+            bool? passIfTextFound = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebTestPropertiesValidationRulesContentValidation(contentMatch.Value, Optional.ToNullable(ignoreCase), Optional.ToNullable(passIfTextFound), serializedAdditionalRawData);
+            return new WebTestPropertiesValidationRulesContentValidation(contentMatch, ignoreCase, passIfTextFound, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebTestPropertiesValidationRulesContentValidation>.Write(ModelReaderWriterOptions options)

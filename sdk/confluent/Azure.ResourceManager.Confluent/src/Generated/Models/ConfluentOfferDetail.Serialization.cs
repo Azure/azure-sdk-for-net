@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Confluent.Models
             writer.WriteStringValue(PlanName);
             writer.WritePropertyName("termUnit"u8);
             writer.WriteStringValue(TermUnit);
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Confluent.Models
             string planId = default;
             string planName = default;
             string termUnit = default;
-            Optional<ConfluentSaaSOfferStatus> status = default;
+            ConfluentSaaSOfferStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,14 @@ namespace Azure.ResourceManager.Confluent.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConfluentOfferDetail(publisherId, id, planId, planName, termUnit, Optional.ToNullable(status), serializedAdditionalRawData);
+            return new ConfluentOfferDetail(
+                publisherId,
+                id,
+                planId,
+                planName,
+                termUnit,
+                status,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConfluentOfferDetail>.Write(ModelReaderWriterOptions options)

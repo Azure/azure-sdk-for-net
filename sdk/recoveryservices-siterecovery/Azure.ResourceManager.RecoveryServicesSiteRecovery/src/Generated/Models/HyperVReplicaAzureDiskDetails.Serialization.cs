@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DiskId))
+            if (DiskId != null)
             {
                 writer.WritePropertyName("diskId"u8);
                 writer.WriteStringValue(DiskId);
             }
-            if (Optional.IsDefined(LogStorageAccountId))
+            if (LogStorageAccountId != null)
             {
                 writer.WritePropertyName("logStorageAccountId"u8);
                 writer.WriteStringValue(LogStorageAccountId);
             }
-            if (Optional.IsDefined(DiskType))
+            if (DiskType.HasValue)
             {
                 writer.WritePropertyName("diskType"u8);
                 writer.WriteStringValue(DiskType.Value.ToString());
             }
-            if (Optional.IsDefined(DiskEncryptionSetId))
+            if (DiskEncryptionSetId != null)
             {
                 writer.WritePropertyName("diskEncryptionSetId"u8);
                 writer.WriteStringValue(DiskEncryptionSetId);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> diskId = default;
-            Optional<ResourceIdentifier> logStorageAccountId = default;
-            Optional<SiteRecoveryDiskAccountType> diskType = default;
-            Optional<ResourceIdentifier> diskEncryptionSetId = default;
+            string diskId = default;
+            ResourceIdentifier logStorageAccountId = default;
+            SiteRecoveryDiskAccountType? diskType = default;
+            ResourceIdentifier diskEncryptionSetId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HyperVReplicaAzureDiskDetails(diskId.Value, logStorageAccountId.Value, Optional.ToNullable(diskType), diskEncryptionSetId.Value, serializedAdditionalRawData);
+            return new HyperVReplicaAzureDiskDetails(diskId, logStorageAccountId, diskType, diskEncryptionSetId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HyperVReplicaAzureDiskDetails>.Write(ModelReaderWriterOptions options)

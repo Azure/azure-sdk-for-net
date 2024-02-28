@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name.ToString());
-            if (options.Format != "W" && Optional.IsDefined(Tier))
+            if (options.Format != "W" && Tier.HasValue)
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier.Value.ToSerialString());
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Storage.Models
                 return null;
             }
             StorageSkuName name = default;
-            Optional<StorageSkuTier> tier = default;
+            StorageSkuTier? tier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageSku(name, Optional.ToNullable(tier), serializedAdditionalRawData);
+            return new StorageSku(name, tier, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageSku>.Write(ModelReaderWriterOptions options)

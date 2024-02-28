@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(HostIP))
+            if (HostIP != null)
             {
                 writer.WritePropertyName("hostIP"u8);
                 writer.WriteStringValue(HostIP);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<string> hostIP = default;
+            string hostIP = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ControlPlaneProfileControlPlaneEndpoint(hostIP.Value, serializedAdditionalRawData);
+            return new ControlPlaneProfileControlPlaneEndpoint(hostIP, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ControlPlaneProfileControlPlaneEndpoint>.Write(ModelReaderWriterOptions options)

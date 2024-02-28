@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(LinuxRuntimeSettings))
+            if (options.Format != "W" && LinuxRuntimeSettings != null)
             {
                 writer.WritePropertyName("linuxRuntimeSettings"u8);
                 writer.WriteObjectValue(LinuxRuntimeSettings);
             }
-            if (options.Format != "W" && Optional.IsDefined(WindowsRuntimeSettings))
+            if (options.Format != "W" && WindowsRuntimeSettings != null)
             {
                 writer.WritePropertyName("windowsRuntimeSettings"u8);
                 writer.WriteObjectValue(WindowsRuntimeSettings);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<FunctionAppRuntimeSettings> linuxRuntimeSettings = default;
-            Optional<FunctionAppRuntimeSettings> windowsRuntimeSettings = default;
+            FunctionAppRuntimeSettings linuxRuntimeSettings = default;
+            FunctionAppRuntimeSettings windowsRuntimeSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    linuxRuntimeSettings = FunctionAppRuntimeSettings.DeserializeFunctionAppRuntimeSettings(property.Value);
+                    linuxRuntimeSettings = FunctionAppRuntimeSettings.DeserializeFunctionAppRuntimeSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("windowsRuntimeSettings"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    windowsRuntimeSettings = FunctionAppRuntimeSettings.DeserializeFunctionAppRuntimeSettings(property.Value);
+                    windowsRuntimeSettings = FunctionAppRuntimeSettings.DeserializeFunctionAppRuntimeSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FunctionAppRuntimes(linuxRuntimeSettings.Value, windowsRuntimeSettings.Value, serializedAdditionalRawData);
+            return new FunctionAppRuntimes(linuxRuntimeSettings, windowsRuntimeSettings, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FunctionAppRuntimes>.Write(ModelReaderWriterOptions options)

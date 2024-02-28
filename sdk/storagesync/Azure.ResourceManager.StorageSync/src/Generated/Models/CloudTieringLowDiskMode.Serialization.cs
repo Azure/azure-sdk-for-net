@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
+            if (options.Format != "W" && LastUpdatedOn.HasValue)
             {
                 writer.WritePropertyName("lastUpdatedTimestamp"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W" && State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> lastUpdatedTimestamp = default;
-            Optional<CloudTieringLowDiskModeState> state = default;
+            DateTimeOffset? lastUpdatedTimestamp = default;
+            CloudTieringLowDiskModeState? state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudTieringLowDiskMode(Optional.ToNullable(lastUpdatedTimestamp), Optional.ToNullable(state), serializedAdditionalRawData);
+            return new CloudTieringLowDiskMode(lastUpdatedTimestamp, state, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudTieringLowDiskMode>.Write(ModelReaderWriterOptions options)

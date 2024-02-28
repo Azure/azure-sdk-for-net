@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            Optional<SolutionResourceProperties> properties = default;
+            SolutionResourceProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    properties = SolutionResourceProperties.DeserializeSolutionResourceProperties(property.Value);
+                    properties = SolutionResourceProperties.DeserializeSolutionResourceProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SolutionResourcePatch(properties.Value, serializedAdditionalRawData);
+            return new SolutionResourcePatch(properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SolutionResourcePatch>.Write(ModelReaderWriterOptions options)

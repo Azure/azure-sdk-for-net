@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Minimum))
+            if (Minimum.HasValue)
             {
                 writer.WritePropertyName("minimum"u8);
                 writer.WriteNumberValue(Minimum.Value);
             }
-            if (Optional.IsDefined(Maximum))
+            if (Maximum.HasValue)
             {
                 writer.WritePropertyName("maximum"u8);
                 writer.WriteNumberValue(Maximum.Value);
             }
-            if (Optional.IsDefined(Default))
+            if (Default.HasValue)
             {
                 writer.WritePropertyName("default"u8);
                 writer.WriteNumberValue(Default.Value);
             }
-            if (Optional.IsDefined(ScaleType))
+            if (ScaleType.HasValue)
             {
                 writer.WritePropertyName("scaleType"u8);
                 writer.WriteStringValue(ScaleType.Value.ToString());
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<int> minimum = default;
-            Optional<int> maximum = default;
-            Optional<int> @default = default;
-            Optional<IntegrationServiceEnvironmentSkuScaleType> scaleType = default;
+            int? minimum = default;
+            int? maximum = default;
+            int? @default = default;
+            IntegrationServiceEnvironmentSkuScaleType? scaleType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationServiceEnvironmentSkuCapacity(Optional.ToNullable(minimum), Optional.ToNullable(maximum), Optional.ToNullable(@default), Optional.ToNullable(scaleType), serializedAdditionalRawData);
+            return new IntegrationServiceEnvironmentSkuCapacity(minimum, maximum, @default, scaleType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationServiceEnvironmentSkuCapacity>.Write(ModelReaderWriterOptions options)

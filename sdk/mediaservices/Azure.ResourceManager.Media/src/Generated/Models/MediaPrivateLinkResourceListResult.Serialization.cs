@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<MediaServicesPrivateLinkResourceData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MediaServicesPrivateLinkResourceData>> value = default;
+            IReadOnlyList<MediaServicesPrivateLinkResourceData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<MediaServicesPrivateLinkResourceData> array = new List<MediaServicesPrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MediaServicesPrivateLinkResourceData.DeserializeMediaServicesPrivateLinkResourceData(item));
+                        array.Add(MediaServicesPrivateLinkResourceData.DeserializeMediaServicesPrivateLinkResourceData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MediaPrivateLinkResourceListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new MediaPrivateLinkResourceListResult(value ?? new ChangeTrackingList<MediaServicesPrivateLinkResourceData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MediaPrivateLinkResourceListResult>.Write(ModelReaderWriterOptions options)

@@ -54,8 +54,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sourceVault"/> or <paramref name="vaultCertificates"/> is null. </exception>
         public NodeTypeVaultSecretGroup(WritableSubResource sourceVault, IEnumerable<NodeTypeVaultCertificate> vaultCertificates)
         {
-            Argument.AssertNotNull(sourceVault, nameof(sourceVault));
-            Argument.AssertNotNull(vaultCertificates, nameof(vaultCertificates));
+            if (sourceVault == null)
+            {
+                throw new ArgumentNullException(nameof(sourceVault));
+            }
+            if (vaultCertificates == null)
+            {
+                throw new ArgumentNullException(nameof(vaultCertificates));
+            }
 
             SourceVault = sourceVault;
             VaultCertificates = vaultCertificates.ToList();

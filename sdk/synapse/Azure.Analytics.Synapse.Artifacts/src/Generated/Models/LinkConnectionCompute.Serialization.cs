@@ -18,17 +18,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CoreCount))
+            if (CoreCount.HasValue)
             {
                 writer.WritePropertyName("coreCount"u8);
                 writer.WriteNumberValue(CoreCount.Value);
             }
-            if (Optional.IsDefined(ComputeType))
+            if (ComputeType != null)
             {
                 writer.WritePropertyName("computeType"u8);
                 writer.WriteStringValue(ComputeType);
             }
-            if (Optional.IsDefined(DataProcessIntervalMinutes))
+            if (DataProcessIntervalMinutes.HasValue)
             {
                 writer.WritePropertyName("dataProcessIntervalMinutes"u8);
                 writer.WriteNumberValue(DataProcessIntervalMinutes.Value);
@@ -42,9 +42,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<int> coreCount = default;
-            Optional<string> computeType = default;
-            Optional<int> dataProcessIntervalMinutes = default;
+            int? coreCount = default;
+            string computeType = default;
+            int? dataProcessIntervalMinutes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("coreCount"u8))
@@ -71,7 +71,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new LinkConnectionCompute(Optional.ToNullable(coreCount), computeType.Value, Optional.ToNullable(dataProcessIntervalMinutes));
+            return new LinkConnectionCompute(coreCount, computeType, dataProcessIntervalMinutes);
         }
 
         internal partial class LinkConnectionComputeConverter : JsonConverter<LinkConnectionCompute>

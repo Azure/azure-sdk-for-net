@@ -42,24 +42,24 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsActive))
+            if (IsActive.HasValue)
             {
                 writer.WritePropertyName("isActive"u8);
                 writer.WriteBooleanValue(IsActive.Value);
             }
-            if (Optional.IsDefined(IsRegularRegistration))
+            if (IsRegularRegistration.HasValue)
             {
                 writer.WritePropertyName("isRegularRegistration"u8);
                 writer.WriteBooleanValue(IsRegularRegistration.Value);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<bool> isActive = default;
-            Optional<bool> isRegularRegistration = default;
-            Optional<string> displayName = default;
+            SystemData systemData = default;
+            bool? isActive = default;
+            bool? isRegularRegistration = default;
+            string displayName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,7 +179,15 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MsixPackagePatch(id, name, type, systemData.Value, Optional.ToNullable(isActive), Optional.ToNullable(isRegularRegistration), displayName.Value, serializedAdditionalRawData);
+            return new MsixPackagePatch(
+                id,
+                name,
+                type,
+                systemData,
+                isActive,
+                isRegularRegistration,
+                displayName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MsixPackagePatch>.Write(ModelReaderWriterOptions options)

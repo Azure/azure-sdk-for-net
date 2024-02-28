@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ApiVersion))
+            if (ApiVersion != null)
             {
                 writer.WritePropertyName("apiVersion"u8);
                 writer.WriteStringValue(ApiVersion);
             }
-            if (Optional.IsDefined(ResourceProviderNamespace))
+            if (ResourceProviderNamespace != null)
             {
                 writer.WritePropertyName("resourceProviderNamespace"u8);
                 writer.WriteStringValue(ResourceProviderNamespace);
             }
-            if (Optional.IsDefined(ResourceType))
+            if (ResourceType != null)
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             {
                 return null;
             }
-            Optional<string> apiVersion = default;
-            Optional<string> resourceProviderNamespace = default;
-            Optional<string> resourceType = default;
+            string apiVersion = default;
+            string resourceProviderNamespace = default;
+            string resourceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomLocationEnabledResourceTypeMetadata(apiVersion.Value, resourceProviderNamespace.Value, resourceType.Value, serializedAdditionalRawData);
+            return new CustomLocationEnabledResourceTypeMetadata(apiVersion, resourceProviderNamespace, resourceType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CustomLocationEnabledResourceTypeMetadata>.Write(ModelReaderWriterOptions options)

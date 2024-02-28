@@ -19,12 +19,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DateFormat))
+            if (DateFormat != null)
             {
                 writer.WritePropertyName("dateFormat"u8);
                 writer.WriteObjectValue(DateFormat);
             }
-            if (Optional.IsDefined(TimestampFormat))
+            if (TimestampFormat != null)
             {
                 writer.WritePropertyName("timestampFormat"u8);
                 writer.WriteObjectValue(TimestampFormat);
@@ -45,8 +45,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> dateFormat = default;
-            Optional<object> timestampFormat = default;
+            object dateFormat = default;
+            object timestampFormat = default;
             string type = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
@@ -78,7 +78,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureDatabricksDeltaLakeImportCommand(type, additionalProperties, dateFormat.Value, timestampFormat.Value);
+            return new AzureDatabricksDeltaLakeImportCommand(type, additionalProperties, dateFormat, timestampFormat);
         }
 
         internal partial class AzureDatabricksDeltaLakeImportCommandConverter : JsonConverter<AzureDatabricksDeltaLakeImportCommand>

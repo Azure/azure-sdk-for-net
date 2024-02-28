@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<GremlinDatabaseData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<GremlinDatabaseData>> value = default;
+            IReadOnlyList<GremlinDatabaseData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<GremlinDatabaseData> array = new List<GremlinDatabaseData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GremlinDatabaseData.DeserializeGremlinDatabaseData(item));
+                        array.Add(GremlinDatabaseData.DeserializeGremlinDatabaseData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GremlinDatabaseListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new GremlinDatabaseListResult(value ?? new ChangeTrackingList<GremlinDatabaseData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GremlinDatabaseListResult>.Write(ModelReaderWriterOptions options)

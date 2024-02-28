@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Peering.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(EventTimestamp))
+            if (options.Format != "W" && EventTimestamp.HasValue)
             {
                 writer.WritePropertyName("eventTimestamp"u8);
                 writer.WriteStringValue(EventTimestamp.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EventType))
+            if (options.Format != "W" && EventType != null)
             {
                 writer.WritePropertyName("eventType"u8);
                 writer.WriteStringValue(EventType);
             }
-            if (options.Format != "W" && Optional.IsDefined(EventSummary))
+            if (options.Format != "W" && EventSummary != null)
             {
                 writer.WritePropertyName("eventSummary"u8);
                 writer.WriteStringValue(EventSummary);
             }
-            if (options.Format != "W" && Optional.IsDefined(EventLevel))
+            if (options.Format != "W" && EventLevel != null)
             {
                 writer.WritePropertyName("eventLevel"u8);
                 writer.WriteStringValue(EventLevel);
             }
-            if (options.Format != "W" && Optional.IsDefined(EventDescription))
+            if (options.Format != "W" && EventDescription != null)
             {
                 writer.WritePropertyName("eventDescription"u8);
                 writer.WriteStringValue(EventDescription);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> eventTimestamp = default;
-            Optional<string> eventType = default;
-            Optional<string> eventSummary = default;
-            Optional<string> eventLevel = default;
-            Optional<string> eventDescription = default;
+            DateTimeOffset? eventTimestamp = default;
+            string eventType = default;
+            string eventSummary = default;
+            string eventLevel = default;
+            string eventDescription = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.Peering.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PeeringServicePrefixEvent(Optional.ToNullable(eventTimestamp), eventType.Value, eventSummary.Value, eventLevel.Value, eventDescription.Value, serializedAdditionalRawData);
+            return new PeeringServicePrefixEvent(
+                eventTimestamp,
+                eventType,
+                eventSummary,
+                eventLevel,
+                eventDescription,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PeeringServicePrefixEvent>.Write(ModelReaderWriterOptions options)

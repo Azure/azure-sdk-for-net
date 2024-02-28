@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ExtendedLocationType))
+            if (ExtendedLocationType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ExtendedLocationType.Value.ToString());
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -60,8 +60,8 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<ExtendedLocationType> type = default;
-            Optional<string> name = default;
+            ExtendedLocationType? type = default;
+            string name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new ExtendedLocation(Optional.ToNullable(type), name.Value);
+            return new ExtendedLocation(type, name);
         }
 
         BinaryData IPersistableModel<ExtendedLocation>.Write(ModelReaderWriterOptions options)

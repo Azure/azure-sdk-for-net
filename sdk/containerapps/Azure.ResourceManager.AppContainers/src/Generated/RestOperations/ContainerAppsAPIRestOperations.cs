@@ -68,10 +68,38 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="jobName"/> or <paramref name="jobExecutionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ContainerAppJobExecutionData>> JobExecutionAsync(string subscriptionId, string resourceGroupName, string jobName, string jobExecutionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
-            Argument.AssertNotNullOrEmpty(jobExecutionName, nameof(jobExecutionName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (jobName == null)
+            {
+                throw new ArgumentNullException(nameof(jobName));
+            }
+            if (jobName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(jobName));
+            }
+            if (jobExecutionName == null)
+            {
+                throw new ArgumentNullException(nameof(jobExecutionName));
+            }
+            if (jobExecutionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(jobExecutionName));
+            }
 
             using var message = CreateJobExecutionRequest(subscriptionId, resourceGroupName, jobName, jobExecutionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -101,10 +129,38 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="jobName"/> or <paramref name="jobExecutionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ContainerAppJobExecutionData> JobExecution(string subscriptionId, string resourceGroupName, string jobName, string jobExecutionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
-            Argument.AssertNotNullOrEmpty(jobExecutionName, nameof(jobExecutionName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (jobName == null)
+            {
+                throw new ArgumentNullException(nameof(jobName));
+            }
+            if (jobName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(jobName));
+            }
+            if (jobExecutionName == null)
+            {
+                throw new ArgumentNullException(nameof(jobExecutionName));
+            }
+            if (jobExecutionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(jobExecutionName));
+            }
 
             using var message = CreateJobExecutionRequest(subscriptionId, resourceGroupName, jobName, jobExecutionName);
             _pipeline.Send(message, cancellationToken);

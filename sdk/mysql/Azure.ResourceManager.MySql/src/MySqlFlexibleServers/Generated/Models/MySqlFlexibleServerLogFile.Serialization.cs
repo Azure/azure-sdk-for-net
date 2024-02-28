@@ -42,34 +42,34 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(SizeInKB))
+            if (SizeInKB.HasValue)
             {
                 writer.WritePropertyName("sizeInKB"u8);
                 writer.WriteNumberValue(SizeInKB.Value);
             }
-            if (Optional.IsDefined(CreatedOn))
+            if (CreatedOn.HasValue)
             {
                 writer.WritePropertyName("createdTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(TypePropertiesType))
+            if (TypePropertiesType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(TypePropertiesType);
             }
-            if (Optional.IsDefined(LastModifiedOn))
+            if (LastModifiedOn.HasValue)
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (Optional.IsDefined(Uri))
+            if (Uri != null)
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
@@ -116,12 +116,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<long> sizeInKB = default;
-            Optional<DateTimeOffset> createdTime = default;
-            Optional<string> type0 = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<Uri> url = default;
+            SystemData systemData = default;
+            long? sizeInKB = default;
+            DateTimeOffset? createdTime = default;
+            string type0 = default;
+            DateTimeOffset? lastModifiedTime = default;
+            Uri url = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -209,7 +209,17 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlFlexibleServerLogFile(id, name, type, systemData.Value, Optional.ToNullable(sizeInKB), Optional.ToNullable(createdTime), type0.Value, Optional.ToNullable(lastModifiedTime), url.Value, serializedAdditionalRawData);
+            return new MySqlFlexibleServerLogFile(
+                id,
+                name,
+                type,
+                systemData,
+                sizeInKB,
+                createdTime,
+                type0,
+                lastModifiedTime,
+                url,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlFlexibleServerLogFile>.Write(ModelReaderWriterOptions options)

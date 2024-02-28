@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Provider))
+            if (Provider.HasValue)
             {
                 writer.WritePropertyName("provider"u8);
                 writer.WriteStringValue(Provider.Value.ToString());
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             {
                 return null;
             }
-            Optional<ApplianceProvider> provider = default;
+            ApplianceProvider? provider = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppliancePropertiesInfrastructureConfig(Optional.ToNullable(provider), serializedAdditionalRawData);
+            return new AppliancePropertiesInfrastructureConfig(provider, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppliancePropertiesInfrastructureConfig>.Write(ModelReaderWriterOptions options)

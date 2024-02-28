@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<ResourceHealthMetadataEntityData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ResourceHealthMetadataEntityData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ResourceHealthMetadataEntityData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     List<ResourceHealthMetadataEntityData> array = new List<ResourceHealthMetadataEntityData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceHealthMetadataEntityData.DeserializeResourceHealthMetadataEntityData(item));
+                        array.Add(ResourceHealthMetadataEntityData.DeserializeResourceHealthMetadataEntityData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MetadataEntityListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new MetadataEntityListResult(value ?? new ChangeTrackingList<ResourceHealthMetadataEntityData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MetadataEntityListResult>.Write(ModelReaderWriterOptions options)

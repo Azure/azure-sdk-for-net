@@ -80,7 +80,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
         public virtual async Task<Response<ComponentResource>> GetAsync(string componentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
+            if (componentName == null)
+            {
+                throw new ArgumentNullException(nameof(componentName));
+            }
+            if (componentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(componentName));
+            }
 
             using var scope = _componentClientDiagnostics.CreateScope("ComponentCollection.Get");
             scope.Start();
@@ -125,7 +132,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
         public virtual Response<ComponentResource> Get(string componentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
+            if (componentName == null)
+            {
+                throw new ArgumentNullException(nameof(componentName));
+            }
+            if (componentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(componentName));
+            }
 
             using var scope = _componentClientDiagnostics.CreateScope("ComponentCollection.Get");
             scope.Start();
@@ -230,7 +244,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string componentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
+            if (componentName == null)
+            {
+                throw new ArgumentNullException(nameof(componentName));
+            }
+            if (componentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(componentName));
+            }
 
             using var scope = _componentClientDiagnostics.CreateScope("ComponentCollection.Exists");
             scope.Start();
@@ -273,7 +294,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
         public virtual Response<bool> Exists(string componentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
+            if (componentName == null)
+            {
+                throw new ArgumentNullException(nameof(componentName));
+            }
+            if (componentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(componentName));
+            }
 
             using var scope = _componentClientDiagnostics.CreateScope("ComponentCollection.Exists");
             scope.Start();
@@ -316,7 +344,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
         public virtual async Task<NullableResponse<ComponentResource>> GetIfExistsAsync(string componentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
+            if (componentName == null)
+            {
+                throw new ArgumentNullException(nameof(componentName));
+            }
+            if (componentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(componentName));
+            }
 
             using var scope = _componentClientDiagnostics.CreateScope("ComponentCollection.GetIfExists");
             scope.Start();
@@ -361,7 +396,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
         public virtual NullableResponse<ComponentResource> GetIfExists(string componentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
+            if (componentName == null)
+            {
+                throw new ArgumentNullException(nameof(componentName));
+            }
+            if (componentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(componentName));
+            }
 
             using var scope = _componentClientDiagnostics.CreateScope("ComponentCollection.GetIfExists");
             scope.Start();

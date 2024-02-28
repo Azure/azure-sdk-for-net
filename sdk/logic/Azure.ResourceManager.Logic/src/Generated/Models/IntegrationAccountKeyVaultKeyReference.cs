@@ -51,7 +51,10 @@ namespace Azure.ResourceManager.Logic.Models
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
         public IntegrationAccountKeyVaultKeyReference(string keyName)
         {
-            Argument.AssertNotNull(keyName, nameof(keyName));
+            if (keyName == null)
+            {
+                throw new ArgumentNullException(nameof(keyName));
+            }
 
             KeyName = keyName;
         }

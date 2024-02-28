@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ImageState))
+            if (ImageState.HasValue)
             {
                 writer.WritePropertyName("imageState"u8);
                 writer.WriteStringValue(ImageState.Value.ToString());
             }
-            if (Optional.IsDefined(ScheduledDeprecationOn))
+            if (ScheduledDeprecationOn.HasValue)
             {
                 writer.WritePropertyName("scheduledDeprecationTime"u8);
                 writer.WriteStringValue(ScheduledDeprecationOn.Value, "O");
             }
-            if (Optional.IsDefined(AlternativeOption))
+            if (AlternativeOption != null)
             {
                 writer.WritePropertyName("alternativeOption"u8);
                 writer.WriteObjectValue(AlternativeOption);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<ImageState> imageState = default;
-            Optional<DateTimeOffset> scheduledDeprecationTime = default;
-            Optional<ImageAlternativeOption> alternativeOption = default;
+            ImageState? imageState = default;
+            DateTimeOffset? scheduledDeprecationTime = default;
+            ImageAlternativeOption alternativeOption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    alternativeOption = ImageAlternativeOption.DeserializeImageAlternativeOption(property.Value);
+                    alternativeOption = ImageAlternativeOption.DeserializeImageAlternativeOption(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ImageDeprecationStatus(Optional.ToNullable(imageState), Optional.ToNullable(scheduledDeprecationTime), alternativeOption.Value, serializedAdditionalRawData);
+            return new ImageDeprecationStatus(imageState, scheduledDeprecationTime, alternativeOption, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ImageDeprecationStatus>.Write(ModelReaderWriterOptions options)

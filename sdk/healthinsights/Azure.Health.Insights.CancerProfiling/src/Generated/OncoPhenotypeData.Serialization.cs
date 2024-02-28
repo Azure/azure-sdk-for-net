@@ -34,7 +34,7 @@ namespace Azure.Health.Insights.CancerProfiling
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(Configuration))
+            if (Configuration != null)
             {
                 writer.WritePropertyName("configuration"u8);
                 writer.WriteObjectValue(Configuration);
@@ -78,7 +78,7 @@ namespace Azure.Health.Insights.CancerProfiling
                 return null;
             }
             IList<PatientRecord> patients = default;
-            Optional<OncoPhenotypeModelConfiguration> configuration = default;
+            OncoPhenotypeModelConfiguration configuration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.Health.Insights.CancerProfiling
                     List<PatientRecord> array = new List<PatientRecord>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PatientRecord.DeserializePatientRecord(item));
+                        array.Add(PatientRecord.DeserializePatientRecord(item, options));
                     }
                     patients = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.Health.Insights.CancerProfiling
                     {
                         continue;
                     }
-                    configuration = OncoPhenotypeModelConfiguration.DeserializeOncoPhenotypeModelConfiguration(property.Value);
+                    configuration = OncoPhenotypeModelConfiguration.DeserializeOncoPhenotypeModelConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -108,7 +108,7 @@ namespace Azure.Health.Insights.CancerProfiling
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OncoPhenotypeData(patients, configuration.Value, serializedAdditionalRawData);
+            return new OncoPhenotypeData(patients, configuration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OncoPhenotypeData>.Write(ModelReaderWriterOptions options)

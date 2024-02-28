@@ -51,7 +51,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <exception cref="ArgumentNullException"> <paramref name="osDisk"/> is null. </exception>
         public NetworkCloudStorageProfile(NetworkCloudOSDisk osDisk)
         {
-            Argument.AssertNotNull(osDisk, nameof(osDisk));
+            if (osDisk == null)
+            {
+                throw new ArgumentNullException(nameof(osDisk));
+            }
 
             OSDisk = osDisk;
             VolumeAttachments = new ChangeTrackingList<ResourceIdentifier>();

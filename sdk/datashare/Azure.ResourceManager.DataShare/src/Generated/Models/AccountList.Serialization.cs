@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataShare.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataShare.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IReadOnlyList<DataShareAccountData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataShare.Models
                     List<DataShareAccountData> array = new List<DataShareAccountData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataShareAccountData.DeserializeDataShareAccountData(item));
+                        array.Add(DataShareAccountData.DeserializeDataShareAccountData(item, options));
                     }
                     value = array;
                     continue;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AccountList(nextLink.Value, value, serializedAdditionalRawData);
+            return new AccountList(nextLink, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AccountList>.Write(ModelReaderWriterOptions options)

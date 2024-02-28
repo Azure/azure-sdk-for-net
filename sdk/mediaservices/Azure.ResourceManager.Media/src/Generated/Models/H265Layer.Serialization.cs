@@ -26,69 +26,69 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Profile))
+            if (Profile.HasValue)
             {
                 writer.WritePropertyName("profile"u8);
                 writer.WriteStringValue(Profile.Value.ToString());
             }
-            if (Optional.IsDefined(Level))
+            if (Level != null)
             {
                 writer.WritePropertyName("level"u8);
                 writer.WriteStringValue(Level);
             }
-            if (Optional.IsDefined(BufferWindow))
+            if (BufferWindow.HasValue)
             {
                 writer.WritePropertyName("bufferWindow"u8);
                 writer.WriteStringValue(BufferWindow.Value, "P");
             }
-            if (Optional.IsDefined(Crf))
+            if (Crf.HasValue)
             {
                 writer.WritePropertyName("crf"u8);
                 writer.WriteNumberValue(Crf.Value);
             }
-            if (Optional.IsDefined(ReferenceFrames))
+            if (ReferenceFrames.HasValue)
             {
                 writer.WritePropertyName("referenceFrames"u8);
                 writer.WriteNumberValue(ReferenceFrames.Value);
             }
             writer.WritePropertyName("bitrate"u8);
             writer.WriteNumberValue(Bitrate);
-            if (Optional.IsDefined(MaxBitrate))
+            if (MaxBitrate.HasValue)
             {
                 writer.WritePropertyName("maxBitrate"u8);
                 writer.WriteNumberValue(MaxBitrate.Value);
             }
-            if (Optional.IsDefined(BFrames))
+            if (BFrames.HasValue)
             {
                 writer.WritePropertyName("bFrames"u8);
                 writer.WriteNumberValue(BFrames.Value);
             }
-            if (Optional.IsDefined(FrameRate))
+            if (FrameRate != null)
             {
                 writer.WritePropertyName("frameRate"u8);
                 writer.WriteStringValue(FrameRate);
             }
-            if (Optional.IsDefined(Slices))
+            if (Slices.HasValue)
             {
                 writer.WritePropertyName("slices"u8);
                 writer.WriteNumberValue(Slices.Value);
             }
-            if (Optional.IsDefined(UseAdaptiveBFrame))
+            if (UseAdaptiveBFrame.HasValue)
             {
                 writer.WritePropertyName("adaptiveBFrame"u8);
                 writer.WriteBooleanValue(UseAdaptiveBFrame.Value);
             }
-            if (Optional.IsDefined(Width))
+            if (Width != null)
             {
                 writer.WritePropertyName("width"u8);
                 writer.WriteStringValue(Width);
             }
-            if (Optional.IsDefined(Height))
+            if (Height != null)
             {
                 writer.WritePropertyName("height"u8);
                 writer.WriteStringValue(Height);
             }
-            if (Optional.IsDefined(Label))
+            if (Label != null)
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
@@ -131,20 +131,20 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<H265VideoProfile> profile = default;
-            Optional<string> level = default;
-            Optional<TimeSpan> bufferWindow = default;
-            Optional<float> crf = default;
-            Optional<int> referenceFrames = default;
+            H265VideoProfile? profile = default;
+            string level = default;
+            TimeSpan? bufferWindow = default;
+            float? crf = default;
+            int? referenceFrames = default;
             int bitrate = default;
-            Optional<int> maxBitrate = default;
-            Optional<int> bFrames = default;
-            Optional<string> frameRate = default;
-            Optional<int> slices = default;
-            Optional<bool> adaptiveBFrame = default;
-            Optional<string> width = default;
-            Optional<string> height = default;
-            Optional<string> label = default;
+            int? maxBitrate = default;
+            int? bFrames = default;
+            string frameRate = default;
+            int? slices = default;
+            bool? adaptiveBFrame = default;
+            string width = default;
+            string height = default;
+            string label = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -257,7 +257,22 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new H265Layer(width.Value, height.Value, label.Value, serializedAdditionalRawData, bitrate, Optional.ToNullable(maxBitrate), Optional.ToNullable(bFrames), frameRate.Value, Optional.ToNullable(slices), Optional.ToNullable(adaptiveBFrame), Optional.ToNullable(profile), level.Value, Optional.ToNullable(bufferWindow), Optional.ToNullable(crf), Optional.ToNullable(referenceFrames));
+            return new H265Layer(
+                width,
+                height,
+                label,
+                serializedAdditionalRawData,
+                bitrate,
+                maxBitrate,
+                bFrames,
+                frameRate,
+                slices,
+                adaptiveBFrame,
+                profile,
+                level,
+                bufferWindow,
+                crf,
+                referenceFrames);
         }
 
         BinaryData IPersistableModel<H265Layer>.Write(ModelReaderWriterOptions options)

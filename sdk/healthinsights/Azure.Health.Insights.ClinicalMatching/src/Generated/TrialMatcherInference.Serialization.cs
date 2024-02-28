@@ -31,17 +31,17 @@ namespace Azure.Health.Insights.ClinicalMatching
             writer.WriteStringValue(Type.ToString());
             writer.WritePropertyName("value"u8);
             writer.WriteStringValue(Value);
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(ConfidenceScore))
+            if (ConfidenceScore.HasValue)
             {
                 writer.WritePropertyName("confidenceScore"u8);
                 writer.WriteNumberValue(ConfidenceScore.Value);
             }
-            if (Optional.IsCollectionDefined(Evidence))
+            if (!(Evidence is ChangeTrackingList<TrialMatcherInferenceEvidence> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("evidence"u8);
                 writer.WriteStartArray();
@@ -51,17 +51,17 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Source))
+            if (Source.HasValue)
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source.Value.ToString());
             }
-            if (Optional.IsDefined(Metadata))
+            if (Metadata != null)
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteObjectValue(Metadata);
@@ -106,12 +106,12 @@ namespace Azure.Health.Insights.ClinicalMatching
             }
             TrialMatcherInferenceType type = default;
             string value = default;
-            Optional<string> description = default;
-            Optional<float> confidenceScore = default;
-            Optional<IReadOnlyList<TrialMatcherInferenceEvidence>> evidence = default;
-            Optional<string> id = default;
-            Optional<ClinicalTrialSource> source = default;
-            Optional<ClinicalTrialMetadata> metadata = default;
+            string description = default;
+            float? confidenceScore = default;
+            IReadOnlyList<TrialMatcherInferenceEvidence> evidence = default;
+            string id = default;
+            ClinicalTrialSource? source = default;
+            ClinicalTrialMetadata metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                     List<TrialMatcherInferenceEvidence> array = new List<TrialMatcherInferenceEvidence>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TrialMatcherInferenceEvidence.DeserializeTrialMatcherInferenceEvidence(item));
+                        array.Add(TrialMatcherInferenceEvidence.DeserializeTrialMatcherInferenceEvidence(item, options));
                     }
                     evidence = array;
                     continue;
@@ -174,7 +174,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                     {
                         continue;
                     }
-                    metadata = ClinicalTrialMetadata.DeserializeClinicalTrialMetadata(property.Value);
+                    metadata = ClinicalTrialMetadata.DeserializeClinicalTrialMetadata(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -183,7 +183,16 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrialMatcherInference(type, value, description.Value, Optional.ToNullable(confidenceScore), Optional.ToList(evidence), id.Value, Optional.ToNullable(source), metadata.Value, serializedAdditionalRawData);
+            return new TrialMatcherInference(
+                type,
+                value,
+                description,
+                confidenceScore,
+                evidence ?? new ChangeTrackingList<TrialMatcherInferenceEvidence>(),
+                id,
+                source,
+                metadata,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrialMatcherInference>.Write(ModelReaderWriterOptions options)

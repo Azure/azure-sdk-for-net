@@ -16,17 +16,17 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sensitivity))
+            if (Sensitivity.HasValue)
             {
                 writer.WritePropertyName("sensitivity"u8);
                 writer.WriteStringValue(Sensitivity.Value.ToString());
             }
-            if (Optional.IsDefined(OutputMotionRegion))
+            if (OutputMotionRegion.HasValue)
             {
                 writer.WritePropertyName("outputMotionRegion"u8);
                 writer.WriteBooleanValue(OutputMotionRegion.Value);
             }
-            if (Optional.IsDefined(EventAggregationWindow))
+            if (EventAggregationWindow != null)
             {
                 writer.WritePropertyName("eventAggregationWindow"u8);
                 writer.WriteStringValue(EventAggregationWindow);
@@ -51,9 +51,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<MotionDetectionSensitivity> sensitivity = default;
-            Optional<bool> outputMotionRegion = default;
-            Optional<string> eventAggregationWindow = default;
+            MotionDetectionSensitivity? sensitivity = default;
+            bool? outputMotionRegion = default;
+            string eventAggregationWindow = default;
             string type = default;
             string name = default;
             IList<NodeInput> inputs = default;
@@ -103,7 +103,13 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new MotionDetectionProcessor(type, name, inputs, Optional.ToNullable(sensitivity), Optional.ToNullable(outputMotionRegion), eventAggregationWindow.Value);
+            return new MotionDetectionProcessor(
+                type,
+                name,
+                inputs,
+                sensitivity,
+                outputMotionRegion,
+                eventAggregationWindow);
         }
     }
 }

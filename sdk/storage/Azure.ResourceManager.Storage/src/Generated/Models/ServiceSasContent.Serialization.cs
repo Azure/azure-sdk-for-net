@@ -28,87 +28,87 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStartObject();
             writer.WritePropertyName("canonicalizedResource"u8);
             writer.WriteStringValue(CanonicalizedResource);
-            if (Optional.IsDefined(Resource))
+            if (Resource.HasValue)
             {
                 writer.WritePropertyName("signedResource"u8);
                 writer.WriteStringValue(Resource.Value.ToString());
             }
-            if (Optional.IsDefined(Permissions))
+            if (Permissions.HasValue)
             {
                 writer.WritePropertyName("signedPermission"u8);
                 writer.WriteStringValue(Permissions.Value.ToString());
             }
-            if (Optional.IsDefined(IPAddressOrRange))
+            if (IPAddressOrRange != null)
             {
                 writer.WritePropertyName("signedIp"u8);
                 writer.WriteStringValue(IPAddressOrRange);
             }
-            if (Optional.IsDefined(Protocols))
+            if (Protocols.HasValue)
             {
                 writer.WritePropertyName("signedProtocol"u8);
                 writer.WriteStringValue(Protocols.Value.ToSerialString());
             }
-            if (Optional.IsDefined(SharedAccessStartOn))
+            if (SharedAccessStartOn.HasValue)
             {
                 writer.WritePropertyName("signedStart"u8);
                 writer.WriteStringValue(SharedAccessStartOn.Value, "O");
             }
-            if (Optional.IsDefined(SharedAccessExpiryOn))
+            if (SharedAccessExpiryOn.HasValue)
             {
                 writer.WritePropertyName("signedExpiry"u8);
                 writer.WriteStringValue(SharedAccessExpiryOn.Value, "O");
             }
-            if (Optional.IsDefined(Identifier))
+            if (Identifier != null)
             {
                 writer.WritePropertyName("signedIdentifier"u8);
                 writer.WriteStringValue(Identifier);
             }
-            if (Optional.IsDefined(PartitionKeyStart))
+            if (PartitionKeyStart != null)
             {
                 writer.WritePropertyName("startPk"u8);
                 writer.WriteStringValue(PartitionKeyStart);
             }
-            if (Optional.IsDefined(PartitionKeyEnd))
+            if (PartitionKeyEnd != null)
             {
                 writer.WritePropertyName("endPk"u8);
                 writer.WriteStringValue(PartitionKeyEnd);
             }
-            if (Optional.IsDefined(RowKeyStart))
+            if (RowKeyStart != null)
             {
                 writer.WritePropertyName("startRk"u8);
                 writer.WriteStringValue(RowKeyStart);
             }
-            if (Optional.IsDefined(RowKeyEnd))
+            if (RowKeyEnd != null)
             {
                 writer.WritePropertyName("endRk"u8);
                 writer.WriteStringValue(RowKeyEnd);
             }
-            if (Optional.IsDefined(KeyToSign))
+            if (KeyToSign != null)
             {
                 writer.WritePropertyName("keyToSign"u8);
                 writer.WriteStringValue(KeyToSign);
             }
-            if (Optional.IsDefined(CacheControl))
+            if (CacheControl != null)
             {
                 writer.WritePropertyName("rscc"u8);
                 writer.WriteStringValue(CacheControl);
             }
-            if (Optional.IsDefined(ContentDisposition))
+            if (ContentDisposition != null)
             {
                 writer.WritePropertyName("rscd"u8);
                 writer.WriteStringValue(ContentDisposition);
             }
-            if (Optional.IsDefined(ContentEncoding))
+            if (ContentEncoding != null)
             {
                 writer.WritePropertyName("rsce"u8);
                 writer.WriteStringValue(ContentEncoding);
             }
-            if (Optional.IsDefined(ContentLanguage))
+            if (ContentLanguage != null)
             {
                 writer.WritePropertyName("rscl"u8);
                 writer.WriteStringValue(ContentLanguage);
             }
-            if (Optional.IsDefined(ContentType))
+            if (ContentType != null)
             {
                 writer.WritePropertyName("rsct"u8);
                 writer.WriteStringValue(ContentType);
@@ -152,23 +152,23 @@ namespace Azure.ResourceManager.Storage.Models
                 return null;
             }
             string canonicalizedResource = default;
-            Optional<ServiceSasSignedResourceType> signedResource = default;
-            Optional<StorageAccountSasPermission> signedPermission = default;
-            Optional<string> signedIP = default;
-            Optional<StorageAccountHttpProtocol> signedProtocol = default;
-            Optional<DateTimeOffset> signedStart = default;
-            Optional<DateTimeOffset> signedExpiry = default;
-            Optional<string> signedIdentifier = default;
-            Optional<string> startPk = default;
-            Optional<string> endPk = default;
-            Optional<string> startRk = default;
-            Optional<string> endRk = default;
-            Optional<string> keyToSign = default;
-            Optional<string> rscc = default;
-            Optional<string> rscd = default;
-            Optional<string> rsce = default;
-            Optional<string> rscl = default;
-            Optional<string> rsct = default;
+            ServiceSasSignedResourceType? signedResource = default;
+            StorageAccountSasPermission? signedPermission = default;
+            string signedIP = default;
+            StorageAccountHttpProtocol? signedProtocol = default;
+            DateTimeOffset? signedStart = default;
+            DateTimeOffset? signedExpiry = default;
+            string signedIdentifier = default;
+            string startPk = default;
+            string endPk = default;
+            string startRk = default;
+            string endRk = default;
+            string keyToSign = default;
+            string rscc = default;
+            string rscd = default;
+            string rsce = default;
+            string rscl = default;
+            string rsct = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -289,7 +289,26 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceSasContent(canonicalizedResource, Optional.ToNullable(signedResource), Optional.ToNullable(signedPermission), signedIP.Value, Optional.ToNullable(signedProtocol), Optional.ToNullable(signedStart), Optional.ToNullable(signedExpiry), signedIdentifier.Value, startPk.Value, endPk.Value, startRk.Value, endRk.Value, keyToSign.Value, rscc.Value, rscd.Value, rsce.Value, rscl.Value, rsct.Value, serializedAdditionalRawData);
+            return new ServiceSasContent(
+                canonicalizedResource,
+                signedResource,
+                signedPermission,
+                signedIP,
+                signedProtocol,
+                signedStart,
+                signedExpiry,
+                signedIdentifier,
+                startPk,
+                endPk,
+                startRk,
+                endRk,
+                keyToSign,
+                rscc,
+                rscd,
+                rsce,
+                rscl,
+                rsct,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceSasContent>.Write(ModelReaderWriterOptions options)

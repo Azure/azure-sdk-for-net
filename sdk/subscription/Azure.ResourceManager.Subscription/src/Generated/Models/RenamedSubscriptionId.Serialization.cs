@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Subscription.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(SubscriptionId))
+            if (options.Format != "W" && SubscriptionId != null)
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Subscription.Models
             {
                 return null;
             }
-            Optional<string> subscriptionId = default;
+            string subscriptionId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Subscription.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RenamedSubscriptionId(subscriptionId.Value, serializedAdditionalRawData);
+            return new RenamedSubscriptionId(subscriptionId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RenamedSubscriptionId>.Write(ModelReaderWriterOptions options)

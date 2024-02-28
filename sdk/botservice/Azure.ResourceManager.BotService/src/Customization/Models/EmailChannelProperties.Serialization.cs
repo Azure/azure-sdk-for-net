@@ -103,7 +103,6 @@ namespace Azure.ResourceManager.BotService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     authMethod = property.Value.GetInt32().ToEmailChannelAuthMethod();

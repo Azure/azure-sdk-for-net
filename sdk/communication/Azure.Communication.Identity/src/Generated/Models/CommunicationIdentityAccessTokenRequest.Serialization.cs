@@ -22,7 +22,7 @@ namespace Azure.Communication.Identity.Models
                 writer.WriteStringValue(item.ToString());
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(ExpiresInMinutes))
+            if (ExpiresInMinutes.HasValue)
             {
                 writer.WritePropertyName("expiresInMinutes"u8);
                 writer.WriteNumberValue(ExpiresInMinutes.Value);

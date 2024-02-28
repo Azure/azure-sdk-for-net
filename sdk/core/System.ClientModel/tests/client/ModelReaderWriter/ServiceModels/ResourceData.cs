@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable
-
 namespace System.ClientModel.Tests.Client.Models.ResourceManager
 {
     /// <summary> Common fields that are returned in the response for all Azure Resource Manager resources. </summary>
@@ -27,12 +25,15 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager
         }
 
         /// <summary> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </summary>
-        public string Id { get; }
+        public string? Id { get; }
+
         /// <summary> The name of the resource. </summary>
-        public string Name { get; }
+        public string? Name { get; }
+
         /// <summary> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </summary>
-        public string ResourceType { get; }
+        public string? ResourceType { get; }
+
         /// <summary> Azure Resource Manager metadata containing createdBy and modifiedBy information. </summary>
-        public SystemData SystemData { get; }
+        public SystemData? SystemData { get; }
     }
 }

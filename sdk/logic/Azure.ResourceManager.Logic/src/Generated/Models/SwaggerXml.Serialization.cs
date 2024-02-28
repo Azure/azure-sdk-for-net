@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Namespace))
+            if (Namespace != null)
             {
                 writer.WritePropertyName("namespace"u8);
                 writer.WriteStringValue(Namespace);
             }
-            if (Optional.IsDefined(Prefix))
+            if (Prefix != null)
             {
                 writer.WritePropertyName("prefix"u8);
                 writer.WriteStringValue(Prefix);
             }
-            if (Optional.IsDefined(IsAttribute))
+            if (IsAttribute.HasValue)
             {
                 writer.WritePropertyName("attribute"u8);
                 writer.WriteBooleanValue(IsAttribute.Value);
             }
-            if (Optional.IsDefined(IsWrapped))
+            if (IsWrapped.HasValue)
             {
                 writer.WritePropertyName("wrapped"u8);
                 writer.WriteBooleanValue(IsWrapped.Value);
             }
-            if (Optional.IsCollectionDefined(Extensions))
+            if (!(Extensions is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("extensions"u8);
                 writer.WriteStartObject();
@@ -112,12 +112,12 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> @namespace = default;
-            Optional<string> prefix = default;
-            Optional<bool> attribute = default;
-            Optional<bool> wrapped = default;
-            Optional<IDictionary<string, BinaryData>> extensions = default;
+            string name = default;
+            string @namespace = default;
+            string prefix = default;
+            bool? attribute = default;
+            bool? wrapped = default;
+            IDictionary<string, BinaryData> extensions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -182,7 +182,14 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SwaggerXml(name.Value, @namespace.Value, prefix.Value, Optional.ToNullable(attribute), Optional.ToNullable(wrapped), Optional.ToDictionary(extensions), serializedAdditionalRawData);
+            return new SwaggerXml(
+                name,
+                @namespace,
+                prefix,
+                attribute,
+                wrapped,
+                extensions ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SwaggerXml>.Write(ModelReaderWriterOptions options)

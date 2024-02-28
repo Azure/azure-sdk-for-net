@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<PolicySignaturesOverridesForIdpsData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PolicySignaturesOverridesForIdpsData>> value = default;
+            IReadOnlyList<PolicySignaturesOverridesForIdpsData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<PolicySignaturesOverridesForIdpsData> array = new List<PolicySignaturesOverridesForIdpsData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PolicySignaturesOverridesForIdpsData.DeserializePolicySignaturesOverridesForIdpsData(item));
+                        array.Add(PolicySignaturesOverridesForIdpsData.DeserializePolicySignaturesOverridesForIdpsData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicySignaturesOverridesForIdpsListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new PolicySignaturesOverridesForIdpsListResult(value ?? new ChangeTrackingList<PolicySignaturesOverridesForIdpsData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicySignaturesOverridesForIdpsListResult>.Write(ModelReaderWriterOptions options)

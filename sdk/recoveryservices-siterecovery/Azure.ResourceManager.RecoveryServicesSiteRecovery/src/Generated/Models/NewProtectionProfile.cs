@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -20,7 +19,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
         public NewProtectionProfile(string policyName, SetMultiVmSyncStatus multiVmSyncStatus)
         {
-            Argument.AssertNotNull(policyName, nameof(policyName));
+            if (policyName == null)
+            {
+                throw new ArgumentNullException(nameof(policyName));
+            }
 
             PolicyName = policyName;
             MultiVmSyncStatus = multiVmSyncStatus;

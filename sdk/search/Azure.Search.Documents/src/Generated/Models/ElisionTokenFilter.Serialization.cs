@@ -16,7 +16,7 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Articles))
+            if (!(Articles is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("articles"u8);
                 writer.WriteStartArray();
@@ -39,7 +39,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<IList<string>> articles = default;
+            IList<string> articles = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -69,7 +69,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new ElisionTokenFilter(odataType, name, Optional.ToList(articles));
+            return new ElisionTokenFilter(odataType, name, articles ?? new ChangeTrackingList<string>());
         }
     }
 }

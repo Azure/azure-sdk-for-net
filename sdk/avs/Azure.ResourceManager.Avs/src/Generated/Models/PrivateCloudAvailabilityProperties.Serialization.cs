@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Avs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Strategy))
+            if (Strategy.HasValue)
             {
                 writer.WritePropertyName("strategy"u8);
                 writer.WriteStringValue(Strategy.Value.ToString());
             }
-            if (Optional.IsDefined(Zone))
+            if (Zone.HasValue)
             {
                 writer.WritePropertyName("zone"u8);
                 writer.WriteNumberValue(Zone.Value);
             }
-            if (Optional.IsDefined(SecondaryZone))
+            if (SecondaryZone.HasValue)
             {
                 writer.WritePropertyName("secondaryZone"u8);
                 writer.WriteNumberValue(SecondaryZone.Value);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Optional<AvailabilityStrategy> strategy = default;
-            Optional<int> zone = default;
-            Optional<int> secondaryZone = default;
+            AvailabilityStrategy? strategy = default;
+            int? zone = default;
+            int? secondaryZone = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateCloudAvailabilityProperties(Optional.ToNullable(strategy), Optional.ToNullable(zone), Optional.ToNullable(secondaryZone), serializedAdditionalRawData);
+            return new PrivateCloudAvailabilityProperties(strategy, zone, secondaryZone, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateCloudAvailabilityProperties>.Write(ModelReaderWriterOptions options)

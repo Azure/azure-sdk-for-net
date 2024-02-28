@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Properties))
+            if (!(Properties is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Secrets))
+            if (!(Secrets is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("secrets"u8);
                 writer.WriteStartObject();
@@ -86,8 +86,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> properties = default;
-            Optional<IDictionary<string, string>> secrets = default;
+            IDictionary<string, string> properties = default;
+            IDictionary<string, string> secrets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BuildpackBindingLaunchProperties(Optional.ToDictionary(properties), Optional.ToDictionary(secrets), serializedAdditionalRawData);
+            return new BuildpackBindingLaunchProperties(properties ?? new ChangeTrackingDictionary<string, string>(), secrets ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BuildpackBindingLaunchProperties>.Write(ModelReaderWriterOptions options)

@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
             writer.WriteStartObject();
             writer.WritePropertyName("patchSettings"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AssessmentMode))
+            if (AssessmentMode.HasValue)
             {
                 writer.WritePropertyName("assessmentMode"u8);
                 writer.WriteStringValue(AssessmentMode.Value.ToString());
             }
-            if (Optional.IsDefined(PatchMode))
+            if (PatchMode.HasValue)
             {
                 writer.WritePropertyName("patchMode"u8);
                 writer.WriteStringValue(PatchMode.Value.ToString());
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<AssessmentModeType> assessmentMode = default;
-            Optional<PatchModeType> patchMode = default;
+            AssessmentModeType? assessmentMode = default;
+            PatchModeType? patchMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridComputeLinuxConfiguration(Optional.ToNullable(assessmentMode), Optional.ToNullable(patchMode), serializedAdditionalRawData);
+            return new HybridComputeLinuxConfiguration(assessmentMode, patchMode, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridComputeLinuxConfiguration>.Write(ModelReaderWriterOptions options)

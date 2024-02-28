@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
             {
                 return null;
             }
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<ETag> etag = default;
+            ProvisioningState? provisioningState = default;
+            ETag? etag = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new ResourceProperties(provisioningState, etag, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceProperties>.Write(ModelReaderWriterOptions options)

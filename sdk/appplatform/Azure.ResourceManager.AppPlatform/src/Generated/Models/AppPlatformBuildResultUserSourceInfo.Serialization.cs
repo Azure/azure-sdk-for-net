@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(BuildResultId))
+            if (BuildResultId != null)
             {
                 writer.WritePropertyName("buildResultId"u8);
                 writer.WriteStringValue(BuildResultId);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(UserSourceInfoType);
-            if (Optional.IsDefined(Version))
+            if (Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
@@ -76,9 +76,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<string> buildResultId = default;
+            string buildResultId = default;
             string type = default;
-            Optional<string> version = default;
+            string version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformBuildResultUserSourceInfo(type, version.Value, serializedAdditionalRawData, buildResultId.Value);
+            return new AppPlatformBuildResultUserSourceInfo(type, version, serializedAdditionalRawData, buildResultId);
         }
 
         BinaryData IPersistableModel<AppPlatformBuildResultUserSourceInfo>.Write(ModelReaderWriterOptions options)

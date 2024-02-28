@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(ResourceType))
+            if (ResourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Optional.IsDefined(GroupId))
+            if (GroupId != null)
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
             }
-            if (Optional.IsCollectionDefined(RequiredMembers))
+            if (!(RequiredMembers is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("requiredMembers"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(PrivateLinkServiceId))
+            if (options.Format != "W" && PrivateLinkServiceId != null)
             {
                 writer.WritePropertyName("privateLinkServiceID"u8);
                 writer.WriteStringValue(PrivateLinkServiceId);
@@ -99,12 +99,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<string> groupId = default;
-            Optional<IList<string>> requiredMembers = default;
-            Optional<ResourceIdentifier> privateLinkServiceId = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            string groupId = default;
+            IList<string> requiredMembers = default;
+            ResourceIdentifier privateLinkServiceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -166,7 +166,14 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerServicePrivateLinkResourceData(id.Value, name.Value, Optional.ToNullable(type), groupId.Value, Optional.ToList(requiredMembers), privateLinkServiceId.Value, serializedAdditionalRawData);
+            return new ContainerServicePrivateLinkResourceData(
+                id,
+                name,
+                type,
+                groupId,
+                requiredMembers ?? new ChangeTrackingList<string>(),
+                privateLinkServiceId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerServicePrivateLinkResourceData>.Write(ModelReaderWriterOptions options)

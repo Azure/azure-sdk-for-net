@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStringValue(BindingType);
             writer.WritePropertyName("bindingRetrievalProperties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Script))
+            if (Script != null)
             {
                 writer.WritePropertyName("script"u8);
                 writer.WriteStringValue(Script);
             }
-            if (Optional.IsDefined(UdfType))
+            if (UdfType.HasValue)
             {
                 writer.WritePropertyName("udfType"u8);
                 writer.WriteStringValue(UdfType.Value.ToString());
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             string bindingType = default;
-            Optional<string> script = default;
-            Optional<StreamingJobFunctionUdfType> udfType = default;
+            string script = default;
+            StreamingJobFunctionUdfType? udfType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JavaScriptFunctionRetrieveDefaultDefinitionContent(bindingType, serializedAdditionalRawData, script.Value, Optional.ToNullable(udfType));
+            return new JavaScriptFunctionRetrieveDefaultDefinitionContent(bindingType, serializedAdditionalRawData, script, udfType);
         }
 
         BinaryData IPersistableModel<JavaScriptFunctionRetrieveDefaultDefinitionContent>.Write(ModelReaderWriterOptions options)

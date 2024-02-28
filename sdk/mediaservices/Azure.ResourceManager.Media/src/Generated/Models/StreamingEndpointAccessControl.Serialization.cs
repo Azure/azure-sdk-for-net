@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Akamai))
+            if (Akamai != null)
             {
                 writer.WritePropertyName("akamai"u8);
                 writer.WriteObjectValue(Akamai);
             }
-            if (Optional.IsDefined(IPs))
+            if (IPs != null)
             {
                 writer.WritePropertyName("ip"u8);
                 writer.WriteObjectValue(IPs);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<AkamaiAccessControl> akamai = default;
-            Optional<IPAccessControl> ip = default;
+            AkamaiAccessControl akamai = default;
+            IPAccessControl ip = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    akamai = AkamaiAccessControl.DeserializeAkamaiAccessControl(property.Value);
+                    akamai = AkamaiAccessControl.DeserializeAkamaiAccessControl(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("ip"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    ip = IPAccessControl.DeserializeIPAccessControl(property.Value);
+                    ip = IPAccessControl.DeserializeIPAccessControl(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamingEndpointAccessControl(akamai.Value, ip.Value, serializedAdditionalRawData);
+            return new StreamingEndpointAccessControl(akamai, ip, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamingEndpointAccessControl>.Write(ModelReaderWriterOptions options)

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CurrencyCode))
+            if (CurrencyCode != null)
             {
                 writer.WritePropertyName("currencyCode"u8);
                 writer.WriteStringValue(CurrencyCode);
             }
-            if (Optional.IsDefined(Amount))
+            if (Amount.HasValue)
             {
                 writer.WritePropertyName("amount"u8);
                 writer.WriteNumberValue(Amount.Value);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             {
                 return null;
             }
-            Optional<string> currencyCode = default;
-            Optional<double> amount = default;
+            string currencyCode = default;
+            double? amount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BillingBenefitsPrice(currencyCode.Value, Optional.ToNullable(amount), serializedAdditionalRawData);
+            return new BillingBenefitsPrice(currencyCode, amount, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BillingBenefitsPrice>.Write(ModelReaderWriterOptions options)

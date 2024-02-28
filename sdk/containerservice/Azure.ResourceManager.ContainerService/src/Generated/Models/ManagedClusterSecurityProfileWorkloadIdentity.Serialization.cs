@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsWorkloadIdentityEnabled))
+            if (IsWorkloadIdentityEnabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsWorkloadIdentityEnabled.Value);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
+            bool? enabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterSecurityProfileWorkloadIdentity(Optional.ToNullable(enabled), serializedAdditionalRawData);
+            return new ManagedClusterSecurityProfileWorkloadIdentity(enabled, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterSecurityProfileWorkloadIdentity>.Write(ModelReaderWriterOptions options)

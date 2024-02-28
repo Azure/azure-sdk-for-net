@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Kusto.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -49,54 +49,54 @@ namespace Azure.ResourceManager.Kusto.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(TableName))
+            if (TableName != null)
             {
                 writer.WritePropertyName("tableName"u8);
                 writer.WriteStringValue(TableName);
             }
-            if (Optional.IsDefined(MappingRuleName))
+            if (MappingRuleName != null)
             {
                 writer.WritePropertyName("mappingRuleName"u8);
                 writer.WriteStringValue(MappingRuleName);
             }
-            if (Optional.IsDefined(ManagedIdentityResourceId))
+            if (ManagedIdentityResourceId != null)
             {
                 writer.WritePropertyName("managedIdentityResourceId"u8);
                 writer.WriteStringValue(ManagedIdentityResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ManagedIdentityObjectId))
+            if (options.Format != "W" && ManagedIdentityObjectId.HasValue)
             {
                 writer.WritePropertyName("managedIdentityObjectId"u8);
                 writer.WriteStringValue(ManagedIdentityObjectId.Value);
             }
-            if (Optional.IsDefined(CosmosDBAccountResourceId))
+            if (CosmosDBAccountResourceId != null)
             {
                 writer.WritePropertyName("cosmosDbAccountResourceId"u8);
                 writer.WriteStringValue(CosmosDBAccountResourceId);
             }
-            if (Optional.IsDefined(CosmosDBDatabase))
+            if (CosmosDBDatabase != null)
             {
                 writer.WritePropertyName("cosmosDbDatabase"u8);
                 writer.WriteStringValue(CosmosDBDatabase);
             }
-            if (Optional.IsDefined(CosmosDBContainer))
+            if (CosmosDBContainer != null)
             {
                 writer.WritePropertyName("cosmosDbContainer"u8);
                 writer.WriteStringValue(CosmosDBContainer);
             }
-            if (Optional.IsDefined(RetrievalStartOn))
+            if (RetrievalStartOn.HasValue)
             {
                 writer.WritePropertyName("retrievalStartDate"u8);
                 writer.WriteStringValue(RetrievalStartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -140,21 +140,21 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             DataConnectionKind kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> tableName = default;
-            Optional<string> mappingRuleName = default;
-            Optional<ResourceIdentifier> managedIdentityResourceId = default;
-            Optional<Guid> managedIdentityObjectId = default;
-            Optional<ResourceIdentifier> cosmosDBAccountResourceId = default;
-            Optional<string> cosmosDBDatabase = default;
-            Optional<string> cosmosDBContainer = default;
-            Optional<DateTimeOffset> retrievalStartDate = default;
-            Optional<KustoProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            string tableName = default;
+            string mappingRuleName = default;
+            ResourceIdentifier managedIdentityResourceId = default;
+            Guid? managedIdentityObjectId = default;
+            ResourceIdentifier cosmosDBAccountResourceId = default;
+            string cosmosDBDatabase = default;
+            string cosmosDBContainer = default;
+            DateTimeOffset? retrievalStartDate = default;
+            KustoProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -280,7 +280,23 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KustoCosmosDBDataConnection(id, name, type, systemData.Value, Optional.ToNullable(location), kind, serializedAdditionalRawData, tableName.Value, mappingRuleName.Value, managedIdentityResourceId.Value, Optional.ToNullable(managedIdentityObjectId), cosmosDBAccountResourceId.Value, cosmosDBDatabase.Value, cosmosDBContainer.Value, Optional.ToNullable(retrievalStartDate), Optional.ToNullable(provisioningState));
+            return new KustoCosmosDBDataConnection(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                kind,
+                serializedAdditionalRawData,
+                tableName,
+                mappingRuleName,
+                managedIdentityResourceId,
+                managedIdentityObjectId,
+                cosmosDBAccountResourceId,
+                cosmosDBDatabase,
+                cosmosDBContainer,
+                retrievalStartDate,
+                provisioningState);
         }
 
         BinaryData IPersistableModel<KustoCosmosDBDataConnection>.Write(ModelReaderWriterOptions options)

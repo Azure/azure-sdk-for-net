@@ -18,22 +18,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Source))
+            if (Source != null)
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteObjectValue(Source);
             }
-            if (Optional.IsDefined(Target))
+            if (Target != null)
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteObjectValue(Target);
             }
-            if (Optional.IsDefined(OperationType))
+            if (OperationType != null)
             {
                 writer.WritePropertyName("operationType"u8);
                 writer.WriteStringValue(OperationType);
@@ -47,10 +47,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<LinkTableRequestSource> source = default;
-            Optional<LinkTableRequestTarget> target = default;
-            Optional<string> operationType = default;
+            string id = default;
+            LinkTableRequestSource source = default;
+            LinkTableRequestTarget target = default;
+            string operationType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -82,7 +82,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new LinkTableRequest(id.Value, source.Value, target.Value, operationType.Value);
+            return new LinkTableRequest(id, source, target, operationType);
         }
 
         internal partial class LinkTableRequestConverter : JsonConverter<LinkTableRequest>

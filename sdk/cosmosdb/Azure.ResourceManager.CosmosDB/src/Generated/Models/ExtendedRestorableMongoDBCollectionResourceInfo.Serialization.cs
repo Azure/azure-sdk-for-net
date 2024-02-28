@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Rid))
+            if (options.Format != "W" && Rid != null)
             {
                 writer.WritePropertyName("_rid"u8);
                 writer.WriteStringValue(Rid);
             }
-            if (options.Format != "W" && Optional.IsDefined(OperationType))
+            if (options.Format != "W" && OperationType.HasValue)
             {
                 writer.WritePropertyName("operationType"u8);
                 writer.WriteStringValue(OperationType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(EventTimestamp))
+            if (options.Format != "W" && EventTimestamp != null)
             {
                 writer.WritePropertyName("eventTimestamp"u8);
                 writer.WriteStringValue(EventTimestamp);
             }
-            if (options.Format != "W" && Optional.IsDefined(CollectionName))
+            if (options.Format != "W" && CollectionName != null)
             {
                 writer.WritePropertyName("ownerId"u8);
                 writer.WriteStringValue(CollectionName);
             }
-            if (options.Format != "W" && Optional.IsDefined(CollectionId))
+            if (options.Format != "W" && CollectionId != null)
             {
                 writer.WritePropertyName("ownerResourceId"u8);
                 writer.WriteStringValue(CollectionId);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> rid = default;
-            Optional<CosmosDBOperationType> operationType = default;
-            Optional<string> eventTimestamp = default;
-            Optional<string> ownerId = default;
-            Optional<string> ownerResourceId = default;
+            string rid = default;
+            CosmosDBOperationType? operationType = default;
+            string eventTimestamp = default;
+            string ownerId = default;
+            string ownerResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExtendedRestorableMongoDBCollectionResourceInfo(rid.Value, Optional.ToNullable(operationType), eventTimestamp.Value, ownerId.Value, ownerResourceId.Value, serializedAdditionalRawData);
+            return new ExtendedRestorableMongoDBCollectionResourceInfo(
+                rid,
+                operationType,
+                eventTimestamp,
+                ownerId,
+                ownerResourceId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExtendedRestorableMongoDBCollectionResourceInfo>.Write(ModelReaderWriterOptions options)

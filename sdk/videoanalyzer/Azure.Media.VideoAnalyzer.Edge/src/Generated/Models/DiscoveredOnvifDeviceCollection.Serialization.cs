@@ -16,7 +16,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<DiscoveredOnvifDevice> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<IList<DiscoveredOnvifDevice>> value = default;
+            IList<DiscoveredOnvifDevice> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -53,7 +53,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new DiscoveredOnvifDeviceCollection(Optional.ToList(value));
+            return new DiscoveredOnvifDeviceCollection(value ?? new ChangeTrackingList<DiscoveredOnvifDevice>());
         }
     }
 }

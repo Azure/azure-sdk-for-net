@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Consumption.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(EstimatedBalance))
+            if (options.Format != "W" && EstimatedBalance != null)
             {
                 writer.WritePropertyName("estimatedBalance"u8);
                 writer.WriteObjectValue(EstimatedBalance);
             }
-            if (options.Format != "W" && Optional.IsDefined(CurrentBalance))
+            if (options.Format != "W" && CurrentBalance != null)
             {
                 writer.WritePropertyName("currentBalance"u8);
                 writer.WriteObjectValue(CurrentBalance);
             }
-            if (options.Format != "W" && Optional.IsDefined(EstimatedBalanceInBillingCurrency))
+            if (options.Format != "W" && EstimatedBalanceInBillingCurrency != null)
             {
                 writer.WritePropertyName("estimatedBalanceInBillingCurrency"u8);
                 writer.WriteObjectValue(EstimatedBalanceInBillingCurrency);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<ConsumptionAmount> estimatedBalance = default;
-            Optional<ConsumptionAmount> currentBalance = default;
-            Optional<ConsumptionAmountWithExchangeRate> estimatedBalanceInBillingCurrency = default;
+            ConsumptionAmount estimatedBalance = default;
+            ConsumptionAmount currentBalance = default;
+            ConsumptionAmountWithExchangeRate estimatedBalanceInBillingCurrency = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     {
                         continue;
                     }
-                    estimatedBalance = ConsumptionAmount.DeserializeConsumptionAmount(property.Value);
+                    estimatedBalance = ConsumptionAmount.DeserializeConsumptionAmount(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("currentBalance"u8))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     {
                         continue;
                     }
-                    currentBalance = ConsumptionAmount.DeserializeConsumptionAmount(property.Value);
+                    currentBalance = ConsumptionAmount.DeserializeConsumptionAmount(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("estimatedBalanceInBillingCurrency"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     {
                         continue;
                     }
-                    estimatedBalanceInBillingCurrency = ConsumptionAmountWithExchangeRate.DeserializeConsumptionAmountWithExchangeRate(property.Value);
+                    estimatedBalanceInBillingCurrency = ConsumptionAmountWithExchangeRate.DeserializeConsumptionAmountWithExchangeRate(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CreditBalanceSummary(estimatedBalance.Value, currentBalance.Value, estimatedBalanceInBillingCurrency.Value, serializedAdditionalRawData);
+            return new CreditBalanceSummary(estimatedBalance, currentBalance, estimatedBalanceInBillingCurrency, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CreditBalanceSummary>.Write(ModelReaderWriterOptions options)

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("uri"u8);
             writer.WriteStringValue(Uri.AbsoluteUri);
-            if (Optional.IsDefined(Parameters))
+            if (Parameters != null)
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStringValue(Parameters);
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && Optional.IsDefined(ApplicationName))
+            if (options.Format != "W" && ApplicationName != null)
             {
                 writer.WritePropertyName("applicationName"u8);
                 writer.WriteStringValue(ApplicationName);
@@ -87,9 +87,9 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
             string name = default;
             Uri uri = default;
-            Optional<string> parameters = default;
+            string parameters = default;
             IList<string> roles = default;
-            Optional<string> applicationName = default;
+            string applicationName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,13 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RuntimeScriptAction(name, uri, parameters.Value, roles, applicationName.Value, serializedAdditionalRawData);
+            return new RuntimeScriptAction(
+                name,
+                uri,
+                parameters,
+                roles,
+                applicationName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RuntimeScriptAction>.Write(ModelReaderWriterOptions options)

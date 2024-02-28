@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ConfirmationNumber))
+            if (options.Format != "W" && ConfirmationNumber != null)
             {
                 writer.WritePropertyName("confirmationNumber"u8);
                 writer.WriteStringValue(ConfirmationNumber);
             }
-            if (options.Format != "W" && Optional.IsDefined(ReadyBy))
+            if (options.Format != "W" && ReadyBy.HasValue)
             {
                 writer.WritePropertyName("readyByTime"u8);
                 writer.WriteStringValue(ReadyBy.Value, "O");
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<string> confirmationNumber = default;
-            Optional<DateTimeOffset> readyByTime = default;
+            string confirmationNumber = default;
+            DateTimeOffset? readyByTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxShipmentPickUpResult(confirmationNumber.Value, Optional.ToNullable(readyByTime), serializedAdditionalRawData);
+            return new DataBoxShipmentPickUpResult(confirmationNumber, readyByTime, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxShipmentPickUpResult>.Write(ModelReaderWriterOptions options)

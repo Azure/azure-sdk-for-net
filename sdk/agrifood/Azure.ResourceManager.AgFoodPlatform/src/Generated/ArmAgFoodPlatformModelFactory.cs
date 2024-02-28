@@ -32,7 +32,18 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
         /// <returns> A new <see cref="AgFoodPlatform.ExtensionData"/> instance for mocking. </returns>
         public static ExtensionData ExtensionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? eTag = null, string extensionId = null, string extensionCategory = null, string installedExtensionVersion = null, string extensionAuthLink = null, string extensionApiDocsLink = null)
         {
-            return new ExtensionData(id, name, resourceType, systemData, eTag, extensionId, extensionCategory, installedExtensionVersion, extensionAuthLink, extensionApiDocsLink, serializedAdditionalRawData: null);
+            return new ExtensionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                eTag,
+                extensionId,
+                extensionCategory,
+                installedExtensionVersion,
+                extensionAuthLink,
+                extensionApiDocsLink,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AgFoodPlatform.FarmBeatsExtensionData"/>. </summary>
@@ -60,7 +71,22 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
         {
             detailedInformation ??= new List<DetailedInformation>();
 
-            return new FarmBeatsExtensionData(id, name, resourceType, systemData, targetResourceType, farmBeatsExtensionId, farmBeatsExtensionName, farmBeatsExtensionVersion, publisherId, description, extensionCategory, extensionAuthLink, extensionApiDocsLink, detailedInformation?.ToList(), serializedAdditionalRawData: null);
+            return new FarmBeatsExtensionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                targetResourceType,
+                farmBeatsExtensionId,
+                farmBeatsExtensionName,
+                farmBeatsExtensionVersion,
+                publisherId,
+                description,
+                extensionCategory,
+                extensionAuthLink,
+                extensionApiDocsLink,
+                detailedInformation?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DetailedInformation"/>. </summary>
@@ -76,7 +102,13 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             platformParameters ??= new List<string>();
             apiInputParameters ??= new List<string>();
 
-            return new DetailedInformation(apiName, customParameters?.ToList(), platformParameters?.ToList(), unitsSupported, apiInputParameters?.ToList(), serializedAdditionalRawData: null);
+            return new DetailedInformation(
+                apiName,
+                customParameters?.ToList(),
+                platformParameters?.ToList(),
+                unitsSupported,
+                apiInputParameters?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.UnitSystemsInfo"/>. </summary>
@@ -108,7 +140,20 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new FarmBeatData(id, name, resourceType, systemData, tags, location, identity, instanceUri, provisioningState, sensorIntegration, publicNetworkAccess, privateEndpointConnections, serializedAdditionalRawData: null);
+            return new FarmBeatData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                identity,
+                instanceUri,
+                provisioningState,
+                sensorIntegration,
+                publicNetworkAccess,
+                privateEndpointConnections,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SensorIntegration"/>. </summary>
@@ -132,7 +177,15 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
         /// <returns> A new <see cref="AgFoodPlatform.AgFoodPlatformPrivateEndpointConnectionData"/> instance for mocking. </returns>
         public static AgFoodPlatformPrivateEndpointConnectionData AgFoodPlatformPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, AgFoodPlatformPrivateLinkServiceConnectionState connectionState = null, AgFoodPlatformPrivateEndpointConnectionProvisioningState? provisioningState = null)
         {
-            return new AgFoodPlatformPrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState, serializedAdditionalRawData: null);
+            return new AgFoodPlatformPrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null,
+                connectionState,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ArmAsyncOperation"/>. </summary>
@@ -167,7 +220,15 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             requiredMembers ??= new List<string>();
             requiredZoneNames ??= new List<string>();
 
-            return new AgFoodPlatformPrivateLinkResourceData(id, name, resourceType, systemData, groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), serializedAdditionalRawData: null);
+            return new AgFoodPlatformPrivateLinkResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                groupId,
+                requiredMembers?.ToList(),
+                requiredZoneNames?.ToList(),
+                serializedAdditionalRawData: null);
         }
     }
 }

@@ -491,6 +491,10 @@ namespace Azure.Search.Documents.Tests
 
                     case nameof(ModelWithVectorProperty.TitleVector):
                         Assert.AreEqual(SearchFieldDataType.Collection(SearchFieldDataType.Single), field.Type);
+                        Assert.AreEqual(1536, field.VectorSearchDimensions);
+                        Assert.AreEqual("test-config", field.VectorSearchProfileName);
+                        Assert.IsTrue(field.IsStored);
+                        Assert.IsFalse(field.IsHidden);
                         break;
 
                     default:

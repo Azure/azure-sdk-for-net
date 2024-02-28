@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(AddressPrefix))
+            if (AddressPrefix != null)
             {
                 writer.WritePropertyName("addressPrefix"u8);
                 writer.WriteStringValue(AddressPrefix);
             }
-            if (Optional.IsDefined(NetworkSecurityGroup))
+            if (NetworkSecurityGroup != null)
             {
                 if (NetworkSecurityGroup != null)
                 {
@@ -86,9 +86,9 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> addressPrefix = default;
-            Optional<NetworkSecurityGroupResourceReferenceInfo> networkSecurityGroup = default;
+            string name = default;
+            string addressPrefix = default;
+            NetworkSecurityGroupResourceReferenceInfo networkSecurityGroup = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         networkSecurityGroup = null;
                         continue;
                     }
-                    networkSecurityGroup = NetworkSecurityGroupResourceReferenceInfo.DeserializeNetworkSecurityGroupResourceReferenceInfo(property.Value);
+                    networkSecurityGroup = NetworkSecurityGroupResourceReferenceInfo.DeserializeNetworkSecurityGroupResourceReferenceInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubnetResourceSettings(name.Value, addressPrefix.Value, networkSecurityGroup.Value, serializedAdditionalRawData);
+            return new SubnetResourceSettings(name, addressPrefix, networkSecurityGroup, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubnetResourceSettings>.Write(ModelReaderWriterOptions options)

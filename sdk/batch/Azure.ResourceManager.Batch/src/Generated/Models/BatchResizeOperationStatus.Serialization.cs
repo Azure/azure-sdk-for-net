@@ -27,32 +27,32 @@ namespace Azure.ResourceManager.Batch.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TargetDedicatedNodes))
+            if (TargetDedicatedNodes.HasValue)
             {
                 writer.WritePropertyName("targetDedicatedNodes"u8);
                 writer.WriteNumberValue(TargetDedicatedNodes.Value);
             }
-            if (Optional.IsDefined(TargetLowPriorityNodes))
+            if (TargetLowPriorityNodes.HasValue)
             {
                 writer.WritePropertyName("targetLowPriorityNodes"u8);
                 writer.WriteNumberValue(TargetLowPriorityNodes.Value);
             }
-            if (Optional.IsDefined(ResizeTimeout))
+            if (ResizeTimeout.HasValue)
             {
                 writer.WritePropertyName("resizeTimeout"u8);
                 writer.WriteStringValue(ResizeTimeout.Value, "P");
             }
-            if (Optional.IsDefined(NodeDeallocationOption))
+            if (NodeDeallocationOption.HasValue)
             {
                 writer.WritePropertyName("nodeDeallocationOption"u8);
                 writer.WriteStringValue(NodeDeallocationOption.Value.ToSerialString());
             }
-            if (Optional.IsDefined(StartOn))
+            if (StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(Errors))
+            if (!(Errors is ChangeTrackingList<ResponseError> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
@@ -100,12 +100,12 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<int> targetDedicatedNodes = default;
-            Optional<int> targetLowPriorityNodes = default;
-            Optional<TimeSpan> resizeTimeout = default;
-            Optional<BatchNodeDeallocationOption> nodeDeallocationOption = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<IReadOnlyList<ResponseError>> errors = default;
+            int? targetDedicatedNodes = default;
+            int? targetLowPriorityNodes = default;
+            TimeSpan? resizeTimeout = default;
+            BatchNodeDeallocationOption? nodeDeallocationOption = default;
+            DateTimeOffset? startTime = default;
+            IReadOnlyList<ResponseError> errors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -175,7 +175,14 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchResizeOperationStatus(Optional.ToNullable(targetDedicatedNodes), Optional.ToNullable(targetLowPriorityNodes), Optional.ToNullable(resizeTimeout), Optional.ToNullable(nodeDeallocationOption), Optional.ToNullable(startTime), Optional.ToList(errors), serializedAdditionalRawData);
+            return new BatchResizeOperationStatus(
+                targetDedicatedNodes,
+                targetLowPriorityNodes,
+                resizeTimeout,
+                nodeDeallocationOption,
+                startTime,
+                errors ?? new ChangeTrackingList<ResponseError>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchResizeOperationStatus>.Write(ModelReaderWriterOptions options)

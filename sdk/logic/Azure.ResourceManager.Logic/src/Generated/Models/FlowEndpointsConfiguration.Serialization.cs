@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Workflow))
+            if (Workflow != null)
             {
                 writer.WritePropertyName("workflow"u8);
                 writer.WriteObjectValue(Workflow);
             }
-            if (Optional.IsDefined(Connector))
+            if (Connector != null)
             {
                 writer.WritePropertyName("connector"u8);
                 writer.WriteObjectValue(Connector);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<FlowEndpoints> workflow = default;
-            Optional<FlowEndpoints> connector = default;
+            FlowEndpoints workflow = default;
+            FlowEndpoints connector = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    workflow = FlowEndpoints.DeserializeFlowEndpoints(property.Value);
+                    workflow = FlowEndpoints.DeserializeFlowEndpoints(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("connector"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    connector = FlowEndpoints.DeserializeFlowEndpoints(property.Value);
+                    connector = FlowEndpoints.DeserializeFlowEndpoints(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FlowEndpointsConfiguration(workflow.Value, connector.Value, serializedAdditionalRawData);
+            return new FlowEndpointsConfiguration(workflow, connector, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FlowEndpointsConfiguration>.Write(ModelReaderWriterOptions options)

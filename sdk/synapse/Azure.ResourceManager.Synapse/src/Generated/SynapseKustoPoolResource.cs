@@ -505,7 +505,10 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<SynapseKustoPoolResource>> UpdateAsync(WaitUntil waitUntil, SynapseKustoPoolPatch patch, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _synapseKustoPoolKustoPoolsClientDiagnostics.CreateScope("SynapseKustoPoolResource.Update");
             scope.Start();
@@ -552,7 +555,10 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<SynapseKustoPoolResource> Update(WaitUntil waitUntil, SynapseKustoPoolPatch patch, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _synapseKustoPoolKustoPoolsClientDiagnostics.CreateScope("SynapseKustoPoolResource.Update");
             scope.Start();
@@ -765,7 +771,7 @@ namespace Azure.ResourceManager.Synapse
         public virtual AsyncPageable<SynapseDataSourceResourceSku> GetSkusByResourceAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseKustoPoolKustoPoolsRestClient.CreateListSkusByResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SynapseDataSourceResourceSku.DeserializeSynapseDataSourceResourceSku, _synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, "SynapseKustoPoolResource.GetSkusByResource", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => SynapseDataSourceResourceSku.DeserializeSynapseDataSourceResourceSku(e), _synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, "SynapseKustoPoolResource.GetSkusByResource", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -794,7 +800,7 @@ namespace Azure.ResourceManager.Synapse
         public virtual Pageable<SynapseDataSourceResourceSku> GetSkusByResource(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseKustoPoolKustoPoolsRestClient.CreateListSkusByResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, SynapseDataSourceResourceSku.DeserializeSynapseDataSourceResourceSku, _synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, "SynapseKustoPoolResource.GetSkusByResource", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => SynapseDataSourceResourceSku.DeserializeSynapseDataSourceResourceSku(e), _synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, "SynapseKustoPoolResource.GetSkusByResource", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -823,7 +829,7 @@ namespace Azure.ResourceManager.Synapse
         public virtual AsyncPageable<SynapseLanguageExtension> GetLanguageExtensionsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseKustoPoolKustoPoolsRestClient.CreateListLanguageExtensionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SynapseLanguageExtension.DeserializeSynapseLanguageExtension, _synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, "SynapseKustoPoolResource.GetLanguageExtensions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => SynapseLanguageExtension.DeserializeSynapseLanguageExtension(e), _synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, "SynapseKustoPoolResource.GetLanguageExtensions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -852,7 +858,7 @@ namespace Azure.ResourceManager.Synapse
         public virtual Pageable<SynapseLanguageExtension> GetLanguageExtensions(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseKustoPoolKustoPoolsRestClient.CreateListLanguageExtensionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, SynapseLanguageExtension.DeserializeSynapseLanguageExtension, _synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, "SynapseKustoPoolResource.GetLanguageExtensions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => SynapseLanguageExtension.DeserializeSynapseLanguageExtension(e), _synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, "SynapseKustoPoolResource.GetLanguageExtensions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -882,7 +888,10 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="languageExtensionsToAdd"/> is null. </exception>
         public virtual async Task<ArmOperation> AddLanguageExtensionsAsync(WaitUntil waitUntil, SynapseLanguageExtensionsList languageExtensionsToAdd, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(languageExtensionsToAdd, nameof(languageExtensionsToAdd));
+            if (languageExtensionsToAdd == null)
+            {
+                throw new ArgumentNullException(nameof(languageExtensionsToAdd));
+            }
 
             using var scope = _synapseKustoPoolKustoPoolsClientDiagnostics.CreateScope("SynapseKustoPoolResource.AddLanguageExtensions");
             scope.Start();
@@ -928,7 +937,10 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="languageExtensionsToAdd"/> is null. </exception>
         public virtual ArmOperation AddLanguageExtensions(WaitUntil waitUntil, SynapseLanguageExtensionsList languageExtensionsToAdd, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(languageExtensionsToAdd, nameof(languageExtensionsToAdd));
+            if (languageExtensionsToAdd == null)
+            {
+                throw new ArgumentNullException(nameof(languageExtensionsToAdd));
+            }
 
             using var scope = _synapseKustoPoolKustoPoolsClientDiagnostics.CreateScope("SynapseKustoPoolResource.AddLanguageExtensions");
             scope.Start();
@@ -974,7 +986,10 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="languageExtensionsToRemove"/> is null. </exception>
         public virtual async Task<ArmOperation> RemoveLanguageExtensionsAsync(WaitUntil waitUntil, SynapseLanguageExtensionsList languageExtensionsToRemove, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(languageExtensionsToRemove, nameof(languageExtensionsToRemove));
+            if (languageExtensionsToRemove == null)
+            {
+                throw new ArgumentNullException(nameof(languageExtensionsToRemove));
+            }
 
             using var scope = _synapseKustoPoolKustoPoolsClientDiagnostics.CreateScope("SynapseKustoPoolResource.RemoveLanguageExtensions");
             scope.Start();
@@ -1020,7 +1035,10 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="languageExtensionsToRemove"/> is null. </exception>
         public virtual ArmOperation RemoveLanguageExtensions(WaitUntil waitUntil, SynapseLanguageExtensionsList languageExtensionsToRemove, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(languageExtensionsToRemove, nameof(languageExtensionsToRemove));
+            if (languageExtensionsToRemove == null)
+            {
+                throw new ArgumentNullException(nameof(languageExtensionsToRemove));
+            }
 
             using var scope = _synapseKustoPoolKustoPoolsClientDiagnostics.CreateScope("SynapseKustoPoolResource.RemoveLanguageExtensions");
             scope.Start();
@@ -1065,7 +1083,7 @@ namespace Azure.ResourceManager.Synapse
         public virtual AsyncPageable<SynapseFollowerDatabaseDefinition> GetFollowerDatabasesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseKustoPoolKustoPoolsRestClient.CreateListFollowerDatabasesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SynapseFollowerDatabaseDefinition.DeserializeSynapseFollowerDatabaseDefinition, _synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, "SynapseKustoPoolResource.GetFollowerDatabases", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => SynapseFollowerDatabaseDefinition.DeserializeSynapseFollowerDatabaseDefinition(e), _synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, "SynapseKustoPoolResource.GetFollowerDatabases", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1094,7 +1112,7 @@ namespace Azure.ResourceManager.Synapse
         public virtual Pageable<SynapseFollowerDatabaseDefinition> GetFollowerDatabases(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseKustoPoolKustoPoolsRestClient.CreateListFollowerDatabasesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, SynapseFollowerDatabaseDefinition.DeserializeSynapseFollowerDatabaseDefinition, _synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, "SynapseKustoPoolResource.GetFollowerDatabases", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => SynapseFollowerDatabaseDefinition.DeserializeSynapseFollowerDatabaseDefinition(e), _synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, "SynapseKustoPoolResource.GetFollowerDatabases", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1124,7 +1142,10 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="followerDatabaseToRemove"/> is null. </exception>
         public virtual async Task<ArmOperation> DetachFollowerDatabasesAsync(WaitUntil waitUntil, SynapseFollowerDatabaseDefinition followerDatabaseToRemove, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(followerDatabaseToRemove, nameof(followerDatabaseToRemove));
+            if (followerDatabaseToRemove == null)
+            {
+                throw new ArgumentNullException(nameof(followerDatabaseToRemove));
+            }
 
             using var scope = _synapseKustoPoolKustoPoolsClientDiagnostics.CreateScope("SynapseKustoPoolResource.DetachFollowerDatabases");
             scope.Start();
@@ -1170,7 +1191,10 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="followerDatabaseToRemove"/> is null. </exception>
         public virtual ArmOperation DetachFollowerDatabases(WaitUntil waitUntil, SynapseFollowerDatabaseDefinition followerDatabaseToRemove, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(followerDatabaseToRemove, nameof(followerDatabaseToRemove));
+            if (followerDatabaseToRemove == null)
+            {
+                throw new ArgumentNullException(nameof(followerDatabaseToRemove));
+            }
 
             using var scope = _synapseKustoPoolKustoPoolsClientDiagnostics.CreateScope("SynapseKustoPoolResource.DetachFollowerDatabases");
             scope.Start();
@@ -1211,7 +1235,10 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<KustoPoolNameAvailabilityResult>> CheckKustoPoolChildResourceNameAvailabilityAsync(KustoPoolChildResourceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _kustoPoolChildResourceClientDiagnostics.CreateScope("SynapseKustoPoolResource.CheckKustoPoolChildResourceNameAvailability");
             scope.Start();
@@ -1249,7 +1276,10 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<KustoPoolNameAvailabilityResult> CheckKustoPoolChildResourceNameAvailability(KustoPoolChildResourceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _kustoPoolChildResourceClientDiagnostics.CreateScope("SynapseKustoPoolResource.CheckKustoPoolChildResourceNameAvailability");
             scope.Start();
@@ -1291,7 +1321,10 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<KustoPoolNameAvailabilityResult>> CheckKustoPoolPrincipalAssignmentNameAvailabilityAsync(KustoPoolPrincipalAssignmentNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _synapseClusterPrincipalAssignmentKustoPoolPrincipalAssignmentsClientDiagnostics.CreateScope("SynapseKustoPoolResource.CheckKustoPoolPrincipalAssignmentNameAvailability");
             scope.Start();
@@ -1333,7 +1366,10 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<KustoPoolNameAvailabilityResult> CheckKustoPoolPrincipalAssignmentNameAvailability(KustoPoolPrincipalAssignmentNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _synapseClusterPrincipalAssignmentKustoPoolPrincipalAssignmentsClientDiagnostics.CreateScope("SynapseKustoPoolResource.CheckKustoPoolPrincipalAssignmentNameAvailability");
             scope.Start();
@@ -1371,7 +1407,7 @@ namespace Azure.ResourceManager.Synapse
         public virtual AsyncPageable<SynapseKustoPoolPrivateLinkData> GetAllKustoPoolPrivateLinkDataAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoPoolPrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SynapseKustoPoolPrivateLinkData.DeserializeSynapseKustoPoolPrivateLinkData, _kustoPoolPrivateLinkResourcesClientDiagnostics, Pipeline, "SynapseKustoPoolResource.GetAllKustoPoolPrivateLinkData", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => SynapseKustoPoolPrivateLinkData.DeserializeSynapseKustoPoolPrivateLinkData(e), _kustoPoolPrivateLinkResourcesClientDiagnostics, Pipeline, "SynapseKustoPoolResource.GetAllKustoPoolPrivateLinkData", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1396,7 +1432,7 @@ namespace Azure.ResourceManager.Synapse
         public virtual Pageable<SynapseKustoPoolPrivateLinkData> GetAllKustoPoolPrivateLinkData(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoPoolPrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, SynapseKustoPoolPrivateLinkData.DeserializeSynapseKustoPoolPrivateLinkData, _kustoPoolPrivateLinkResourcesClientDiagnostics, Pipeline, "SynapseKustoPoolResource.GetAllKustoPoolPrivateLinkData", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => SynapseKustoPoolPrivateLinkData.DeserializeSynapseKustoPoolPrivateLinkData(e), _kustoPoolPrivateLinkResourcesClientDiagnostics, Pipeline, "SynapseKustoPoolResource.GetAllKustoPoolPrivateLinkData", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1426,8 +1462,14 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<SynapseKustoPoolResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _synapseKustoPoolKustoPoolsClientDiagnostics.CreateScope("SynapseKustoPoolResource.AddTag");
             scope.Start();
@@ -1488,8 +1530,14 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<SynapseKustoPoolResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _synapseKustoPoolKustoPoolsClientDiagnostics.CreateScope("SynapseKustoPoolResource.AddTag");
             scope.Start();
@@ -1549,7 +1597,10 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<SynapseKustoPoolResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _synapseKustoPoolKustoPoolsClientDiagnostics.CreateScope("SynapseKustoPoolResource.SetTags");
             scope.Start();
@@ -1606,7 +1657,10 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<SynapseKustoPoolResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _synapseKustoPoolKustoPoolsClientDiagnostics.CreateScope("SynapseKustoPoolResource.SetTags");
             scope.Start();
@@ -1663,7 +1717,10 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<SynapseKustoPoolResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _synapseKustoPoolKustoPoolsClientDiagnostics.CreateScope("SynapseKustoPoolResource.RemoveTag");
             scope.Start();
@@ -1723,7 +1780,10 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<SynapseKustoPoolResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _synapseKustoPoolKustoPoolsClientDiagnostics.CreateScope("SynapseKustoPoolResource.RemoveTag");
             scope.Start();

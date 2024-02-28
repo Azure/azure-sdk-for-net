@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(VirtualNetworkArmResourceId))
+            if (VirtualNetworkArmResourceId != null)
             {
                 writer.WritePropertyName("virtualNetworkArmResourceId"u8);
                 writer.WriteStringValue(VirtualNetworkArmResourceId);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> virtualNetworkArmResourceId = default;
+            ResourceIdentifier virtualNetworkArmResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter(virtualNetworkArmResourceId.Value, serializedAdditionalRawData);
+            return new PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter(virtualNetworkArmResourceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter>.Write(ModelReaderWriterOptions options)

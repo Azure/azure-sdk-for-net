@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Min))
+            if (Min.HasValue)
             {
                 writer.WritePropertyName("min"u8);
                 writer.WriteNumberValue(Min.Value);
             }
-            if (Optional.IsDefined(Max))
+            if (Max.HasValue)
             {
                 writer.WritePropertyName("max"u8);
                 writer.WriteNumberValue(Max.Value);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<int> min = default;
-            Optional<int> max = default;
+            int? min = default;
+            int? max = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualNetworkGatewayAutoScaleBounds(Optional.ToNullable(min), Optional.ToNullable(max), serializedAdditionalRawData);
+            return new VirtualNetworkGatewayAutoScaleBounds(min, max, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualNetworkGatewayAutoScaleBounds>.Write(ModelReaderWriterOptions options)

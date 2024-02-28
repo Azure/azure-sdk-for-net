@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<string> description = default;
+            string description = default;
             IList<DeliveryRule> rules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<DeliveryRule> array = new List<DeliveryRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeliveryRule.DeserializeDeliveryRule(item));
+                        array.Add(DeliveryRule.DeserializeDeliveryRule(item, options));
                     }
                     rules = array;
                     continue;
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EndpointDeliveryPolicy(description.Value, rules, serializedAdditionalRawData);
+            return new EndpointDeliveryPolicy(description, rules, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EndpointDeliveryPolicy>.Write(ModelReaderWriterOptions options)

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Labels))
+            if (!(Labels is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Ids))
+            if (!(Ids is ChangeTrackingList<WritableSubResource> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("ids"u8);
                 writer.WriteStartArray();
@@ -85,8 +85,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IList<string>> labels = default;
-            Optional<IList<WritableSubResource>> ids = default;
+            IList<string> labels = default;
+            IList<WritableSubResource> ids = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PropagatedRouteTable(Optional.ToList(labels), Optional.ToList(ids), serializedAdditionalRawData);
+            return new PropagatedRouteTable(labels ?? new ChangeTrackingList<string>(), ids ?? new ChangeTrackingList<WritableSubResource>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PropagatedRouteTable>.Write(ModelReaderWriterOptions options)

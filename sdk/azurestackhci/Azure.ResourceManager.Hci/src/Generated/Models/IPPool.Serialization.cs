@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(IPPoolType))
+            if (IPPoolType.HasValue)
             {
                 writer.WritePropertyName("ipPoolType"u8);
                 writer.WriteStringValue(IPPoolType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Start))
+            if (Start != null)
             {
                 writer.WritePropertyName("start"u8);
                 writer.WriteStringValue(Start);
             }
-            if (Optional.IsDefined(End))
+            if (End != null)
             {
                 writer.WritePropertyName("end"u8);
                 writer.WriteStringValue(End);
             }
-            if (Optional.IsDefined(Info))
+            if (Info != null)
             {
                 writer.WritePropertyName("info"u8);
                 writer.WriteObjectValue(Info);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<IPPoolTypeEnum> ipPoolType = default;
-            Optional<string> start = default;
-            Optional<string> end = default;
-            Optional<IPPoolInfo> info = default;
+            string name = default;
+            IPPoolTypeEnum? ipPoolType = default;
+            string start = default;
+            string end = default;
+            IPPoolInfo info = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    info = IPPoolInfo.DeserializeIPPoolInfo(property.Value);
+                    info = IPPoolInfo.DeserializeIPPoolInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IPPool(name.Value, Optional.ToNullable(ipPoolType), start.Value, end.Value, info.Value, serializedAdditionalRawData);
+            return new IPPool(
+                name,
+                ipPoolType,
+                start,
+                end,
+                info,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IPPool>.Write(ModelReaderWriterOptions options)

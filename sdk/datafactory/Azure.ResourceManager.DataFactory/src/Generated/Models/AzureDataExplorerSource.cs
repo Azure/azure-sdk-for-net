@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -20,7 +19,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="query"/> is null. </exception>
         public AzureDataExplorerSource(DataFactoryElement<string> query)
         {
-            Argument.AssertNotNull(query, nameof(query));
+            if (query == null)
+            {
+                throw new ArgumentNullException(nameof(query));
+            }
 
             Query = query;
             CopySourceType = "AzureDataExplorerSource";
@@ -44,6 +46,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             QueryTimeout = queryTimeout;
             AdditionalColumns = additionalColumns;
             CopySourceType = copySourceType ?? "AzureDataExplorerSource";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureDataExplorerSource"/> for deserialization. </summary>
+        internal AzureDataExplorerSource()
+        {
         }
 
         /// <summary> Database query. Should be a Kusto Query Language (KQL) query. Type: string (or Expression with resultType string). </summary>
