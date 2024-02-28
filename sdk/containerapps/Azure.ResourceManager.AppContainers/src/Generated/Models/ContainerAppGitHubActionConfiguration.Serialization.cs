@@ -109,15 +109,15 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<ContainerAppRegistryInfo> registryInfo = default;
-            Optional<ContainerAppCredentials> azureCredentials = default;
-            Optional<string> contextPath = default;
-            Optional<string> gitHubPersonalAccessToken = default;
-            Optional<string> image = default;
-            Optional<string> publishType = default;
-            Optional<string> os = default;
-            Optional<string> runtimeStack = default;
-            Optional<string> runtimeVersion = default;
+            ContainerAppRegistryInfo registryInfo = default;
+            ContainerAppCredentials azureCredentials = default;
+            string contextPath = default;
+            string gitHubPersonalAccessToken = default;
+            string image = default;
+            string publishType = default;
+            string os = default;
+            string runtimeStack = default;
+            string runtimeVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -182,15 +182,15 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ContainerAppGitHubActionConfiguration(
-                registryInfo.Value,
-                azureCredentials.Value,
-                contextPath.Value,
-                gitHubPersonalAccessToken.Value,
-                image.Value,
-                publishType.Value,
-                os.Value,
-                runtimeStack.Value,
-                runtimeVersion.Value,
+                registryInfo,
+                azureCredentials,
+                contextPath,
+                gitHubPersonalAccessToken,
+                image,
+                publishType,
+                os,
+                runtimeStack,
+                runtimeVersion,
                 serializedAdditionalRawData);
         }
 

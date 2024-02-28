@@ -54,12 +54,12 @@ namespace Azure.Communication.ShortCodes.Models
             {
                 return null;
             }
-            Optional<int> totalMonthlyVolume = default;
-            Optional<int> monthlyAverageMessagesFromUser = default;
-            Optional<int> monthlyAverageMessagesToUser = default;
-            Optional<bool> isSpiky = default;
-            Optional<string> spikeDetails = default;
-            Optional<int> estimatedRampUpTimeInDays = default;
+            int? totalMonthlyVolume = default;
+            int? monthlyAverageMessagesFromUser = default;
+            int? monthlyAverageMessagesToUser = default;
+            bool? isSpiky = default;
+            string spikeDetails = default;
+            int? estimatedRampUpTimeInDays = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("totalMonthlyVolume"u8))
@@ -114,12 +114,12 @@ namespace Azure.Communication.ShortCodes.Models
                 }
             }
             return new TrafficDetails(
-                Optional.ToNullable(totalMonthlyVolume),
-                Optional.ToNullable(monthlyAverageMessagesFromUser),
-                Optional.ToNullable(monthlyAverageMessagesToUser),
-                Optional.ToNullable(isSpiky),
-                spikeDetails.Value,
-                Optional.ToNullable(estimatedRampUpTimeInDays));
+                totalMonthlyVolume,
+                monthlyAverageMessagesFromUser,
+                monthlyAverageMessagesToUser,
+                isSpiky,
+                spikeDetails,
+                estimatedRampUpTimeInDays);
         }
     }
 }

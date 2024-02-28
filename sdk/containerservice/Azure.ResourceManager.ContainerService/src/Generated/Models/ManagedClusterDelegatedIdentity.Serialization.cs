@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<Guid> tenantId = default;
-            Optional<string> referralResource = default;
-            Optional<AzureLocation> location = default;
+            ResourceIdentifier resourceId = default;
+            Guid? tenantId = default;
+            string referralResource = default;
+            AzureLocation? location = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterDelegatedIdentity(resourceId.Value, Optional.ToNullable(tenantId), referralResource.Value, Optional.ToNullable(location), serializedAdditionalRawData);
+            return new ManagedClusterDelegatedIdentity(resourceId, tenantId, referralResource, location, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterDelegatedIdentity>.Write(ModelReaderWriterOptions options)

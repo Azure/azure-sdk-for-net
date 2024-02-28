@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             IReadOnlyList<PipelineActivityRunInformation> value = default;
-            Optional<string> continuationToken = default;
+            string continuationToken = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PipelineActivityRunsResult(value, continuationToken.Value, serializedAdditionalRawData);
+            return new PipelineActivityRunsResult(value, continuationToken, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PipelineActivityRunsResult>.Write(ModelReaderWriterOptions options)

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             IReadOnlyList<string> zones = default;
             IReadOnlyList<string> sites = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeSkuLocationInfo(Optional.ToNullable(location), zones ?? new ChangeTrackingList<string>(), sites ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new DataBoxEdgeSkuLocationInfo(location, zones ?? new ChangeTrackingList<string>(), sites ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeSkuLocationInfo>.Write(ModelReaderWriterOptions options)

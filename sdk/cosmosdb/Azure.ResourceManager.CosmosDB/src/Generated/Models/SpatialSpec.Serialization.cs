@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> path = default;
+            string path = default;
             IList<CosmosDBSpatialType> types = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SpatialSpec(path.Value, types ?? new ChangeTrackingList<CosmosDBSpatialType>(), serializedAdditionalRawData);
+            return new SpatialSpec(path, types ?? new ChangeTrackingList<CosmosDBSpatialType>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SpatialSpec>.Write(ModelReaderWriterOptions options)

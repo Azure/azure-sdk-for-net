@@ -81,10 +81,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<TimeSpan> maximumDuration = default;
+            TimeSpan? maximumDuration = default;
             VmGuestPatchRebootSetting rebootSetting = default;
-            Optional<WindowsParameters> windowsParameters = default;
-            Optional<LinuxParameters> linuxParameters = default;
+            WindowsParameters windowsParameters = default;
+            LinuxParameters linuxParameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineInstallPatchesContent(Optional.ToNullable(maximumDuration), rebootSetting, windowsParameters.Value, linuxParameters.Value, serializedAdditionalRawData);
+            return new VirtualMachineInstallPatchesContent(maximumDuration, rebootSetting, windowsParameters, linuxParameters, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineInstallPatchesContent>.Write(ModelReaderWriterOptions options)

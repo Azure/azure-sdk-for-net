@@ -138,19 +138,19 @@ namespace Azure.ResourceManager.AppContainers
             {
                 return null;
             }
-            Optional<ContainerAppExtendedLocation> extendedLocation = default;
+            ContainerAppExtendedLocation extendedLocation = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ContainerAppConnectedEnvironmentProvisioningState> provisioningState = default;
-            Optional<string> deploymentErrors = default;
-            Optional<string> defaultDomain = default;
-            Optional<IPAddress> staticIP = default;
-            Optional<string> daprAIConnectionString = default;
-            Optional<ContainerAppCustomDomainConfiguration> customDomainConfiguration = default;
+            SystemData systemData = default;
+            ContainerAppConnectedEnvironmentProvisioningState? provisioningState = default;
+            string deploymentErrors = default;
+            string defaultDomain = default;
+            IPAddress staticIP = default;
+            string daprAIConnectionString = default;
+            ContainerAppCustomDomainConfiguration customDomainConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -271,16 +271,16 @@ namespace Azure.ResourceManager.AppContainers
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                extendedLocation.Value,
-                Optional.ToNullable(provisioningState),
-                deploymentErrors.Value,
-                defaultDomain.Value,
-                staticIP.Value,
-                daprAIConnectionString.Value,
-                customDomainConfiguration.Value,
+                extendedLocation,
+                provisioningState,
+                deploymentErrors,
+                defaultDomain,
+                staticIP,
+                daprAIConnectionString,
+                customDomainConfiguration,
                 serializedAdditionalRawData);
         }
 

@@ -122,12 +122,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<GetUserTablesSqlTaskInput> input = default;
+            GetUserTablesSqlTaskInput input = default;
             IReadOnlyList<GetUserTablesSqlTaskOutput> output = default;
-            Optional<string> taskId = default;
+            string taskId = default;
             TaskType taskType = default;
             IReadOnlyList<ODataError> errors = default;
-            Optional<TaskState> state = default;
+            TaskState? state = default;
             IReadOnlyList<CommandProperties> commands = default;
             IDictionary<string, string> clientData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -227,13 +227,13 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new GetUserTablesSqlTaskProperties(
                 taskType,
                 errors ?? new ChangeTrackingList<ODataError>(),
-                Optional.ToNullable(state),
+                state,
                 commands ?? new ChangeTrackingList<CommandProperties>(),
                 clientData ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
-                input.Value,
+                input,
                 output ?? new ChangeTrackingList<GetUserTablesSqlTaskOutput>(),
-                taskId.Value);
+                taskId);
         }
 
         BinaryData IPersistableModel<GetUserTablesSqlTaskProperties>.Write(ModelReaderWriterOptions options)

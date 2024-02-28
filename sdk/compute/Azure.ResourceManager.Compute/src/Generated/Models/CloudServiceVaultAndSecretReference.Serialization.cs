@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<WritableSubResource> sourceVault = default;
-            Optional<Uri> secretUrl = default;
+            WritableSubResource sourceVault = default;
+            Uri secretUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudServiceVaultAndSecretReference(sourceVault, secretUrl.Value, serializedAdditionalRawData);
+            return new CloudServiceVaultAndSecretReference(sourceVault, secretUrl, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudServiceVaultAndSecretReference>.Write(ModelReaderWriterOptions options)

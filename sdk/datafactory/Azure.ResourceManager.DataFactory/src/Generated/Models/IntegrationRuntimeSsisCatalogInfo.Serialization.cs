@@ -87,11 +87,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<string> catalogServerEndpoint = default;
-            Optional<string> catalogAdminUserName = default;
-            Optional<DataFactorySecretString> catalogAdminPassword = default;
-            Optional<IntegrationRuntimeSsisCatalogPricingTier> catalogPricingTier = default;
-            Optional<string> dualStandbyPairName = default;
+            string catalogServerEndpoint = default;
+            string catalogAdminUserName = default;
+            DataFactorySecretString catalogAdminPassword = default;
+            IntegrationRuntimeSsisCatalogPricingTier? catalogPricingTier = default;
+            string dualStandbyPairName = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,11 +133,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new IntegrationRuntimeSsisCatalogInfo(
-                catalogServerEndpoint.Value,
-                catalogAdminUserName.Value,
+                catalogServerEndpoint,
+                catalogAdminUserName,
                 catalogAdminPassword,
-                Optional.ToNullable(catalogPricingTier),
-                dualStandbyPairName.Value,
+                catalogPricingTier,
+                dualStandbyPairName,
                 additionalProperties);
         }
 

@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<UefiKey> pk = default;
+            UefiKey pk = default;
             IList<UefiKey> kek = default;
             IList<UefiKey> db = default;
             IList<UefiKey> dbx = default;
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UefiKeySignatures(pk.Value, kek ?? new ChangeTrackingList<UefiKey>(), db ?? new ChangeTrackingList<UefiKey>(), dbx ?? new ChangeTrackingList<UefiKey>(), serializedAdditionalRawData);
+            return new UefiKeySignatures(pk, kek ?? new ChangeTrackingList<UefiKey>(), db ?? new ChangeTrackingList<UefiKey>(), dbx ?? new ChangeTrackingList<UefiKey>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UefiKeySignatures>.Write(ModelReaderWriterOptions options)

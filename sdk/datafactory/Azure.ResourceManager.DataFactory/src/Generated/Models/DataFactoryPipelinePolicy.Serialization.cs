@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<PipelineElapsedTimeMetricPolicy> elapsedTimeMetric = default;
+            PipelineElapsedTimeMetricPolicy elapsedTimeMetric = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataFactoryPipelinePolicy(elapsedTimeMetric.Value, serializedAdditionalRawData);
+            return new DataFactoryPipelinePolicy(elapsedTimeMetric, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataFactoryPipelinePolicy>.Write(ModelReaderWriterOptions options)

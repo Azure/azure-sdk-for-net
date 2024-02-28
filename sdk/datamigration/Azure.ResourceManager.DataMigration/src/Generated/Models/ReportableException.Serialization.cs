@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> message = default;
-            Optional<string> actionableMessage = default;
-            Optional<string> filePath = default;
-            Optional<string> lineNumber = default;
-            Optional<int> hResult = default;
-            Optional<string> stackTrace = default;
+            string message = default;
+            string actionableMessage = default;
+            string filePath = default;
+            string lineNumber = default;
+            int? hResult = default;
+            string stackTrace = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -145,12 +145,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ReportableException(
-                message.Value,
-                actionableMessage.Value,
-                filePath.Value,
-                lineNumber.Value,
-                Optional.ToNullable(hResult),
-                stackTrace.Value,
+                message,
+                actionableMessage,
+                filePath,
+                lineNumber,
+                hResult,
+                stackTrace,
                 serializedAdditionalRawData);
         }
 

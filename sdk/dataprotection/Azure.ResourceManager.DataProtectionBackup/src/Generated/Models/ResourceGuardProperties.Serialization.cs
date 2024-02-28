@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<DataProtectionBackupProvisioningState> provisioningState = default;
-            Optional<bool> allowAutoApprovals = default;
+            DataProtectionBackupProvisioningState? provisioningState = default;
+            bool? allowAutoApprovals = default;
             IReadOnlyList<ResourceGuardOperationDetails> resourceGuardOperations = default;
             IList<string> vaultCriticalOperationExclusionList = default;
-            Optional<string> description = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -166,11 +166,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ResourceGuardProperties(
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(allowAutoApprovals),
+                provisioningState,
+                allowAutoApprovals,
                 resourceGuardOperations ?? new ChangeTrackingList<ResourceGuardOperationDetails>(),
                 vaultCriticalOperationExclusionList ?? new ChangeTrackingList<string>(),
-                description.Value,
+                description,
                 serializedAdditionalRawData);
         }
 

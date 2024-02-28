@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> databaseName = default;
-            Optional<BackupType> backupType = default;
+            string databaseName = default;
+            BackupType? backupType = default;
             IReadOnlyList<string> backupFiles = default;
-            Optional<int> position = default;
-            Optional<bool> isDamaged = default;
-            Optional<bool> isCompressed = default;
-            Optional<int> familyCount = default;
-            Optional<DateTimeOffset> backupFinishDate = default;
+            int? position = default;
+            bool? isDamaged = default;
+            bool? isCompressed = default;
+            int? familyCount = default;
+            DateTimeOffset? backupFinishDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -201,14 +201,14 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DatabaseBackupInfo(
-                databaseName.Value,
-                Optional.ToNullable(backupType),
+                databaseName,
+                backupType,
                 backupFiles ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(position),
-                Optional.ToNullable(isDamaged),
-                Optional.ToNullable(isCompressed),
-                Optional.ToNullable(familyCount),
-                Optional.ToNullable(backupFinishDate),
+                position,
+                isDamaged,
+                isCompressed,
+                familyCount,
+                backupFinishDate,
                 serializedAdditionalRawData);
         }
 

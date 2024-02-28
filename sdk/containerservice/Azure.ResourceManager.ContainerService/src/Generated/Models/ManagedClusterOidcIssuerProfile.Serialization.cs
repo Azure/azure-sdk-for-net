@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<string> issuerUrl = default;
-            Optional<bool> enabled = default;
+            string issuerUrl = default;
+            bool? enabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterOidcIssuerProfile(issuerUrl.Value, Optional.ToNullable(enabled), serializedAdditionalRawData);
+            return new ManagedClusterOidcIssuerProfile(issuerUrl, enabled, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterOidcIssuerProfile>.Write(ModelReaderWriterOptions options)

@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 return null;
             }
             ContainerRegistryOS os = default;
-            Optional<ContainerRegistryOSArchitecture> architecture = default;
-            Optional<ContainerRegistryCpuVariant> variant = default;
+            ContainerRegistryOSArchitecture? architecture = default;
+            ContainerRegistryCpuVariant? variant = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryPlatformProperties(os, Optional.ToNullable(architecture), Optional.ToNullable(variant), serializedAdditionalRawData);
+            return new ContainerRegistryPlatformProperties(os, architecture, variant, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryPlatformProperties>.Write(ModelReaderWriterOptions options)

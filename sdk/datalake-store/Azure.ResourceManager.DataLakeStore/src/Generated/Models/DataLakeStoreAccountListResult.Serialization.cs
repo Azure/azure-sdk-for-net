@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 return null;
             }
             IReadOnlyList<DataLakeStoreAccountBasicData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataLakeStoreAccountListResult(value ?? new ChangeTrackingList<DataLakeStoreAccountBasicData>(), nextLink.Value, serializedAdditionalRawData);
+            return new DataLakeStoreAccountListResult(value ?? new ChangeTrackingList<DataLakeStoreAccountBasicData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataLakeStoreAccountListResult>.Write(ModelReaderWriterOptions options)

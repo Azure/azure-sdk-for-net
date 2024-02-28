@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<string> username = default;
+            string username = default;
             IReadOnlyList<ContainerRegistryPassword> passwords = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryListCredentialsResult(username.Value, passwords ?? new ChangeTrackingList<ContainerRegistryPassword>(), serializedAdditionalRawData);
+            return new ContainerRegistryListCredentialsResult(username, passwords ?? new ChangeTrackingList<ContainerRegistryPassword>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryListCredentialsResult>.Write(ModelReaderWriterOptions options)

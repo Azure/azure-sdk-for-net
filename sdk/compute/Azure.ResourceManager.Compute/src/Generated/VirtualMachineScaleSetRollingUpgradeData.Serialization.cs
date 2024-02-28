@@ -127,11 +127,11 @@ namespace Azure.ResourceManager.Compute
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<RollingUpgradePolicy> policy = default;
-            Optional<RollingUpgradeRunningStatus> runningStatus = default;
-            Optional<RollingUpgradeProgressInfo> progress = default;
-            Optional<ComputeApiError> error = default;
+            SystemData systemData = default;
+            RollingUpgradePolicy policy = default;
+            RollingUpgradeRunningStatus runningStatus = default;
+            RollingUpgradeProgressInfo progress = default;
+            ComputeApiError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -237,13 +237,13 @@ namespace Azure.ResourceManager.Compute
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                policy.Value,
-                runningStatus.Value,
-                progress.Value,
-                error.Value,
+                policy,
+                runningStatus,
+                progress,
+                error,
                 serializedAdditionalRawData);
         }
 

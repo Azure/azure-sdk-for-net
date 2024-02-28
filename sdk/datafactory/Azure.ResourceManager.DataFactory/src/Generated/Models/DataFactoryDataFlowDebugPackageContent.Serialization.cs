@@ -111,13 +111,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<Guid> sessionId = default;
-            Optional<DataFactoryDataFlowDebugInfo> dataFlow = default;
+            Guid? sessionId = default;
+            DataFactoryDataFlowDebugInfo dataFlow = default;
             IList<DataFactoryDataFlowDebugInfo> dataFlows = default;
             IList<DataFactoryDatasetDebugInfo> datasets = default;
             IList<DataFactoryLinkedServiceDebugInfo> linkedServices = default;
-            Optional<DataFlowStagingInfo> staging = default;
-            Optional<DataFlowDebugPackageDebugSettings> debugSettings = default;
+            DataFlowStagingInfo staging = default;
+            DataFlowDebugPackageDebugSettings debugSettings = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -204,13 +204,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new DataFactoryDataFlowDebugPackageContent(
-                Optional.ToNullable(sessionId),
-                dataFlow.Value,
+                sessionId,
+                dataFlow,
                 dataFlows ?? new ChangeTrackingList<DataFactoryDataFlowDebugInfo>(),
                 datasets ?? new ChangeTrackingList<DataFactoryDatasetDebugInfo>(),
                 linkedServices ?? new ChangeTrackingList<DataFactoryLinkedServiceDebugInfo>(),
-                staging.Value,
-                debugSettings.Value,
+                staging,
+                debugSettings,
                 additionalProperties);
         }
 

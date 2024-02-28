@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 return null;
             }
             IReadOnlyList<DatadogHost> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatadogHostListResponse(value ?? new ChangeTrackingList<DatadogHost>(), nextLink.Value, serializedAdditionalRawData);
+            return new DatadogHostListResponse(value ?? new ChangeTrackingList<DatadogHost>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatadogHostListResponse>.Write(ModelReaderWriterOptions options)

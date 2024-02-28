@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> keyVaultId = default;
-            Optional<string> certObjectName = default;
-            Optional<string> keyObjectName = default;
-            Optional<string> rootCertObjectName = default;
-            Optional<string> certChainObjectName = default;
+            ResourceIdentifier keyVaultId = default;
+            string certObjectName = default;
+            string keyObjectName = default;
+            string rootCertObjectName = default;
+            string certChainObjectName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,11 +134,11 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new IstioPluginCertificateAuthority(
-                keyVaultId.Value,
-                certObjectName.Value,
-                keyObjectName.Value,
-                rootCertObjectName.Value,
-                certChainObjectName.Value,
+                keyVaultId,
+                certObjectName,
+                keyObjectName,
+                rootCertObjectName,
+                certChainObjectName,
                 serializedAdditionalRawData);
         }
 

@@ -80,9 +80,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<IPAddress> ipAddress = default;
-            Optional<string> subnet = default;
-            Optional<string> gateway = default;
+            IPAddress ipAddress = default;
+            string subnet = default;
+            string gateway = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeIPv4Config(ipAddress.Value, subnet.Value, gateway.Value, serializedAdditionalRawData);
+            return new DataBoxEdgeIPv4Config(ipAddress, subnet, gateway, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeIPv4Config>.Write(ModelReaderWriterOptions options)

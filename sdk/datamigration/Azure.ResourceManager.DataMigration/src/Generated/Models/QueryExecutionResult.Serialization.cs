@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> queryText = default;
-            Optional<long> statementsInBatch = default;
-            Optional<ExecutionStatistics> sourceResult = default;
-            Optional<ExecutionStatistics> targetResult = default;
+            string queryText = default;
+            long? statementsInBatch = default;
+            ExecutionStatistics sourceResult = default;
+            ExecutionStatistics targetResult = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QueryExecutionResult(queryText.Value, Optional.ToNullable(statementsInBatch), sourceResult.Value, targetResult.Value, serializedAdditionalRawData);
+            return new QueryExecutionResult(queryText, statementsInBatch, sourceResult, targetResult, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QueryExecutionResult>.Write(ModelReaderWriterOptions options)

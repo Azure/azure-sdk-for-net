@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 return null;
             }
             IReadOnlyList<DeletedDataProtectionBackupInstanceData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeletedBackupInstanceResourceList(nextLink.Value, serializedAdditionalRawData, value ?? new ChangeTrackingList<DeletedDataProtectionBackupInstanceData>());
+            return new DeletedBackupInstanceResourceList(nextLink, serializedAdditionalRawData, value ?? new ChangeTrackingList<DeletedDataProtectionBackupInstanceData>());
         }
 
         BinaryData IPersistableModel<DeletedBackupInstanceResourceList>.Write(ModelReaderWriterOptions options)

@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<PolybaseSettingsRejectType> rejectType = default;
-            Optional<DataFactoryElement<int>> rejectValue = default;
-            Optional<DataFactoryElement<int>> rejectSampleValue = default;
-            Optional<DataFactoryElement<bool>> useTypeDefault = default;
+            PolybaseSettingsRejectType? rejectType = default;
+            DataFactoryElement<int> rejectValue = default;
+            DataFactoryElement<int> rejectSampleValue = default;
+            DataFactoryElement<bool> useTypeDefault = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new PolybaseSettings(Optional.ToNullable(rejectType), rejectValue.Value, rejectSampleValue.Value, useTypeDefault.Value, additionalProperties);
+            return new PolybaseSettings(rejectType, rejectValue, rejectSampleValue, useTypeDefault, additionalProperties);
         }
 
         BinaryData IPersistableModel<PolybaseSettings>.Write(ModelReaderWriterOptions options)

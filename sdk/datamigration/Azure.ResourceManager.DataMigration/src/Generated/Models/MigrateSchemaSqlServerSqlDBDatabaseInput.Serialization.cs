@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> id = default;
-            Optional<string> targetDatabaseName = default;
-            Optional<SchemaMigrationSetting> schemaSetting = default;
+            string name = default;
+            string id = default;
+            string targetDatabaseName = default;
+            SchemaMigrationSetting schemaSetting = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateSchemaSqlServerSqlDBDatabaseInput(name.Value, id.Value, targetDatabaseName.Value, schemaSetting.Value, serializedAdditionalRawData);
+            return new MigrateSchemaSqlServerSqlDBDatabaseInput(name, id, targetDatabaseName, schemaSetting, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MigrateSchemaSqlServerSqlDBDatabaseInput>.Write(ModelReaderWriterOptions options)
