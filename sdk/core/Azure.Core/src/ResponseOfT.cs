@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel;
 using System.ComponentModel;
 using System.Diagnostics;
 
@@ -19,10 +20,15 @@ namespace Azure
 #pragma warning restore SA1649 // File name should match first type name
     {
         /// <summary>
-        /// TBD.
+        /// Creates an instance of <see cref="Response{T}"/> with no value
+        /// or <see cref="Response"/>. It is not intended for this constructor
+        /// to be called, as it will create an instance of
+        /// <see cref="Response{T}"/> with null <see cref="Value"/> and
+        /// <see cref="Response"/>, neither of which is intended usage of this
+        /// type.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        protected Response() : base(default, DefaultResponse)
+        protected Response() : base()
         {
             // Added for back-compat with GA APIs.  Any type that derives from
             // Response<T> must provide an implementation for GetRawResponse that
@@ -31,10 +37,14 @@ namespace Azure
         }
 
         /// <summary>
-        /// TBD.
+        /// Creates an instance of <see cref="Response{T}"/> from the provided
+        /// <paramref name="value"/> and <paramref name="response"/>.
         /// </summary>
-        /// <param name="value"></param>
-        /// <param name="response"></param>
+        /// <param name="value">The value to return from
+        /// <see cref="ClientResult{T}.Value"/> on the created instance.</param>
+        /// <param name="response">The <see cref="Response"/> to return from
+        /// <see cref="NullableResponse{T}.GetRawResponse"/> on the created
+        /// instance.</param>
         protected Response(T value, Response response) : base(value, response) { }
 
         /// <inheritdoc />

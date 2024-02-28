@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Buffers;
+using Azure.Core.Pipeline;
 
 namespace Azure
 {
@@ -34,12 +35,6 @@ namespace Azure
         public new virtual ResponseHeaders Headers => new ResponseHeaders(this);
 
         /// <summary>
-        /// TBD.
-        /// </summary>
-        protected override PipelineResponseHeaders HeadersCore
-            => throw new NotImplementedException("Subtypes must implement this method.");
-
-        /// <summary>
         /// Gets the contents of HTTP response, if it is available.
         /// </summary>
         /// <remarks>
@@ -58,20 +53,20 @@ namespace Azure
             }
         }
 
+        /// <summary>
+        /// Gets the value of <see cref="PipelineResponse.Headers"/> on
+        /// the base <see cref="PipelineResponse"/> type.
+        /// </summary>
+        protected override PipelineResponseHeaders HeadersCore
+            => new ResponseHeadersAdapter(Headers);
+
+        internal void SetIsError(bool value) => IsErrorCore = value;
+
         internal HttpMessageSanitizer Sanitizer { get; set; } = HttpMessageSanitizer.Default;
 
         internal RequestFailedDetailsParser? RequestFailedDetailsParser { get; set; }
 
-        internal void SetIsError(bool value) => IsErrorCore = value;
-
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        protected override bool IsErrorCore
-        {
-            get => base.IsErrorCore;
-            set => base.IsErrorCore = value;
-        }
+        #region Abstract header methods
 
         /// <summary>
         /// Returns header value if the header is stored in the collection. If header has multiple values they are going to be joined with a comma.
@@ -101,6 +96,88 @@ namespace Azure
         /// </summary>
         /// <returns>The <see cref="IEnumerable{T}"/> enumerating <see cref="HttpHeader"/> in the response.</returns>
         protected internal abstract IEnumerable<HttpHeader> EnumerateHeaders();
+
+        #endregion
+
+        #region BufferContent implementation
+
+        /// <inheritdoc/>
+        public override BinaryData BufferContent(CancellationToken cancellationToken = default)
+            => BufferContentSyncOrAsync(cancellationToken, async: false).EnsureCompleted();
+
+        /// <inheritdoc/>
+        public override async ValueTask<BinaryData> BufferContentAsync(CancellationToken cancellationToken = default)
+            => await BufferContentSyncOrAsync(cancellationToken, async: true).ConfigureAwait(false);
+
+        /// <summary>
+        /// Provide a default implementation of the
+        /// <see cref="BufferContent(CancellationToken)"/> method inherited from
+        /// <see cref="PipelineResponse"/>. This is used by any types derived
+        /// from <see cref="Response"/> that don't override the BufferContent
+        /// methods. It is intended that any high-performance implementation
+        /// will override these methods instead of using the default
+        /// implementation.
+        /// </summary>
+        private async ValueTask<BinaryData> BufferContentSyncOrAsync(CancellationToken cancellationToken, bool async)
+        {
+            // We can tell the content has been buffered and not overwritten by
+            // a call to the abstract ContentStream setter if ContentStream is
+            // an instance our private BufferContentStream type.
+
+            if (ContentStream is BufferedContentStream bufferedContent)
+            {
+                return bufferedContent.Content;
+            }
+
+            if (ContentStream is null)
+            {
+                return s_EmptyBinaryData;
+            }
+
+            if (ContentStream is MemoryStream memoryStream)
+            {
+                return BufferedContentStream.FromBuffer(memoryStream);
+            }
+
+            BufferedContentStream bufferStream = new();
+            Stream? contentStream = ContentStream;
+
+            if (async)
+            {
+                await contentStream.CopyToAsync(bufferStream, cancellationToken).ConfigureAwait(false);
+#if NET6_0_OR_GREATER
+                await contentStream.DisposeAsync().ConfigureAwait(false);
+#else
+                contentStream.Dispose();
+#endif
+            }
+            else
+            {
+                contentStream.CopyTo(bufferStream, cancellationToken);
+                contentStream.Dispose();
+            }
+
+            bufferStream.Position = 0;
+            ContentStream = bufferStream;
+            return bufferStream.Content;
+        }
+
+        /// <summary>
+        /// Private Stream type to facilitate detecting whether abstract
+        /// ContentStream setter was called in order to invalidate cached
+        /// content returned from Content property.
+        /// </summary>
+        private class BufferedContentStream : MemoryStream
+        {
+            public static BinaryData FromBuffer(MemoryStream stream)
+                => stream.TryGetBuffer(out ArraySegment<byte> segment) ?
+                    new BinaryData(segment.AsMemory()) :
+                    new BinaryData(stream.ToArray());
+
+            public BinaryData Content => FromBuffer(this);
+        }
+
+        #endregion
 
         /// <summary>
         /// Creates a new instance of <see cref="Response{T}"/> with the provided value and HTTP response.
@@ -135,146 +212,49 @@ namespace Azure
         }
 
         /// <summary>
-        /// TBD.
+        /// Internal implementation of abstract <see cref="Response{T}"/>.
         /// </summary>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public override BinaryData BufferContent(CancellationToken cancellationToken = default)
-        {
-            // Derived types should provide an implementation that allows caching
-            // to improve performance.
-            if (ContentStream is null)
-            {
-                return s_EmptyBinaryData;
-            }
-
-            if (ContentStream is MemoryStream memoryStream)
-            {
-                return memoryStream.TryGetBuffer(out ArraySegment<byte> segment) ?
-                    new BinaryData(segment.AsMemory()) :
-                    new BinaryData(memoryStream.ToArray());
-            }
-
-            BufferedContentStream bufferStream = new();
-
-            Stream? contentStream = ContentStream;
-            contentStream.CopyTo(bufferStream, cancellationToken);
-            contentStream.Dispose();
-
-            bufferStream.Position = 0;
-            ContentStream = bufferStream;
-
-            BinaryData content = BinaryData.FromStream(bufferStream);
-            bufferStream.Position = 0;
-
-            return content;
-        }
-
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public override async ValueTask<BinaryData> BufferContentAsync(CancellationToken cancellationToken = default)
-        {
-            // Derived types should provide an implementation that allows caching
-            // to improve performance.
-            if (ContentStream is null)
-            {
-                return s_EmptyBinaryData;
-            }
-
-            if (ContentStream is MemoryStream memoryStream)
-            {
-                return memoryStream.TryGetBuffer(out ArraySegment<byte> segment) ?
-                    new BinaryData(segment.AsMemory()) :
-                    new BinaryData(memoryStream.ToArray());
-            }
-
-            BufferedContentStream bufferStream = new();
-
-            Stream? contentStream = ContentStream;
-            await contentStream.CopyToAsync(bufferStream, cancellationToken).ConfigureAwait(false);
-            contentStream.Dispose();
-
-            bufferStream.Position = 0;
-            ContentStream = bufferStream;
-
-            BinaryData content = BinaryData.FromStream(bufferStream);
-            bufferStream.Position = 0;
-
-            return content;
-        }
-
-        private class BufferedContentStream : MemoryStream { }
-
-        #region Private implementation subtypes of abstract Response types
         private class AzureCoreResponse<T> : Response<T>
         {
             public AzureCoreResponse(T value, Response response)
                 : base(value, response) { }
         }
 
-        internal class AzureCoreDefaultResponse : Response
+        /// <summary>
+        /// This adapter adapts the Azure.Core <see cref="ResponseHeaders"/>
+        /// type to the System.ClientModel <see cref="PipelineResponseHeaders"/>
+        /// interface, so that <see cref="Response"/> can implement the
+        /// <see cref="HeadersCore"/> property inherited from
+        /// <see cref="PipelineResponse"/>.
+        /// </summary>
+        private class ResponseHeadersAdapter : PipelineResponseHeaders
         {
-            private readonly string DefaultMessage = "Types derived from abstract Response<T> must provide an implementation of the virtual GetRawResponse method that returns a non-null Response value.";
+            /// <summary>
+            /// Headers on the Azure.Core Response type to adapt to.
+            /// </summary>
+            private readonly ResponseHeaders _headers;
 
-            public override string ClientRequestId
+            public ResponseHeadersAdapter(ResponseHeaders headers)
             {
-                get => throw new NotSupportedException(DefaultMessage);
-                set => throw new NotSupportedException(DefaultMessage);
+                _headers = headers;
             }
 
-            public override int Status => throw new NotSupportedException(DefaultMessage);
+            public override bool TryGetValue(string name, out string? value)
+                => _headers.TryGetValue(name, out value);
 
-            public override string ReasonPhrase => throw new NotSupportedException(DefaultMessage);
+            public override bool TryGetValues(string name, out IEnumerable<string>? values)
+                => _headers.TryGetValues(name, out values);
 
-            public override Stream? ContentStream
+            public override IEnumerator<KeyValuePair<string, string>> GetEnumerator()
+                => GetHeaderValues().GetEnumerator();
+
+            private IEnumerable<KeyValuePair<string, string>> GetHeaderValues()
             {
-                get => throw new NotSupportedException(DefaultMessage);
-                set => throw new NotSupportedException(DefaultMessage);
-            }
-
-            protected override PipelineResponseHeaders HeadersCore
-                => throw new NotSupportedException(DefaultMessage);
-
-            public override void Dispose()
-            {
-                throw new NotSupportedException(DefaultMessage);
-            }
-
-            protected internal override bool ContainsHeader(string name)
-            {
-                throw new NotSupportedException(DefaultMessage);
-            }
-
-            protected internal override IEnumerable<HttpHeader> EnumerateHeaders()
-            {
-                throw new NotSupportedException(DefaultMessage);
-            }
-
-            protected internal override bool TryGetHeader(string name, [NotNullWhen(true)] out string? value)
-            {
-                throw new NotSupportedException(DefaultMessage);
-            }
-
-            protected internal override bool TryGetHeaderValues(string name, [NotNullWhen(true)] out IEnumerable<string>? values)
-            {
-                throw new NotSupportedException(DefaultMessage);
-            }
-
-            public override BinaryData BufferContent(CancellationToken cancellationToken = default)
-            {
-                throw new NotSupportedException(DefaultMessage);
-            }
-
-            public override ValueTask<BinaryData> BufferContentAsync(CancellationToken cancellationToken = default)
-            {
-                throw new NotSupportedException(DefaultMessage);
+                foreach (HttpHeader header in _headers)
+                {
+                    yield return new KeyValuePair<string, string>(header.Name, header.Value);
+                }
             }
         }
-        #endregion
     }
 }
