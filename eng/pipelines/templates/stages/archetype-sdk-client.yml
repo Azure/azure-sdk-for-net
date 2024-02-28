@@ -100,6 +100,9 @@ extends:
 
     stages:
       - stage: Build
+        variables:
+          - template: /eng/pipelines/templates/variables/globals.yml@self
+          - template: /eng/pipelines/templates/variables/image.yml@self
         jobs:
           - template: /eng/pipelines/templates/jobs/ci.yml@self
             parameters:
@@ -127,9 +130,6 @@ extends:
                     - BuildConfiguration=Debug/Release
                 - ${{ parameters.MatrixReplace }}
               TestDependsOnDependency: ${{ parameters.TestDependsOnDependency }}
-
-        variables:
-          - template: /eng/pipelines/templates/variables/globals.yml@self
 
       # The Prerelease and Release stages are conditioned on whether we are building a pull request and the branch.
       - ${{if and(ne(variables['Build.Reason'], 'PullRequest'), eq(variables['System.TeamProject'], 'internal'))}}:
