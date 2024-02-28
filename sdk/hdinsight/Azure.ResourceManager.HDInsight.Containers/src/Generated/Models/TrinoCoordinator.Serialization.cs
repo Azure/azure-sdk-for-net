@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 return null;
             }
-            bool? highAvailabilityEnabled = default;
-            bool? enable = default;
-            int? port = default;
-            bool? suspend = default;
+            Optional<bool> highAvailabilityEnabled = default;
+            Optional<bool> enable = default;
+            Optional<int> port = default;
+            Optional<bool> suspend = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrinoCoordinator(highAvailabilityEnabled, enable, port, suspend, serializedAdditionalRawData);
+            return new TrinoCoordinator(Optional.ToNullable(highAvailabilityEnabled), Optional.ToNullable(enable), Optional.ToNullable(port), Optional.ToNullable(suspend), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrinoCoordinator>.Write(ModelReaderWriterOptions options)

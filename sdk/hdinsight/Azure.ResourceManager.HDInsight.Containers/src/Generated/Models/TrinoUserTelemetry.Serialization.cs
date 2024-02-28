@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 return null;
             }
-            TrinoTelemetryConfig storage = default;
+            Optional<TrinoTelemetryConfig> storage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrinoUserTelemetry(storage, serializedAdditionalRawData);
+            return new TrinoUserTelemetry(storage.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrinoUserTelemetry>.Write(ModelReaderWriterOptions options)

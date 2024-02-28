@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
             string kind = default;
             string ready = default;
-            string message = default;
+            Optional<string> message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightServiceStatus(kind, ready, message, serializedAdditionalRawData);
+            return new HDInsightServiceStatus(kind, ready, message.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightServiceStatus>.Write(ModelReaderWriterOptions options)

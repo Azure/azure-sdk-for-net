@@ -87,8 +87,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
             int minNodes = default;
             int maxNodes = default;
-            int? pollInterval = default;
-            int? cooldownPeriod = default;
+            Optional<int> pollInterval = default;
+            Optional<int> cooldownPeriod = default;
             IList<ScalingRule> scalingRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -138,13 +138,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LoadBasedConfig(
-                minNodes,
-                maxNodes,
-                pollInterval,
-                cooldownPeriod,
-                scalingRules,
-                serializedAdditionalRawData);
+            return new LoadBasedConfig(minNodes, maxNodes, Optional.ToNullable(pollInterval), Optional.ToNullable(cooldownPeriod), scalingRules, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LoadBasedConfig>.Write(ModelReaderWriterOptions options)

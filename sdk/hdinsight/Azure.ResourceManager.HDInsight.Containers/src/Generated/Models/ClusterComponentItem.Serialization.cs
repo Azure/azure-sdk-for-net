@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 return null;
             }
-            string name = default;
-            string version = default;
+            Optional<string> name = default;
+            Optional<string> version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterComponentItem(name, version, serializedAdditionalRawData);
+            return new ClusterComponentItem(name.Value, version.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterComponentItem>.Write(ModelReaderWriterOptions options)

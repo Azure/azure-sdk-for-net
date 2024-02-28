@@ -48,8 +48,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
 
         /// <summary> Initializes a new instance of <see cref="ClusterConnectivityProfile"/>. </summary>
         /// <param name="web"> Web connectivity endpoint details. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="web"/> is null. </exception>
         internal ClusterConnectivityProfile(WebConnectivityEndpoint web)
         {
+            if (web == null)
+            {
+                throw new ArgumentNullException(nameof(web));
+            }
+
             Web = web;
             Ssh = new ChangeTrackingList<SshConnectivityEndpoint>();
         }

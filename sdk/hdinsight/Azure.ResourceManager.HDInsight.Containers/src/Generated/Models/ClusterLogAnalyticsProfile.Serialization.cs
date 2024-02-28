@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 return null;
             }
             bool enabled = default;
-            ClusterLogAnalyticsApplicationLogs applicationLogs = default;
-            bool? metricsEnabled = default;
+            Optional<ClusterLogAnalyticsApplicationLogs> applicationLogs = default;
+            Optional<bool> metricsEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterLogAnalyticsProfile(enabled, applicationLogs, metricsEnabled, serializedAdditionalRawData);
+            return new ClusterLogAnalyticsProfile(enabled, applicationLogs.Value, Optional.ToNullable(metricsEnabled), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterLogAnalyticsProfile>.Write(ModelReaderWriterOptions options)

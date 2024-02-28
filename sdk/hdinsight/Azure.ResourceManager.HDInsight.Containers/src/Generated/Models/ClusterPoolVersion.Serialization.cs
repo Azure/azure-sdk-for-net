@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
-            string clusterPoolVersion = default;
-            string aksVersion = default;
-            bool? isPreview = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> clusterPoolVersion = default;
+            Optional<string> aksVersion = default;
+            Optional<bool> isPreview = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -175,15 +175,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterPoolVersion(
-                id,
-                name,
-                type,
-                systemData,
-                clusterPoolVersion,
-                aksVersion,
-                isPreview,
-                serializedAdditionalRawData);
+            return new ClusterPoolVersion(id, name, type, systemData.Value, clusterPoolVersion.Value, aksVersion.Value, Optional.ToNullable(isPreview), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterPoolVersion>.Write(ModelReaderWriterOptions options)

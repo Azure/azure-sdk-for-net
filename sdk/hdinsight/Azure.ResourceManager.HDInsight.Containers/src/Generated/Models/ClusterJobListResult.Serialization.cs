@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 return null;
             }
             IReadOnlyList<ClusterJob> value = default;
-            string nextLink = default;
+            Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterJobListResult(value, nextLink, serializedAdditionalRawData);
+            return new ClusterJobListResult(value, nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterJobListResult>.Write(ModelReaderWriterOptions options)

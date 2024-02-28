@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 return null;
             }
             IReadOnlyList<HDInsightClusterData> value = default;
-            string nextLink = default;
+            Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightClusterListResult(value ?? new ChangeTrackingList<HDInsightClusterData>(), nextLink, serializedAdditionalRawData);
+            return new HDInsightClusterListResult(value ?? new ChangeTrackingList<HDInsightClusterData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightClusterListResult>.Write(ModelReaderWriterOptions options)

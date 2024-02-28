@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             string type = default;
             string name = default;
             string url = default;
-            string parameters = default;
+            Optional<string> parameters = default;
             IList<string> services = default;
-            int? timeoutInMinutes = default;
-            bool? shouldPersist = default;
+            Optional<int> timeoutInMinutes = default;
+            Optional<bool> shouldPersist = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,15 +157,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScriptActionProfile(
-                type,
-                name,
-                url,
-                parameters,
-                services,
-                timeoutInMinutes,
-                shouldPersist,
-                serializedAdditionalRawData);
+            return new ScriptActionProfile(type, name, url, parameters.Value, services, Optional.ToNullable(timeoutInMinutes), Optional.ToNullable(shouldPersist), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScriptActionProfile>.Write(ModelReaderWriterOptions options)

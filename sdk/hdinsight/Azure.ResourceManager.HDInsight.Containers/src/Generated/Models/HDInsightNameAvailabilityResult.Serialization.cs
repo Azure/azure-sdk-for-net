@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 return null;
             }
-            bool? nameAvailable = default;
-            string reason = default;
-            string message = default;
+            Optional<bool> nameAvailable = default;
+            Optional<string> reason = default;
+            Optional<string> message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightNameAvailabilityResult(nameAvailable, reason, message, serializedAdditionalRawData);
+            return new HDInsightNameAvailabilityResult(Optional.ToNullable(nameAvailable), reason.Value, message.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightNameAvailabilityResult>.Write(ModelReaderWriterOptions options)
