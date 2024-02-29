@@ -159,6 +159,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "FtpServer": return FtpServerLinkedService.DeserializeFtpServerLinkedService(element, options);
                     case "GoogleAdWords": return GoogleAdWordsLinkedService.DeserializeGoogleAdWordsLinkedService(element, options);
                     case "GoogleBigQuery": return GoogleBigQueryLinkedService.DeserializeGoogleBigQueryLinkedService(element, options);
+                    case "GoogleBigQueryV2": return GoogleBigQueryV2LinkedService.DeserializeGoogleBigQueryV2LinkedService(element, options);
                     case "GoogleCloudStorage": return GoogleCloudStorageLinkedService.DeserializeGoogleCloudStorageLinkedService(element, options);
                     case "GoogleSheets": return GoogleSheetsLinkedService.DeserializeGoogleSheetsLinkedService(element, options);
                     case "Greenplum": return GreenplumLinkedService.DeserializeGreenplumLinkedService(element, options);
@@ -191,6 +192,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "Paypal": return PaypalLinkedService.DeserializePaypalLinkedService(element, options);
                     case "Phoenix": return PhoenixLinkedService.DeserializePhoenixLinkedService(element, options);
                     case "PostgreSql": return PostgreSqlLinkedService.DeserializePostgreSqlLinkedService(element, options);
+                    case "PostgreSqlV2": return PostgreSqlV2LinkedService.DeserializePostgreSqlV2LinkedService(element, options);
                     case "Presto": return PrestoLinkedService.DeserializePrestoLinkedService(element, options);
                     case "QuickBooks": return QuickBooksLinkedService.DeserializeQuickBooksLinkedService(element, options);
                     case "Quickbase": return QuickbaseLinkedService.DeserializeQuickbaseLinkedService(element, options);
@@ -209,6 +211,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "SapOpenHub": return SapOpenHubLinkedService.DeserializeSapOpenHubLinkedService(element, options);
                     case "SapTable": return SapTableLinkedService.DeserializeSapTableLinkedService(element, options);
                     case "ServiceNow": return ServiceNowLinkedService.DeserializeServiceNowLinkedService(element, options);
+                    case "ServiceNowV2": return ServiceNowV2LinkedService.DeserializeServiceNowV2LinkedService(element, options);
                     case "Sftp": return SftpServerLinkedService.DeserializeSftpServerLinkedService(element, options);
                     case "SharePointOnlineList": return SharePointOnlineListLinkedService.DeserializeSharePointOnlineListLinkedService(element, options);
                     case "Shopify": return ShopifyLinkedService.DeserializeShopifyLinkedService(element, options);
