@@ -16,7 +16,6 @@ EasmClient client = new EasmClient(new System.Uri(endpoint),
 
 ## Create a discovery group
 
-
 In order to start discovery runs, we must first create a discovery group, which is a collection of known assets that we can pivot off of. These are created using the `DiscoveryGroupsCreateOrReplace` method.
 
 ```C# Snippet:Sample2_DiscoveryGroups_Create_Discovery_Group
