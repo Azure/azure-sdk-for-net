@@ -22,26 +22,36 @@ namespace Azure.Provisioning.Authorization
         /// <param name="resource"></param>
         /// <param name="roleDefinition"></param>
         /// <param name="principalId"></param>
-        /// <param name="principalType"></param>
         internal RoleAssignment(
             IConstruct scope,
             Resource resource,
             RoleDefinition roleDefinition,
-            Guid? principalId,
-            RoleManagementPrincipalType principalType)
+            Guid? principalId = default)
             : base(
                 scope,
                 resource,
-                // TODO use guid bicep function?
-                $"{resource.Name}{principalId}{roleDefinition}",
+                resource.Name,
                 ResourceType,
                 "2022-04-01",
                 (name) => ArmAuthorizationModelFactory.RoleAssignmentData(
                     name: name,
                     roleDefinitionId: ResourceIdentifier.Parse($"/providers/Microsoft.Authorization/roleDefinitions/{roleDefinition}"),
-                    principalId: principalId,
-                    principalType: principalType))
+                    principalId: principalId))
         {
+            if (scope.Configuration?.UseInteractiveMode != true && principalId == null)
+            {
+                throw new InvalidOperationException("PrincipalId must be specified when in not in interactive mode.");
+            }
+
+            if (principalId == null)
+            {
+                AssignParameter(data => data.PrincipalId, new Parameter("principalId"));
+                AssignProperty(data => data.Name, $"guid('{resource.Name}', principalId, '{roleDefinition}')");
+            }
+            else
+            {
+                AssignProperty(data => data.Name, $"guid('{resource.Name}', '{principalId}', '{roleDefinition}')");
+            }
         }
     }
 }

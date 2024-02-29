@@ -176,7 +176,7 @@ namespace Azure.Provisioning.Tests
         [Test]
         public async Task WebSiteUsingL3ResourceGroupScope()
         {
-            var infra = new TestInfrastructure(scope: ConstructScope.ResourceGroup, configuration: new Configuration { UsePromptMode = true });
+            var infra = new TestInfrastructure(scope: ConstructScope.ResourceGroup, configuration: new Configuration { UseInteractiveMode = true });
             infra.AddWebSiteWithSqlBackEnd();
 
             infra.GetSingleResource<ResourceGroup>()!.Properties.Tags.Add("key", "value");
@@ -195,7 +195,7 @@ namespace Azure.Provisioning.Tests
                 {
                     sqlAdminPassword = new { value = "password" },
                     appUserPassword = new { value = "password" }
-                }), promptMode: true);
+                }), interactiveMode: true);
         }
 
         [Test]
@@ -204,28 +204,72 @@ namespace Azure.Provisioning.Tests
             var infra = new TestInfrastructure();
             var storageAccount = infra.AddStorageAccount(name: "photoAcct", sku: StorageSkuName.PremiumLrs, kind: StorageKind.BlockBlobStorage);
             infra.AddBlobService();
-            storageAccount.AssignRole(RoleDefinition.StorageBlobDataContributor, Guid.Empty);
-
             infra.Build(GetOutputPath());
 
             await ValidateBicepAsync();
         }
 
         [Test]
+        public async Task RoleAssignmentWithParameter()
+        {
+            var infra = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
+            var storageAccount = infra.AddStorageAccount(name: "photoAcct", sku: StorageSkuName.PremiumLrs, kind: StorageKind.BlockBlobStorage);
+            infra.AddBlobService();
+            storageAccount.AssignRole(RoleDefinition.StorageBlobDataContributor);
+            infra.Build(GetOutputPath());
+
+            await ValidateBicepAsync(BinaryData.FromObjectAsJson(new { principalId = new { value = Guid.Empty }}), interactiveMode: true);
+        }
+
+        [Test]
+        public async Task RoleAssignmentWithoutParameter()
+        {
+            var infra = new TestInfrastructure();
+            var storageAccount = infra.AddStorageAccount(name: "photoAcct", sku: StorageSkuName.PremiumLrs, kind: StorageKind.BlockBlobStorage);
+            infra.AddBlobService();
+            storageAccount.AssignRole(RoleDefinition.StorageBlobDataContributor, Guid.Empty);
+            infra.Build(GetOutputPath());
+
+            await ValidateBicepAsync();
+        }
+
+        [Test]
+        public async Task RoleAssignmentWithoutParameterInteractiveMode()
+        {
+            var infra = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
+            var storageAccount = infra.AddStorageAccount(name: "photoAcct", sku: StorageSkuName.PremiumLrs, kind: StorageKind.BlockBlobStorage);
+            infra.AddBlobService();
+            storageAccount.AssignRole(RoleDefinition.StorageBlobDataContributor, Guid.Empty);
+            infra.Build(GetOutputPath());
+
+            await ValidateBicepAsync(interactiveMode: true);
+        }
+
+        [Test]
+        public void RoleAssignmentPrincipalMustBeSuppliedInNonInteractiveMode()
+        {
+            var infra = new TestInfrastructure();
+            var storageAccount = infra.AddStorageAccount(name: "photoAcct", sku: StorageSkuName.PremiumLrs, kind: StorageKind.BlockBlobStorage);
+            infra.AddBlobService();
+
+            Assert.Throws<InvalidOperationException>(() => storageAccount.AssignRole(RoleDefinition.StorageBlobDataContributor));
+        }
+
+        [Test]
         public async Task StorageBlobDefaultsInPromptMode()
         {
-            var infra = new TestInfrastructure(configuration: new Configuration { UsePromptMode = true });
+            var infra = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
             infra.AddStorageAccount(name: "photoAcct", sku: StorageSkuName.PremiumLrs, kind: StorageKind.BlockBlobStorage);
             infra.AddBlobService();
             infra.Build(GetOutputPath());
 
-            await ValidateBicepAsync(promptMode: true);
+            await ValidateBicepAsync(interactiveMode: true);
         }
 
         [Test]
         public void CannotAddLocationParameterInPromptMode()
         {
-            var infra = new TestInfrastructure(configuration: new Configuration { UsePromptMode = true });
+            var infra = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
             var sa = infra.AddStorageAccount(name: "photoAcct", sku: StorageSkuName.PremiumLrs, kind: StorageKind.BlockBlobStorage);
             Assert.Throws<InvalidOperationException>(() =>
                 sa.AssignParameter(d => d.Location, new Parameter("myLocationParam")));
@@ -323,7 +367,7 @@ namespace Azure.Provisioning.Tests
             await ValidateBicepAsync();
         }
 
-        public async Task ValidateBicepAsync(BinaryData? parameters = null, bool promptMode = false)
+        public async Task ValidateBicepAsync(BinaryData? parameters = null, bool interactiveMode = false)
         {
             if (TestEnvironment.GlobalIsRunningInCI)
             {
@@ -360,7 +404,7 @@ namespace Azure.Provisioning.Tests
                 }
 
                 ResourceIdentifier scope;
-                if (promptMode)
+                if (interactiveMode)
                 {
                     var rgs = subscription.GetResourceGroups();
                     var data = new ResourceGroupData("westus");
@@ -380,7 +424,7 @@ namespace Azure.Provisioning.Tests
                         Template = new BinaryData(File.ReadAllText(Path.Combine(testPath, "main.json"))),
                         Parameters = parameters
                     });
-                if (!promptMode)
+                if (!interactiveMode)
                 {
                     content.Location = "westus";
                 }

@@ -4,7 +4,7 @@ targetScope = 'resourceGroup'
 param location string = resourceGroup().location
 
 
-resource storageAccount_h6G2ez5uo 'Microsoft.Storage/storageAccounts@2022-09-01' = {
+resource storageAccount_cU8v6cAqM 'Microsoft.Storage/storageAccounts@2022-09-01' = {
   name: toLower(take(concat('photoAcct', uniqueString(resourceGroup().id)), 24))
   location: location
   sku: {
@@ -15,8 +15,8 @@ resource storageAccount_h6G2ez5uo 'Microsoft.Storage/storageAccounts@2022-09-01'
   }
 }
 
-resource blobService_1Rg30zvEh 'Microsoft.Storage/storageAccounts/blobServices@2022-09-01' = {
-  parent: storageAccount_h6G2ez5uo
+resource blobService_QhDlnWma3 'Microsoft.Storage/storageAccounts/blobServices@2022-09-01' = {
+  parent: storageAccount_cU8v6cAqM
   name: 'default'
   properties: {
   }

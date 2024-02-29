@@ -8,7 +8,7 @@ namespace Azure.Provisioning
     public partial class Configuration
     {
         public Configuration() { }
-        public bool UsePromptMode { get { throw null; } set { } }
+        public bool UseInteractiveMode { get { throw null; } set { } }
     }
     public abstract partial class Construct : Azure.Provisioning.IConstruct
     {
@@ -90,7 +90,7 @@ namespace Azure.Provisioning
         public Azure.Provisioning.Resource? Parent { get { throw null; } }
         public Azure.Provisioning.IConstruct Scope { get { throw null; } }
         public string Version { get { throw null; } }
-        public Azure.Provisioning.Authorization.RoleAssignment AssignRole(Azure.Provisioning.Authorization.RoleDefinition roleDefinition, System.Guid principalId) { throw null; }
+        public Azure.Provisioning.Authorization.RoleAssignment AssignRole(Azure.Provisioning.Authorization.RoleDefinition roleDefinition, System.Guid? principalId = default(System.Guid?)) { throw null; }
         protected virtual Azure.Provisioning.Resource? FindParentInScope(Azure.Provisioning.IConstruct scope) { throw null; }
         protected virtual string GetAzureName(Azure.Provisioning.IConstruct scope, string resourceName) { throw null; }
         Azure.Provisioning.Resource System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Resource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

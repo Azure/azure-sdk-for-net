@@ -33,10 +33,7 @@ namespace Azure.Provisioning.Storage
                 sku: new StorageSku(sku),
                 kind: StorageKind.StorageV2))
         {
-            if (scope.Configuration?.UsePromptMode == true)
-            {
-                AssignProperty(data => data.Name, $"toLower(take(concat('{name}', uniqueString(resourceGroup().id)), 24))");
-            }
+            AssignProperty(data => data.Name, $"toLower(take(concat('{name}', uniqueString(resourceGroup().id)), 24))");
         }
 
         /// <inheritdoc/>
