@@ -48,7 +48,9 @@ namespace Azure.Core
                     throw new InvalidOperationException($"{nameof(Response)} is not set on this message. "
                         + "This is may be because the message was not sent via pipeline.Send, "
                         + "the pipeline transport did not populate the response, or because "
-                        + $"{nameof(ExtractResponse)} was called.");
+                        + $"{nameof(ExtractResponse)} was called. You can check the {nameof(HasResponse)} "
+                        + "property to test whether the message has a response value before "
+                        + $"accessing the {nameof(Response)} property.");
 #pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
                 }
                 return (Response)base.Response;
