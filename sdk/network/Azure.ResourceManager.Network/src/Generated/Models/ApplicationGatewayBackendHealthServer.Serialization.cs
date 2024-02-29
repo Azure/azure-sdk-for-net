@@ -27,22 +27,22 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Address))
+            if (Address != null)
             {
                 writer.WritePropertyName("address"u8);
                 writer.WriteStringValue(Address);
             }
-            if (Optional.IsDefined(IPConfiguration))
+            if (IPConfiguration != null)
             {
                 writer.WritePropertyName("ipConfiguration"u8);
                 writer.WriteObjectValue(IPConfiguration);
             }
-            if (Optional.IsDefined(Health))
+            if (Health.HasValue)
             {
                 writer.WritePropertyName("health"u8);
                 writer.WriteStringValue(Health.Value.ToString());
             }
-            if (Optional.IsDefined(HealthProbeLog))
+            if (HealthProbeLog != null)
             {
                 writer.WritePropertyName("healthProbeLog"u8);
                 writer.WriteStringValue(HealthProbeLog);
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> address = default;
-            Optional<NetworkInterfaceIPConfigurationData> ipConfiguration = default;
-            Optional<ApplicationGatewayBackendHealthServerHealth> health = default;
-            Optional<string> healthProbeLog = default;
+            string address = default;
+            NetworkInterfaceIPConfigurationData ipConfiguration = default;
+            ApplicationGatewayBackendHealthServerHealth? health = default;
+            string healthProbeLog = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    ipConfiguration = NetworkInterfaceIPConfigurationData.DeserializeNetworkInterfaceIPConfigurationData(property.Value);
+                    ipConfiguration = NetworkInterfaceIPConfigurationData.DeserializeNetworkInterfaceIPConfigurationData(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("health"u8))
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayBackendHealthServer(address.Value, ipConfiguration.Value, Optional.ToNullable(health), healthProbeLog.Value, serializedAdditionalRawData);
+            return new ApplicationGatewayBackendHealthServer(address, ipConfiguration, health, healthProbeLog, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayBackendHealthServer>.Write(ModelReaderWriterOptions options)

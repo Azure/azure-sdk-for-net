@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Chaos.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<ChaosCapabilityData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 if (NextLink != null)
                 {
@@ -87,8 +87,8 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ChaosCapabilityData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ChaosCapabilityData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     List<ChaosCapabilityData> array = new List<ChaosCapabilityData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ChaosCapabilityData.DeserializeChaosCapabilityData(item));
+                        array.Add(ChaosCapabilityData.DeserializeChaosCapabilityData(item, options));
                     }
                     value = array;
                     continue;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CapabilityListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new CapabilityListResult(value ?? new ChangeTrackingList<ChaosCapabilityData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CapabilityListResult>.Write(ModelReaderWriterOptions options)

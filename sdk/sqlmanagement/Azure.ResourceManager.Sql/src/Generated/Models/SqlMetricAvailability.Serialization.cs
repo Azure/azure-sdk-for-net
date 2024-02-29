@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Retention))
+            if (options.Format != "W" && Retention != null)
             {
                 writer.WritePropertyName("retention"u8);
                 writer.WriteStringValue(Retention);
             }
-            if (options.Format != "W" && Optional.IsDefined(TimeGrain))
+            if (options.Format != "W" && TimeGrain != null)
             {
                 writer.WritePropertyName("timeGrain"u8);
                 writer.WriteStringValue(TimeGrain);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<string> retention = default;
-            Optional<string> timeGrain = default;
+            string retention = default;
+            string timeGrain = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlMetricAvailability(retention.Value, timeGrain.Value, serializedAdditionalRawData);
+            return new SqlMetricAvailability(retention, timeGrain, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlMetricAvailability>.Write(ModelReaderWriterOptions options)

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (Optional.IsDefined(ETag))
+            if (ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -50,19 +50,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AwsRoleArn))
+            if (AwsRoleArn != null)
             {
                 writer.WritePropertyName("awsRoleArn"u8);
                 writer.WriteStringValue(AwsRoleArn);
             }
-            if (Optional.IsDefined(DataTypes))
+            if (DataTypes != null)
             {
                 writer.WritePropertyName("dataTypes"u8);
                 writer.WriteObjectValue(DataTypes);
@@ -107,13 +107,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 return null;
             }
             DataConnectorKind kind = default;
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> awsRoleArn = default;
-            Optional<AwsCloudTrailDataConnectorDataTypes> dataTypes = default;
+            SystemData systemData = default;
+            string awsRoleArn = default;
+            AwsCloudTrailDataConnectorDataTypes dataTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             {
                                 continue;
                             }
-                            dataTypes = AwsCloudTrailDataConnectorDataTypes.DeserializeAwsCloudTrailDataConnectorDataTypes(property0.Value);
+                            dataTypes = AwsCloudTrailDataConnectorDataTypes.DeserializeAwsCloudTrailDataConnectorDataTypes(property0.Value, options);
                             continue;
                         }
                     }
@@ -188,7 +188,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsAwsCloudTrailDataConnector(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), serializedAdditionalRawData, awsRoleArn.Value, dataTypes.Value);
+            return new SecurityInsightsAwsCloudTrailDataConnector(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                etag,
+                serializedAdditionalRawData,
+                awsRoleArn,
+                dataTypes);
         }
 
         BinaryData IPersistableModel<SecurityInsightsAwsCloudTrailDataConnector>.Write(ModelReaderWriterOptions options)

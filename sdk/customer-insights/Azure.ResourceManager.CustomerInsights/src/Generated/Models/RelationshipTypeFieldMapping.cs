@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
@@ -52,8 +51,14 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <exception cref="ArgumentNullException"> <paramref name="profileFieldName"/> or <paramref name="relatedProfileKeyProperty"/> is null. </exception>
         public RelationshipTypeFieldMapping(string profileFieldName, string relatedProfileKeyProperty)
         {
-            Argument.AssertNotNull(profileFieldName, nameof(profileFieldName));
-            Argument.AssertNotNull(relatedProfileKeyProperty, nameof(relatedProfileKeyProperty));
+            if (profileFieldName == null)
+            {
+                throw new ArgumentNullException(nameof(profileFieldName));
+            }
+            if (relatedProfileKeyProperty == null)
+            {
+                throw new ArgumentNullException(nameof(relatedProfileKeyProperty));
+            }
 
             ProfileFieldName = profileFieldName;
             RelatedProfileKeyProperty = relatedProfileKeyProperty;

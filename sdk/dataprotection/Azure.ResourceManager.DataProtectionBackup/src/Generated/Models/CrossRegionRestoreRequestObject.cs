@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -56,8 +55,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <exception cref="ArgumentNullException"> <paramref name="restoreRequestObject"/> or <paramref name="crossRegionRestoreDetails"/> is null. </exception>
         public CrossRegionRestoreRequestObject(BackupRestoreContent restoreRequestObject, CrossRegionRestoreDetails crossRegionRestoreDetails)
         {
-            Argument.AssertNotNull(restoreRequestObject, nameof(restoreRequestObject));
-            Argument.AssertNotNull(crossRegionRestoreDetails, nameof(crossRegionRestoreDetails));
+            if (restoreRequestObject == null)
+            {
+                throw new ArgumentNullException(nameof(restoreRequestObject));
+            }
+            if (crossRegionRestoreDetails == null)
+            {
+                throw new ArgumentNullException(nameof(crossRegionRestoreDetails));
+            }
 
             RestoreRequestObject = restoreRequestObject;
             CrossRegionRestoreDetails = crossRegionRestoreDetails;

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(InitialWorkspaceAdminObjectId))
+            if (InitialWorkspaceAdminObjectId.HasValue)
             {
                 writer.WritePropertyName("initialWorkspaceAdminObjectId"u8);
                 writer.WriteStringValue(InitialWorkspaceAdminObjectId.Value);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<Guid> initialWorkspaceAdminObjectId = default;
+            Guid? initialWorkspaceAdminObjectId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CspWorkspaceAdminProperties(Optional.ToNullable(initialWorkspaceAdminObjectId), serializedAdditionalRawData);
+            return new CspWorkspaceAdminProperties(initialWorkspaceAdminObjectId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CspWorkspaceAdminProperties>.Write(ModelReaderWriterOptions options)

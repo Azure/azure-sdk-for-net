@@ -26,67 +26,67 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(P10))
+            if (options.Format != "W" && P10.HasValue)
             {
                 writer.WritePropertyName("P10"u8);
                 writer.WriteNumberValue(P10.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(P25))
+            if (options.Format != "W" && P25.HasValue)
             {
                 writer.WritePropertyName("P25"u8);
                 writer.WriteNumberValue(P25.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(P50))
+            if (options.Format != "W" && P50.HasValue)
             {
                 writer.WritePropertyName("P50"u8);
                 writer.WriteNumberValue(P50.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(P75))
+            if (options.Format != "W" && P75.HasValue)
             {
                 writer.WritePropertyName("P75"u8);
                 writer.WriteNumberValue(P75.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(P90))
+            if (options.Format != "W" && P90.HasValue)
             {
                 writer.WritePropertyName("P90"u8);
                 writer.WriteNumberValue(P90.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(P95))
+            if (options.Format != "W" && P95.HasValue)
             {
                 writer.WritePropertyName("P95"u8);
                 writer.WriteNumberValue(P95.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(P99))
+            if (options.Format != "W" && P99.HasValue)
             {
                 writer.WritePropertyName("P99"u8);
                 writer.WriteNumberValue(P99.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Count))
+            if (options.Format != "W" && Count.HasValue)
             {
                 writer.WritePropertyName("_count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Average))
+            if (options.Format != "W" && Average.HasValue)
             {
                 writer.WritePropertyName("average"u8);
                 writer.WriteNumberValue(Average.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Maximum))
+            if (options.Format != "W" && Maximum.HasValue)
             {
                 writer.WritePropertyName("maximum"u8);
                 writer.WriteNumberValue(Maximum.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Minimum))
+            if (options.Format != "W" && Minimum.HasValue)
             {
                 writer.WritePropertyName("minimum"u8);
                 writer.WriteNumberValue(Minimum.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Timestamp))
+            if (options.Format != "W" && Timestamp.HasValue)
             {
                 writer.WritePropertyName("timestamp"u8);
                 writer.WriteStringValue(Timestamp.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(Total))
+            if (options.Format != "W" && Total.HasValue)
             {
                 writer.WritePropertyName("total"u8);
                 writer.WriteNumberValue(Total.Value);
@@ -129,19 +129,19 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<double> p10 = default;
-            Optional<double> p25 = default;
-            Optional<double> p50 = default;
-            Optional<double> p75 = default;
-            Optional<double> p90 = default;
-            Optional<double> p95 = default;
-            Optional<double> p99 = default;
-            Optional<int> count = default;
-            Optional<double> average = default;
-            Optional<double> maximum = default;
-            Optional<double> minimum = default;
-            Optional<DateTimeOffset> timestamp = default;
-            Optional<double> total = default;
+            double? p10 = default;
+            double? p25 = default;
+            double? p50 = default;
+            double? p75 = default;
+            double? p90 = default;
+            double? p95 = default;
+            double? p99 = default;
+            int? count = default;
+            double? average = default;
+            double? maximum = default;
+            double? minimum = default;
+            DateTimeOffset? timestamp = default;
+            double? total = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -269,7 +269,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PercentileMetricValue(Optional.ToNullable(count), Optional.ToNullable(average), Optional.ToNullable(maximum), Optional.ToNullable(minimum), Optional.ToNullable(timestamp), Optional.ToNullable(total), serializedAdditionalRawData, Optional.ToNullable(p10), Optional.ToNullable(p25), Optional.ToNullable(p50), Optional.ToNullable(p75), Optional.ToNullable(p90), Optional.ToNullable(p95), Optional.ToNullable(p99));
+            return new PercentileMetricValue(
+                count,
+                average,
+                maximum,
+                minimum,
+                timestamp,
+                total,
+                serializedAdditionalRawData,
+                p10,
+                p25,
+                p50,
+                p75,
+                p90,
+                p95,
+                p99);
         }
 
         BinaryData IPersistableModel<PercentileMetricValue>.Write(ModelReaderWriterOptions options)

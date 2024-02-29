@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Target))
+            if (Target != null)
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target);
             }
-            if (Optional.IsDefined(UsageModel))
+            if (UsageModel != null)
             {
                 writer.WritePropertyName("usageModel"u8);
                 writer.WriteStringValue(UsageModel);
             }
-            if (Optional.IsDefined(VerificationDelayInSeconds))
+            if (VerificationDelayInSeconds.HasValue)
             {
                 writer.WritePropertyName("verificationTimer"u8);
                 writer.WriteNumberValue(VerificationDelayInSeconds.Value);
             }
-            if (Optional.IsDefined(WriteBackDelayInSeconds))
+            if (WriteBackDelayInSeconds.HasValue)
             {
                 writer.WritePropertyName("writeBackTimer"u8);
                 writer.WriteNumberValue(WriteBackDelayInSeconds.Value);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> target = default;
-            Optional<string> usageModel = default;
-            Optional<int> verificationTimer = default;
-            Optional<int> writeBackTimer = default;
+            ResourceIdentifier target = default;
+            string usageModel = default;
+            int? verificationTimer = default;
+            int? writeBackTimer = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BlobNfsTarget(target.Value, usageModel.Value, Optional.ToNullable(verificationTimer), Optional.ToNullable(writeBackTimer), serializedAdditionalRawData);
+            return new BlobNfsTarget(target, usageModel, verificationTimer, writeBackTimer, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BlobNfsTarget>.Write(ModelReaderWriterOptions options)

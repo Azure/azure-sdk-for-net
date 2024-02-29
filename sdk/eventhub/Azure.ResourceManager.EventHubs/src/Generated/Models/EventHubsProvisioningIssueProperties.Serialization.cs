@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.EventHubs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IssueType))
+            if (IssueType != null)
             {
                 writer.WritePropertyName("issueType"u8);
                 writer.WriteStringValue(IssueType);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 return null;
             }
-            Optional<string> issueType = default;
-            Optional<string> description = default;
+            string issueType = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventHubsProvisioningIssueProperties(issueType.Value, description.Value, serializedAdditionalRawData);
+            return new EventHubsProvisioningIssueProperties(issueType, description, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventHubsProvisioningIssueProperties>.Write(ModelReaderWriterOptions options)

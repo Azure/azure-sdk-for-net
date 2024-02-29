@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="cloudLinkName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AvsCloudLinkResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string cloudLinkName, AvsCloudLinkData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(cloudLinkName, nameof(cloudLinkName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (cloudLinkName == null)
+            {
+                throw new ArgumentNullException(nameof(cloudLinkName));
+            }
+            if (cloudLinkName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudLinkName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _avsCloudLinkCloudLinksClientDiagnostics.CreateScope("AvsCloudLinkCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="cloudLinkName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AvsCloudLinkResource> CreateOrUpdate(WaitUntil waitUntil, string cloudLinkName, AvsCloudLinkData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(cloudLinkName, nameof(cloudLinkName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (cloudLinkName == null)
+            {
+                throw new ArgumentNullException(nameof(cloudLinkName));
+            }
+            if (cloudLinkName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudLinkName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _avsCloudLinkCloudLinksClientDiagnostics.CreateScope("AvsCloudLinkCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="cloudLinkName"/> is null. </exception>
         public virtual async Task<Response<AvsCloudLinkResource>> GetAsync(string cloudLinkName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(cloudLinkName, nameof(cloudLinkName));
+            if (cloudLinkName == null)
+            {
+                throw new ArgumentNullException(nameof(cloudLinkName));
+            }
+            if (cloudLinkName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudLinkName));
+            }
 
             using var scope = _avsCloudLinkCloudLinksClientDiagnostics.CreateScope("AvsCloudLinkCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="cloudLinkName"/> is null. </exception>
         public virtual Response<AvsCloudLinkResource> Get(string cloudLinkName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(cloudLinkName, nameof(cloudLinkName));
+            if (cloudLinkName == null)
+            {
+                throw new ArgumentNullException(nameof(cloudLinkName));
+            }
+            if (cloudLinkName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudLinkName));
+            }
 
             using var scope = _avsCloudLinkCloudLinksClientDiagnostics.CreateScope("AvsCloudLinkCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="cloudLinkName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string cloudLinkName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(cloudLinkName, nameof(cloudLinkName));
+            if (cloudLinkName == null)
+            {
+                throw new ArgumentNullException(nameof(cloudLinkName));
+            }
+            if (cloudLinkName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudLinkName));
+            }
 
             using var scope = _avsCloudLinkCloudLinksClientDiagnostics.CreateScope("AvsCloudLinkCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="cloudLinkName"/> is null. </exception>
         public virtual Response<bool> Exists(string cloudLinkName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(cloudLinkName, nameof(cloudLinkName));
+            if (cloudLinkName == null)
+            {
+                throw new ArgumentNullException(nameof(cloudLinkName));
+            }
+            if (cloudLinkName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudLinkName));
+            }
 
             using var scope = _avsCloudLinkCloudLinksClientDiagnostics.CreateScope("AvsCloudLinkCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="cloudLinkName"/> is null. </exception>
         public virtual async Task<NullableResponse<AvsCloudLinkResource>> GetIfExistsAsync(string cloudLinkName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(cloudLinkName, nameof(cloudLinkName));
+            if (cloudLinkName == null)
+            {
+                throw new ArgumentNullException(nameof(cloudLinkName));
+            }
+            if (cloudLinkName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudLinkName));
+            }
 
             using var scope = _avsCloudLinkCloudLinksClientDiagnostics.CreateScope("AvsCloudLinkCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="cloudLinkName"/> is null. </exception>
         public virtual NullableResponse<AvsCloudLinkResource> GetIfExists(string cloudLinkName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(cloudLinkName, nameof(cloudLinkName));
+            if (cloudLinkName == null)
+            {
+                throw new ArgumentNullException(nameof(cloudLinkName));
+            }
+            if (cloudLinkName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudLinkName));
+            }
 
             using var scope = _avsCloudLinkCloudLinksClientDiagnostics.CreateScope("AvsCloudLinkCollection.GetIfExists");
             scope.Start();

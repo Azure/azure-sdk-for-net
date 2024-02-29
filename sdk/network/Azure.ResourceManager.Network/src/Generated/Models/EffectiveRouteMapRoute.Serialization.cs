@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Prefix))
+            if (Prefix != null)
             {
                 writer.WritePropertyName("prefix"u8);
                 writer.WriteStringValue(Prefix);
             }
-            if (Optional.IsDefined(BgpCommunities))
+            if (BgpCommunities != null)
             {
                 writer.WritePropertyName("bgpCommunities"u8);
                 writer.WriteStringValue(BgpCommunities);
             }
-            if (Optional.IsDefined(AsPath))
+            if (AsPath != null)
             {
                 writer.WritePropertyName("asPath"u8);
                 writer.WriteStringValue(AsPath);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> prefix = default;
-            Optional<string> bgpCommunities = default;
-            Optional<string> asPath = default;
+            string prefix = default;
+            string bgpCommunities = default;
+            string asPath = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EffectiveRouteMapRoute(prefix.Value, bgpCommunities.Value, asPath.Value, serializedAdditionalRawData);
+            return new EffectiveRouteMapRoute(prefix, bgpCommunities, asPath, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EffectiveRouteMapRoute>.Write(ModelReaderWriterOptions options)

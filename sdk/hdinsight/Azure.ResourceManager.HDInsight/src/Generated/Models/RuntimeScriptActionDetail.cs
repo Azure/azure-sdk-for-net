@@ -21,9 +21,18 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="uri"/> or <paramref name="roles"/> is null. </exception>
         public RuntimeScriptActionDetail(string name, Uri uri, IEnumerable<string> roles) : base(name, uri, roles)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(uri, nameof(uri));
-            Argument.AssertNotNull(roles, nameof(roles));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (uri == null)
+            {
+                throw new ArgumentNullException(nameof(uri));
+            }
+            if (roles == null)
+            {
+                throw new ArgumentNullException(nameof(roles));
+            }
 
             ExecutionSummary = new ChangeTrackingList<ScriptActionExecutionSummary>();
         }

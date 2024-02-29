@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DestinationTenantId))
+            if (DestinationTenantId.HasValue)
             {
                 writer.WritePropertyName("destinationTenantId"u8);
                 writer.WriteStringValue(DestinationTenantId.Value);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<Guid> destinationTenantId = default;
+            Guid? destinationTenantId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ChangeDirectoryContent(Optional.ToNullable(destinationTenantId), serializedAdditionalRawData);
+            return new ChangeDirectoryContent(destinationTenantId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ChangeDirectoryContent>.Write(ModelReaderWriterOptions options)

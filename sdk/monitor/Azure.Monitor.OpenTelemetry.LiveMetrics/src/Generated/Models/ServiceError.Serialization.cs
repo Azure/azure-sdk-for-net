@@ -19,11 +19,11 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
             {
                 return null;
             }
-            Optional<string> requestId = default;
-            Optional<DateTimeOffset> responseDateTime = default;
-            Optional<string> code = default;
-            Optional<string> message = default;
-            Optional<string> exception = default;
+            string requestId = default;
+            DateTimeOffset? responseDateTime = default;
+            string code = default;
+            string message = default;
+            string exception = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("RequestId"u8))
@@ -56,7 +56,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                     continue;
                 }
             }
-            return new ServiceError(requestId.Value, Optional.ToNullable(responseDateTime), code.Value, message.Value, exception.Value);
+            return new ServiceError(requestId, responseDateTime, code, message, exception);
         }
     }
 }

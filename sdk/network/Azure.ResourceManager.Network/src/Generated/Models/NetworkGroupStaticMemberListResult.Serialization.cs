@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<NetworkGroupStaticMemberData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<NetworkGroupStaticMemberData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<NetworkGroupStaticMemberData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<NetworkGroupStaticMemberData> array = new List<NetworkGroupStaticMemberData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkGroupStaticMemberData.DeserializeNetworkGroupStaticMemberData(item));
+                        array.Add(NetworkGroupStaticMemberData.DeserializeNetworkGroupStaticMemberData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkGroupStaticMemberListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new NetworkGroupStaticMemberListResult(value ?? new ChangeTrackingList<NetworkGroupStaticMemberData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkGroupStaticMemberListResult>.Write(ModelReaderWriterOptions options)

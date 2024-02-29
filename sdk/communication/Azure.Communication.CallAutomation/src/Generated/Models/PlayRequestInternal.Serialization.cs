@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Communication;
 using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
@@ -22,7 +23,7 @@ namespace Azure.Communication.CallAutomation
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(PlayTo))
+            if (!(PlayTo is ChangeTrackingList<CommunicationIdentifierModel> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("playTo"u8);
                 writer.WriteStartArray();
@@ -32,17 +33,17 @@ namespace Azure.Communication.CallAutomation
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PlayOptions))
+            if (PlayOptions != null)
             {
                 writer.WritePropertyName("playOptions"u8);
                 writer.WriteObjectValue(PlayOptions);
             }
-            if (Optional.IsDefined(OperationContext))
+            if (OperationContext != null)
             {
                 writer.WritePropertyName("operationContext"u8);
                 writer.WriteStringValue(OperationContext);
             }
-            if (Optional.IsDefined(OperationCallbackUri))
+            if (OperationCallbackUri != null)
             {
                 writer.WritePropertyName("operationCallbackUri"u8);
                 writer.WriteStringValue(OperationCallbackUri);

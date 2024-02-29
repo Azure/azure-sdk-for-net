@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.StorageMover.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(CopyMode))
+            if (CopyMode.HasValue)
             {
                 writer.WritePropertyName("copyMode"u8);
                 writer.WriteStringValue(CopyMode.Value.ToString());
             }
-            if (Optional.IsDefined(AgentName))
+            if (AgentName != null)
             {
                 writer.WritePropertyName("agentName"u8);
                 writer.WriteStringValue(AgentName);
@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.StorageMover.Models
             {
                 return null;
             }
-            Optional<string> description = default;
-            Optional<StorageMoverCopyMode> copyMode = default;
-            Optional<string> agentName = default;
+            string description = default;
+            StorageMoverCopyMode? copyMode = default;
+            string agentName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JobDefinitionPatch(description.Value, Optional.ToNullable(copyMode), agentName.Value, serializedAdditionalRawData);
+            return new JobDefinitionPatch(description, copyMode, agentName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<JobDefinitionPatch>.Write(ModelReaderWriterOptions options)

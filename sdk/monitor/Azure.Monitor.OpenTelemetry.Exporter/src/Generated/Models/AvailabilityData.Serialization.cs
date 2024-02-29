@@ -23,17 +23,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             writer.WriteStringValue(Duration);
             writer.WritePropertyName("success"u8);
             writer.WriteBooleanValue(Success);
-            if (Optional.IsDefined(RunLocation))
+            if (RunLocation != null)
             {
                 writer.WritePropertyName("runLocation"u8);
                 writer.WriteStringValue(RunLocation);
             }
-            if (Optional.IsDefined(Message))
+            if (Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Optional.IsCollectionDefined(Properties))
+            if (!(Properties is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteStartObject();
@@ -44,7 +44,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Measurements))
+            if (!(Measurements is ChangeTrackingDictionary<string, double> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("measurements"u8);
                 writer.WriteStartObject();

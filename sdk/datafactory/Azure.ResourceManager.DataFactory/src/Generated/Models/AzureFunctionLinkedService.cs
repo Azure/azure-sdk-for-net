@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -20,7 +19,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppUri"/> is null. </exception>
         public AzureFunctionLinkedService(DataFactoryElement<string> functionAppUri)
         {
-            Argument.AssertNotNull(functionAppUri, nameof(functionAppUri));
+            if (functionAppUri == null)
+            {
+                throw new ArgumentNullException(nameof(functionAppUri));
+            }
 
             FunctionAppUri = functionAppUri;
             LinkedServiceType = "AzureFunction";
@@ -48,6 +50,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             ResourceId = resourceId;
             Authentication = authentication;
             LinkedServiceType = linkedServiceType ?? "AzureFunction";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureFunctionLinkedService"/> for deserialization. </summary>
+        internal AzureFunctionLinkedService()
+        {
         }
 
         /// <summary> The endpoint of the Azure Function App. URL will be in the format https://&lt;accountName&gt;.azurewebsites.net. Type: string (or Expression with resultType string). </summary>

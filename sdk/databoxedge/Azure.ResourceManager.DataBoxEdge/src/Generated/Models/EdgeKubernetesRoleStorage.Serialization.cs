@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(StorageClasses))
+            if (options.Format != "W" && !(StorageClasses is ChangeTrackingList<EdgeKubernetesRoleStorageClassInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("storageClasses"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Endpoints))
+            if (!(Endpoints is ChangeTrackingList<DataBoxEdgeMountPointMap> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartArray();
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<EdgeKubernetesRoleStorageClassInfo>> storageClasses = default;
-            Optional<IList<DataBoxEdgeMountPointMap>> endpoints = default;
+            IReadOnlyList<EdgeKubernetesRoleStorageClassInfo> storageClasses = default;
+            IList<DataBoxEdgeMountPointMap> endpoints = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     List<EdgeKubernetesRoleStorageClassInfo> array = new List<EdgeKubernetesRoleStorageClassInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EdgeKubernetesRoleStorageClassInfo.DeserializeEdgeKubernetesRoleStorageClassInfo(item));
+                        array.Add(EdgeKubernetesRoleStorageClassInfo.DeserializeEdgeKubernetesRoleStorageClassInfo(item, options));
                     }
                     storageClasses = array;
                     continue;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     List<DataBoxEdgeMountPointMap> array = new List<DataBoxEdgeMountPointMap>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataBoxEdgeMountPointMap.DeserializeDataBoxEdgeMountPointMap(item));
+                        array.Add(DataBoxEdgeMountPointMap.DeserializeDataBoxEdgeMountPointMap(item, options));
                     }
                     endpoints = array;
                     continue;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeKubernetesRoleStorage(Optional.ToList(storageClasses), Optional.ToList(endpoints), serializedAdditionalRawData);
+            return new EdgeKubernetesRoleStorage(storageClasses ?? new ChangeTrackingList<EdgeKubernetesRoleStorageClassInfo>(), endpoints ?? new ChangeTrackingList<DataBoxEdgeMountPointMap>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeKubernetesRoleStorage>.Write(ModelReaderWriterOptions options)

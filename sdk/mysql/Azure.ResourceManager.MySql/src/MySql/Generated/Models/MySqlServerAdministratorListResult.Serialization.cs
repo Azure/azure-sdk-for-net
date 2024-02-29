@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.MySql.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<MySqlServerAdministratorData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.MySql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MySqlServerAdministratorData>> value = default;
+            IReadOnlyList<MySqlServerAdministratorData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.MySql.Models
                     List<MySqlServerAdministratorData> array = new List<MySqlServerAdministratorData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MySqlServerAdministratorData.DeserializeMySqlServerAdministratorData(item));
+                        array.Add(MySqlServerAdministratorData.DeserializeMySqlServerAdministratorData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.MySql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlServerAdministratorListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new MySqlServerAdministratorListResult(value ?? new ChangeTrackingList<MySqlServerAdministratorData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlServerAdministratorListResult>.Write(ModelReaderWriterOptions options)

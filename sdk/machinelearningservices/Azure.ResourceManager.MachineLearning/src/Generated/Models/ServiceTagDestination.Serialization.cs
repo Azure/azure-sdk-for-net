@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Action))
+            if (Action.HasValue)
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AddressPrefixes))
+            if (options.Format != "W" && !(AddressPrefixes is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("addressPrefixes"u8);
                 writer.WriteStartArray();
@@ -41,17 +41,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PortRanges))
+            if (PortRanges != null)
             {
                 writer.WritePropertyName("portRanges"u8);
                 writer.WriteStringValue(PortRanges);
             }
-            if (Optional.IsDefined(Protocol))
+            if (Protocol != null)
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol);
             }
-            if (Optional.IsDefined(ServiceTag))
+            if (ServiceTag != null)
             {
                 writer.WritePropertyName("serviceTag"u8);
                 writer.WriteStringValue(ServiceTag);
@@ -94,11 +94,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<NetworkingRuleAction> action = default;
-            Optional<IReadOnlyList<string>> addressPrefixes = default;
-            Optional<string> portRanges = default;
-            Optional<string> protocol = default;
-            Optional<string> serviceTag = default;
+            NetworkingRuleAction? action = default;
+            IReadOnlyList<string> addressPrefixes = default;
+            string portRanges = default;
+            string protocol = default;
+            string serviceTag = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -147,7 +147,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceTagDestination(Optional.ToNullable(action), Optional.ToList(addressPrefixes), portRanges.Value, protocol.Value, serviceTag.Value, serializedAdditionalRawData);
+            return new ServiceTagDestination(
+                action,
+                addressPrefixes ?? new ChangeTrackingList<string>(),
+                portRanges,
+                protocol,
+                serviceTag,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceTagDestination>.Write(ModelReaderWriterOptions options)

@@ -30,17 +30,17 @@ namespace Azure.ResourceManager.EventGrid.Models
             writer.WriteStringValue(EndpointType.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceId))
+            if (ResourceId != null)
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Optional.IsDefined(QueueName))
+            if (QueueName != null)
             {
                 writer.WritePropertyName("queueName"u8);
                 writer.WriteStringValue(QueueName);
             }
-            if (Optional.IsDefined(QueueMessageTimeToLiveInSeconds))
+            if (QueueMessageTimeToLiveInSeconds.HasValue)
             {
                 writer.WritePropertyName("queueMessageTimeToLiveInSeconds"u8);
                 writer.WriteNumberValue(QueueMessageTimeToLiveInSeconds.Value);
@@ -85,9 +85,9 @@ namespace Azure.ResourceManager.EventGrid.Models
                 return null;
             }
             EndpointType endpointType = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<string> queueName = default;
-            Optional<long> queueMessageTimeToLiveInSeconds = default;
+            ResourceIdentifier resourceId = default;
+            string queueName = default;
+            long? queueMessageTimeToLiveInSeconds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageQueueEventSubscriptionDestination(endpointType, serializedAdditionalRawData, resourceId.Value, queueName.Value, Optional.ToNullable(queueMessageTimeToLiveInSeconds));
+            return new StorageQueueEventSubscriptionDestination(endpointType, serializedAdditionalRawData, resourceId, queueName, queueMessageTimeToLiveInSeconds);
         }
 
         BinaryData IPersistableModel<StorageQueueEventSubscriptionDestination>.Write(ModelReaderWriterOptions options)

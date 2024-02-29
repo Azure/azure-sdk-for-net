@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DatabaseName))
+            if (DatabaseName != null)
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (Optional.IsDefined(Edition))
+            if (Edition != null)
             {
                 writer.WritePropertyName("edition"u8);
                 writer.WriteStringValue(Edition);
             }
-            if (Optional.IsDefined(ServiceObjectiveName))
+            if (ServiceObjectiveName != null)
             {
                 writer.WritePropertyName("serviceObjectiveName"u8);
                 writer.WriteStringValue(ServiceObjectiveName);
             }
-            if (Optional.IsDefined(MaxSizeBytes))
+            if (MaxSizeBytes != null)
             {
                 writer.WritePropertyName("maxSizeBytes"u8);
                 writer.WriteStringValue(MaxSizeBytes);
@@ -56,12 +56,12 @@ namespace Azure.ResourceManager.Sql.Models
             writer.WriteStringValue(AdministratorLogin);
             writer.WritePropertyName("administratorLoginPassword"u8);
             writer.WriteStringValue(AdministratorLoginPassword);
-            if (Optional.IsDefined(AuthenticationType))
+            if (AuthenticationType != null)
             {
                 writer.WritePropertyName("authenticationType"u8);
                 writer.WriteStringValue(AuthenticationType);
             }
-            if (Optional.IsDefined(NetworkIsolation))
+            if (NetworkIsolation != null)
             {
                 writer.WritePropertyName("networkIsolation"u8);
                 writer.WriteObjectValue(NetworkIsolation);
@@ -104,17 +104,17 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<string> databaseName = default;
-            Optional<string> edition = default;
-            Optional<string> serviceObjectiveName = default;
-            Optional<string> maxSizeBytes = default;
+            string databaseName = default;
+            string edition = default;
+            string serviceObjectiveName = default;
+            string maxSizeBytes = default;
             StorageKeyType storageKeyType = default;
             string storageKey = default;
             Uri storageUri = default;
             string administratorLogin = default;
             string administratorLoginPassword = default;
-            Optional<string> authenticationType = default;
-            Optional<NetworkIsolationSettings> networkIsolation = default;
+            string authenticationType = default;
+            NetworkIsolationSettings networkIsolation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    networkIsolation = NetworkIsolationSettings.DeserializeNetworkIsolationSettings(property.Value);
+                    networkIsolation = NetworkIsolationSettings.DeserializeNetworkIsolationSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -184,7 +184,19 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatabaseImportDefinition(databaseName.Value, edition.Value, serviceObjectiveName.Value, maxSizeBytes.Value, storageKeyType, storageKey, storageUri, administratorLogin, administratorLoginPassword, authenticationType.Value, networkIsolation.Value, serializedAdditionalRawData);
+            return new DatabaseImportDefinition(
+                databaseName,
+                edition,
+                serviceObjectiveName,
+                maxSizeBytes,
+                storageKeyType,
+                storageKey,
+                storageUri,
+                administratorLogin,
+                administratorLoginPassword,
+                authenticationType,
+                networkIsolation,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatabaseImportDefinition>.Write(ModelReaderWriterOptions options)

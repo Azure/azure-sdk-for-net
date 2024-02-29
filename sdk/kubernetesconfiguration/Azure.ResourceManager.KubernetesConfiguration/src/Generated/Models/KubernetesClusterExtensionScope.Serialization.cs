@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Cluster))
+            if (Cluster != null)
             {
                 if (Cluster != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("cluster");
                 }
             }
-            if (Optional.IsDefined(Namespace))
+            if (Namespace != null)
             {
                 if (Namespace != null)
                 {
@@ -88,8 +88,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 return null;
             }
-            Optional<ScopeCluster> cluster = default;
-            Optional<ScopeNamespace> @namespace = default;
+            ScopeCluster cluster = default;
+            ScopeNamespace @namespace = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                         cluster = null;
                         continue;
                     }
-                    cluster = ScopeCluster.DeserializeScopeCluster(property.Value);
+                    cluster = ScopeCluster.DeserializeScopeCluster(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("namespace"u8))
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                         @namespace = null;
                         continue;
                     }
-                    @namespace = ScopeNamespace.DeserializeScopeNamespace(property.Value);
+                    @namespace = ScopeNamespace.DeserializeScopeNamespace(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesClusterExtensionScope(cluster.Value, @namespace.Value, serializedAdditionalRawData);
+            return new KubernetesClusterExtensionScope(cluster, @namespace, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesClusterExtensionScope>.Write(ModelReaderWriterOptions options)

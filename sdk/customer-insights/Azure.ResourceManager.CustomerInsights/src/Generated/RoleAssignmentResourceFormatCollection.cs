@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<RoleAssignmentResourceFormatResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string assignmentName, RoleAssignmentResourceFormatData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(assignmentName, nameof(assignmentName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (assignmentName == null)
+            {
+                throw new ArgumentNullException(nameof(assignmentName));
+            }
+            if (assignmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(assignmentName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _roleAssignmentResourceFormatRoleAssignmentsClientDiagnostics.CreateScope("RoleAssignmentResourceFormatCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<RoleAssignmentResourceFormatResource> CreateOrUpdate(WaitUntil waitUntil, string assignmentName, RoleAssignmentResourceFormatData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(assignmentName, nameof(assignmentName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (assignmentName == null)
+            {
+                throw new ArgumentNullException(nameof(assignmentName));
+            }
+            if (assignmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(assignmentName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _roleAssignmentResourceFormatRoleAssignmentsClientDiagnostics.CreateScope("RoleAssignmentResourceFormatCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentName"/> is null. </exception>
         public virtual async Task<Response<RoleAssignmentResourceFormatResource>> GetAsync(string assignmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(assignmentName, nameof(assignmentName));
+            if (assignmentName == null)
+            {
+                throw new ArgumentNullException(nameof(assignmentName));
+            }
+            if (assignmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(assignmentName));
+            }
 
             using var scope = _roleAssignmentResourceFormatRoleAssignmentsClientDiagnostics.CreateScope("RoleAssignmentResourceFormatCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentName"/> is null. </exception>
         public virtual Response<RoleAssignmentResourceFormatResource> Get(string assignmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(assignmentName, nameof(assignmentName));
+            if (assignmentName == null)
+            {
+                throw new ArgumentNullException(nameof(assignmentName));
+            }
+            if (assignmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(assignmentName));
+            }
 
             using var scope = _roleAssignmentResourceFormatRoleAssignmentsClientDiagnostics.CreateScope("RoleAssignmentResourceFormatCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string assignmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(assignmentName, nameof(assignmentName));
+            if (assignmentName == null)
+            {
+                throw new ArgumentNullException(nameof(assignmentName));
+            }
+            if (assignmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(assignmentName));
+            }
 
             using var scope = _roleAssignmentResourceFormatRoleAssignmentsClientDiagnostics.CreateScope("RoleAssignmentResourceFormatCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentName"/> is null. </exception>
         public virtual Response<bool> Exists(string assignmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(assignmentName, nameof(assignmentName));
+            if (assignmentName == null)
+            {
+                throw new ArgumentNullException(nameof(assignmentName));
+            }
+            if (assignmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(assignmentName));
+            }
 
             using var scope = _roleAssignmentResourceFormatRoleAssignmentsClientDiagnostics.CreateScope("RoleAssignmentResourceFormatCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentName"/> is null. </exception>
         public virtual async Task<NullableResponse<RoleAssignmentResourceFormatResource>> GetIfExistsAsync(string assignmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(assignmentName, nameof(assignmentName));
+            if (assignmentName == null)
+            {
+                throw new ArgumentNullException(nameof(assignmentName));
+            }
+            if (assignmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(assignmentName));
+            }
 
             using var scope = _roleAssignmentResourceFormatRoleAssignmentsClientDiagnostics.CreateScope("RoleAssignmentResourceFormatCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentName"/> is null. </exception>
         public virtual NullableResponse<RoleAssignmentResourceFormatResource> GetIfExists(string assignmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(assignmentName, nameof(assignmentName));
+            if (assignmentName == null)
+            {
+                throw new ArgumentNullException(nameof(assignmentName));
+            }
+            if (assignmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(assignmentName));
+            }
 
             using var scope = _roleAssignmentResourceFormatRoleAssignmentsClientDiagnostics.CreateScope("RoleAssignmentResourceFormatCollection.GetIfExists");
             scope.Start();

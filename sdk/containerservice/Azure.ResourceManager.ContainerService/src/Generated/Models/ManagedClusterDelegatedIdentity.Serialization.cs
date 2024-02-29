@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceId))
+            if (ResourceId != null)
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Optional.IsDefined(TenantId))
+            if (TenantId.HasValue)
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (Optional.IsDefined(ReferralResource))
+            if (ReferralResource != null)
             {
                 writer.WritePropertyName("referralResource"u8);
                 writer.WriteStringValue(ReferralResource);
             }
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<Guid> tenantId = default;
-            Optional<string> referralResource = default;
-            Optional<AzureLocation> location = default;
+            ResourceIdentifier resourceId = default;
+            Guid? tenantId = default;
+            string referralResource = default;
+            AzureLocation? location = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterDelegatedIdentity(resourceId.Value, Optional.ToNullable(tenantId), referralResource.Value, Optional.ToNullable(location), serializedAdditionalRawData);
+            return new ManagedClusterDelegatedIdentity(resourceId, tenantId, referralResource, location, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterDelegatedIdentity>.Write(ModelReaderWriterOptions options)

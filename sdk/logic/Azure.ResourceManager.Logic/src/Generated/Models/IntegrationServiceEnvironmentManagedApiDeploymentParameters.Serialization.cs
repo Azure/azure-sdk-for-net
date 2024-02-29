@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ContentLinkDefinition))
+            if (ContentLinkDefinition != null)
             {
                 writer.WritePropertyName("contentLinkDefinition"u8);
                 writer.WriteObjectValue(ContentLinkDefinition);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<LogicContentLink> contentLinkDefinition = default;
+            LogicContentLink contentLinkDefinition = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    contentLinkDefinition = LogicContentLink.DeserializeLogicContentLink(property.Value);
+                    contentLinkDefinition = LogicContentLink.DeserializeLogicContentLink(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationServiceEnvironmentManagedApiDeploymentParameters(contentLinkDefinition.Value, serializedAdditionalRawData);
+            return new IntegrationServiceEnvironmentManagedApiDeploymentParameters(contentLinkDefinition, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationServiceEnvironmentManagedApiDeploymentParameters>.Write(ModelReaderWriterOptions options)

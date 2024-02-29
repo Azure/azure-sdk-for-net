@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(IsSupported))
+            if (options.Format != "W" && IsSupported.HasValue)
             {
                 writer.WritePropertyName("isSupported"u8);
                 writer.WriteBooleanValue(IsSupported.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(SupportedVersion))
+            if (options.Format != "W" && SupportedVersion != null)
             {
                 writer.WritePropertyName("supportedVersion"u8);
                 writer.WriteStringValue(SupportedVersion);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<bool> isSupported = default;
-            Optional<string> supportedVersion = default;
+            bool? isSupported = default;
+            string supportedVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GitHubActionWebAppStackSettings(Optional.ToNullable(isSupported), supportedVersion.Value, serializedAdditionalRawData);
+            return new GitHubActionWebAppStackSettings(isSupported, supportedVersion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GitHubActionWebAppStackSettings>.Write(ModelReaderWriterOptions options)

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
@@ -19,7 +18,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 return null;
             }
             DocumentKeyValueElement key = default;
-            Optional<DocumentKeyValueElement> value = default;
+            DocumentKeyValueElement value = default;
             float confidence = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -43,7 +42,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new DocumentKeyValuePair(key, value.Value, confidence);
+            return new DocumentKeyValuePair(key, value, confidence);
         }
     }
 }

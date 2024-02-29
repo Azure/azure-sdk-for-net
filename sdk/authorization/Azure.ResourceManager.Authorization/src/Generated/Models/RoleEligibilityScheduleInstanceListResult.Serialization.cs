@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Authorization.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<RoleEligibilityScheduleInstanceData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<RoleEligibilityScheduleInstanceData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<RoleEligibilityScheduleInstanceData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     List<RoleEligibilityScheduleInstanceData> array = new List<RoleEligibilityScheduleInstanceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RoleEligibilityScheduleInstanceData.DeserializeRoleEligibilityScheduleInstanceData(item));
+                        array.Add(RoleEligibilityScheduleInstanceData.DeserializeRoleEligibilityScheduleInstanceData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoleEligibilityScheduleInstanceListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new RoleEligibilityScheduleInstanceListResult(value ?? new ChangeTrackingList<RoleEligibilityScheduleInstanceData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoleEligibilityScheduleInstanceListResult>.Write(ModelReaderWriterOptions options)

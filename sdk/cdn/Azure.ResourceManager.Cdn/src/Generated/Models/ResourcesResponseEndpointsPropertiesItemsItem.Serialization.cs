@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(EndpointId))
+            if (EndpointId != null)
             {
                 writer.WritePropertyName("endpointId"u8);
                 writer.WriteStringValue(EndpointId);
             }
-            if (Optional.IsDefined(History))
+            if (History.HasValue)
             {
                 writer.WritePropertyName("history"u8);
                 writer.WriteBooleanValue(History.Value);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> endpointId = default;
-            Optional<bool> history = default;
+            string id = default;
+            string name = default;
+            string endpointId = default;
+            bool? history = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourcesResponseEndpointsPropertiesItemsItem(id.Value, name.Value, endpointId.Value, Optional.ToNullable(history), serializedAdditionalRawData);
+            return new ResourcesResponseEndpointsPropertiesItemsItem(id, name, endpointId, history, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourcesResponseEndpointsPropertiesItemsItem>.Write(ModelReaderWriterOptions options)

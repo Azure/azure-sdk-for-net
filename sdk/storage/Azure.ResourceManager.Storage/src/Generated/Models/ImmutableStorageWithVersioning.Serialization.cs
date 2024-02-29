@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsEnabled))
+            if (IsEnabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(TimeStamp))
+            if (options.Format != "W" && TimeStamp.HasValue)
             {
                 writer.WritePropertyName("timeStamp"u8);
                 writer.WriteStringValue(TimeStamp.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(MigrationState))
+            if (options.Format != "W" && MigrationState.HasValue)
             {
                 writer.WritePropertyName("migrationState"u8);
                 writer.WriteStringValue(MigrationState.Value.ToString());
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<DateTimeOffset> timeStamp = default;
-            Optional<ImmutableStorageWithVersioningMigrationState> migrationState = default;
+            bool? enabled = default;
+            DateTimeOffset? timeStamp = default;
+            ImmutableStorageWithVersioningMigrationState? migrationState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ImmutableStorageWithVersioning(Optional.ToNullable(enabled), Optional.ToNullable(timeStamp), Optional.ToNullable(migrationState), serializedAdditionalRawData);
+            return new ImmutableStorageWithVersioning(enabled, timeStamp, migrationState, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ImmutableStorageWithVersioning>.Write(ModelReaderWriterOptions options)

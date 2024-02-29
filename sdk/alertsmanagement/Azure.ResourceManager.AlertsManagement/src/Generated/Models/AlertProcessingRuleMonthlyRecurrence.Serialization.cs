@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             writer.WriteEndArray();
             writer.WritePropertyName("recurrenceType"u8);
             writer.WriteStringValue(RecurrenceType.ToString());
-            if (Optional.IsDefined(StartOn))
+            if (StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "T");
             }
-            if (Optional.IsDefined(EndOn))
+            if (EndOn.HasValue)
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "T");
@@ -85,8 +85,8 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             }
             IList<int> daysOfMonth = default;
             RecurrenceType recurrenceType = default;
-            Optional<TimeSpan> startTime = default;
-            Optional<TimeSpan> endTime = default;
+            TimeSpan? startTime = default;
+            TimeSpan? endTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AlertProcessingRuleMonthlyRecurrence(recurrenceType, Optional.ToNullable(startTime), Optional.ToNullable(endTime), serializedAdditionalRawData, daysOfMonth);
+            return new AlertProcessingRuleMonthlyRecurrence(recurrenceType, startTime, endTime, serializedAdditionalRawData, daysOfMonth);
         }
 
         BinaryData IPersistableModel<AlertProcessingRuleMonthlyRecurrence>.Write(ModelReaderWriterOptions options)

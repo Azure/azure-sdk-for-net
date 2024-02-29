@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NamespacePath))
+            if (NamespacePath != null)
             {
                 writer.WritePropertyName("namespacePath"u8);
                 writer.WriteStringValue(NamespacePath);
             }
-            if (Optional.IsDefined(TargetPath))
+            if (TargetPath != null)
             {
                 writer.WritePropertyName("targetPath"u8);
                 writer.WriteStringValue(TargetPath);
             }
-            if (Optional.IsDefined(NfsExport))
+            if (NfsExport != null)
             {
                 writer.WritePropertyName("nfsExport"u8);
                 writer.WriteStringValue(NfsExport);
             }
-            if (Optional.IsDefined(NfsAccessPolicy))
+            if (NfsAccessPolicy != null)
             {
                 writer.WritePropertyName("nfsAccessPolicy"u8);
                 writer.WriteStringValue(NfsAccessPolicy);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Optional<string> namespacePath = default;
-            Optional<string> targetPath = default;
-            Optional<string> nfsExport = default;
-            Optional<string> nfsAccessPolicy = default;
+            string namespacePath = default;
+            string targetPath = default;
+            string nfsExport = default;
+            string nfsAccessPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NamespaceJunction(namespacePath.Value, targetPath.Value, nfsExport.Value, nfsAccessPolicy.Value, serializedAdditionalRawData);
+            return new NamespaceJunction(namespacePath, targetPath, nfsExport, nfsAccessPolicy, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NamespaceJunction>.Write(ModelReaderWriterOptions options)

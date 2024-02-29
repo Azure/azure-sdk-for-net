@@ -16,7 +16,7 @@ namespace Azure.IoT.TimeSeriesInsights
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Span))
+            if (Span.HasValue)
             {
                 writer.WritePropertyName("span"u8);
                 writer.WriteStringValue(Span.Value, "P");
@@ -30,7 +30,7 @@ namespace Azure.IoT.TimeSeriesInsights
             {
                 return null;
             }
-            Optional<TimeSpan> span = default;
+            TimeSpan? span = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("span"u8))
@@ -43,7 +43,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     continue;
                 }
             }
-            return new InterpolationBoundary(Optional.ToNullable(span));
+            return new InterpolationBoundary(span);
         }
     }
 }

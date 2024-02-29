@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TagInfo))
+            if (TagInfo != null)
             {
                 writer.WritePropertyName("tagInfo"u8);
                 writer.WriteObjectValue(TagInfo);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<DataProtectionBackupRetentionTag> tagInfo = default;
+            DataProtectionBackupRetentionTag tagInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    tagInfo = DataProtectionBackupRetentionTag.DeserializeDataProtectionBackupRetentionTag(property.Value);
+                    tagInfo = DataProtectionBackupRetentionTag.DeserializeDataProtectionBackupRetentionTag(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AdhocBasedBackupTaggingCriteria(tagInfo.Value, serializedAdditionalRawData);
+            return new AdhocBasedBackupTaggingCriteria(tagInfo, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AdhocBasedBackupTaggingCriteria>.Write(ModelReaderWriterOptions options)

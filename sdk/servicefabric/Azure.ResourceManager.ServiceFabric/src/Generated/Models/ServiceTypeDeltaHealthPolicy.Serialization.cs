@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MaxPercentDeltaUnhealthyServices))
+            if (MaxPercentDeltaUnhealthyServices.HasValue)
             {
                 writer.WritePropertyName("maxPercentDeltaUnhealthyServices"u8);
                 writer.WriteNumberValue(MaxPercentDeltaUnhealthyServices.Value);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 return null;
             }
-            Optional<int> maxPercentDeltaUnhealthyServices = default;
+            int? maxPercentDeltaUnhealthyServices = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceTypeDeltaHealthPolicy(Optional.ToNullable(maxPercentDeltaUnhealthyServices), serializedAdditionalRawData);
+            return new ServiceTypeDeltaHealthPolicy(maxPercentDeltaUnhealthyServices, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceTypeDeltaHealthPolicy>.Write(ModelReaderWriterOptions options)

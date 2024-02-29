@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TokenType))
+            if (TokenType.HasValue)
             {
                 writer.WritePropertyName("tokenType"u8);
                 writer.WriteStringValue(TokenType.Value.ToString());
             }
-            if (Optional.IsDefined(Token))
+            if (Token != null)
             {
                 writer.WritePropertyName("token"u8);
                 writer.WriteStringValue(Token);
             }
-            if (Optional.IsDefined(RefreshToken))
+            if (RefreshToken != null)
             {
                 writer.WritePropertyName("refreshToken"u8);
                 writer.WriteStringValue(RefreshToken);
             }
-            if (Optional.IsDefined(Scope))
+            if (Scope != null)
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
-            if (Optional.IsDefined(ExpiresIn))
+            if (ExpiresIn.HasValue)
             {
                 writer.WritePropertyName("expiresIn"u8);
                 writer.WriteNumberValue(ExpiresIn.Value);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<SourceCodeRepoAuthTokenType> tokenType = default;
-            Optional<string> token = default;
-            Optional<string> refreshToken = default;
-            Optional<string> scope = default;
-            Optional<int> expiresIn = default;
+            SourceCodeRepoAuthTokenType? tokenType = default;
+            string token = default;
+            string refreshToken = default;
+            string scope = default;
+            int? expiresIn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SourceCodeRepoAuthInfoUpdateContent(Optional.ToNullable(tokenType), token.Value, refreshToken.Value, scope.Value, Optional.ToNullable(expiresIn), serializedAdditionalRawData);
+            return new SourceCodeRepoAuthInfoUpdateContent(
+                tokenType,
+                token,
+                refreshToken,
+                scope,
+                expiresIn,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SourceCodeRepoAuthInfoUpdateContent>.Write(ModelReaderWriterOptions options)

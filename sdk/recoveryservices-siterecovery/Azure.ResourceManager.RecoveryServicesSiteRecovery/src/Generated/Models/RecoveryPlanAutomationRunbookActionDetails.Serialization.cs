@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RunbookId))
+            if (RunbookId != null)
             {
                 writer.WritePropertyName("runbookId"u8);
                 writer.WriteStringValue(RunbookId);
             }
-            if (Optional.IsDefined(Timeout))
+            if (Timeout != null)
             {
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteStringValue(Timeout);
@@ -78,8 +78,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> runbookId = default;
-            Optional<string> timeout = default;
+            ResourceIdentifier runbookId = default;
+            string timeout = default;
             RecoveryPlanActionLocation fabricLocation = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecoveryPlanAutomationRunbookActionDetails(instanceType, serializedAdditionalRawData, runbookId.Value, timeout.Value, fabricLocation);
+            return new RecoveryPlanAutomationRunbookActionDetails(instanceType, serializedAdditionalRawData, runbookId, timeout, fabricLocation);
         }
 
         BinaryData IPersistableModel<RecoveryPlanAutomationRunbookActionDetails>.Write(ModelReaderWriterOptions options)

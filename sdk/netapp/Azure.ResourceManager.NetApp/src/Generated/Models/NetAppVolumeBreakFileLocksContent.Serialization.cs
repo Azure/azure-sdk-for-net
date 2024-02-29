@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ClientIP))
+            if (ClientIP != null)
             {
                 writer.WritePropertyName("clientIp"u8);
                 writer.WriteStringValue(ClientIP.ToString());
             }
-            if (Optional.IsDefined(ConfirmRunningDisruptiveOperation))
+            if (ConfirmRunningDisruptiveOperation.HasValue)
             {
                 writer.WritePropertyName("confirmRunningDisruptiveOperation"u8);
                 writer.WriteBooleanValue(ConfirmRunningDisruptiveOperation.Value);
@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<IPAddress> clientIP = default;
-            Optional<bool> confirmRunningDisruptiveOperation = default;
+            IPAddress clientIP = default;
+            bool? confirmRunningDisruptiveOperation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppVolumeBreakFileLocksContent(clientIP.Value, Optional.ToNullable(confirmRunningDisruptiveOperation), serializedAdditionalRawData);
+            return new NetAppVolumeBreakFileLocksContent(clientIP, confirmRunningDisruptiveOperation, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppVolumeBreakFileLocksContent>.Write(ModelReaderWriterOptions options)

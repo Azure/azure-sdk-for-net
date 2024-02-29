@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EncryptedSecret))
+            if (EncryptedSecret != null)
             {
                 writer.WritePropertyName("encryptedSecret"u8);
                 writer.WriteObjectValue(EncryptedSecret);
             }
-            if (Optional.IsDefined(KeyVaultId))
+            if (KeyVaultId != null)
             {
                 writer.WritePropertyName("keyVaultId"u8);
                 writer.WriteStringValue(KeyVaultId);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<AsymmetricEncryptedSecret> encryptedSecret = default;
-            Optional<string> keyVaultId = default;
+            AsymmetricEncryptedSecret encryptedSecret = default;
+            string keyVaultId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    encryptedSecret = AsymmetricEncryptedSecret.DeserializeAsymmetricEncryptedSecret(property.Value);
+                    encryptedSecret = AsymmetricEncryptedSecret.DeserializeAsymmetricEncryptedSecret(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("keyVaultId"u8))
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeDeviceSecret(encryptedSecret.Value, keyVaultId.Value, serializedAdditionalRawData);
+            return new DataBoxEdgeDeviceSecret(encryptedSecret, keyVaultId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeDeviceSecret>.Write(ModelReaderWriterOptions options)

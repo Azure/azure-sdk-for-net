@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ColumnName))
+            if (ColumnName != null)
             {
                 if (ColumnName != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("columnName");
                 }
             }
-            if (Optional.IsDefined(DataType))
+            if (DataType.HasValue)
             {
                 writer.WritePropertyName("dataType"u8);
                 writer.WriteStringValue(DataType.Value.ToString());
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> columnName = default;
-            Optional<FeatureDataType> dataType = default;
+            string columnName = default;
+            FeatureDataType? dataType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IndexColumn(columnName.Value, Optional.ToNullable(dataType), serializedAdditionalRawData);
+            return new IndexColumn(columnName, dataType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IndexColumn>.Write(ModelReaderWriterOptions options)

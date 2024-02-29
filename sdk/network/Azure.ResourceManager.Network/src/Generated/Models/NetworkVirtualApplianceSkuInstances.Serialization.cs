@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ScaleUnit))
+            if (options.Format != "W" && ScaleUnit != null)
             {
                 writer.WritePropertyName("scaleUnit"u8);
                 writer.WriteStringValue(ScaleUnit);
             }
-            if (options.Format != "W" && Optional.IsDefined(InstanceCount))
+            if (options.Format != "W" && InstanceCount.HasValue)
             {
                 writer.WritePropertyName("instanceCount"u8);
                 writer.WriteNumberValue(InstanceCount.Value);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> scaleUnit = default;
-            Optional<int> instanceCount = default;
+            string scaleUnit = default;
+            int? instanceCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkVirtualApplianceSkuInstances(scaleUnit.Value, Optional.ToNullable(instanceCount), serializedAdditionalRawData);
+            return new NetworkVirtualApplianceSkuInstances(scaleUnit, instanceCount, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkVirtualApplianceSkuInstances>.Write(ModelReaderWriterOptions options)

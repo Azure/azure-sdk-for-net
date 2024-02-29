@@ -16,27 +16,27 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(PrivateLinkResourceId))
+            if (PrivateLinkResourceId != null)
             {
                 writer.WritePropertyName("privateLinkResourceId"u8);
                 writer.WriteStringValue(PrivateLinkResourceId);
             }
-            if (Optional.IsDefined(GroupId))
+            if (GroupId != null)
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
             }
-            if (Optional.IsDefined(ConnectionState))
+            if (ConnectionState != null)
             {
                 writer.WritePropertyName("connectionState"u8);
                 writer.WriteObjectValue(ConnectionState);
             }
-            if (Optional.IsCollectionDefined(Fqdns))
+            if (!(Fqdns is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("fqdns"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsCompliant))
+            if (IsCompliant.HasValue)
             {
                 writer.WritePropertyName("isCompliant"u8);
                 writer.WriteBooleanValue(IsCompliant.Value);
@@ -60,14 +60,14 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> privateLinkResourceId = default;
-            Optional<string> groupId = default;
-            Optional<string> provisioningState = default;
-            Optional<ManagedPrivateEndpointConnectionState> connectionState = default;
-            Optional<bool> isReserved = default;
-            Optional<IList<string>> fqdns = default;
-            Optional<bool> isCompliant = default;
+            string name = default;
+            string privateLinkResourceId = default;
+            string groupId = default;
+            string provisioningState = default;
+            ManagedPrivateEndpointConnectionState connectionState = default;
+            bool? isReserved = default;
+            IList<string> fqdns = default;
+            bool? isCompliant = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -132,7 +132,15 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
                     continue;
                 }
             }
-            return new ManagedPrivateEndpointProperties(name.Value, privateLinkResourceId.Value, groupId.Value, provisioningState.Value, connectionState.Value, Optional.ToNullable(isReserved), Optional.ToList(fqdns), Optional.ToNullable(isCompliant));
+            return new ManagedPrivateEndpointProperties(
+                name,
+                privateLinkResourceId,
+                groupId,
+                provisioningState,
+                connectionState,
+                isReserved,
+                fqdns ?? new ChangeTrackingList<string>(),
+                isCompliant);
         }
     }
 }

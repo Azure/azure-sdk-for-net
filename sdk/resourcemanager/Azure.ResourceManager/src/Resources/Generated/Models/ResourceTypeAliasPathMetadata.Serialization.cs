@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(TokenType))
+            if (options.Format != "W" && TokenType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(TokenType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Attributes))
+            if (options.Format != "W" && Attributes.HasValue)
             {
                 writer.WritePropertyName("attributes"u8);
                 writer.WriteStringValue(Attributes.Value.ToString());
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<ResourceTypeAliasPathTokenType> type = default;
-            Optional<ResourceTypeAliasPathAttributes> attributes = default;
+            ResourceTypeAliasPathTokenType? type = default;
+            ResourceTypeAliasPathAttributes? attributes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceTypeAliasPathMetadata(Optional.ToNullable(type), Optional.ToNullable(attributes), serializedAdditionalRawData);
+            return new ResourceTypeAliasPathMetadata(type, attributes, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceTypeAliasPathMetadata>.Write(ModelReaderWriterOptions options)

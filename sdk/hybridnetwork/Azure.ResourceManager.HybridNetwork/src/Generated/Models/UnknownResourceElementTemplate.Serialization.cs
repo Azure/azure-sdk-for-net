@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ResourceElementType.ToString());
-            if (Optional.IsDefined(DependsOnProfile))
+            if (DependsOnProfile != null)
             {
                 writer.WritePropertyName("dependsOnProfile"u8);
                 writer.WriteObjectValue(DependsOnProfile);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownResourceElementTemplate(document.RootElement, options);
+            return DeserializeResourceElementTemplate(document.RootElement, options);
         }
 
         internal static UnknownResourceElementTemplate DeserializeUnknownResourceElementTemplate(JsonElement element, ModelReaderWriterOptions options = null)
@@ -76,9 +76,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<string> name = default;
+            string name = default;
             Type type = "AutoRest.CSharp.Output.Models.Types.EnumTypeValue";
-            Optional<DependsOnProfile> dependsOnProfile = default;
+            DependsOnProfile dependsOnProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    dependsOnProfile = DependsOnProfile.DeserializeDependsOnProfile(property.Value);
+                    dependsOnProfile = DependsOnProfile.DeserializeDependsOnProfile(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownResourceElementTemplate(name.Value, type, dependsOnProfile.Value, serializedAdditionalRawData);
+            return new UnknownResourceElementTemplate(name, type, dependsOnProfile, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceElementTemplate>.Write(ModelReaderWriterOptions options)
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownResourceElementTemplate(document.RootElement, options);
+                        return DeserializeResourceElementTemplate(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(ResourceElementTemplate)} does not support '{options.Format}' format.");

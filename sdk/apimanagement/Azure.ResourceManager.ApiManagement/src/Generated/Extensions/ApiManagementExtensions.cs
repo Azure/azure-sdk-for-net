@@ -49,7 +49,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiResource"/> object. </returns>
         public static ApiResource GetApiResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableApiManagementArmClient(client).GetApiResource(id);
         }
@@ -68,7 +71,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiReleaseResource"/> object. </returns>
         public static ApiReleaseResource GetApiReleaseResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableApiManagementArmClient(client).GetApiReleaseResource(id);
         }
@@ -87,7 +93,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiOperationResource"/> object. </returns>
         public static ApiOperationResource GetApiOperationResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableApiManagementArmClient(client).GetApiOperationResource(id);
         }
@@ -106,7 +115,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiOperationPolicyResource"/> object. </returns>
         public static ApiOperationPolicyResource GetApiOperationPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableApiManagementArmClient(client).GetApiOperationPolicyResource(id);
         }
@@ -125,7 +137,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiPolicyResource"/> object. </returns>
         public static ApiPolicyResource GetApiPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableApiManagementArmClient(client).GetApiPolicyResource(id);
         }
@@ -144,7 +159,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementPolicyResource"/> object. </returns>
         public static ApiManagementPolicyResource GetApiManagementPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableApiManagementArmClient(client).GetApiManagementPolicyResource(id);
         }
@@ -163,7 +181,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementProductPolicyResource"/> object. </returns>
         public static ApiManagementProductPolicyResource GetApiManagementProductPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableApiManagementArmClient(client).GetApiManagementProductPolicyResource(id);
         }
@@ -182,7 +203,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiOperationTagResource"/> object. </returns>
         public static ApiOperationTagResource GetApiOperationTagResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableApiManagementArmClient(client).GetApiOperationTagResource(id);
         }
@@ -201,7 +225,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiTagResource"/> object. </returns>
         public static ApiTagResource GetApiTagResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableApiManagementArmClient(client).GetApiTagResource(id);
         }
@@ -220,7 +247,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementProductTagResource"/> object. </returns>
         public static ApiManagementProductTagResource GetApiManagementProductTagResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableApiManagementArmClient(client).GetApiManagementProductTagResource(id);
         }
@@ -239,7 +269,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementTagResource"/> object. </returns>
         public static ApiManagementTagResource GetApiManagementTagResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableApiManagementArmClient(client).GetApiManagementTagResource(id);
         }
@@ -258,7 +291,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiSchemaResource"/> object. </returns>
         public static ApiSchemaResource GetApiSchemaResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableApiManagementArmClient(client).GetApiSchemaResource(id);
         }
@@ -277,7 +313,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiDiagnosticResource"/> object. </returns>
         public static ApiDiagnosticResource GetApiDiagnosticResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableApiManagementArmClient(client).GetApiDiagnosticResource(id);
         }
@@ -296,7 +335,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementDiagnosticResource"/> object. </returns>
         public static ApiManagementDiagnosticResource GetApiManagementDiagnosticResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableApiManagementArmClient(client).GetApiManagementDiagnosticResource(id);
         }
@@ -315,7 +357,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiIssueResource"/> object. </returns>
         public static ApiIssueResource GetApiIssueResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableApiManagementArmClient(client).GetApiIssueResource(id);
         }
@@ -334,7 +379,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementIssueResource"/> object. </returns>
         public static ApiManagementIssueResource GetApiManagementIssueResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableApiManagementArmClient(client).GetApiManagementIssueResource(id);
         }
@@ -353,7 +401,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiIssueCommentResource"/> object. </returns>
         public static ApiIssueCommentResource GetApiIssueCommentResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableApiManagementArmClient(client).GetApiIssueCommentResource(id);
         }
@@ -372,7 +423,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiIssueAttachmentResource"/> object. </returns>
         public static ApiIssueAttachmentResource GetApiIssueAttachmentResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableApiManagementArmClient(client).GetApiIssueAttachmentResource(id);
         }
@@ -391,7 +445,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiTagDescriptionResource"/> object. </returns>
         public static ApiTagDescriptionResource GetApiTagDescriptionResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableApiManagementArmClient(client).GetApiTagDescriptionResource(id);
         }
@@ -410,7 +467,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiVersionSetResource"/> object. </returns>
         public static ApiVersionSetResource GetApiVersionSetResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableApiManagementArmClient(client).GetApiVersionSetResource(id);
         }
@@ -429,7 +489,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementAuthorizationServerResource"/> object. </returns>
         public static ApiManagementAuthorizationServerResource GetApiManagementAuthorizationServerResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableApiManagementArmClient(client).GetApiManagementAuthorizationServerResource(id);
         }
@@ -448,7 +511,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementBackendResource"/> object. </returns>
         public static ApiManagementBackendResource GetApiManagementBackendResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableApiManagementArmClient(client).GetApiManagementBackendResource(id);
         }
@@ -467,7 +533,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementCacheResource"/> object. </returns>
         public static ApiManagementCacheResource GetApiManagementCacheResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableApiManagementArmClient(client).GetApiManagementCacheResource(id);
         }
@@ -486,7 +555,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementCertificateResource"/> object. </returns>
         public static ApiManagementCertificateResource GetApiManagementCertificateResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableApiManagementArmClient(client).GetApiManagementCertificateResource(id);
         }
@@ -505,7 +577,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementDeletedServiceResource"/> object. </returns>
         public static ApiManagementDeletedServiceResource GetApiManagementDeletedServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableApiManagementArmClient(client).GetApiManagementDeletedServiceResource(id);
         }
@@ -524,7 +599,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementServiceResource"/> object. </returns>
         public static ApiManagementServiceResource GetApiManagementServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableApiManagementArmClient(client).GetApiManagementServiceResource(id);
         }
@@ -543,7 +621,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementEmailTemplateResource"/> object. </returns>
         public static ApiManagementEmailTemplateResource GetApiManagementEmailTemplateResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableApiManagementArmClient(client).GetApiManagementEmailTemplateResource(id);
         }
@@ -562,7 +643,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementGatewayResource"/> object. </returns>
         public static ApiManagementGatewayResource GetApiManagementGatewayResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableApiManagementArmClient(client).GetApiManagementGatewayResource(id);
         }
@@ -581,7 +665,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementGatewayHostnameConfigurationResource"/> object. </returns>
         public static ApiManagementGatewayHostnameConfigurationResource GetApiManagementGatewayHostnameConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableApiManagementArmClient(client).GetApiManagementGatewayHostnameConfigurationResource(id);
         }
@@ -600,7 +687,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementGatewayCertificateAuthorityResource"/> object. </returns>
         public static ApiManagementGatewayCertificateAuthorityResource GetApiManagementGatewayCertificateAuthorityResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableApiManagementArmClient(client).GetApiManagementGatewayCertificateAuthorityResource(id);
         }
@@ -619,7 +709,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementGroupResource"/> object. </returns>
         public static ApiManagementGroupResource GetApiManagementGroupResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableApiManagementArmClient(client).GetApiManagementGroupResource(id);
         }
@@ -638,7 +731,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementIdentityProviderResource"/> object. </returns>
         public static ApiManagementIdentityProviderResource GetApiManagementIdentityProviderResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableApiManagementArmClient(client).GetApiManagementIdentityProviderResource(id);
         }
@@ -657,7 +753,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementLoggerResource"/> object. </returns>
         public static ApiManagementLoggerResource GetApiManagementLoggerResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableApiManagementArmClient(client).GetApiManagementLoggerResource(id);
         }
@@ -676,7 +775,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementNamedValueResource"/> object. </returns>
         public static ApiManagementNamedValueResource GetApiManagementNamedValueResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableApiManagementArmClient(client).GetApiManagementNamedValueResource(id);
         }
@@ -695,7 +797,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementNotificationResource"/> object. </returns>
         public static ApiManagementNotificationResource GetApiManagementNotificationResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableApiManagementArmClient(client).GetApiManagementNotificationResource(id);
         }
@@ -714,7 +819,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementOpenIdConnectProviderResource"/> object. </returns>
         public static ApiManagementOpenIdConnectProviderResource GetApiManagementOpenIdConnectProviderResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableApiManagementArmClient(client).GetApiManagementOpenIdConnectProviderResource(id);
         }
@@ -733,7 +841,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementPortalRevisionResource"/> object. </returns>
         public static ApiManagementPortalRevisionResource GetApiManagementPortalRevisionResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableApiManagementArmClient(client).GetApiManagementPortalRevisionResource(id);
         }
@@ -752,7 +863,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementPortalSignInSettingResource"/> object. </returns>
         public static ApiManagementPortalSignInSettingResource GetApiManagementPortalSignInSettingResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableApiManagementArmClient(client).GetApiManagementPortalSignInSettingResource(id);
         }
@@ -771,7 +885,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementPortalSignUpSettingResource"/> object. </returns>
         public static ApiManagementPortalSignUpSettingResource GetApiManagementPortalSignUpSettingResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableApiManagementArmClient(client).GetApiManagementPortalSignUpSettingResource(id);
         }
@@ -790,7 +907,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementPortalDelegationSettingResource"/> object. </returns>
         public static ApiManagementPortalDelegationSettingResource GetApiManagementPortalDelegationSettingResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableApiManagementArmClient(client).GetApiManagementPortalDelegationSettingResource(id);
         }
@@ -809,7 +929,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementPrivateEndpointConnectionResource"/> object. </returns>
         public static ApiManagementPrivateEndpointConnectionResource GetApiManagementPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableApiManagementArmClient(client).GetApiManagementPrivateEndpointConnectionResource(id);
         }
@@ -828,7 +951,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementPrivateLinkResource"/> object. </returns>
         public static ApiManagementPrivateLinkResource GetApiManagementPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableApiManagementArmClient(client).GetApiManagementPrivateLinkResource(id);
         }
@@ -847,7 +973,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementProductResource"/> object. </returns>
         public static ApiManagementProductResource GetApiManagementProductResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableApiManagementArmClient(client).GetApiManagementProductResource(id);
         }
@@ -866,7 +995,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementGlobalSchemaResource"/> object. </returns>
         public static ApiManagementGlobalSchemaResource GetApiManagementGlobalSchemaResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableApiManagementArmClient(client).GetApiManagementGlobalSchemaResource(id);
         }
@@ -885,7 +1017,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementTenantSettingResource"/> object. </returns>
         public static ApiManagementTenantSettingResource GetApiManagementTenantSettingResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableApiManagementArmClient(client).GetApiManagementTenantSettingResource(id);
         }
@@ -904,7 +1039,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementSubscriptionResource"/> object. </returns>
         public static ApiManagementSubscriptionResource GetApiManagementSubscriptionResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableApiManagementArmClient(client).GetApiManagementSubscriptionResource(id);
         }
@@ -923,7 +1061,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementUserSubscriptionResource"/> object. </returns>
         public static ApiManagementUserSubscriptionResource GetApiManagementUserSubscriptionResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableApiManagementArmClient(client).GetApiManagementUserSubscriptionResource(id);
         }
@@ -942,7 +1083,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="TenantAccessInfoResource"/> object. </returns>
         public static TenantAccessInfoResource GetTenantAccessInfoResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableApiManagementArmClient(client).GetTenantAccessInfoResource(id);
         }
@@ -961,7 +1105,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementUserResource"/> object. </returns>
         public static ApiManagementUserResource GetApiManagementUserResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableApiManagementArmClient(client).GetApiManagementUserResource(id);
         }
@@ -978,7 +1125,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An object representing collection of ApiManagementServiceResources and their operations over a ApiManagementServiceResource. </returns>
         public static ApiManagementServiceCollection GetApiManagementServices(this ResourceGroupResource resourceGroupResource)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementServices();
         }
@@ -1016,7 +1166,10 @@ namespace Azure.ResourceManager.ApiManagement
         [ForwardsClientCalls]
         public static async Task<Response<ApiManagementServiceResource>> GetApiManagementServiceAsync(this ResourceGroupResource resourceGroupResource, string serviceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return await GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementServiceAsync(serviceName, cancellationToken).ConfigureAwait(false);
         }
@@ -1054,7 +1207,10 @@ namespace Azure.ResourceManager.ApiManagement
         [ForwardsClientCalls]
         public static Response<ApiManagementServiceResource> GetApiManagementService(this ResourceGroupResource resourceGroupResource, string serviceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementService(serviceName, cancellationToken);
         }
@@ -1071,7 +1227,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An object representing collection of ApiManagementDeletedServiceResources and their operations over a ApiManagementDeletedServiceResource. </returns>
         public static ApiManagementDeletedServiceCollection GetApiManagementDeletedServices(this SubscriptionResource subscriptionResource)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementDeletedServices();
         }
@@ -1110,7 +1269,10 @@ namespace Azure.ResourceManager.ApiManagement
         [ForwardsClientCalls]
         public static async Task<Response<ApiManagementDeletedServiceResource>> GetApiManagementDeletedServiceAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string serviceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return await GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementDeletedServiceAsync(location, serviceName, cancellationToken).ConfigureAwait(false);
         }
@@ -1149,7 +1311,10 @@ namespace Azure.ResourceManager.ApiManagement
         [ForwardsClientCalls]
         public static Response<ApiManagementDeletedServiceResource> GetApiManagementDeletedService(this SubscriptionResource subscriptionResource, AzureLocation location, string serviceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementDeletedService(location, serviceName, cancellationToken);
         }
@@ -1185,7 +1350,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An async collection of <see cref="ApiManagementDeletedServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ApiManagementDeletedServiceResource> GetApiManagementDeletedServicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementDeletedServicesAsync(cancellationToken);
         }
@@ -1221,7 +1389,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> A collection of <see cref="ApiManagementDeletedServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ApiManagementDeletedServiceResource> GetApiManagementDeletedServices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementDeletedServices(cancellationToken);
         }
@@ -1257,7 +1428,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An async collection of <see cref="ApiManagementServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ApiManagementServiceResource> GetApiManagementServicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementServicesAsync(cancellationToken);
         }
@@ -1293,7 +1467,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> A collection of <see cref="ApiManagementServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ApiManagementServiceResource> GetApiManagementServices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementServices(cancellationToken);
         }
@@ -1329,7 +1506,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<ApiManagementServiceNameAvailabilityResult>> CheckApiManagementServiceNameAvailabilityAsync(this SubscriptionResource subscriptionResource, ApiManagementServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return await GetMockableApiManagementSubscriptionResource(subscriptionResource).CheckApiManagementServiceNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
@@ -1365,7 +1545,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<ApiManagementServiceNameAvailabilityResult> CheckApiManagementServiceNameAvailability(this SubscriptionResource subscriptionResource, ApiManagementServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableApiManagementSubscriptionResource(subscriptionResource).CheckApiManagementServiceNameAvailability(content, cancellationToken);
         }
@@ -1400,7 +1583,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static async Task<Response<ApiManagementServiceGetDomainOwnershipIdentifierResult>> GetApiManagementServiceDomainOwnershipIdentifierAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return await GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementServiceDomainOwnershipIdentifierAsync(cancellationToken).ConfigureAwait(false);
         }
@@ -1435,7 +1621,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static Response<ApiManagementServiceGetDomainOwnershipIdentifierResult> GetApiManagementServiceDomainOwnershipIdentifier(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementServiceDomainOwnershipIdentifier(cancellationToken);
         }
@@ -1467,7 +1656,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An async collection of <see cref="ApiManagementSku"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ApiManagementSku> GetApiManagementSkusAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementSkusAsync(cancellationToken);
         }
@@ -1499,7 +1691,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> A collection of <see cref="ApiManagementSku"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ApiManagementSku> GetApiManagementSkus(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementSkus(cancellationToken);
         }

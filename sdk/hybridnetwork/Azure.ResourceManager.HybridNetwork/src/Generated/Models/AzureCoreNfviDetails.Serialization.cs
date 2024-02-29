@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<string> name = default;
+            AzureLocation? location = default;
+            string name = default;
             NfviType nfviType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureCoreNfviDetails(name.Value, nfviType, serializedAdditionalRawData, Optional.ToNullable(location));
+            return new AzureCoreNfviDetails(name, nfviType, serializedAdditionalRawData, location);
         }
 
         BinaryData IPersistableModel<AzureCoreNfviDetails>.Write(ModelReaderWriterOptions options)

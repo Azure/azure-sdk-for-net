@@ -28,54 +28,54 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(RuleType))
+            if (RuleType.HasValue)
             {
                 writer.WritePropertyName("ruleType"u8);
                 writer.WriteStringValue(RuleType.Value.ToString());
             }
-            if (Optional.IsDefined(Priority))
+            if (Priority.HasValue)
             {
                 writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
-            if (Optional.IsDefined(BackendAddressPool))
+            if (BackendAddressPool != null)
             {
                 writer.WritePropertyName("backendAddressPool"u8);
                 JsonSerializer.Serialize(writer, BackendAddressPool);
             }
-            if (Optional.IsDefined(BackendSettings))
+            if (BackendSettings != null)
             {
                 writer.WritePropertyName("backendSettings"u8);
                 JsonSerializer.Serialize(writer, BackendSettings);
             }
-            if (Optional.IsDefined(Listener))
+            if (Listener != null)
             {
                 writer.WritePropertyName("listener"u8);
                 JsonSerializer.Serialize(writer, Listener);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -119,16 +119,16 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<ApplicationGatewayRequestRoutingRuleType> ruleType = default;
-            Optional<int> priority = default;
-            Optional<WritableSubResource> backendAddressPool = default;
-            Optional<WritableSubResource> backendSettings = default;
-            Optional<WritableSubResource> listener = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            ApplicationGatewayRequestRoutingRuleType? ruleType = default;
+            int? priority = default;
+            WritableSubResource backendAddressPool = default;
+            WritableSubResource backendSettings = default;
+            WritableSubResource listener = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -237,7 +237,18 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayRoutingRule(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(ruleType), Optional.ToNullable(priority), backendAddressPool, backendSettings, listener, Optional.ToNullable(provisioningState));
+            return new ApplicationGatewayRoutingRule(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                etag,
+                ruleType,
+                priority,
+                backendAddressPool,
+                backendSettings,
+                listener,
+                provisioningState);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayRoutingRule>.Write(ModelReaderWriterOptions options)

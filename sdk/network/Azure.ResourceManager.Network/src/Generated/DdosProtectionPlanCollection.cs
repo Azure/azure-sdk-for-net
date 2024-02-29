@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="ddosProtectionPlanName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DdosProtectionPlanResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string ddosProtectionPlanName, DdosProtectionPlanData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ddosProtectionPlanName, nameof(ddosProtectionPlanName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (ddosProtectionPlanName == null)
+            {
+                throw new ArgumentNullException(nameof(ddosProtectionPlanName));
+            }
+            if (ddosProtectionPlanName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(ddosProtectionPlanName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _ddosProtectionPlanClientDiagnostics.CreateScope("DdosProtectionPlanCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="ddosProtectionPlanName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DdosProtectionPlanResource> CreateOrUpdate(WaitUntil waitUntil, string ddosProtectionPlanName, DdosProtectionPlanData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ddosProtectionPlanName, nameof(ddosProtectionPlanName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (ddosProtectionPlanName == null)
+            {
+                throw new ArgumentNullException(nameof(ddosProtectionPlanName));
+            }
+            if (ddosProtectionPlanName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(ddosProtectionPlanName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _ddosProtectionPlanClientDiagnostics.CreateScope("DdosProtectionPlanCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="ddosProtectionPlanName"/> is null. </exception>
         public virtual async Task<Response<DdosProtectionPlanResource>> GetAsync(string ddosProtectionPlanName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ddosProtectionPlanName, nameof(ddosProtectionPlanName));
+            if (ddosProtectionPlanName == null)
+            {
+                throw new ArgumentNullException(nameof(ddosProtectionPlanName));
+            }
+            if (ddosProtectionPlanName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(ddosProtectionPlanName));
+            }
 
             using var scope = _ddosProtectionPlanClientDiagnostics.CreateScope("DdosProtectionPlanCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="ddosProtectionPlanName"/> is null. </exception>
         public virtual Response<DdosProtectionPlanResource> Get(string ddosProtectionPlanName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ddosProtectionPlanName, nameof(ddosProtectionPlanName));
+            if (ddosProtectionPlanName == null)
+            {
+                throw new ArgumentNullException(nameof(ddosProtectionPlanName));
+            }
+            if (ddosProtectionPlanName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(ddosProtectionPlanName));
+            }
 
             using var scope = _ddosProtectionPlanClientDiagnostics.CreateScope("DdosProtectionPlanCollection.Get");
             scope.Start();
@@ -329,7 +363,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="ddosProtectionPlanName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string ddosProtectionPlanName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ddosProtectionPlanName, nameof(ddosProtectionPlanName));
+            if (ddosProtectionPlanName == null)
+            {
+                throw new ArgumentNullException(nameof(ddosProtectionPlanName));
+            }
+            if (ddosProtectionPlanName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(ddosProtectionPlanName));
+            }
 
             using var scope = _ddosProtectionPlanClientDiagnostics.CreateScope("DdosProtectionPlanCollection.Exists");
             scope.Start();
@@ -372,7 +413,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="ddosProtectionPlanName"/> is null. </exception>
         public virtual Response<bool> Exists(string ddosProtectionPlanName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ddosProtectionPlanName, nameof(ddosProtectionPlanName));
+            if (ddosProtectionPlanName == null)
+            {
+                throw new ArgumentNullException(nameof(ddosProtectionPlanName));
+            }
+            if (ddosProtectionPlanName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(ddosProtectionPlanName));
+            }
 
             using var scope = _ddosProtectionPlanClientDiagnostics.CreateScope("DdosProtectionPlanCollection.Exists");
             scope.Start();
@@ -415,7 +463,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="ddosProtectionPlanName"/> is null. </exception>
         public virtual async Task<NullableResponse<DdosProtectionPlanResource>> GetIfExistsAsync(string ddosProtectionPlanName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ddosProtectionPlanName, nameof(ddosProtectionPlanName));
+            if (ddosProtectionPlanName == null)
+            {
+                throw new ArgumentNullException(nameof(ddosProtectionPlanName));
+            }
+            if (ddosProtectionPlanName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(ddosProtectionPlanName));
+            }
 
             using var scope = _ddosProtectionPlanClientDiagnostics.CreateScope("DdosProtectionPlanCollection.GetIfExists");
             scope.Start();
@@ -460,7 +515,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="ddosProtectionPlanName"/> is null. </exception>
         public virtual NullableResponse<DdosProtectionPlanResource> GetIfExists(string ddosProtectionPlanName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ddosProtectionPlanName, nameof(ddosProtectionPlanName));
+            if (ddosProtectionPlanName == null)
+            {
+                throw new ArgumentNullException(nameof(ddosProtectionPlanName));
+            }
+            if (ddosProtectionPlanName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(ddosProtectionPlanName));
+            }
 
             using var scope = _ddosProtectionPlanClientDiagnostics.CreateScope("DdosProtectionPlanCollection.GetIfExists");
             scope.Start();

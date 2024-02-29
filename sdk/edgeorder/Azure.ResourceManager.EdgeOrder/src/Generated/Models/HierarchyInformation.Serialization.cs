@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProductFamilyName))
+            if (ProductFamilyName != null)
             {
                 writer.WritePropertyName("productFamilyName"u8);
                 writer.WriteStringValue(ProductFamilyName);
             }
-            if (Optional.IsDefined(ProductLineName))
+            if (ProductLineName != null)
             {
                 writer.WritePropertyName("productLineName"u8);
                 writer.WriteStringValue(ProductLineName);
             }
-            if (Optional.IsDefined(ProductName))
+            if (ProductName != null)
             {
                 writer.WritePropertyName("productName"u8);
                 writer.WriteStringValue(ProductName);
             }
-            if (Optional.IsDefined(ConfigurationName))
+            if (ConfigurationName != null)
             {
                 writer.WritePropertyName("configurationName"u8);
                 writer.WriteStringValue(ConfigurationName);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Optional<string> productFamilyName = default;
-            Optional<string> productLineName = default;
-            Optional<string> productName = default;
-            Optional<string> configurationName = default;
+            string productFamilyName = default;
+            string productLineName = default;
+            string productName = default;
+            string configurationName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HierarchyInformation(productFamilyName.Value, productLineName.Value, productName.Value, configurationName.Value, serializedAdditionalRawData);
+            return new HierarchyInformation(productFamilyName, productLineName, productName, configurationName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HierarchyInformation>.Write(ModelReaderWriterOptions options)

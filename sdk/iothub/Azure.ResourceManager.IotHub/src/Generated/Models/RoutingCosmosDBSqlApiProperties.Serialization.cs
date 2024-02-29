@@ -28,39 +28,39 @@ namespace Azure.ResourceManager.IotHub.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(SubscriptionId))
+            if (SubscriptionId != null)
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (Optional.IsDefined(ResourceGroup))
+            if (ResourceGroup != null)
             {
                 writer.WritePropertyName("resourceGroup"u8);
                 writer.WriteStringValue(ResourceGroup);
             }
             writer.WritePropertyName("endpointUri"u8);
             writer.WriteStringValue(EndpointUri.AbsoluteUri);
-            if (Optional.IsDefined(AuthenticationType))
+            if (AuthenticationType.HasValue)
             {
                 writer.WritePropertyName("authenticationType"u8);
                 writer.WriteStringValue(AuthenticationType.Value.ToString());
             }
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
             }
-            if (Optional.IsDefined(PrimaryKey))
+            if (PrimaryKey != null)
             {
                 writer.WritePropertyName("primaryKey"u8);
                 writer.WriteStringValue(PrimaryKey);
             }
-            if (Optional.IsDefined(SecondaryKey))
+            if (SecondaryKey != null)
             {
                 writer.WritePropertyName("secondaryKey"u8);
                 writer.WriteStringValue(SecondaryKey);
@@ -69,12 +69,12 @@ namespace Azure.ResourceManager.IotHub.Models
             writer.WriteStringValue(DatabaseName);
             writer.WritePropertyName("containerName"u8);
             writer.WriteStringValue(ContainerName);
-            if (Optional.IsDefined(PartitionKeyName))
+            if (PartitionKeyName != null)
             {
                 writer.WritePropertyName("partitionKeyName"u8);
                 writer.WriteStringValue(PartitionKeyName);
             }
-            if (Optional.IsDefined(PartitionKeyTemplate))
+            if (PartitionKeyTemplate != null)
             {
                 writer.WritePropertyName("partitionKeyTemplate"u8);
                 writer.WriteStringValue(PartitionKeyTemplate);
@@ -118,18 +118,18 @@ namespace Azure.ResourceManager.IotHub.Models
                 return null;
             }
             string name = default;
-            Optional<string> id = default;
-            Optional<string> subscriptionId = default;
-            Optional<string> resourceGroup = default;
+            string id = default;
+            string subscriptionId = default;
+            string resourceGroup = default;
             Uri endpointUri = default;
-            Optional<IotHubAuthenticationType> authenticationType = default;
-            Optional<ManagedIdentity> identity = default;
-            Optional<string> primaryKey = default;
-            Optional<string> secondaryKey = default;
+            IotHubAuthenticationType? authenticationType = default;
+            ManagedIdentity identity = default;
+            string primaryKey = default;
+            string secondaryKey = default;
             string databaseName = default;
             string containerName = default;
-            Optional<string> partitionKeyName = default;
-            Optional<string> partitionKeyTemplate = default;
+            string partitionKeyName = default;
+            string partitionKeyTemplate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    identity = ManagedIdentity.DeserializeManagedIdentity(property.Value);
+                    identity = ManagedIdentity.DeserializeManagedIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("primaryKey"u8))
@@ -213,7 +213,21 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoutingCosmosDBSqlApiProperties(name, id.Value, subscriptionId.Value, resourceGroup.Value, endpointUri, Optional.ToNullable(authenticationType), identity.Value, primaryKey.Value, secondaryKey.Value, databaseName, containerName, partitionKeyName.Value, partitionKeyTemplate.Value, serializedAdditionalRawData);
+            return new RoutingCosmosDBSqlApiProperties(
+                name,
+                id,
+                subscriptionId,
+                resourceGroup,
+                endpointUri,
+                authenticationType,
+                identity,
+                primaryKey,
+                secondaryKey,
+                databaseName,
+                containerName,
+                partitionKeyName,
+                partitionKeyTemplate,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoutingCosmosDBSqlApiProperties>.Write(ModelReaderWriterOptions options)

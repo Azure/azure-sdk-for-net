@@ -197,7 +197,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<VirtualDesktopResource>> UpdateAsync(VirtualDesktopPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _virtualDesktopDesktopsClientDiagnostics.CreateScope("VirtualDesktopResource.Update");
             scope.Start();
@@ -239,7 +242,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<VirtualDesktopResource> Update(VirtualDesktopPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _virtualDesktopDesktopsClientDiagnostics.CreateScope("VirtualDesktopResource.Update");
             scope.Start();

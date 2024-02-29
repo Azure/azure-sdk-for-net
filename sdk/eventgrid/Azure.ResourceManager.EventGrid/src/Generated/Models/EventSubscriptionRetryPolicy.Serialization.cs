@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MaxDeliveryAttempts))
+            if (MaxDeliveryAttempts.HasValue)
             {
                 writer.WritePropertyName("maxDeliveryAttempts"u8);
                 writer.WriteNumberValue(MaxDeliveryAttempts.Value);
             }
-            if (Optional.IsDefined(EventTimeToLiveInMinutes))
+            if (EventTimeToLiveInMinutes.HasValue)
             {
                 writer.WritePropertyName("eventTimeToLiveInMinutes"u8);
                 writer.WriteNumberValue(EventTimeToLiveInMinutes.Value);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<int> maxDeliveryAttempts = default;
-            Optional<int> eventTimeToLiveInMinutes = default;
+            int? maxDeliveryAttempts = default;
+            int? eventTimeToLiveInMinutes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventSubscriptionRetryPolicy(Optional.ToNullable(maxDeliveryAttempts), Optional.ToNullable(eventTimeToLiveInMinutes), serializedAdditionalRawData);
+            return new EventSubscriptionRetryPolicy(maxDeliveryAttempts, eventTimeToLiveInMinutes, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventSubscriptionRetryPolicy>.Write(ModelReaderWriterOptions options)

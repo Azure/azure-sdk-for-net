@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStartObject();
             writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(IsEnabled);
-            if (options.Format != "W" && Optional.IsDefined(Destination))
+            if (options.Format != "W" && Destination != null)
             {
                 writer.WritePropertyName("destination"u8);
                 writer.WriteStringValue(Destination);
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Storage.Models
                 return null;
             }
             bool enabled = default;
-            Optional<string> destination = default;
+            string destination = default;
             BlobInventoryRuleType type = default;
             IList<BlobInventoryPolicyRule> rules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<BlobInventoryPolicyRule> array = new List<BlobInventoryPolicyRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BlobInventoryPolicyRule.DeserializeBlobInventoryPolicyRule(item));
+                        array.Add(BlobInventoryPolicyRule.DeserializeBlobInventoryPolicyRule(item, options));
                     }
                     rules = array;
                     continue;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BlobInventoryPolicySchema(enabled, destination.Value, type, rules, serializedAdditionalRawData);
+            return new BlobInventoryPolicySchema(enabled, destination, type, rules, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BlobInventoryPolicySchema>.Write(ModelReaderWriterOptions options)

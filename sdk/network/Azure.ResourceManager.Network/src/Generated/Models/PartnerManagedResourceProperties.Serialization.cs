@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(InternalLoadBalancerId))
+            if (options.Format != "W" && InternalLoadBalancerId != null)
             {
                 writer.WritePropertyName("internalLoadBalancerId"u8);
                 writer.WriteStringValue(InternalLoadBalancerId);
             }
-            if (options.Format != "W" && Optional.IsDefined(StandardLoadBalancerId))
+            if (options.Format != "W" && StandardLoadBalancerId != null)
             {
                 writer.WritePropertyName("standardLoadBalancerId"u8);
                 writer.WriteStringValue(StandardLoadBalancerId);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<ResourceIdentifier> internalLoadBalancerId = default;
-            Optional<ResourceIdentifier> standardLoadBalancerId = default;
+            ResourceIdentifier id = default;
+            ResourceIdentifier internalLoadBalancerId = default;
+            ResourceIdentifier standardLoadBalancerId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PartnerManagedResourceProperties(id.Value, internalLoadBalancerId.Value, standardLoadBalancerId.Value, serializedAdditionalRawData);
+            return new PartnerManagedResourceProperties(id, internalLoadBalancerId, standardLoadBalancerId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PartnerManagedResourceProperties>.Write(ModelReaderWriterOptions options)

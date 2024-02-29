@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(StreamingLocators))
+            if (options.Format != "W" && !(StreamingLocators is ChangeTrackingList<MediaAssetStreamingLocator> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("streamingLocators"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MediaAssetStreamingLocator>> streamingLocators = default;
+            IReadOnlyList<MediaAssetStreamingLocator> streamingLocators = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<MediaAssetStreamingLocator> array = new List<MediaAssetStreamingLocator>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MediaAssetStreamingLocator.DeserializeMediaAssetStreamingLocator(item));
+                        array.Add(MediaAssetStreamingLocator.DeserializeMediaAssetStreamingLocator(item, options));
                     }
                     streamingLocators = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ListStreamingLocatorsResponse(Optional.ToList(streamingLocators), serializedAdditionalRawData);
+            return new ListStreamingLocatorsResponse(streamingLocators ?? new ChangeTrackingList<MediaAssetStreamingLocator>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ListStreamingLocatorsResponse>.Write(ModelReaderWriterOptions options)

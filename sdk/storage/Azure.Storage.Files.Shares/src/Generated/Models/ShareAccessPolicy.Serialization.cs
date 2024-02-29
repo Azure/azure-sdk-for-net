@@ -17,19 +17,19 @@ namespace Azure.Storage.Files.Shares.Models
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
             writer.WriteStartElement(nameHint ?? "AccessPolicy");
-            if (Optional.IsDefined(PolicyStartsOn))
+            if (PolicyStartsOn.HasValue)
             {
                 writer.WriteStartElement("Start");
                 writer.WriteValue(PolicyStartsOn.Value, "O");
                 writer.WriteEndElement();
             }
-            if (Optional.IsDefined(PolicyExpiresOn))
+            if (PolicyExpiresOn.HasValue)
             {
                 writer.WriteStartElement("Expiry");
                 writer.WriteValue(PolicyExpiresOn.Value, "O");
                 writer.WriteEndElement();
             }
-            if (Optional.IsDefined(Permissions))
+            if (Permissions != null)
             {
                 writer.WriteStartElement("Permission");
                 writer.WriteValue(Permissions);

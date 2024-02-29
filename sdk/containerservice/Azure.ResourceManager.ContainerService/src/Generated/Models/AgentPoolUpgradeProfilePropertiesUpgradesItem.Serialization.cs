@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(KubernetesVersion))
+            if (KubernetesVersion != null)
             {
                 writer.WritePropertyName("kubernetesVersion"u8);
                 writer.WriteStringValue(KubernetesVersion);
             }
-            if (Optional.IsDefined(IsPreview))
+            if (IsPreview.HasValue)
             {
                 writer.WritePropertyName("isPreview"u8);
                 writer.WriteBooleanValue(IsPreview.Value);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<string> kubernetesVersion = default;
-            Optional<bool> isPreview = default;
+            string kubernetesVersion = default;
+            bool? isPreview = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AgentPoolUpgradeProfilePropertiesUpgradesItem(kubernetesVersion.Value, Optional.ToNullable(isPreview), serializedAdditionalRawData);
+            return new AgentPoolUpgradeProfilePropertiesUpgradesItem(kubernetesVersion, isPreview, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AgentPoolUpgradeProfilePropertiesUpgradesItem>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(ProtectedItemDetails))
+            if (options.Format != "W" && !(ProtectedItemDetails is ChangeTrackingList<FailoverProtectedItemProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("protectedItemDetails"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
-            if (options.Format != "W" && Optional.IsCollectionDefined(AffectedObjectDetails))
+            if (options.Format != "W" && !(AffectedObjectDetails is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("affectedObjectDetails"u8);
                 writer.WriteStartObject();
@@ -87,9 +87,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<FailoverProtectedItemProperties>> protectedItemDetails = default;
+            IReadOnlyList<FailoverProtectedItemProperties> protectedItemDetails = default;
             string instanceType = default;
-            Optional<IReadOnlyDictionary<string, string>> affectedObjectDetails = default;
+            IReadOnlyDictionary<string, string> affectedObjectDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     List<FailoverProtectedItemProperties> array = new List<FailoverProtectedItemProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FailoverProtectedItemProperties.DeserializeFailoverProtectedItemProperties(item));
+                        array.Add(FailoverProtectedItemProperties.DeserializeFailoverProtectedItemProperties(item, options));
                     }
                     protectedItemDetails = array;
                     continue;
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TestFailoverWorkflowModelCustomProperties(instanceType, Optional.ToDictionary(affectedObjectDetails), serializedAdditionalRawData, Optional.ToList(protectedItemDetails));
+            return new TestFailoverWorkflowModelCustomProperties(instanceType, affectedObjectDetails ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, protectedItemDetails ?? new ChangeTrackingList<FailoverProtectedItemProperties>());
         }
 
         BinaryData IPersistableModel<TestFailoverWorkflowModelCustomProperties>.Write(ModelReaderWriterOptions options)

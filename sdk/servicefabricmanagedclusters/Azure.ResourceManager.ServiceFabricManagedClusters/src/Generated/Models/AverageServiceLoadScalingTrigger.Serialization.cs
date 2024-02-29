@@ -122,7 +122,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AverageServiceLoadScalingTrigger(kind, serializedAdditionalRawData, metricName, lowerLoadThreshold, upperLoadThreshold, scaleInterval, useOnlyPrimaryLoad);
+            return new AverageServiceLoadScalingTrigger(
+                kind,
+                serializedAdditionalRawData,
+                metricName,
+                lowerLoadThreshold,
+                upperLoadThreshold,
+                scaleInterval,
+                useOnlyPrimaryLoad);
         }
 
         BinaryData IPersistableModel<AverageServiceLoadScalingTrigger>.Write(ModelReaderWriterOptions options)

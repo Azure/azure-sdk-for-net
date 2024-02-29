@@ -1,10 +1,18 @@
 # Release History
 
-## 6.1.0-beta.1 (Unreleased)
+## 6.2.0-beta.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+- Updated the `Azure.Messaging.EventHubs`, which includes a new build of the AMQP transport library.  The notable bug fix addresses an obscure race condition when a cancellation token is signaled while service operations are being invoked concurrently which caused those operations to hang.
+
+## 6.1.0 (2024-02-13)
 
 ### Bugs Fixed
 
@@ -13,6 +21,8 @@
   - CorelationId
   - To
   - ReplyTo
+
+- Avoid race condition when determining whether to checkpoint when the host is in the process of shutting down.
 
 ### Other Changes
 

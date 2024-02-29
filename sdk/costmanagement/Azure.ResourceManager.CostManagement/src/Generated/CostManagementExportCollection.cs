@@ -72,8 +72,18 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="exportName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<CostManagementExportResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string exportName, CostManagementExportData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(exportName, nameof(exportName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (exportName == null)
+            {
+                throw new ArgumentNullException(nameof(exportName));
+            }
+            if (exportName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(exportName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _costManagementExportExportsClientDiagnostics.CreateScope("CostManagementExportCollection.CreateOrUpdate");
             scope.Start();
@@ -121,8 +131,18 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="exportName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<CostManagementExportResource> CreateOrUpdate(WaitUntil waitUntil, string exportName, CostManagementExportData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(exportName, nameof(exportName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (exportName == null)
+            {
+                throw new ArgumentNullException(nameof(exportName));
+            }
+            if (exportName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(exportName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _costManagementExportExportsClientDiagnostics.CreateScope("CostManagementExportCollection.CreateOrUpdate");
             scope.Start();
@@ -169,7 +189,14 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="exportName"/> is null. </exception>
         public virtual async Task<Response<CostManagementExportResource>> GetAsync(string exportName, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(exportName, nameof(exportName));
+            if (exportName == null)
+            {
+                throw new ArgumentNullException(nameof(exportName));
+            }
+            if (exportName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(exportName));
+            }
 
             using var scope = _costManagementExportExportsClientDiagnostics.CreateScope("CostManagementExportCollection.Get");
             scope.Start();
@@ -215,7 +242,14 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="exportName"/> is null. </exception>
         public virtual Response<CostManagementExportResource> Get(string exportName, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(exportName, nameof(exportName));
+            if (exportName == null)
+            {
+                throw new ArgumentNullException(nameof(exportName));
+            }
+            if (exportName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(exportName));
+            }
 
             using var scope = _costManagementExportExportsClientDiagnostics.CreateScope("CostManagementExportCollection.Get");
             scope.Start();
@@ -321,7 +355,14 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="exportName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string exportName, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(exportName, nameof(exportName));
+            if (exportName == null)
+            {
+                throw new ArgumentNullException(nameof(exportName));
+            }
+            if (exportName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(exportName));
+            }
 
             using var scope = _costManagementExportExportsClientDiagnostics.CreateScope("CostManagementExportCollection.Exists");
             scope.Start();
@@ -365,7 +406,14 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="exportName"/> is null. </exception>
         public virtual Response<bool> Exists(string exportName, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(exportName, nameof(exportName));
+            if (exportName == null)
+            {
+                throw new ArgumentNullException(nameof(exportName));
+            }
+            if (exportName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(exportName));
+            }
 
             using var scope = _costManagementExportExportsClientDiagnostics.CreateScope("CostManagementExportCollection.Exists");
             scope.Start();
@@ -409,7 +457,14 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="exportName"/> is null. </exception>
         public virtual async Task<NullableResponse<CostManagementExportResource>> GetIfExistsAsync(string exportName, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(exportName, nameof(exportName));
+            if (exportName == null)
+            {
+                throw new ArgumentNullException(nameof(exportName));
+            }
+            if (exportName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(exportName));
+            }
 
             using var scope = _costManagementExportExportsClientDiagnostics.CreateScope("CostManagementExportCollection.GetIfExists");
             scope.Start();
@@ -455,7 +510,14 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="exportName"/> is null. </exception>
         public virtual NullableResponse<CostManagementExportResource> GetIfExists(string exportName, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(exportName, nameof(exportName));
+            if (exportName == null)
+            {
+                throw new ArgumentNullException(nameof(exportName));
+            }
+            if (exportName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(exportName));
+            }
 
             using var scope = _costManagementExportExportsClientDiagnostics.CreateScope("CostManagementExportCollection.GetIfExists");
             scope.Start();

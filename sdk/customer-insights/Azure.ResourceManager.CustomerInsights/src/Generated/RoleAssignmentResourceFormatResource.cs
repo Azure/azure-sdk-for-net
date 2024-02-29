@@ -281,7 +281,10 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<RoleAssignmentResourceFormatResource>> UpdateAsync(WaitUntil waitUntil, RoleAssignmentResourceFormatData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _roleAssignmentResourceFormatRoleAssignmentsClientDiagnostics.CreateScope("RoleAssignmentResourceFormatResource.Update");
             scope.Start();
@@ -327,7 +330,10 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<RoleAssignmentResourceFormatResource> Update(WaitUntil waitUntil, RoleAssignmentResourceFormatData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _roleAssignmentResourceFormatRoleAssignmentsClientDiagnostics.CreateScope("RoleAssignmentResourceFormatResource.Update");
             scope.Start();

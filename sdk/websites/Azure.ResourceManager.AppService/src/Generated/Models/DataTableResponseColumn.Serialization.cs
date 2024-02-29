@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ColumnName))
+            if (ColumnName != null)
             {
                 writer.WritePropertyName("columnName"u8);
                 writer.WriteStringValue(ColumnName);
             }
-            if (Optional.IsDefined(DataType))
+            if (DataType != null)
             {
                 writer.WritePropertyName("dataType"u8);
                 writer.WriteStringValue(DataType);
             }
-            if (Optional.IsDefined(ColumnType))
+            if (ColumnType != null)
             {
                 writer.WritePropertyName("columnType"u8);
                 writer.WriteStringValue(ColumnType);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> columnName = default;
-            Optional<string> dataType = default;
-            Optional<string> columnType = default;
+            string columnName = default;
+            string dataType = default;
+            string columnType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataTableResponseColumn(columnName.Value, dataType.Value, columnType.Value, serializedAdditionalRawData);
+            return new DataTableResponseColumn(columnName, dataType, columnType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataTableResponseColumn>.Write(ModelReaderWriterOptions options)

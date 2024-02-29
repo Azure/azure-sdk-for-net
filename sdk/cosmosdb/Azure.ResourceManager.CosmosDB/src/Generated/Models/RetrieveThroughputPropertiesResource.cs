@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -53,7 +52,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <exception cref="ArgumentNullException"> <paramref name="physicalPartitionIds"/> is null. </exception>
         public RetrieveThroughputPropertiesResource(IEnumerable<WritableSubResource> physicalPartitionIds)
         {
-            Argument.AssertNotNull(physicalPartitionIds, nameof(physicalPartitionIds));
+            if (physicalPartitionIds == null)
+            {
+                throw new ArgumentNullException(nameof(physicalPartitionIds));
+            }
 
             PhysicalPartitionIds = physicalPartitionIds.ToList();
         }

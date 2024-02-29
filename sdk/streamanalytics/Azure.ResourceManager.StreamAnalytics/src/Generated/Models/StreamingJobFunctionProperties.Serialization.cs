@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(FunctionPropertiesType);
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Inputs))
+            if (!(Inputs is ChangeTrackingList<StreamingJobFunctionInput> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("inputs"u8);
                 writer.WriteStartArray();
@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Output))
+            if (Output != null)
             {
                 writer.WritePropertyName("output"u8);
                 writer.WriteObjectValue(Output);
             }
-            if (Optional.IsDefined(Binding))
+            if (Binding != null)
             {
                 writer.WritePropertyName("binding"u8);
                 writer.WriteObjectValue(Binding);
@@ -98,11 +98,11 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Aggregate": return AggregateFunctionProperties.DeserializeAggregateFunctionProperties(element);
-                    case "Scalar": return ScalarFunctionProperties.DeserializeScalarFunctionProperties(element);
+                    case "Aggregate": return AggregateFunctionProperties.DeserializeAggregateFunctionProperties(element, options);
+                    case "Scalar": return ScalarFunctionProperties.DeserializeScalarFunctionProperties(element, options);
                 }
             }
-            return UnknownFunctionProperties.DeserializeUnknownFunctionProperties(element);
+            return UnknownFunctionProperties.DeserializeUnknownFunctionProperties(element, options);
         }
 
         BinaryData IPersistableModel<StreamingJobFunctionProperties>.Write(ModelReaderWriterOptions options)

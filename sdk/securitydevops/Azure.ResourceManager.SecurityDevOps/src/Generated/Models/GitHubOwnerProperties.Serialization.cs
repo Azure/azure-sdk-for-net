@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProvisioningState))
+            if (ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(OwnerUri))
+            if (OwnerUri != null)
             {
                 writer.WritePropertyName("ownerUrl"u8);
                 writer.WriteStringValue(OwnerUri.AbsoluteUri);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             {
                 return null;
             }
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<Uri> ownerUrl = default;
+            ProvisioningState? provisioningState = default;
+            Uri ownerUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GitHubOwnerProperties(Optional.ToNullable(provisioningState), ownerUrl.Value, serializedAdditionalRawData);
+            return new GitHubOwnerProperties(provisioningState, ownerUrl, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GitHubOwnerProperties>.Write(ModelReaderWriterOptions options)

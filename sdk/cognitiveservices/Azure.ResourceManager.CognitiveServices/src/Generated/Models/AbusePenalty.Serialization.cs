@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Action))
+            if (Action.HasValue)
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action.Value.ToString());
             }
-            if (Optional.IsDefined(RateLimitPercentage))
+            if (RateLimitPercentage.HasValue)
             {
                 writer.WritePropertyName("rateLimitPercentage"u8);
                 writer.WriteNumberValue(RateLimitPercentage.Value);
             }
-            if (Optional.IsDefined(Expiration))
+            if (Expiration.HasValue)
             {
                 writer.WritePropertyName("expiration"u8);
                 writer.WriteStringValue(Expiration.Value, "O");
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<AbusePenaltyAction> action = default;
-            Optional<float> rateLimitPercentage = default;
-            Optional<DateTimeOffset> expiration = default;
+            AbusePenaltyAction? action = default;
+            float? rateLimitPercentage = default;
+            DateTimeOffset? expiration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AbusePenalty(Optional.ToNullable(action), Optional.ToNullable(rateLimitPercentage), Optional.ToNullable(expiration), serializedAdditionalRawData);
+            return new AbusePenalty(action, rateLimitPercentage, expiration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AbusePenalty>.Write(ModelReaderWriterOptions options)

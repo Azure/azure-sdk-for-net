@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Mode))
+            if (Mode.HasValue)
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<ArmApplicationManagementMode> mode = default;
+            ArmApplicationManagementMode? mode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmApplicationManagementPolicy(Optional.ToNullable(mode), serializedAdditionalRawData);
+            return new ArmApplicationManagementPolicy(mode, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArmApplicationManagementPolicy>.Write(ModelReaderWriterOptions options)

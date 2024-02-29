@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteObjectValue(StreamingJob);
             writer.WritePropertyName("diagnostics"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(WriteUri))
+            if (WriteUri != null)
             {
                 writer.WritePropertyName("writeUri"u8);
                 writer.WriteStringValue(WriteUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(Path))
+            if (Path != null)
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
@@ -81,15 +81,15 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             StreamingJobData streamingJob = default;
-            Optional<Uri> writeUri = default;
-            Optional<string> path = default;
+            Uri writeUri = default;
+            string path = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("streamingJob"u8))
                 {
-                    streamingJob = StreamingJobData.DeserializeStreamingJobData(property.Value);
+                    streamingJob = StreamingJobData.DeserializeStreamingJobData(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("diagnostics"u8))
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamAnalyticsTestQuery(streamingJob, writeUri.Value, path.Value, serializedAdditionalRawData);
+            return new StreamAnalyticsTestQuery(streamingJob, writeUri, path, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamAnalyticsTestQuery>.Write(ModelReaderWriterOptions options)

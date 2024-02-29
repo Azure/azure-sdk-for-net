@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.ServiceBus.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Subnet))
+            if (Subnet != null)
             {
                 writer.WritePropertyName("subnet"u8);
                 JsonSerializer.Serialize(writer, Subnet);
             }
-            if (Optional.IsDefined(IgnoreMissingVnetServiceEndpoint))
+            if (IgnoreMissingVnetServiceEndpoint.HasValue)
             {
                 writer.WritePropertyName("ignoreMissingVnetServiceEndpoint"u8);
                 writer.WriteBooleanValue(IgnoreMissingVnetServiceEndpoint.Value);
@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.ServiceBus.Models
             {
                 return null;
             }
-            Optional<WritableSubResource> subnet = default;
-            Optional<bool> ignoreMissingVnetServiceEndpoint = default;
+            WritableSubResource subnet = default;
+            bool? ignoreMissingVnetServiceEndpoint = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceBusNetworkRuleSetVirtualNetworkRules(subnet, Optional.ToNullable(ignoreMissingVnetServiceEndpoint), serializedAdditionalRawData);
+            return new ServiceBusNetworkRuleSetVirtualNetworkRules(subnet, ignoreMissingVnetServiceEndpoint, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceBusNetworkRuleSetVirtualNetworkRules>.Write(ModelReaderWriterOptions options)

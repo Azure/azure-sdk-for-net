@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(QueryResults))
+            if (QueryResults != null)
             {
                 writer.WritePropertyName("queryResults"u8);
                 writer.WriteObjectValue(QueryResults);
             }
-            if (Optional.IsDefined(ValidationErrors))
+            if (ValidationErrors != null)
             {
                 writer.WritePropertyName("validationErrors"u8);
                 writer.WriteObjectValue(ValidationErrors);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<QueryExecutionResult> queryResults = default;
-            Optional<ValidationError> validationErrors = default;
+            QueryExecutionResult queryResults = default;
+            ValidationError validationErrors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    queryResults = QueryExecutionResult.DeserializeQueryExecutionResult(property.Value);
+                    queryResults = QueryExecutionResult.DeserializeQueryExecutionResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("validationErrors"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    validationErrors = ValidationError.DeserializeValidationError(property.Value);
+                    validationErrors = ValidationError.DeserializeValidationError(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QueryAnalysisValidationResult(queryResults.Value, validationErrors.Value, serializedAdditionalRawData);
+            return new QueryAnalysisValidationResult(queryResults, validationErrors, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QueryAnalysisValidationResult>.Write(ModelReaderWriterOptions options)

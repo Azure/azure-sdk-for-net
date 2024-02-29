@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink.AbsoluteUri);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 return null;
             }
             IReadOnlyList<NewRelicObservabilityTagRuleData> value = default;
-            Optional<Uri> nextLink = default;
+            Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     List<NewRelicObservabilityTagRuleData> array = new List<NewRelicObservabilityTagRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NewRelicObservabilityTagRuleData.DeserializeNewRelicObservabilityTagRuleData(item));
+                        array.Add(NewRelicObservabilityTagRuleData.DeserializeNewRelicObservabilityTagRuleData(item, options));
                     }
                     value = array;
                     continue;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NewRelicObservabilityTagRuleListResult(value, nextLink.Value, serializedAdditionalRawData);
+            return new NewRelicObservabilityTagRuleListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NewRelicObservabilityTagRuleListResult>.Write(ModelReaderWriterOptions options)

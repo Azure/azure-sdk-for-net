@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(ColumnType))
+            if (ColumnType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ColumnType.Value.ToString());
             }
-            if (Optional.IsDefined(DataTypeHint))
+            if (DataTypeHint.HasValue)
             {
                 writer.WritePropertyName("dataTypeHint"u8);
                 writer.WriteStringValue(DataTypeHint.Value.ToString());
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsDefaultDisplay))
+            if (options.Format != "W" && IsDefaultDisplay.HasValue)
             {
                 writer.WritePropertyName("isDefaultDisplay"u8);
                 writer.WriteBooleanValue(IsDefaultDisplay.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsHidden))
+            if (options.Format != "W" && IsHidden.HasValue)
             {
                 writer.WritePropertyName("isHidden"u8);
                 writer.WriteBooleanValue(IsHidden.Value);
@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<OperationalInsightsColumnType> type = default;
-            Optional<OperationalInsightsColumnDataTypeHint> dataTypeHint = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<bool> isDefaultDisplay = default;
-            Optional<bool> isHidden = default;
+            string name = default;
+            OperationalInsightsColumnType? type = default;
+            OperationalInsightsColumnDataTypeHint? dataTypeHint = default;
+            string displayName = default;
+            string description = default;
+            bool? isDefaultDisplay = default;
+            bool? isHidden = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -167,7 +167,15 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationalInsightsColumn(name.Value, Optional.ToNullable(type), Optional.ToNullable(dataTypeHint), displayName.Value, description.Value, Optional.ToNullable(isDefaultDisplay), Optional.ToNullable(isHidden), serializedAdditionalRawData);
+            return new OperationalInsightsColumn(
+                name,
+                type,
+                dataTypeHint,
+                displayName,
+                description,
+                isDefaultDisplay,
+                isHidden,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationalInsightsColumn>.Write(ModelReaderWriterOptions options)

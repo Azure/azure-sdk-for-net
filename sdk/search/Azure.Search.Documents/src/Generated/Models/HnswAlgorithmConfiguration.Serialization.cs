@@ -15,7 +15,7 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Parameters))
+            if (Parameters != null)
             {
                 writer.WritePropertyName("hnswParameters"u8);
                 writer.WriteObjectValue(Parameters);
@@ -33,7 +33,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<HnswParameters> hnswParameters = default;
+            HnswParameters hnswParameters = default;
             string name = default;
             VectorSearchAlgorithmKind kind = default;
             foreach (var property in element.EnumerateObject())
@@ -58,7 +58,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new HnswAlgorithmConfiguration(name, kind, hnswParameters.Value);
+            return new HnswAlgorithmConfiguration(name, kind, hnswParameters);
         }
     }
 }

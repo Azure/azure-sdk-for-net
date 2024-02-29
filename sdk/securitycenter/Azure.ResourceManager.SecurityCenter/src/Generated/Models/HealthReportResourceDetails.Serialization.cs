@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Source))
+            if (Source.HasValue)
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(ConnectorId))
+            if (options.Format != "W" && ConnectorId != null)
             {
                 writer.WritePropertyName("connectorId"u8);
                 writer.WriteStringValue(ConnectorId);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<HealthReportSource> source = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> connectorId = default;
+            HealthReportSource? source = default;
+            ResourceIdentifier id = default;
+            string connectorId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HealthReportResourceDetails(Optional.ToNullable(source), id.Value, connectorId.Value, serializedAdditionalRawData);
+            return new HealthReportResourceDetails(source, id, connectorId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HealthReportResourceDetails>.Write(ModelReaderWriterOptions options)

@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(ErrorCode))
+            if (ErrorCode != null)
             {
                 writer.WritePropertyName("errorCode"u8);
                 writer.WriteStringValue(ErrorCode);
             }
-            if (Optional.IsDefined(ErrorMessage))
+            if (ErrorMessage != null)
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
             }
-            if (Optional.IsDefined(Recommendation))
+            if (Recommendation != null)
             {
                 writer.WritePropertyName("recommendation"u8);
                 writer.WriteStringValue(Recommendation);
             }
-            if (Optional.IsDefined(ContainerName))
+            if (ContainerName != null)
             {
                 writer.WritePropertyName("containerName"u8);
                 writer.WriteStringValue(ContainerName);
             }
-            if (Optional.IsDefined(ProtectedItemName))
+            if (ProtectedItemName != null)
             {
                 writer.WritePropertyName("protectedItemName"u8);
                 writer.WriteStringValue(ProtectedItemName);
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<BackupValidationStatus> status = default;
-            Optional<string> errorCode = default;
-            Optional<string> errorMessage = default;
-            Optional<string> recommendation = default;
-            Optional<string> containerName = default;
-            Optional<string> protectedItemName = default;
+            BackupValidationStatus? status = default;
+            string errorCode = default;
+            string errorMessage = default;
+            string recommendation = default;
+            string containerName = default;
+            string protectedItemName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,7 +144,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PreValidateEnableBackupResult(Optional.ToNullable(status), errorCode.Value, errorMessage.Value, recommendation.Value, containerName.Value, protectedItemName.Value, serializedAdditionalRawData);
+            return new PreValidateEnableBackupResult(
+                status,
+                errorCode,
+                errorMessage,
+                recommendation,
+                containerName,
+                protectedItemName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PreValidateEnableBackupResult>.Write(ModelReaderWriterOptions options)

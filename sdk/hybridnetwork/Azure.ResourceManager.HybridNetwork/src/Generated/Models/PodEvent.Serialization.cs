@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EventType))
+            if (EventType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(EventType.Value.ToString());
             }
-            if (Optional.IsDefined(Reason))
+            if (Reason != null)
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
             }
-            if (Optional.IsDefined(Message))
+            if (Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Optional.IsDefined(LastSeenOn))
+            if (LastSeenOn.HasValue)
             {
                 writer.WritePropertyName("lastSeenTime"u8);
                 writer.WriteStringValue(LastSeenOn.Value, "O");
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<PodEventType> type = default;
-            Optional<string> reason = default;
-            Optional<string> message = default;
-            Optional<DateTimeOffset> lastSeenTime = default;
+            PodEventType? type = default;
+            string reason = default;
+            string message = default;
+            DateTimeOffset? lastSeenTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PodEvent(Optional.ToNullable(type), reason.Value, message.Value, Optional.ToNullable(lastSeenTime), serializedAdditionalRawData);
+            return new PodEvent(type, reason, message, lastSeenTime, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PodEvent>.Write(ModelReaderWriterOptions options)

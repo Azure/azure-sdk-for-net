@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ReplicaCompletionCount))
+            if (ReplicaCompletionCount.HasValue)
             {
                 writer.WritePropertyName("replicaCompletionCount"u8);
                 writer.WriteNumberValue(ReplicaCompletionCount.Value);
             }
-            if (Optional.IsDefined(Parallelism))
+            if (Parallelism.HasValue)
             {
                 writer.WritePropertyName("parallelism"u8);
                 writer.WriteNumberValue(Parallelism.Value);
             }
-            if (Optional.IsDefined(Scale))
+            if (Scale != null)
             {
                 writer.WritePropertyName("scale"u8);
                 writer.WriteObjectValue(Scale);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<int> replicaCompletionCount = default;
-            Optional<int> parallelism = default;
-            Optional<ContainerAppJobScale> scale = default;
+            int? replicaCompletionCount = default;
+            int? parallelism = default;
+            ContainerAppJobScale scale = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    scale = ContainerAppJobScale.DeserializeContainerAppJobScale(property.Value);
+                    scale = ContainerAppJobScale.DeserializeContainerAppJobScale(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventTriggerConfiguration(Optional.ToNullable(replicaCompletionCount), Optional.ToNullable(parallelism), scale.Value, serializedAdditionalRawData);
+            return new EventTriggerConfiguration(replicaCompletionCount, parallelism, scale, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventTriggerConfiguration>.Write(ModelReaderWriterOptions options)

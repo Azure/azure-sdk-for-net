@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MinifiedTemplate))
+            if (MinifiedTemplate != null)
             {
                 writer.WritePropertyName("minifiedTemplate"u8);
                 writer.WriteStringValue(MinifiedTemplate);
             }
-            if (Optional.IsDefined(TemplateHash))
+            if (TemplateHash != null)
             {
                 writer.WritePropertyName("templateHash"u8);
                 writer.WriteStringValue(TemplateHash);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<string> minifiedTemplate = default;
-            Optional<string> templateHash = default;
+            string minifiedTemplate = default;
+            string templateHash = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TemplateHashResult(minifiedTemplate.Value, templateHash.Value, serializedAdditionalRawData);
+            return new TemplateHashResult(minifiedTemplate, templateHash, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TemplateHashResult>.Write(ModelReaderWriterOptions options)

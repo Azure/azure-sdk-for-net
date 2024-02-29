@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> or <paramref name="info"/> is null. </exception>
         public virtual async Task<ArmOperation<SynapseIPFirewallRuleInfoResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string ruleName, SynapseIPFirewallRuleInfoData info, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
-            Argument.AssertNotNull(info, nameof(info));
+            if (ruleName == null)
+            {
+                throw new ArgumentNullException(nameof(ruleName));
+            }
+            if (ruleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleName));
+            }
+            if (info == null)
+            {
+                throw new ArgumentNullException(nameof(info));
+            }
 
             using var scope = _synapseIPFirewallRuleInfoIPFirewallRulesClientDiagnostics.CreateScope("SynapseIPFirewallRuleInfoCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> or <paramref name="info"/> is null. </exception>
         public virtual ArmOperation<SynapseIPFirewallRuleInfoResource> CreateOrUpdate(WaitUntil waitUntil, string ruleName, SynapseIPFirewallRuleInfoData info, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
-            Argument.AssertNotNull(info, nameof(info));
+            if (ruleName == null)
+            {
+                throw new ArgumentNullException(nameof(ruleName));
+            }
+            if (ruleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleName));
+            }
+            if (info == null)
+            {
+                throw new ArgumentNullException(nameof(info));
+            }
 
             using var scope = _synapseIPFirewallRuleInfoIPFirewallRulesClientDiagnostics.CreateScope("SynapseIPFirewallRuleInfoCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         public virtual async Task<Response<SynapseIPFirewallRuleInfoResource>> GetAsync(string ruleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+            if (ruleName == null)
+            {
+                throw new ArgumentNullException(nameof(ruleName));
+            }
+            if (ruleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleName));
+            }
 
             using var scope = _synapseIPFirewallRuleInfoIPFirewallRulesClientDiagnostics.CreateScope("SynapseIPFirewallRuleInfoCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         public virtual Response<SynapseIPFirewallRuleInfoResource> Get(string ruleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+            if (ruleName == null)
+            {
+                throw new ArgumentNullException(nameof(ruleName));
+            }
+            if (ruleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleName));
+            }
 
             using var scope = _synapseIPFirewallRuleInfoIPFirewallRulesClientDiagnostics.CreateScope("SynapseIPFirewallRuleInfoCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string ruleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+            if (ruleName == null)
+            {
+                throw new ArgumentNullException(nameof(ruleName));
+            }
+            if (ruleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleName));
+            }
 
             using var scope = _synapseIPFirewallRuleInfoIPFirewallRulesClientDiagnostics.CreateScope("SynapseIPFirewallRuleInfoCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         public virtual Response<bool> Exists(string ruleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+            if (ruleName == null)
+            {
+                throw new ArgumentNullException(nameof(ruleName));
+            }
+            if (ruleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleName));
+            }
 
             using var scope = _synapseIPFirewallRuleInfoIPFirewallRulesClientDiagnostics.CreateScope("SynapseIPFirewallRuleInfoCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         public virtual async Task<NullableResponse<SynapseIPFirewallRuleInfoResource>> GetIfExistsAsync(string ruleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+            if (ruleName == null)
+            {
+                throw new ArgumentNullException(nameof(ruleName));
+            }
+            if (ruleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleName));
+            }
 
             using var scope = _synapseIPFirewallRuleInfoIPFirewallRulesClientDiagnostics.CreateScope("SynapseIPFirewallRuleInfoCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         public virtual NullableResponse<SynapseIPFirewallRuleInfoResource> GetIfExists(string ruleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+            if (ruleName == null)
+            {
+                throw new ArgumentNullException(nameof(ruleName));
+            }
+            if (ruleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleName));
+            }
 
             using var scope = _synapseIPFirewallRuleInfoIPFirewallRulesClientDiagnostics.CreateScope("SynapseIPFirewallRuleInfoCollection.GetIfExists");
             scope.Start();

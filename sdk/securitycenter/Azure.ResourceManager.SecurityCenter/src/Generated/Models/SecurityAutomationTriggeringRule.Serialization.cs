@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PropertyJPath))
+            if (PropertyJPath != null)
             {
                 writer.WritePropertyName("propertyJPath"u8);
                 writer.WriteStringValue(PropertyJPath);
             }
-            if (Optional.IsDefined(PropertyType))
+            if (PropertyType.HasValue)
             {
                 writer.WritePropertyName("propertyType"u8);
                 writer.WriteStringValue(PropertyType.Value.ToString());
             }
-            if (Optional.IsDefined(ExpectedValue))
+            if (ExpectedValue != null)
             {
                 writer.WritePropertyName("expectedValue"u8);
                 writer.WriteStringValue(ExpectedValue);
             }
-            if (Optional.IsDefined(Operator))
+            if (Operator.HasValue)
             {
                 writer.WritePropertyName("operator"u8);
                 writer.WriteStringValue(Operator.Value.ToString());
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> propertyJPath = default;
-            Optional<AutomationTriggeringRulePropertyType> propertyType = default;
-            Optional<string> expectedValue = default;
-            Optional<AutomationTriggeringRuleOperator> @operator = default;
+            string propertyJPath = default;
+            AutomationTriggeringRulePropertyType? propertyType = default;
+            string expectedValue = default;
+            AutomationTriggeringRuleOperator? @operator = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityAutomationTriggeringRule(propertyJPath.Value, Optional.ToNullable(propertyType), expectedValue.Value, Optional.ToNullable(@operator), serializedAdditionalRawData);
+            return new SecurityAutomationTriggeringRule(propertyJPath, propertyType, expectedValue, @operator, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityAutomationTriggeringRule>.Write(ModelReaderWriterOptions options)

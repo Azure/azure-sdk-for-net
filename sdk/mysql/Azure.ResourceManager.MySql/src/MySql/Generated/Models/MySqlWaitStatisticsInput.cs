@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MySql.Models
 {
@@ -53,7 +52,10 @@ namespace Azure.ResourceManager.MySql.Models
         /// <exception cref="ArgumentNullException"> <paramref name="aggregationWindow"/> is null. </exception>
         public MySqlWaitStatisticsInput(DateTimeOffset observationStartOn, DateTimeOffset observationEndOn, string aggregationWindow)
         {
-            Argument.AssertNotNull(aggregationWindow, nameof(aggregationWindow));
+            if (aggregationWindow == null)
+            {
+                throw new ArgumentNullException(nameof(aggregationWindow));
+            }
 
             ObservationStartOn = observationStartOn;
             ObservationEndOn = observationEndOn;

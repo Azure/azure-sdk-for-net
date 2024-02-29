@@ -962,6 +962,7 @@
     {
       "filename": "**/sdk/servicefabricmanagedclusters/**/*.cs",
       "words": [
+        "dscp",
         "reimage",
         "ssdlrs"
       ]
@@ -1084,6 +1085,7 @@
         "Nysiis",
         "Phonetik",
         "Piqd",
+        "Rerank",
         "Reranker",
         "Rslp",
         "Soundex",

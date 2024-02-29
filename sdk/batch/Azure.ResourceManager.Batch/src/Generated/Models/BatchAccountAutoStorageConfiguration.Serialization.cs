@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteStringValue(LastKeySyncedOn, "O");
             writer.WritePropertyName("storageAccountId"u8);
             writer.WriteStringValue(StorageAccountId);
-            if (Optional.IsDefined(AuthenticationMode))
+            if (AuthenticationMode.HasValue)
             {
                 writer.WritePropertyName("authenticationMode"u8);
                 writer.WriteStringValue(AuthenticationMode.Value.ToSerialString());
             }
-            if (Optional.IsDefined(NodeIdentity))
+            if (NodeIdentity != null)
             {
                 writer.WritePropertyName("nodeIdentityReference"u8);
                 writer.WriteObjectValue(NodeIdentity);
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Batch.Models
             }
             DateTimeOffset lastKeySync = default;
             ResourceIdentifier storageAccountId = default;
-            Optional<BatchAutoStorageAuthenticationMode> authenticationMode = default;
-            Optional<ComputeNodeIdentityReference> nodeIdentityReference = default;
+            BatchAutoStorageAuthenticationMode? authenticationMode = default;
+            ComputeNodeIdentityReference nodeIdentityReference = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    nodeIdentityReference = ComputeNodeIdentityReference.DeserializeComputeNodeIdentityReference(property.Value);
+                    nodeIdentityReference = ComputeNodeIdentityReference.DeserializeComputeNodeIdentityReference(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchAccountAutoStorageConfiguration(storageAccountId, Optional.ToNullable(authenticationMode), nodeIdentityReference.Value, serializedAdditionalRawData, lastKeySync);
+            return new BatchAccountAutoStorageConfiguration(storageAccountId, authenticationMode, nodeIdentityReference, serializedAdditionalRawData, lastKeySync);
         }
 
         BinaryData IPersistableModel<BatchAccountAutoStorageConfiguration>.Write(ModelReaderWriterOptions options)

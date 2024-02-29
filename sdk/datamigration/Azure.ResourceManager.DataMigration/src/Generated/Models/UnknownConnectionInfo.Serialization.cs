@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ConnectionInfoType);
-            if (Optional.IsDefined(UserName))
+            if (UserName != null)
             {
                 writer.WritePropertyName("userName"u8);
                 writer.WriteStringValue(UserName);
             }
-            if (Optional.IsDefined(Password))
+            if (Password != null)
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownConnectionInfo(document.RootElement, options);
+            return DeserializeConnectionInfo(document.RootElement, options);
         }
 
         internal static UnknownConnectionInfo DeserializeUnknownConnectionInfo(JsonElement element, ModelReaderWriterOptions options = null)
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             string type = "Unknown";
-            Optional<string> userName = default;
-            Optional<string> password = default;
+            string userName = default;
+            string password = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownConnectionInfo(type, userName.Value, password.Value, serializedAdditionalRawData);
+            return new UnknownConnectionInfo(type, userName, password, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectionInfo>.Write(ModelReaderWriterOptions options)
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownConnectionInfo(document.RootElement, options);
+                        return DeserializeConnectionInfo(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(ConnectionInfo)} does not support '{options.Format}' format.");

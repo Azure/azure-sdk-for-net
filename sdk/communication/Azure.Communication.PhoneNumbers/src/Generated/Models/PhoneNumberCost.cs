@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers
 {
@@ -20,7 +19,10 @@ namespace Azure.Communication.PhoneNumbers
         /// <exception cref="ArgumentNullException"> <paramref name="isoCurrencySymbol"/> is null. </exception>
         internal PhoneNumberCost(double amount, string isoCurrencySymbol, BillingFrequency billingFrequency)
         {
-            Argument.AssertNotNull(isoCurrencySymbol, nameof(isoCurrencySymbol));
+            if (isoCurrencySymbol == null)
+            {
+                throw new ArgumentNullException(nameof(isoCurrencySymbol));
+            }
 
             Amount = amount;
             IsoCurrencySymbol = isoCurrencySymbol;

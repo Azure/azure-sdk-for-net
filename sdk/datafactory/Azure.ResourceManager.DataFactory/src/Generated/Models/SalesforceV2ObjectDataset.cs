@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -20,7 +19,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public SalesforceV2ObjectDataset(DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
         {
-            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
+            if (linkedServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(linkedServiceName));
+            }
 
             DatasetType = "SalesforceV2Object";
         }
@@ -42,6 +44,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             ObjectApiName = objectApiName;
             ReportId = reportId;
             DatasetType = datasetType ?? "SalesforceV2Object";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SalesforceV2ObjectDataset"/> for deserialization. </summary>
+        internal SalesforceV2ObjectDataset()
+        {
         }
 
         /// <summary> The Salesforce V2 object API name. Type: string (or Expression with resultType string). </summary>

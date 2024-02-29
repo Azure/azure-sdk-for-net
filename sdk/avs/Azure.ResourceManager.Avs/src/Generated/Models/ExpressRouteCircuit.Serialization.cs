@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Avs.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(PrimarySubnet))
+            if (options.Format != "W" && PrimarySubnet != null)
             {
                 writer.WritePropertyName("primarySubnet"u8);
                 writer.WriteStringValue(PrimarySubnet);
             }
-            if (options.Format != "W" && Optional.IsDefined(SecondarySubnet))
+            if (options.Format != "W" && SecondarySubnet != null)
             {
                 writer.WritePropertyName("secondarySubnet"u8);
                 writer.WriteStringValue(SecondarySubnet);
             }
-            if (options.Format != "W" && Optional.IsDefined(ExpressRouteId))
+            if (options.Format != "W" && ExpressRouteId != null)
             {
                 writer.WritePropertyName("expressRouteID"u8);
                 writer.WriteStringValue(ExpressRouteId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ExpressRoutePrivatePeeringId))
+            if (options.Format != "W" && ExpressRoutePrivatePeeringId != null)
             {
                 writer.WritePropertyName("expressRoutePrivatePeeringID"u8);
                 writer.WriteStringValue(ExpressRoutePrivatePeeringId);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Optional<string> primarySubnet = default;
-            Optional<string> secondarySubnet = default;
-            Optional<ResourceIdentifier> expressRouteId = default;
-            Optional<ResourceIdentifier> expressRoutePrivatePeeringId = default;
+            string primarySubnet = default;
+            string secondarySubnet = default;
+            ResourceIdentifier expressRouteId = default;
+            ResourceIdentifier expressRoutePrivatePeeringId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExpressRouteCircuit(primarySubnet.Value, secondarySubnet.Value, expressRouteId.Value, expressRoutePrivatePeeringId.Value, serializedAdditionalRawData);
+            return new ExpressRouteCircuit(primarySubnet, secondarySubnet, expressRouteId, expressRoutePrivatePeeringId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExpressRouteCircuit>.Write(ModelReaderWriterOptions options)

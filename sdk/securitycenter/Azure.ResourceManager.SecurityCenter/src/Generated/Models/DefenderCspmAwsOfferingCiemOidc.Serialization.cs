@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CloudRoleArn))
+            if (CloudRoleArn != null)
             {
                 writer.WritePropertyName("cloudRoleArn"u8);
                 writer.WriteStringValue(CloudRoleArn);
             }
-            if (Optional.IsDefined(AzureActiveDirectoryAppName))
+            if (AzureActiveDirectoryAppName != null)
             {
                 writer.WritePropertyName("azureActiveDirectoryAppName"u8);
                 writer.WriteStringValue(AzureActiveDirectoryAppName);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> cloudRoleArn = default;
-            Optional<string> azureActiveDirectoryAppName = default;
+            string cloudRoleArn = default;
+            string azureActiveDirectoryAppName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DefenderCspmAwsOfferingCiemOidc(cloudRoleArn.Value, azureActiveDirectoryAppName.Value, serializedAdditionalRawData);
+            return new DefenderCspmAwsOfferingCiemOidc(cloudRoleArn, azureActiveDirectoryAppName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DefenderCspmAwsOfferingCiemOidc>.Write(ModelReaderWriterOptions options)

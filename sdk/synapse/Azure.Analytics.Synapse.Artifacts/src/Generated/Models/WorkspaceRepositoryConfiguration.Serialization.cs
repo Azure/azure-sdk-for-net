@@ -18,57 +18,57 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Type))
+            if (Type != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(Type);
             }
-            if (Optional.IsDefined(HostName))
+            if (HostName != null)
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (Optional.IsDefined(AccountName))
+            if (AccountName != null)
             {
                 writer.WritePropertyName("accountName"u8);
                 writer.WriteStringValue(AccountName);
             }
-            if (Optional.IsDefined(ProjectName))
+            if (ProjectName != null)
             {
                 writer.WritePropertyName("projectName"u8);
                 writer.WriteStringValue(ProjectName);
             }
-            if (Optional.IsDefined(RepositoryName))
+            if (RepositoryName != null)
             {
                 writer.WritePropertyName("repositoryName"u8);
                 writer.WriteStringValue(RepositoryName);
             }
-            if (Optional.IsDefined(CollaborationBranch))
+            if (CollaborationBranch != null)
             {
                 writer.WritePropertyName("collaborationBranch"u8);
                 writer.WriteStringValue(CollaborationBranch);
             }
-            if (Optional.IsDefined(RootFolder))
+            if (RootFolder != null)
             {
                 writer.WritePropertyName("rootFolder"u8);
                 writer.WriteStringValue(RootFolder);
             }
-            if (Optional.IsDefined(LastCommitId))
+            if (LastCommitId != null)
             {
                 writer.WritePropertyName("lastCommitId"u8);
                 writer.WriteStringValue(LastCommitId);
             }
-            if (Optional.IsDefined(TenantId))
+            if (TenantId.HasValue)
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (Optional.IsDefined(ClientId))
+            if (ClientId != null)
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
-            if (Optional.IsDefined(ClientSecret))
+            if (ClientSecret != null)
             {
                 writer.WritePropertyName("clientSecret"u8);
                 writer.WriteObjectValue(ClientSecret);
@@ -82,17 +82,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> type = default;
-            Optional<string> hostName = default;
-            Optional<string> accountName = default;
-            Optional<string> projectName = default;
-            Optional<string> repositoryName = default;
-            Optional<string> collaborationBranch = default;
-            Optional<string> rootFolder = default;
-            Optional<string> lastCommitId = default;
-            Optional<Guid> tenantId = default;
-            Optional<string> clientId = default;
-            Optional<GitHubClientSecret> clientSecret = default;
+            string type = default;
+            string hostName = default;
+            string accountName = default;
+            string projectName = default;
+            string repositoryName = default;
+            string collaborationBranch = default;
+            string rootFolder = default;
+            string lastCommitId = default;
+            Guid? tenantId = default;
+            string clientId = default;
+            GitHubClientSecret clientSecret = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -159,7 +159,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new WorkspaceRepositoryConfiguration(type.Value, hostName.Value, accountName.Value, projectName.Value, repositoryName.Value, collaborationBranch.Value, rootFolder.Value, lastCommitId.Value, Optional.ToNullable(tenantId), clientId.Value, clientSecret.Value);
+            return new WorkspaceRepositoryConfiguration(
+                type,
+                hostName,
+                accountName,
+                projectName,
+                repositoryName,
+                collaborationBranch,
+                rootFolder,
+                lastCommitId,
+                tenantId,
+                clientId,
+                clientSecret);
         }
 
         internal partial class WorkspaceRepositoryConfigurationConverter : JsonConverter<WorkspaceRepositoryConfiguration>

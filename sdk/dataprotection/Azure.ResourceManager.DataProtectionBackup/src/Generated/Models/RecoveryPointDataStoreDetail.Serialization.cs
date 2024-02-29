@@ -26,47 +26,47 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CreatedOn))
+            if (CreatedOn.HasValue)
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(ExpireOn))
+            if (ExpireOn.HasValue)
             {
                 writer.WritePropertyName("expiryTime"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (Optional.IsDefined(RecoveryPointDataStoreId))
+            if (RecoveryPointDataStoreId.HasValue)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(RecoveryPointDataStoreId.Value);
             }
-            if (Optional.IsDefined(Metadata))
+            if (Metadata != null)
             {
                 writer.WritePropertyName("metaData"u8);
                 writer.WriteStringValue(Metadata);
             }
-            if (Optional.IsDefined(State))
+            if (State != null)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
             }
-            if (Optional.IsDefined(RecoveryPointDataStoreType))
+            if (RecoveryPointDataStoreType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(RecoveryPointDataStoreType);
             }
-            if (Optional.IsDefined(IsVisible))
+            if (IsVisible.HasValue)
             {
                 writer.WritePropertyName("visible"u8);
                 writer.WriteBooleanValue(IsVisible.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(RehydrationExpireOn))
+            if (options.Format != "W" && RehydrationExpireOn.HasValue)
             {
                 writer.WritePropertyName("rehydrationExpiryTime"u8);
                 writer.WriteStringValue(RehydrationExpireOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(RehydrationStatus))
+            if (options.Format != "W" && RehydrationStatus.HasValue)
             {
                 writer.WritePropertyName("rehydrationStatus"u8);
                 writer.WriteStringValue(RehydrationStatus.Value.ToString());
@@ -109,15 +109,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<DateTimeOffset> expiryTime = default;
-            Optional<Guid> id = default;
-            Optional<string> metaData = default;
-            Optional<string> state = default;
-            Optional<string> type = default;
-            Optional<bool> visible = default;
-            Optional<DateTimeOffset> rehydrationExpiryTime = default;
-            Optional<RecoveryPointDataStoreRehydrationStatus> rehydrationStatus = default;
+            DateTimeOffset? creationTime = default;
+            DateTimeOffset? expiryTime = default;
+            Guid? id = default;
+            string metaData = default;
+            string state = default;
+            string type = default;
+            bool? visible = default;
+            DateTimeOffset? rehydrationExpiryTime = default;
+            RecoveryPointDataStoreRehydrationStatus? rehydrationStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -197,7 +197,17 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecoveryPointDataStoreDetail(Optional.ToNullable(creationTime), Optional.ToNullable(expiryTime), Optional.ToNullable(id), metaData.Value, state.Value, type.Value, Optional.ToNullable(visible), Optional.ToNullable(rehydrationExpiryTime), Optional.ToNullable(rehydrationStatus), serializedAdditionalRawData);
+            return new RecoveryPointDataStoreDetail(
+                creationTime,
+                expiryTime,
+                id,
+                metaData,
+                state,
+                type,
+                visible,
+                rehydrationExpiryTime,
+                rehydrationStatus,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecoveryPointDataStoreDetail>.Write(ModelReaderWriterOptions options)

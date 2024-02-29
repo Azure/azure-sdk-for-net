@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStartObject();
             writer.WritePropertyName("messageId"u8);
             writer.WriteStringValue(MessageId);
-            if (Optional.IsDefined(SenderApplicationId))
+            if (SenderApplicationId != null)
             {
                 writer.WritePropertyName("senderApplicationId"u8);
                 writer.WriteStringValue(SenderApplicationId);
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Logic.Models
                 return null;
             }
             string messageId = default;
-            Optional<string> senderApplicationId = default;
+            string senderApplicationId = default;
             string schemaVersion = default;
             string schemaName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new X12SchemaReference(messageId, senderApplicationId.Value, schemaVersion, schemaName, serializedAdditionalRawData);
+            return new X12SchemaReference(messageId, senderApplicationId, schemaVersion, schemaName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<X12SchemaReference>.Write(ModelReaderWriterOptions options)

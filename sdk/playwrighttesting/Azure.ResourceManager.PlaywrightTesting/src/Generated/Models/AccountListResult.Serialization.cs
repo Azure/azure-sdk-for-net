@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink.AbsoluteUri);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
                 return null;
             }
             IReadOnlyList<PlaywrightTestingAccountData> value = default;
-            Optional<Uri> nextLink = default;
+            Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
                     List<PlaywrightTestingAccountData> array = new List<PlaywrightTestingAccountData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PlaywrightTestingAccountData.DeserializePlaywrightTestingAccountData(item));
+                        array.Add(PlaywrightTestingAccountData.DeserializePlaywrightTestingAccountData(item, options));
                     }
                     value = array;
                     continue;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AccountListResult(value, nextLink.Value, serializedAdditionalRawData);
+            return new AccountListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AccountListResult>.Write(ModelReaderWriterOptions options)

@@ -283,7 +283,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AvailabilityGroupListenerResource>> UpdateAsync(WaitUntil waitUntil, AvailabilityGroupListenerData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _availabilityGroupListenerClientDiagnostics.CreateScope("AvailabilityGroupListenerResource.Update");
             scope.Start();
@@ -329,7 +332,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AvailabilityGroupListenerResource> Update(WaitUntil waitUntil, AvailabilityGroupListenerData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _availabilityGroupListenerClientDiagnostics.CreateScope("AvailabilityGroupListenerResource.Update");
             scope.Start();

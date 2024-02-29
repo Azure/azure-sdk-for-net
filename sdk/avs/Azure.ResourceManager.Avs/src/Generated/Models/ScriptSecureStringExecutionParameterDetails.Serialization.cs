@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Avs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SecureValue))
+            if (SecureValue != null)
             {
                 writer.WritePropertyName("secureValue"u8);
                 writer.WriteStringValue(SecureValue);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Optional<string> secureValue = default;
+            string secureValue = default;
             string name = default;
             ScriptExecutionParameterType type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScriptSecureStringExecutionParameterDetails(name, type, serializedAdditionalRawData, secureValue.Value);
+            return new ScriptSecureStringExecutionParameterDetails(name, type, serializedAdditionalRawData, secureValue);
         }
 
         BinaryData IPersistableModel<ScriptSecureStringExecutionParameterDetails>.Write(ModelReaderWriterOptions options)

@@ -64,10 +64,22 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="extendedLocation"/>, <paramref name="azureGroupId"/>, <paramref name="jumpHostsAllowed"/> or <paramref name="userList"/> is null. </exception>
         public NetworkCloudBareMetalMachineKeySetData(AzureLocation location, ExtendedLocation extendedLocation, string azureGroupId, DateTimeOffset expireOn, IEnumerable<IPAddress> jumpHostsAllowed, BareMetalMachineKeySetPrivilegeLevel privilegeLevel, IEnumerable<KeySetUser> userList) : base(location)
         {
-            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
-            Argument.AssertNotNull(azureGroupId, nameof(azureGroupId));
-            Argument.AssertNotNull(jumpHostsAllowed, nameof(jumpHostsAllowed));
-            Argument.AssertNotNull(userList, nameof(userList));
+            if (extendedLocation == null)
+            {
+                throw new ArgumentNullException(nameof(extendedLocation));
+            }
+            if (azureGroupId == null)
+            {
+                throw new ArgumentNullException(nameof(azureGroupId));
+            }
+            if (jumpHostsAllowed == null)
+            {
+                throw new ArgumentNullException(nameof(jumpHostsAllowed));
+            }
+            if (userList == null)
+            {
+                throw new ArgumentNullException(nameof(userList));
+            }
 
             ExtendedLocation = extendedLocation;
             AzureGroupId = azureGroupId;

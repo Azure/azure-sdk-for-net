@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SendToOwners))
+            if (SendToOwners != null)
             {
                 writer.WritePropertyName("sendToOwners"u8);
                 writer.WriteStringValue(SendToOwners);
             }
-            if (Optional.IsCollectionDefined(CustomEmailAddresses))
+            if (!(CustomEmailAddresses is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("customEmailAddresses"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Locale))
+            if (Locale != null)
             {
                 writer.WritePropertyName("locale"u8);
                 writer.WriteStringValue(Locale);
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> sendToOwners = default;
-            Optional<IList<string>> customEmailAddresses = default;
-            Optional<string> locale = default;
+            string sendToOwners = default;
+            IList<string> customEmailAddresses = default;
+            string locale = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryConfigureAlertProperties(sendToOwners.Value, Optional.ToList(customEmailAddresses), locale.Value, serializedAdditionalRawData);
+            return new SiteRecoveryConfigureAlertProperties(sendToOwners, customEmailAddresses ?? new ChangeTrackingList<string>(), locale, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryConfigureAlertProperties>.Write(ModelReaderWriterOptions options)

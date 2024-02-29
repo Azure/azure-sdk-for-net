@@ -15,12 +15,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SkipSamplesWithoutAnnotation))
+            if (SkipSamplesWithoutAnnotation != null)
             {
                 writer.WritePropertyName("skipSamplesWithoutAnnotation"u8);
                 writer.WriteStringValue(SkipSamplesWithoutAnnotation);
             }
-            if (Optional.IsDefined(MaximumSamplesPerSecond))
+            if (MaximumSamplesPerSecond != null)
             {
                 writer.WritePropertyName("maximumSamplesPerSecond"u8);
                 writer.WriteStringValue(MaximumSamplesPerSecond);
@@ -34,8 +34,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<string> skipSamplesWithoutAnnotation = default;
-            Optional<string> maximumSamplesPerSecond = default;
+            string skipSamplesWithoutAnnotation = default;
+            string maximumSamplesPerSecond = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("skipSamplesWithoutAnnotation"u8))
@@ -49,7 +49,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new SamplingOptions(skipSamplesWithoutAnnotation.Value, maximumSamplesPerSecond.Value);
+            return new SamplingOptions(skipSamplesWithoutAnnotation, maximumSamplesPerSecond);
         }
     }
 }

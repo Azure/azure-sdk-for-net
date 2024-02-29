@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EventHub))
+            if (EventHub != null)
             {
                 writer.WritePropertyName("eventHub"u8);
                 writer.WriteObjectValue(EventHub);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<DataImportSourcesEventHub> eventHub = default;
+            DataImportSourcesEventHub eventHub = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    eventHub = DataImportSourcesEventHub.DeserializeDataImportSourcesEventHub(property.Value);
+                    eventHub = DataImportSourcesEventHub.DeserializeDataImportSourcesEventHub(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataSourcesSpecDataImports(eventHub.Value, serializedAdditionalRawData);
+            return new DataSourcesSpecDataImports(eventHub, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataSourcesSpecDataImports>.Write(ModelReaderWriterOptions options)

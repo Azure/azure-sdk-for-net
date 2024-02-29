@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(MsPort))
+            if (options.Format != "W" && MsPort.HasValue)
             {
                 if (MsPort != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     writer.WriteNull("msPort");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(InternalMsPort))
+            if (options.Format != "W" && InternalMsPort.HasValue)
             {
                 if (InternalMsPort != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     writer.WriteNull("internalMsPort");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(HttpPort))
+            if (options.Format != "W" && HttpPort.HasValue)
             {
                 if (HttpPort != null)
                 {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     writer.WriteNull("httpPort");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(HttpsPort))
+            if (options.Format != "W" && HttpsPort.HasValue)
             {
                 if (HttpsPort != null)
                 {
@@ -74,17 +74,17 @@ namespace Azure.ResourceManager.Workloads.Models
                     writer.WriteNull("httpsPort");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(Hostname))
+            if (options.Format != "W" && Hostname != null)
             {
                 writer.WritePropertyName("hostname"u8);
                 writer.WriteStringValue(Hostname);
             }
-            if (options.Format != "W" && Optional.IsDefined(IPAddress))
+            if (options.Format != "W" && IPAddress != null)
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress);
             }
-            if (options.Format != "W" && Optional.IsDefined(Health))
+            if (options.Format != "W" && Health.HasValue)
             {
                 writer.WritePropertyName("health"u8);
                 writer.WriteStringValue(Health.Value.ToString());
@@ -127,13 +127,13 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<long?> msPort = default;
-            Optional<long?> internalMsPort = default;
-            Optional<long?> httpPort = default;
-            Optional<long?> httpsPort = default;
-            Optional<string> hostname = default;
-            Optional<string> ipAddress = default;
-            Optional<SapHealthState> health = default;
+            long? msPort = default;
+            long? internalMsPort = default;
+            long? httpPort = default;
+            long? httpsPort = default;
+            string hostname = default;
+            string ipAddress = default;
+            SapHealthState? health = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -203,7 +203,15 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MessageServerProperties(Optional.ToNullable(msPort), Optional.ToNullable(internalMsPort), Optional.ToNullable(httpPort), Optional.ToNullable(httpsPort), hostname.Value, ipAddress.Value, Optional.ToNullable(health), serializedAdditionalRawData);
+            return new MessageServerProperties(
+                msPort,
+                internalMsPort,
+                httpPort,
+                httpsPort,
+                hostname,
+                ipAddress,
+                health,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MessageServerProperties>.Write(ModelReaderWriterOptions options)

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStringValue(RuleSetType);
             writer.WritePropertyName("ruleSetVersion"u8);
             writer.WriteStringValue(RuleSetVersion);
-            if (Optional.IsCollectionDefined(RuleGroups))
+            if (!(RuleGroups is ChangeTrackingList<ExclusionManagedRuleGroup> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ruleGroups"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             string ruleSetType = default;
             string ruleSetVersion = default;
-            Optional<IList<ExclusionManagedRuleGroup>> ruleGroups = default;
+            IList<ExclusionManagedRuleGroup> ruleGroups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ExclusionManagedRuleGroup> array = new List<ExclusionManagedRuleGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExclusionManagedRuleGroup.DeserializeExclusionManagedRuleGroup(item));
+                        array.Add(ExclusionManagedRuleGroup.DeserializeExclusionManagedRuleGroup(item, options));
                     }
                     ruleGroups = array;
                     continue;
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExclusionManagedRuleSet(ruleSetType, ruleSetVersion, Optional.ToList(ruleGroups), serializedAdditionalRawData);
+            return new ExclusionManagedRuleSet(ruleSetType, ruleSetVersion, ruleGroups ?? new ChangeTrackingList<ExclusionManagedRuleGroup>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExclusionManagedRuleSet>.Write(ModelReaderWriterOptions options)

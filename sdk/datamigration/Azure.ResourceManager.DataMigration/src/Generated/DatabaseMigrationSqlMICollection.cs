@@ -81,9 +81,26 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceName"/>, <paramref name="targetDBName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DatabaseMigrationSqlMIResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string managedInstanceName, string targetDBName, DatabaseMigrationSqlMIData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
-            Argument.AssertNotNullOrEmpty(targetDBName, nameof(targetDBName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (managedInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(managedInstanceName));
+            }
+            if (managedInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(managedInstanceName));
+            }
+            if (targetDBName == null)
+            {
+                throw new ArgumentNullException(nameof(targetDBName));
+            }
+            if (targetDBName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(targetDBName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _databaseMigrationSqlMIDatabaseMigrationsSqlMIClientDiagnostics.CreateScope("DatabaseMigrationSqlMICollection.CreateOrUpdate");
             scope.Start();
@@ -132,9 +149,26 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceName"/>, <paramref name="targetDBName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DatabaseMigrationSqlMIResource> CreateOrUpdate(WaitUntil waitUntil, string managedInstanceName, string targetDBName, DatabaseMigrationSqlMIData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
-            Argument.AssertNotNullOrEmpty(targetDBName, nameof(targetDBName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (managedInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(managedInstanceName));
+            }
+            if (managedInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(managedInstanceName));
+            }
+            if (targetDBName == null)
+            {
+                throw new ArgumentNullException(nameof(targetDBName));
+            }
+            if (targetDBName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(targetDBName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _databaseMigrationSqlMIDatabaseMigrationsSqlMIClientDiagnostics.CreateScope("DatabaseMigrationSqlMICollection.CreateOrUpdate");
             scope.Start();
@@ -183,8 +217,22 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceName"/> or <paramref name="targetDBName"/> is null. </exception>
         public virtual async Task<Response<DatabaseMigrationSqlMIResource>> GetAsync(string managedInstanceName, string targetDBName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
-            Argument.AssertNotNullOrEmpty(targetDBName, nameof(targetDBName));
+            if (managedInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(managedInstanceName));
+            }
+            if (managedInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(managedInstanceName));
+            }
+            if (targetDBName == null)
+            {
+                throw new ArgumentNullException(nameof(targetDBName));
+            }
+            if (targetDBName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(targetDBName));
+            }
 
             using var scope = _databaseMigrationSqlMIDatabaseMigrationsSqlMIClientDiagnostics.CreateScope("DatabaseMigrationSqlMICollection.Get");
             scope.Start();
@@ -232,8 +280,22 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceName"/> or <paramref name="targetDBName"/> is null. </exception>
         public virtual Response<DatabaseMigrationSqlMIResource> Get(string managedInstanceName, string targetDBName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
-            Argument.AssertNotNullOrEmpty(targetDBName, nameof(targetDBName));
+            if (managedInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(managedInstanceName));
+            }
+            if (managedInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(managedInstanceName));
+            }
+            if (targetDBName == null)
+            {
+                throw new ArgumentNullException(nameof(targetDBName));
+            }
+            if (targetDBName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(targetDBName));
+            }
 
             using var scope = _databaseMigrationSqlMIDatabaseMigrationsSqlMIClientDiagnostics.CreateScope("DatabaseMigrationSqlMICollection.Get");
             scope.Start();
@@ -281,8 +343,22 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceName"/> or <paramref name="targetDBName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string managedInstanceName, string targetDBName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
-            Argument.AssertNotNullOrEmpty(targetDBName, nameof(targetDBName));
+            if (managedInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(managedInstanceName));
+            }
+            if (managedInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(managedInstanceName));
+            }
+            if (targetDBName == null)
+            {
+                throw new ArgumentNullException(nameof(targetDBName));
+            }
+            if (targetDBName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(targetDBName));
+            }
 
             using var scope = _databaseMigrationSqlMIDatabaseMigrationsSqlMIClientDiagnostics.CreateScope("DatabaseMigrationSqlMICollection.Exists");
             scope.Start();
@@ -328,8 +404,22 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceName"/> or <paramref name="targetDBName"/> is null. </exception>
         public virtual Response<bool> Exists(string managedInstanceName, string targetDBName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
-            Argument.AssertNotNullOrEmpty(targetDBName, nameof(targetDBName));
+            if (managedInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(managedInstanceName));
+            }
+            if (managedInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(managedInstanceName));
+            }
+            if (targetDBName == null)
+            {
+                throw new ArgumentNullException(nameof(targetDBName));
+            }
+            if (targetDBName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(targetDBName));
+            }
 
             using var scope = _databaseMigrationSqlMIDatabaseMigrationsSqlMIClientDiagnostics.CreateScope("DatabaseMigrationSqlMICollection.Exists");
             scope.Start();
@@ -375,8 +465,22 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceName"/> or <paramref name="targetDBName"/> is null. </exception>
         public virtual async Task<NullableResponse<DatabaseMigrationSqlMIResource>> GetIfExistsAsync(string managedInstanceName, string targetDBName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
-            Argument.AssertNotNullOrEmpty(targetDBName, nameof(targetDBName));
+            if (managedInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(managedInstanceName));
+            }
+            if (managedInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(managedInstanceName));
+            }
+            if (targetDBName == null)
+            {
+                throw new ArgumentNullException(nameof(targetDBName));
+            }
+            if (targetDBName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(targetDBName));
+            }
 
             using var scope = _databaseMigrationSqlMIDatabaseMigrationsSqlMIClientDiagnostics.CreateScope("DatabaseMigrationSqlMICollection.GetIfExists");
             scope.Start();
@@ -424,8 +528,22 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceName"/> or <paramref name="targetDBName"/> is null. </exception>
         public virtual NullableResponse<DatabaseMigrationSqlMIResource> GetIfExists(string managedInstanceName, string targetDBName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
-            Argument.AssertNotNullOrEmpty(targetDBName, nameof(targetDBName));
+            if (managedInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(managedInstanceName));
+            }
+            if (managedInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(managedInstanceName));
+            }
+            if (targetDBName == null)
+            {
+                throw new ArgumentNullException(nameof(targetDBName));
+            }
+            if (targetDBName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(targetDBName));
+            }
 
             using var scope = _databaseMigrationSqlMIDatabaseMigrationsSqlMIClientDiagnostics.CreateScope("DatabaseMigrationSqlMICollection.GetIfExists");
             scope.Start();

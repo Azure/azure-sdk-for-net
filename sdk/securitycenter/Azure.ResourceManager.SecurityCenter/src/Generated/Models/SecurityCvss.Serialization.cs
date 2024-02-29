@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Base))
+            if (options.Format != "W" && Base.HasValue)
             {
                 writer.WritePropertyName("base"u8);
                 writer.WriteNumberValue(Base.Value);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<float> @base = default;
+            float? @base = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityCvss(Optional.ToNullable(@base), serializedAdditionalRawData);
+            return new SecurityCvss(@base, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityCvss>.Write(ModelReaderWriterOptions options)

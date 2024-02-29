@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<VirtualHubEffectiveRoute> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<VirtualHubEffectiveRoute>> value = default;
+            IReadOnlyList<VirtualHubEffectiveRoute> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<VirtualHubEffectiveRoute> array = new List<VirtualHubEffectiveRoute>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualHubEffectiveRoute.DeserializeVirtualHubEffectiveRoute(item));
+                        array.Add(VirtualHubEffectiveRoute.DeserializeVirtualHubEffectiveRoute(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualHubEffectiveRouteList(Optional.ToList(value), serializedAdditionalRawData);
+            return new VirtualHubEffectiveRouteList(value ?? new ChangeTrackingList<VirtualHubEffectiveRoute>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualHubEffectiveRouteList>.Write(ModelReaderWriterOptions options)

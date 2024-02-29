@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FileLocation))
+            if (FileLocation != null)
             {
                 writer.WritePropertyName("fileLocation"u8);
                 writer.WriteStringValue(FileLocation);
             }
-            if (Optional.IsDefined(FamilySequenceNumber))
+            if (FamilySequenceNumber.HasValue)
             {
                 writer.WritePropertyName("familySequenceNumber"u8);
                 writer.WriteNumberValue(FamilySequenceNumber.Value);
             }
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> fileLocation = default;
-            Optional<int> familySequenceNumber = default;
-            Optional<BackupFileStatus> status = default;
+            string fileLocation = default;
+            int? familySequenceNumber = default;
+            BackupFileStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupFileInfo(fileLocation.Value, Optional.ToNullable(familySequenceNumber), Optional.ToNullable(status), serializedAdditionalRawData);
+            return new BackupFileInfo(fileLocation, familySequenceNumber, status, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupFileInfo>.Write(ModelReaderWriterOptions options)

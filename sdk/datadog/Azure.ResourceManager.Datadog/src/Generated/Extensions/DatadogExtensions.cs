@@ -49,7 +49,10 @@ namespace Azure.ResourceManager.Datadog
         /// <returns> Returns a <see cref="DatadogMonitorResource"/> object. </returns>
         public static DatadogMonitorResource GetDatadogMonitorResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableDatadogArmClient(client).GetDatadogMonitorResource(id);
         }
@@ -68,7 +71,10 @@ namespace Azure.ResourceManager.Datadog
         /// <returns> Returns a <see cref="MonitoringTagRuleResource"/> object. </returns>
         public static MonitoringTagRuleResource GetMonitoringTagRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableDatadogArmClient(client).GetMonitoringTagRuleResource(id);
         }
@@ -87,7 +93,10 @@ namespace Azure.ResourceManager.Datadog
         /// <returns> Returns a <see cref="DatadogSingleSignOnResource"/> object. </returns>
         public static DatadogSingleSignOnResource GetDatadogSingleSignOnResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableDatadogArmClient(client).GetDatadogSingleSignOnResource(id);
         }
@@ -104,7 +113,10 @@ namespace Azure.ResourceManager.Datadog
         /// <returns> An object representing collection of DatadogMonitorResources and their operations over a DatadogMonitorResource. </returns>
         public static DatadogMonitorResourceCollection GetDatadogMonitorResources(this ResourceGroupResource resourceGroupResource)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableDatadogResourceGroupResource(resourceGroupResource).GetDatadogMonitorResources();
         }
@@ -142,7 +154,10 @@ namespace Azure.ResourceManager.Datadog
         [ForwardsClientCalls]
         public static async Task<Response<DatadogMonitorResource>> GetDatadogMonitorResourceAsync(this ResourceGroupResource resourceGroupResource, string monitorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return await GetMockableDatadogResourceGroupResource(resourceGroupResource).GetDatadogMonitorResourceAsync(monitorName, cancellationToken).ConfigureAwait(false);
         }
@@ -180,7 +195,10 @@ namespace Azure.ResourceManager.Datadog
         [ForwardsClientCalls]
         public static Response<DatadogMonitorResource> GetDatadogMonitorResource(this ResourceGroupResource resourceGroupResource, string monitorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableDatadogResourceGroupResource(resourceGroupResource).GetDatadogMonitorResource(monitorName, cancellationToken);
         }
@@ -212,7 +230,10 @@ namespace Azure.ResourceManager.Datadog
         /// <returns> An async collection of <see cref="DatadogAgreementResourceProperties"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DatadogAgreementResourceProperties> GetMarketplaceAgreementsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableDatadogSubscriptionResource(subscriptionResource).GetMarketplaceAgreementsAsync(cancellationToken);
         }
@@ -244,7 +265,10 @@ namespace Azure.ResourceManager.Datadog
         /// <returns> A collection of <see cref="DatadogAgreementResourceProperties"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DatadogAgreementResourceProperties> GetMarketplaceAgreements(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableDatadogSubscriptionResource(subscriptionResource).GetMarketplaceAgreements(cancellationToken);
         }
@@ -276,7 +300,10 @@ namespace Azure.ResourceManager.Datadog
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static async Task<Response<DatadogAgreementResourceProperties>> CreateOrUpdateMarketplaceAgreementAsync(this SubscriptionResource subscriptionResource, DatadogAgreementResourceProperties body = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return await GetMockableDatadogSubscriptionResource(subscriptionResource).CreateOrUpdateMarketplaceAgreementAsync(body, cancellationToken).ConfigureAwait(false);
         }
@@ -308,7 +335,10 @@ namespace Azure.ResourceManager.Datadog
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static Response<DatadogAgreementResourceProperties> CreateOrUpdateMarketplaceAgreement(this SubscriptionResource subscriptionResource, DatadogAgreementResourceProperties body = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableDatadogSubscriptionResource(subscriptionResource).CreateOrUpdateMarketplaceAgreement(body, cancellationToken);
         }
@@ -344,7 +374,10 @@ namespace Azure.ResourceManager.Datadog
         /// <returns> An async collection of <see cref="DatadogMonitorResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DatadogMonitorResource> GetDatadogMonitorResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableDatadogSubscriptionResource(subscriptionResource).GetDatadogMonitorResourcesAsync(cancellationToken);
         }
@@ -380,7 +413,10 @@ namespace Azure.ResourceManager.Datadog
         /// <returns> A collection of <see cref="DatadogMonitorResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DatadogMonitorResource> GetDatadogMonitorResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableDatadogSubscriptionResource(subscriptionResource).GetDatadogMonitorResources(cancellationToken);
         }

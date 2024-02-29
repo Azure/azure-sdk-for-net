@@ -168,19 +168,19 @@ public static partial class AssistantsModelFactory
         return new ThreadMessage(id, @object: null, createdAt, threadId, role, contentItems?.ToList(), assistantId, runId, fileIds?.ToList(), metadata, serializedAdditionalRawData: null);
     }
 
-    public static RequiredFunctionToolCall RequiredFunctionToolCall(string toolCallId, string functionName, BinaryData functionParameters)
+    public static RequiredFunctionToolCall RequiredFunctionToolCall(string toolCallId, string functionName, string functionArguments)
     {
-        return new RequiredFunctionToolCall(toolCallId, new InternalFunctionDefinition(functionName, functionParameters));
+        return new RequiredFunctionToolCall(toolCallId, new InternalRequiredFunctionToolCallDetails(functionName, functionArguments));
     }
 
-    public static FunctionToolCall FunctionToolCall(string id, string name, string arguments, string output)
+    public static RunStepFunctionToolCall RunStepFunctionToolCall(string id, string name, string arguments, string output)
     {
-        return new FunctionToolCall(id, new InternalFunctionToolCallDetails(name, arguments, output));
+        return new RunStepFunctionToolCall(id, new InternalRunStepFunctionToolCallDetails(name, arguments, output));
     }
 
-    public static CodeInterpreterToolCall CodeInterpreterToolCall(string id, string input, IReadOnlyList<CodeInterpreterToolCallOutput> outputs)
+    public static RunStepCodeInterpreterToolCall RunStepCodeInterpreterToolCall(string id, string input, IReadOnlyList<RunStepCodeInterpreterToolCallOutput> outputs)
     {
-        return new CodeInterpreterToolCall(id, new InternalCodeInterpreterToolCallDetails(input, outputs));
+        return new RunStepCodeInterpreterToolCall(id, new InternalCodeInterpreterToolCallDetails(input, outputs));
     }
 
     /// <summary>

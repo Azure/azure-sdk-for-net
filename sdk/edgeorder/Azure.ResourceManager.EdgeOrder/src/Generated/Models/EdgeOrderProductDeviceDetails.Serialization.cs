@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(SerialNumber))
+            if (options.Format != "W" && SerialNumber != null)
             {
                 writer.WritePropertyName("serialNumber"u8);
                 writer.WriteStringValue(SerialNumber);
             }
-            if (options.Format != "W" && Optional.IsDefined(ManagementResourceId))
+            if (options.Format != "W" && ManagementResourceId != null)
             {
                 writer.WritePropertyName("managementResourceId"u8);
                 writer.WriteStringValue(ManagementResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ManagementResourceTenantId))
+            if (options.Format != "W" && ManagementResourceTenantId != null)
             {
                 writer.WritePropertyName("managementResourceTenantId"u8);
                 writer.WriteStringValue(ManagementResourceTenantId);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Optional<string> serialNumber = default;
-            Optional<string> managementResourceId = default;
-            Optional<string> managementResourceTenantId = default;
+            string serialNumber = default;
+            string managementResourceId = default;
+            string managementResourceTenantId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeOrderProductDeviceDetails(serialNumber.Value, managementResourceId.Value, managementResourceTenantId.Value, serializedAdditionalRawData);
+            return new EdgeOrderProductDeviceDetails(serialNumber, managementResourceId, managementResourceTenantId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeOrderProductDeviceDetails>.Write(ModelReaderWriterOptions options)

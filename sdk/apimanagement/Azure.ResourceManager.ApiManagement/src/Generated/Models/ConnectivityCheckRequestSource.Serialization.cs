@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartObject();
             writer.WritePropertyName("region"u8);
             writer.WriteStringValue(Region);
-            if (Optional.IsDefined(Instance))
+            if (Instance.HasValue)
             {
                 writer.WritePropertyName("instance"u8);
                 writer.WriteNumberValue(Instance.Value);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 return null;
             }
             string region = default;
-            Optional<long> instance = default;
+            long? instance = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectivityCheckRequestSource(region, Optional.ToNullable(instance), serializedAdditionalRawData);
+            return new ConnectivityCheckRequestSource(region, instance, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectivityCheckRequestSource>.Write(ModelReaderWriterOptions options)

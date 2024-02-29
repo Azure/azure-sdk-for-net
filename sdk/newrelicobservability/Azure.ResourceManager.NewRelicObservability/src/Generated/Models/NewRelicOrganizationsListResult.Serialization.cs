@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink.AbsoluteUri);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 return null;
             }
             IReadOnlyList<NewRelicOrganizationResourceData> value = default;
-            Optional<Uri> nextLink = default;
+            Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     List<NewRelicOrganizationResourceData> array = new List<NewRelicOrganizationResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NewRelicOrganizationResourceData.DeserializeNewRelicOrganizationResourceData(item));
+                        array.Add(NewRelicOrganizationResourceData.DeserializeNewRelicOrganizationResourceData(item, options));
                     }
                     value = array;
                     continue;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NewRelicOrganizationsListResult(value, nextLink.Value, serializedAdditionalRawData);
+            return new NewRelicOrganizationsListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NewRelicOrganizationsListResult>.Write(ModelReaderWriterOptions options)

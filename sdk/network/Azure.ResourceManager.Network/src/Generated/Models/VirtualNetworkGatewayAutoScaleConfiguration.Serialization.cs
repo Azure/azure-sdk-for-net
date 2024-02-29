@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Bounds))
+            if (Bounds != null)
             {
                 writer.WritePropertyName("bounds"u8);
                 writer.WriteObjectValue(Bounds);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<VirtualNetworkGatewayAutoScaleBounds> bounds = default;
+            VirtualNetworkGatewayAutoScaleBounds bounds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    bounds = VirtualNetworkGatewayAutoScaleBounds.DeserializeVirtualNetworkGatewayAutoScaleBounds(property.Value);
+                    bounds = VirtualNetworkGatewayAutoScaleBounds.DeserializeVirtualNetworkGatewayAutoScaleBounds(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualNetworkGatewayAutoScaleConfiguration(bounds.Value, serializedAdditionalRawData);
+            return new VirtualNetworkGatewayAutoScaleConfiguration(bounds, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualNetworkGatewayAutoScaleConfiguration>.Write(ModelReaderWriterOptions options)

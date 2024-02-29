@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EventHubResourceId))
+            if (EventHubResourceId != null)
             {
                 writer.WritePropertyName("eventHubResourceId"u8);
                 writer.WriteStringValue(EventHubResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(SasPolicyName))
+            if (options.Format != "W" && SasPolicyName != null)
             {
                 writer.WritePropertyName("sasPolicyName"u8);
                 writer.WriteStringValue(SasPolicyName);
             }
-            if (Optional.IsDefined(ConnectionString))
+            if (ConnectionString != null)
             {
                 writer.WritePropertyName("connectionString"u8);
                 writer.WriteStringValue(ConnectionString);
@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> eventHubResourceId = default;
-            Optional<string> sasPolicyName = default;
-            Optional<string> connectionString = default;
+            ResourceIdentifier eventHubResourceId = default;
+            string sasPolicyName = default;
+            string connectionString = default;
             ActionType actionType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityAutomationActionEventHub(actionType, serializedAdditionalRawData, eventHubResourceId.Value, sasPolicyName.Value, connectionString.Value);
+            return new SecurityAutomationActionEventHub(actionType, serializedAdditionalRawData, eventHubResourceId, sasPolicyName, connectionString);
         }
 
         BinaryData IPersistableModel<SecurityAutomationActionEventHub>.Write(ModelReaderWriterOptions options)

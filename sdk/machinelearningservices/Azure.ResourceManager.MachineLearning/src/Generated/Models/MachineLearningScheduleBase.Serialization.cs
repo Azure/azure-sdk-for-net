@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 if (Id != null)
                 {
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("id");
                 }
             }
-            if (Optional.IsDefined(ProvisioningStatus))
+            if (ProvisioningStatus.HasValue)
             {
                 writer.WritePropertyName("provisioningStatus"u8);
                 writer.WriteStringValue(ProvisioningStatus.Value.ToString());
             }
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -86,9 +86,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<MachineLearningScheduleProvisioningState> provisioningStatus = default;
-            Optional<MachineLearningScheduleStatus> status = default;
+            string id = default;
+            MachineLearningScheduleProvisioningState? provisioningStatus = default;
+            MachineLearningScheduleStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningScheduleBase(id.Value, Optional.ToNullable(provisioningStatus), Optional.ToNullable(status), serializedAdditionalRawData);
+            return new MachineLearningScheduleBase(id, provisioningStatus, status, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningScheduleBase>.Write(ModelReaderWriterOptions options)

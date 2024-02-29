@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 return null;
             }
             IReadOnlyList<DynatraceMonitorData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     List<DynatraceMonitorData> array = new List<DynatraceMonitorData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DynatraceMonitorData.DeserializeDynatraceMonitorData(item));
+                        array.Add(DynatraceMonitorData.DeserializeDynatraceMonitorData(item, options));
                     }
                     value = array;
                     continue;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorResourceListResult(value, nextLink.Value, serializedAdditionalRawData);
+            return new MonitorResourceListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorResourceListResult>.Write(ModelReaderWriterOptions options)

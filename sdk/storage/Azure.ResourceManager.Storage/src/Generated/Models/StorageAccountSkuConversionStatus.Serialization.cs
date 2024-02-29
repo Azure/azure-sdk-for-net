@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(SkuConversionStatus))
+            if (options.Format != "W" && SkuConversionStatus.HasValue)
             {
                 writer.WritePropertyName("skuConversionStatus"u8);
                 writer.WriteStringValue(SkuConversionStatus.Value.ToString());
             }
-            if (Optional.IsDefined(TargetSkuName))
+            if (TargetSkuName.HasValue)
             {
                 writer.WritePropertyName("targetSkuName"u8);
                 writer.WriteStringValue(TargetSkuName.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EndOn))
+            if (options.Format != "W" && EndOn.HasValue)
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<StorageAccountSkuConversionState> skuConversionStatus = default;
-            Optional<StorageSkuName> targetSkuName = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
+            StorageAccountSkuConversionState? skuConversionStatus = default;
+            StorageSkuName? targetSkuName = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageAccountSkuConversionStatus(Optional.ToNullable(skuConversionStatus), Optional.ToNullable(targetSkuName), Optional.ToNullable(startTime), Optional.ToNullable(endTime), serializedAdditionalRawData);
+            return new StorageAccountSkuConversionStatus(skuConversionStatus, targetSkuName, startTime, endTime, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageAccountSkuConversionStatus>.Write(ModelReaderWriterOptions options)

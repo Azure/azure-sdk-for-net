@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             writer.WritePropertyName("recoveryPointType"u8);
             writer.WriteStringValue(RecoveryPointType.ToString());
-            if (Optional.IsDefined(CloudServiceCreationOption))
+            if (CloudServiceCreationOption != null)
             {
                 writer.WritePropertyName("cloudServiceCreationOption"u8);
                 writer.WriteStringValue(CloudServiceCreationOption);
             }
-            if (Optional.IsDefined(MultiVmSyncPointOption))
+            if (MultiVmSyncPointOption.HasValue)
             {
                 writer.WritePropertyName("multiVmSyncPointOption"u8);
                 writer.WriteStringValue(MultiVmSyncPointOption.Value.ToString());
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 return null;
             }
             A2ARpRecoveryPointType recoveryPointType = default;
-            Optional<string> cloudServiceCreationOption = default;
-            Optional<MultiVmSyncPointOption> multiVmSyncPointOption = default;
+            string cloudServiceCreationOption = default;
+            MultiVmSyncPointOption? multiVmSyncPointOption = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecoveryPlanA2AFailoverContent(instanceType, serializedAdditionalRawData, recoveryPointType, cloudServiceCreationOption.Value, Optional.ToNullable(multiVmSyncPointOption));
+            return new RecoveryPlanA2AFailoverContent(instanceType, serializedAdditionalRawData, recoveryPointType, cloudServiceCreationOption, multiVmSyncPointOption);
         }
 
         BinaryData IPersistableModel<RecoveryPlanA2AFailoverContent>.Write(ModelReaderWriterOptions options)

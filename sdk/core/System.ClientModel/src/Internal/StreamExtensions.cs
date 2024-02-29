@@ -12,6 +12,9 @@ namespace System.ClientModel.Internal;
 
 internal static class StreamExtensions
 {
+    // Same value as Stream.CopyTo uses by default
+    private const int DefaultCopyBufferSize = 81920;
+
     public static async Task WriteAsync(this Stream stream, ReadOnlyMemory<byte> buffer, CancellationToken cancellation = default)
     {
         Argument.AssertNotNull(stream, nameof(stream));
@@ -84,6 +87,49 @@ internal static class StreamExtensions
         {
             if (array != null)
                 ArrayPool<byte>.Shared.Return(array);
+        }
+    }
+
+    public static async Task CopyToAsync(this Stream source, Stream destination, CancellationToken cancellationToken)
+    {
+        byte[] buffer = ArrayPool<byte>.Shared.Rent(DefaultCopyBufferSize);
+
+        try
+        {
+            while (true)
+            {
+#pragma warning disable CA1835 // ReadAsync(Memory<>) overload is not available in all targets
+                int bytesRead = await source.ReadAsync(buffer, 0, buffer.Length, cancellationToken).ConfigureAwait(false);
+#pragma warning restore // ReadAsync(Memory<>) overload is not available in all targets
+                if (bytesRead == 0)
+                    break;
+                await destination.WriteAsync(new ReadOnlyMemory<byte>(buffer, 0, bytesRead), cancellationToken).ConfigureAwait(false);
+            }
+        }
+        finally
+        {
+            await destination.FlushAsync(cancellationToken).ConfigureAwait(false);
+            ArrayPool<byte>.Shared.Return(buffer);
+        }
+    }
+
+    public static void CopyTo(this Stream source, Stream destination, CancellationToken cancellationToken)
+    {
+        byte[] buffer = ArrayPool<byte>.Shared.Rent(DefaultCopyBufferSize);
+
+        try
+        {
+            int read;
+            while ((read = source.Read(buffer, 0, buffer.Length)) != 0)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                destination.Write(buffer, 0, read);
+            }
+        }
+        finally
+        {
+            destination.Flush();
+            ArrayPool<byte>.Shared.Return(buffer);
         }
     }
 }

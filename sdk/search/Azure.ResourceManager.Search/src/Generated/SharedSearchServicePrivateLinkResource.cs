@@ -287,7 +287,10 @@ namespace Azure.ResourceManager.Search
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SharedSearchServicePrivateLinkResource>> UpdateAsync(WaitUntil waitUntil, SharedSearchServicePrivateLinkResourceData data, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesClientDiagnostics.CreateScope("SharedSearchServicePrivateLinkResource.Update");
             scope.Start();
@@ -334,7 +337,10 @@ namespace Azure.ResourceManager.Search
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SharedSearchServicePrivateLinkResource> Update(WaitUntil waitUntil, SharedSearchServicePrivateLinkResourceData data, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesClientDiagnostics.CreateScope("SharedSearchServicePrivateLinkResource.Update");
             scope.Start();

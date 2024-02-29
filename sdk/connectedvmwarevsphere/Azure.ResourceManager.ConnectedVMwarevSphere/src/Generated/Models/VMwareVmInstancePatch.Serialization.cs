@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(HardwareProfile))
+            if (HardwareProfile != null)
             {
                 writer.WritePropertyName("hardwareProfile"u8);
                 writer.WriteObjectValue(HardwareProfile);
             }
-            if (Optional.IsDefined(StorageProfile))
+            if (StorageProfile != null)
             {
                 writer.WritePropertyName("storageProfile"u8);
                 writer.WriteObjectValue(StorageProfile);
             }
-            if (Optional.IsDefined(NetworkProfile))
+            if (NetworkProfile != null)
             {
                 writer.WritePropertyName("networkProfile"u8);
                 writer.WriteObjectValue(NetworkProfile);
@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             {
                 return null;
             }
-            Optional<VmInstanceHardwareProfile> hardwareProfile = default;
-            Optional<StorageProfileUpdate> storageProfile = default;
-            Optional<VMwareNetworkProfileUpdate> networkProfile = default;
+            VmInstanceHardwareProfile hardwareProfile = default;
+            StorageProfileUpdate storageProfile = default;
+            VMwareNetworkProfileUpdate networkProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                             {
                                 continue;
                             }
-                            hardwareProfile = VmInstanceHardwareProfile.DeserializeVmInstanceHardwareProfile(property0.Value);
+                            hardwareProfile = VmInstanceHardwareProfile.DeserializeVmInstanceHardwareProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("storageProfile"u8))
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                             {
                                 continue;
                             }
-                            storageProfile = StorageProfileUpdate.DeserializeStorageProfileUpdate(property0.Value);
+                            storageProfile = StorageProfileUpdate.DeserializeStorageProfileUpdate(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("networkProfile"u8))
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                             {
                                 continue;
                             }
-                            networkProfile = VMwareNetworkProfileUpdate.DeserializeVMwareNetworkProfileUpdate(property0.Value);
+                            networkProfile = VMwareNetworkProfileUpdate.DeserializeVMwareNetworkProfileUpdate(property0.Value, options);
                             continue;
                         }
                     }
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareVmInstancePatch(hardwareProfile.Value, storageProfile.Value, networkProfile.Value, serializedAdditionalRawData);
+            return new VMwareVmInstancePatch(hardwareProfile, storageProfile, networkProfile, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VMwareVmInstancePatch>.Write(ModelReaderWriterOptions options)

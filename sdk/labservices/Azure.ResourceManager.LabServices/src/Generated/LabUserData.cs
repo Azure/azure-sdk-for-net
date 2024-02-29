@@ -56,7 +56,10 @@ namespace Azure.ResourceManager.LabServices
         /// <exception cref="ArgumentNullException"> <paramref name="email"/> is null. </exception>
         public LabUserData(string email)
         {
-            Argument.AssertNotNull(email, nameof(email));
+            if (email == null)
+            {
+                throw new ArgumentNullException(nameof(email));
+            }
 
             Email = email;
         }

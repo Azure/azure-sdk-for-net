@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(PolicyDetails))
+            if (options.Format != "W" && PolicyDetails != null)
             {
                 writer.WritePropertyName("policyDetails"u8);
                 writer.WriteObjectValue(PolicyDetails);
             }
-            if (options.Format != "W" && Optional.IsDefined(DeploymentId))
+            if (options.Format != "W" && DeploymentId != null)
             {
                 writer.WritePropertyName("deploymentId"u8);
                 writer.WriteStringValue(DeploymentId);
             }
-            if (options.Format != "W" && Optional.IsDefined(DeploymentOn))
+            if (options.Format != "W" && DeploymentOn.HasValue)
             {
                 writer.WritePropertyName("deploymentTime"u8);
                 writer.WriteStringValue(DeploymentOn.Value, "O");
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<PolicyDetails> policyDetails = default;
-            Optional<ResourceIdentifier> deploymentId = default;
-            Optional<DateTimeOffset> deploymentTime = default;
+            PolicyDetails policyDetails = default;
+            ResourceIdentifier deploymentId = default;
+            DateTimeOffset? deploymentTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     {
                         continue;
                     }
-                    policyDetails = PolicyDetails.DeserializePolicyDetails(property.Value);
+                    policyDetails = PolicyDetails.DeserializePolicyDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("deploymentId"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrackedResourceModificationDetails(policyDetails.Value, deploymentId.Value, Optional.ToNullable(deploymentTime), serializedAdditionalRawData);
+            return new TrackedResourceModificationDetails(policyDetails, deploymentId, deploymentTime, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrackedResourceModificationDetails>.Write(ModelReaderWriterOptions options)

@@ -23,10 +23,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="masterTargetId"/>, <paramref name="retentionDrive"/>, <paramref name="multiVmGroupId"/> or <paramref name="multiVmGroupName"/> is null. </exception>
         public InMageEnableProtectionContent(string masterTargetId, Guid processServerId, string retentionDrive, string multiVmGroupId, string multiVmGroupName)
         {
-            Argument.AssertNotNull(masterTargetId, nameof(masterTargetId));
-            Argument.AssertNotNull(retentionDrive, nameof(retentionDrive));
-            Argument.AssertNotNull(multiVmGroupId, nameof(multiVmGroupId));
-            Argument.AssertNotNull(multiVmGroupName, nameof(multiVmGroupName));
+            if (masterTargetId == null)
+            {
+                throw new ArgumentNullException(nameof(masterTargetId));
+            }
+            if (retentionDrive == null)
+            {
+                throw new ArgumentNullException(nameof(retentionDrive));
+            }
+            if (multiVmGroupId == null)
+            {
+                throw new ArgumentNullException(nameof(multiVmGroupId));
+            }
+            if (multiVmGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(multiVmGroupName));
+            }
 
             MasterTargetId = masterTargetId;
             ProcessServerId = processServerId;

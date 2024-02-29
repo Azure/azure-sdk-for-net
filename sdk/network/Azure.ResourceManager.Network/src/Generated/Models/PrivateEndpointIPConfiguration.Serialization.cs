@@ -28,34 +28,34 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(PrivateEndpointIPConfigurationType))
+            if (options.Format != "W" && PrivateEndpointIPConfigurationType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(PrivateEndpointIPConfigurationType);
             }
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(GroupId))
+            if (GroupId != null)
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
             }
-            if (Optional.IsDefined(MemberName))
+            if (MemberName != null)
             {
                 writer.WritePropertyName("memberName"u8);
                 writer.WriteStringValue(MemberName);
             }
-            if (Optional.IsDefined(PrivateIPAddress))
+            if (PrivateIPAddress != null)
             {
                 writer.WritePropertyName("privateIPAddress"u8);
                 writer.WriteStringValue(PrivateIPAddress.ToString());
@@ -99,12 +99,12 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<ETag> etag = default;
-            Optional<string> groupId = default;
-            Optional<string> memberName = default;
-            Optional<IPAddress> privateIPAddress = default;
+            string name = default;
+            string type = default;
+            ETag? etag = default;
+            string groupId = default;
+            string memberName = default;
+            IPAddress privateIPAddress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,7 +165,14 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateEndpointIPConfiguration(name.Value, type.Value, Optional.ToNullable(etag), groupId.Value, memberName.Value, privateIPAddress.Value, serializedAdditionalRawData);
+            return new PrivateEndpointIPConfiguration(
+                name,
+                type,
+                etag,
+                groupId,
+                memberName,
+                privateIPAddress,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateEndpointIPConfiguration>.Write(ModelReaderWriterOptions options)

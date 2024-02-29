@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(JobIdentifier))
+            if (JobIdentifier != null)
             {
                 writer.WritePropertyName("jobId"u8);
                 writer.WriteStringValue(JobIdentifier);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<string> jobId = default;
+            string jobId = default;
             string objectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataProtectionOperationJobExtendedInfo(objectType, serializedAdditionalRawData, jobId.Value);
+            return new DataProtectionOperationJobExtendedInfo(objectType, serializedAdditionalRawData, jobId);
         }
 
         BinaryData IPersistableModel<DataProtectionOperationJobExtendedInfo>.Write(ModelReaderWriterOptions options)

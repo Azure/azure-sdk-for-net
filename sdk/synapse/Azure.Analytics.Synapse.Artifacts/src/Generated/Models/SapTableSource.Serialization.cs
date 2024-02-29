@@ -19,74 +19,74 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(RowCount))
+            if (RowCount != null)
             {
                 writer.WritePropertyName("rowCount"u8);
                 writer.WriteObjectValue(RowCount);
             }
-            if (Optional.IsDefined(RowSkips))
+            if (RowSkips != null)
             {
                 writer.WritePropertyName("rowSkips"u8);
                 writer.WriteObjectValue(RowSkips);
             }
-            if (Optional.IsDefined(RfcTableFields))
+            if (RfcTableFields != null)
             {
                 writer.WritePropertyName("rfcTableFields"u8);
                 writer.WriteObjectValue(RfcTableFields);
             }
-            if (Optional.IsDefined(RfcTableOptions))
+            if (RfcTableOptions != null)
             {
                 writer.WritePropertyName("rfcTableOptions"u8);
                 writer.WriteObjectValue(RfcTableOptions);
             }
-            if (Optional.IsDefined(BatchSize))
+            if (BatchSize != null)
             {
                 writer.WritePropertyName("batchSize"u8);
                 writer.WriteObjectValue(BatchSize);
             }
-            if (Optional.IsDefined(CustomRfcReadTableFunctionModule))
+            if (CustomRfcReadTableFunctionModule != null)
             {
                 writer.WritePropertyName("customRfcReadTableFunctionModule"u8);
                 writer.WriteObjectValue(CustomRfcReadTableFunctionModule);
             }
-            if (Optional.IsDefined(SapDataColumnDelimiter))
+            if (SapDataColumnDelimiter != null)
             {
                 writer.WritePropertyName("sapDataColumnDelimiter"u8);
                 writer.WriteObjectValue(SapDataColumnDelimiter);
             }
-            if (Optional.IsDefined(PartitionOption))
+            if (PartitionOption != null)
             {
                 writer.WritePropertyName("partitionOption"u8);
                 writer.WriteObjectValue(PartitionOption);
             }
-            if (Optional.IsDefined(PartitionSettings))
+            if (PartitionSettings != null)
             {
                 writer.WritePropertyName("partitionSettings"u8);
                 writer.WriteObjectValue(PartitionSettings);
             }
-            if (Optional.IsDefined(QueryTimeout))
+            if (QueryTimeout != null)
             {
                 writer.WritePropertyName("queryTimeout"u8);
                 writer.WriteObjectValue(QueryTimeout);
             }
-            if (Optional.IsDefined(AdditionalColumns))
+            if (AdditionalColumns != null)
             {
                 writer.WritePropertyName("additionalColumns"u8);
                 writer.WriteObjectValue(AdditionalColumns);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Optional.IsDefined(SourceRetryCount))
+            if (SourceRetryCount != null)
             {
                 writer.WritePropertyName("sourceRetryCount"u8);
                 writer.WriteObjectValue(SourceRetryCount);
             }
-            if (Optional.IsDefined(SourceRetryWait))
+            if (SourceRetryWait != null)
             {
                 writer.WritePropertyName("sourceRetryWait"u8);
                 writer.WriteObjectValue(SourceRetryWait);
             }
-            if (Optional.IsDefined(MaxConcurrentConnections))
+            if (MaxConcurrentConnections != null)
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 writer.WriteObjectValue(MaxConcurrentConnections);
@@ -105,21 +105,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> rowCount = default;
-            Optional<object> rowSkips = default;
-            Optional<object> rfcTableFields = default;
-            Optional<object> rfcTableOptions = default;
-            Optional<object> batchSize = default;
-            Optional<object> customRfcReadTableFunctionModule = default;
-            Optional<object> sapDataColumnDelimiter = default;
-            Optional<object> partitionOption = default;
-            Optional<SapTablePartitionSettings> partitionSettings = default;
-            Optional<object> queryTimeout = default;
-            Optional<object> additionalColumns = default;
+            object rowCount = default;
+            object rowSkips = default;
+            object rfcTableFields = default;
+            object rfcTableOptions = default;
+            object batchSize = default;
+            object customRfcReadTableFunctionModule = default;
+            object sapDataColumnDelimiter = default;
+            object partitionOption = default;
+            SapTablePartitionSettings partitionSettings = default;
+            object queryTimeout = default;
+            object additionalColumns = default;
             string type = default;
-            Optional<object> sourceRetryCount = default;
-            Optional<object> sourceRetryWait = default;
-            Optional<object> maxConcurrentConnections = default;
+            object sourceRetryCount = default;
+            object sourceRetryWait = default;
+            object maxConcurrentConnections = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -258,7 +258,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SapTableSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, queryTimeout.Value, additionalColumns.Value, rowCount.Value, rowSkips.Value, rfcTableFields.Value, rfcTableOptions.Value, batchSize.Value, customRfcReadTableFunctionModule.Value, sapDataColumnDelimiter.Value, partitionOption.Value, partitionSettings.Value);
+            return new SapTableSource(
+                type,
+                sourceRetryCount,
+                sourceRetryWait,
+                maxConcurrentConnections,
+                additionalProperties,
+                queryTimeout,
+                additionalColumns,
+                rowCount,
+                rowSkips,
+                rfcTableFields,
+                rfcTableOptions,
+                batchSize,
+                customRfcReadTableFunctionModule,
+                sapDataColumnDelimiter,
+                partitionOption,
+                partitionSettings);
         }
 
         internal partial class SapTableSourceConverter : JsonConverter<SapTableSource>

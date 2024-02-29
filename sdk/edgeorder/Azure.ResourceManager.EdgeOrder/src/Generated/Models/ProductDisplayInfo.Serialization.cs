@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProductFamilyDisplayName))
+            if (options.Format != "W" && ProductFamilyDisplayName != null)
             {
                 writer.WritePropertyName("productFamilyDisplayName"u8);
                 writer.WriteStringValue(ProductFamilyDisplayName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ConfigurationDisplayName))
+            if (options.Format != "W" && ConfigurationDisplayName != null)
             {
                 writer.WritePropertyName("configurationDisplayName"u8);
                 writer.WriteStringValue(ConfigurationDisplayName);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Optional<string> productFamilyDisplayName = default;
-            Optional<string> configurationDisplayName = default;
+            string productFamilyDisplayName = default;
+            string configurationDisplayName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProductDisplayInfo(productFamilyDisplayName.Value, configurationDisplayName.Value, serializedAdditionalRawData);
+            return new ProductDisplayInfo(productFamilyDisplayName, configurationDisplayName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProductDisplayInfo>.Write(ModelReaderWriterOptions options)

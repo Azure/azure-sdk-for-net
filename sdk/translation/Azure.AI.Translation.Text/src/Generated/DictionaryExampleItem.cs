@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.AI.Translation.Text
 {
@@ -60,9 +59,18 @@ namespace Azure.AI.Translation.Text
         /// <exception cref="ArgumentNullException"> <paramref name="normalizedSource"/>, <paramref name="normalizedTarget"/> or <paramref name="examples"/> is null. </exception>
         internal DictionaryExampleItem(string normalizedSource, string normalizedTarget, IEnumerable<DictionaryExample> examples)
         {
-            Argument.AssertNotNull(normalizedSource, nameof(normalizedSource));
-            Argument.AssertNotNull(normalizedTarget, nameof(normalizedTarget));
-            Argument.AssertNotNull(examples, nameof(examples));
+            if (normalizedSource == null)
+            {
+                throw new ArgumentNullException(nameof(normalizedSource));
+            }
+            if (normalizedTarget == null)
+            {
+                throw new ArgumentNullException(nameof(normalizedTarget));
+            }
+            if (examples == null)
+            {
+                throw new ArgumentNullException(nameof(examples));
+            }
 
             NormalizedSource = normalizedSource;
             NormalizedTarget = normalizedTarget;

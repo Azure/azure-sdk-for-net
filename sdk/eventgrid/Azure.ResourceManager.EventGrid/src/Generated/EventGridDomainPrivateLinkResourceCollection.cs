@@ -81,7 +81,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
         public virtual async Task<Response<EventGridDomainPrivateLinkResource>> GetAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
+            if (privateLinkResourceName == null)
+            {
+                throw new ArgumentNullException(nameof(privateLinkResourceName));
+            }
+            if (privateLinkResourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateLinkResourceName));
+            }
 
             using var scope = _eventGridDomainPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("EventGridDomainPrivateLinkResourceCollection.Get");
             scope.Start();
@@ -126,7 +133,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
         public virtual Response<EventGridDomainPrivateLinkResource> Get(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
+            if (privateLinkResourceName == null)
+            {
+                throw new ArgumentNullException(nameof(privateLinkResourceName));
+            }
+            if (privateLinkResourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateLinkResourceName));
+            }
 
             using var scope = _eventGridDomainPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("EventGridDomainPrivateLinkResourceCollection.Get");
             scope.Start();
@@ -235,7 +249,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
+            if (privateLinkResourceName == null)
+            {
+                throw new ArgumentNullException(nameof(privateLinkResourceName));
+            }
+            if (privateLinkResourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateLinkResourceName));
+            }
 
             using var scope = _eventGridDomainPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("EventGridDomainPrivateLinkResourceCollection.Exists");
             scope.Start();
@@ -278,7 +299,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
         public virtual Response<bool> Exists(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
+            if (privateLinkResourceName == null)
+            {
+                throw new ArgumentNullException(nameof(privateLinkResourceName));
+            }
+            if (privateLinkResourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateLinkResourceName));
+            }
 
             using var scope = _eventGridDomainPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("EventGridDomainPrivateLinkResourceCollection.Exists");
             scope.Start();
@@ -321,7 +349,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
         public virtual async Task<NullableResponse<EventGridDomainPrivateLinkResource>> GetIfExistsAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
+            if (privateLinkResourceName == null)
+            {
+                throw new ArgumentNullException(nameof(privateLinkResourceName));
+            }
+            if (privateLinkResourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateLinkResourceName));
+            }
 
             using var scope = _eventGridDomainPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("EventGridDomainPrivateLinkResourceCollection.GetIfExists");
             scope.Start();
@@ -366,7 +401,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
         public virtual NullableResponse<EventGridDomainPrivateLinkResource> GetIfExists(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
+            if (privateLinkResourceName == null)
+            {
+                throw new ArgumentNullException(nameof(privateLinkResourceName));
+            }
+            if (privateLinkResourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateLinkResourceName));
+            }
 
             using var scope = _eventGridDomainPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("EventGridDomainPrivateLinkResourceCollection.GetIfExists");
             scope.Start();

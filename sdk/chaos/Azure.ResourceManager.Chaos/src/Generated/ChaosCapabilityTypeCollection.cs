@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -80,7 +80,14 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentNullException"> <paramref name="capabilityTypeName"/> is null. </exception>
         public virtual async Task<Response<ChaosCapabilityTypeResource>> GetAsync(string capabilityTypeName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(capabilityTypeName, nameof(capabilityTypeName));
+            if (capabilityTypeName == null)
+            {
+                throw new ArgumentNullException(nameof(capabilityTypeName));
+            }
+            if (capabilityTypeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(capabilityTypeName));
+            }
 
             using var scope = _chaosCapabilityTypeCapabilityTypesClientDiagnostics.CreateScope("ChaosCapabilityTypeCollection.Get");
             scope.Start();
@@ -111,7 +118,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -125,7 +132,14 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentNullException"> <paramref name="capabilityTypeName"/> is null. </exception>
         public virtual Response<ChaosCapabilityTypeResource> Get(string capabilityTypeName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(capabilityTypeName, nameof(capabilityTypeName));
+            if (capabilityTypeName == null)
+            {
+                throw new ArgumentNullException(nameof(capabilityTypeName));
+            }
+            if (capabilityTypeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(capabilityTypeName));
+            }
 
             using var scope = _chaosCapabilityTypeCapabilityTypesClientDiagnostics.CreateScope("ChaosCapabilityTypeCollection.Get");
             scope.Start();
@@ -156,7 +170,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -187,7 +201,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -218,7 +232,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -232,7 +246,14 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentNullException"> <paramref name="capabilityTypeName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string capabilityTypeName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(capabilityTypeName, nameof(capabilityTypeName));
+            if (capabilityTypeName == null)
+            {
+                throw new ArgumentNullException(nameof(capabilityTypeName));
+            }
+            if (capabilityTypeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(capabilityTypeName));
+            }
 
             using var scope = _chaosCapabilityTypeCapabilityTypesClientDiagnostics.CreateScope("ChaosCapabilityTypeCollection.Exists");
             scope.Start();
@@ -261,7 +282,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -275,7 +296,14 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentNullException"> <paramref name="capabilityTypeName"/> is null. </exception>
         public virtual Response<bool> Exists(string capabilityTypeName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(capabilityTypeName, nameof(capabilityTypeName));
+            if (capabilityTypeName == null)
+            {
+                throw new ArgumentNullException(nameof(capabilityTypeName));
+            }
+            if (capabilityTypeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(capabilityTypeName));
+            }
 
             using var scope = _chaosCapabilityTypeCapabilityTypesClientDiagnostics.CreateScope("ChaosCapabilityTypeCollection.Exists");
             scope.Start();
@@ -304,7 +332,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -318,7 +346,14 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentNullException"> <paramref name="capabilityTypeName"/> is null. </exception>
         public virtual async Task<NullableResponse<ChaosCapabilityTypeResource>> GetIfExistsAsync(string capabilityTypeName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(capabilityTypeName, nameof(capabilityTypeName));
+            if (capabilityTypeName == null)
+            {
+                throw new ArgumentNullException(nameof(capabilityTypeName));
+            }
+            if (capabilityTypeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(capabilityTypeName));
+            }
 
             using var scope = _chaosCapabilityTypeCapabilityTypesClientDiagnostics.CreateScope("ChaosCapabilityTypeCollection.GetIfExists");
             scope.Start();
@@ -349,7 +384,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -363,7 +398,14 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentNullException"> <paramref name="capabilityTypeName"/> is null. </exception>
         public virtual NullableResponse<ChaosCapabilityTypeResource> GetIfExists(string capabilityTypeName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(capabilityTypeName, nameof(capabilityTypeName));
+            if (capabilityTypeName == null)
+            {
+                throw new ArgumentNullException(nameof(capabilityTypeName));
+            }
+            if (capabilityTypeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(capabilityTypeName));
+            }
 
             using var scope = _chaosCapabilityTypeCapabilityTypesClientDiagnostics.CreateScope("ChaosCapabilityTypeCollection.GetIfExists");
             scope.Start();

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(OrdererEndpoints))
+            if (options.Format != "W" && !(OrdererEndpoints is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ordererEndpoints"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(StorageEndpoints))
+            if (options.Format != "W" && !(StorageEndpoints is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("storageEndpoints"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ServiceEndpoints))
+            if (options.Format != "W" && !(ServiceEndpoints is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("serviceEndpoints"u8);
                 writer.WriteStartArray();
@@ -94,9 +94,9 @@ namespace Azure.ResourceManager.FluidRelay.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> ordererEndpoints = default;
-            Optional<IReadOnlyList<string>> storageEndpoints = default;
-            Optional<IReadOnlyList<string>> serviceEndpoints = default;
+            IReadOnlyList<string> ordererEndpoints = default;
+            IReadOnlyList<string> storageEndpoints = default;
+            IReadOnlyList<string> serviceEndpoints = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FluidRelayEndpoints(Optional.ToList(ordererEndpoints), Optional.ToList(storageEndpoints), Optional.ToList(serviceEndpoints), serializedAdditionalRawData);
+            return new FluidRelayEndpoints(ordererEndpoints ?? new ChangeTrackingList<string>(), storageEndpoints ?? new ChangeTrackingList<string>(), serviceEndpoints ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FluidRelayEndpoints>.Write(ModelReaderWriterOptions options)

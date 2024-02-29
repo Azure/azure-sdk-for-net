@@ -49,7 +49,10 @@ namespace Azure.ResourceManager.WebPubSub
         /// <returns> Returns a <see cref="WebPubSubResource"/> object. </returns>
         public static WebPubSubResource GetWebPubSubResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableWebPubSubArmClient(client).GetWebPubSubResource(id);
         }
@@ -68,7 +71,10 @@ namespace Azure.ResourceManager.WebPubSub
         /// <returns> Returns a <see cref="WebPubSubHubResource"/> object. </returns>
         public static WebPubSubHubResource GetWebPubSubHubResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableWebPubSubArmClient(client).GetWebPubSubHubResource(id);
         }
@@ -87,7 +93,10 @@ namespace Azure.ResourceManager.WebPubSub
         /// <returns> Returns a <see cref="WebPubSubPrivateEndpointConnectionResource"/> object. </returns>
         public static WebPubSubPrivateEndpointConnectionResource GetWebPubSubPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableWebPubSubArmClient(client).GetWebPubSubPrivateEndpointConnectionResource(id);
         }
@@ -106,7 +115,10 @@ namespace Azure.ResourceManager.WebPubSub
         /// <returns> Returns a <see cref="WebPubSubSharedPrivateLinkResource"/> object. </returns>
         public static WebPubSubSharedPrivateLinkResource GetWebPubSubSharedPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableWebPubSubArmClient(client).GetWebPubSubSharedPrivateLinkResource(id);
         }
@@ -123,7 +135,10 @@ namespace Azure.ResourceManager.WebPubSub
         /// <returns> An object representing collection of WebPubSubResources and their operations over a WebPubSubResource. </returns>
         public static WebPubSubCollection GetWebPubSubs(this ResourceGroupResource resourceGroupResource)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableWebPubSubResourceGroupResource(resourceGroupResource).GetWebPubSubs();
         }
@@ -161,7 +176,10 @@ namespace Azure.ResourceManager.WebPubSub
         [ForwardsClientCalls]
         public static async Task<Response<WebPubSubResource>> GetWebPubSubAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return await GetMockableWebPubSubResourceGroupResource(resourceGroupResource).GetWebPubSubAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
@@ -199,7 +217,10 @@ namespace Azure.ResourceManager.WebPubSub
         [ForwardsClientCalls]
         public static Response<WebPubSubResource> GetWebPubSub(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableWebPubSubResourceGroupResource(resourceGroupResource).GetWebPubSub(resourceName, cancellationToken);
         }
@@ -236,7 +257,10 @@ namespace Azure.ResourceManager.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<WebPubSubNameAvailability>> CheckWebPubSubNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, WebPubSubNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return await GetMockableWebPubSubSubscriptionResource(subscriptionResource).CheckWebPubSubNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
@@ -273,7 +297,10 @@ namespace Azure.ResourceManager.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<WebPubSubNameAvailability> CheckWebPubSubNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, WebPubSubNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableWebPubSubSubscriptionResource(subscriptionResource).CheckWebPubSubNameAvailability(location, content, cancellationToken);
         }
@@ -309,7 +336,10 @@ namespace Azure.ResourceManager.WebPubSub
         /// <returns> An async collection of <see cref="WebPubSubResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<WebPubSubResource> GetWebPubSubsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableWebPubSubSubscriptionResource(subscriptionResource).GetWebPubSubsAsync(cancellationToken);
         }
@@ -345,7 +375,10 @@ namespace Azure.ResourceManager.WebPubSub
         /// <returns> A collection of <see cref="WebPubSubResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<WebPubSubResource> GetWebPubSubs(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableWebPubSubSubscriptionResource(subscriptionResource).GetWebPubSubs(cancellationToken);
         }
@@ -378,7 +411,10 @@ namespace Azure.ResourceManager.WebPubSub
         /// <returns> An async collection of <see cref="SignalRServiceUsage"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SignalRServiceUsage> GetUsagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableWebPubSubSubscriptionResource(subscriptionResource).GetUsagesAsync(location, cancellationToken);
         }
@@ -411,7 +447,10 @@ namespace Azure.ResourceManager.WebPubSub
         /// <returns> A collection of <see cref="SignalRServiceUsage"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SignalRServiceUsage> GetUsages(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableWebPubSubSubscriptionResource(subscriptionResource).GetUsages(location, cancellationToken);
         }

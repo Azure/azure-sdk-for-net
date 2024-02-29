@@ -26,47 +26,47 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(UpdateTitle))
+            if (UpdateTitle != null)
             {
                 writer.WritePropertyName("updateTitle"u8);
                 writer.WriteStringValue(UpdateTitle);
             }
-            if (Optional.IsDefined(UpdateSizeInBytes))
+            if (UpdateSizeInBytes.HasValue)
             {
                 writer.WritePropertyName("updateSize"u8);
                 writer.WriteNumberValue(UpdateSizeInBytes.Value);
             }
-            if (Optional.IsDefined(UpdateType))
+            if (UpdateType.HasValue)
             {
                 writer.WritePropertyName("updateType"u8);
                 writer.WriteStringValue(UpdateType.Value.ToString());
             }
-            if (Optional.IsDefined(TargetVersion))
+            if (TargetVersion != null)
             {
                 writer.WritePropertyName("targetVersion"u8);
                 writer.WriteStringValue(TargetVersion);
             }
-            if (Optional.IsDefined(FriendlyVersionNumber))
+            if (FriendlyVersionNumber != null)
             {
                 writer.WritePropertyName("friendlyVersionNumber"u8);
                 writer.WriteStringValue(FriendlyVersionNumber);
             }
-            if (Optional.IsDefined(EstimatedInstallTimeInMins))
+            if (EstimatedInstallTimeInMins.HasValue)
             {
                 writer.WritePropertyName("estimatedInstallTimeInMins"u8);
                 writer.WriteNumberValue(EstimatedInstallTimeInMins.Value);
             }
-            if (Optional.IsDefined(RebootBehavior))
+            if (RebootBehavior.HasValue)
             {
                 writer.WritePropertyName("rebootBehavior"u8);
                 writer.WriteStringValue(RebootBehavior.Value.ToString());
             }
-            if (Optional.IsDefined(InstallationImpact))
+            if (InstallationImpact.HasValue)
             {
                 writer.WritePropertyName("installationImpact"u8);
                 writer.WriteStringValue(InstallationImpact.Value.ToString());
             }
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -109,15 +109,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<string> updateTitle = default;
-            Optional<double> updateSize = default;
-            Optional<DataBoxEdgeUpdateType> updateType = default;
-            Optional<string> targetVersion = default;
-            Optional<string> friendlyVersionNumber = default;
-            Optional<int> estimatedInstallTimeInMins = default;
-            Optional<InstallRebootBehavior> rebootBehavior = default;
-            Optional<InstallationImpact> installationImpact = default;
-            Optional<DataBoxEdgeUpdateStatus> status = default;
+            string updateTitle = default;
+            double? updateSize = default;
+            DataBoxEdgeUpdateType? updateType = default;
+            string targetVersion = default;
+            string friendlyVersionNumber = default;
+            int? estimatedInstallTimeInMins = default;
+            InstallRebootBehavior? rebootBehavior = default;
+            InstallationImpact? installationImpact = default;
+            DataBoxEdgeUpdateStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -197,7 +197,17 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeUpdateDetails(updateTitle.Value, Optional.ToNullable(updateSize), Optional.ToNullable(updateType), targetVersion.Value, friendlyVersionNumber.Value, Optional.ToNullable(estimatedInstallTimeInMins), Optional.ToNullable(rebootBehavior), Optional.ToNullable(installationImpact), Optional.ToNullable(status), serializedAdditionalRawData);
+            return new DataBoxEdgeUpdateDetails(
+                updateTitle,
+                updateSize,
+                updateType,
+                targetVersion,
+                friendlyVersionNumber,
+                estimatedInstallTimeInMins,
+                rebootBehavior,
+                installationImpact,
+                status,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeUpdateDetails>.Write(ModelReaderWriterOptions options)

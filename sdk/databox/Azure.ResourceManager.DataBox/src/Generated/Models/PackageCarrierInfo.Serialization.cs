@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CarrierName))
+            if (CarrierName != null)
             {
                 writer.WritePropertyName("carrierName"u8);
                 writer.WriteStringValue(CarrierName);
             }
-            if (Optional.IsDefined(TrackingId))
+            if (TrackingId != null)
             {
                 writer.WritePropertyName("trackingId"u8);
                 writer.WriteStringValue(TrackingId);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<string> carrierName = default;
-            Optional<string> trackingId = default;
+            string carrierName = default;
+            string trackingId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PackageCarrierInfo(carrierName.Value, trackingId.Value, serializedAdditionalRawData);
+            return new PackageCarrierInfo(carrierName, trackingId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PackageCarrierInfo>.Write(ModelReaderWriterOptions options)

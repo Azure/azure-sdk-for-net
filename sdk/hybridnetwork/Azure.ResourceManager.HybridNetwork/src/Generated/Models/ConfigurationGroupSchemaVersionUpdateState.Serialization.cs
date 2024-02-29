@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(VersionState))
+            if (VersionState.HasValue)
             {
                 writer.WritePropertyName("versionState"u8);
                 writer.WriteStringValue(VersionState.Value.ToString());
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<VersionState> versionState = default;
+            VersionState? versionState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConfigurationGroupSchemaVersionUpdateState(Optional.ToNullable(versionState), serializedAdditionalRawData);
+            return new ConfigurationGroupSchemaVersionUpdateState(versionState, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConfigurationGroupSchemaVersionUpdateState>.Write(ModelReaderWriterOptions options)

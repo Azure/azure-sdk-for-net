@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.IotHub.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(LockDurationAsIso8601))
+            if (LockDurationAsIso8601.HasValue)
             {
                 writer.WritePropertyName("lockDurationAsIso8601"u8);
                 writer.WriteStringValue(LockDurationAsIso8601.Value, "P");
             }
-            if (Optional.IsDefined(TtlAsIso8601))
+            if (TtlAsIso8601.HasValue)
             {
                 writer.WritePropertyName("ttlAsIso8601"u8);
                 writer.WriteStringValue(TtlAsIso8601.Value, "P");
             }
-            if (Optional.IsDefined(MaxDeliveryCount))
+            if (MaxDeliveryCount.HasValue)
             {
                 writer.WritePropertyName("maxDeliveryCount"u8);
                 writer.WriteNumberValue(MaxDeliveryCount.Value);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<TimeSpan> lockDurationAsIso8601 = default;
-            Optional<TimeSpan> ttlAsIso8601 = default;
-            Optional<int> maxDeliveryCount = default;
+            TimeSpan? lockDurationAsIso8601 = default;
+            TimeSpan? ttlAsIso8601 = default;
+            int? maxDeliveryCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MessagingEndpointProperties(Optional.ToNullable(lockDurationAsIso8601), Optional.ToNullable(ttlAsIso8601), Optional.ToNullable(maxDeliveryCount), serializedAdditionalRawData);
+            return new MessagingEndpointProperties(lockDurationAsIso8601, ttlAsIso8601, maxDeliveryCount, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MessagingEndpointProperties>.Write(ModelReaderWriterOptions options)

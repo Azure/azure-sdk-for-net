@@ -58,8 +58,14 @@ namespace Azure.ResourceManager.SignalR
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> or <paramref name="customCertificate"/> is null. </exception>
         public SignalRCustomDomainData(string domainName, WritableSubResource customCertificate)
         {
-            Argument.AssertNotNull(domainName, nameof(domainName));
-            Argument.AssertNotNull(customCertificate, nameof(customCertificate));
+            if (domainName == null)
+            {
+                throw new ArgumentNullException(nameof(domainName));
+            }
+            if (customCertificate == null)
+            {
+                throw new ArgumentNullException(nameof(customCertificate));
+            }
 
             DomainName = domainName;
             CustomCertificate = customCertificate;

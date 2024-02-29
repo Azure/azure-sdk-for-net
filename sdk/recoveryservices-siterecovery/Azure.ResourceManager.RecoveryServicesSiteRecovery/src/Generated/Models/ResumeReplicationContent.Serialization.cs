@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = ResumeReplicationProperties.DeserializeResumeReplicationProperties(property.Value);
+                    properties = ResumeReplicationProperties.DeserializeResumeReplicationProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

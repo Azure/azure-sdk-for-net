@@ -353,7 +353,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AdminRuleGroupResource>> UpdateAsync(WaitUntil waitUntil, AdminRuleGroupData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _adminRuleGroupAdminRuleCollectionsClientDiagnostics.CreateScope("AdminRuleGroupResource.Update");
             scope.Start();
@@ -399,7 +402,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AdminRuleGroupResource> Update(WaitUntil waitUntil, AdminRuleGroupData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _adminRuleGroupAdminRuleCollectionsClientDiagnostics.CreateScope("AdminRuleGroupResource.Update");
             scope.Start();

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ErrorCode))
+            if (options.Format != "W" && ErrorCode != null)
             {
                 writer.WritePropertyName("errorCode"u8);
                 writer.WriteStringValue(ErrorCode);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsRetryable))
+            if (options.Format != "W" && IsRetryable.HasValue)
             {
                 writer.WritePropertyName("isRetryable"u8);
                 writer.WriteStringValue(IsRetryable.Value.ToSerialString());
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<string> errorCode = default;
-            Optional<ActionRetryableState> isRetryable = default;
+            string errorCode = default;
+            ActionRetryableState? isRetryable = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecommendedActionErrorInfo(errorCode.Value, Optional.ToNullable(isRetryable), serializedAdditionalRawData);
+            return new RecommendedActionErrorInfo(errorCode, isRetryable, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecommendedActionErrorInfo>.Write(ModelReaderWriterOptions options)

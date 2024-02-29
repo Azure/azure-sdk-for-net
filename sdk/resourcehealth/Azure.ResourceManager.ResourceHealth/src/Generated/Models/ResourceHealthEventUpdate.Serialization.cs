@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Summary))
+            if (Summary != null)
             {
                 writer.WritePropertyName("summary"u8);
                 writer.WriteStringValue(Summary);
             }
-            if (Optional.IsDefined(UpdatedOn))
+            if (UpdatedOn.HasValue)
             {
                 writer.WritePropertyName("updateDateTime"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 return null;
             }
-            Optional<string> summary = default;
-            Optional<DateTimeOffset> updateDateTime = default;
+            string summary = default;
+            DateTimeOffset? updateDateTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceHealthEventUpdate(summary.Value, Optional.ToNullable(updateDateTime), serializedAdditionalRawData);
+            return new ResourceHealthEventUpdate(summary, updateDateTime, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceHealthEventUpdate>.Write(ModelReaderWriterOptions options)

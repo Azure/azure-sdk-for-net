@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(BuildpackId))
+            if (BuildpackId != null)
             {
                 writer.WritePropertyName("buildpackId"u8);
                 writer.WriteStringValue(BuildpackId);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<string> buildpackId = default;
+            string buildpackId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SupportedBuildpackResourceProperties(buildpackId.Value, serializedAdditionalRawData);
+            return new SupportedBuildpackResourceProperties(buildpackId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SupportedBuildpackResourceProperties>.Write(ModelReaderWriterOptions options)

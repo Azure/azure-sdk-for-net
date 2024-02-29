@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Uri))
+            if (Uri != null)
             {
                 if (Uri != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("url");
                 }
             }
-            if (Optional.IsDefined(BucketName))
+            if (BucketName != null)
             {
                 if (BucketName != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("bucketName");
                 }
             }
-            if (Optional.IsDefined(UseInsecureCommunication))
+            if (UseInsecureCommunication.HasValue)
             {
                 if (UseInsecureCommunication != null)
                 {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("insecure");
                 }
             }
-            if (Optional.IsDefined(TimeoutInSeconds))
+            if (TimeoutInSeconds.HasValue)
             {
                 if (TimeoutInSeconds != null)
                 {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("timeoutInSeconds");
                 }
             }
-            if (Optional.IsDefined(SyncIntervalInSeconds))
+            if (SyncIntervalInSeconds.HasValue)
             {
                 if (SyncIntervalInSeconds != null)
                 {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("syncIntervalInSeconds");
                 }
             }
-            if (Optional.IsDefined(AccessKey))
+            if (AccessKey != null)
             {
                 if (AccessKey != null)
                 {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("accessKey");
                 }
             }
-            if (Optional.IsDefined(LocalAuthRef))
+            if (LocalAuthRef != null)
             {
                 if (LocalAuthRef != null)
                 {
@@ -148,13 +148,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 return null;
             }
-            Optional<Uri> url = default;
-            Optional<string> bucketName = default;
-            Optional<bool?> insecure = default;
-            Optional<long?> timeoutInSeconds = default;
-            Optional<long?> syncIntervalInSeconds = default;
-            Optional<string> accessKey = default;
-            Optional<string> localAuthRef = default;
+            Uri url = default;
+            string bucketName = default;
+            bool? insecure = default;
+            long? timeoutInSeconds = default;
+            long? syncIntervalInSeconds = default;
+            string accessKey = default;
+            string localAuthRef = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -235,7 +235,15 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesBucketUpdateContent(url.Value, bucketName.Value, Optional.ToNullable(insecure), Optional.ToNullable(timeoutInSeconds), Optional.ToNullable(syncIntervalInSeconds), accessKey.Value, localAuthRef.Value, serializedAdditionalRawData);
+            return new KubernetesBucketUpdateContent(
+                url,
+                bucketName,
+                insecure,
+                timeoutInSeconds,
+                syncIntervalInSeconds,
+                accessKey,
+                localAuthRef,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesBucketUpdateContent>.Write(ModelReaderWriterOptions options)

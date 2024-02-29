@@ -20,7 +20,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public AzureMLBatchExecutionActivity(string name) : base(name)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
 
             GlobalParameters = new ChangeTrackingDictionary<string, BinaryData>();
             WebServiceOutputs = new ChangeTrackingDictionary<string, AzureMLWebServiceFile>();
@@ -48,6 +51,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             WebServiceOutputs = webServiceOutputs;
             WebServiceInputs = webServiceInputs;
             ActivityType = activityType ?? "AzureMLBatchExecution";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureMLBatchExecutionActivity"/> for deserialization. </summary>
+        internal AzureMLBatchExecutionActivity()
+        {
         }
 
         /// <summary>

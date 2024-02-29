@@ -19,10 +19,10 @@ namespace Azure.Containers.ContainerRegistry
             {
                 return null;
             }
-            Optional<string> mediaType = default;
-            Optional<OciDescriptor> config = default;
-            Optional<IReadOnlyList<OciDescriptor>> layers = default;
-            Optional<int> schemaVersion = default;
+            string mediaType = default;
+            OciDescriptor config = default;
+            IReadOnlyList<OciDescriptor> layers = default;
+            int? schemaVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mediaType"u8))
@@ -63,7 +63,7 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new V2Manifest(Optional.ToNullable(schemaVersion), mediaType.Value, config.Value, Optional.ToList(layers));
+            return new V2Manifest(schemaVersion, mediaType, config, layers ?? new ChangeTrackingList<OciDescriptor>());
         }
     }
 }

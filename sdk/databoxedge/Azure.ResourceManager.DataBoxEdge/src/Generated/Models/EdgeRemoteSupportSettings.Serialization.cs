@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RemoteApplicationType))
+            if (RemoteApplicationType.HasValue)
             {
                 writer.WritePropertyName("remoteApplicationType"u8);
                 writer.WriteStringValue(RemoteApplicationType.Value.ToString());
             }
-            if (Optional.IsDefined(AccessLevel))
+            if (AccessLevel.HasValue)
             {
                 writer.WritePropertyName("accessLevel"u8);
                 writer.WriteStringValue(AccessLevel.Value.ToString());
             }
-            if (Optional.IsDefined(ExpireOn))
+            if (ExpireOn.HasValue)
             {
                 writer.WritePropertyName("expirationTimeStampInUTC"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<EdgeRemoteApplicationType> remoteApplicationType = default;
-            Optional<EdgeRemoteApplicationAccessLevel> accessLevel = default;
-            Optional<DateTimeOffset> expirationTimeStampInUtc = default;
+            EdgeRemoteApplicationType? remoteApplicationType = default;
+            EdgeRemoteApplicationAccessLevel? accessLevel = default;
+            DateTimeOffset? expirationTimeStampInUtc = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeRemoteSupportSettings(Optional.ToNullable(remoteApplicationType), Optional.ToNullable(accessLevel), Optional.ToNullable(expirationTimeStampInUtc), serializedAdditionalRawData);
+            return new EdgeRemoteSupportSettings(remoteApplicationType, accessLevel, expirationTimeStampInUtc, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeRemoteSupportSettings>.Write(ModelReaderWriterOptions options)

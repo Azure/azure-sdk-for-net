@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteStartObject();
             writer.WritePropertyName("defaultAction"u8);
             writer.WriteStringValue(DefaultAction.ToSerialString());
-            if (Optional.IsCollectionDefined(IPRules))
+            if (!(IPRules is ChangeTrackingList<BatchIPRule> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ipRules"u8);
                 writer.WriteStartArray();
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Batch.Models
                 return null;
             }
             BatchEndpointAccessDefaultAction defaultAction = default;
-            Optional<IList<BatchIPRule>> ipRules = default;
+            IList<BatchIPRule> ipRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Batch.Models
                     List<BatchIPRule> array = new List<BatchIPRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BatchIPRule.DeserializeBatchIPRule(item));
+                        array.Add(BatchIPRule.DeserializeBatchIPRule(item, options));
                     }
                     ipRules = array;
                     continue;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchEndpointAccessProfile(defaultAction, Optional.ToList(ipRules), serializedAdditionalRawData);
+            return new BatchEndpointAccessProfile(defaultAction, ipRules ?? new ChangeTrackingList<BatchIPRule>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchEndpointAccessProfile>.Write(ModelReaderWriterOptions options)

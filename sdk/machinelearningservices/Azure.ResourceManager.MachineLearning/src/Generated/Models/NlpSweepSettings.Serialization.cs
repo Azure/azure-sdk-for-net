@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EarlyTermination))
+            if (EarlyTermination != null)
             {
                 if (EarlyTermination != null)
                 {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<MachineLearningEarlyTerminationPolicy> earlyTermination = default;
+            MachineLearningEarlyTerminationPolicy earlyTermination = default;
             SamplingAlgorithmType samplingAlgorithm = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         earlyTermination = null;
                         continue;
                     }
-                    earlyTermination = MachineLearningEarlyTerminationPolicy.DeserializeMachineLearningEarlyTerminationPolicy(property.Value);
+                    earlyTermination = MachineLearningEarlyTerminationPolicy.DeserializeMachineLearningEarlyTerminationPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("samplingAlgorithm"u8))
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NlpSweepSettings(earlyTermination.Value, samplingAlgorithm, serializedAdditionalRawData);
+            return new NlpSweepSettings(earlyTermination, samplingAlgorithm, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NlpSweepSettings>.Write(ModelReaderWriterOptions options)

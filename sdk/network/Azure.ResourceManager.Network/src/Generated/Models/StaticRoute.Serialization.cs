@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsCollectionDefined(AddressPrefixes))
+            if (!(AddressPrefixes is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("addressPrefixes"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextHopIPAddress))
+            if (NextHopIPAddress != null)
             {
                 writer.WritePropertyName("nextHopIpAddress"u8);
                 writer.WriteStringValue(NextHopIPAddress);
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<IList<string>> addressPrefixes = default;
-            Optional<string> nextHopIPAddress = default;
+            string name = default;
+            IList<string> addressPrefixes = default;
+            string nextHopIPAddress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StaticRoute(name.Value, Optional.ToList(addressPrefixes), nextHopIPAddress.Value, serializedAdditionalRawData);
+            return new StaticRoute(name, addressPrefixes ?? new ChangeTrackingList<string>(), nextHopIPAddress, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StaticRoute>.Write(ModelReaderWriterOptions options)

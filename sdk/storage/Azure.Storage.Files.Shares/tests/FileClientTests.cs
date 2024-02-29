@@ -9,16 +9,13 @@ using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Files.Shares.Specialized;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
-using Microsoft.Diagnostics.Symbols;
 using Moq;
 using NUnit.Framework;
-using NUnit.Framework.Internal;
 
 namespace Azure.Storage.Files.Shares.Tests
 {
@@ -3092,6 +3089,80 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2024_05_04)]
+        [TestCase(null)]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task GetRangeListDiffWithRenameAsync(bool? renameSupport)
+        {
+            // Arrange
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
+            string destFileName = GetNewFileName();
+            ShareFileClient sourceFile = InstrumentClient(test.Directory.GetFileClient(GetNewFileName()));
+            await sourceFile.CreateAsync(Constants.MB);
+
+            byte[] data = GetRandomBuffer(Constants.KB);
+            using Stream stream = new MemoryStream(data);
+            HttpRange range = new HttpRange(Constants.KB, Constants.KB);
+            await sourceFile.UploadRangeAsync(
+                   range: range,
+                   content: stream);
+
+            Response<ShareSnapshotInfo> snapshotResponse0 = await test.Share.CreateSnapshotAsync();
+
+            stream.Position = 0;
+            HttpRange range2 = new HttpRange(3 * Constants.KB, Constants.KB);
+            await sourceFile.UploadRangeAsync(
+                   range: range2,
+                   content: stream);
+
+            HttpRange range3 = new HttpRange(0, 512);
+            Response<ShareFileUploadInfo> response = await sourceFile.ClearRangeAsync(range3);
+
+            // rename file after first snapshot
+            ShareFileClient destFile = await sourceFile.RenameAsync(destinationPath: test.Directory.Name + "/" + destFileName);
+
+            // take another share snapshot
+            Response<ShareSnapshotInfo> snapshotResponse1 = await test.Share.CreateSnapshotAsync();
+
+            ShareFileGetRangeListDiffOptions options = new ShareFileGetRangeListDiffOptions
+            {
+                Snapshot = snapshotResponse1.Value.Snapshot,
+                PreviousSnapshot = snapshotResponse0.Value.Snapshot,
+                IncludeRenames = renameSupport
+            };
+
+            try
+            {
+                if (renameSupport == true)
+                {
+                    // Act - renamed file range diff
+                    Response<ShareFileRangeInfo> rangeListResponse = await destFile.GetRangeListDiffAsync(options);
+                    // Assert
+                    // Ensure that we grab the whole ETag value from the service without removing the quotes
+                    Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+
+                    // Ensure the ranges list is correct after the clear call by doing a GetRangeListDiff call
+                    Assert.AreEqual(1, rangeListResponse.Value.Ranges.Count());
+                    Assert.AreEqual(range2, rangeListResponse.Value.Ranges.First());
+                    Assert.AreEqual(1, rangeListResponse.Value.ClearRanges.Count());
+                    Assert.AreEqual(range3, rangeListResponse.Value.ClearRanges.First());
+                }
+                else
+                {
+                    // Act
+                    await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                        destFile.GetRangeListDiffAsync(options),
+                        e => Assert.AreEqual(ShareErrorCode.PreviousSnapshotNotFound.ToString(), e.ErrorCode));
+                }
+            }
+            finally
+            {
+                await destFile.DeleteAsync();
+            }
+        }
+
+        [RecordedTest]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
         public async Task GetRangeListDiffAsync_OAuth()
         {
@@ -4490,19 +4561,18 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.AreEqual(0, handles.Count);
         }
 
-        // Uncomment this test when Client Name is enabled with STG 93.
-        //[PlaybackOnly("Not possible to make this test live")]
-        //[ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2024_02_04)]
-        //public async Task ListHandlesWithClientName()
-        //{
-        //    ShareServiceClient serviceClient = SharesClientBuilder.GetServiceClient_SharedKey();
-        //    ShareClient shareClient = serviceClient.GetShareClient("myshare");
-        //    ShareDirectoryClient directoryClient = shareClient.GetDirectoryClient("directory");
-        //    ShareFileClient fileClient = directoryClient.GetFileClient("file");
-        //    IList<ShareFileHandle> handles = await fileClient.GetHandlesAsync().ToListAsync();
-        //    // Assert
-        //    Assert.NotNull(handles[0].ClientName);
-        //}
+        [PlaybackOnly("Not possible to make this test live")]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2024_02_04)]
+        public async Task ListHandlesWithClientName()
+        {
+            ShareServiceClient serviceClient = SharesClientBuilder.GetServiceClient_SharedKey();
+            ShareClient shareClient = serviceClient.GetShareClient("myshare");
+            ShareDirectoryClient directoryClient = shareClient.GetDirectoryClient("directory");
+            ShareFileClient fileClient = directoryClient.GetFileClient("file");
+            IList<ShareFileHandle> handles = await fileClient.GetHandlesAsync().ToListAsync();
+            // Assert
+            Assert.NotNull(handles[0].ClientName);
+        }
 
         [RecordedTest]
         public async Task ListHandles_Min()
@@ -6064,6 +6134,40 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Act
             ShareFileClient destFile = await sasFileClient.RenameAsync(destinationPath: newPath + "?" + destSas);
+
+            // Assert
+            Response<ShareFileProperties> response = await destFile.GetPropertiesAsync();
+        }
+
+        [LiveOnly]
+        [Test]
+        public async Task RenameAsync_SourceSasUri()
+        {
+            // Arrange
+            string shareName = GetNewShareName();
+            await using DisposingShare test = await GetTestShareAsync(shareName: shareName);
+            string sourceDirectoryName = GetNewDirectoryName();
+            ShareDirectoryClient directoryClient = await test.Share.CreateDirectoryAsync(GetNewDirectoryName());
+            ShareDirectoryClient sourceDirectoryClient = await directoryClient.CreateSubdirectoryAsync(sourceDirectoryName);
+            ShareFileClient sourceFile = await sourceDirectoryClient.CreateFileAsync(GetNewFileName(), Constants.MB);
+
+            // Make unique source sas
+            SasQueryParameters sourceSas = GetNewFileServiceSasCredentialsShare(shareName);
+            ShareUriBuilder sourceUriBuilder = new ShareUriBuilder(sourceDirectoryClient.Uri)
+            {
+                Sas = sourceSas
+            };
+
+            string destFileName = GetNewFileName();
+
+            ShareDirectoryClient sasDirectoryClient = InstrumentClient(new ShareDirectoryClient(sourceUriBuilder.ToUri(), GetOptions()));
+            ShareFileClient sasFileClient = InstrumentClient(sasDirectoryClient.GetFileClient(sourceFile.Name));
+
+            // Make unique destination sas
+            string newPath = sourceDirectoryClient.Path + "/" + destFileName;
+
+            // Act
+            ShareFileClient destFile = await sasFileClient.RenameAsync(destinationPath: newPath);
 
             // Assert
             Response<ShareFileProperties> response = await destFile.GetPropertiesAsync();

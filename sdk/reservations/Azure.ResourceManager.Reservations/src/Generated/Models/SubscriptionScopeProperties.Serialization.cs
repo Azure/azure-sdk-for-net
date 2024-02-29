@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Scopes))
+            if (!(Scopes is ChangeTrackingList<ScopeProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("scopes"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ScopeProperties>> scopes = default;
+            IReadOnlyList<ScopeProperties> scopes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     List<ScopeProperties> array = new List<ScopeProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScopeProperties.DeserializeScopeProperties(item));
+                        array.Add(ScopeProperties.DeserializeScopeProperties(item, options));
                     }
                     scopes = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubscriptionScopeProperties(Optional.ToList(scopes), serializedAdditionalRawData);
+            return new SubscriptionScopeProperties(scopes ?? new ChangeTrackingList<ScopeProperties>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubscriptionScopeProperties>.Write(ModelReaderWriterOptions options)

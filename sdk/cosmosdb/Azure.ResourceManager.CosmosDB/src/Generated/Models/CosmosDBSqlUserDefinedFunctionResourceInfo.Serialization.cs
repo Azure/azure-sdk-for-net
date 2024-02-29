@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(FunctionName);
-            if (Optional.IsDefined(Body))
+            if (Body != null)
             {
                 writer.WritePropertyName("body"u8);
                 writer.WriteStringValue(Body);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             string id = default;
-            Optional<string> body = default;
+            string body = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBSqlUserDefinedFunctionResourceInfo(id, body.Value, serializedAdditionalRawData);
+            return new CosmosDBSqlUserDefinedFunctionResourceInfo(id, body, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBSqlUserDefinedFunctionResourceInfo>.Write(ModelReaderWriterOptions options)

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ManifestFile))
+            if (options.Format != "W" && ManifestFile != null)
             {
                 writer.WritePropertyName("manifestFile"u8);
                 writer.WriteStringValue(ManifestFile);
             }
-            if (options.Format != "W" && Optional.IsDefined(ManifestHash))
+            if (options.Format != "W" && ManifestHash != null)
             {
                 writer.WritePropertyName("manifestHash"u8);
                 writer.WriteStringValue(ManifestHash);
             }
-            if (options.Format != "W" && Optional.IsDefined(BackupManifestCloudPath))
+            if (options.Format != "W" && BackupManifestCloudPath != null)
             {
                 writer.WritePropertyName("backupManifestCloudPath"u8);
                 writer.WriteStringValue(BackupManifestCloudPath);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<string> manifestFile = default;
-            Optional<string> manifestHash = default;
-            Optional<string> backupManifestCloudPath = default;
+            string manifestFile = default;
+            string manifestHash = default;
+            string backupManifestCloudPath = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExportDiskDetails(manifestFile.Value, manifestHash.Value, backupManifestCloudPath.Value, serializedAdditionalRawData);
+            return new ExportDiskDetails(manifestFile, manifestHash, backupManifestCloudPath, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExportDiskDetails>.Write(ModelReaderWriterOptions options)

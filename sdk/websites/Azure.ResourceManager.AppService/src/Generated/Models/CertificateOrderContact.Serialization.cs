@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Email))
+            if (Email != null)
             {
                 writer.WritePropertyName("email"u8);
                 writer.WriteStringValue(Email);
             }
-            if (Optional.IsDefined(NameFirst))
+            if (NameFirst != null)
             {
                 writer.WritePropertyName("nameFirst"u8);
                 writer.WriteStringValue(NameFirst);
             }
-            if (Optional.IsDefined(NameLast))
+            if (NameLast != null)
             {
                 writer.WritePropertyName("nameLast"u8);
                 writer.WriteStringValue(NameLast);
             }
-            if (Optional.IsDefined(Phone))
+            if (Phone != null)
             {
                 writer.WritePropertyName("phone"u8);
                 writer.WriteStringValue(Phone);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> email = default;
-            Optional<string> nameFirst = default;
-            Optional<string> nameLast = default;
-            Optional<string> phone = default;
+            string email = default;
+            string nameFirst = default;
+            string nameLast = default;
+            string phone = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CertificateOrderContact(email.Value, nameFirst.Value, nameLast.Value, phone.Value, serializedAdditionalRawData);
+            return new CertificateOrderContact(email, nameFirst, nameLast, phone, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CertificateOrderContact>.Write(ModelReaderWriterOptions options)

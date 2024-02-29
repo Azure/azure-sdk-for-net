@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CreateDnsRecord))
+            if (CreateDnsRecord.HasValue)
             {
                 writer.WritePropertyName("createDnsRecord"u8);
                 writer.WriteBooleanValue(CreateDnsRecord.Value);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<bool> createDnsRecord = default;
+            bool? createDnsRecord = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedServerDnsAliasCreateOrUpdateContent(Optional.ToNullable(createDnsRecord), serializedAdditionalRawData);
+            return new ManagedServerDnsAliasCreateOrUpdateContent(createDnsRecord, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedServerDnsAliasCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

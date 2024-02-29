@@ -27,17 +27,17 @@ namespace Azure.AI.OpenAI
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Url))
+            if (Url != null)
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Url.AbsoluteUri);
             }
-            if (Optional.IsDefined(Base64Data))
+            if (Base64Data != null)
             {
                 writer.WritePropertyName("b64_json"u8);
                 writer.WriteStringValue(Base64Data);
             }
-            if (Optional.IsDefined(RevisedPrompt))
+            if (RevisedPrompt != null)
             {
                 writer.WritePropertyName("revised_prompt"u8);
                 writer.WriteStringValue(RevisedPrompt);
@@ -80,9 +80,9 @@ namespace Azure.AI.OpenAI
             {
                 return null;
             }
-            Optional<Uri> url = default;
-            Optional<string> b64Json = default;
-            Optional<string> revisedPrompt = default;
+            Uri url = default;
+            string b64Json = default;
+            string revisedPrompt = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ImageGenerationData(url.Value, b64Json.Value, revisedPrompt.Value, serializedAdditionalRawData);
+            return new ImageGenerationData(url, b64Json, revisedPrompt, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ImageGenerationData>.Write(ModelReaderWriterOptions options)

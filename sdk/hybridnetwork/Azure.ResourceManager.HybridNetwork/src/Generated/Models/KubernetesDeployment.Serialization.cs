@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Namespace))
+            if (Namespace != null)
             {
                 writer.WritePropertyName("namespace"u8);
                 writer.WriteStringValue(Namespace);
             }
-            if (Optional.IsDefined(DesiredNumberOfPods))
+            if (DesiredNumberOfPods.HasValue)
             {
                 writer.WritePropertyName("desired"u8);
                 writer.WriteNumberValue(DesiredNumberOfPods.Value);
             }
-            if (Optional.IsDefined(ReadyNumberOfPods))
+            if (ReadyNumberOfPods.HasValue)
             {
                 writer.WritePropertyName("ready"u8);
                 writer.WriteNumberValue(ReadyNumberOfPods.Value);
             }
-            if (Optional.IsDefined(UpToDateNumberOfPods))
+            if (UpToDateNumberOfPods.HasValue)
             {
                 writer.WritePropertyName("upToDate"u8);
                 writer.WriteNumberValue(UpToDateNumberOfPods.Value);
             }
-            if (Optional.IsDefined(AvailableNumberOfPods))
+            if (AvailableNumberOfPods.HasValue)
             {
                 writer.WritePropertyName("available"u8);
                 writer.WriteNumberValue(AvailableNumberOfPods.Value);
             }
-            if (Optional.IsDefined(CreatedOn))
+            if (CreatedOn.HasValue)
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> @namespace = default;
-            Optional<int> desired = default;
-            Optional<int> ready = default;
-            Optional<int> upToDate = default;
-            Optional<int> available = default;
-            Optional<DateTimeOffset> creationTime = default;
+            string name = default;
+            string @namespace = default;
+            int? desired = default;
+            int? ready = default;
+            int? upToDate = default;
+            int? available = default;
+            DateTimeOffset? creationTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -171,7 +171,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesDeployment(name.Value, @namespace.Value, Optional.ToNullable(desired), Optional.ToNullable(ready), Optional.ToNullable(upToDate), Optional.ToNullable(available), Optional.ToNullable(creationTime), serializedAdditionalRawData);
+            return new KubernetesDeployment(
+                name,
+                @namespace,
+                desired,
+                ready,
+                upToDate,
+                available,
+                creationTime,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesDeployment>.Write(ModelReaderWriterOptions options)

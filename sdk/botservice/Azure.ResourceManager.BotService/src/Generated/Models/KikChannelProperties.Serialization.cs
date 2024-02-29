@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.BotService.Models
             writer.WriteStartObject();
             writer.WritePropertyName("userName"u8);
             writer.WriteStringValue(UserName);
-            if (Optional.IsDefined(ApiKey))
+            if (ApiKey != null)
             {
                 writer.WritePropertyName("apiKey"u8);
                 writer.WriteStringValue(ApiKey);
             }
-            if (Optional.IsDefined(IsValidated))
+            if (IsValidated.HasValue)
             {
                 writer.WritePropertyName("isValidated"u8);
                 writer.WriteBooleanValue(IsValidated.Value);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.BotService.Models
                 return null;
             }
             string userName = default;
-            Optional<string> apiKey = default;
-            Optional<bool> isValidated = default;
+            string apiKey = default;
+            bool? isValidated = default;
             bool isEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KikChannelProperties(userName, apiKey.Value, Optional.ToNullable(isValidated), isEnabled, serializedAdditionalRawData);
+            return new KikChannelProperties(userName, apiKey, isValidated, isEnabled, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KikChannelProperties>.Write(ModelReaderWriterOptions options)

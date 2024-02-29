@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Maps.Routing.Models
 {
@@ -18,8 +17,8 @@ namespace Azure.Maps.Routing.Models
             {
                 return null;
             }
-            Optional<int> statusCode = default;
-            Optional<RouteMatrixResultResponse> response = default;
+            int? statusCode = default;
+            RouteMatrixResultResponse response = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("statusCode"u8))
@@ -41,7 +40,7 @@ namespace Azure.Maps.Routing.Models
                     continue;
                 }
             }
-            return new RouteMatrix(Optional.ToNullable(statusCode), response.Value);
+            return new RouteMatrix(statusCode, response);
         }
     }
 }

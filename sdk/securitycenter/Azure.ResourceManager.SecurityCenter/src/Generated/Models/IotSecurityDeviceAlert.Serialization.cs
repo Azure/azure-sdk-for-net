@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(AlertDisplayName))
+            if (options.Format != "W" && AlertDisplayName != null)
             {
                 writer.WritePropertyName("alertDisplayName"u8);
                 writer.WriteStringValue(AlertDisplayName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ReportedSeverity))
+            if (options.Format != "W" && ReportedSeverity.HasValue)
             {
                 writer.WritePropertyName("reportedSeverity"u8);
                 writer.WriteStringValue(ReportedSeverity.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(AlertsCount))
+            if (options.Format != "W" && AlertsCount.HasValue)
             {
                 writer.WritePropertyName("alertsCount"u8);
                 writer.WriteNumberValue(AlertsCount.Value);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> alertDisplayName = default;
-            Optional<ReportedSeverity> reportedSeverity = default;
-            Optional<long> alertsCount = default;
+            string alertDisplayName = default;
+            ReportedSeverity? reportedSeverity = default;
+            long? alertsCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotSecurityDeviceAlert(alertDisplayName.Value, Optional.ToNullable(reportedSeverity), Optional.ToNullable(alertsCount), serializedAdditionalRawData);
+            return new IotSecurityDeviceAlert(alertDisplayName, reportedSeverity, alertsCount, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotSecurityDeviceAlert>.Write(ModelReaderWriterOptions options)

@@ -20,5 +20,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             ExportSettingsType = exportSettingsType ?? "Unknown";
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownExportSettings"/> for deserialization. </summary>
+        internal UnknownExportSettings()
+        {
+        }
     }
 }

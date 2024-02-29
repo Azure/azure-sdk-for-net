@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Billing.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DestinationEnrollmentAccountId))
+            if (DestinationEnrollmentAccountId != null)
             {
                 writer.WritePropertyName("destinationEnrollmentAccountId"u8);
                 writer.WriteStringValue(DestinationEnrollmentAccountId);
             }
-            if (Optional.IsDefined(DestinationInvoiceSectionId))
+            if (DestinationInvoiceSectionId != null)
             {
                 writer.WritePropertyName("destinationInvoiceSectionId"u8);
                 writer.WriteStringValue(DestinationInvoiceSectionId);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 return null;
             }
-            Optional<string> destinationEnrollmentAccountId = default;
-            Optional<ResourceIdentifier> destinationInvoiceSectionId = default;
+            string destinationEnrollmentAccountId = default;
+            ResourceIdentifier destinationInvoiceSectionId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Billing.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BillingSubscriptionMoveContent(destinationEnrollmentAccountId.Value, destinationInvoiceSectionId.Value, serializedAdditionalRawData);
+            return new BillingSubscriptionMoveContent(destinationEnrollmentAccountId, destinationInvoiceSectionId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BillingSubscriptionMoveContent>.Write(ModelReaderWriterOptions options)

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,24 +47,24 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(StartAddress))
+            if (StartAddress != null)
             {
                 writer.WritePropertyName("startAddress"u8);
                 writer.WriteStringValue(StartAddress);
             }
-            if (Optional.IsDefined(EndAddress))
+            if (EndAddress != null)
             {
                 writer.WritePropertyName("endAddress"u8);
                 writer.WriteStringValue(EndAddress);
             }
-            if (Optional.IsDefined(RouteType))
+            if (RouteType.HasValue)
             {
                 writer.WritePropertyName("routeType"u8);
                 writer.WriteStringValue(RouteType.Value.ToString());
@@ -108,14 +108,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> startAddress = default;
-            Optional<string> endAddress = default;
-            Optional<AppServiceVirtualNetworkRouteType> routeType = default;
+            SystemData systemData = default;
+            string startAddress = default;
+            string endAddress = default;
+            AppServiceVirtualNetworkRouteType? routeType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -186,7 +186,16 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceVirtualNetworkRoute(id, name, type, systemData.Value, startAddress.Value, endAddress.Value, Optional.ToNullable(routeType), kind.Value, serializedAdditionalRawData);
+            return new AppServiceVirtualNetworkRoute(
+                id,
+                name,
+                type,
+                systemData,
+                startAddress,
+                endAddress,
+                routeType,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceVirtualNetworkRoute>.Write(ModelReaderWriterOptions options)

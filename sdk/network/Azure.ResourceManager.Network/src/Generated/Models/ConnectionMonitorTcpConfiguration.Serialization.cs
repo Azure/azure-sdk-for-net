@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Port))
+            if (Port.HasValue)
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (Optional.IsDefined(DisableTraceRoute))
+            if (DisableTraceRoute.HasValue)
             {
                 writer.WritePropertyName("disableTraceRoute"u8);
                 writer.WriteBooleanValue(DisableTraceRoute.Value);
             }
-            if (Optional.IsDefined(DestinationPortBehavior))
+            if (DestinationPortBehavior.HasValue)
             {
                 writer.WritePropertyName("destinationPortBehavior"u8);
                 writer.WriteStringValue(DestinationPortBehavior.Value.ToString());
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<int> port = default;
-            Optional<bool> disableTraceRoute = default;
-            Optional<DestinationPortBehavior> destinationPortBehavior = default;
+            int? port = default;
+            bool? disableTraceRoute = default;
+            DestinationPortBehavior? destinationPortBehavior = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectionMonitorTcpConfiguration(Optional.ToNullable(port), Optional.ToNullable(disableTraceRoute), Optional.ToNullable(destinationPortBehavior), serializedAdditionalRawData);
+            return new ConnectionMonitorTcpConfiguration(port, disableTraceRoute, destinationPortBehavior, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectionMonitorTcpConfiguration>.Write(ModelReaderWriterOptions options)

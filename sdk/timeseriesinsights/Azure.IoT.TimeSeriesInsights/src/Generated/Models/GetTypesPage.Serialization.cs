@@ -19,8 +19,8 @@ namespace Azure.IoT.TimeSeriesInsights
             {
                 return null;
             }
-            Optional<IReadOnlyList<TimeSeriesType>> types = default;
-            Optional<string> continuationToken = default;
+            IReadOnlyList<TimeSeriesType> types = default;
+            string continuationToken = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("types"u8))
@@ -43,7 +43,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     continue;
                 }
             }
-            return new GetTypesPage(continuationToken.Value, Optional.ToList(types));
+            return new GetTypesPage(continuationToken, types ?? new ChangeTrackingList<TimeSeriesType>());
         }
     }
 }

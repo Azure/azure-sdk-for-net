@@ -35,3 +35,5 @@ extends:
     Artifacts:
     - name: Azure.AI.OpenAI
       safeName: AzureAIOpenAI
+    - name: Azure.AI.OpenAI.Assistants
+      safeName: AzureAIOpenAIAssistants

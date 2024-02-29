@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ConsentToAuthorization))
+            if (ConsentToAuthorization.HasValue)
             {
                 writer.WritePropertyName("consentToAuthorization"u8);
                 writer.WriteBooleanValue(ConsentToAuthorization.Value);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<bool> consentToAuthorization = default;
+            bool? consentToAuthorization = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProviderConsentDefinition(Optional.ToNullable(consentToAuthorization), serializedAdditionalRawData);
+            return new ProviderConsentDefinition(consentToAuthorization, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProviderConsentDefinition>.Write(ModelReaderWriterOptions options)

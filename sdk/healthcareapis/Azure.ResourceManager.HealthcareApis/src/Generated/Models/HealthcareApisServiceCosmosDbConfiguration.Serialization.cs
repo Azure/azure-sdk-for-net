@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(OfferThroughput))
+            if (OfferThroughput.HasValue)
             {
                 writer.WritePropertyName("offerThroughput"u8);
                 writer.WriteNumberValue(OfferThroughput.Value);
             }
-            if (Optional.IsDefined(KeyVaultKeyUri))
+            if (KeyVaultKeyUri != null)
             {
                 writer.WritePropertyName("keyVaultKeyUri"u8);
                 writer.WriteStringValue(KeyVaultKeyUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(CrossTenantCmkApplicationId))
+            if (CrossTenantCmkApplicationId.HasValue)
             {
                 writer.WritePropertyName("crossTenantCmkApplicationId"u8);
                 writer.WriteStringValue(CrossTenantCmkApplicationId.Value);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             {
                 return null;
             }
-            Optional<int> offerThroughput = default;
-            Optional<Uri> keyVaultKeyUri = default;
-            Optional<Guid> crossTenantCmkApplicationId = default;
+            int? offerThroughput = default;
+            Uri keyVaultKeyUri = default;
+            Guid? crossTenantCmkApplicationId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HealthcareApisServiceCosmosDbConfiguration(Optional.ToNullable(offerThroughput), keyVaultKeyUri.Value, Optional.ToNullable(crossTenantCmkApplicationId), serializedAdditionalRawData);
+            return new HealthcareApisServiceCosmosDbConfiguration(offerThroughput, keyVaultKeyUri, crossTenantCmkApplicationId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HealthcareApisServiceCosmosDbConfiguration>.Write(ModelReaderWriterOptions options)

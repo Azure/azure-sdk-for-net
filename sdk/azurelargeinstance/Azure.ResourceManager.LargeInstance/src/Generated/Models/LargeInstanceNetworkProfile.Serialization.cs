@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(NetworkInterfaces))
+            if (!(NetworkInterfaces is ChangeTrackingList<LargeInstanceIPAddress> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("networkInterfaces"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(CircuitId))
+            if (options.Format != "W" && CircuitId != null)
             {
                 writer.WritePropertyName("circuitId"u8);
                 writer.WriteStringValue(CircuitId);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.LargeInstance.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<LargeInstanceIPAddress>> networkInterfaces = default;
-            Optional<string> circuitId = default;
+            IReadOnlyList<LargeInstanceIPAddress> networkInterfaces = default;
+            string circuitId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                     List<LargeInstanceIPAddress> array = new List<LargeInstanceIPAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LargeInstanceIPAddress.DeserializeLargeInstanceIPAddress(item));
+                        array.Add(LargeInstanceIPAddress.DeserializeLargeInstanceIPAddress(item, options));
                     }
                     networkInterfaces = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LargeInstanceNetworkProfile(Optional.ToList(networkInterfaces), circuitId.Value, serializedAdditionalRawData);
+            return new LargeInstanceNetworkProfile(networkInterfaces ?? new ChangeTrackingList<LargeInstanceIPAddress>(), circuitId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LargeInstanceNetworkProfile>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(InstanceFlexibility))
+            if (InstanceFlexibility.HasValue)
             {
                 writer.WritePropertyName("instanceFlexibility"u8);
                 writer.WriteStringValue(InstanceFlexibility.Value.ToString());
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<InstanceFlexibility> instanceFlexibility = default;
+            InstanceFlexibility? instanceFlexibility = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PurchaseRequestPropertiesReservedResourceProperties(Optional.ToNullable(instanceFlexibility), serializedAdditionalRawData);
+            return new PurchaseRequestPropertiesReservedResourceProperties(instanceFlexibility, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PurchaseRequestPropertiesReservedResourceProperties>.Write(ModelReaderWriterOptions options)

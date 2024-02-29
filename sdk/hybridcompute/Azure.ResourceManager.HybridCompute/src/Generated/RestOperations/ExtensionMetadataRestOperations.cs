@@ -72,10 +72,38 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="publisher"/>, <paramref name="extensionType"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<HybridComputeExtensionValueData>> GetAsync(string subscriptionId, AzureLocation location, string publisher, string extensionType, string version, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(publisher, nameof(publisher));
-            Argument.AssertNotNullOrEmpty(extensionType, nameof(extensionType));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (publisher == null)
+            {
+                throw new ArgumentNullException(nameof(publisher));
+            }
+            if (publisher.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(publisher));
+            }
+            if (extensionType == null)
+            {
+                throw new ArgumentNullException(nameof(extensionType));
+            }
+            if (extensionType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(extensionType));
+            }
+            if (version == null)
+            {
+                throw new ArgumentNullException(nameof(version));
+            }
+            if (version.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
+            }
 
             using var message = CreateGetRequest(subscriptionId, location, publisher, extensionType, version);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -106,10 +134,38 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="publisher"/>, <paramref name="extensionType"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<HybridComputeExtensionValueData> Get(string subscriptionId, AzureLocation location, string publisher, string extensionType, string version, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(publisher, nameof(publisher));
-            Argument.AssertNotNullOrEmpty(extensionType, nameof(extensionType));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (publisher == null)
+            {
+                throw new ArgumentNullException(nameof(publisher));
+            }
+            if (publisher.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(publisher));
+            }
+            if (extensionType == null)
+            {
+                throw new ArgumentNullException(nameof(extensionType));
+            }
+            if (extensionType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(extensionType));
+            }
+            if (version == null)
+            {
+                throw new ArgumentNullException(nameof(version));
+            }
+            if (version.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
+            }
 
             using var message = CreateGetRequest(subscriptionId, location, publisher, extensionType, version);
             _pipeline.Send(message, cancellationToken);
@@ -162,9 +218,30 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="publisher"/> or <paramref name="extensionType"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ExtensionValueListResult>> ListAsync(string subscriptionId, AzureLocation location, string publisher, string extensionType, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(publisher, nameof(publisher));
-            Argument.AssertNotNullOrEmpty(extensionType, nameof(extensionType));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (publisher == null)
+            {
+                throw new ArgumentNullException(nameof(publisher));
+            }
+            if (publisher.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(publisher));
+            }
+            if (extensionType == null)
+            {
+                throw new ArgumentNullException(nameof(extensionType));
+            }
+            if (extensionType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(extensionType));
+            }
 
             using var message = CreateListRequest(subscriptionId, location, publisher, extensionType);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -192,9 +269,30 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="publisher"/> or <paramref name="extensionType"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ExtensionValueListResult> List(string subscriptionId, AzureLocation location, string publisher, string extensionType, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(publisher, nameof(publisher));
-            Argument.AssertNotNullOrEmpty(extensionType, nameof(extensionType));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (publisher == null)
+            {
+                throw new ArgumentNullException(nameof(publisher));
+            }
+            if (publisher.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(publisher));
+            }
+            if (extensionType == null)
+            {
+                throw new ArgumentNullException(nameof(extensionType));
+            }
+            if (extensionType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(extensionType));
+            }
 
             using var message = CreateListRequest(subscriptionId, location, publisher, extensionType);
             _pipeline.Send(message, cancellationToken);

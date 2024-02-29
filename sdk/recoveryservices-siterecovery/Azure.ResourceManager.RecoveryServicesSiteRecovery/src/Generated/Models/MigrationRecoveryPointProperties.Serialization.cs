@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(RecoveryPointOn))
+            if (options.Format != "W" && RecoveryPointOn.HasValue)
             {
                 writer.WritePropertyName("recoveryPointTime"u8);
                 writer.WriteStringValue(RecoveryPointOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(RecoveryPointType))
+            if (options.Format != "W" && RecoveryPointType.HasValue)
             {
                 writer.WritePropertyName("recoveryPointType"u8);
                 writer.WriteStringValue(RecoveryPointType.Value.ToString());
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> recoveryPointTime = default;
-            Optional<MigrationRecoveryPointType> recoveryPointType = default;
+            DateTimeOffset? recoveryPointTime = default;
+            MigrationRecoveryPointType? recoveryPointType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrationRecoveryPointProperties(Optional.ToNullable(recoveryPointTime), Optional.ToNullable(recoveryPointType), serializedAdditionalRawData);
+            return new MigrationRecoveryPointProperties(recoveryPointTime, recoveryPointType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MigrationRecoveryPointProperties>.Write(ModelReaderWriterOptions options)

@@ -22,9 +22,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="componentId"/>, <paramref name="metricThresholds"/> or <paramref name="workspaceConnection"/> is null. </exception>
         public CustomMonitoringSignal(string componentId, IEnumerable<CustomMetricThreshold> metricThresholds, MonitoringWorkspaceConnection workspaceConnection)
         {
-            Argument.AssertNotNull(componentId, nameof(componentId));
-            Argument.AssertNotNull(metricThresholds, nameof(metricThresholds));
-            Argument.AssertNotNull(workspaceConnection, nameof(workspaceConnection));
+            if (componentId == null)
+            {
+                throw new ArgumentNullException(nameof(componentId));
+            }
+            if (metricThresholds == null)
+            {
+                throw new ArgumentNullException(nameof(metricThresholds));
+            }
+            if (workspaceConnection == null)
+            {
+                throw new ArgumentNullException(nameof(workspaceConnection));
+            }
 
             ComponentId = componentId;
             InputAssets = new ChangeTrackingDictionary<string, MonitoringInputDataBase>();

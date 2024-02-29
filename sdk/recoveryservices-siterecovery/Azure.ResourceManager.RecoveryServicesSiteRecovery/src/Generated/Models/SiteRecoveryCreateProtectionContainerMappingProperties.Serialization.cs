@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TargetProtectionContainerId))
+            if (TargetProtectionContainerId != null)
             {
                 writer.WritePropertyName("targetProtectionContainerId"u8);
                 writer.WriteStringValue(TargetProtectionContainerId);
             }
-            if (Optional.IsDefined(PolicyId))
+            if (PolicyId != null)
             {
                 writer.WritePropertyName("policyId"u8);
                 writer.WriteStringValue(PolicyId);
             }
-            if (Optional.IsDefined(ProviderSpecificContent))
+            if (ProviderSpecificContent != null)
             {
                 writer.WritePropertyName("providerSpecificInput"u8);
                 writer.WriteObjectValue(ProviderSpecificContent);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> targetProtectionContainerId = default;
-            Optional<ResourceIdentifier> policyId = default;
-            Optional<ReplicationProviderSpecificContainerMappingContent> providerSpecificContent = default;
+            ResourceIdentifier targetProtectionContainerId = default;
+            ResourceIdentifier policyId = default;
+            ReplicationProviderSpecificContainerMappingContent providerSpecificContent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    providerSpecificContent = ReplicationProviderSpecificContainerMappingContent.DeserializeReplicationProviderSpecificContainerMappingContent(property.Value);
+                    providerSpecificContent = ReplicationProviderSpecificContainerMappingContent.DeserializeReplicationProviderSpecificContainerMappingContent(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryCreateProtectionContainerMappingProperties(targetProtectionContainerId.Value, policyId.Value, providerSpecificContent.Value, serializedAdditionalRawData);
+            return new SiteRecoveryCreateProtectionContainerMappingProperties(targetProtectionContainerId, policyId, providerSpecificContent, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryCreateProtectionContainerMappingProperties>.Write(ModelReaderWriterOptions options)

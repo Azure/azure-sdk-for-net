@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             IReadOnlyList<DiskAccessData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<DiskAccessData> array = new List<DiskAccessData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DiskAccessData.DeserializeDiskAccessData(item));
+                        array.Add(DiskAccessData.DeserializeDiskAccessData(item, options));
                     }
                     value = array;
                     continue;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiskAccessList(value, nextLink.Value, serializedAdditionalRawData);
+            return new DiskAccessList(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiskAccessList>.Write(ModelReaderWriterOptions options)

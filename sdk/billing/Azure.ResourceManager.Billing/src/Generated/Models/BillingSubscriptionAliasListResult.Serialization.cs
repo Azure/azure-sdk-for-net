@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Billing.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<BillingSubscriptionAliasData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Billing.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<BillingSubscriptionAliasData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<BillingSubscriptionAliasData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Billing.Models
                     List<BillingSubscriptionAliasData> array = new List<BillingSubscriptionAliasData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BillingSubscriptionAliasData.DeserializeBillingSubscriptionAliasData(item));
+                        array.Add(BillingSubscriptionAliasData.DeserializeBillingSubscriptionAliasData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Billing.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BillingSubscriptionAliasListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new BillingSubscriptionAliasListResult(value ?? new ChangeTrackingList<BillingSubscriptionAliasData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BillingSubscriptionAliasListResult>.Write(ModelReaderWriterOptions options)

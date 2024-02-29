@@ -20,5 +20,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             FormatReadSettingsType = formatReadSettingsType ?? "Unknown";
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownFormatReadSettings"/> for deserialization. </summary>
+        internal UnknownFormatReadSettings()
+        {
+        }
     }
 }

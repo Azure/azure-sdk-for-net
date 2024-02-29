@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             IReadOnlyList<ProcessThreadInfo> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<ProcessThreadInfo> array = new List<ProcessThreadInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProcessThreadInfo.DeserializeProcessThreadInfo(item));
+                        array.Add(ProcessThreadInfo.DeserializeProcessThreadInfo(item, options));
                     }
                     value = array;
                     continue;
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProcessThreadInfoListResult(value, nextLink.Value, serializedAdditionalRawData);
+            return new ProcessThreadInfoListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProcessThreadInfoListResult>.Write(ModelReaderWriterOptions options)

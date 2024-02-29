@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProtectedItemName))
+            if (options.Format != "W" && ProtectedItemName != null)
             {
                 writer.WritePropertyName("protectedItemName"u8);
                 writer.WriteStringValue(ProtectedItemName);
             }
-            if (options.Format != "W" && Optional.IsDefined(VmName))
+            if (options.Format != "W" && VmName != null)
             {
                 writer.WritePropertyName("vmName"u8);
                 writer.WriteStringValue(VmName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ApplianceName))
+            if (options.Format != "W" && ApplianceName != null)
             {
                 writer.WritePropertyName("applianceName"u8);
                 writer.WriteStringValue(ApplianceName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ServerType))
+            if (options.Format != "W" && ServerType != null)
             {
                 writer.WritePropertyName("serverType"u8);
                 writer.WriteStringValue(ServerType);
             }
-            if (options.Format != "W" && Optional.IsDefined(ComponentDisplayName))
+            if (options.Format != "W" && ComponentDisplayName != null)
             {
                 writer.WritePropertyName("componentDisplayName"u8);
                 writer.WriteStringValue(ComponentDisplayName);
@@ -91,11 +91,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> protectedItemName = default;
-            Optional<string> vmName = default;
-            Optional<string> applianceName = default;
-            Optional<string> serverType = default;
-            Optional<string> componentDisplayName = default;
+            string protectedItemName = default;
+            string vmName = default;
+            string applianceName = default;
+            string serverType = default;
+            string componentDisplayName = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -137,7 +137,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageRcmFailbackEventDetails(instanceType, serializedAdditionalRawData, protectedItemName.Value, vmName.Value, applianceName.Value, serverType.Value, componentDisplayName.Value);
+            return new InMageRcmFailbackEventDetails(
+                instanceType,
+                serializedAdditionalRawData,
+                protectedItemName,
+                vmName,
+                applianceName,
+                serverType,
+                componentDisplayName);
         }
 
         BinaryData IPersistableModel<InMageRcmFailbackEventDetails>.Write(ModelReaderWriterOptions options)

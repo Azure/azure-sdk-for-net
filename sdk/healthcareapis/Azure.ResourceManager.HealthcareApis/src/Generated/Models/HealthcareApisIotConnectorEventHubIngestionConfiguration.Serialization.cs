@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EventHubName))
+            if (EventHubName != null)
             {
                 writer.WritePropertyName("eventHubName"u8);
                 writer.WriteStringValue(EventHubName);
             }
-            if (Optional.IsDefined(ConsumerGroup))
+            if (ConsumerGroup != null)
             {
                 writer.WritePropertyName("consumerGroup"u8);
                 writer.WriteStringValue(ConsumerGroup);
             }
-            if (Optional.IsDefined(FullyQualifiedEventHubNamespace))
+            if (FullyQualifiedEventHubNamespace != null)
             {
                 writer.WritePropertyName("fullyQualifiedEventHubNamespace"u8);
                 writer.WriteStringValue(FullyQualifiedEventHubNamespace);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             {
                 return null;
             }
-            Optional<string> eventHubName = default;
-            Optional<string> consumerGroup = default;
-            Optional<string> fullyQualifiedEventHubNamespace = default;
+            string eventHubName = default;
+            string consumerGroup = default;
+            string fullyQualifiedEventHubNamespace = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HealthcareApisIotConnectorEventHubIngestionConfiguration(eventHubName.Value, consumerGroup.Value, fullyQualifiedEventHubNamespace.Value, serializedAdditionalRawData);
+            return new HealthcareApisIotConnectorEventHubIngestionConfiguration(eventHubName, consumerGroup, fullyQualifiedEventHubNamespace, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HealthcareApisIotConnectorEventHubIngestionConfiguration>.Write(ModelReaderWriterOptions options)

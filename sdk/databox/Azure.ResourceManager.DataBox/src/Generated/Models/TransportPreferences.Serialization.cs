@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStartObject();
             writer.WritePropertyName("preferredShipmentType"u8);
             writer.WriteStringValue(PreferredShipmentType.ToSerialString());
-            if (options.Format != "W" && Optional.IsDefined(IsUpdated))
+            if (options.Format != "W" && IsUpdated.HasValue)
             {
                 writer.WritePropertyName("isUpdated"u8);
                 writer.WriteBooleanValue(IsUpdated.Value);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 return null;
             }
             TransportShipmentType preferredShipmentType = default;
-            Optional<bool> isUpdated = default;
+            bool? isUpdated = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TransportPreferences(preferredShipmentType, Optional.ToNullable(isUpdated), serializedAdditionalRawData);
+            return new TransportPreferences(preferredShipmentType, isUpdated, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TransportPreferences>.Write(ModelReaderWriterOptions options)

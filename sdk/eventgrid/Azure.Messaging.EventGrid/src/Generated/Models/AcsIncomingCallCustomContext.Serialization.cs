@@ -19,8 +19,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<IReadOnlyDictionary<string, string>> sipHeaders = default;
-            Optional<IReadOnlyDictionary<string, string>> voipHeaders = default;
+            IReadOnlyDictionary<string, string> sipHeaders = default;
+            IReadOnlyDictionary<string, string> voipHeaders = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sipHeaders"u8))
@@ -52,7 +52,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsIncomingCallCustomContext(Optional.ToDictionary(sipHeaders), Optional.ToDictionary(voipHeaders));
+            return new AcsIncomingCallCustomContext(sipHeaders ?? new ChangeTrackingDictionary<string, string>(), voipHeaders ?? new ChangeTrackingDictionary<string, string>());
         }
     }
 }

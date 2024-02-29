@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.Avs.Models
             writer.WriteStringValue(TargetId);
             writer.WritePropertyName("lunName"u8);
             writer.WriteStringValue(LunName);
-            if (Optional.IsDefined(MountOption))
+            if (MountOption.HasValue)
             {
                 writer.WritePropertyName("mountOption"u8);
                 writer.WriteStringValue(MountOption.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Path))
+            if (options.Format != "W" && Path != null)
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Avs.Models
             }
             ResourceIdentifier targetId = default;
             string lunName = default;
-            Optional<LunMountMode> mountOption = default;
-            Optional<string> path = default;
+            LunMountMode? mountOption = default;
+            string path = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiskPoolVolume(targetId, lunName, Optional.ToNullable(mountOption), path.Value, serializedAdditionalRawData);
+            return new DiskPoolVolume(targetId, lunName, mountOption, path, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiskPoolVolume>.Write(ModelReaderWriterOptions options)

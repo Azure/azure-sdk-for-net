@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="containerAppName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ContainerAppResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string containerAppName, ContainerAppData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(containerAppName, nameof(containerAppName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (containerAppName == null)
+            {
+                throw new ArgumentNullException(nameof(containerAppName));
+            }
+            if (containerAppName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(containerAppName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _containerAppClientDiagnostics.CreateScope("ContainerAppCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="containerAppName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ContainerAppResource> CreateOrUpdate(WaitUntil waitUntil, string containerAppName, ContainerAppData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(containerAppName, nameof(containerAppName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (containerAppName == null)
+            {
+                throw new ArgumentNullException(nameof(containerAppName));
+            }
+            if (containerAppName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(containerAppName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _containerAppClientDiagnostics.CreateScope("ContainerAppCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="containerAppName"/> is null. </exception>
         public virtual async Task<Response<ContainerAppResource>> GetAsync(string containerAppName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(containerAppName, nameof(containerAppName));
+            if (containerAppName == null)
+            {
+                throw new ArgumentNullException(nameof(containerAppName));
+            }
+            if (containerAppName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(containerAppName));
+            }
 
             using var scope = _containerAppClientDiagnostics.CreateScope("ContainerAppCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="containerAppName"/> is null. </exception>
         public virtual Response<ContainerAppResource> Get(string containerAppName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(containerAppName, nameof(containerAppName));
+            if (containerAppName == null)
+            {
+                throw new ArgumentNullException(nameof(containerAppName));
+            }
+            if (containerAppName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(containerAppName));
+            }
 
             using var scope = _containerAppClientDiagnostics.CreateScope("ContainerAppCollection.Get");
             scope.Start();
@@ -329,7 +363,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="containerAppName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string containerAppName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(containerAppName, nameof(containerAppName));
+            if (containerAppName == null)
+            {
+                throw new ArgumentNullException(nameof(containerAppName));
+            }
+            if (containerAppName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(containerAppName));
+            }
 
             using var scope = _containerAppClientDiagnostics.CreateScope("ContainerAppCollection.Exists");
             scope.Start();
@@ -372,7 +413,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="containerAppName"/> is null. </exception>
         public virtual Response<bool> Exists(string containerAppName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(containerAppName, nameof(containerAppName));
+            if (containerAppName == null)
+            {
+                throw new ArgumentNullException(nameof(containerAppName));
+            }
+            if (containerAppName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(containerAppName));
+            }
 
             using var scope = _containerAppClientDiagnostics.CreateScope("ContainerAppCollection.Exists");
             scope.Start();
@@ -415,7 +463,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="containerAppName"/> is null. </exception>
         public virtual async Task<NullableResponse<ContainerAppResource>> GetIfExistsAsync(string containerAppName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(containerAppName, nameof(containerAppName));
+            if (containerAppName == null)
+            {
+                throw new ArgumentNullException(nameof(containerAppName));
+            }
+            if (containerAppName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(containerAppName));
+            }
 
             using var scope = _containerAppClientDiagnostics.CreateScope("ContainerAppCollection.GetIfExists");
             scope.Start();
@@ -460,7 +515,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="containerAppName"/> is null. </exception>
         public virtual NullableResponse<ContainerAppResource> GetIfExists(string containerAppName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(containerAppName, nameof(containerAppName));
+            if (containerAppName == null)
+            {
+                throw new ArgumentNullException(nameof(containerAppName));
+            }
+            if (containerAppName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(containerAppName));
+            }
 
             using var scope = _containerAppClientDiagnostics.CreateScope("ContainerAppCollection.GetIfExists");
             scope.Start();

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsEnabled))
+            if (IsEnabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(Configuration))
+            if (Configuration != null)
             {
                 writer.WritePropertyName("configuration"u8);
                 writer.WriteObjectValue(Configuration);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<DefenderForServersGcpOfferingArcAutoProvisioningConfiguration> configuration = default;
+            bool? enabled = default;
+            DefenderForServersGcpOfferingArcAutoProvisioningConfiguration configuration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    configuration = DefenderForServersGcpOfferingArcAutoProvisioningConfiguration.DeserializeDefenderForServersGcpOfferingArcAutoProvisioningConfiguration(property.Value);
+                    configuration = DefenderForServersGcpOfferingArcAutoProvisioningConfiguration.DeserializeDefenderForServersGcpOfferingArcAutoProvisioningConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DefenderForServersGcpOfferingArcAutoProvisioning(Optional.ToNullable(enabled), configuration.Value, serializedAdditionalRawData);
+            return new DefenderForServersGcpOfferingArcAutoProvisioning(enabled, configuration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DefenderForServersGcpOfferingArcAutoProvisioning>.Write(ModelReaderWriterOptions options)

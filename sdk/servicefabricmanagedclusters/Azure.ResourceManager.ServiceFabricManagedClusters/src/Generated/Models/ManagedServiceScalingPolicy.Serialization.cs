@@ -76,12 +76,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 if (property.NameEquals("scalingMechanism"u8))
                 {
-                    scalingMechanism = ManagedServiceScalingMechanism.DeserializeManagedServiceScalingMechanism(property.Value);
+                    scalingMechanism = ManagedServiceScalingMechanism.DeserializeManagedServiceScalingMechanism(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("scalingTrigger"u8))
                 {
-                    scalingTrigger = ManagedServiceScalingTrigger.DeserializeManagedServiceScalingTrigger(property.Value);
+                    scalingTrigger = ManagedServiceScalingTrigger.DeserializeManagedServiceScalingTrigger(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -55,22 +55,22 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteObjectValue(IotDeviceDetails);
             writer.WritePropertyName("ioTEdgeDeviceDetails"u8);
             writer.WriteObjectValue(IotEdgeDeviceDetails);
-            if (options.Format != "W" && Optional.IsDefined(Version))
+            if (options.Format != "W" && Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (options.Format != "W" && Optional.IsDefined(HostPlatform))
+            if (options.Format != "W" && HostPlatform.HasValue)
             {
                 writer.WritePropertyName("hostPlatform"u8);
                 writer.WriteStringValue(HostPlatform.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(HostPlatformType))
+            if (options.Format != "W" && HostPlatformType.HasValue)
             {
                 writer.WritePropertyName("hostPlatformType"u8);
                 writer.WriteStringValue(HostPlatformType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -118,13 +118,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             EdgeIotDeviceInfo iotDeviceDetails = default;
             EdgeIotDeviceInfo iotEdgeDeviceDetails = default;
-            Optional<string> version = default;
-            Optional<DataBoxEdgeOSPlatformType> hostPlatform = default;
-            Optional<HostPlatformType> hostPlatformType = default;
-            Optional<DataBoxEdgeRoleAddonProvisioningState> provisioningState = default;
+            string version = default;
+            DataBoxEdgeOSPlatformType? hostPlatform = default;
+            HostPlatformType? hostPlatformType = default;
+            DataBoxEdgeRoleAddonProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -169,12 +169,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         if (property0.NameEquals("ioTDeviceDetails"u8))
                         {
-                            iotDeviceDetails = EdgeIotDeviceInfo.DeserializeEdgeIotDeviceInfo(property0.Value);
+                            iotDeviceDetails = EdgeIotDeviceInfo.DeserializeEdgeIotDeviceInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("ioTEdgeDeviceDetails"u8))
                         {
-                            iotEdgeDeviceDetails = EdgeIotDeviceInfo.DeserializeEdgeIotDeviceInfo(property0.Value);
+                            iotEdgeDeviceDetails = EdgeIotDeviceInfo.DeserializeEdgeIotDeviceInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("version"u8))
@@ -218,7 +218,19 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeIotAddon(id, name, type, systemData.Value, kind, serializedAdditionalRawData, iotDeviceDetails, iotEdgeDeviceDetails, version.Value, Optional.ToNullable(hostPlatform), Optional.ToNullable(hostPlatformType), Optional.ToNullable(provisioningState));
+            return new EdgeIotAddon(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                serializedAdditionalRawData,
+                iotDeviceDetails,
+                iotEdgeDeviceDetails,
+                version,
+                hostPlatform,
+                hostPlatformType,
+                provisioningState);
         }
 
         BinaryData IPersistableModel<EdgeIotAddon>.Write(ModelReaderWriterOptions options)

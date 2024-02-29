@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(State))
+            if (State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<SecurityInsightsDataTypeConnectionState> state = default;
+            SecurityInsightsDataTypeConnectionState? state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TIDataConnectorDataTypesIndicators(Optional.ToNullable(state), serializedAdditionalRawData);
+            return new TIDataConnectorDataTypesIndicators(state, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TIDataConnectorDataTypesIndicators>.Write(ModelReaderWriterOptions options)

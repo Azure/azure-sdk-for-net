@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
-            if (Optional.IsCollectionDefined(IncludedTracks))
+            if (!(IncludedTracks is ChangeTrackingList<TrackDescriptor> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("includedTracks"u8);
                 writer.WriteStartArray();
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Media.Models
                 return null;
             }
             string odataType = default;
-            Optional<IList<TrackDescriptor>> includedTracks = default;
+            IList<TrackDescriptor> includedTracks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<TrackDescriptor> array = new List<TrackDescriptor>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TrackDescriptor.DeserializeTrackDescriptor(item));
+                        array.Add(TrackDescriptor.DeserializeTrackDescriptor(item, options));
                     }
                     includedTracks = array;
                     continue;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FromEachInputFile(odataType, Optional.ToList(includedTracks), serializedAdditionalRawData);
+            return new FromEachInputFile(odataType, includedTracks ?? new ChangeTrackingList<TrackDescriptor>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FromEachInputFile>.Write(ModelReaderWriterOptions options)

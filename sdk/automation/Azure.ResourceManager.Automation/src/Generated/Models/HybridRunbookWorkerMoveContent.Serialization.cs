@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(HybridRunbookWorkerGroupName))
+            if (HybridRunbookWorkerGroupName != null)
             {
                 writer.WritePropertyName("hybridRunbookWorkerGroupName"u8);
                 writer.WriteStringValue(HybridRunbookWorkerGroupName);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> hybridRunbookWorkerGroupName = default;
+            string hybridRunbookWorkerGroupName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridRunbookWorkerMoveContent(hybridRunbookWorkerGroupName.Value, serializedAdditionalRawData);
+            return new HybridRunbookWorkerMoveContent(hybridRunbookWorkerGroupName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridRunbookWorkerMoveContent>.Write(ModelReaderWriterOptions options)

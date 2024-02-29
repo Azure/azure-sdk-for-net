@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -52,7 +51,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> is null. </exception>
         public MachineLearningComputeInstanceAssignedUser(string objectId, Guid tenantId)
         {
-            Argument.AssertNotNull(objectId, nameof(objectId));
+            if (objectId == null)
+            {
+                throw new ArgumentNullException(nameof(objectId));
+            }
 
             ObjectId = objectId;
             TenantId = tenantId;

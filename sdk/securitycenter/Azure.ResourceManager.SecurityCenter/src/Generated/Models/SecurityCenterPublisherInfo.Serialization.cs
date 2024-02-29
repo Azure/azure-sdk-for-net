@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PublisherName))
+            if (PublisherName != null)
             {
                 writer.WritePropertyName("publisherName"u8);
                 writer.WriteStringValue(PublisherName);
             }
-            if (Optional.IsDefined(ProductName))
+            if (ProductName != null)
             {
                 writer.WritePropertyName("productName"u8);
                 writer.WriteStringValue(ProductName);
             }
-            if (Optional.IsDefined(BinaryName))
+            if (BinaryName != null)
             {
                 writer.WritePropertyName("binaryName"u8);
                 writer.WriteStringValue(BinaryName);
             }
-            if (Optional.IsDefined(Version))
+            if (Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> publisherName = default;
-            Optional<string> productName = default;
-            Optional<string> binaryName = default;
-            Optional<string> version = default;
+            string publisherName = default;
+            string productName = default;
+            string binaryName = default;
+            string version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityCenterPublisherInfo(publisherName.Value, productName.Value, binaryName.Value, version.Value, serializedAdditionalRawData);
+            return new SecurityCenterPublisherInfo(publisherName, productName, binaryName, version, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityCenterPublisherInfo>.Write(ModelReaderWriterOptions options)

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ImportIPv4RoutePolicyId))
+            if (ImportIPv4RoutePolicyId != null)
             {
                 writer.WritePropertyName("importIpv4RoutePolicyId"u8);
                 writer.WriteStringValue(ImportIPv4RoutePolicyId);
             }
-            if (Optional.IsDefined(ImportIPv6RoutePolicyId))
+            if (ImportIPv6RoutePolicyId != null)
             {
                 writer.WritePropertyName("importIpv6RoutePolicyId"u8);
                 writer.WriteStringValue(ImportIPv6RoutePolicyId);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> importIPv4RoutePolicyId = default;
-            Optional<ResourceIdentifier> importIPv6RoutePolicyId = default;
+            ResourceIdentifier importIPv4RoutePolicyId = default;
+            ResourceIdentifier importIPv6RoutePolicyId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ImportRoutePolicy(importIPv4RoutePolicyId.Value, importIPv6RoutePolicyId.Value, serializedAdditionalRawData);
+            return new ImportRoutePolicy(importIPv4RoutePolicyId, importIPv6RoutePolicyId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ImportRoutePolicy>.Write(ModelReaderWriterOptions options)

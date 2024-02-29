@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsEnabled))
+            if (IsEnabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(IntervalHours))
+            if (IntervalHours.HasValue)
             {
                 writer.WritePropertyName("intervalHours"u8);
                 writer.WriteNumberValue(IntervalHours.Value);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<int> intervalHours = default;
+            bool? enabled = default;
+            int? intervalHours = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterSecurityProfileImageCleaner(Optional.ToNullable(enabled), Optional.ToNullable(intervalHours), serializedAdditionalRawData);
+            return new ManagedClusterSecurityProfileImageCleaner(enabled, intervalHours, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterSecurityProfileImageCleaner>.Write(ModelReaderWriterOptions options)

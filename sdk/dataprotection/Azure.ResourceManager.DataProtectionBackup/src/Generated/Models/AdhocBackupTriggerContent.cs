@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <exception cref="ArgumentNullException"> <paramref name="backupRules"/> is null. </exception>
         public AdhocBackupTriggerContent(AdhocBackupRules backupRules)
         {
-            Argument.AssertNotNull(backupRules, nameof(backupRules));
+            if (backupRules == null)
+            {
+                throw new ArgumentNullException(nameof(backupRules));
+            }
 
             BackupRules = backupRules;
         }

@@ -19,49 +19,49 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ExtractionMode))
+            if (ExtractionMode != null)
             {
                 writer.WritePropertyName("extractionMode"u8);
                 writer.WriteObjectValue(ExtractionMode);
             }
-            if (Optional.IsDefined(SubscriberProcess))
+            if (SubscriberProcess != null)
             {
                 writer.WritePropertyName("subscriberProcess"u8);
                 writer.WriteObjectValue(SubscriberProcess);
             }
-            if (Optional.IsDefined(Selection))
+            if (Selection != null)
             {
                 writer.WritePropertyName("selection"u8);
                 writer.WriteObjectValue(Selection);
             }
-            if (Optional.IsDefined(Projection))
+            if (Projection != null)
             {
                 writer.WritePropertyName("projection"u8);
                 writer.WriteObjectValue(Projection);
             }
-            if (Optional.IsDefined(QueryTimeout))
+            if (QueryTimeout != null)
             {
                 writer.WritePropertyName("queryTimeout"u8);
                 writer.WriteObjectValue(QueryTimeout);
             }
-            if (Optional.IsDefined(AdditionalColumns))
+            if (AdditionalColumns != null)
             {
                 writer.WritePropertyName("additionalColumns"u8);
                 writer.WriteObjectValue(AdditionalColumns);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Optional.IsDefined(SourceRetryCount))
+            if (SourceRetryCount != null)
             {
                 writer.WritePropertyName("sourceRetryCount"u8);
                 writer.WriteObjectValue(SourceRetryCount);
             }
-            if (Optional.IsDefined(SourceRetryWait))
+            if (SourceRetryWait != null)
             {
                 writer.WritePropertyName("sourceRetryWait"u8);
                 writer.WriteObjectValue(SourceRetryWait);
             }
-            if (Optional.IsDefined(MaxConcurrentConnections))
+            if (MaxConcurrentConnections != null)
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 writer.WriteObjectValue(MaxConcurrentConnections);
@@ -80,16 +80,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> extractionMode = default;
-            Optional<object> subscriberProcess = default;
-            Optional<object> selection = default;
-            Optional<object> projection = default;
-            Optional<object> queryTimeout = default;
-            Optional<object> additionalColumns = default;
+            object extractionMode = default;
+            object subscriberProcess = default;
+            object selection = default;
+            object projection = default;
+            object queryTimeout = default;
+            object additionalColumns = default;
             string type = default;
-            Optional<object> sourceRetryCount = default;
-            Optional<object> sourceRetryWait = default;
-            Optional<object> maxConcurrentConnections = default;
+            object sourceRetryCount = default;
+            object sourceRetryWait = default;
+            object maxConcurrentConnections = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -183,7 +183,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SapOdpSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, queryTimeout.Value, additionalColumns.Value, extractionMode.Value, subscriberProcess.Value, selection.Value, projection.Value);
+            return new SapOdpSource(
+                type,
+                sourceRetryCount,
+                sourceRetryWait,
+                maxConcurrentConnections,
+                additionalProperties,
+                queryTimeout,
+                additionalColumns,
+                extractionMode,
+                subscriberProcess,
+                selection,
+                projection);
         }
 
         internal partial class SapOdpSourceConverter : JsonConverter<SapOdpSource>

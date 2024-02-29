@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="publicCertificateName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<WebSiteSlotPublicCertificateResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string publicCertificateName, PublicCertificateData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(publicCertificateName, nameof(publicCertificateName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (publicCertificateName == null)
+            {
+                throw new ArgumentNullException(nameof(publicCertificateName));
+            }
+            if (publicCertificateName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(publicCertificateName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _webSiteSlotPublicCertificateWebAppsClientDiagnostics.CreateScope("WebSiteSlotPublicCertificateCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="publicCertificateName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<WebSiteSlotPublicCertificateResource> CreateOrUpdate(WaitUntil waitUntil, string publicCertificateName, PublicCertificateData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(publicCertificateName, nameof(publicCertificateName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (publicCertificateName == null)
+            {
+                throw new ArgumentNullException(nameof(publicCertificateName));
+            }
+            if (publicCertificateName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(publicCertificateName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _webSiteSlotPublicCertificateWebAppsClientDiagnostics.CreateScope("WebSiteSlotPublicCertificateCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="publicCertificateName"/> is null. </exception>
         public virtual async Task<Response<WebSiteSlotPublicCertificateResource>> GetAsync(string publicCertificateName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(publicCertificateName, nameof(publicCertificateName));
+            if (publicCertificateName == null)
+            {
+                throw new ArgumentNullException(nameof(publicCertificateName));
+            }
+            if (publicCertificateName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(publicCertificateName));
+            }
 
             using var scope = _webSiteSlotPublicCertificateWebAppsClientDiagnostics.CreateScope("WebSiteSlotPublicCertificateCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="publicCertificateName"/> is null. </exception>
         public virtual Response<WebSiteSlotPublicCertificateResource> Get(string publicCertificateName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(publicCertificateName, nameof(publicCertificateName));
+            if (publicCertificateName == null)
+            {
+                throw new ArgumentNullException(nameof(publicCertificateName));
+            }
+            if (publicCertificateName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(publicCertificateName));
+            }
 
             using var scope = _webSiteSlotPublicCertificateWebAppsClientDiagnostics.CreateScope("WebSiteSlotPublicCertificateCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="publicCertificateName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string publicCertificateName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(publicCertificateName, nameof(publicCertificateName));
+            if (publicCertificateName == null)
+            {
+                throw new ArgumentNullException(nameof(publicCertificateName));
+            }
+            if (publicCertificateName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(publicCertificateName));
+            }
 
             using var scope = _webSiteSlotPublicCertificateWebAppsClientDiagnostics.CreateScope("WebSiteSlotPublicCertificateCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="publicCertificateName"/> is null. </exception>
         public virtual Response<bool> Exists(string publicCertificateName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(publicCertificateName, nameof(publicCertificateName));
+            if (publicCertificateName == null)
+            {
+                throw new ArgumentNullException(nameof(publicCertificateName));
+            }
+            if (publicCertificateName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(publicCertificateName));
+            }
 
             using var scope = _webSiteSlotPublicCertificateWebAppsClientDiagnostics.CreateScope("WebSiteSlotPublicCertificateCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="publicCertificateName"/> is null. </exception>
         public virtual async Task<NullableResponse<WebSiteSlotPublicCertificateResource>> GetIfExistsAsync(string publicCertificateName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(publicCertificateName, nameof(publicCertificateName));
+            if (publicCertificateName == null)
+            {
+                throw new ArgumentNullException(nameof(publicCertificateName));
+            }
+            if (publicCertificateName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(publicCertificateName));
+            }
 
             using var scope = _webSiteSlotPublicCertificateWebAppsClientDiagnostics.CreateScope("WebSiteSlotPublicCertificateCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="publicCertificateName"/> is null. </exception>
         public virtual NullableResponse<WebSiteSlotPublicCertificateResource> GetIfExists(string publicCertificateName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(publicCertificateName, nameof(publicCertificateName));
+            if (publicCertificateName == null)
+            {
+                throw new ArgumentNullException(nameof(publicCertificateName));
+            }
+            if (publicCertificateName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(publicCertificateName));
+            }
 
             using var scope = _webSiteSlotPublicCertificateWebAppsClientDiagnostics.CreateScope("WebSiteSlotPublicCertificateCollection.GetIfExists");
             scope.Start();

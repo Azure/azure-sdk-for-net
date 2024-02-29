@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Certificate))
+            if (options.Format != "W" && Certificate != null)
             {
                 writer.WritePropertyName("certificate"u8);
                 writer.WriteStringValue(Certificate);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreationTimeStamp))
+            if (options.Format != "W" && CreationTimeStamp.HasValue)
             {
                 writer.WritePropertyName("creationTimeStamp"u8);
                 writer.WriteNumberValue(CreationTimeStamp.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ExpirationTimeStamp))
+            if (options.Format != "W" && ExpirationTimeStamp.HasValue)
             {
                 writer.WritePropertyName("expirationTimeStamp"u8);
                 writer.WriteNumberValue(ExpirationTimeStamp.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(PrivateKey))
+            if (options.Format != "W" && PrivateKey != null)
             {
                 writer.WritePropertyName("privateKey"u8);
                 writer.WriteStringValue(PrivateKey);
             }
-            if (options.Format != "W" && Optional.IsDefined(PublicKey))
+            if (options.Format != "W" && PublicKey != null)
             {
                 writer.WritePropertyName("publicKey"u8);
                 writer.WriteStringValue(PublicKey);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             {
                 return null;
             }
-            Optional<string> certificate = default;
-            Optional<long> creationTimeStamp = default;
-            Optional<long> expirationTimeStamp = default;
-            Optional<string> privateKey = default;
-            Optional<string> publicKey = default;
+            string certificate = default;
+            long? creationTimeStamp = default;
+            long? expirationTimeStamp = default;
+            string privateKey = default;
+            string publicKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplianceSshKey(certificate.Value, Optional.ToNullable(creationTimeStamp), Optional.ToNullable(expirationTimeStamp), privateKey.Value, publicKey.Value, serializedAdditionalRawData);
+            return new ApplianceSshKey(
+                certificate,
+                creationTimeStamp,
+                expirationTimeStamp,
+                privateKey,
+                publicKey,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplianceSshKey>.Write(ModelReaderWriterOptions options)

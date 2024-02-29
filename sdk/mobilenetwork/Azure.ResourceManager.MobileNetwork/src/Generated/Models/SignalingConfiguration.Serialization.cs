@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NasReroute))
+            if (NasReroute != null)
             {
                 writer.WritePropertyName("nasReroute"u8);
                 writer.WriteObjectValue(NasReroute);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 return null;
             }
-            Optional<NASRerouteConfiguration> nasReroute = default;
+            NASRerouteConfiguration nasReroute = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     {
                         continue;
                     }
-                    nasReroute = NASRerouteConfiguration.DeserializeNASRerouteConfiguration(property.Value);
+                    nasReroute = NASRerouteConfiguration.DeserializeNASRerouteConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SignalingConfiguration(nasReroute.Value, serializedAdditionalRawData);
+            return new SignalingConfiguration(nasReroute, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SignalingConfiguration>.Write(ModelReaderWriterOptions options)

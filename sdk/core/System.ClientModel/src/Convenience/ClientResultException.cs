@@ -6,9 +6,13 @@ using System.ClientModel.Primitives;
 using System.Globalization;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace System.ClientModel;
 
+/// <summary>
+/// The exception that is thrown when the processing of a client request failed.
+/// </summary>
 [Serializable]
 public class ClientResultException : Exception, ISerializable
 {
@@ -16,6 +20,22 @@ public class ClientResultException : Exception, ISerializable
 
     private readonly PipelineResponse? _response;
     private int _status;
+
+    /// <summary>
+    /// Asynchronously create an instance of <see cref="ClientResultException"/>
+    /// from the <see cref="PipelineResponse"/> containing the details of the
+    /// service's error response.
+    /// </summary>
+    /// <param name="response">The service's error response.</param>
+    /// <param name="innerException">The <see cref="Exception.InnerException"/>,
+    /// if any, that threw the current exception.</param>
+    /// <returns>The <see cref="ClientResultException"/> instance that was
+    /// created.</returns>
+    public static async Task<ClientResultException> CreateAsync(PipelineResponse response, Exception? innerException = default)
+    {
+        string message = await CreateMessageAsync(response).ConfigureAwait(false);
+        return new ClientResultException(message, response, innerException);
+    }
 
     /// <summary>
     /// Gets the HTTP status code of the response. Returns. <code>0</code> if response was not received.
@@ -26,6 +46,15 @@ public class ClientResultException : Exception, ISerializable
         protected set => _status = value;
     }
 
+    /// <summary>
+    /// Initializes a new instance of <see cref="ClientResultException"/> from a
+    /// <see cref="PipelineResponse"/> containing the details of the service's
+    /// error response.  The <see cref="Exception.Message"/> is created from the
+    /// provided <paramref name="response"/>.
+    /// </summary>
+    /// <param name="response">The service's error response.</param>
+    /// <param name="innerException">The <see cref="Exception.InnerException"/>,
+    /// if any, that threw the current exception.</param>
     public ClientResultException(PipelineResponse response, Exception? innerException = default)
         : base(CreateMessage(response), innerException)
     {
@@ -35,6 +64,19 @@ public class ClientResultException : Exception, ISerializable
         _status = response.Status;
     }
 
+    /// <summary>
+    /// Initializes a new instance of <see cref="ClientResultException"/> with a
+    /// custom exception message and an optional <see cref="PipelineResponse"/>.
+    /// The <see cref="Exception.Message"/> is set to <paramref name="response"/>
+    /// and if <paramref name="response"/> is provided, it will be returned from
+    /// calls to this exception instance's <see cref="GetRawResponse"/> method.
+    /// </summary>
+    /// <param name="message">The message to set on <see cref="Exception.Message"/>.
+    /// </param>
+    /// <param name="response">The response, if any, to return from
+    /// <see cref="GetRawResponse"/>.</param>
+    /// <param name="innerException">The <see cref="Exception.InnerException"/>,
+    /// if any, that threw the current exception.</param>
     public ClientResultException(string message, PipelineResponse? response = default, Exception? innerException = default)
         : base(message ?? DefaultMessage, innerException)
     {
@@ -42,11 +84,7 @@ public class ClientResultException : Exception, ISerializable
         _status = response?.Status ?? 0;
     }
 
-    /// <summary>
-    /// TBD
-    /// </summary>
-    /// <param name="info"></param>
-    /// <param name="context"></param>
+    /// <inheritdoc />
     protected ClientResultException(SerializationInfo info, StreamingContext context)
         : base(info, context)
     {
@@ -63,11 +101,28 @@ public class ClientResultException : Exception, ISerializable
         base.GetObjectData(info, context);
     }
 
+    /// <summary>
+    /// Gets the <see cref="PipelineResponse"/>, if any, that led to the exception.
+    /// </summary>
+    /// <returns>The <see cref="PipelineResponse"/>, if any, that led to the exception.</returns>
     public PipelineResponse? GetRawResponse() => _response;
 
     private static string CreateMessage(PipelineResponse response)
+        => CreateMessageSyncOrAsync(response, async: false).EnsureCompleted();
+
+    private static async ValueTask<string> CreateMessageAsync(PipelineResponse response)
+        => await CreateMessageSyncOrAsync(response, async: true).ConfigureAwait(false);
+
+    private static async ValueTask<string> CreateMessageSyncOrAsync(PipelineResponse response, bool async)
     {
-        response.BufferContent();
+        if (async)
+        {
+            await response.BufferContentAsync().ConfigureAwait(false);
+        }
+        else
+        {
+            response.BufferContent();
+        }
 
         StringBuilder messageBuilder = new();
 

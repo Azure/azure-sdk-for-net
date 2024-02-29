@@ -17,7 +17,7 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ScoringUri))
+            if (ScoringUri != null)
             {
                 if (ScoringUri != null)
                 {
@@ -29,7 +29,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("uri");
                 }
             }
-            if (Optional.IsDefined(AuthenticationKey))
+            if (AuthenticationKey != null)
             {
                 if (AuthenticationKey != null)
                 {
@@ -41,7 +41,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("key");
                 }
             }
-            if (Optional.IsDefined(RawResourceId))
+            if (RawResourceId != null)
             {
                 if (RawResourceId != null)
                 {
@@ -53,7 +53,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("resourceId");
                 }
             }
-            if (Optional.IsDefined(Timeout))
+            if (Timeout.HasValue)
             {
                 if (Timeout != null)
                 {
@@ -65,7 +65,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("timeout");
                 }
             }
-            if (Optional.IsDefined(RawLocation))
+            if (RawLocation != null)
             {
                 if (RawLocation != null)
                 {
@@ -77,7 +77,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("region");
                 }
             }
-            if (Optional.IsDefined(DegreeOfParallelism))
+            if (DegreeOfParallelism.HasValue)
             {
                 if (DegreeOfParallelism != null)
                 {
@@ -91,17 +91,17 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(ODataType);
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Context))
+            if (Context != null)
             {
                 writer.WritePropertyName("context"u8);
                 writer.WriteStringValue(Context);
@@ -129,16 +129,16 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<Uri> uri = default;
-            Optional<string> key = default;
-            Optional<string> resourceId = default;
-            Optional<TimeSpan?> timeout = default;
-            Optional<string> region = default;
-            Optional<int?> degreeOfParallelism = default;
+            Uri uri = default;
+            string key = default;
+            string resourceId = default;
+            TimeSpan? timeout = default;
+            string region = default;
+            int? degreeOfParallelism = default;
             string odataType = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<string> context = default;
+            string name = default;
+            string description = default;
+            string context = default;
             IList<InputFieldMappingEntry> inputs = default;
             IList<OutputFieldMappingEntry> outputs = default;
             foreach (var property in element.EnumerateObject())
@@ -244,7 +244,19 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new AzureMachineLearningSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, uri.Value, key.Value, resourceId.Value, Optional.ToNullable(timeout), region.Value, Optional.ToNullable(degreeOfParallelism));
+            return new AzureMachineLearningSkill(
+                odataType,
+                name,
+                description,
+                context,
+                inputs,
+                outputs,
+                uri,
+                key,
+                resourceId,
+                timeout,
+                region,
+                degreeOfParallelism);
         }
     }
 }

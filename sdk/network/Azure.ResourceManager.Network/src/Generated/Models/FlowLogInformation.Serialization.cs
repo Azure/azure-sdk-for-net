@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             writer.WritePropertyName("targetResourceId"u8);
             writer.WriteStringValue(TargetResourceId);
-            if (Optional.IsDefined(FlowAnalyticsConfiguration))
+            if (FlowAnalyticsConfiguration != null)
             {
                 writer.WritePropertyName("flowAnalyticsConfiguration"u8);
                 writer.WriteObjectValue(FlowAnalyticsConfiguration);
@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStringValue(StorageId);
             writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(Enabled);
-            if (Optional.IsDefined(RetentionPolicy))
+            if (RetentionPolicy != null)
             {
                 writer.WritePropertyName("retentionPolicy"u8);
                 writer.WriteObjectValue(RetentionPolicy);
             }
-            if (Optional.IsDefined(Format))
+            if (Format != null)
             {
                 writer.WritePropertyName("format"u8);
                 writer.WriteObjectValue(Format);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             ResourceIdentifier targetResourceId = default;
-            Optional<TrafficAnalyticsProperties> flowAnalyticsConfiguration = default;
+            TrafficAnalyticsProperties flowAnalyticsConfiguration = default;
             ResourceIdentifier storageId = default;
             bool enabled = default;
-            Optional<RetentionPolicyParameters> retentionPolicy = default;
-            Optional<FlowLogProperties> format = default;
+            RetentionPolicyParameters retentionPolicy = default;
+            FlowLogProperties format = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    flowAnalyticsConfiguration = TrafficAnalyticsProperties.DeserializeTrafficAnalyticsProperties(property.Value);
+                    flowAnalyticsConfiguration = TrafficAnalyticsProperties.DeserializeTrafficAnalyticsProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            retentionPolicy = RetentionPolicyParameters.DeserializeRetentionPolicyParameters(property0.Value);
+                            retentionPolicy = RetentionPolicyParameters.DeserializeRetentionPolicyParameters(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("format"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            format = FlowLogProperties.DeserializeFlowLogProperties(property0.Value);
+                            format = FlowLogProperties.DeserializeFlowLogProperties(property0.Value, options);
                             continue;
                         }
                     }
@@ -158,7 +158,14 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FlowLogInformation(targetResourceId, flowAnalyticsConfiguration.Value, storageId, enabled, retentionPolicy.Value, format.Value, serializedAdditionalRawData);
+            return new FlowLogInformation(
+                targetResourceId,
+                flowAnalyticsConfiguration,
+                storageId,
+                enabled,
+                retentionPolicy,
+                format,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FlowLogInformation>.Write(ModelReaderWriterOptions options)

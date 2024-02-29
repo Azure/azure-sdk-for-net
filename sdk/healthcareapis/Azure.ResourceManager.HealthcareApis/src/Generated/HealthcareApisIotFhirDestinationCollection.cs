@@ -87,8 +87,18 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentNullException"> <paramref name="fhirDestinationName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<HealthcareApisIotFhirDestinationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string fhirDestinationName, HealthcareApisIotFhirDestinationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(fhirDestinationName, nameof(fhirDestinationName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (fhirDestinationName == null)
+            {
+                throw new ArgumentNullException(nameof(fhirDestinationName));
+            }
+            if (fhirDestinationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fhirDestinationName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _healthcareApisIotFhirDestinationIotConnectorFhirDestinationClientDiagnostics.CreateScope("HealthcareApisIotFhirDestinationCollection.CreateOrUpdate");
             scope.Start();
@@ -136,8 +146,18 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentNullException"> <paramref name="fhirDestinationName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<HealthcareApisIotFhirDestinationResource> CreateOrUpdate(WaitUntil waitUntil, string fhirDestinationName, HealthcareApisIotFhirDestinationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(fhirDestinationName, nameof(fhirDestinationName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (fhirDestinationName == null)
+            {
+                throw new ArgumentNullException(nameof(fhirDestinationName));
+            }
+            if (fhirDestinationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fhirDestinationName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _healthcareApisIotFhirDestinationIotConnectorFhirDestinationClientDiagnostics.CreateScope("HealthcareApisIotFhirDestinationCollection.CreateOrUpdate");
             scope.Start();
@@ -183,7 +203,14 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentNullException"> <paramref name="fhirDestinationName"/> is null. </exception>
         public virtual async Task<Response<HealthcareApisIotFhirDestinationResource>> GetAsync(string fhirDestinationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(fhirDestinationName, nameof(fhirDestinationName));
+            if (fhirDestinationName == null)
+            {
+                throw new ArgumentNullException(nameof(fhirDestinationName));
+            }
+            if (fhirDestinationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fhirDestinationName));
+            }
 
             using var scope = _healthcareApisIotFhirDestinationIotConnectorFhirDestinationClientDiagnostics.CreateScope("HealthcareApisIotFhirDestinationCollection.Get");
             scope.Start();
@@ -228,7 +255,14 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentNullException"> <paramref name="fhirDestinationName"/> is null. </exception>
         public virtual Response<HealthcareApisIotFhirDestinationResource> Get(string fhirDestinationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(fhirDestinationName, nameof(fhirDestinationName));
+            if (fhirDestinationName == null)
+            {
+                throw new ArgumentNullException(nameof(fhirDestinationName));
+            }
+            if (fhirDestinationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fhirDestinationName));
+            }
 
             using var scope = _healthcareApisIotFhirDestinationIotConnectorFhirDestinationClientDiagnostics.CreateScope("HealthcareApisIotFhirDestinationCollection.Get");
             scope.Start();
@@ -333,7 +367,14 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentNullException"> <paramref name="fhirDestinationName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string fhirDestinationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(fhirDestinationName, nameof(fhirDestinationName));
+            if (fhirDestinationName == null)
+            {
+                throw new ArgumentNullException(nameof(fhirDestinationName));
+            }
+            if (fhirDestinationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fhirDestinationName));
+            }
 
             using var scope = _healthcareApisIotFhirDestinationIotConnectorFhirDestinationClientDiagnostics.CreateScope("HealthcareApisIotFhirDestinationCollection.Exists");
             scope.Start();
@@ -376,7 +417,14 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentNullException"> <paramref name="fhirDestinationName"/> is null. </exception>
         public virtual Response<bool> Exists(string fhirDestinationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(fhirDestinationName, nameof(fhirDestinationName));
+            if (fhirDestinationName == null)
+            {
+                throw new ArgumentNullException(nameof(fhirDestinationName));
+            }
+            if (fhirDestinationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fhirDestinationName));
+            }
 
             using var scope = _healthcareApisIotFhirDestinationIotConnectorFhirDestinationClientDiagnostics.CreateScope("HealthcareApisIotFhirDestinationCollection.Exists");
             scope.Start();
@@ -419,7 +467,14 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentNullException"> <paramref name="fhirDestinationName"/> is null. </exception>
         public virtual async Task<NullableResponse<HealthcareApisIotFhirDestinationResource>> GetIfExistsAsync(string fhirDestinationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(fhirDestinationName, nameof(fhirDestinationName));
+            if (fhirDestinationName == null)
+            {
+                throw new ArgumentNullException(nameof(fhirDestinationName));
+            }
+            if (fhirDestinationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fhirDestinationName));
+            }
 
             using var scope = _healthcareApisIotFhirDestinationIotConnectorFhirDestinationClientDiagnostics.CreateScope("HealthcareApisIotFhirDestinationCollection.GetIfExists");
             scope.Start();
@@ -464,7 +519,14 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentNullException"> <paramref name="fhirDestinationName"/> is null. </exception>
         public virtual NullableResponse<HealthcareApisIotFhirDestinationResource> GetIfExists(string fhirDestinationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(fhirDestinationName, nameof(fhirDestinationName));
+            if (fhirDestinationName == null)
+            {
+                throw new ArgumentNullException(nameof(fhirDestinationName));
+            }
+            if (fhirDestinationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fhirDestinationName));
+            }
 
             using var scope = _healthcareApisIotFhirDestinationIotConnectorFhirDestinationClientDiagnostics.CreateScope("HealthcareApisIotFhirDestinationCollection.GetIfExists");
             scope.Start();

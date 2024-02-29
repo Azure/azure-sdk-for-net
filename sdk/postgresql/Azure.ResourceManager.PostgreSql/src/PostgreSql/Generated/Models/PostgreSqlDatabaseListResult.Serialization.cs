@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<PostgreSqlDatabaseData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PostgreSqlDatabaseData>> value = default;
+            IReadOnlyList<PostgreSqlDatabaseData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                     List<PostgreSqlDatabaseData> array = new List<PostgreSqlDatabaseData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PostgreSqlDatabaseData.DeserializePostgreSqlDatabaseData(item));
+                        array.Add(PostgreSqlDatabaseData.DeserializePostgreSqlDatabaseData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlDatabaseListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new PostgreSqlDatabaseListResult(value ?? new ChangeTrackingList<PostgreSqlDatabaseData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlDatabaseListResult>.Write(ModelReaderWriterOptions options)

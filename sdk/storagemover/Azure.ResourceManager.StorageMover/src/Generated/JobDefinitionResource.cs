@@ -351,7 +351,10 @@ namespace Azure.ResourceManager.StorageMover
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<JobDefinitionResource>> UpdateAsync(JobDefinitionPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _jobDefinitionClientDiagnostics.CreateScope("JobDefinitionResource.Update");
             scope.Start();
@@ -393,7 +396,10 @@ namespace Azure.ResourceManager.StorageMover
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<JobDefinitionResource> Update(JobDefinitionPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _jobDefinitionClientDiagnostics.CreateScope("JobDefinitionResource.Update");
             scope.Start();

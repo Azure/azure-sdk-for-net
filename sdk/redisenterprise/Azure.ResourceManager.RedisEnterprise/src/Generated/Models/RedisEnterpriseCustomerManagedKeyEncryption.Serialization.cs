@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(KeyEncryptionKeyIdentity))
+            if (KeyEncryptionKeyIdentity != null)
             {
                 writer.WritePropertyName("keyEncryptionKeyIdentity"u8);
                 writer.WriteObjectValue(KeyEncryptionKeyIdentity);
             }
-            if (Optional.IsDefined(KeyEncryptionKeyUri))
+            if (KeyEncryptionKeyUri != null)
             {
                 writer.WritePropertyName("keyEncryptionKeyUrl"u8);
                 writer.WriteStringValue(KeyEncryptionKeyUri.AbsoluteUri);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             {
                 return null;
             }
-            Optional<RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity> keyEncryptionKeyIdentity = default;
-            Optional<Uri> keyEncryptionKeyUrl = default;
+            RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity keyEncryptionKeyIdentity = default;
+            Uri keyEncryptionKeyUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     {
                         continue;
                     }
-                    keyEncryptionKeyIdentity = RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity.DeserializeRedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity(property.Value);
+                    keyEncryptionKeyIdentity = RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity.DeserializeRedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("keyEncryptionKeyUrl"u8))
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RedisEnterpriseCustomerManagedKeyEncryption(keyEncryptionKeyIdentity.Value, keyEncryptionKeyUrl.Value, serializedAdditionalRawData);
+            return new RedisEnterpriseCustomerManagedKeyEncryption(keyEncryptionKeyIdentity, keyEncryptionKeyUrl, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RedisEnterpriseCustomerManagedKeyEncryption>.Write(ModelReaderWriterOptions options)

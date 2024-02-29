@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -22,8 +21,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="driverMemory"/> or <paramref name="executorMemory"/> is null. </exception>
         public NotebookSessionProperties(string driverMemory, int driverCores, string executorMemory, int executorCores, int numExecutors)
         {
-            Argument.AssertNotNull(driverMemory, nameof(driverMemory));
-            Argument.AssertNotNull(executorMemory, nameof(executorMemory));
+            if (driverMemory == null)
+            {
+                throw new ArgumentNullException(nameof(driverMemory));
+            }
+            if (executorMemory == null)
+            {
+                throw new ArgumentNullException(nameof(executorMemory));
+            }
 
             DriverMemory = driverMemory;
             DriverCores = driverCores;

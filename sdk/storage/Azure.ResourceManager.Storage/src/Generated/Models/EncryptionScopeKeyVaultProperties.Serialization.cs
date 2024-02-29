@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(KeyUri))
+            if (KeyUri != null)
             {
                 writer.WritePropertyName("keyUri"u8);
                 writer.WriteStringValue(KeyUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(CurrentVersionedKeyIdentifier))
+            if (options.Format != "W" && CurrentVersionedKeyIdentifier != null)
             {
                 writer.WritePropertyName("currentVersionedKeyIdentifier"u8);
                 writer.WriteStringValue(CurrentVersionedKeyIdentifier);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastKeyRotationTimestamp))
+            if (options.Format != "W" && LastKeyRotationTimestamp.HasValue)
             {
                 writer.WritePropertyName("lastKeyRotationTimestamp"u8);
                 writer.WriteStringValue(LastKeyRotationTimestamp.Value, "O");
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<Uri> keyUri = default;
-            Optional<string> currentVersionedKeyIdentifier = default;
-            Optional<DateTimeOffset> lastKeyRotationTimestamp = default;
+            Uri keyUri = default;
+            string currentVersionedKeyIdentifier = default;
+            DateTimeOffset? lastKeyRotationTimestamp = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EncryptionScopeKeyVaultProperties(keyUri.Value, currentVersionedKeyIdentifier.Value, Optional.ToNullable(lastKeyRotationTimestamp), serializedAdditionalRawData);
+            return new EncryptionScopeKeyVaultProperties(keyUri, currentVersionedKeyIdentifier, lastKeyRotationTimestamp, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EncryptionScopeKeyVaultProperties>.Write(ModelReaderWriterOptions options)

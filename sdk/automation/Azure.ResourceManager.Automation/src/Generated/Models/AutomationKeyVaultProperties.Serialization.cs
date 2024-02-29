@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(KeyvaultUri))
+            if (KeyvaultUri != null)
             {
                 writer.WritePropertyName("keyvaultUri"u8);
                 writer.WriteStringValue(KeyvaultUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(KeyName))
+            if (KeyName != null)
             {
                 writer.WritePropertyName("keyName"u8);
                 writer.WriteStringValue(KeyName);
             }
-            if (Optional.IsDefined(KeyVersion))
+            if (KeyVersion != null)
             {
                 writer.WritePropertyName("keyVersion"u8);
                 writer.WriteStringValue(KeyVersion);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<Uri> keyvaultUri = default;
-            Optional<string> keyName = default;
-            Optional<string> keyVersion = default;
+            Uri keyvaultUri = default;
+            string keyName = default;
+            string keyVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationKeyVaultProperties(keyvaultUri.Value, keyName.Value, keyVersion.Value, serializedAdditionalRawData);
+            return new AutomationKeyVaultProperties(keyvaultUri, keyName, keyVersion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationKeyVaultProperties>.Write(ModelReaderWriterOptions options)

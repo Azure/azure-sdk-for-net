@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Net;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceMover.Models
@@ -56,7 +55,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
 
         /// <summary> Initializes a new instance of <see cref="NicIPConfigurationResourceSettings"/>. </summary>
         /// <param name="name"> Gets or sets the IP configuration name. </param>
-        /// <param name="privateIPAddress"> Gets or sets the private IP address of the network interface IP Configuration. </param>
+        /// <param name="privateIPAddressStringValue"> Gets or sets the private IP address of the network interface IP Configuration. </param>
         /// <param name="privateIPAllocationMethod"> Gets or sets the private IP address allocation method. </param>
         /// <param name="subnet"> Defines reference to subnet. </param>
         /// <param name="isPrimary"> Gets or sets a value indicating whether this IP configuration is the primary. </param>
@@ -64,10 +63,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <param name="loadBalancerNatRules"> Gets or sets the references of the load balancer NAT rules. </param>
         /// <param name="publicIP"> Defines reference to a public IP. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NicIPConfigurationResourceSettings(string name, IPAddress privateIPAddress, string privateIPAllocationMethod, SubnetReferenceInfo subnet, bool? isPrimary, IList<LoadBalancerBackendAddressPoolReferenceInfo> loadBalancerBackendAddressPools, IList<LoadBalancerNatRuleReferenceInfo> loadBalancerNatRules, PublicIPReferenceInfo publicIP, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NicIPConfigurationResourceSettings(string name, string privateIPAddressStringValue, string privateIPAllocationMethod, SubnetReferenceInfo subnet, bool? isPrimary, IList<LoadBalancerBackendAddressPoolReferenceInfo> loadBalancerBackendAddressPools, IList<LoadBalancerNatRuleReferenceInfo> loadBalancerNatRules, PublicIPReferenceInfo publicIP, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
-            PrivateIPAddress = privateIPAddress;
+            PrivateIPAddressStringValue = privateIPAddressStringValue;
             PrivateIPAllocationMethod = privateIPAllocationMethod;
             Subnet = subnet;
             IsPrimary = isPrimary;
@@ -80,7 +79,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <summary> Gets or sets the IP configuration name. </summary>
         public string Name { get; set; }
         /// <summary> Gets or sets the private IP address of the network interface IP Configuration. </summary>
-        public IPAddress PrivateIPAddress { get; set; }
+        public string PrivateIPAddressStringValue { get; set; }
         /// <summary> Gets or sets the private IP address allocation method. </summary>
         public string PrivateIPAllocationMethod { get; set; }
         /// <summary> Defines reference to subnet. </summary>

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IPAddressOrRange))
+            if (IPAddressOrRange != null)
             {
                 writer.WritePropertyName("ipAddressOrRange"u8);
                 writer.WriteStringValue(IPAddressOrRange);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> ipAddressOrRange = default;
+            string ipAddressOrRange = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBIPAddressOrRange(ipAddressOrRange.Value, serializedAdditionalRawData);
+            return new CosmosDBIPAddressOrRange(ipAddressOrRange, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBIPAddressOrRange>.Write(ModelReaderWriterOptions options)

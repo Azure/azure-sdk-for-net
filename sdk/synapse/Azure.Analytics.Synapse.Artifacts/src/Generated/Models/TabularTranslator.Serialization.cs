@@ -19,37 +19,37 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ColumnMappings))
+            if (ColumnMappings != null)
             {
                 writer.WritePropertyName("columnMappings"u8);
                 writer.WriteObjectValue(ColumnMappings);
             }
-            if (Optional.IsDefined(SchemaMapping))
+            if (SchemaMapping != null)
             {
                 writer.WritePropertyName("schemaMapping"u8);
                 writer.WriteObjectValue(SchemaMapping);
             }
-            if (Optional.IsDefined(CollectionReference))
+            if (CollectionReference != null)
             {
                 writer.WritePropertyName("collectionReference"u8);
                 writer.WriteObjectValue(CollectionReference);
             }
-            if (Optional.IsDefined(MapComplexValuesToString))
+            if (MapComplexValuesToString != null)
             {
                 writer.WritePropertyName("mapComplexValuesToString"u8);
                 writer.WriteObjectValue(MapComplexValuesToString);
             }
-            if (Optional.IsDefined(Mappings))
+            if (Mappings != null)
             {
                 writer.WritePropertyName("mappings"u8);
                 writer.WriteObjectValue(Mappings);
             }
-            if (Optional.IsDefined(TypeConversion))
+            if (TypeConversion != null)
             {
                 writer.WritePropertyName("typeConversion"u8);
                 writer.WriteObjectValue(TypeConversion);
             }
-            if (Optional.IsDefined(TypeConversionSettings))
+            if (TypeConversionSettings != null)
             {
                 writer.WritePropertyName("typeConversionSettings"u8);
                 writer.WriteObjectValue(TypeConversionSettings);
@@ -70,13 +70,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> columnMappings = default;
-            Optional<object> schemaMapping = default;
-            Optional<object> collectionReference = default;
-            Optional<object> mapComplexValuesToString = default;
-            Optional<object> mappings = default;
-            Optional<object> typeConversion = default;
-            Optional<TypeConversionSettings> typeConversionSettings = default;
+            object columnMappings = default;
+            object schemaMapping = default;
+            object collectionReference = default;
+            object mapComplexValuesToString = default;
+            object mappings = default;
+            object typeConversion = default;
+            TypeConversionSettings typeConversionSettings = default;
             string type = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
@@ -153,7 +153,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new TabularTranslator(type, additionalProperties, columnMappings.Value, schemaMapping.Value, collectionReference.Value, mapComplexValuesToString.Value, mappings.Value, typeConversion.Value, typeConversionSettings.Value);
+            return new TabularTranslator(
+                type,
+                additionalProperties,
+                columnMappings,
+                schemaMapping,
+                collectionReference,
+                mapComplexValuesToString,
+                mappings,
+                typeConversion,
+                typeConversionSettings);
         }
 
         internal partial class TabularTranslatorConverter : JsonConverter<TabularTranslator>

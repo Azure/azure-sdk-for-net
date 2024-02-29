@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ParameterServerCount))
+            if (ParameterServerCount.HasValue)
             {
                 writer.WritePropertyName("parameterServerCount"u8);
                 writer.WriteNumberValue(ParameterServerCount.Value);
             }
-            if (Optional.IsDefined(WorkerCount))
+            if (WorkerCount.HasValue)
             {
                 if (WorkerCount != null)
                 {
@@ -83,8 +83,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<int> parameterServerCount = default;
-            Optional<int?> workerCount = default;
+            int? parameterServerCount = default;
+            int? workerCount = default;
             DistributionType distributionType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TensorFlowDistributionConfiguration(distributionType, serializedAdditionalRawData, Optional.ToNullable(parameterServerCount), Optional.ToNullable(workerCount));
+            return new TensorFlowDistributionConfiguration(distributionType, serializedAdditionalRawData, parameterServerCount, workerCount);
         }
 
         BinaryData IPersistableModel<TensorFlowDistributionConfiguration>.Write(ModelReaderWriterOptions options)

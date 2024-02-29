@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
@@ -19,7 +18,10 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="stop"/> is null. </exception>
         internal StopFinishDetails(string stop)
         {
-            Argument.AssertNotNull(stop, nameof(stop));
+            if (stop == null)
+            {
+                throw new ArgumentNullException(nameof(stop));
+            }
 
             Type = "stop";
             Stop = stop;

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SourceVmResourceId))
+            if (SourceVmResourceId != null)
             {
                 writer.WritePropertyName("sourceVirtualMachineResourceId"u8);
                 writer.WriteStringValue(SourceVmResourceId);
             }
-            if (Optional.IsDefined(DestinationVmName))
+            if (DestinationVmName != null)
             {
                 writer.WritePropertyName("destinationVirtualMachineName"u8);
                 writer.WriteStringValue(DestinationVmName);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> sourceVmResourceId = default;
-            Optional<string> destinationVmName = default;
+            ResourceIdentifier sourceVmResourceId = default;
+            string destinationVmName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabImportVmContent(sourceVmResourceId.Value, destinationVmName.Value, serializedAdditionalRawData);
+            return new DevTestLabImportVmContent(sourceVmResourceId, destinationVmName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabImportVmContent>.Write(ModelReaderWriterOptions options)

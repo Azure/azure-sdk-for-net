@@ -27,7 +27,7 @@ namespace Azure.AI.Translation.Text
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DetectedLanguage))
+            if (DetectedLanguage != null)
             {
                 writer.WritePropertyName("detectedLanguage"u8);
                 writer.WriteObjectValue(DetectedLanguage);
@@ -39,7 +39,7 @@ namespace Azure.AI.Translation.Text
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(SourceText))
+            if (SourceText != null)
             {
                 writer.WritePropertyName("sourceText"u8);
                 writer.WriteObjectValue(SourceText);
@@ -82,9 +82,9 @@ namespace Azure.AI.Translation.Text
             {
                 return null;
             }
-            Optional<DetectedLanguage> detectedLanguage = default;
+            DetectedLanguage detectedLanguage = default;
             IReadOnlyList<Translation> translations = default;
-            Optional<SourceText> sourceText = default;
+            SourceText sourceText = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.AI.Translation.Text
                     {
                         continue;
                     }
-                    detectedLanguage = DetectedLanguage.DeserializeDetectedLanguage(property.Value);
+                    detectedLanguage = DetectedLanguage.DeserializeDetectedLanguage(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("translations"u8))
@@ -103,7 +103,7 @@ namespace Azure.AI.Translation.Text
                     List<Translation> array = new List<Translation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Translation.DeserializeTranslation(item));
+                        array.Add(Translation.DeserializeTranslation(item, options));
                     }
                     translations = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.AI.Translation.Text
                     {
                         continue;
                     }
-                    sourceText = SourceText.DeserializeSourceText(property.Value);
+                    sourceText = SourceText.DeserializeSourceText(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -123,7 +123,7 @@ namespace Azure.AI.Translation.Text
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TranslatedTextItem(detectedLanguage.Value, translations, sourceText.Value, serializedAdditionalRawData);
+            return new TranslatedTextItem(detectedLanguage, translations, sourceText, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TranslatedTextItem>.Write(ModelReaderWriterOptions options)

@@ -51,7 +51,10 @@ namespace Azure.ResourceManager.ResourceGraph.Models
         /// <exception cref="ArgumentNullException"> <paramref name="query"/> is null. </exception>
         public ResourceQueryContent(string query)
         {
-            Argument.AssertNotNull(query, nameof(query));
+            if (query == null)
+            {
+                throw new ArgumentNullException(nameof(query));
+            }
 
             Subscriptions = new ChangeTrackingList<string>();
             ManagementGroups = new ChangeTrackingList<string>();

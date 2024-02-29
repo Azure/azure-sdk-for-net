@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MaxPercentUnhealthyServices))
+            if (MaxPercentUnhealthyServices.HasValue)
             {
                 writer.WritePropertyName("maxPercentUnhealthyServices"u8);
                 writer.WriteNumberValue(MaxPercentUnhealthyServices.Value);
             }
-            if (Optional.IsDefined(MaxPercentUnhealthyPartitionsPerService))
+            if (MaxPercentUnhealthyPartitionsPerService.HasValue)
             {
                 writer.WritePropertyName("maxPercentUnhealthyPartitionsPerService"u8);
                 writer.WriteNumberValue(MaxPercentUnhealthyPartitionsPerService.Value);
             }
-            if (Optional.IsDefined(MaxPercentUnhealthyReplicasPerPartition))
+            if (MaxPercentUnhealthyReplicasPerPartition.HasValue)
             {
                 writer.WritePropertyName("maxPercentUnhealthyReplicasPerPartition"u8);
                 writer.WriteNumberValue(MaxPercentUnhealthyReplicasPerPartition.Value);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 return null;
             }
-            Optional<int> maxPercentUnhealthyServices = default;
-            Optional<int> maxPercentUnhealthyPartitionsPerService = default;
-            Optional<int> maxPercentUnhealthyReplicasPerPartition = default;
+            int? maxPercentUnhealthyServices = default;
+            int? maxPercentUnhealthyPartitionsPerService = default;
+            int? maxPercentUnhealthyReplicasPerPartition = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmServiceTypeHealthPolicy(Optional.ToNullable(maxPercentUnhealthyServices), Optional.ToNullable(maxPercentUnhealthyPartitionsPerService), Optional.ToNullable(maxPercentUnhealthyReplicasPerPartition), serializedAdditionalRawData);
+            return new ArmServiceTypeHealthPolicy(maxPercentUnhealthyServices, maxPercentUnhealthyPartitionsPerService, maxPercentUnhealthyReplicasPerPartition, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArmServiceTypeHealthPolicy>.Write(ModelReaderWriterOptions options)

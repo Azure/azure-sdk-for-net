@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CreationToken))
+            if (CreationToken != null)
             {
                 writer.WritePropertyName("creationToken"u8);
                 writer.WriteStringValue(CreationToken);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<string> creationToken = default;
+            string creationToken = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RelocateVolumeContent(creationToken.Value, serializedAdditionalRawData);
+            return new RelocateVolumeContent(creationToken, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RelocateVolumeContent>.Write(ModelReaderWriterOptions options)

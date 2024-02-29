@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Maps.Geolocation
 {
@@ -18,7 +17,7 @@ namespace Azure.Maps.Geolocation
             {
                 return null;
             }
-            Optional<ErrorDetail> error = default;
+            ErrorDetail error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("error"u8))
@@ -31,7 +30,7 @@ namespace Azure.Maps.Geolocation
                     continue;
                 }
             }
-            return new ErrorResponse(error.Value);
+            return new ErrorResponse(error);
         }
     }
 }

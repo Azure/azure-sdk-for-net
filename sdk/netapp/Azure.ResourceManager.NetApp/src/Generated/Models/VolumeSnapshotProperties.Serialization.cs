@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SnapshotPolicyId))
+            if (SnapshotPolicyId != null)
             {
                 writer.WritePropertyName("snapshotPolicyId"u8);
                 writer.WriteStringValue(SnapshotPolicyId);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> snapshotPolicyId = default;
+            ResourceIdentifier snapshotPolicyId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VolumeSnapshotProperties(snapshotPolicyId.Value, serializedAdditionalRawData);
+            return new VolumeSnapshotProperties(snapshotPolicyId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VolumeSnapshotProperties>.Write(ModelReaderWriterOptions options)

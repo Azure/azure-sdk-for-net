@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.Synapse.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(MetadataType.ToString());
-            if (Optional.IsDefined(Id))
+            if (Id.HasValue)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteNumberValue(Id.Value);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -85,13 +85,13 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Environment": return SynapseSsisEnvironment.DeserializeSynapseSsisEnvironment(element);
-                    case "Folder": return SynapseSsisFolder.DeserializeSynapseSsisFolder(element);
-                    case "Package": return SynapseSsisPackage.DeserializeSynapseSsisPackage(element);
-                    case "Project": return SynapseSsisProject.DeserializeSynapseSsisProject(element);
+                    case "Environment": return SynapseSsisEnvironment.DeserializeSynapseSsisEnvironment(element, options);
+                    case "Folder": return SynapseSsisFolder.DeserializeSynapseSsisFolder(element, options);
+                    case "Package": return SynapseSsisPackage.DeserializeSynapseSsisPackage(element, options);
+                    case "Project": return SynapseSsisProject.DeserializeSynapseSsisProject(element, options);
                 }
             }
-            return UnknownSsisObjectMetadata.DeserializeUnknownSsisObjectMetadata(element);
+            return UnknownSsisObjectMetadata.DeserializeUnknownSsisObjectMetadata(element, options);
         }
 
         BinaryData IPersistableModel<SynapseSsisObjectMetadata>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Criteria))
+            if (!(Criteria is ChangeTrackingList<DataProtectionBackupCriteria> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("criteria"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<IList<DataProtectionBackupCriteria>> criteria = default;
+            IList<DataProtectionBackupCriteria> criteria = default;
             bool isDefault = default;
             long taggingPriority = default;
             DataProtectionBackupRetentionTag tagInfo = default;
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     List<DataProtectionBackupCriteria> array = new List<DataProtectionBackupCriteria>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataProtectionBackupCriteria.DeserializeDataProtectionBackupCriteria(item));
+                        array.Add(DataProtectionBackupCriteria.DeserializeDataProtectionBackupCriteria(item, options));
                     }
                     criteria = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 if (property.NameEquals("tagInfo"u8))
                 {
-                    tagInfo = DataProtectionBackupRetentionTag.DeserializeDataProtectionBackupRetentionTag(property.Value);
+                    tagInfo = DataProtectionBackupRetentionTag.DeserializeDataProtectionBackupRetentionTag(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataProtectionBackupTaggingCriteria(Optional.ToList(criteria), isDefault, taggingPriority, tagInfo, serializedAdditionalRawData);
+            return new DataProtectionBackupTaggingCriteria(criteria ?? new ChangeTrackingList<DataProtectionBackupCriteria>(), isDefault, taggingPriority, tagInfo, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataProtectionBackupTaggingCriteria>.Write(ModelReaderWriterOptions options)
