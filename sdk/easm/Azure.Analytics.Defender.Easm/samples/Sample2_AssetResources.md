@@ -1,8 +1,8 @@
-# Listing Assets
+# Listing assets
 
 After the discovery run is finished, your workspace will be populated with assets. The sample provided demonstrates how you can retrieve the assets from your workspace.
 
-## Create an EASM Client
+## Create an EASM client
 
 To create an EasmClient, you need your subscription ID, region, and some sort of credential.
 
@@ -11,7 +11,7 @@ To create an EasmClient, you need your subscription ID, region, and some sort of
 EasmClient client = new EasmClient(new System.Uri(endpoint),
                 new DefaultAzureCredential());
 ```
-## List Assets
+## List assets
 
 You can call the client's `AssetsList` method to view your assets.
 

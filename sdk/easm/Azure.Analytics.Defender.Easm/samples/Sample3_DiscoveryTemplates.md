@@ -1,8 +1,8 @@
-# Create Discovery Groups using Templates
+# Create discovery groups using templates
 
 Instead of manually importing discovery seeds for your discovery run, you can use discovery templates. Discovery templates consist of pre-defined discovery seeds. The following example demonstrates how to search for a discovery template and use it to create a discovery group.
 
-## Create an EASM Client
+## Create an EASM client
 
 To create an EasmClient, you need your subscription ID, region, and some sort of credential.
 
@@ -12,7 +12,7 @@ EasmClient client = new EasmClient(new System.Uri(endpoint),
                 new DefaultAzureCredential());
 ```
 
-## Get Templates
+## Get templates
 
 The `DiscoveryTemplatesList` method can be used to find a discovery template using a filter. The endpoint will return templates based on a partial match on the name field.
 
@@ -25,7 +25,7 @@ foreach (DiscoveryTemplate template in response)
 }
 ```
 
-## Get the Seeds associated with a Template
+## Get the seeds associated with a template
 
 
 To get more detail about a disco template, we can use the `DiscoveryTemplatesGet` method. From here, we can see the names and seeds which would be used in a discovery run.
@@ -42,7 +42,7 @@ foreach (DiscoverySource seed in discoTemplate.Seeds)
 }
 ```
 
-## Run Discovery with a Template
+## Run discovery with a template
 
 To start a discovery from a template, we can use `DiscoveryRun` method with a template id.
 

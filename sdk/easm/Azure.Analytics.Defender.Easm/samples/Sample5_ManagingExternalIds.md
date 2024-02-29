@@ -1,4 +1,4 @@
-# Managing External Ids
+# Managing external Ids
 
 External IDs can be a useful method of keeping track of assets in multiple systems, but it can be time consuming to manually tag each asset. In this example, we'll take a look at how you can, with a map of name/kind/external id, tag each asset in your inventory with an external id automatically using the SDK.
 
@@ -12,7 +12,7 @@ EasmClient client = new EasmClient(new System.Uri(endpoint),
                 new DefaultAzureCredential());
 ```
 
-## Initialize External Id Mapping
+## Initialize external id mapping
 
 Assets in EASM can be uniquely distinguished by `name` and `kind`, so we can create a simple dictionary containing `name`, `kind`, and `external_id`. In a more realistic case, this could be generated using an export from the external system we're using for tagging
 
@@ -30,7 +30,7 @@ List<Dictionary<string, string>> mapping = new List<Dictionary<string, string>> 
 };
 ```
 
-## Update Assets
+## Update assets
 
 Using the client, we can update each asset and append the tracking id of the update to our update ID list, so that we can keep track of the progress on each update later.
 
@@ -49,7 +49,7 @@ mapping.ForEach(asset =>
 });
 ```
 
-## View Update Progress
+## View update progress
 
 Using the client, we can view the progress of each update using the `TasksGet` method
 

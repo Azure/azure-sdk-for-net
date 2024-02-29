@@ -1,9 +1,9 @@
-# Use Saved Filters
+# Use saved filters
 
 Saved Filters are used to store a query within EASM, these saved queries can be used to synchronize exact queries across multiple scripts, or to ensure a team is looking at the same assets
 In this example, we'll go over how a saved filter could be used to synchronize the a query across multiple scripts
 
-## Create an EASM Client
+## Create an EASM client
 
 To create an EasmClient, you need your subscription ID, region, and some sort of credential.
 
@@ -13,7 +13,7 @@ EasmClient client = new EasmClient(new System.Uri(endpoint),
                 new DefaultAzureCredential());
 ```
 
-## Create a Saved Filter
+## Create a saved filter
 
 To create a Saved Filter, we need to send a filter, name, and description to the `SavedFiltersCreateOrReplace` endpoint.
 
@@ -23,7 +23,7 @@ SavedFilterPayload savedFilterRequest = new SavedFilterPayload("IP Address = 1.1
 client.CreateOrReplaceSavedFilter(savedFilterName, savedFilterRequest);
 ```
 
-## Monitor Assets with the Saved Filter
+## Monitor assets with the saved filter
 
 Set up an asset list call that could be used to monitor the assets:
 
@@ -46,7 +46,7 @@ string monitorFilter = savedFilterResponse.Value.Filter;
 }
 ```
 
-## Update the Monitored Assets
+## Update the monitored assets
 
 
 The monitored assets can be updated with an assets update call:

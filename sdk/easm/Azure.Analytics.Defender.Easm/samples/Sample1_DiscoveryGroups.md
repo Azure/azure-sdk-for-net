@@ -1,10 +1,10 @@
-# Create and manage Discovery Groups
+# Create and manage discovery groups
 
 To use these samples, you'll first need to set up resources. See [getting started](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/easm/Azure.Analytics.Defender.Easm/README.md#getting-started) for details.
 
 This code sample demonstrates how to create and manage discovery groups in an EASM workspace. Discovery groups are used to discover and map the online assets.
 
-## Create an EASM Client
+## Create an EASM client
 
 To create an EasmClient, you need your subscription ID, region, and some sort of credential.
 
@@ -14,7 +14,7 @@ EasmClient client = new EasmClient(new System.Uri(endpoint),
                 new DefaultAzureCredential());
 ```
 
-## Create a Discovery Group
+## Create a discovery group
 
 
 In order to start discovery runs, we must first create a discovery group, which is a collection of known assets that we can pivot off of. These are created using the `DiscoveryGroupsCreateOrReplace` method.
@@ -48,7 +48,7 @@ request.Description = discoveryGroupDescription;
 client.CreateOrReplaceDiscoveryGroup(discoveryGroupName, request);
 ```
 
-## Run the Discovery Group
+## Run the discovery group
 
 Discovery groups created through the API's `createOrReplace` method aren't run automatically, so we need to start the run ourselves.
 
