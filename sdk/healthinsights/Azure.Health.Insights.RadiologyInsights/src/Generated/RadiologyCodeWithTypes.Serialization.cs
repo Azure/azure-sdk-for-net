@@ -14,7 +14,7 @@ using Azure.Core;
 
 namespace Azure.Health.Insights.RadiologyInsights
 {
-    internal partial class RadiologyCodeWithTypes : IUtf8JsonSerializable, IJsonModel<RadiologyCodeWithTypes>
+    public partial class RadiologyCodeWithTypes : IUtf8JsonSerializable, IJsonModel<RadiologyCodeWithTypes>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RadiologyCodeWithTypes>)this).Write(writer, new ModelReaderWriterOptions("W"));
 

@@ -28,3 +28,4 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Naming", "AZC0032:Improper model name suffix", Justification = "<Pending>", Scope = "type", Target = "~T:Azure.Health.Insights.RadiologyInsights.SampledData")]
 [assembly: SuppressMessage("Usage", "AZC0012:Avoid single word type names", Justification = "<Pending>", Scope = "type", Target = "~T:Azure.Health.Insights.RadiologyInsights.Meta")]
 [assembly: SuppressMessage("Usage", "AZC0012:Avoid single word type names", Justification = "<Pending>", Scope = "type", Target = "~T:Azure.Health.Insights.RadiologyInsights.Resource")]
+[assembly: SuppressMessage("Naming", "AZC0032:Improper model name suffix", Justification = "<Pending>", Scope = "type", Target = "~T:Azure.Health.Insights.RadiologyInsights.FhirR4SampledData")]

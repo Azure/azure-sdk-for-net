@@ -19,9 +19,9 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
 
             PatientRecord patientRecord = RadiologyInsightsClientTests.CreatePatientRecord();
             patientRecord.PatientDocuments[0].AdministrativeMetadata = CreateDocumentAdministrativeMetadata();
-            var radiologyInsightsModelConfiguration = CreateConfiguration();
             List<PatientRecord> patientRecords = new List<PatientRecord> { patientRecord };
-            RadiologyInsightsData radiologyInsightsData = new RadiologyInsightsData(patientRecords, radiologyInsightsModelConfiguration);
+            RadiologyInsightsData radiologyInsightsData = new RadiologyInsightsData(patientRecords);
+            radiologyInsightsData.Configuration = CreateConfiguration();
 
             Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyInsights(WaitUntil.Completed, radiologyInsightsData);
             RadiologyInsightsInferenceResult responseData = operation.Value;
@@ -68,17 +68,17 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
             followupRecommendationOptions.IncludeRecommendationsInReferences = true;
             followupRecommendationOptions.ProvideFocusedSentenceEvidence = true;
             findingOptions.ProvideFocusedSentenceEvidence = true;
-            radiologyInsightsInferenceOptions.FollowupRecommendation = followupRecommendationOptions;
-            radiologyInsightsInferenceOptions.Finding = findingOptions;
+            radiologyInsightsInferenceOptions.FollowupRecommendationOptions = followupRecommendationOptions;
+            radiologyInsightsInferenceOptions.FindingOptions = findingOptions;
             return radiologyInsightsInferenceOptions;
         }
         private static PatientRecord CreatePatientRecord()
         {
             string id = "patient_id2";
-            PatientInfo patientInfo = new PatientInfo
+            PatientDetails patientInfo = new PatientDetails
             {
                 BirthDate = new System.DateTime(1959, 11, 11),
-                Sex = PatientInfoSex.Female,
+                Sex = PatientSex.Female,
             };
             Encounter encounter = new Encounter("encounterid1")
             {
@@ -89,15 +89,16 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
                     End = new System.DateTime(2021, 08, 28)
                 }
             };
-            List<Encounter> encounterList = new List<Encounter> { encounter };
             DocumentContent documentContent = new DocumentContent(DocumentContentSourceType.Inline, "CLINICAL HISTORY:   \n        20-year-old female presenting with abdominal pain. Surgical history significant for appendectomy.\n        COMPARISON:   \n        Right upper quadrant sonographic performed 1 day prior.\n        TECHNIQUE:   \n        Transabdominal grayscale pelvic sonography with duplex color Doppler and spectral waveform analysis of the ovaries.\n        FINDINGS:   \n        The uterus is unremarkable given the transabdominal technique with endometrial echo complex within physiologic normal limits. The ovaries are symmetric in size, measuring 2.5 x 1.2 x 3.0 cm and the left measuring 2.8 x 1.5 x 1.9 cm.\n On duplex imaging, Doppler signal is symmetric.\n        IMPRESSION:   \n        1. Normal pelvic sonography. Findings of testicular torsion.\n        A new US pelvis within the next 6 months is recommended.\n        These results have been discussed with Dr. Jones at 3 PM on November 5 2020.");
             PatientDocument patientDocument = new PatientDocument(DocumentType.Note, "doc2", documentContent)
             {
                 ClinicalType = ClinicalDocumentType.RadiologyReport,
                 CreatedDateTime = new System.DateTime(2021, 08, 28)
             };
-            List<PatientDocument> patientDocuments = new List<PatientDocument> { patientDocument };
-            PatientRecord patientRecord = new PatientRecord(id, patientInfo, encounterList, patientDocuments);
+            PatientRecord patientRecord = new PatientRecord(id);
+            patientRecord.Info = patientInfo;
+            patientRecord.Encounters.Add(encounter);
+            patientRecord.PatientDocuments.Add(patientDocument);
             return patientRecord;
         }
 
@@ -105,17 +106,17 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
         {
             DocumentAdministrativeMetadata documentAdministrativeMetadata = new DocumentAdministrativeMetadata();
 
-            Coding coding = new Coding()
+            FhirR4Coding coding = new FhirR4Coding()
             {
                 Display = "US PELVIS COMPLETE",
                 Code = "USPELVIS",
                 System = "Http://hl7.org/fhir/ValueSet/cpt-all"
             };
 
-            CodeableConcept codeableConcept = new CodeableConcept();
+            FhirR4CodeableConcept codeableConcept = new FhirR4CodeableConcept();
             codeableConcept.Coding.Add(coding);
 
-            OrderedProcedure orderedProcedure = new OrderedProcedure()
+            FhirR4Extendible orderedProcedure = new FhirR4Extendible()
             {
                 Description = "US PELVIS COMPLETE",
                 Code = codeableConcept

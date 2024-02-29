@@ -14,7 +14,7 @@ using Azure.Core;
 
 namespace Azure.Health.Insights.RadiologyInsights
 {
-    internal partial class GenericProcedureRecommendation : IUtf8JsonSerializable, IJsonModel<GenericProcedureRecommendation>
+    public partial class GenericProcedureRecommendation : IUtf8JsonSerializable, IJsonModel<GenericProcedureRecommendation>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GenericProcedureRecommendation>)this).Write(writer, new ModelReaderWriterOptions("W"));
 

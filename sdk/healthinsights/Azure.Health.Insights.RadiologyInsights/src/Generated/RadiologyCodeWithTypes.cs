@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.Health.Insights.RadiologyInsights
 {
     /// <summary> Radiology code with types : used in imaging procedure recommendation for contrast and view. </summary>
-    internal partial class RadiologyCodeWithTypes
+    public partial class RadiologyCodeWithTypes
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

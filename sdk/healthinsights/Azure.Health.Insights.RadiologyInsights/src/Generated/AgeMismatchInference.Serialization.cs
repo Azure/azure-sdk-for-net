@@ -14,28 +14,21 @@ using Azure.Core;
 
 namespace Azure.Health.Insights.RadiologyInsights
 {
-    public partial class FhirR4Narrative : IUtf8JsonSerializable, IJsonModel<FhirR4Narrative>
+    public partial class AgeMismatchInference : IUtf8JsonSerializable, IJsonModel<AgeMismatchInference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FhirR4Narrative>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AgeMismatchInference>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<FhirR4Narrative>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AgeMismatchInference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FhirR4Narrative>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AgeMismatchInference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FhirR4Narrative)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AgeMismatchInference)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("status"u8);
-            writer.WriteStringValue(Status);
-            writer.WritePropertyName("div"u8);
-            writer.WriteStringValue(Div);
-            if (Id != null)
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind);
             if (!(Extension is ChangeTrackingList<FhirR4Extension> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("extension"u8);
@@ -64,19 +57,19 @@ namespace Azure.Health.Insights.RadiologyInsights
             writer.WriteEndObject();
         }
 
-        FhirR4Narrative IJsonModel<FhirR4Narrative>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AgeMismatchInference IJsonModel<AgeMismatchInference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FhirR4Narrative>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AgeMismatchInference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FhirR4Narrative)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AgeMismatchInference)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeFhirR4Narrative(document.RootElement, options);
+            return DeserializeAgeMismatchInference(document.RootElement, options);
         }
 
-        internal static FhirR4Narrative DeserializeFhirR4Narrative(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static AgeMismatchInference DeserializeAgeMismatchInference(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -84,27 +77,15 @@ namespace Azure.Health.Insights.RadiologyInsights
             {
                 return null;
             }
-            string status = default;
-            string div = default;
-            string id = default;
+            string kind = default;
             IReadOnlyList<FhirR4Extension> extension = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("status"u8))
+                if (property.NameEquals("kind"u8))
                 {
-                    status = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("div"u8))
-                {
-                    div = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("id"u8))
-                {
-                    id = property.Value.GetString();
+                    kind = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("extension"u8))
@@ -127,46 +108,46 @@ namespace Azure.Health.Insights.RadiologyInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FhirR4Narrative(id, extension ?? new ChangeTrackingList<FhirR4Extension>(), serializedAdditionalRawData, status, div);
+            return new AgeMismatchInference(kind, extension ?? new ChangeTrackingList<FhirR4Extension>(), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<FhirR4Narrative>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<AgeMismatchInference>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FhirR4Narrative>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AgeMismatchInference>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FhirR4Narrative)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AgeMismatchInference)} does not support '{options.Format}' format.");
             }
         }
 
-        FhirR4Narrative IPersistableModel<FhirR4Narrative>.Create(BinaryData data, ModelReaderWriterOptions options)
+        AgeMismatchInference IPersistableModel<AgeMismatchInference>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FhirR4Narrative>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AgeMismatchInference>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeFhirR4Narrative(document.RootElement, options);
+                        return DeserializeAgeMismatchInference(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FhirR4Narrative)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AgeMismatchInference)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<FhirR4Narrative>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AgeMismatchInference>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new FhirR4Narrative FromResponse(Response response)
+        internal static new AgeMismatchInference FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeFhirR4Narrative(document.RootElement);
+            return DeserializeAgeMismatchInference(document.RootElement);
         }
 
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>

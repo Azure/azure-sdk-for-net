@@ -11,8 +11,22 @@ using Azure.Core;
 
 namespace Azure.Health.Insights.RadiologyInsights
 {
-    /// <summary> Procedure information. </summary>
-    public partial class FhirR4Extendible
+    /// <summary>
+    /// An inference made by the Radiology Insights model regarding a patient.
+    ///   - AgeMismatch
+    ///   - SexMismatch
+    ///   - LateralityDiscrepancy
+    ///   - CompleteOrderDiscrepancy
+    ///   - LimitedOrderDiscrepancy
+    ///   - Finding
+    ///   - CriticalResult
+    ///   - FollowupRecommendation
+    ///   - RadiologyProcedure
+    ///   - FollowupCommunication
+    /// Please note <see cref="RadiologyInsightsInference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="AgeMismatchInference"/>, <see cref="SexMismatchInference"/>, <see cref="LateralityDiscrepancyInference"/>, <see cref="CompleteOrderDiscrepancyInference"/>, <see cref="LimitedOrderDiscrepancyInference"/>, <see cref="FindingInference"/>, <see cref="CriticalResultInference"/>, <see cref="RadiologyProcedureInference"/>, <see cref="FollowupRecommendationInference"/> and <see cref="FollowupCommunicationInference"/>.
+    /// </summary>
+    public abstract partial class RadiologyInsightsInference
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -44,32 +58,28 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// </list>
         /// </para>
         /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="FhirR4Extendible"/>. </summary>
-        public FhirR4Extendible()
+        /// <summary> Initializes a new instance of <see cref="RadiologyInsightsInference"/>. </summary>
+        protected RadiologyInsightsInference()
         {
             Extension = new ChangeTrackingList<FhirR4Extension>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="FhirR4Extendible"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RadiologyInsightsInference"/>. </summary>
+        /// <param name="kind"> Discriminator. </param>
         /// <param name="extension"> Additional Content defined by implementations. </param>
-        /// <param name="code"> Procedure code. </param>
-        /// <param name="description"> Procedure description. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FhirR4Extendible(IList<FhirR4Extension> extension, FhirR4CodeableConcept code, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RadiologyInsightsInference(string kind, IReadOnlyList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            Kind = kind;
             Extension = extension;
-            Code = code;
-            Description = description;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Discriminator. </summary>
+        internal string Kind { get; set; }
         /// <summary> Additional Content defined by implementations. </summary>
-        public IList<FhirR4Extension> Extension { get; }
-        /// <summary> Procedure code. </summary>
-        public FhirR4CodeableConcept Code { get; set; }
-        /// <summary> Procedure description. </summary>
-        public string Description { get; set; }
+        public IReadOnlyList<FhirR4Extension> Extension { get; }
     }
 }

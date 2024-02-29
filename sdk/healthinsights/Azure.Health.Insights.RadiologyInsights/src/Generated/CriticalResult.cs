@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Health.Insights.RadiologyInsights
 {
-    /// <summary> Procedure information. </summary>
-    public partial class FhirR4Extendible
+    /// <summary> Critical Result consists of two properties. </summary>
+    public partial class CriticalResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,30 +45,38 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="FhirR4Extendible"/>. </summary>
-        public FhirR4Extendible()
+        /// <summary> Initializes a new instance of <see cref="CriticalResult"/>. </summary>
+        /// <param name="description"> Description : medical problem. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="description"/> is null. </exception>
+        internal CriticalResult(string description)
         {
-            Extension = new ChangeTrackingList<FhirR4Extension>();
+            if (description == null)
+            {
+                throw new ArgumentNullException(nameof(description));
+            }
+
+            Description = description;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FhirR4Extendible"/>. </summary>
-        /// <param name="extension"> Additional Content defined by implementations. </param>
-        /// <param name="code"> Procedure code. </param>
-        /// <param name="description"> Procedure description. </param>
+        /// <summary> Initializes a new instance of <see cref="CriticalResult"/>. </summary>
+        /// <param name="description"> Description : medical problem. </param>
+        /// <param name="finding"> Finding linked to the critical result. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FhirR4Extendible(IList<FhirR4Extension> extension, FhirR4CodeableConcept code, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CriticalResult(string description, FhirR4Observation finding, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Extension = extension;
-            Code = code;
             Description = description;
+            Finding = finding;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Additional Content defined by implementations. </summary>
-        public IList<FhirR4Extension> Extension { get; }
-        /// <summary> Procedure code. </summary>
-        public FhirR4CodeableConcept Code { get; set; }
-        /// <summary> Procedure description. </summary>
-        public string Description { get; set; }
+        /// <summary> Initializes a new instance of <see cref="CriticalResult"/> for deserialization. </summary>
+        internal CriticalResult()
+        {
+        }
+
+        /// <summary> Description : medical problem. </summary>
+        public string Description { get; }
+        /// <summary> Finding linked to the critical result. </summary>
+        public FhirR4Observation Finding { get; }
     }
 }

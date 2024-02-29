@@ -59,9 +59,9 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
         private static RadiologyInsightsData GetRadiologyInsightsData()
         {
             PatientRecord patientRecord = CreatePatientRecord();
-            RadiologyInsightsModelConfiguration radiologyInsightsModelConfiguration = CreateConfiguration();
             List<PatientRecord> patientRecords = new() { patientRecord };
-            RadiologyInsightsData radiologyInsightsData = new(patientRecords, radiologyInsightsModelConfiguration);
+            RadiologyInsightsData radiologyInsightsData = new(patientRecords);
+            radiologyInsightsData.Configuration = CreateConfiguration();
             return radiologyInsightsData;
         }
 
@@ -98,18 +98,18 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
             followupRecommendationOptions.IncludeRecommendationsInReferences = true;
             followupRecommendationOptions.ProvideFocusedSentenceEvidence = true;
             findingOptions.ProvideFocusedSentenceEvidence = true;
-            radiologyInsightsInferenceOptions.FollowupRecommendation = followupRecommendationOptions;
-            radiologyInsightsInferenceOptions.Finding = findingOptions;
+            radiologyInsightsInferenceOptions.FollowupRecommendationOptions = followupRecommendationOptions;
+            radiologyInsightsInferenceOptions.FindingOptions = findingOptions;
             return radiologyInsightsInferenceOptions;
         }
 
         private static PatientRecord CreatePatientRecord()
         {
             string id = "patient_id2";
-            PatientInfo patientInfo = new()
+            PatientDetails patientInfo = new()
             {
                 BirthDate = new System.DateTime(1959, 11, 11),
-                Sex = PatientInfoSex.Female,
+                Sex = PatientSex.Female,
             };
             Encounter encounter = new("encounterid1")
             {
@@ -120,7 +120,6 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
                     End = new System.DateTime(2021, 08, 28)
                 }
             };
-            List<Encounter> encounterList = new() { encounter };
             DocumentContent documentContent = new(DocumentContentSourceType.Inline, DOC_CONTENT);
             PatientDocument patientDocument = new(DocumentType.Note, "doc2", documentContent)
             {
@@ -128,8 +127,10 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
                 CreatedDateTime = new System.DateTime(2021, 08, 28),
                 AdministrativeMetadata = CreateDocumentAdministrativeMetadata()
             };
-            List<PatientDocument> patientDocuments = new() { patientDocument };
-            PatientRecord patientRecord = new(id, patientInfo, encounterList, patientDocuments);
+            PatientRecord patientRecord = new(id);
+            patientRecord.Info = patientInfo;
+            patientRecord.Encounters.Add(encounter);
+            patientRecord.PatientDocuments.Add(patientDocument);
             return patientRecord;
         }
 
@@ -137,17 +138,17 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
         {
             DocumentAdministrativeMetadata documentAdministrativeMetadata = new DocumentAdministrativeMetadata();
 
-            Coding coding = new()
+            FhirR4Coding coding = new()
             {
                 Display = "US PELVIS COMPLETE",
                 Code = "USPELVIS",
                 System = "Http://hl7.org/fhir/ValueSet/cpt-all"
             };
 
-            CodeableConcept codeableConcept = new();
+            FhirR4CodeableConcept codeableConcept = new();
             codeableConcept.Coding.Add(coding);
 
-            OrderedProcedure orderedProcedure = new()
+            FhirR4Extendible orderedProcedure = new()
             {
                 Description = "US PELVIS COMPLETE",
                 Code = codeableConcept
