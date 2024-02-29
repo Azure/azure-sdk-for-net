@@ -621,7 +621,7 @@
 # PRLabel: %Monitor - Query
 /sdk/monitor/Azure.Monitor.Query/                                  @nisha-bhatia @JoshLove-msft @pallavit @Azure/azure-sdk-write-monitor-data-plane
 
-# ServiceLabel: %Monitor - Query
+# ServiceLabel: %Monitor - Query                                   @ToddKingMSFT
 # AzureSdkOwners:                                                  @nisha-bhatia
 # ServiceOwners:                                                   @SameergMS @dadunl @AzMonEssential @AzmonAlerts @AzmonActionG @AzmonLogA
 
