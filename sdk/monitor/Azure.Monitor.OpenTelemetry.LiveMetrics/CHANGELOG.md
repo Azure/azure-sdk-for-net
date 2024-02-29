@@ -4,7 +4,7 @@
 
 ### Features Added
 
-- Report Performance Counters "CPU Total" and "Committed Memory".
+- Report counters "CPU Total" and "Committed Memory".
   ([#42213](https://github.com/Azure/azure-sdk-for-net/pull/42213))
 
 ### Breaking Changes
