@@ -30,7 +30,7 @@ steps:
         # 7.2 behavior for command argument passing. Newer behaviors will result
         # in errors from git.exe.
         $PSNativeCommandArgumentPassing = 'Legacy'
-        
+
         function SparseCheckout([Array]$paths, [Hashtable]$repository)
         {
             $dir = $repository.WorkingDirectory
