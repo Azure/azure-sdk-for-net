@@ -96,7 +96,6 @@ namespace Azure.Core
         {
             context.Freeze();
 
-            // Azure-specific extensibility piece
             if (context.Policies?.Count > 0)
             {
                 Policies ??= new(context.Policies.Count);
