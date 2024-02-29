@@ -190,7 +190,7 @@ internal class StructuredMessageDecodingStream : Stream
     {
         if (_streamFooterLength > 0 && !_processedFooter)
         {
-            throw new InvalidDataException();
+            throw Errors.InvalidStructuredMessage("Missing or incomplete trailer.");
         }
         _processedFooter = true;
     }
@@ -399,11 +399,11 @@ internal class StructuredMessageDecodingStream : Stream
 
         if (_innerStreamConsumed != _innerStreamLength)
         {
-            throw new InvalidDataException();
+            throw Errors.InvalidStructuredMessage("Unexpected message size.");
         }
         if (_currentSegmentNum != _totalSegments)
         {
-            throw new InvalidDataException();
+            throw Errors.InvalidStructuredMessage("Missing expected message segments.");
         }
 
         _processedFooter = true;
@@ -419,7 +419,7 @@ internal class StructuredMessageDecodingStream : Stream
         _currentSegmentContentRemaining = _currentSegmentContentLength;
         if (newSegNum != _currentSegmentNum + 1)
         {
-            throw new InvalidDataException("Unexpected segment number in structured message.");
+            throw Errors.InvalidStructuredMessage("Unexpected segment number in structured message.");
         }
         _currentSegmentNum = newSegNum;
         _currentRegion = SMRegion.SegmentContent;

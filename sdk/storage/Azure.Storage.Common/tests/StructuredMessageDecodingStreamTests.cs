@@ -156,7 +156,7 @@ namespace Azure.Storage.Tests
             MemoryStream encodedDataStream = new(encodedData);
             Stream decodingStream = new StructuredMessageDecodingStream(encodedDataStream);
 
-            //
+            // manual try/catch to validate the proccess failed mid-stream rather than the end
             const int copyBufferSize = 4;
             bool caught = false;
             try
@@ -173,22 +173,6 @@ namespace Azure.Storage.Tests
 
         [Test]
         public void BadStreamCrcThrows()
-        {
-            const int segmentLength = 256;
-            Random r = new();
-
-            byte[] originalData = new byte[2048];
-            r.NextBytes(originalData);
-            byte[] encodedData = StructuredMessageHelper.MakeEncodedData(originalData, segmentLength, Flags.StorageCrc64);
-
-            encodedData[originalData.Length - 1] = (byte)~encodedData[originalData.Length - 1];
-
-            Stream decodingStream = new StructuredMessageDecodingStream(new MemoryStream(encodedData));
-            Assert.That(async () => await CopyStream(decodingStream, Stream.Null), Throws.InnerException.TypeOf<InvalidDataException>());
-        }
-
-        [Test]
-        public void BadStreamWrongStreamFooter()
         {
             const int segmentLength = 256;
             Random r = new();
