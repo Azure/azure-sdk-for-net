@@ -193,7 +193,7 @@ namespace Azure.Provisioning.Tests
                 {
                     sqlAdminPassword = new { value = "password" },
                     appUserPassword = new { value = "password" }
-                }), anonymousResourceGroup: true);
+                }), promptMode: true);
         }
 
         [Test]
@@ -205,6 +205,17 @@ namespace Azure.Provisioning.Tests
             infra.Build(GetOutputPath());
 
             await ValidateBicepAsync();
+        }
+
+        [Test]
+        public async Task StorageBlobDefaultsInPromptMode()
+        {
+            var infra = new TestInfrastructure(configuration: new Configuration { UsePromptMode = true });
+            infra.AddStorageAccount(name: "photoAcct", sku: StorageSkuName.PremiumLrs, kind: StorageKind.BlockBlobStorage);
+            infra.AddBlobService();
+            infra.Build(GetOutputPath());
+
+            await ValidateBicepAsync(promptMode: true);
         }
 
         [Test]
@@ -280,7 +291,7 @@ namespace Azure.Provisioning.Tests
             await ValidateBicepAsync();
         }
 
-        public async Task ValidateBicepAsync(BinaryData? parameters = null, bool anonymousResourceGroup = false)
+        public async Task ValidateBicepAsync(BinaryData? parameters = null, bool promptMode = false)
         {
             if (TestEnvironment.GlobalIsRunningInCI)
             {
@@ -317,7 +328,7 @@ namespace Azure.Provisioning.Tests
                 }
 
                 ResourceIdentifier scope;
-                if (anonymousResourceGroup)
+                if (promptMode)
                 {
                     var rgs = subscription.GetResourceGroups();
                     var data = new ResourceGroupData("westus");
@@ -337,7 +348,7 @@ namespace Azure.Provisioning.Tests
                         Template = new BinaryData(File.ReadAllText(Path.Combine(testPath, "main.json"))),
                         Parameters = parameters
                     });
-                if (!anonymousResourceGroup)
+                if (!promptMode)
                 {
                     content.Location = "westus";
                 }
