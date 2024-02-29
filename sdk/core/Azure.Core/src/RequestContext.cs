@@ -2,8 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Threading;
+using System.Runtime.CompilerServices;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -12,10 +13,8 @@ namespace Azure
     /// <summary>
     /// Options that can be used to control the behavior of a request sent by a client.
     /// </summary>
-    public class RequestContext
+    public class RequestContext : RequestOptions
     {
-        private bool _frozen;
-
         private (int Status, bool IsError)[]? _statusCodes;
         internal (int Status, bool IsError)[]? StatusCodes => _statusCodes;
 
@@ -27,12 +26,29 @@ namespace Azure
         /// <summary>
         /// Controls under what conditions the operation raises an exception if the underlying response indicates a failure.
         /// </summary>
-        public ErrorOptions ErrorOptions { get; set; } = ErrorOptions.Default;
+        public new ErrorOptions ErrorOptions
+        {
+            get => FromResponseErrorOptions(base.ErrorOptions);
+            set => base.ErrorOptions = ToResponseErrorOptions(value);
+        }
 
-        /// <summary>
-        /// The token to check for cancellation.
-        /// </summary>
-        public CancellationToken CancellationToken { get; set; } = CancellationToken.None;
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static ErrorOptions FromResponseErrorOptions(ClientErrorBehaviors options)
+            => options switch
+            {
+                ClientErrorBehaviors.Default => ErrorOptions.Default,
+                ClientErrorBehaviors.NoThrow => ErrorOptions.NoThrow,
+                _ => throw new NotSupportedException(),
+            };
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static ClientErrorBehaviors ToResponseErrorOptions(ErrorOptions options)
+            => options switch
+            {
+                ErrorOptions.Default => ClientErrorBehaviors.Default,
+                ErrorOptions.NoThrow => ClientErrorBehaviors.NoThrow,
+                _ => throw new NotSupportedException(),
+            };
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RequestContext"/> class.
@@ -79,10 +95,7 @@ namespace Azure
         {
             Argument.AssertInRange(statusCode, 100, 599, nameof(statusCode));
 
-            if (_frozen)
-            {
-                throw new InvalidOperationException("Cannot modify classifiers after this type has been used in a method call.");
-            }
+            AssertNotFrozen();
 
             int length = _statusCodes == null ? 0 : _statusCodes.Length;
             Array.Resize(ref _statusCodes, length + 1);
@@ -105,10 +118,7 @@ namespace Azure
         /// used in a method call.</exception>
         public void AddClassifier(ResponseClassificationHandler classifier)
         {
-            if (_frozen)
-            {
-                throw new InvalidOperationException("Cannot modify classifiers after this type has been used in a method call.");
-            }
+            AssertNotFrozen();
 
             int length = _handlers == null ? 0 : _handlers.Length;
             Array.Resize(ref _handlers, length + 1);
@@ -116,12 +126,23 @@ namespace Azure
             _handlers[0] = classifier;
         }
 
-        internal void Freeze()
+        /// <inheritdoc/>
+        protected override void Apply(PipelineMessage message)
         {
-            _frozen = true;
+            base.Apply(message);
+
+            HttpMessage httpMessage = HttpMessage.GetHttpMessage(message);
+
+            if (Policies?.Count > 0)
+            {
+                httpMessage.Policies ??= new(Policies.Count);
+                httpMessage.Policies.AddRange(Policies);
+            }
+
+            httpMessage.ResponseClassifier = ApplyClassifier(httpMessage.ResponseClassifier);
         }
 
-        internal ResponseClassifier Apply(ResponseClassifier classifier)
+        private ResponseClassifier ApplyClassifier(ResponseClassifier classifier)
         {
             if (_statusCodes == null && _handlers == null)
             {
