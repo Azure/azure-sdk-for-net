@@ -18,8 +18,9 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
         internal readonly DoubleBuffer _documentBuffer = new();
         internal static bool? s_isAzureWebApp = null;
 
-        private DateTimeOffset cachedCollectedTime = DateTimeOffset.MinValue;
-        private long cachedCollectedValue = 0;
+        private readonly int _processorCount = Environment.ProcessorCount;
+        private DateTimeOffset _cachedCollectedTime = DateTimeOffset.MinValue;
+        private long _cachedCollectedValue = 0;
 
         public MonitoringDataPoint GetDataPoint()
         {
@@ -167,8 +168,8 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
 
         private void ResetCachedValues()
         {
-            this.cachedCollectedTime = DateTimeOffset.MinValue;
-            this.cachedCollectedValue = 0;
+            _cachedCollectedTime = DateTimeOffset.MinValue;
+            _cachedCollectedValue = 0;
         }
 
         /// <summary>
@@ -177,13 +178,11 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
         /// </summary>
         private bool TryCalculateCPUCounter(Process process, out double normalizedValue)
         {
-            var previousCollectedValue = this.cachedCollectedValue;
-            var previousCollectedTime = this.cachedCollectedTime;
+            var previousCollectedValue = _cachedCollectedValue;
+            var previousCollectedTime = _cachedCollectedTime;
 
-            var recentCollectedValue = this.cachedCollectedValue = process.TotalProcessorTime.Ticks;
-            var recentCollectedTime = this.cachedCollectedTime = DateTimeOffset.UtcNow;
-
-            var processorCount = Environment.ProcessorCount;
+            var recentCollectedValue = _cachedCollectedValue = process.TotalProcessorTime.Ticks;
+            var recentCollectedTime = _cachedCollectedTime = DateTimeOffset.UtcNow;
 
             double calculatedValue;
 
@@ -219,12 +218,12 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
 
             period = period != 0 ? period : 1;
             calculatedValue = diff * 100.0 / period;
-            normalizedValue = calculatedValue / processorCount;
+            normalizedValue = calculatedValue / _processorCount;
             LiveMetricsExporterEventSource.Log.ProcessCountersCpuCounter(
                 period: previousCollectedValue,
                 diffValue: recentCollectedValue,
                 calculatedValue: calculatedValue,
-                processorCount: processorCount,
+                processorCount: _processorCount,
                 normalizedValue: normalizedValue);
             return true;
         }
